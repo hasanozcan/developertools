@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: developertools-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    region: frankfurt
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:80
+      - key: ConnectionStrings__DefaultConnection
+        fromDatabase:
+          name: developertools-db
+          property: connectionString
+      - key: Cors__AllowedOrigins__0
+        value: https://devstools.app
+      - key: Cors__AllowedOrigins__1
+        value: https://www.devstools.app
+
+databases:
+  - name: developertools-db
+    databaseName: developertools
+    region: frankfurt
+    plan: free
+    postgresMajorVersion: 16

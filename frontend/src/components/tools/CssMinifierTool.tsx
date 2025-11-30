@@ -1,0 +1,299 @@
+'use client';
+
+import React, { useState } from 'react';
+import { Minimize2, Copy, Check, FileText, Trash2, Info } from 'lucide-react';
+
+interface MinifyStats {
+  original: number;
+  minified: number;
+  saved: number;
+  percentage: number;
+}
+
+export default function CssMinifierTool() {
+  const [input, setInput] = useState('');
+  const [output, setOutput] = useState('');
+  const [copied, setCopied] = useState(false);
+  const [stats, setStats] = useState<MinifyStats | null>(null);
+  const [removeComments, setRemoveComments] = useState(true);
+
+  const minifyCss = (css: string): string => {
+    if (!css.trim()) return '';
+
+    let result = css;
+
+    // Remove comments
+    if (removeComments) {
+      result = result.replace(/\/\*[\s\S]*?\*\//g, '');
+    }
+
+    // Remove newlines and extra whitespace
+    result = result.replace(/\s+/g, ' ');
+
+    // Remove spaces around special characters
+    result = result.replace(/\s*([{};:,>~+])\s*/g, '$1');
+
+    // Remove semicolon before closing brace
+    result = result.replace(/;}/g, '}');
+
+    // Remove spaces around !important
+    result = result.replace(/\s*!important/g, '!important');
+
+    // Remove leading zeros
+    result = result.replace(/:0\./g, ':.');
+    result = result.replace(/\s0\./g, ' .');
+
+    // Remove units from zero values
+    result = result.replace(/(:|\s)0(px|em|rem|%|vh|vw|pt|cm|mm|in|pc|ex|ch)/g, '$10');
+
+    // Shorten hex colors
+    result = result.replace(/#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3/g, '#$1$2$3');
+
+    // Remove last semicolon in each block
+    result = result.replace(/;}/g, '}');
+
+    // Trim
+    result = result.trim();
+
+    return result;
+  };
+
+  const beautifyCss = (css: string): string => {
+    if (!css.trim()) return '';
+
+    let result = css;
+    
+    // First minify to normalize
+    result = result.replace(/\s+/g, ' ');
+    
+    // Add newline after each rule
+    result = result.replace(/}/g, '}\n');
+    
+    // Add newline after opening brace
+    result = result.replace(/{/g, ' {\n  ');
+    
+    // Add newline after semicolons
+    result = result.replace(/;/g, ';\n  ');
+    
+    // Fix double spaces
+    result = result.replace(/\n  }/g, '\n}');
+    
+    // Add space before opening brace
+    result = result.replace(/([^\s]){/g, '$1 {');
+    
+    return result.trim();
+  };
+
+  const handleMinify = () => {
+    const minified = minifyCss(input);
+    setOutput(minified);
+    
+    const original = input.length;
+    const minifiedLength = minified.length;
+    const saved = original - minifiedLength;
+    const percentage = original > 0 ? Math.round((saved / original) * 100) : 0;
+    
+    setStats({
+      original,
+      minified: minifiedLength,
+      saved,
+      percentage,
+    });
+  };
+
+  const handleBeautify = () => {
+    setOutput(beautifyCss(input));
+    setStats(null);
+  };
+
+  const copyOutput = async () => {
+    await navigator.clipboard.writeText(output);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const loadSample = () => {
+    setInput(`.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+/* Header styles */
+.header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #eeeeee;
+    padding: 16px 24px;
+}
+
+.header .logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333333;
+}
+
+/* Button styles */
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .header {
+        padding: 12px 16px;
+    }
+}`);
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Options */}
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={removeComments}
+            onChange={(e) => setRemoveComments(e.target.checked)}
+            className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
+          />
+          <span className="text-sm text-gray-700 dark:text-gray-300">Remove Comments</span>
+        </label>
+
+        <div className="flex gap-2">
+          <button
+            onClick={loadSample}
+            className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2"
+          >
+            <FileText className="w-4 h-4" />
+            Load Sample
+          </button>
+          <button
+            onClick={() => { setInput(''); setOutput(''); setStats(null); }}
+            className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2"
+          >
+            <Trash2 className="w-4 h-4" />
+            Clear
+          </button>
+        </div>
+      </div>
+
+      {/* Input */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          CSS Input
+        </label>
+        <textarea
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          rows={12}
+          placeholder="Paste your CSS here..."
+          className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+        />
+        <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+          {input.length} characters
+        </div>
+      </div>
+
+      {/* Actions */}
+      <div className="flex flex-wrap gap-3">
+        <button
+          onClick={handleMinify}
+          disabled={!input.trim()}
+          className="px-6 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <Minimize2 className="w-4 h-4" />
+          Minify CSS
+        </button>
+        <button
+          onClick={handleBeautify}
+          disabled={!input.trim()}
+          className="px-6 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Beautify
+        </button>
+      </div>
+
+      {/* Stats */}
+      {stats && (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg text-center">
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.original.toLocaleString()}</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">Original</div>
+          </div>
+          <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg text-center">
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.minified.toLocaleString()}</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">Minified</div>
+          </div>
+          <div className="p-4 bg-green-50 dark:bg-green-900/30 rounded-lg text-center">
+            <div className="text-2xl font-bold text-green-600 dark:text-green-400">{stats.saved.toLocaleString()}</div>
+            <div className="text-sm text-green-600 dark:text-green-400">Bytes Saved</div>
+          </div>
+          <div className="p-4 bg-green-50 dark:bg-green-900/30 rounded-lg text-center">
+            <div className="text-2xl font-bold text-green-600 dark:text-green-400">{stats.percentage}%</div>
+            <div className="text-sm text-green-600 dark:text-green-400">Reduction</div>
+          </div>
+        </div>
+      )}
+
+      {/* Output */}
+      {output && (
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Output
+            </label>
+            <button
+              onClick={copyOutput}
+              className="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2"
+            >
+              {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+              {copied ? 'Copied!' : 'Copy'}
+            </button>
+          </div>
+          <pre className="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-lg font-mono text-sm bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white overflow-auto max-h-96 whitespace-pre-wrap break-all">
+            {output}
+          </pre>
+          <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            {output.length} characters
+          </div>
+        </div>
+      )}
+
+      {/* Info */}
+      <div className="p-4 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg">
+        <div className="flex items-start gap-3">
+          <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+          <div className="text-sm text-blue-700 dark:text-blue-300">
+            <p className="font-medium mb-2">CSS Minification optimizes by:</p>
+            <ul className="list-disc list-inside space-y-1 text-blue-600 dark:text-blue-400">
+              <li>Removing comments and unnecessary whitespace</li>
+              <li>Shortening color values (e.g., #ffffff → #fff)</li>
+              <li>Removing units from zero values</li>
+              <li>Removing leading zeros (e.g., 0.5 → .5)</li>
+              <li>Removing redundant semicolons</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
