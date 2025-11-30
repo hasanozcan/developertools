@@ -1,10 +1,12 @@
 import { MetadataRoute } from 'next';
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://developertools.com';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
 
 // Tool definitions for sitemap
 const tools = [
   { category: 'json', slug: 'json-formatter' },
+  { category: 'json', slug: 'json-validator' },
+  { category: 'json', slug: 'json-csv' },
   { category: 'encoding', slug: 'base64' },
   { category: 'encoding', slug: 'url-encoder' },
   { category: 'encoding', slug: 'jwt-decoder' },
@@ -17,6 +19,9 @@ const tools = [
 ];
 
 const categories = ['json', 'encoding', 'generators', 'crypto', 'text', 'converters'];
+
+// Static pages
+const staticPages = ['about', 'privacy', 'terms', 'contact'];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const toolUrls = tools.map((tool) => ({
@@ -33,6 +38,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  const staticUrls = staticPages.map((page) => ({
+    url: `${BASE_URL}/${page}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.5,
+  }));
+
   return [
     {
       url: BASE_URL,
@@ -42,5 +54,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...categoryUrls,
     ...toolUrls,
+    ...staticUrls,
   ];
 }
