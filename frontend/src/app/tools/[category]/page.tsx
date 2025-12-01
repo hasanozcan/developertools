@@ -14,6 +14,8 @@ const categories: Record<string, { name: string; description: string; icon: any;
       { name: 'JSON Formatter', slug: 'json-formatter', description: 'Format and beautify JSON data' },
       { name: 'JSON Validator', slug: 'json-validator', description: 'Validate JSON syntax' },
       { name: 'JSON to CSV Converter', slug: 'json-csv', description: 'Convert JSON to CSV and vice versa' },
+      { name: 'JSON to TypeScript', slug: 'json-to-typescript', description: 'Generate TypeScript interfaces from JSON' },
+      { name: 'YAML ↔ JSON Converter', slug: 'yaml-json', description: 'Convert between YAML and JSON formats' },
     ],
   },
   encoding: {
@@ -25,6 +27,7 @@ const categories: Record<string, { name: string; description: string; icon: any;
       { name: 'URL Encoder/Decoder', slug: 'url-encoder', description: 'Encode or decode URL strings' },
       { name: 'JWT Decoder', slug: 'jwt-decoder', description: 'Decode and inspect JWT tokens' },
       { name: 'HTML Entity Encoder/Decoder', slug: 'html-entity', description: 'Encode or decode HTML entities' },
+      { name: 'Image to Base64', slug: 'image-to-base64', description: 'Convert images to Base64 data URIs' },
     ],
   },
   generators: {
@@ -37,6 +40,8 @@ const categories: Record<string, { name: string; description: string; icon: any;
       { name: 'Lorem Ipsum Generator', slug: 'lorem-ipsum', description: 'Generate placeholder text' },
       { name: 'QR Code Generator', slug: 'qr-code', description: 'Generate QR codes from text or URLs' },
       { name: 'Slug Generator', slug: 'slug-generator', description: 'Generate SEO-friendly URL slugs' },
+      { name: 'CSS Gradient Generator', slug: 'css-gradient', description: 'Create beautiful CSS gradients' },
+      { name: 'Meta Tags Generator', slug: 'meta-tags', description: 'Generate SEO meta tags for websites' },
     ],
   },
   crypto: {
@@ -68,6 +73,8 @@ const categories: Record<string, { name: string; description: string; icon: any;
       { name: 'Timestamp Converter', slug: 'timestamp-converter', description: 'Convert timestamps to dates' },
       { name: 'Color Converter', slug: 'color-converter', description: 'Convert colors between HEX, RGB, HSL' },
       { name: 'JSON to CSV Converter', slug: 'json-csv', description: 'Convert JSON to CSV and vice versa' },
+      { name: 'YAML ↔ JSON Converter', slug: 'yaml-json', description: 'Convert between YAML and JSON formats' },
+      { name: 'Image to Base64', slug: 'image-to-base64', description: 'Convert images to Base64 data URIs' },
     ],
   },
   formatters: {

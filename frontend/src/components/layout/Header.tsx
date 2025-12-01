@@ -13,11 +13,16 @@ import LanguageSelector from '@/components/common/LanguageSelector';
 // Tool slugs for search - names will be translated dynamically
 const toolSlugs = [
   { slug: 'json-formatter', category: 'json', keywords: ['json', 'format', 'beautify', 'validate'] },
+  { slug: 'json-to-typescript', category: 'json', keywords: ['json', 'typescript', 'ts', 'interface', 'type', 'convert'] },
+  { slug: 'yaml-json', category: 'json', keywords: ['yaml', 'json', 'convert', 'yml'] },
   { slug: 'base64', category: 'encoding', keywords: ['base64', 'encode', 'decode'] },
   { slug: 'url-encoder', category: 'encoding', keywords: ['url', 'encode', 'decode', 'percent'] },
   { slug: 'jwt-decoder', category: 'encoding', keywords: ['jwt', 'token', 'decode', 'json web token'] },
+  { slug: 'image-to-base64', category: 'encoding', keywords: ['image', 'base64', 'convert', 'data uri', 'png', 'jpg'] },
   { slug: 'uuid-generator', category: 'generators', keywords: ['uuid', 'guid', 'generate', 'random'] },
   { slug: 'password-generator', category: 'generators', keywords: ['password', 'generate', 'secure', 'random'] },
+  { slug: 'css-gradient', category: 'generators', keywords: ['css', 'gradient', 'linear', 'radial', 'color'] },
+  { slug: 'meta-tags', category: 'generators', keywords: ['meta', 'tags', 'seo', 'og', 'twitter', 'html'] },
   { slug: 'md5-hash', category: 'crypto', keywords: ['md5', 'hash', 'checksum'] },
   { slug: 'sha256-hash', category: 'crypto', keywords: ['sha256', 'sha-256', 'hash', 'secure'] },
   { slug: 'regex-tester', category: 'text', keywords: ['regex', 'regular expression', 'test', 'match'] },
@@ -75,6 +80,7 @@ export default function Header() {
         { slug: 'url-encoder', category: 'encoding', name: t('toolName.url-encoder') },
         { slug: 'jwt-decoder', category: 'encoding', name: t('toolName.jwt-decoder') },
         { slug: 'html-entity', category: 'encoding', name: t('toolName.html-entity') },
+        { slug: 'image-to-base64', category: 'encoding', name: t('toolName.image-to-base64') },
       ]
     },
     { 
@@ -85,6 +91,8 @@ export default function Header() {
         { slug: 'password-generator', category: 'generators', name: t('toolName.password-generator') },
         { slug: 'qr-code', category: 'generators', name: t('toolName.qr-code') },
         { slug: 'slug-generator', category: 'generators', name: t('toolName.slug-generator') },
+        { slug: 'css-gradient', category: 'generators', name: t('toolName.css-gradient') },
+        { slug: 'meta-tags', category: 'generators', name: t('toolName.meta-tags') },
       ]
     },
     { 
@@ -104,6 +112,8 @@ export default function Header() {
         { slug: 'timestamp-converter', category: 'converters', name: t('toolName.timestamp-converter') },
         { slug: 'color-converter', category: 'converters', name: t('toolName.color-converter') },
         { slug: 'json-csv', category: 'converters', name: t('toolName.json-csv') },
+        { slug: 'json-to-typescript', category: 'json', name: t('toolName.json-to-typescript') },
+        { slug: 'yaml-json', category: 'json', name: t('toolName.yaml-json') },
       ]
     },
     { 

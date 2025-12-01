@@ -24,6 +24,11 @@ import QrCodeGeneratorTool from '@/components/tools/QrCodeGeneratorTool';
 import SlugGeneratorTool from '@/components/tools/SlugGeneratorTool';
 import CssMinifierTool from '@/components/tools/CssMinifierTool';
 import JsMinifierTool from '@/components/tools/JsMinifierTool';
+import JsonToTypescriptTool from '@/components/tools/JsonToTypescriptTool';
+import ImageToBase64Tool from '@/components/tools/ImageToBase64Tool';
+import YamlJsonConverterTool from '@/components/tools/YamlJsonConverterTool';
+import CssGradientGeneratorTool from '@/components/tools/CssGradientGeneratorTool';
+import MetaTagsGeneratorTool from '@/components/tools/MetaTagsGeneratorTool';
 
 // Tool configurations
 const tools: Record<string, Record<string, {
@@ -70,6 +75,28 @@ const tools: Record<string, Record<string, {
         { question: 'How are nested objects handled?', answer: 'Nested objects can be automatically flattened using dot notation (e.g., address.city) for proper CSV conversion.' },
       ],
     },
+    'json-to-typescript': {
+      name: 'JSON to TypeScript',
+      description: 'Convert JSON to TypeScript interfaces or types. Free online JSON to TS converter.',
+      longDescription: 'Free online JSON to TypeScript converter. Generate TypeScript interfaces or type definitions from your JSON data. Supports nested objects and arrays.',
+      keywords: ['json to typescript', 'json to ts', 'typescript interface generator', 'json to interface'],
+      component: JsonToTypescriptTool,
+      faqs: [
+        { question: 'What is the difference between interface and type?', answer: 'Interfaces are extendable and can be merged, while types are more flexible and can represent unions and intersections. Both work for defining object shapes.' },
+        { question: 'How are arrays handled?', answer: 'Arrays are detected and typed appropriately. If all elements are of the same type, a typed array is generated. Mixed types result in union types.' },
+      ],
+    },
+    'yaml-json': {
+      name: 'YAML ↔ JSON Converter',
+      description: 'Convert between YAML and JSON formats. Free online YAML JSON converter.',
+      longDescription: 'Free online YAML to JSON and JSON to YAML converter. Perfect for Kubernetes configs, CI/CD pipelines, and configuration file conversions.',
+      keywords: ['yaml to json', 'json to yaml', 'yaml converter', 'kubernetes yaml'],
+      component: YamlJsonConverterTool,
+      faqs: [
+        { question: 'What is YAML?', answer: 'YAML (YAML Ain\'t Markup Language) is a human-readable data serialization format commonly used for configuration files, especially in DevOps and cloud environments.' },
+        { question: 'When should I use YAML vs JSON?', answer: 'YAML is preferred for configuration files due to better readability. JSON is better for data interchange and API responses due to universal support.' },
+      ],
+    },
   },
   encoding: {
     'base64': {
@@ -113,6 +140,17 @@ const tools: Record<string, Record<string, {
       faqs: [
         { question: 'What are HTML entities?', answer: 'HTML entities are special codes used to display reserved characters in HTML. For example, &lt; represents < and &amp; represents &.' },
         { question: 'Why encode HTML entities?', answer: 'Encoding HTML entities prevents XSS attacks and ensures special characters display correctly in web pages instead of being interpreted as HTML code.' },
+      ],
+    },
+    'image-to-base64': {
+      name: 'Image to Base64',
+      description: 'Convert images to Base64 data URIs. Free online image to Base64 encoder.',
+      longDescription: 'Free online image to Base64 converter. Convert images (PNG, JPG, GIF, WebP, SVG) to Base64 data URIs for embedding directly in HTML or CSS.',
+      keywords: ['image to base64', 'base64 image encoder', 'data uri generator', 'embed image'],
+      component: ImageToBase64Tool,
+      faqs: [
+        { question: 'What is a Base64 data URI?', answer: 'A data URI is a way to embed file contents directly in HTML or CSS. The image is converted to Base64 text that browsers can display without separate HTTP requests.' },
+        { question: 'When should I use Base64 images?', answer: 'Base64 images are useful for small icons, logos, or when you want to reduce HTTP requests. Large images should use regular URLs as Base64 increases file size by ~33%.' },
       ],
     },
   },
@@ -169,6 +207,28 @@ const tools: Record<string, Record<string, {
       faqs: [
         { question: 'What is a URL slug?', answer: 'A URL slug is the part of a URL that identifies a particular page in a human-readable form. For example, in /blog/my-first-post, "my-first-post" is the slug.' },
         { question: 'Why are slugs important for SEO?', answer: 'SEO-friendly slugs help search engines understand your content and improve click-through rates by showing users what the page is about.' },
+      ],
+    },
+    'css-gradient': {
+      name: 'CSS Gradient Generator',
+      description: 'Create beautiful CSS gradients with a visual editor. Free gradient generator.',
+      longDescription: 'Free online CSS gradient generator. Create stunning linear and radial gradients with multiple color stops, presets, and export options. Get production-ready CSS code instantly.',
+      keywords: ['css gradient generator', 'gradient maker', 'linear gradient', 'radial gradient', 'css background'],
+      component: CssGradientGeneratorTool,
+      faqs: [
+        { question: 'What types of gradients are supported?', answer: 'This tool supports both linear gradients (with customizable angles) and radial gradients (with circle or ellipse shapes).' },
+        { question: 'Can I export the gradient as an image?', answer: 'Yes! You can download the gradient as a PNG image in addition to copying the CSS code.' },
+      ],
+    },
+    'meta-tags': {
+      name: 'Meta Tags Generator',
+      description: 'Generate SEO meta tags for your website. Free meta tags generator.',
+      longDescription: 'Free online meta tags generator. Create essential HTML meta tags for SEO, Open Graph for social sharing, and Twitter Cards. Improve your website visibility.',
+      keywords: ['meta tags generator', 'seo meta tags', 'open graph tags', 'twitter card generator'],
+      component: MetaTagsGeneratorTool,
+      faqs: [
+        { question: 'What are meta tags?', answer: 'Meta tags are HTML elements that provide metadata about a web page. They help search engines understand your content and control how your page appears in search results.' },
+        { question: 'What are Open Graph tags?', answer: 'Open Graph tags control how your content appears when shared on social media platforms like Facebook, LinkedIn, and others.' },
       ],
     },
   },
@@ -283,6 +343,28 @@ const tools: Record<string, Record<string, {
       faqs: [
         { question: 'What formats are supported?', answer: 'This tool supports conversion between JSON (array of objects) and CSV (comma-separated values). You can also use semicolons, tabs, or pipes as delimiters.' },
         { question: 'How are nested objects handled?', answer: 'Nested objects can be automatically flattened using dot notation (e.g., address.city) for proper CSV conversion.' },
+      ],
+    },
+    'yaml-json': {
+      name: 'YAML ↔ JSON Converter',
+      description: 'Convert between YAML and JSON formats. Free online YAML JSON converter.',
+      longDescription: 'Free online YAML to JSON and JSON to YAML converter. Perfect for Kubernetes configs, CI/CD pipelines, and configuration file conversions.',
+      keywords: ['yaml to json', 'json to yaml', 'yaml converter', 'kubernetes yaml'],
+      component: YamlJsonConverterTool,
+      faqs: [
+        { question: 'What is YAML?', answer: 'YAML (YAML Ain\'t Markup Language) is a human-readable data serialization format commonly used for configuration files, especially in DevOps and cloud environments.' },
+        { question: 'When should I use YAML vs JSON?', answer: 'YAML is preferred for configuration files due to better readability. JSON is better for data interchange and API responses due to universal support.' },
+      ],
+    },
+    'image-to-base64': {
+      name: 'Image to Base64',
+      description: 'Convert images to Base64 data URIs. Free online image to Base64 encoder.',
+      longDescription: 'Free online image to Base64 converter. Convert images (PNG, JPG, GIF, WebP, SVG) to Base64 data URIs for embedding directly in HTML or CSS.',
+      keywords: ['image to base64', 'base64 image encoder', 'data uri generator', 'embed image'],
+      component: ImageToBase64Tool,
+      faqs: [
+        { question: 'What is a Base64 data URI?', answer: 'A data URI is a way to embed file contents directly in HTML or CSS. The image is converted to Base64 text that browsers can display without separate HTTP requests.' },
+        { question: 'When should I use Base64 images?', answer: 'Base64 images are useful for small icons, logos, or when you want to reduce HTTP requests. Large images should use regular URLs as Base64 increases file size by ~33%.' },
       ],
     },
   },

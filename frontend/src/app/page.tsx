@@ -49,6 +49,11 @@ const featuredTools = [
   { slug: 'html-entity', category: 'encoding' },
   { slug: 'json-csv', category: 'converters' },
   { slug: 'text-diff', category: 'text' },
+  { slug: 'json-to-typescript', category: 'json' },
+  { slug: 'yaml-json', category: 'json' },
+  { slug: 'image-to-base64', category: 'encoding' },
+  { slug: 'css-gradient', category: 'generators' },
+  { slug: 'meta-tags', category: 'generators' },
 ];
 
 export default function Home() {
