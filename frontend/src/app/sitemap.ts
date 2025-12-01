@@ -8,17 +8,22 @@ const tools = [
   { category: 'json', slug: 'json-formatter' },
   { category: 'json', slug: 'json-validator' },
   { category: 'json', slug: 'json-csv' },
+  { category: 'json', slug: 'json-to-typescript' },
+  { category: 'json', slug: 'yaml-json' },
   // Encoding Tools
   { category: 'encoding', slug: 'base64' },
   { category: 'encoding', slug: 'url-encoder' },
   { category: 'encoding', slug: 'jwt-decoder' },
   { category: 'encoding', slug: 'html-entity' },
+  { category: 'encoding', slug: 'image-to-base64' },
   // Generator Tools
   { category: 'generators', slug: 'uuid-generator' },
   { category: 'generators', slug: 'password-generator' },
   { category: 'generators', slug: 'lorem-ipsum' },
   { category: 'generators', slug: 'qr-code' },
   { category: 'generators', slug: 'slug-generator' },
+  { category: 'generators', slug: 'css-gradient' },
+  { category: 'generators', slug: 'meta-tags' },
   // Crypto Tools
   { category: 'crypto', slug: 'md5-hash' },
   { category: 'crypto', slug: 'sha256-hash' },
