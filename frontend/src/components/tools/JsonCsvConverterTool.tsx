@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { Copy, Check, Download } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface JsonToCsvOptions {
   delimiter: string;
@@ -145,6 +146,7 @@ function csvToJson(csv: string, options: { delimiter: string; hasHeaders: boolea
 }
 
 export default function JsonCsvConverterTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [mode, setMode] = useState<'jsonToCsv' | 'csvToJson'>('jsonToCsv');
@@ -240,23 +242,23 @@ export default function JsonCsvConverterTool() {
           onClick={loadSampleData}
           className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
         >
-          Load Sample
+          {t('common.loadSample')}
         </button>
       </div>
 
       {/* Options */}
       <div className="flex flex-wrap items-center gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
         <div className="flex items-center gap-2">
-          <label className="text-sm text-gray-700 dark:text-gray-300">Delimiter:</label>
+          <label className="text-sm text-gray-700 dark:text-gray-300">{t('tool.jsonCsv.delimiter')}:</label>
           <select
             value={delimiter}
             onChange={(e) => setDelimiter(e.target.value)}
             className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
           >
-            <option value=",">Comma (,)</option>
-            <option value=";">Semicolon (;)</option>
-            <option value="\t">Tab</option>
-            <option value="|">Pipe (|)</option>
+            <option value=",">{t('tool.jsonCsv.comma')} (,)</option>
+            <option value=";">{t('tool.jsonCsv.semicolon')} (;)</option>
+            <option value="\t">{t('common.tab')}</option>
+            <option value="|">{t('tool.jsonCsv.pipe')} (|)</option>
           </select>
         </div>
         
@@ -268,7 +270,7 @@ export default function JsonCsvConverterTool() {
             className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
           />
           <span className="text-sm text-gray-700 dark:text-gray-300">
-            {mode === 'jsonToCsv' ? 'Include headers' : 'First row is headers'}
+            {mode === 'jsonToCsv' ? t('tool.jsonCsv.includeHeaders') : t('tool.jsonCsv.firstRowHeaders')}
           </span>
         </label>
         
@@ -280,7 +282,7 @@ export default function JsonCsvConverterTool() {
               onChange={(e) => setFlattenNested(e.target.checked)}
               className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
             />
-            <span className="text-sm text-gray-700 dark:text-gray-300">Flatten nested objects</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.jsonCsv.flattenObjects')}</span>
           </label>
         )}
       </div>
@@ -291,7 +293,7 @@ export default function JsonCsvConverterTool() {
           onClick={handleConvert}
           className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
         >
-          Convert
+          {t('common.convert')}
         </button>
         {output && (
           <>
@@ -300,14 +302,14 @@ export default function JsonCsvConverterTool() {
               className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium flex items-center gap-2"
             >
               {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
-              {copied ? 'Copied!' : 'Copy'}
+              {copied ? t('common.copied') : t('common.copy')}
             </button>
             <button
               onClick={downloadFile}
               className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium flex items-center gap-2"
             >
               <Download className="w-4 h-4" />
-              Download
+              {t('common.download')}
             </button>
           </>
         )}
@@ -324,7 +326,7 @@ export default function JsonCsvConverterTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            {mode === 'jsonToCsv' ? 'JSON Input (Array of Objects)' : 'CSV Input'}
+            {mode === 'jsonToCsv' ? t('tool.jsonCsv.jsonInput') : t('tool.jsonCsv.csvInput')}
           </label>
           <CodeEditor
             value={input}
@@ -335,14 +337,14 @@ export default function JsonCsvConverterTool() {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            {mode === 'jsonToCsv' ? 'CSV Output' : 'JSON Output'}
+            {mode === 'jsonToCsv' ? t('tool.jsonCsv.csvOutput') : t('tool.jsonCsv.jsonOutput')}
           </label>
           <CodeEditor
             value={output}
             onChange={() => {}}
             readOnly
             language={mode === 'jsonToCsv' ? 'text' : 'json'}
-            placeholder="Converted output will appear here..."
+            placeholder={t('tool.jsonCsv.outputPlaceholder')}
           />
         </div>
       </div>

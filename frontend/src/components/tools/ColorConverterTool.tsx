@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { Copy, Check } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface ColorValues {
   hex: string;
@@ -93,6 +94,7 @@ function hslToRgb(h: number, s: number, l: number): { r: number; g: number; b: n
 }
 
 export default function ColorConverterTool() {
+  const { t } = useLanguage();
   const [color, setColor] = useState<ColorValues>({
     hex: '#3B82F6',
     rgb: { r: 59, g: 130, b: 246 },
@@ -133,12 +135,26 @@ export default function ColorConverterTool() {
     setTimeout(() => setCopied(null), 2000);
   }, []);
 
+  const loadSample = useCallback(() => {
+    updateFromHex('#FF5733');
+  }, [updateFromHex]);
+
   const hexString = color.hex;
   const rgbString = `rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`;
   const hslString = `hsl(${color.hsl.h}, ${color.hsl.s}%, ${color.hsl.l}%)`;
 
   return (
     <div className="space-y-6">
+      {/* Load Sample Button */}
+      <div className="flex justify-end">
+        <button
+          onClick={loadSample}
+          className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
+        >
+          {t('common.loadSample')}
+        </button>
+      </div>
+
       {/* Color Preview */}
       <div className="flex items-center gap-6">
         <div
@@ -146,7 +162,7 @@ export default function ColorConverterTool() {
           style={{ backgroundColor: color.hex }}
         />
         <div className="flex-1">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Color Picker</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('tool.colorConverter.colorPicker')}</label>
           <input
             type="color"
             value={color.hex}
@@ -170,7 +186,7 @@ export default function ColorConverterTool() {
           <button
             onClick={() => copyToClipboard(hexString, 'hex')}
             className="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors"
-            title="Copy HEX"
+            title={t('tool.colorConverter.copyHex')}
           >
             {copied === 'hex' ? <Check className="w-5 h-5 text-green-600" /> : <Copy className="w-5 h-5 text-gray-600 dark:text-gray-400" />}
           </button>
@@ -219,7 +235,7 @@ export default function ColorConverterTool() {
           <button
             onClick={() => copyToClipboard(rgbString, 'rgb')}
             className="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors self-end"
-            title="Copy RGB"
+            title={t('tool.colorConverter.copyRgb')}
           >
             {copied === 'rgb' ? <Check className="w-5 h-5 text-green-600" /> : <Copy className="w-5 h-5 text-gray-600 dark:text-gray-400" />}
           </button>
@@ -233,7 +249,7 @@ export default function ColorConverterTool() {
         <div className="flex gap-2">
           <div className="flex-1 grid grid-cols-3 gap-2">
             <div>
-              <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">H (0-360)</label>
+              <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">{t('tool.colorConverter.hue')}</label>
               <input
                 type="number"
                 min="0"
@@ -244,7 +260,7 @@ export default function ColorConverterTool() {
               />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">S (0-100%)</label>
+              <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">{t('tool.colorConverter.saturation')}</label>
               <input
                 type="number"
                 min="0"
@@ -255,7 +271,7 @@ export default function ColorConverterTool() {
               />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">L (0-100%)</label>
+              <label className="block text-xs text-gray-500 dark:text-gray-400 mb-1">{t('tool.colorConverter.lightness')}</label>
               <input
                 type="number"
                 min="0"
@@ -269,7 +285,7 @@ export default function ColorConverterTool() {
           <button
             onClick={() => copyToClipboard(hslString, 'hsl')}
             className="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors self-end"
-            title="Copy HSL"
+            title={t('tool.colorConverter.copyHsl')}
           >
             {copied === 'hsl' ? <Check className="w-5 h-5 text-green-600" /> : <Copy className="w-5 h-5 text-gray-600 dark:text-gray-400" />}
           </button>
@@ -279,7 +295,7 @@ export default function ColorConverterTool() {
 
       {/* Color Variations */}
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Color Variations</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t('tool.colorConverter.colorVariations')}</label>
         <div className="grid grid-cols-5 gap-2">
           {[10, 30, 50, 70, 90].map((lightness) => {
             const variantRgb = hslToRgb(color.hsl.h, color.hsl.s, lightness);
@@ -290,7 +306,7 @@ export default function ColorConverterTool() {
                 onClick={() => updateFromHex(variantHex)}
                 className="h-12 rounded-lg border border-gray-200 dark:border-gray-600 transition-transform hover:scale-105"
                 style={{ backgroundColor: variantHex }}
-                title={`${lightness}% lightness`}
+                title={`${lightness}% ${t('tool.colorConverter.lightnessTooltip')}`}
               />
             );
           })}

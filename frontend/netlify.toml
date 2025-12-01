@@ -1,15 +1,11 @@
 [build]
   # Frontend klasöründe build komutunu çalıştır
   command = "npm run build"
-  publish = ".next"
+  publish = "out"
 
 [build.environment]
   # Node.js versiyonu
   NODE_VERSION = "18"
-
-# Next.js için Netlify plugin
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
 
 # Redirect kuralları - API isteklerini backend'e yönlendir
 [[redirects]]

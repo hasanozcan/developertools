@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link2, Copy, Check, FileText, Settings, RefreshCw } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface SlugOptions {
   lowercase: boolean;
@@ -12,6 +13,7 @@ interface SlugOptions {
 }
 
 export default function SlugGeneratorTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState('');
   const [slug, setSlug] = useState('');
   const [copied, setCopied] = useState(false);
@@ -116,13 +118,13 @@ export default function SlugGeneratorTool() {
       {/* Input */}
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Title or Text
+          {t('tool.slugGenerator.titleOrText')}
         </label>
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
           rows={3}
-          placeholder="Enter title or text to convert to slug..."
+          placeholder={t('tool.slugGenerator.inputPlaceholder')}
           className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
         />
       </div>
@@ -131,12 +133,12 @@ export default function SlugGeneratorTool() {
       <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
         <div className="flex items-center gap-2 mb-4">
           <Settings className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-          <span className="font-medium text-gray-700 dark:text-gray-300">Options</span>
+          <span className="font-medium text-gray-700 dark:text-gray-300">{t('common.options')}</span>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div>
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">Separator</label>
+            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">{t('tool.slugGenerator.separator')}</label>
             <div className="flex rounded-lg overflow-hidden border border-gray-300 dark:border-gray-600">
               {['-', '_', '.'].map((sep) => (
                 <button
@@ -155,7 +157,7 @@ export default function SlugGeneratorTool() {
           </div>
 
           <div>
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">Max Length</label>
+            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">{t('tool.slugGenerator.maxLength')}</label>
             <input
               type="number"
               value={options.maxLength}
@@ -174,7 +176,7 @@ export default function SlugGeneratorTool() {
                 onChange={(e) => setOptions({ ...options, lowercase: e.target.checked })}
                 className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
               />
-              <span className="text-sm text-gray-700 dark:text-gray-300">Lowercase</span>
+              <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.slugGenerator.lowercase')}</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input
@@ -183,7 +185,7 @@ export default function SlugGeneratorTool() {
                 onChange={(e) => setOptions({ ...options, transliterate: e.target.checked })}
                 className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
               />
-              <span className="text-sm text-gray-700 dark:text-gray-300">Transliterate</span>
+              <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.slugGenerator.transliterate')}</span>
             </label>
           </div>
 
@@ -195,7 +197,7 @@ export default function SlugGeneratorTool() {
                 onChange={(e) => setOptions({ ...options, removeStopWords: e.target.checked })}
                 className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
               />
-              <span className="text-sm text-gray-700 dark:text-gray-300">Remove Stop Words</span>
+              <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.slugGenerator.removeStopWords')}</span>
             </label>
           </div>
         </div>
@@ -205,11 +207,11 @@ export default function SlugGeneratorTool() {
       <div>
         <div className="flex items-center justify-between mb-2">
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Generated Slug
+            {t('tool.slugGenerator.generatedSlug')}
           </label>
           {slug && (
             <span className="text-xs text-gray-500 dark:text-gray-400">
-              {slug.length} characters
+              {slug.length} {t('tool.slugGenerator.characters')}
             </span>
           )}
         </div>
@@ -226,7 +228,7 @@ export default function SlugGeneratorTool() {
             className="px-4 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
             {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-            {copied ? 'Copied!' : 'Copy'}
+            {copied ? t('common.copied') : t('common.copy')}
           </button>
         </div>
       </div>
@@ -235,7 +237,7 @@ export default function SlugGeneratorTool() {
       {slug && (
         <div className="p-4 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-lg">
           <label className="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
-            URL Preview
+            {t('tool.slugGenerator.urlPreview')}
           </label>
           <code className="text-sm text-green-800 dark:text-green-200 break-all">
             https://example.com/blog/<span className="font-bold">{slug}</span>
@@ -246,7 +248,7 @@ export default function SlugGeneratorTool() {
       {/* Sample Texts */}
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-          Try These Examples
+          {t('tool.slugGenerator.tryExamples')}
         </label>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           {samples.map((sample, index) => (
@@ -267,32 +269,32 @@ export default function SlugGeneratorTool() {
       {/* SEO Tips */}
       <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
         <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 border-b border-gray-200 dark:border-gray-600">
-          <span className="font-medium text-gray-700 dark:text-gray-300">SEO Best Practices for URLs</span>
+          <span className="font-medium text-gray-700 dark:text-gray-300">{t('tool.slugGenerator.seoTitle')}</span>
         </div>
         <div className="p-4 space-y-3 text-sm text-gray-600 dark:text-gray-400">
           <div className="flex items-start gap-2">
             <span className="text-green-600 dark:text-green-400">✓</span>
-            <span>Use hyphens (-) to separate words, not underscores</span>
+            <span>{t('tool.slugGenerator.seoTip1')}</span>
           </div>
           <div className="flex items-start gap-2">
             <span className="text-green-600 dark:text-green-400">✓</span>
-            <span>Keep URLs short and descriptive (50-60 characters)</span>
+            <span>{t('tool.slugGenerator.seoTip2')}</span>
           </div>
           <div className="flex items-start gap-2">
             <span className="text-green-600 dark:text-green-400">✓</span>
-            <span>Use lowercase letters only</span>
+            <span>{t('tool.slugGenerator.seoTip3')}</span>
           </div>
           <div className="flex items-start gap-2">
             <span className="text-green-600 dark:text-green-400">✓</span>
-            <span>Include target keywords</span>
+            <span>{t('tool.slugGenerator.seoTip4')}</span>
           </div>
           <div className="flex items-start gap-2">
             <span className="text-red-600 dark:text-red-400">✗</span>
-            <span>Avoid special characters and accents</span>
+            <span>{t('tool.slugGenerator.seoTip5')}</span>
           </div>
           <div className="flex items-start gap-2">
             <span className="text-red-600 dark:text-red-400">✗</span>
-            <span>Don't use stop words (a, an, the, etc.) when possible</span>
+            <span>{t('tool.slugGenerator.seoTip6')}</span>
           </div>
         </div>
       </div>

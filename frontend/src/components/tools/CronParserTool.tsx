@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Clock, AlertCircle, Calendar, Play, Copy, Check, FileText } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface CronParts {
   minute: string;
@@ -17,6 +18,7 @@ interface NextRun {
 }
 
 export default function CronParserTool() {
+  const { t } = useLanguage();
   const [expression, setExpression] = useState('');
   const [description, setDescription] = useState('');
   const [error, setError] = useState('');
@@ -232,6 +234,10 @@ export default function CronParserTool() {
     setExpression(expr);
   };
 
+  const loadSample = () => {
+    setExpression('0 9 * * 1-5');
+  };
+
   const copyToClipboard = async () => {
     await navigator.clipboard.writeText(expression);
     setCopied(true);
@@ -239,16 +245,16 @@ export default function CronParserTool() {
   };
 
   const presets = [
-    { label: 'Every minute', expr: '* * * * *' },
-    { label: 'Every hour', expr: '0 * * * *' },
-    { label: 'Every day at midnight', expr: '0 0 * * *' },
-    { label: 'Every day at noon', expr: '0 12 * * *' },
-    { label: 'Every Monday at 9 AM', expr: '0 9 * * 1' },
-    { label: 'Every weekday at 6 PM', expr: '0 18 * * 1-5' },
-    { label: 'First day of month', expr: '0 0 1 * *' },
-    { label: 'Every 15 minutes', expr: '*/15 * * * *' },
-    { label: 'Every 6 hours', expr: '0 */6 * * *' },
-    { label: 'Weekends at 10 AM', expr: '0 10 * * 0,6' },
+    { label: t('tool.cronParser.presetEveryMinute'), expr: '* * * * *' },
+    { label: t('tool.cronParser.presetEveryHour'), expr: '0 * * * *' },
+    { label: t('tool.cronParser.presetMidnight'), expr: '0 0 * * *' },
+    { label: t('tool.cronParser.presetNoon'), expr: '0 12 * * *' },
+    { label: t('tool.cronParser.presetMondayMorning'), expr: '0 9 * * 1' },
+    { label: t('tool.cronParser.presetWeekdayEvening'), expr: '0 18 * * 1-5' },
+    { label: t('tool.cronParser.presetFirstOfMonth'), expr: '0 0 1 * *' },
+    { label: t('tool.cronParser.presetEvery15Min'), expr: '*/15 * * * *' },
+    { label: t('tool.cronParser.presetEvery6Hours'), expr: '0 */6 * * *' },
+    { label: t('tool.cronParser.presetWeekends'), expr: '0 10 * * 0,6' },
   ];
 
   const fieldInfo = [
@@ -264,7 +270,7 @@ export default function CronParserTool() {
       {/* Input */}
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Cron Expression
+          {t('tool.cronParser.cronExpression')}
         </label>
         <div className="flex gap-2">
           <input
@@ -281,6 +287,12 @@ export default function CronParserTool() {
             title="Copy expression"
           >
             {copied ? <Check className="w-5 h-5 text-green-600" /> : <Copy className="w-5 h-5" />}
+          </button>
+          <button
+            onClick={loadSample}
+            className="px-4 py-3 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg hover:bg-primary-200 dark:hover:bg-primary-900/50 transition-colors"
+          >
+            {t('common.loadSample')}
           </button>
         </div>
         
@@ -305,7 +317,7 @@ export default function CronParserTool() {
         <div className="p-4 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-lg">
           <div className="flex items-center gap-2 mb-2">
             <Clock className="w-5 h-5 text-green-600 dark:text-green-400" />
-            <span className="font-medium text-green-700 dark:text-green-300">Schedule Description</span>
+            <span className="font-medium text-green-700 dark:text-green-300">{t('tool.cronParser.scheduleDescription')}</span>
           </div>
           <p className="text-green-800 dark:text-green-200 text-lg">{description}</p>
         </div>
@@ -316,7 +328,7 @@ export default function CronParserTool() {
         <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
           <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 border-b border-gray-200 dark:border-gray-600 flex items-center gap-2">
             <Play className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-            <span className="font-medium text-gray-700 dark:text-gray-300">Next 5 Runs</span>
+            <span className="font-medium text-gray-700 dark:text-gray-300">{t('tool.cronParser.nextRuns')}</span>
           </div>
           <div className="divide-y divide-gray-200 dark:divide-gray-600">
             {nextRuns.map((run, index) => (
@@ -335,7 +347,7 @@ export default function CronParserTool() {
       {/* Presets */}
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-          Common Presets
+          {t('tool.cronParser.commonPresets')}
         </label>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
           {presets.map((preset) => (
@@ -355,15 +367,15 @@ export default function CronParserTool() {
       <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
         <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 border-b border-gray-200 dark:border-gray-600 flex items-center gap-2">
           <FileText className="w-4 h-4 text-gray-600 dark:text-gray-400" />
-          <span className="font-medium text-gray-700 dark:text-gray-300">Field Reference</span>
+          <span className="font-medium text-gray-700 dark:text-gray-300">{t('tool.cronParser.fieldReference')}</span>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 dark:bg-gray-700/50">
               <tr>
-                <th className="px-4 py-2 text-left text-gray-700 dark:text-gray-300">Field</th>
-                <th className="px-4 py-2 text-left text-gray-700 dark:text-gray-300">Range</th>
-                <th className="px-4 py-2 text-left text-gray-700 dark:text-gray-300">Special Characters</th>
+                <th className="px-4 py-2 text-left text-gray-700 dark:text-gray-300">{t('tool.cronParser.field')}</th>
+                <th className="px-4 py-2 text-left text-gray-700 dark:text-gray-300">{t('tool.cronParser.range')}</th>
+                <th className="px-4 py-2 text-left text-gray-700 dark:text-gray-300">{t('tool.cronParser.specialChars')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
@@ -379,10 +391,10 @@ export default function CronParserTool() {
         </div>
         <div className="p-4 bg-gray-50 dark:bg-gray-700/50 border-t border-gray-200 dark:divide-gray-600 text-sm text-gray-600 dark:text-gray-400">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <div><code className="text-primary-600 dark:text-primary-400">*</code> = any value</div>
-            <div><code className="text-primary-600 dark:text-primary-400">,</code> = value list</div>
-            <div><code className="text-primary-600 dark:text-primary-400">-</code> = range</div>
-            <div><code className="text-primary-600 dark:text-primary-400">/</code> = step values</div>
+            <div><code className="text-primary-600 dark:text-primary-400">*</code> = {t('tool.cronParser.anyValue')}</div>
+            <div><code className="text-primary-600 dark:text-primary-400">,</code> = {t('tool.cronParser.valueList')}</div>
+            <div><code className="text-primary-600 dark:text-primary-400">-</code> = {t('tool.cronParser.rangeValue')}</div>
+            <div><code className="text-primary-600 dark:text-primary-400">/</code> = {t('tool.cronParser.stepValues')}</div>
           </div>
         </div>
       </div>

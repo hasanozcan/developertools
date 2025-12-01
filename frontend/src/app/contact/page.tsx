@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import { Mail, MessageSquare, Send, CheckCircle } from 'lucide-react';
 import Breadcrumb from '@/components/common/Breadcrumb';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function ContactPage() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -48,8 +50,8 @@ export default function ContactPage() {
     <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-8">
       <Breadcrumb
         items={[
-          { name: 'Home', href: '/' },
-          { name: 'Contact' },
+          { name: t('common.home'), href: '/' },
+          { name: t('footer.contact') },
         ]}
       />
 
@@ -59,9 +61,9 @@ export default function ContactPage() {
           <div className="flex justify-center mb-4">
             <MessageSquare className="w-16 h-16 text-primary-600 dark:text-primary-400" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Contact Us</h1>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">{t('contact.title')}</h1>
           <p className="text-xl text-gray-600 dark:text-gray-300">
-            Have a question or feedback? We&apos;d love to hear from you.
+            {t('contact.subtitle')}
           </p>
         </div>
 
@@ -70,9 +72,9 @@ export default function ContactPage() {
           <div className="md:col-span-1 space-y-6">
             <div className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
               <Mail className="w-8 h-8 text-primary-600 dark:text-primary-400 mb-3" />
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Email Us</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{t('contact.emailUs')}</h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm">
-                For general inquiries and support
+                {t('contact.emailUsDesc')}
               </p>
               <a 
                 href="mailto:support@devstools.app" 
@@ -84,9 +86,9 @@ export default function ContactPage() {
 
             <div className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
               <MessageSquare className="w-8 h-8 text-primary-600 dark:text-primary-400 mb-3" />
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Feedback</h3>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{t('contact.feedback')}</h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm">
-                Suggestions for new tools or improvements are always welcome!
+                {t('contact.feedbackDesc')}
               </p>
             </div>
           </div>
@@ -97,15 +99,15 @@ export default function ContactPage() {
               {isSubmitted ? (
                 <div className="text-center py-8">
                   <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Thank You!</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('contact.thankYou')}</h3>
                   <p className="text-gray-600 dark:text-gray-400 mb-6">
-                    Your message has been received. We&apos;ll get back to you as soon as possible.
+                    {t('contact.thankYouDesc')}
                   </p>
                   <button
                     onClick={() => setIsSubmitted(false)}
                     className="px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
                   >
-                    Send Another Message
+                    {t('contact.sendAnother')}
                   </button>
                 </div>
               ) : (
@@ -126,7 +128,7 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Name
+                        {t('contact.name')}
                       </label>
                       <input
                         type="text"
@@ -136,12 +138,12 @@ export default function ContactPage() {
                         onChange={handleChange}
                         required
                         className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                        placeholder="Your name"
+                        placeholder={t('contact.namePlaceholder')}
                       />
                     </div>
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Email
+                        {t('contact.email')}
                       </label>
                       <input
                         type="email"
@@ -151,14 +153,14 @@ export default function ContactPage() {
                         onChange={handleChange}
                         required
                         className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                        placeholder="your@email.com"
+                        placeholder={t('contact.emailPlaceholder')}
                       />
                     </div>
                   </div>
 
                   <div>
                     <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Subject
+                      {t('contact.subject')}
                     </label>
                     <select
                       id="subject"
@@ -168,18 +170,18 @@ export default function ContactPage() {
                       required
                       className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     >
-                      <option value="">Select a subject</option>
-                      <option value="feedback">General Feedback</option>
-                      <option value="bug">Bug Report</option>
-                      <option value="feature">Feature Request</option>
-                      <option value="question">Question</option>
-                      <option value="other">Other</option>
+                      <option value="">{t('contact.selectSubject')}</option>
+                      <option value="feedback">{t('contact.subjectFeedback')}</option>
+                      <option value="bug">{t('contact.subjectBug')}</option>
+                      <option value="feature">{t('contact.subjectFeature')}</option>
+                      <option value="question">{t('contact.subjectQuestion')}</option>
+                      <option value="other">{t('contact.subjectOther')}</option>
                     </select>
                   </div>
 
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                      Message
+                      {t('contact.message')}
                     </label>
                     <textarea
                       id="message"
@@ -189,7 +191,7 @@ export default function ContactPage() {
                       required
                       rows={6}
                       className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none"
-                      placeholder="Your message..."
+                      placeholder={t('contact.messagePlaceholder')}
                     />
                   </div>
 
@@ -201,12 +203,12 @@ export default function ContactPage() {
                     {isSubmitting ? (
                       <>
                         <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        Sending...
+                        {t('contact.sending')}
                       </>
                     ) : (
                       <>
                         <Send className="w-5 h-5" />
-                        Send Message
+                        {t('contact.sendMessage')}
                       </>
                     )}
                   </button>

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { QrCode, Download, Copy, Check, RefreshCw, FileText, Palette } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface QrOptions {
   size: number;
@@ -11,6 +12,7 @@ interface QrOptions {
 }
 
 export default function QrCodeGeneratorTool() {
+  const { t } = useLanguage();
   const [text, setText] = useState('');
   const [qrDataUrl, setQrDataUrl] = useState('');
   const [copied, setCopied] = useState(false);
@@ -98,6 +100,10 @@ export default function QrCodeGeneratorTool() {
     { label: 'vCard', value: 'BEGIN:VCARD\nVERSION:3.0\nN:Doe;John\nFN:John Doe\nTEL:+1234567890\nEMAIL:john@example.com\nEND:VCARD' },
   ];
 
+  const loadSample = () => {
+    setText('https://example.com/my-website');
+  };
+
   const sizePresets = [128, 256, 512, 1024];
 
   return (
@@ -105,7 +111,7 @@ export default function QrCodeGeneratorTool() {
       {/* Input */}
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Content to Encode
+          {t('tool.qrCode.contentToEncode')}
         </label>
         <textarea
           value={text}
@@ -114,15 +120,23 @@ export default function QrCodeGeneratorTool() {
           placeholder="Enter text, URL, or data to encode..."
           className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
         />
-        <div className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-          {text.length} characters
+        <div className="mt-2 flex items-center justify-between">
+          <span className="text-sm text-gray-500 dark:text-gray-400">
+            {text.length} characters
+          </span>
+          <button
+            onClick={loadSample}
+            className="px-3 py-1.5 text-sm bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg hover:bg-primary-200 dark:hover:bg-primary-900/50 transition-colors"
+          >
+            {t('common.loadSample')}
+          </button>
         </div>
       </div>
 
       {/* Presets */}
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Quick Presets
+          {t('tool.qrCode.quickPresets')}
         </label>
         <div className="flex flex-wrap gap-2">
           {presetTexts.map((preset) => (
@@ -142,7 +156,7 @@ export default function QrCodeGeneratorTool() {
         {/* Size */}
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Size
+            {t('tool.qrCode.size')}
           </label>
           <div className="flex gap-1">
             {sizePresets.map((size) => (
@@ -164,7 +178,7 @@ export default function QrCodeGeneratorTool() {
         {/* Error Correction */}
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Error Correction
+            {t('tool.qrCode.errorCorrection')}
           </label>
           <select
             value={options.errorCorrection}
@@ -182,7 +196,7 @@ export default function QrCodeGeneratorTool() {
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             <Palette className="w-4 h-4 inline mr-1" />
-            Foreground
+            {t('tool.qrCode.foreground')}
           </label>
           <div className="flex gap-2">
             <input
@@ -204,7 +218,7 @@ export default function QrCodeGeneratorTool() {
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
             <Palette className="w-4 h-4 inline mr-1" />
-            Background
+            {t('tool.qrCode.background')}
           </label>
           <div className="flex gap-2">
             <input
@@ -244,7 +258,7 @@ export default function QrCodeGeneratorTool() {
             >
               <div className="text-center text-gray-400 dark:text-gray-500">
                 <QrCode className="w-16 h-16 mx-auto mb-2 opacity-50" />
-                <p className="text-sm">Enter content to generate QR code</p>
+                <p className="text-sm">{t('tool.qrCode.enterContent')}</p>
               </div>
             </div>
           )}
@@ -258,28 +272,28 @@ export default function QrCodeGeneratorTool() {
               className="px-4 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium flex items-center gap-2"
             >
               <Download className="w-4 h-4" />
-              Download PNG
+              {t('common.download')} PNG
             </button>
             <button
               onClick={() => downloadQR('svg')}
               className="px-4 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium flex items-center gap-2"
             >
               <Download className="w-4 h-4" />
-              Download SVG
+              {t('common.download')} SVG
             </button>
             <button
               onClick={copyToClipboard}
               className="px-4 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium flex items-center gap-2"
             >
               {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
-              {copied ? 'Copied!' : 'Copy Image'}
+              {copied ? t('common.copied') : t('tool.qrCode.copyImage')}
             </button>
             <button
               onClick={() => generateQR(text)}
               className="px-4 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium flex items-center gap-2"
             >
               <RefreshCw className="w-4 h-4" />
-              Regenerate
+              {t('tool.qrCode.regenerate')}
             </button>
           </div>
         )}
@@ -288,7 +302,7 @@ export default function QrCodeGeneratorTool() {
       {/* Info */}
       <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
         <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 border-b border-gray-200 dark:border-gray-600">
-          <span className="font-medium text-gray-700 dark:text-gray-300">QR Code Data Types</span>
+          <span className="font-medium text-gray-700 dark:text-gray-300">{t('tool.qrCode.dataTypes')}</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
           <div className="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600">

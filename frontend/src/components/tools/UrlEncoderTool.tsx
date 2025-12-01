@@ -3,8 +3,10 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { ArrowDownUp } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function UrlEncoderTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
@@ -44,6 +46,16 @@ export default function UrlEncoderTool() {
     setError(null);
   }, [input, output]);
 
+  const loadSample = useCallback(() => {
+    if (mode === 'encode') {
+      setInput('https://example.com/search?q=hello world&lang=en&special=<>#%');
+    } else {
+      setInput('https%3A%2F%2Fexample.com%2Fsearch%3Fq%3Dhello%20world%26lang%3Den%26special%3D%3C%3E%23%25');
+    }
+    setOutput('');
+    setError(null);
+  }, [mode]);
+
   return (
     <div className="space-y-6">
       {/* Controls */}
@@ -57,7 +69,7 @@ export default function UrlEncoderTool() {
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            Encode
+            {t('common.encode')}
           </button>
           <button
             onClick={() => setMode('decode')}
@@ -67,7 +79,7 @@ export default function UrlEncoderTool() {
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            Decode
+            {t('common.decode')}
           </button>
         </div>
         
@@ -76,23 +88,30 @@ export default function UrlEncoderTool() {
           onChange={(e) => setEncodeType(e.target.value as 'component' | 'full')}
           className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
         >
-          <option value="component">Component (encodeURIComponent)</option>
-          <option value="full">Full URL (encodeURI)</option>
+          <option value="component">{t('tool.urlEncoder.componentOption')}</option>
+          <option value="full">{t('tool.urlEncoder.fullUrlOption')}</option>
         </select>
 
         <button
           onClick={handleConvert}
           className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
         >
-          {mode === 'encode' ? 'Encode' : 'Decode'}
+          {mode === 'encode' ? t('common.encode') : t('common.decode')}
         </button>
         
         <button
           onClick={swapMode}
           className="p-2 text-gray-500 dark:text-gray-400 hover:text-primary-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-          title="Swap input and output"
+          title={t('tool.urlEncoder.swapTooltip')}
         >
           <ArrowDownUp className="w-5 h-5" />
+        </button>
+        
+        <button
+          onClick={loadSample}
+          className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
+        >
+          {t('common.loadSample')}
         </button>
       </div>
 
@@ -105,25 +124,25 @@ export default function UrlEncoderTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            {mode === 'encode' ? 'Plain Text / URL' : 'Encoded URL'}
+            {mode === 'encode' ? t('tool.urlEncoder.plainText') : t('tool.urlEncoder.encodedUrl')}
           </label>
           <CodeEditor
             value={input}
             onChange={setInput}
-            placeholder={mode === 'encode' ? 'Enter URL or text to encode...' : 'Enter encoded URL to decode...'}
+            placeholder={mode === 'encode' ? t('tool.urlEncoder.enterTextToEncode') : t('tool.urlEncoder.enterTextToDecode')}
             language="text"
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            {mode === 'encode' ? 'Encoded Output' : 'Decoded Text'}
+            {mode === 'encode' ? t('tool.urlEncoder.encodedOutput') : t('tool.urlEncoder.decodedText')}
           </label>
           <CodeEditor
             value={output}
             onChange={() => {}}
             readOnly
             language="text"
-            placeholder="Result will appear here..."
+            placeholder={t('common.result') + '...'}
           />
         </div>
       </div>

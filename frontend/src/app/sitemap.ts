@@ -2,23 +2,42 @@ import { MetadataRoute } from 'next';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
 
-// Tool definitions for sitemap
+// Tool definitions for sitemap - ALL tools must be listed here
 const tools = [
+  // JSON Tools
   { category: 'json', slug: 'json-formatter' },
   { category: 'json', slug: 'json-validator' },
   { category: 'json', slug: 'json-csv' },
+  // Encoding Tools
   { category: 'encoding', slug: 'base64' },
   { category: 'encoding', slug: 'url-encoder' },
   { category: 'encoding', slug: 'jwt-decoder' },
+  { category: 'encoding', slug: 'html-entity' },
+  // Generator Tools
   { category: 'generators', slug: 'uuid-generator' },
   { category: 'generators', slug: 'password-generator' },
+  { category: 'generators', slug: 'lorem-ipsum' },
+  { category: 'generators', slug: 'qr-code' },
+  { category: 'generators', slug: 'slug-generator' },
+  // Crypto Tools
   { category: 'crypto', slug: 'md5-hash' },
   { category: 'crypto', slug: 'sha256-hash' },
+  // Text Tools
   { category: 'text', slug: 'regex-tester' },
+  { category: 'text', slug: 'text-diff' },
+  { category: 'text', slug: 'markdown-preview' },
+  // Converter Tools
   { category: 'converters', slug: 'timestamp-converter' },
+  { category: 'converters', slug: 'color-converter' },
+  // Formatter Tools
+  { category: 'formatters', slug: 'sql-formatter' },
+  { category: 'formatters', slug: 'css-minifier' },
+  { category: 'formatters', slug: 'js-minifier' },
+  // Utility Tools
+  { category: 'utilities', slug: 'cron-parser' },
 ];
 
-const categories = ['json', 'encoding', 'generators', 'crypto', 'text', 'converters'];
+const categories = ['json', 'encoding', 'generators', 'crypto', 'text', 'converters', 'formatters', 'utilities'];
 
 // Static pages
 const staticPages = ['about', 'privacy', 'terms', 'contact'];
@@ -51,6 +70,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1,
+    },
+    {
+      url: `${BASE_URL}/tools`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.95,
     },
     ...categoryUrls,
     ...toolUrls,

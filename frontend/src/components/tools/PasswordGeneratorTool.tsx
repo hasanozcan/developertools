@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { RefreshCw, Eye, EyeOff } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const LOWERCASE = 'abcdefghijklmnopqrstuvwxyz';
 const UPPERCASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -35,7 +36,7 @@ function generatePassword(
   return password;
 }
 
-function calculateStrength(password: string): { score: number; label: string; color: string } {
+function calculateStrength(password: string, t: (key: string) => string): { score: number; label: string; color: string } {
   let score = 0;
   
   if (password.length >= 8) score++;
@@ -46,13 +47,14 @@ function calculateStrength(password: string): { score: number; label: string; co
   if (/[0-9]/.test(password)) score++;
   if (/[^a-zA-Z0-9]/.test(password)) score++;
 
-  if (score <= 2) return { score: 25, label: 'Weak', color: 'bg-red-500' };
-  if (score <= 4) return { score: 50, label: 'Fair', color: 'bg-yellow-500' };
-  if (score <= 5) return { score: 75, label: 'Good', color: 'bg-blue-500' };
-  return { score: 100, label: 'Strong', color: 'bg-green-500' };
+  if (score <= 2) return { score: 25, label: t('tool.passwordGenerator.weak'), color: 'bg-red-500' };
+  if (score <= 4) return { score: 50, label: t('tool.passwordGenerator.fair'), color: 'bg-yellow-500' };
+  if (score <= 5) return { score: 75, label: t('tool.passwordGenerator.good'), color: 'bg-blue-500' };
+  return { score: 100, label: t('tool.passwordGenerator.strong'), color: 'bg-green-500' };
 }
 
 export default function PasswordGeneratorTool() {
+  const { t } = useLanguage();
   const [password, setPassword] = useState('');
   const [length, setLength] = useState(16);
   const [useLowercase, setUseLowercase] = useState(true);
@@ -70,7 +72,7 @@ export default function PasswordGeneratorTool() {
     generate();
   }, []);
 
-  const strength = calculateStrength(password);
+  const strength = calculateStrength(password, t);
 
   return (
     <div className="space-y-6">
@@ -92,7 +94,7 @@ export default function PasswordGeneratorTool() {
         {/* Strength indicator */}
         <div className="mt-2">
           <div className="flex justify-between text-sm mb-1">
-            <span className="text-gray-600 dark:text-gray-400">Strength:</span>
+            <span className="text-gray-600 dark:text-gray-400">{t('tool.passwordGenerator.strength')}:</span>
             <span className={`font-medium ${strength.color.replace('bg-', 'text-')}`}>
               {strength.label}
             </span>
@@ -111,7 +113,7 @@ export default function PasswordGeneratorTool() {
         {/* Length slider */}
         <div>
           <div className="flex justify-between text-sm mb-2">
-            <label className="text-gray-600 dark:text-gray-400">Password Length</label>
+            <label className="text-gray-600 dark:text-gray-400">{t('tool.passwordGenerator.length')}</label>
             <span className="font-medium text-gray-900 dark:text-white">{length}</span>
           </div>
           <input
@@ -137,7 +139,7 @@ export default function PasswordGeneratorTool() {
               onChange={(e) => setUseLowercase(e.target.checked)}
               className="rounded border-gray-300 dark:border-gray-600"
             />
-            <span className="text-sm text-gray-700 dark:text-gray-300">Lowercase (a-z)</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.passwordGenerator.lowercase')} (a-z)</span>
           </label>
           
           <label className="flex items-center gap-2 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 border border-transparent dark:border-gray-700">
@@ -147,7 +149,7 @@ export default function PasswordGeneratorTool() {
               onChange={(e) => setUseUppercase(e.target.checked)}
               className="rounded border-gray-300 dark:border-gray-600"
             />
-            <span className="text-sm text-gray-700 dark:text-gray-300">Uppercase (A-Z)</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.passwordGenerator.uppercase')} (A-Z)</span>
           </label>
           
           <label className="flex items-center gap-2 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 border border-transparent dark:border-gray-700">
@@ -157,7 +159,7 @@ export default function PasswordGeneratorTool() {
               onChange={(e) => setUseNumbers(e.target.checked)}
               className="rounded border-gray-300 dark:border-gray-600"
             />
-            <span className="text-sm text-gray-700 dark:text-gray-300">Numbers (0-9)</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.passwordGenerator.numbers')} (0-9)</span>
           </label>
           
           <label className="flex items-center gap-2 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 border border-transparent dark:border-gray-700">
@@ -167,7 +169,7 @@ export default function PasswordGeneratorTool() {
               onChange={(e) => setUseSymbols(e.target.checked)}
               className="rounded border-gray-300 dark:border-gray-600"
             />
-            <span className="text-sm text-gray-700 dark:text-gray-300">Symbols (!@#$%)</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.passwordGenerator.symbols')} (!@#$%)</span>
           </label>
         </div>
 
@@ -177,7 +179,7 @@ export default function PasswordGeneratorTool() {
           className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
         >
           <RefreshCw className="w-5 h-5" />
-          Generate New Password
+          {t('common.generate')}
         </button>
       </div>
     </div>

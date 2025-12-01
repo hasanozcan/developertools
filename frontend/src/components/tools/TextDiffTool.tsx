@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import { Copy, Check, ArrowLeftRight } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface DiffLine {
   type: 'same' | 'added' | 'removed' | 'modified';
@@ -90,6 +91,7 @@ function calculateStats(diff: DiffLine[]): DiffStats {
 }
 
 export default function TextDiffTool() {
+  const { t } = useLanguage();
   const [text1, setText1] = useState('');
   const [text2, setText2] = useState('');
   const [viewMode, setViewMode] = useState<'split' | 'unified'>('split');
@@ -169,7 +171,7 @@ greet(message, customGreeting);`);
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            Split View
+            {t('tool.textDiff.splitView')}
           </button>
           <button
             onClick={() => setViewMode('unified')}
@@ -179,7 +181,7 @@ greet(message, customGreeting);`);
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            Unified View
+            {t('tool.textDiff.unifiedView')}
           </button>
         </div>
         
@@ -190,13 +192,13 @@ greet(message, customGreeting);`);
             onChange={(e) => setIgnoreWhitespace(e.target.checked)}
             className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
           />
-          <span className="text-sm text-gray-700 dark:text-gray-300">Ignore whitespace</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.textDiff.ignoreWhitespace')}</span>
         </label>
         
         <button
           onClick={swapTexts}
           className="p-2 text-gray-500 dark:text-gray-400 hover:text-primary-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-          title="Swap texts"
+          title={t('tool.textDiff.swapTooltip')}
         >
           <ArrowLeftRight className="w-5 h-5" />
         </button>
@@ -205,7 +207,7 @@ greet(message, customGreeting);`);
           onClick={loadSample}
           className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
         >
-          Load Sample
+          {t('common.loadSample')}
         </button>
         
         {diff.length > 0 && (
@@ -214,7 +216,7 @@ greet(message, customGreeting);`);
             className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium flex items-center gap-2 text-sm"
           >
             {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
-            {copied ? 'Copied!' : 'Copy Diff'}
+            {copied ? t('common.copied') : t('tool.textDiff.copyDiff')}
           </button>
         )}
       </div>
@@ -222,7 +224,7 @@ greet(message, customGreeting);`);
       {/* Input Areas */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Original Text</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('tool.textDiff.originalText')}</label>
           <textarea
             value={text1}
             onChange={(e) => setText1(e.target.value)}
@@ -232,7 +234,7 @@ greet(message, customGreeting);`);
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Modified Text</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('tool.textDiff.modifiedText')}</label>
           <textarea
             value={text2}
             onChange={(e) => setText2(e.target.value)}
@@ -247,13 +249,13 @@ greet(message, customGreeting);`);
       {diff.length > 0 && (
         <div className="flex flex-wrap gap-4 text-sm">
           <span className="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 rounded-full">
-            +{stats.additions} additions
+            +{stats.additions} {t('tool.textDiff.additions')}
           </span>
           <span className="px-3 py-1 bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-300 rounded-full">
-            -{stats.deletions} deletions
+            -{stats.deletions} {t('tool.textDiff.deletions')}
           </span>
           <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full">
-            {stats.unchanged} unchanged
+            {stats.unchanged} {t('tool.textDiff.unchanged')}
           </span>
         </div>
       )}
@@ -262,7 +264,7 @@ greet(message, customGreeting);`);
       {diff.length > 0 && (
         <div className="border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden">
           <div className="bg-gray-50 dark:bg-gray-700 px-4 py-2 border-b border-gray-300 dark:border-gray-600">
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Diff Result</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('tool.textDiff.diffResult')}</span>
           </div>
           
           {viewMode === 'split' ? (

@@ -1,28 +1,33 @@
-import Link from 'next/link';
-import { Code2, Github, Twitter } from 'lucide-react';
+'use client';
 
-const footerLinks = {
-  tools: [
-    { name: 'JSON Formatter', href: '/tools/json/json-formatter' },
-    { name: 'Base64 Encoder', href: '/tools/encoding/base64' },
-    { name: 'UUID Generator', href: '/tools/generators/uuid-generator' },
-    { name: 'Regex Tester', href: '/tools/text/regex-tester' },
-  ],
-  categories: [
-    { name: 'Encoders', href: '/tools/encoding' },
-    { name: 'Generators', href: '/tools/generators' },
-    { name: 'Formatters', href: '/tools/formatters' },
-    { name: 'Converters', href: '/tools/converters' },
-  ],
-  company: [
-    { name: 'About', href: '/about' },
-    { name: 'Privacy Policy', href: '/privacy' },
-    { name: 'Terms of Service', href: '/terms' },
-    { name: 'Contact', href: '/contact' },
-  ],
-};
+import Link from 'next/link';
+import { Code2 } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Footer() {
+  const { t } = useLanguage();
+
+  const footerLinks = {
+    tools: [
+      { name: 'JSON Formatter', href: '/tools/json/json-formatter' },
+      { name: 'Base64 Encoder', href: '/tools/encoding/base64' },
+      { name: 'UUID Generator', href: '/tools/generators/uuid-generator' },
+      { name: 'Regex Tester', href: '/tools/text/regex-tester' },
+    ],
+    categories: [
+      { name: t('nav.encoders'), href: '/tools/encoding' },
+      { name: t('nav.generators'), href: '/tools/generators' },
+      { name: t('nav.formatters'), href: '/tools/formatters' },
+      { name: t('nav.converters'), href: '/tools/converters' },
+    ],
+    company: [
+      { name: t('footer.about'), href: '/about' },
+      { name: t('footer.privacy'), href: '/privacy' },
+      { name: t('footer.terms'), href: '/terms' },
+      { name: t('footer.contact'), href: '/contact' },
+    ],
+  };
+
   return (
     <footer className="bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
       <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-12">
@@ -34,21 +39,13 @@ export default function Footer() {
               <span className="font-bold text-xl text-gray-900 dark:text-white">DevsTools</span>
             </Link>
             <p className="text-gray-500 dark:text-gray-400 text-sm mb-4">
-              Free online tools for developers. Fast, secure, and easy to use.
+              {t('footer.description')}
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-                <Github className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-                <Twitter className="w-5 h-5" />
-              </a>
-            </div>
           </div>
 
           {/* Popular Tools */}
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Popular Tools</h3>
+            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">{t('footer.popularTools')}</h3>
             <ul className="space-y-2">
               {footerLinks.tools.map((link) => (
                 <li key={link.name}>
@@ -62,10 +59,10 @@ export default function Footer() {
 
           {/* Categories */}
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Categories</h3>
+            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">{t('footer.categories')}</h3>
             <ul className="space-y-2">
               {footerLinks.categories.map((link) => (
-                <li key={link.name}>
+                <li key={link.href}>
                   <Link href={link.href} className="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm">
                     {link.name}
                   </Link>
@@ -76,10 +73,10 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Company</h3>
+            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">{t('footer.company')}</h3>
             <ul className="space-y-2">
               {footerLinks.company.map((link) => (
-                <li key={link.name}>
+                <li key={link.href}>
                   <Link href={link.href} className="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm">
                     {link.name}
                   </Link>
@@ -90,7 +87,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-200 dark:border-gray-700 mt-8 pt-8 text-center text-gray-500 dark:text-gray-400 text-sm">
-          <p>&copy; {new Date().getFullYear()} Developer Tools. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Developer Tools. {t('footer.copyright').replace('© {year} Developer Tools. ', '')}</p>
         </div>
       </div>
     </footer>

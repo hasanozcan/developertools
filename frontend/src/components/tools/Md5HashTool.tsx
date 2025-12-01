@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import CopyButton from '@/components/common/CopyButton';
+import { useLanguage } from '@/context/LanguageContext';
 
 // Simple MD5 implementation (client-side)
 function md5(string: string): string {
@@ -145,6 +146,7 @@ function md5(string: string): string {
 }
 
 export default function Md5HashTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState('');
   const [hash, setHash] = useState('');
   const [uppercase, setUppercase] = useState(false);
@@ -169,6 +171,13 @@ export default function Md5HashTool() {
     }
   }, [uppercase]);
 
+  const loadSample = useCallback(() => {
+    const sampleText = 'Hello, World! This is a sample text for MD5 hashing.';
+    setInput(sampleText);
+    const result = md5(sampleText);
+    setHash(uppercase ? result.toUpperCase() : result);
+  }, [uppercase]);
+
   return (
     <div className="space-y-6">
       {/* Controls */}
@@ -177,7 +186,14 @@ export default function Md5HashTool() {
           onClick={generateHash}
           className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
         >
-          Generate MD5 Hash
+          {t('tool.md5Hash.generateHash')}
+        </button>
+        
+        <button
+          onClick={loadSample}
+          className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
+        >
+          {t('common.loadSample')}
         </button>
         
         <label className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
@@ -192,13 +208,13 @@ export default function Md5HashTool() {
             }}
             className="rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-primary-600"
           />
-          Uppercase
+          {t('common.uppercase')}
         </label>
       </div>
 
       {/* Input */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Input Text</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('common.input')}</label>
         <CodeEditor
           value={input}
           onChange={handleInputChange}
@@ -210,7 +226,7 @@ export default function Md5HashTool() {
 
       {/* Output */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">MD5 Hash (128-bit)</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('tool.md5Hash.md5Hash')}</label>
         <div className="flex items-center gap-2 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
           <code className="flex-1 font-mono text-sm break-all text-gray-800 dark:text-gray-200">
             {hash || 'Hash will appear here...'}
@@ -221,7 +237,7 @@ export default function Md5HashTool() {
 
       {/* Info */}
       <div className="text-sm text-gray-500 dark:text-gray-400">
-        <p>MD5 produces a 128-bit (16-byte) hash value, typically expressed as a 32-character hexadecimal number.</p>
+        <p>{t('tool.md5Hash.infoText')}</p>
       </div>
     </div>
   );

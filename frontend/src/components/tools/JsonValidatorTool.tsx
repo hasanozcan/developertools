@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { CheckCircle, XCircle, AlertTriangle, Copy, Check } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface ValidationResult {
   isValid: boolean;
@@ -119,6 +120,7 @@ function validateJson(jsonString: string): ValidationResult {
 }
 
 export default function JsonValidatorTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState('');
   const [result, setResult] = useState<ValidationResult | null>(null);
   const [copied, setCopied] = useState(false);
@@ -193,7 +195,7 @@ export default function JsonValidatorTool() {
           onClick={handleValidate}
           className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
         >
-          Validate JSON
+          {t('common.validate')}
         </button>
         <button
           onClick={copyToClipboard}
@@ -201,13 +203,13 @@ export default function JsonValidatorTool() {
           className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
         >
           {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-          {copied ? 'Copied!' : 'Copy Formatted'}
+          {copied ? t('common.copied') : t('tool.jsonValidator.copyFormatted')}
         </button>
         <button
           onClick={clearInput}
           className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors font-medium"
         >
-          Clear
+          {t('common.clear')}
         </button>
         <div className="flex items-center gap-2">
           <label className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 cursor-pointer">
@@ -217,26 +219,26 @@ export default function JsonValidatorTool() {
               onChange={(e) => setAutoValidate(e.target.checked)}
               className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
             />
-            Auto-validate
+            {t('tool.jsonValidator.autoValidate')}
           </label>
         </div>
       </div>
 
       {/* Sample buttons */}
       <div className="flex flex-wrap gap-2">
-        <span className="text-sm text-gray-500 dark:text-gray-400">Load sample:</span>
+        <span className="text-sm text-gray-500 dark:text-gray-400">{t('common.loadSample')}:</span>
         <button
           onClick={loadSampleJson}
           className="text-sm text-primary-600 dark:text-primary-400 hover:underline"
         >
-          Valid JSON
+          {t('tool.jsonValidator.validSample')}
         </button>
         <span className="text-gray-400">|</span>
         <button
           onClick={loadInvalidSampleJson}
           className="text-sm text-primary-600 dark:text-primary-400 hover:underline"
         >
-          Invalid JSON
+          {t('tool.jsonValidator.invalidSample')}
         </button>
       </div>
 
@@ -263,7 +265,7 @@ export default function JsonValidatorTool() {
                     : 'text-red-800 dark:text-red-200'
                 }`}
               >
-                {result.isValid ? 'Valid JSON' : 'Invalid JSON'}
+                {result.isValid ? t('tool.jsonValidator.validJson') : t('tool.jsonValidator.invalidJson')}
               </h3>
               {result.error && (
                 <p className="text-sm text-red-600 dark:text-red-400 mt-1">
@@ -278,35 +280,35 @@ export default function JsonValidatorTool() {
               {result.isValid && result.stats && (
                 <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <div className="text-sm">
-                    <span className="text-gray-500 dark:text-gray-400">Objects:</span>{' '}
+                    <span className="text-gray-500 dark:text-gray-400">{t('tool.jsonValidator.objects')}</span>{' '}
                     <span className="font-medium text-gray-900 dark:text-white">{result.stats.objects}</span>
                   </div>
                   <div className="text-sm">
-                    <span className="text-gray-500 dark:text-gray-400">Arrays:</span>{' '}
+                    <span className="text-gray-500 dark:text-gray-400">{t('tool.jsonValidator.arrays')}</span>{' '}
                     <span className="font-medium text-gray-900 dark:text-white">{result.stats.arrays}</span>
                   </div>
                   <div className="text-sm">
-                    <span className="text-gray-500 dark:text-gray-400">Strings:</span>{' '}
+                    <span className="text-gray-500 dark:text-gray-400">{t('tool.jsonValidator.strings')}</span>{' '}
                     <span className="font-medium text-gray-900 dark:text-white">{result.stats.strings}</span>
                   </div>
                   <div className="text-sm">
-                    <span className="text-gray-500 dark:text-gray-400">Numbers:</span>{' '}
+                    <span className="text-gray-500 dark:text-gray-400">{t('tool.jsonValidator.numbers')}</span>{' '}
                     <span className="font-medium text-gray-900 dark:text-white">{result.stats.numbers}</span>
                   </div>
                   <div className="text-sm">
-                    <span className="text-gray-500 dark:text-gray-400">Booleans:</span>{' '}
+                    <span className="text-gray-500 dark:text-gray-400">{t('tool.jsonValidator.booleans')}</span>{' '}
                     <span className="font-medium text-gray-900 dark:text-white">{result.stats.booleans}</span>
                   </div>
                   <div className="text-sm">
-                    <span className="text-gray-500 dark:text-gray-400">Nulls:</span>{' '}
+                    <span className="text-gray-500 dark:text-gray-400">{t('tool.jsonValidator.nulls')}</span>{' '}
                     <span className="font-medium text-gray-900 dark:text-white">{result.stats.nulls}</span>
                   </div>
                   <div className="text-sm">
-                    <span className="text-gray-500 dark:text-gray-400">Total Keys:</span>{' '}
+                    <span className="text-gray-500 dark:text-gray-400">{t('tool.jsonValidator.totalKeys')}</span>{' '}
                     <span className="font-medium text-gray-900 dark:text-white">{result.stats.totalKeys}</span>
                   </div>
                   <div className="text-sm">
-                    <span className="text-gray-500 dark:text-gray-400">Max Depth:</span>{' '}
+                    <span className="text-gray-500 dark:text-gray-400">{t('tool.jsonValidator.maxDepth')}</span>{' '}
                     <span className="font-medium text-gray-900 dark:text-white">{result.stats.depth}</span>
                   </div>
                 </div>
@@ -319,7 +321,7 @@ export default function JsonValidatorTool() {
       {/* Editor */}
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          JSON Input
+          {t('tool.jsonValidator.jsonInput')}
         </label>
         <CodeEditor
           value={input}
@@ -334,13 +336,13 @@ export default function JsonValidatorTool() {
         <div className="flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" />
           <div>
-            <h3 className="font-semibold text-blue-800 dark:text-blue-200">Common JSON Errors</h3>
+            <h3 className="font-semibold text-blue-800 dark:text-blue-200">{t('tool.jsonValidator.commonErrors')}</h3>
             <ul className="mt-2 text-sm text-blue-700 dark:text-blue-300 space-y-1">
-              <li>• Missing commas between key-value pairs</li>
-              <li>• Trailing commas after the last item</li>
-              <li>• Single quotes instead of double quotes</li>
-              <li>• Unquoted property names</li>
-              <li>• Missing closing brackets or braces</li>
+              <li>• {t('tool.jsonValidator.error1')}</li>
+              <li>• {t('tool.jsonValidator.error4')}</li>
+              <li>• {t('tool.jsonValidator.error3')}</li>
+              <li>• {t('tool.jsonValidator.error2')}</li>
+              <li>• {t('tool.jsonValidator.error5')}</li>
             </ul>
           </div>
         </div>

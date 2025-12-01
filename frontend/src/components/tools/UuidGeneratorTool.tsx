@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { RefreshCw, Trash2 } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 function generateUUID(): string {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -13,6 +14,7 @@ function generateUUID(): string {
 }
 
 export default function UuidGeneratorTool() {
+  const { t } = useLanguage();
   const [uuids, setUuids] = useState<string[]>([]);
   const [count, setCount] = useState(1);
   const [uppercase, setUppercase] = useState(false);
@@ -54,7 +56,7 @@ export default function UuidGeneratorTool() {
       {/* Controls */}
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-2">
-          <label className="text-sm text-gray-600 dark:text-gray-400">Count:</label>
+          <label className="text-sm text-gray-600 dark:text-gray-400">{t('tool.uuidGenerator.quantity')}:</label>
           <input
             type="number"
             min={1}
@@ -72,7 +74,7 @@ export default function UuidGeneratorTool() {
             onChange={(e) => setUppercase(e.target.checked)}
             className="rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-primary-600"
           />
-          Uppercase
+          {t('tool.uuidGenerator.uppercase')}
         </label>
         
         <label className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
@@ -82,7 +84,7 @@ export default function UuidGeneratorTool() {
             onChange={(e) => setNoDashes(e.target.checked)}
             className="rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-primary-600"
           />
-          No Dashes
+          {t('tool.uuidGenerator.hyphens')}
         </label>
 
         <button
@@ -90,13 +92,13 @@ export default function UuidGeneratorTool() {
           className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
         >
           <RefreshCw className="w-4 h-4" />
-          Generate
+          {t('common.generate')}
         </button>
 
         <button
           onClick={clearUuids}
           className="p-2 text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-          title="Clear all"
+          title={t('common.clear')}
         >
           <Trash2 className="w-5 h-5" />
         </button>
@@ -121,13 +123,13 @@ export default function UuidGeneratorTool() {
             ))}
           </div>
         ) : (
-          <p className="text-gray-500 dark:text-gray-400 text-center py-8">Click "Generate" to create UUIDs</p>
+          <p className="text-gray-500 dark:text-gray-400 text-center py-8">{t('common.generate')}...</p>
         )}
       </div>
 
       {/* Info */}
       <div className="text-sm text-gray-500 dark:text-gray-400">
-        <p>Generated UUID v4 (random). Format: xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx</p>
+        <p>{t('tool.uuidGenerator.info')}</p>
       </div>
     </div>
   );

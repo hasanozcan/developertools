@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface RegexMatch {
   match: string;
@@ -10,6 +11,7 @@ interface RegexMatch {
 }
 
 export default function RegexTesterTool() {
+  const { t } = useLanguage();
   const [pattern, setPattern] = useState('');
   const [flags, setFlags] = useState('g');
   const [testString, setTestString] = useState('');
@@ -95,11 +97,26 @@ export default function RegexTesterTool() {
     );
   }, []);
 
+  const loadSample = useCallback(() => {
+    setPattern('\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b');
+    setTestString('Contact us at support@example.com or sales@company.org for more information. Invalid emails: test@, @domain.com, user@.com');
+    setFlags('gi');
+    setError(null);
+  }, []);
+
   return (
     <div className="space-y-6">
       {/* Pattern Input */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Regular Expression</label>
+        <div className="flex items-center justify-between mb-2">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t('tool.regexTester.pattern')}</label>
+          <button
+            onClick={loadSample}
+            className="px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+          >
+            {t('common.loadSample')}
+          </button>
+        </div>
         <div className="flex items-center gap-2">
           <span className="text-gray-400 dark:text-gray-500 font-mono">/</span>
           <input
@@ -123,11 +140,11 @@ export default function RegexTesterTool() {
       {/* Flags Toggle */}
       <div className="flex flex-wrap gap-2">
         {[
-          { flag: 'g', label: 'Global', desc: 'Find all matches' },
-          { flag: 'i', label: 'Case Insensitive', desc: 'Ignore case' },
-          { flag: 'm', label: 'Multiline', desc: '^ and $ match newlines' },
-          { flag: 's', label: 'Dotall', desc: '. matches newlines' },
-        ].map(({ flag, label }) => (
+          { flag: 'g', labelKey: 'tool.regexTester.global' },
+          { flag: 'i', labelKey: 'tool.regexTester.caseInsensitive' },
+          { flag: 'm', labelKey: 'tool.regexTester.multiline' },
+          { flag: 's', labelKey: 'tool.regexTester.dotall' },
+        ].map(({ flag, labelKey }) => (
           <button
             key={flag}
             onClick={() => toggleFlag(flag)}
@@ -137,7 +154,7 @@ export default function RegexTesterTool() {
                 : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600'
             }`}
           >
-            {flag} - {label}
+            {flag} - {t(labelKey)}
           </button>
         ))}
       </div>
@@ -151,7 +168,7 @@ export default function RegexTesterTool() {
 
       {/* Test String */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Test String</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('tool.regexTester.testString')}</label>
         <CodeEditor
           value={testString}
           onChange={setTestString}
@@ -165,7 +182,7 @@ export default function RegexTesterTool() {
       {testString && pattern && !error && (
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Match Highlighting ({matches.length} match{matches.length !== 1 ? 'es' : ''})
+            {t('tool.regexTester.matchHighlighting')} ({matches.length} {t('tool.regexTester.matches')})
           </label>
           <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 font-mono text-sm whitespace-pre-wrap text-gray-800 dark:text-gray-200">
             {Array.isArray(highlightedText) ? (
@@ -187,21 +204,21 @@ export default function RegexTesterTool() {
       {/* Matches List */}
       {matches.length > 0 && (
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Match Details</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('tool.regexTester.matchDetails')}</label>
           <div className="space-y-2 max-h-64 overflow-auto">
             {matches.map((match, i) => (
               <div key={i} className="p-3 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs text-gray-500 dark:text-gray-400">Match {i + 1}</span>
-                  <span className="text-xs text-gray-400 dark:text-gray-500">Index: {match.index}</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">{t('tool.regexTester.match')} {i + 1}</span>
+                  <span className="text-xs text-gray-400 dark:text-gray-500">{t('tool.regexTester.index')}: {match.index}</span>
                 </div>
                 <code className="text-sm font-mono text-primary-700 dark:text-primary-400">{match.match}</code>
                 {match.groups.length > 0 && (
                   <div className="mt-2 text-xs">
-                    <span className="text-gray-500 dark:text-gray-400">Groups: </span>
+                    <span className="text-gray-500 dark:text-gray-400">{t('tool.regexTester.groups')}: </span>
                     {match.groups.map((g, gi) => (
                       <span key={gi} className="inline-block bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-300 px-1.5 py-0.5 rounded mr-1">
-                        ${gi + 1}: {g || '(empty)'}
+                        ${gi + 1}: {g || t('tool.regexTester.empty')}
                       </span>
                     ))}
                   </div>
@@ -215,21 +232,21 @@ export default function RegexTesterTool() {
       {/* Quick Reference */}
       <details className="text-sm">
         <summary className="cursor-pointer text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 font-medium">
-          Regex Quick Reference
+          {t('tool.regexTester.quickReference')}
         </summary>
         <div className="mt-2 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg grid grid-cols-2 md:grid-cols-4 gap-2 text-xs font-mono text-gray-700 dark:text-gray-300">
-          <div><code>.</code> Any character</div>
-          <div><code>\d</code> Digit</div>
-          <div><code>\w</code> Word char</div>
-          <div><code>\s</code> Whitespace</div>
-          <div><code>^</code> Start</div>
-          <div><code>$</code> End</div>
-          <div><code>*</code> 0 or more</div>
-          <div><code>+</code> 1 or more</div>
-          <div><code>?</code> 0 or 1</div>
-          <div><code>{'{n}'}</code> Exactly n</div>
-          <div><code>[abc]</code> Char class</div>
-          <div><code>()</code> Group</div>
+          <div><code>.</code> {t('tool.regexTester.anyChar')}</div>
+          <div><code>\d</code> {t('tool.regexTester.digit')}</div>
+          <div><code>\w</code> {t('tool.regexTester.wordChar')}</div>
+          <div><code>\s</code> {t('tool.regexTester.whitespace')}</div>
+          <div><code>^</code> {t('tool.regexTester.start')}</div>
+          <div><code>$</code> {t('tool.regexTester.end')}</div>
+          <div><code>*</code> {t('tool.regexTester.zeroOrMore')}</div>
+          <div><code>+</code> {t('tool.regexTester.oneOrMore')}</div>
+          <div><code>?</code> {t('tool.regexTester.zeroOrOne')}</div>
+          <div><code>{'{n}'}</code> {t('tool.regexTester.exactlyN')}</div>
+          <div><code>[abc]</code> {t('tool.regexTester.charClass')}</div>
+          <div><code>()</code> {t('tool.regexTester.group')}</div>
         </div>
       </details>
     </div>

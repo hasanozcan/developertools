@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import { Copy, Check, RefreshCw } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 const LOREM_WORDS = [
   'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit',
@@ -56,6 +57,7 @@ function generateParagraph(minSentences: number = 3, maxSentences: number = 7): 
 type OutputType = 'paragraphs' | 'sentences' | 'words';
 
 export default function LoremIpsumTool() {
+  const { t } = useLanguage();
   const [count, setCount] = useState(3);
   const [outputType, setOutputType] = useState<OutputType>('paragraphs');
   const [startWithLorem, setStartWithLorem] = useState(true);
@@ -116,21 +118,21 @@ export default function LoremIpsumTool() {
       {/* Controls */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Type</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('tool.loremIpsum.type')}</label>
           <select
             value={outputType}
             onChange={(e) => setOutputType(e.target.value as OutputType)}
             className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
           >
-            <option value="paragraphs">Paragraphs</option>
-            <option value="sentences">Sentences</option>
-            <option value="words">Words</option>
+            <option value="paragraphs">{t('tool.loremIpsum.paragraphs')}</option>
+            <option value="sentences">{t('tool.loremIpsum.sentences')}</option>
+            <option value="words">{t('tool.loremIpsum.words')}</option>
           </select>
         </div>
         
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Number of {outputType}
+            {t('tool.loremIpsum.numberOf')} {t(`tool.loremIpsum.${outputType}`)}
           </label>
           <input
             type="number"
@@ -150,7 +152,7 @@ export default function LoremIpsumTool() {
               onChange={(e) => setStartWithLorem(e.target.checked)}
               className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
             />
-            <span className="text-sm text-gray-700 dark:text-gray-300">Start with "Lorem ipsum..."</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.loremIpsum.startWithLorem')}</span>
           </label>
         </div>
       </div>
@@ -162,7 +164,7 @@ export default function LoremIpsumTool() {
           className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium flex items-center gap-2"
         >
           <RefreshCw className="w-4 h-4" />
-          Generate
+          {t('common.generate')}
         </button>
         {output && (
           <button
@@ -172,12 +174,12 @@ export default function LoremIpsumTool() {
             {copied ? (
               <>
                 <Check className="w-4 h-4 text-green-600" />
-                Copied!
+                {t('common.copied')}
               </>
             ) : (
               <>
                 <Copy className="w-4 h-4" />
-                Copy
+                {t('common.copy')}
               </>
             )}
           </button>
@@ -186,12 +188,12 @@ export default function LoremIpsumTool() {
 
       {/* Output */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Generated Text</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('tool.loremIpsum.generatedText')}</label>
         <textarea
           value={output}
           readOnly
           rows={12}
-          placeholder="Click 'Generate' to create Lorem Ipsum text..."
+          placeholder={t('tool.loremIpsum.placeholder')}
           className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 font-serif text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 resize-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
         />
       </div>

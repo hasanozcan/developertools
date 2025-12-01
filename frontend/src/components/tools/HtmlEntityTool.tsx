@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { ArrowDownUp } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 // Common HTML entities
 const HTML_ENTITIES: Record<string, string> = {
@@ -93,6 +94,7 @@ function decodeHtmlEntities(text: string): string {
 }
 
 export default function HtmlEntityTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
@@ -117,6 +119,15 @@ export default function HtmlEntityTool() {
     setOutput(input);
   }, [input, output]);
 
+  const loadSample = useCallback(() => {
+    if (mode === 'encode') {
+      setInput('<div class="container">\n  <h1>Hello & Welcome!</h1>\n  <p>Special chars: © ® ™ € £ → ←</p>\n</div>');
+    } else {
+      setInput('&lt;div class=&quot;container&quot;&gt;\n  &lt;h1&gt;Hello &amp; Welcome!&lt;/h1&gt;\n  &lt;p&gt;Special chars: &copy; &reg; &trade; &euro; &pound; &rarr; &larr;&lt;/p&gt;\n&lt;/div&gt;');
+    }
+    setOutput('');
+  }, [mode]);
+
   return (
     <div className="space-y-6">
       {/* Mode Toggle */}
@@ -130,7 +141,7 @@ export default function HtmlEntityTool() {
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            Encode
+            {t('common.encode')}
           </button>
           <button
             onClick={() => setMode('decode')}
@@ -140,7 +151,7 @@ export default function HtmlEntityTool() {
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            Decode
+            {t('common.decode')}
           </button>
         </div>
         
@@ -152,7 +163,7 @@ export default function HtmlEntityTool() {
               onChange={(e) => setEncodeAll(e.target.checked)}
               className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
             />
-            <span className="text-sm text-gray-700 dark:text-gray-300">Encode all characters (numeric entities)</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.htmlEntity.encodeAllOption')}</span>
           </label>
         )}
         
@@ -160,15 +171,22 @@ export default function HtmlEntityTool() {
           onClick={handleConvert}
           className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
         >
-          {mode === 'encode' ? 'Encode' : 'Decode'}
+          {mode === 'encode' ? t('common.encode') : t('common.decode')}
         </button>
         
         <button
           onClick={swapMode}
           className="p-2 text-gray-500 dark:text-gray-400 hover:text-primary-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-          title="Swap input and output"
+          title={t('tool.htmlEntity.swapTooltip')}
         >
           <ArrowDownUp className="w-5 h-5" />
+        </button>
+        
+        <button
+          onClick={loadSample}
+          className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
+        >
+          {t('common.loadSample')}
         </button>
       </div>
 
@@ -176,32 +194,32 @@ export default function HtmlEntityTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            {mode === 'encode' ? 'Plain Text' : 'HTML Encoded Text'}
+            {mode === 'encode' ? t('tool.htmlEntity.plainText') : t('tool.htmlEntity.encodedText')}
           </label>
           <CodeEditor
             value={input}
             onChange={setInput}
-            placeholder={mode === 'encode' ? 'Enter text with special characters...' : 'Enter HTML entities to decode...'}
+            placeholder={mode === 'encode' ? t('tool.htmlEntity.enterTextToEncode') : t('tool.htmlEntity.enterTextToDecode')}
             language="html"
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            {mode === 'encode' ? 'HTML Encoded' : 'Decoded Text'}
+            {mode === 'encode' ? t('tool.htmlEntity.htmlEncoded') : t('tool.htmlEntity.decodedText')}
           </label>
           <CodeEditor
             value={output}
             onChange={() => {}}
             readOnly
             language="html"
-            placeholder="Result will appear here..."
+            placeholder={t('common.result') + '...'}
           />
         </div>
       </div>
 
       {/* Common Entities Reference */}
       <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Common HTML Entities Reference</h3>
+        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">{t('tool.htmlEntity.referenceTitle')}</h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
           {[
             ['&', '&amp;'],

@@ -1,9 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Breadcrumb from '@/components/common/Breadcrumb';
-import FavoriteButton from '@/components/common/FavoriteButton';
-import HistoryTracker from '@/components/common/HistoryTracker';
-import AdSense from '@/components/common/AdSense';
+import ToolPageWrapper from '@/components/tools/ToolPageWrapper';
 import JsonFormatterTool from '@/components/tools/JsonFormatterTool';
 import JsonValidatorTool from '@/components/tools/JsonValidatorTool';
 import Base64Tool from '@/components/tools/Base64Tool';
@@ -459,81 +456,15 @@ export default async function ToolPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(appStructuredData) }}
       />
 
-      <Breadcrumb
-        items={[
-          { name: 'Home', href: '/' },
-          { name: categoryNames[category] || category, href: `/tools/${category}` },
-          { name: tool.name },
-        ]}
-      />
-
-      {/* Header */}
-      <div className="mb-8 flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{tool.name}</h1>
-          <p className="text-gray-600 dark:text-gray-300">{tool.longDescription}</p>
-        </div>
-        <FavoriteButton toolSlug={toolSlug} />
-      </div>
-
-      {/* Track history on client side */}
-      <HistoryTracker slug={toolSlug} name={tool.name} category={category} />
-
-      {/* Ad Banner - Top */}
-      <AdSense 
-        slot="1733348098" 
-        format="horizontal" 
-        className="h-24 rounded-lg mb-8 overflow-hidden"
-      />
-
-      {/* Tool Component */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 mb-8">
+      <ToolPageWrapper
+        toolSlug={toolSlug}
+        category={category}
+        categoryName={categoryNames[category] || category}
+        defaultName={tool.name}
+        defaultDescription={tool.longDescription}
+      >
         <ToolComponent />
-      </div>
-
-      {/* Sidebar Ad for larger screens */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        <div className="lg:col-span-3">
-          {/* How to Use */}
-          <section className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">How to Use {tool.name}</h2>
-            <ol className="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-300">
-              <li>Enter or paste your input in the text area above</li>
-              <li>The tool will process your input automatically or click the action button</li>
-              <li>Copy the result using the copy button</li>
-            </ol>
-          </section>
-
-          {/* FAQs */}
-          <section className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Frequently Asked Questions</h2>
-            <div className="space-y-4">
-              {tool.faqs.map((faq, index) => (
-                <div key={index} className="border-b border-gray-100 dark:border-gray-700 pb-4">
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{faq.question}</h3>
-                  <p className="text-gray-600 dark:text-gray-300">{faq.answer}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-        </div>
-
-        {/* Sidebar */}
-        <div className="lg:col-span-1">
-          <AdSense 
-            slot="2449208552" 
-            format="vertical" 
-            className="h-64 rounded-lg sticky top-24 overflow-hidden"
-          />
-        </div>
-      </div>
-
-      {/* Ad Banner - Bottom */}
-      <AdSense 
-        slot="7781534087" 
-        format="horizontal" 
-        className="h-24 rounded-lg mt-8 overflow-hidden"
-      />
+      </ToolPageWrapper>
     </div>
   );
 }

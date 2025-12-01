@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Code, Copy, Check, FileText, Trash2, Wand2 } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface FormatOptions {
   indent: number;
@@ -10,6 +11,7 @@ interface FormatOptions {
 }
 
 export default function SqlFormatterTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [copied, setCopied] = useState(false);
@@ -174,15 +176,15 @@ select count(*) as total_users, avg(age) as average_age from users where country
       {/* Options */}
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-2">
-          <label className="text-sm text-gray-700 dark:text-gray-300">Indent:</label>
+          <label className="text-sm text-gray-700 dark:text-gray-300">{t('tool.sqlFormatter.indent')}:</label>
           <select
             value={options.indent}
             onChange={(e) => setOptions({ ...options, indent: Number(e.target.value) })}
             className="px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500"
           >
-            <option value={2}>2 spaces</option>
-            <option value={4}>4 spaces</option>
-            <option value={8}>Tab (8)</option>
+            <option value={2}>2 {t('common.spaces')}</option>
+            <option value={4}>4 {t('common.spaces')}</option>
+            <option value={8}>{t('common.tab')} (8)</option>
           </select>
         </div>
 
@@ -193,7 +195,7 @@ select count(*) as total_users, avg(age) as average_age from users where country
             onChange={(e) => setOptions({ ...options, uppercase: e.target.checked })}
             className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
           />
-          <span className="text-sm text-gray-700 dark:text-gray-300">Uppercase Keywords</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.sqlFormatter.uppercaseKeywords')}</span>
         </label>
 
         <div className="flex-1" />
@@ -203,27 +205,27 @@ select count(*) as total_users, avg(age) as average_age from users where country
           className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2"
         >
           <FileText className="w-4 h-4" />
-          Load Sample
+          {t('common.loadSample')}
         </button>
         <button
           onClick={() => { setInput(''); setOutput(''); }}
           className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2"
         >
           <Trash2 className="w-4 h-4" />
-          Clear
+          {t('common.clear')}
         </button>
       </div>
 
       {/* Input */}
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          SQL Input
+          {t('tool.sqlFormatter.sqlInput')}
         </label>
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
           rows={8}
-          placeholder="Paste your SQL query here..."
+          placeholder={t('tool.sqlFormatter.inputPlaceholder')}
           className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
         />
       </div>
@@ -236,7 +238,7 @@ select count(*) as total_users, avg(age) as average_age from users where country
           className="px-6 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Wand2 className="w-4 h-4" />
-          Format SQL
+          {t('common.format')}
         </button>
         <button
           onClick={minifySql}
@@ -244,7 +246,7 @@ select count(*) as total_users, avg(age) as average_age from users where country
           className="px-6 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Code className="w-4 h-4" />
-          Minify
+          {t('common.minify')}
         </button>
       </div>
 
@@ -253,14 +255,14 @@ select count(*) as total_users, avg(age) as average_age from users where country
         <div>
           <div className="flex items-center justify-between mb-2">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Formatted SQL
+              {t('tool.sqlFormatter.formattedSql')}
             </label>
             <button
               onClick={copyOutput}
               className="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2"
             >
               {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
-              {copied ? 'Copied!' : 'Copy'}
+              {copied ? t('common.copied') : t('common.copy')}
             </button>
           </div>
           <div className="relative">
@@ -274,7 +276,7 @@ select count(*) as total_users, avg(age) as average_age from users where country
       {/* SQL Keywords Reference */}
       <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
         <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 border-b border-gray-200 dark:border-gray-600">
-          <span className="font-medium text-gray-700 dark:text-gray-300">Common SQL Keywords</span>
+          <span className="font-medium text-gray-700 dark:text-gray-300">{t('tool.sqlFormatter.commonKeywords')}</span>
         </div>
         <div className="p-4">
           <div className="flex flex-wrap gap-2">
