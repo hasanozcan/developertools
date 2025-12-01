@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { Menu, X, Code2, Search, Star, Clock, Sun, Moon, ChevronDown } from 'lucide-react';
+import { Menu, X, Search, Star, Clock, Sun, Moon, ChevronDown } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { useHistory } from '@/context/HistoryContext';
@@ -251,7 +251,24 @@ export default function Header() {
         <div className="flex items-center h-16">
           {/* Logo - Sol */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
-            <Code2 className="w-8 h-8 text-primary-600 dark:text-primary-400" />
+            <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="logoGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style={{stopColor:'#0EA5E9'}}/>
+                  <stop offset="50%" style={{stopColor:'#8B5CF6'}}/>
+                  <stop offset="100%" style={{stopColor:'#EC4899'}}/>
+                </linearGradient>
+                <linearGradient id="logoGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" style={{stopColor:'#10B981'}}/>
+                  <stop offset="100%" style={{stopColor:'#06B6D4'}}/>
+                </linearGradient>
+              </defs>
+              <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" fill="url(#logoGrad1)"/>
+              <path d="M16 5L25 10.5V21.5L16 27L7 21.5V10.5L16 5Z" fill="rgba(255,255,255,0.1)"/>
+              <path d="M10 12L6 16L10 20" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M22 12L26 16L22 20" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="16" cy="16" r="2.5" fill="url(#logoGrad2)"/>
+            </svg>
             <span className="font-bold text-xl text-gray-900 dark:text-white">DevsTools</span>
           </Link>
 
