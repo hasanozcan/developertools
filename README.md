@@ -29,20 +29,38 @@ DeveloperTools/
     └── package.json
 ```
 
-## Araçlar (10 adet - Tier 1)
+## Araçlar (27 adet)
 
 | Araç | Kategori | İşlem Tipi |
 |------|----------|------------|
 | JSON Formatter | JSON Tools | Client-side |
+| JSON Validator | JSON Tools | Client-side |
+| JSON to CSV Converter | JSON Tools | Client-side |
+| JSON to TypeScript | JSON Tools | Client-side |
+| YAML ↔ JSON Converter | JSON Tools | Client-side |
 | Base64 Encoder/Decoder | Encoding | Client-side |
 | URL Encoder/Decoder | Encoding | Client-side |
 | JWT Decoder | Encoding | Client-side |
+| HTML Entity Encoder/Decoder | Encoding | Client-side |
+| Image to Base64 | Encoding | Client-side |
 | UUID Generator | Generators | Client-side |
 | Password Generator | Generators | Client-side |
+| Lorem Ipsum Generator | Generators | Client-side |
+| QR Code Generator | Generators | Client-side |
+| Slug Generator | Generators | Client-side |
+| CSS Gradient Generator | Generators | Client-side |
+| Meta Tags Generator | Generators | Client-side |
 | MD5 Hash Generator | Crypto | Client-side |
 | SHA256 Hash Generator | Crypto | Client-side |
 | Regex Tester | Text Tools | Client-side |
+| Text Diff Tool | Text Tools | Client-side |
+| Markdown Preview | Text Tools | Client-side |
 | Timestamp Converter | Converters | Client-side |
+| Color Converter | Converters | Client-side |
+| SQL Formatter | Formatters | Client-side |
+| CSS Minifier | Formatters | Client-side |
+| JavaScript Minifier | Formatters | Client-side |
+| Cron Expression Parser | Utilities | Client-side |
 
 ## Hızlı Başlangıç
 
