@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { 
-  Braces, 
-  Code, 
-  Wand2, 
-  Lock, 
-  Type, 
-  ArrowLeftRight, 
+import {
+  Braces,
+  Code,
+  Wand2,
+  Lock,
+  Type,
+  ArrowLeftRight,
   ChevronRight,
   FileJson,
   Binary,
@@ -225,9 +225,9 @@ export default async function CategoryPage({ params }: PageProps) {
       </div>
 
       {/* Ad Banner */}
-      <AdSense 
-        slot="1733348098" 
-        format="horizontal" 
+      <AdSense
+        slot="1733348098"
+        format="horizontal"
         className="h-24 rounded-lg mb-8 overflow-hidden"
       />
 

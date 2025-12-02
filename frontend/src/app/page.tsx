@@ -1,12 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { 
-  Braces, 
-  Code, 
-  Wand2, 
-  Lock, 
-  Type, 
+import {
+  Braces,
+  Code,
+  Wand2,
+  Lock,
+  Type,
   ArrowLeftRight,
   ChevronRight,
   FileJson,
@@ -132,9 +132,9 @@ export default function Home() {
       </section>
 
       {/* Ad Banner - After Popular Tools */}
-      <AdSense 
-        slot="1733348098" 
-        format="horizontal" 
+      <AdSense
+        slot="1733348098"
+        format="horizontal"
         className="h-24 rounded-lg mb-12 overflow-hidden"
       />
 
@@ -168,9 +168,9 @@ export default function Home() {
       </section>
 
       {/* Ad Banner - Bottom */}
-      <AdSense 
-        slot="7781534087" 
-        format="horizontal" 
+      <AdSense
+        slot="7781534087"
+        format="horizontal"
         className="h-24 rounded-lg mb-12 overflow-hidden"
       />
 
