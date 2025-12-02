@@ -1,9 +1,78 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Braces, Code, Wand2, Lock, Type, ArrowLeftRight, ChevronRight } from 'lucide-react';
+import { 
+  Braces, 
+  Code, 
+  Wand2, 
+  Lock, 
+  Type, 
+  ArrowLeftRight, 
+  ChevronRight,
+  FileJson,
+  Binary,
+  Fingerprint,
+  Link2,
+  KeyRound,
+  Hash,
+  ShieldCheck,
+  Regex,
+  Palette,
+  QrCode,
+  Database,
+  Clock,
+  FileText,
+  LinkIcon,
+  Minimize2,
+  FileCode,
+  Key,
+  Timer,
+  TextQuote,
+  Code2,
+  FileSpreadsheet,
+  GitCompare,
+  FileType,
+  FileJson2,
+  Image,
+  Paintbrush,
+  Tags,
+  CheckCircle,
+  LucideIcon
+} from 'lucide-react';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import AdSense from '@/components/common/AdSense';
+
+// Tool icon mapping
+const toolIcons: Record<string, LucideIcon> = {
+  'json-formatter': FileJson,
+  'json-validator': CheckCircle,
+  'json-csv': FileSpreadsheet,
+  'json-to-typescript': FileType,
+  'yaml-json': FileJson2,
+  'base64': Binary,
+  'url-encoder': Link2,
+  'jwt-decoder': KeyRound,
+  'html-entity': Code2,
+  'image-to-base64': Image,
+  'uuid-generator': Fingerprint,
+  'password-generator': Key,
+  'lorem-ipsum': TextQuote,
+  'qr-code': QrCode,
+  'slug-generator': LinkIcon,
+  'css-gradient': Paintbrush,
+  'meta-tags': Tags,
+  'md5-hash': Hash,
+  'sha256-hash': ShieldCheck,
+  'regex-tester': Regex,
+  'text-diff': GitCompare,
+  'markdown-preview': FileText,
+  'timestamp-converter': Timer,
+  'color-converter': Palette,
+  'sql-formatter': Database,
+  'css-minifier': Minimize2,
+  'js-minifier': FileCode,
+  'cron-parser': Clock,
+};
 
 const categories: Record<string, { name: string; description: string; icon: any; tools: { name: string; slug: string; description: string }[] }> = {
   json: {
@@ -164,19 +233,25 @@ export default async function CategoryPage({ params }: PageProps) {
 
       {/* Tools Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {category.tools.map((tool) => (
-          <Link
-            key={tool.slug}
-            href={`/tools/${categorySlug}/${tool.slug}`}
-            className="group p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 hover:shadow-lg transition-all"
-          >
-            <h2 className="font-semibold text-lg text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 flex items-center justify-between mb-2">
-              {tool.name}
-              <ChevronRight className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </h2>
-            <p className="text-gray-500 dark:text-gray-400 text-sm">{tool.description}</p>
-          </Link>
-        ))}
+        {category.tools.map((tool) => {
+          const ToolIcon = toolIcons[tool.slug] || Wand2;
+          return (
+            <Link
+              key={tool.slug}
+              href={`/tools/${categorySlug}/${tool.slug}`}
+              className="group p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 hover:shadow-lg transition-all"
+            >
+              <h2 className="font-semibold text-lg text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 flex items-center justify-between mb-2">
+                <span className="flex items-center gap-2">
+                  <ToolIcon className="w-5 h-5 text-primary-500" />
+                  {tool.name}
+                </span>
+                <ChevronRight className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </h2>
+              <p className="text-gray-500 dark:text-gray-400 text-sm">{tool.description}</p>
+            </Link>
+          );
+        })}
       </div>
 
       {/* SEO Content */}
