@@ -22,11 +22,11 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Developer Tools - Free Online Tools for Developers',
-    template: '%s | Developer Tools',
+    default: 'DevsTools - 27+ Free Online Developer Tools',
+    template: '%s | DevsTools',
   },
-  description: 'Free online developer tools: JSON formatter, Base64 encoder, UUID generator, hash generators, regex tester, and more. No registration required.',
-  keywords: ['developer tools', 'online tools', 'json formatter', 'base64 encoder', 'uuid generator', 'hash generator', 'regex tester', 'free developer tools', 'web developer tools', 'programming tools'],
+  description: 'DevsTools - 27+ free online developer tools: JSON formatter, Base64 encoder/decoder, UUID generator, MD5/SHA hash generators, regex tester, QR code generator & more. No registration, 100% client-side.',
+  keywords: ['developer tools', 'online tools', 'json formatter', 'base64 encoder', 'uuid generator', 'hash generator', 'regex tester', 'qr code generator', 'free developer tools', 'web developer tools', 'programming tools', 'devstools'],
   authors: [{ name: 'DevsTools' }],
   creator: 'DevsTools',
   publisher: 'DevsTools',
@@ -47,8 +47,8 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: siteUrl,
     siteName: 'DevsTools',
-    title: 'Developer Tools - Free Online Tools for Developers',
-    description: 'Free online developer tools: JSON formatter, Base64 encoder, UUID generator, and more.',
+    title: 'DevsTools - 27+ Free Online Developer Tools',
+    description: '27+ free online developer tools: JSON formatter, Base64 encoder, UUID generator, hash generators, regex tester, QR code & more. No registration, 100% client-side.',
     images: [
       {
         url: `${siteUrl}/og-image.png`,
@@ -60,8 +60,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Developer Tools - Free Online Tools for Developers',
-    description: 'Free online developer tools: JSON formatter, Base64 encoder, UUID generator, and more.',
+    title: 'DevsTools - 27+ Free Online Developer Tools',
+    description: '27+ free online developer tools: JSON formatter, Base64 encoder, UUID generator, hash generators, regex tester, QR code & more. No registration required.',
     images: [`${siteUrl}/og-image.png`],
   },
   robots: {
