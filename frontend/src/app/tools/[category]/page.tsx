@@ -180,10 +180,24 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: 'Category Not Found' };
   }
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
+  const categoryUrl = `${siteUrl}/tools/${categorySlug}`;
+
   return {
     title: `${category.name} - Free Online Developer Tools`,
     description: category.description,
+    alternates: {
+      canonical: categoryUrl,
+    },
     openGraph: {
+      title: `${category.name} - Free Online Developer Tools`,
+      description: category.description,
+      url: categoryUrl,
+      siteName: 'DevsTools',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
       title: `${category.name} - Free Online Developer Tools`,
       description: category.description,
     },

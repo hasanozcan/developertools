@@ -453,27 +453,58 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: 'Tool Not Found' };
   }
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
+  const toolUrl = `${siteUrl}/tools/${category}/${toolSlug}`;
+
   return {
     title: `${tool.name} Online - Free Tool | Developer Tools`,
     description: tool.description,
     keywords: tool.keywords,
+    alternates: {
+      canonical: toolUrl,
+      languages: {
+        'en': toolUrl,
+        'tr': `${toolUrl}?lang=tr`,
+        'de': `${toolUrl}?lang=de`,
+        'es': `${toolUrl}?lang=es`,
+        'fr': `${toolUrl}?lang=fr`,
+        'ru': `${toolUrl}?lang=ru`,
+        'zh': `${toolUrl}?lang=zh`,
+      },
+    },
     openGraph: {
       title: `${tool.name} Online - Free Tool`,
       description: tool.description,
       type: 'website',
+      url: toolUrl,
+      siteName: 'DevsTools',
+      images: [
+        {
+          url: `${siteUrl}/og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: tool.name,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${tool.name} Online - Free Tool`,
+      description: tool.description,
+      images: [`${siteUrl}/og-image.png`],
     },
   };
 }
 
 export async function generateStaticParams() {
   const params: { category: string; tool: string }[] = [];
-  
+
   for (const [category, categoryTools] of Object.entries(tools)) {
     for (const toolSlug of Object.keys(categoryTools)) {
       params.push({ category, tool: toolSlug });
     }
   }
-  
+
   return params;
 }
 

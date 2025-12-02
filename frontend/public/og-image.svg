@@ -1,0 +1,106 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="50%" style="stop-color:#1e293b"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0EA5E9"/>
+      <stop offset="50%" style="stop-color:#8B5CF6"/>
+      <stop offset="100%" style="stop-color:#EC4899"/>
+    </linearGradient>
+    <linearGradient id="centerDotGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10B981"/>
+      <stop offset="100%" style="stop-color:#06B6D4"/>
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0EA5E9"/>
+      <stop offset="50%" style="stop-color:#8B5CF6"/>
+      <stop offset="100%" style="stop-color:#EC4899"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- Grid Pattern -->
+  <g opacity="0.05">
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1"/>
+    </pattern>
+    <rect width="1200" height="630" fill="url(#grid)"/>
+  </g>
+  
+  <!-- Decorative Elements -->
+  <circle cx="100" cy="100" r="200" fill="url(#logoGradient)" opacity="0.1"/>
+  <circle cx="1100" cy="530" r="250" fill="url(#logoGradient)" opacity="0.1"/>
+  
+  <!-- Logo Icon - Hexagon style from icon.svg -->
+  <g transform="translate(540, 120)">
+    <!-- Hexagon background -->
+    <path d="M60 0L120 34.64V103.92L60 138.56L0 103.92V34.64L60 0Z" fill="url(#logoGradient)"/>
+    <!-- Inner glow -->
+    <path d="M60 11.5L108.5 39.5V95.5L60 123.5L11.5 95.5V39.5L60 11.5Z" fill="rgba(255,255,255,0.1)"/>
+    <!-- Code brackets -->
+    <path d="M38 54L24 69L38 84" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M82 54L96 69L82 84" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Center dot/cursor -->
+    <circle cx="60" cy="69" r="9" fill="url(#centerDotGradient)"/>
+    <!-- Sparkle accents -->
+    <circle cx="42" cy="30" r="3.5" fill="white" opacity="0.6"/>
+    <circle cx="90" cy="42" r="2.8" fill="white" opacity="0.4"/>
+  </g>
+  
+  <!-- Title -->
+  <text x="600" y="320" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="bold" fill="white">
+    DevsTools
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="600" y="380" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="28" fill="#94a3b8">
+    Free Online Developer Tools
+  </text>
+  
+  <!-- Tool Tags -->
+  <g transform="translate(600, 440)">
+    <!-- JSON -->
+    <rect x="-380" y="0" width="100" height="36" rx="18" fill="#0EA5E9" opacity="0.2"/>
+    <text x="-330" y="24" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="500" fill="#38bdf8">JSON</text>
+    
+    <!-- Base64 -->
+    <rect x="-260" y="0" width="100" height="36" rx="18" fill="#8B5CF6" opacity="0.2"/>
+    <text x="-210" y="24" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="500" fill="#a78bfa">Base64</text>
+    
+    <!-- UUID -->
+    <rect x="-140" y="0" width="80" height="36" rx="18" fill="#10B981" opacity="0.2"/>
+    <text x="-100" y="24" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="500" fill="#34d399">UUID</text>
+    
+    <!-- Hash -->
+    <rect x="-40" y="0" width="80" height="36" rx="18" fill="#EC4899" opacity="0.2"/>
+    <text x="0" y="24" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="500" fill="#f472b6">Hash</text>
+    
+    <!-- Regex -->
+    <rect x="60" y="0" width="90" height="36" rx="18" fill="#f59e0b" opacity="0.2"/>
+    <text x="105" y="24" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="500" fill="#fbbf24">Regex</text>
+    
+    <!-- QR Code -->
+    <rect x="170" y="0" width="100" height="36" rx="18" fill="#06B6D4" opacity="0.2"/>
+    <text x="220" y="24" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="500" fill="#22d3ee">QR Code</text>
+    
+    <!-- More -->
+    <rect x="290" y="0" width="90" height="36" rx="18" fill="#6b7280" opacity="0.2"/>
+    <text x="335" y="24" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="500" fill="#9ca3af">&amp; More</text>
+  </g>
+  
+  <!-- Bottom Text -->
+  <text x="600" y="550" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="20" fill="#64748b">
+    27+ Free Tools • No Registration • 100% Client-Side
+  </text>
+  
+  <!-- URL -->
+  <text x="600" y="590" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="18" fill="url(#accentGradient)">
+    devstools.app
+  </text>
+</svg>
