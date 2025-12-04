@@ -249,7 +249,8 @@ export default function SqlFormatterTool() {
 
   const loadSample = () => {
     setInput(`select u.id, u.name, u.email, o.order_id, o.total_amount from users u inner join orders o on u.id = o.user_id where u.status = 'active' and o.created_at > '2024-01-01' and o.total_amount > 100 order by o.created_at desc limit 10;
-      select count(*) as total_users, avg(age) as average_age from users where country in ('US', 'UK', 'CA') group by country having count(*) > 100;`);
+      select count(*) as total_users, avg(age) as average_age from users where country in ('US', 'UK', 'CA') group by country having count(*) > 100;
+      -- This is a sample SQL query`);
     setError(null);
   };
 
