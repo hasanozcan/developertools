@@ -19,7 +19,6 @@
     "sql-formatter": "^15.6.10"
   },
   "devDependencies": {
-    "@netlify/plugin-nextjs": "^5.15.1",
     "@types/node": "20.14.0",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",

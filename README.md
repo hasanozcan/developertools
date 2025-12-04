@@ -153,7 +153,6 @@ NEXT_PUBLIC_GOOGLE_VERIFICATION=your-verification-code
 
 ### Frontend
 - Vercel (önerilen)
-- Netlify
 - Self-hosted Node.js
 
 ### Database
