@@ -18,6 +18,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
+const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -137,19 +138,17 @@ export default function RootLayout({
             crossOrigin="anonymous"
           />
         )}
-        {process.env.NEXT_PUBLIC_GOOGLE_ADS_ID && (
+        {googleAdsId && (
           <>
-            <script
-              async
-              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID}`}
-            />
+            {/* Google tag (gtag.js) */}
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${googleAdsId}`} />
             <script
               dangerouslySetInnerHTML={{
                 __html: `
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
                   gtag('js', new Date());
-                  gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID}');
+                  gtag('config', '${googleAdsId}');
                 `,
               }}
             />
