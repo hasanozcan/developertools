@@ -87,13 +87,6 @@ export async function getPopularTools(count: number = 10): Promise<Tool[]> {
 
 // Analytics API
 export async function trackToolUsage(toolSlug: string, sessionId?: string, referrer?: string): Promise<void> {
-  try {
-    await fetch(`${API_BASE_URL}/analytics/track`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ toolSlug, sessionId, referrer }),
-    });
-  } catch {
-    // Silently fail - don't break UX for analytics
-  }
+  // Tracking disabled (avoid external analytics call)
+  return;
 }
