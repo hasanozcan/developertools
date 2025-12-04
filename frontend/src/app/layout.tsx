@@ -19,6 +19,9 @@ const jetbrainsMono = JetBrains_Mono({
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
 const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
+const googleAdsSendTo = process.env.NEXT_PUBLIC_GOOGLE_ADS_SEND_TO;
+const googleAdsConversionValue = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_VALUE;
+const googleAdsConversionCurrency = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_CURRENCY;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -152,6 +155,20 @@ export default function RootLayout({
                 `,
               }}
             />
+            {googleAdsSendTo && googleAdsConversionValue && googleAdsConversionCurrency && (
+              /* Event snippet for Sayfa görüntüleme conversion page */
+              <script
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    gtag('event', 'conversion', {
+                      'send_to': '${googleAdsSendTo}',
+                      'value': ${googleAdsConversionValue},
+                      'currency': '${googleAdsConversionCurrency}'
+                    });
+                  `,
+                }}
+              />
+            )}
           </>
         )}
       </head>
