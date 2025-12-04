@@ -1,3 +1,4 @@
+import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
 
 interface ContactPayload {
@@ -15,6 +16,11 @@ const buildEmailBody = ({ name, email, subject, message }: Required<ContactPaylo
   <p>${message.replace(/\n/g, '<br />')}</p>
 `;
 
+const parseBooleanEnv = (value?: string) => {
+  if (typeof value !== 'string') return undefined;
+  return ['true', '1', 'yes', 'y', 'on'].includes(value.toLowerCase());
+};
+
 export async function POST(request: Request) {
   try {
     const payload: ContactPayload = await request.json();
@@ -24,35 +30,55 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    const resendApiKey = process.env.RESEND_API_KEY;
     const targetEmail = (process.env.CONTACT_TO_EMAIL || 'support@devstools.app')
       .split(',')
       .map((emailAddress) => emailAddress.trim())
       .filter(Boolean);
 
-    if (resendApiKey) {
-      const emailResponse = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${resendApiKey}`,
-        },
-        body: JSON.stringify({
-          from: 'DevsTools <support@devstools.app>',
-          to: targetEmail,
-          reply_to: email,
-          subject: `[Contact] ${subject}`,
-          html: buildEmailBody({ name, email, subject, message }),
-        }),
-      });
+    const smtpHost = process.env.SMTP_HOST;
+    const smtpPortRaw = process.env.SMTP_PORT;
+    const smtpSecureRaw = process.env.SMTP_SECURE;
+    const smtpRejectUnauthorizedRaw = process.env.SMTP_TLS_REJECT_UNAUTHORIZED;
+    const smtpUser = process.env.SMTP_USER;
+    const smtpPass = process.env.SMTP_PASS;
+    const smtpFrom =
+      process.env.SMTP_FROM ||
+      (smtpUser ? `DevsTools <${smtpUser}>` : 'DevsTools <support@devstools.app>');
 
-      if (!emailResponse.ok) {
-        const errorBody = await emailResponse.text();
-        console.error('Resend error:', errorBody);
-        return NextResponse.json({ error: 'Failed to send message' }, { status: 502 });
-      }
-    } else {
-      console.warn('RESEND_API_KEY is not configured. Message was not sent via email.');
+    const smtpPort = smtpPortRaw ? Number(smtpPortRaw) : 465;
+    const smtpSecure = parseBooleanEnv(smtpSecureRaw);
+    const smtpRejectUnauthorized = parseBooleanEnv(smtpRejectUnauthorizedRaw);
+
+    if (!smtpHost || !smtpUser || !smtpPass || Number.isNaN(smtpPort)) {
+      console.error('SMTP configuration is incomplete.');
+      return NextResponse.json({ error: 'Email service is not configured' }, { status: 500 });
+    }
+
+    const transporter = nodemailer.createTransport({
+      host: smtpHost,
+      port: smtpPort,
+      secure: typeof smtpSecure === 'boolean' ? smtpSecure : smtpPort === 465,
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+      tls:
+        typeof smtpRejectUnauthorized === 'boolean'
+          ? { rejectUnauthorized: smtpRejectUnauthorized }
+          : undefined,
+    });
+
+    try {
+      await transporter.sendMail({
+        from: smtpFrom,
+        to: targetEmail,
+        replyTo: email,
+        subject: `[Contact] ${subject}`,
+        html: buildEmailBody({ name, email, subject, message }),
+      });
+    } catch (sendError) {
+      console.error('SMTP send failed:', sendError);
+      return NextResponse.json({ error: 'Failed to send message' }, { status: 502 });
     }
 
     return NextResponse.json({ success: true });

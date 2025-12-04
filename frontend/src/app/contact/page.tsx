@@ -78,10 +78,10 @@ export default function ContactPage() {
                 {t('contact.emailUsDesc')}
               </p>
               <a 
-                href="mailto:support@devstools.app" 
+                href="mailto:devstoolsapp@gmail.com" 
                 className="text-primary-600 dark:text-primary-400 hover:underline mt-2 inline-block"
               >
-                support@devstools.app
+                devstoolsapp@gmail.com
               </a>
             </div>
 
