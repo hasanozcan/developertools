@@ -1,0 +1,41 @@
+<svg width="1200" height="628" viewBox="0 0 1200 628" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg7" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0c4a6e"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+    <linearGradient id="cyan" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#06B6D4"/>
+      <stop offset="100%" style="stop-color:#22D3EE"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="628" fill="url(#bg7)"/>
+  
+  <!-- QR Code Focus -->
+  <text x="600" y="150" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" fill="#06B6D4">INSTANT GENERATOR</text>
+  <text x="600" y="250" text-anchor="middle" font-family="system-ui, sans-serif" font-size="80" font-weight="bold" fill="white">QR Code</text>
+  <text x="600" y="320" text-anchor="middle" font-family="system-ui, sans-serif" font-size="32" fill="#94a3b8">Create QR codes for any text or URL</text>
+  
+  <!-- QR Code Visual -->
+  <g transform="translate(450, 360)">
+    <rect width="300" height="180" rx="15" fill="rgba(6,182,212,0.1)" stroke="#06B6D4" stroke-width="2"/>
+    <!-- Simplified QR pattern -->
+    <g transform="translate(100, 40)">
+      <rect width="100" height="100" fill="white" rx="5"/>
+      <rect x="10" y="10" width="25" height="25" fill="#0f172a"/>
+      <rect x="65" y="10" width="25" height="25" fill="#0f172a"/>
+      <rect x="10" y="65" width="25" height="25" fill="#0f172a"/>
+      <rect x="40" y="40" width="20" height="20" fill="#0f172a"/>
+      <rect x="15" y="15" width="15" height="15" fill="white"/>
+      <rect x="70" y="15" width="15" height="15" fill="white"/>
+      <rect x="15" y="70" width="15" height="15" fill="white"/>
+    </g>
+  </g>
+  
+  <g transform="translate(500, 570)">
+    <rect width="200" height="50" rx="25" fill="url(#cyan)"/>
+    <text x="100" y="33" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" font-weight="600" fill="white">Generate Free</text>
+  </g>
+  
+  <text x="60" y="590" font-family="system-ui, sans-serif" font-size="22" font-weight="600" fill="url(#cyan)">devstools.app</text>
+</svg>

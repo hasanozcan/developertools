@@ -1,0 +1,73 @@
+<svg width="1200" height="628" viewBox="0 0 1200 628" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg14" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E3A5F"/>
+      <stop offset="50%" style="stop-color:#0F172A"/>
+      <stop offset="100%" style="stop-color:#134E4A"/>
+    </linearGradient>
+    <linearGradient id="accent14" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3B82F6"/>
+      <stop offset="100%" style="stop-color:#22C55E"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="628" fill="url(#bg14)"/>
+  
+  <!-- Background pattern -->
+  <g opacity="0.1">
+    <rect x="50" y="50" width="50" height="50" fill="#3B82F6" rx="5"/>
+    <rect x="120" y="100" width="30" height="30" fill="#22C55E" rx="5"/>
+    <rect x="1050" y="80" width="40" height="40" fill="#3B82F6" rx="5"/>
+    <rect x="1100" y="150" width="60" height="60" fill="#22C55E" rx="5"/>
+    <rect x="80" y="480" width="45" height="45" fill="#3B82F6" rx="5"/>
+  </g>
+  
+  <!-- YAML to JSON conversion visual -->
+  <g transform="translate(750, 130)">
+    <!-- YAML box -->
+    <rect x="0" y="0" width="180" height="160" rx="12" fill="#1F2937" stroke="#F59E0B" stroke-width="3"/>
+    <text x="90" y="30" font-family="Arial" font-size="16" font-weight="bold" fill="#F59E0B" text-anchor="middle">YAML</text>
+    <text x="20" y="60" font-family="monospace" font-size="12" fill="#94A3B8">name: John</text>
+    <text x="20" y="80" font-family="monospace" font-size="12" fill="#94A3B8">age: 30</text>
+    <text x="20" y="100" font-family="monospace" font-size="12" fill="#94A3B8">skills:</text>
+    <text x="20" y="120" font-family="monospace" font-size="12" fill="#94A3B8">  - JS</text>
+    <text x="20" y="140" font-family="monospace" font-size="12" fill="#94A3B8">  - Python</text>
+    
+    <!-- Arrow -->
+    <g transform="translate(190, 60)">
+      <rect x="0" y="10" width="60" height="30" rx="15" fill="url(#accent14)"/>
+      <text x="30" y="32" font-family="Arial" font-size="20" fill="white" text-anchor="middle">↔</text>
+    </g>
+    
+    <!-- JSON box -->
+    <rect x="260" y="0" width="180" height="160" rx="12" fill="#1F2937" stroke="#22C55E" stroke-width="3"/>
+    <text x="350" y="30" font-family="Arial" font-size="16" font-weight="bold" fill="#22C55E" text-anchor="middle">JSON</text>
+    <text x="280" y="55" font-family="monospace" font-size="11" fill="#94A3B8">{"</text>
+    <text x="280" y="75" font-family="monospace" font-size="11" fill="#94A3B8">  "name": "John",</text>
+    <text x="280" y="95" font-family="monospace" font-size="11" fill="#94A3B8">  "age": 30,</text>
+    <text x="280" y="115" font-family="monospace" font-size="11" fill="#94A3B8">  "skills": [</text>
+    <text x="280" y="135" font-family="monospace" font-size="11" fill="#94A3B8">    "JS","Python"</text>
+    <text x="280" y="150" font-family="monospace" font-size="11" fill="#94A3B8">]}</text>
+  </g>
+  
+  <!-- Main text -->
+  <text x="80" y="200" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="white">YAML ↔ JSON</text>
+  <text x="80" y="280" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="url(#accent14)">Converter</text>
+  
+  <text x="80" y="350" font-family="Arial, sans-serif" font-size="28" fill="#94A3B8">Bidirectional conversion</text>
+  <text x="80" y="395" font-family="Arial, sans-serif" font-size="28" fill="#94A3B8">Validate and format instantly</text>
+  
+  <!-- CTA Button -->
+  <rect x="80" y="440" width="280" height="60" rx="30" fill="url(#accent14)"/>
+  <text x="145" y="480" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">Convert Now →</text>
+  
+  <!-- Logo -->
+  <g transform="translate(50, 50)">
+    <polygon points="40,0 75,20 75,60 40,80 5,60 5,20" fill="none" stroke="url(#accent14)" stroke-width="2"/>
+    <text x="20" y="48" font-family="monospace" font-size="20" font-weight="bold" fill="white">&lt;/&gt;</text>
+  </g>
+  <text x="140" y="100" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white">DevsTools</text>
+  
+  <!-- URL -->
+  <text x="600" y="590" font-family="Arial, sans-serif" font-size="24" fill="#64748B" text-anchor="middle">devstools.dev</text>
+</svg>

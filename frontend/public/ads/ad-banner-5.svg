@@ -1,0 +1,34 @@
+<svg width="1200" height="628" viewBox="0 0 1200 628" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#042f2e"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10B981"/>
+      <stop offset="100%" style="stop-color:#34D399"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="628" fill="url(#bg5)"/>
+  <circle cx="600" cy="314" r="500" fill="#10B981" opacity="0.03"/>
+  
+  <!-- UUID Focus -->
+  <g transform="translate(600, 180)">
+    <text text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" fill="#10B981">GENERATOR</text>
+  </g>
+  <text x="600" y="280" text-anchor="middle" font-family="system-ui, sans-serif" font-size="80" font-weight="bold" fill="white">UUID Generator</text>
+  <text x="600" y="350" text-anchor="middle" font-family="system-ui, sans-serif" font-size="32" fill="#94a3b8">Generate unique IDs with one click</text>
+  
+  <!-- UUID Examples -->
+  <g transform="translate(250, 400)">
+    <rect width="700" height="55" rx="10" fill="rgba(16,185,129,0.1)" stroke="#10B981" stroke-width="1"/>
+    <text x="350" y="36" text-anchor="middle" font-family="monospace" font-size="22" fill="#34D399">550e8400-e29b-41d4-a716-446655440000</text>
+  </g>
+  
+  <g transform="translate(500, 490)">
+    <rect width="200" height="55" rx="27" fill="url(#green)"/>
+    <text x="100" y="36" text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" font-weight="600" fill="white">Generate Now</text>
+  </g>
+  
+  <text x="600" y="590" text-anchor="middle" font-family="system-ui, sans-serif" font-size="22" font-weight="600" fill="url(#green)">devstools.app</text>
+</svg>

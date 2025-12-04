@@ -1,0 +1,81 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgSq2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E3A5F"/>
+      <stop offset="50%" style="stop-color:#0F172A"/>
+      <stop offset="100%" style="stop-color:#134E4A"/>
+    </linearGradient>
+    <linearGradient id="accentSq2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#06B6D4"/>
+      <stop offset="50%" style="stop-color:#22C55E"/>
+      <stop offset="100%" style="stop-color:#14B8A6"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="1200" fill="url(#bgSq2)"/>
+  
+  <!-- Background elements -->
+  <circle cx="100" cy="100" r="120" fill="#06B6D4" opacity="0.1"/>
+  <circle cx="1100" cy="1100" r="150" fill="#22C55E" opacity="0.1"/>
+  <circle cx="1050" cy="200" r="100" fill="#14B8A6" opacity="0.1"/>
+  <circle cx="150" cy="1050" r="80" fill="#06B6D4" opacity="0.1"/>
+  
+  <!-- Logo -->
+  <g transform="translate(500, 80)">
+    <polygon points="100,0 185,50 185,150 100,200 15,150 15,50" fill="none" stroke="url(#accentSq2)" stroke-width="4"/>
+    <text x="55" y="115" font-family="monospace" font-size="50" font-weight="bold" fill="white">&lt;/&gt;</text>
+  </g>
+  <text x="600" y="340" font-family="Arial, sans-serif" font-size="52" font-weight="bold" fill="white" text-anchor="middle">DevsTools</text>
+  
+  <!-- Code editor mockup -->
+  <g transform="translate(150, 400)">
+    <rect x="0" y="0" width="900" height="450" rx="20" fill="#1F2937" stroke="#06B6D4" stroke-width="3"/>
+    <!-- Title bar -->
+    <rect x="0" y="0" width="900" height="50" rx="20" fill="#374151"/>
+    <circle cx="35" cy="25" r="10" fill="#EF4444"/>
+    <circle cx="65" cy="25" r="10" fill="#F59E0B"/>
+    <circle cx="95" cy="25" r="10" fill="#22C55E"/>
+    <text x="450" y="35" font-family="Arial" font-size="20" fill="#94A3B8" text-anchor="middle">Developer Tools</text>
+    
+    <!-- Tool buttons grid -->
+    <g transform="translate(40, 80)">
+      <rect x="0" y="0" width="250" height="70" rx="12" fill="#0EA5E9" opacity="0.2" stroke="#0EA5E9" stroke-width="2"/>
+      <text x="125" y="45" font-family="Arial" font-size="24" font-weight="bold" fill="#0EA5E9" text-anchor="middle">JSON Format</text>
+      
+      <rect x="280" y="0" width="250" height="70" rx="12" fill="#8B5CF6" opacity="0.2" stroke="#8B5CF6" stroke-width="2"/>
+      <text x="405" y="45" font-family="Arial" font-size="24" font-weight="bold" fill="#8B5CF6" text-anchor="middle">UUID Gen</text>
+      
+      <rect x="560" y="0" width="250" height="70" rx="12" fill="#EC4899" opacity="0.2" stroke="#EC4899" stroke-width="2"/>
+      <text x="685" y="45" font-family="Arial" font-size="24" font-weight="bold" fill="#EC4899" text-anchor="middle">Hash Gen</text>
+      
+      <rect x="0" y="100" width="250" height="70" rx="12" fill="#22C55E" opacity="0.2" stroke="#22C55E" stroke-width="2"/>
+      <text x="125" y="145" font-family="Arial" font-size="24" font-weight="bold" fill="#22C55E" text-anchor="middle">Base64</text>
+      
+      <rect x="280" y="100" width="250" height="70" rx="12" fill="#F59E0B" opacity="0.2" stroke="#F59E0B" stroke-width="2"/>
+      <text x="405" y="145" font-family="Arial" font-size="24" font-weight="bold" fill="#F59E0B" text-anchor="middle">Regex Test</text>
+      
+      <rect x="560" y="100" width="250" height="70" rx="12" fill="#06B6D4" opacity="0.2" stroke="#06B6D4" stroke-width="2"/>
+      <text x="685" y="145" font-family="Arial" font-size="24" font-weight="bold" fill="#06B6D4" text-anchor="middle">QR Code</text>
+      
+      <rect x="0" y="200" width="250" height="70" rx="12" fill="#14B8A6" opacity="0.2" stroke="#14B8A6" stroke-width="2"/>
+      <text x="125" y="245" font-family="Arial" font-size="24" font-weight="bold" fill="#14B8A6" text-anchor="middle">Color Conv</text>
+      
+      <rect x="280" y="200" width="250" height="70" rx="12" fill="#A855F7" opacity="0.2" stroke="#A855F7" stroke-width="2"/>
+      <text x="405" y="245" font-family="Arial" font-size="24" font-weight="bold" fill="#A855F7" text-anchor="middle">Markdown</text>
+      
+      <rect x="560" y="200" width="250" height="70" rx="12" fill="#EF4444" opacity="0.2" stroke="#EF4444" stroke-width="2"/>
+      <text x="685" y="245" font-family="Arial" font-size="24" font-weight="bold" fill="#EF4444" text-anchor="middle">Password</text>
+    </g>
+  </g>
+  
+  <!-- Main text -->
+  <text x="600" y="950" font-family="Arial, sans-serif" font-size="64" font-weight="bold" fill="white" text-anchor="middle">Free Online Tools</text>
+  <text x="600" y="1020" font-family="Arial, sans-serif" font-size="36" fill="#94A3B8" text-anchor="middle">No signup required - 100% Free</text>
+  
+  <!-- CTA Button -->
+  <rect x="350" y="1060" width="500" height="80" rx="40" fill="url(#accentSq2)"/>
+  <text x="600" y="1115" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="white" text-anchor="middle">Start Now →</text>
+  
+  <!-- URL -->
+  <text x="600" y="1175" font-family="Arial, sans-serif" font-size="28" fill="#64748B" text-anchor="middle">devstools.dev</text>
+</svg>

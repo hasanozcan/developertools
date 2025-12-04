@@ -1,0 +1,91 @@
+<svg width="1080" height="1350" viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgV2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#134E4A"/>
+      <stop offset="50%" style="stop-color:#0F172A"/>
+      <stop offset="100%" style="stop-color:#1E3A5F"/>
+    </linearGradient>
+    <linearGradient id="accentV2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#14B8A6"/>
+      <stop offset="100%" style="stop-color:#06B6D4"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="1080" height="1350" fill="url(#bgV2)"/>
+  
+  <!-- Background waves -->
+  <path d="M0,200 Q270,150 540,200 T1080,180 L1080,0 L0,0 Z" fill="#14B8A6" opacity="0.1"/>
+  <path d="M0,1200 Q270,1150 540,1200 T1080,1180 L1080,1350 L0,1350 Z" fill="#06B6D4" opacity="0.1"/>
+  
+  <!-- Logo -->
+  <g transform="translate(440, 80)">
+    <polygon points="100,0 185,50 185,150 100,200 15,150 15,50" fill="none" stroke="url(#accentV2)" stroke-width="4"/>
+    <text x="55" y="115" font-family="monospace" font-size="50" font-weight="bold" fill="white">&lt;/&gt;</text>
+  </g>
+  <text x="540" y="340" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle">DevsTools</text>
+  
+  <!-- Code editor visual -->
+  <g transform="translate(90, 400)">
+    <rect x="0" y="0" width="900" height="500" rx="20" fill="#1F2937" stroke="#14B8A6" stroke-width="3"/>
+    <!-- Title bar -->
+    <rect x="0" y="0" width="900" height="50" rx="20" fill="#374151"/>
+    <circle cx="35" cy="25" r="10" fill="#EF4444"/>
+    <circle cx="65" cy="25" r="10" fill="#F59E0B"/>
+    <circle cx="95" cy="25" r="10" fill="#22C55E"/>
+    <text x="450" y="35" font-family="Arial" font-size="20" fill="#94A3B8" text-anchor="middle">JSON Formatter</text>
+    
+    <!-- Code content -->
+    <text x="40" y="100" font-family="monospace" font-size="24" fill="#94A3B8">1</text>
+    <text x="80" y="100" font-family="monospace" font-size="24" fill="#EC4899">{</text>
+    
+    <text x="40" y="140" font-family="monospace" font-size="24" fill="#94A3B8">2</text>
+    <text x="80" y="140" font-family="monospace" font-size="24" fill="#06B6D4">  "name"</text>
+    <text x="220" y="140" font-family="monospace" font-size="24" fill="white">:</text>
+    <text x="250" y="140" font-family="monospace" font-size="24" fill="#22C55E">"DevsTools"</text>
+    <text x="420" y="140" font-family="monospace" font-size="24" fill="white">,</text>
+    
+    <text x="40" y="180" font-family="monospace" font-size="24" fill="#94A3B8">3</text>
+    <text x="80" y="180" font-family="monospace" font-size="24" fill="#06B6D4">  "tools"</text>
+    <text x="220" y="180" font-family="monospace" font-size="24" fill="white">:</text>
+    <text x="250" y="180" font-family="monospace" font-size="24" fill="#F59E0B">30</text>
+    <text x="290" y="180" font-family="monospace" font-size="24" fill="white">,</text>
+    
+    <text x="40" y="220" font-family="monospace" font-size="24" fill="#94A3B8">4</text>
+    <text x="80" y="220" font-family="monospace" font-size="24" fill="#06B6D4">  "free"</text>
+    <text x="200" y="220" font-family="monospace" font-size="24" fill="white">:</text>
+    <text x="230" y="220" font-family="monospace" font-size="24" fill="#8B5CF6">true</text>
+    <text x="300" y="220" font-family="monospace" font-size="24" fill="white">,</text>
+    
+    <text x="40" y="260" font-family="monospace" font-size="24" fill="#94A3B8">5</text>
+    <text x="80" y="260" font-family="monospace" font-size="24" fill="#06B6D4">  "features"</text>
+    <text x="270" y="260" font-family="monospace" font-size="24" fill="white">: [</text>
+    
+    <text x="40" y="300" font-family="monospace" font-size="24" fill="#94A3B8">6</text>
+    <text x="80" y="300" font-family="monospace" font-size="24" fill="#22C55E">    "Fast"</text>
+    <text x="200" y="300" font-family="monospace" font-size="24" fill="white">,</text>
+    <text x="230" y="300" font-family="monospace" font-size="24" fill="#22C55E">"Free"</text>
+    <text x="340" y="300" font-family="monospace" font-size="24" fill="white">,</text>
+    <text x="370" y="300" font-family="monospace" font-size="24" fill="#22C55E">"Easy"</text>
+    
+    <text x="40" y="340" font-family="monospace" font-size="24" fill="#94A3B8">7</text>
+    <text x="80" y="340" font-family="monospace" font-size="24" fill="white">  ]</text>
+    
+    <text x="40" y="380" font-family="monospace" font-size="24" fill="#94A3B8">8</text>
+    <text x="80" y="380" font-family="monospace" font-size="24" fill="#EC4899">}</text>
+    
+    <!-- Valid badge -->
+    <rect x="650" y="420" width="200" height="50" rx="25" fill="#22C55E"/>
+    <text x="750" y="455" font-family="Arial" font-size="24" font-weight="bold" fill="white" text-anchor="middle">✓ Valid JSON</text>
+  </g>
+  
+  <!-- Main text -->
+  <text x="540" y="1000" font-family="Arial, sans-serif" font-size="56" font-weight="bold" fill="white" text-anchor="middle">Format, Validate</text>
+  <text x="540" y="1070" font-family="Arial, sans-serif" font-size="56" font-weight="bold" fill="url(#accentV2)" text-anchor="middle">Convert Instantly</text>
+  
+  <!-- CTA Button -->
+  <rect x="190" y="1130" width="700" height="80" rx="40" fill="url(#accentV2)"/>
+  <text x="540" y="1185" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="white" text-anchor="middle">Try Free Now →</text>
+  
+  <!-- URL -->
+  <text x="540" y="1280" font-family="Arial, sans-serif" font-size="28" fill="#64748B" text-anchor="middle">devstools.dev</text>
+</svg>

@@ -1,0 +1,99 @@
+<svg width="1200" height="628" viewBox="0 0 1200 628" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0c4a6e"/>
+      <stop offset="50%" style="stop-color:#1e3a5f"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06B6D4"/>
+      <stop offset="50%" style="stop-color:#8B5CF6"/>
+      <stop offset="100%" style="stop-color:#EC4899"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10B981"/>
+      <stop offset="100%" style="stop-color:#34D399"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="628" fill="url(#bgGrad2)"/>
+  
+  <!-- Decorative Elements -->
+  <circle cx="1100" cy="100" r="400" fill="url(#accentGrad)" opacity="0.05"/>
+  <circle cx="100" cy="528" r="300" fill="url(#accentGrad)" opacity="0.05"/>
+  
+  <!-- Code Background Pattern -->
+  <g opacity="0.03" transform="translate(600, 50)">
+    <text font-family="monospace" font-size="14" fill="white">{"name": "developer", "tools": true}</text>
+    <text y="25" font-family="monospace" font-size="14" fill="white">const uuid = generateUUID();</text>
+    <text y="50" font-family="monospace" font-size="14" fill="white">base64.encode(data);</text>
+    <text y="75" font-family="monospace" font-size="14" fill="white">hash.sha256(input);</text>
+  </g>
+  
+  <!-- Center Content -->
+  <g transform="translate(600, 314)">
+    <!-- Main Logo -->
+    <g transform="translate(-60, -180)">
+      <path d="M60 0L120 34.64V103.92L60 138.56L0 103.92V34.64L60 0Z" fill="url(#accentGrad)"/>
+      <path d="M60 12L108 39.7V97.1L60 124.8L12 97.1V39.7L60 12Z" fill="rgba(255,255,255,0.1)"/>
+      <path d="M38 55L22 69L38 83" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M82 55L98 69L82 83" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="60" cy="69" r="9" fill="url(#greenGrad)"/>
+    </g>
+    
+    <!-- Brand Name -->
+    <text y="-10" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="bold" fill="white">DevsTools</text>
+    
+    <!-- Tagline -->
+    <text y="50" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="32" fill="#94a3b8">Free Online Developer Tools</text>
+    
+    <!-- Tool Pills -->
+    <g transform="translate(0, 100)">
+      <g transform="translate(-350, 0)">
+        <rect width="95" height="40" rx="20" fill="#0EA5E9" opacity="0.2"/>
+        <text x="47.5" y="26" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="500" fill="#38bdf8">JSON</text>
+      </g>
+      <g transform="translate(-240, 0)">
+        <rect width="95" height="40" rx="20" fill="#8B5CF6" opacity="0.2"/>
+        <text x="47.5" y="26" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="500" fill="#a78bfa">Base64</text>
+      </g>
+      <g transform="translate(-130, 0)">
+        <rect width="80" height="40" rx="20" fill="#10B981" opacity="0.2"/>
+        <text x="40" y="26" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="500" fill="#34d399">UUID</text>
+      </g>
+      <g transform="translate(-35, 0)">
+        <rect width="70" height="40" rx="20" fill="#EC4899" opacity="0.2"/>
+        <text x="35" y="26" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="500" fill="#f472b6">Hash</text>
+      </g>
+      <g transform="translate(50, 0)">
+        <rect width="85" height="40" rx="20" fill="#f59e0b" opacity="0.2"/>
+        <text x="42.5" y="26" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="500" fill="#fbbf24">Regex</text>
+      </g>
+      <g transform="translate(150, 0)">
+        <rect width="100" height="40" rx="20" fill="#06B6D4" opacity="0.2"/>
+        <text x="50" y="26" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="500" fill="#22d3ee">QR Code</text>
+      </g>
+      <g transform="translate(265, 0)">
+        <rect width="85" height="40" rx="20" fill="#6b7280" opacity="0.2"/>
+        <text x="42.5" y="26" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="500" fill="#9ca3af">30+</text>
+      </g>
+    </g>
+    
+    <!-- Features -->
+    <g transform="translate(0, 180)">
+      <text text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" fill="#64748b">
+        <tspan fill="#10B981">✓</tspan> No Signup Required    
+        <tspan fill="#10B981">✓</tspan> 100% Free    
+        <tspan fill="#10B981">✓</tspan> Works Instantly
+      </text>
+    </g>
+  </g>
+  
+  <!-- URL at bottom -->
+  <g transform="translate(600, 560)">
+    <rect x="-100" y="-20" width="200" height="50" rx="25" fill="url(#accentGrad)" opacity="0.1"/>
+    <text text-anchor="middle" y="12" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="600" fill="url(#accentGrad)">devstools.app</text>
+  </g>
+</svg>

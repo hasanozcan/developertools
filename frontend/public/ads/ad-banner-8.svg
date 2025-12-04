@@ -1,0 +1,45 @@
+<svg width="1200" height="628" viewBox="0 0 1200 628" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg8" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#451a03"/>
+      <stop offset="100%" style="stop-color:#0f172a"/>
+    </linearGradient>
+    <linearGradient id="amber" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#fbbf24"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="628" fill="url(#bg8)"/>
+  <circle cx="900" cy="200" r="350" fill="#f59e0b" opacity="0.05"/>
+  
+  <!-- Regex Focus -->
+  <text x="100" y="180" font-family="system-ui, sans-serif" font-size="28" fill="#f59e0b">PATTERN MATCHING</text>
+  <text x="100" y="280" font-family="system-ui, sans-serif" font-size="80" font-weight="bold" fill="white">Regex Tester</text>
+  <text x="100" y="350" font-family="system-ui, sans-serif" font-size="32" fill="#94a3b8">Test &amp; debug regular expressions live</text>
+  
+  <!-- Regex Example -->
+  <g transform="translate(100, 400)">
+    <text font-family="system-ui, sans-serif" font-size="18" fill="#94a3b8">Pattern:</text>
+    <rect y="25" width="500" height="50" rx="8" fill="rgba(245,158,11,0.1)" stroke="#f59e0b" stroke-width="1"/>
+    <text x="20" y="58" font-family="monospace" font-size="20" fill="#fbbf24">/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+/g</text>
+  </g>
+  
+  <g transform="translate(100, 510)">
+    <text font-family="system-ui, sans-serif" font-size="18" fill="#94a3b8">Match:</text>
+    <text y="30" font-family="monospace" font-size="20" fill="white">user</text>
+    <text x="50" y="30" font-family="monospace" font-size="20" fill="#34d399">@example.com</text>
+  </g>
+  
+  <!-- Features on right -->
+  <g transform="translate(750, 200)">
+    <rect width="380" height="320" rx="20" fill="rgba(245,158,11,0.05)" stroke="rgba(245,158,11,0.2)" stroke-width="1"/>
+    <text x="30" y="50" font-family="system-ui, sans-serif" font-size="22" font-weight="600" fill="white">Features</text>
+    <text x="30" y="100" font-family="system-ui, sans-serif" font-size="18" fill="#94a3b8">✓ Real-time matching</text>
+    <text x="30" y="140" font-family="system-ui, sans-serif" font-size="18" fill="#94a3b8">✓ Match highlighting</text>
+    <text x="30" y="180" font-family="system-ui, sans-serif" font-size="18" fill="#94a3b8">✓ Group extraction</text>
+    <text x="30" y="220" font-family="system-ui, sans-serif" font-size="18" fill="#94a3b8">✓ Common patterns</text>
+    <text x="30" y="260" font-family="system-ui, sans-serif" font-size="18" fill="#94a3b8">✓ Flag options</text>
+  </g>
+  
+  <text x="100" y="590" font-family="system-ui, sans-serif" font-size="22" font-weight="600" fill="url(#amber)">devstools.app</text>
+</svg>

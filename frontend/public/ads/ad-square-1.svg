@@ -1,0 +1,62 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgSq1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0F172A"/>
+      <stop offset="50%" style="stop-color:#1E1B4B"/>
+      <stop offset="100%" style="stop-color:#0F172A"/>
+    </linearGradient>
+    <linearGradient id="accentSq1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0EA5E9"/>
+      <stop offset="50%" style="stop-color:#8B5CF6"/>
+      <stop offset="100%" style="stop-color:#EC4899"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="1200" fill="url(#bgSq1)"/>
+  
+  <!-- Background circles -->
+  <circle cx="200" cy="200" r="150" fill="#0EA5E9" opacity="0.1"/>
+  <circle cx="1000" cy="1000" r="180" fill="#EC4899" opacity="0.1"/>
+  <circle cx="1000" cy="300" r="120" fill="#8B5CF6" opacity="0.1"/>
+  
+  <!-- Logo centered top -->
+  <g transform="translate(500, 100)">
+    <polygon points="100,0 185,50 185,150 100,200 15,150 15,50" fill="none" stroke="url(#accentSq1)" stroke-width="4"/>
+    <text x="55" y="115" font-family="monospace" font-size="50" font-weight="bold" fill="white">&lt;/&gt;</text>
+  </g>
+  <text x="600" y="360" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle">DevsTools</text>
+  
+  <!-- Tool icons grid 3x3 -->
+  <g transform="translate(200, 420)">
+    <!-- Row 1 -->
+    <rect x="0" y="0" width="220" height="140" rx="20" fill="#1F2937" stroke="#0EA5E9" stroke-width="3"/>
+    <text x="110" y="80" font-family="monospace" font-size="40" fill="#0EA5E9" text-anchor="middle">JSON</text>
+    
+    <rect x="260" y="0" width="220" height="140" rx="20" fill="#1F2937" stroke="#8B5CF6" stroke-width="3"/>
+    <text x="370" y="80" font-family="monospace" font-size="40" fill="#8B5CF6" text-anchor="middle">UUID</text>
+    
+    <rect x="520" y="0" width="220" height="140" rx="20" fill="#1F2937" stroke="#EC4899" stroke-width="3"/>
+    <text x="630" y="80" font-family="monospace" font-size="40" fill="#EC4899" text-anchor="middle">Hash</text>
+    
+    <!-- Row 2 -->
+    <rect x="0" y="170" width="220" height="140" rx="20" fill="#1F2937" stroke="#22C55E" stroke-width="3"/>
+    <text x="110" y="250" font-family="monospace" font-size="36" fill="#22C55E" text-anchor="middle">Base64</text>
+    
+    <rect x="260" y="170" width="220" height="140" rx="20" fill="#1F2937" stroke="#F59E0B" stroke-width="3"/>
+    <text x="370" y="250" font-family="monospace" font-size="40" fill="#F59E0B" text-anchor="middle">Regex</text>
+    
+    <rect x="520" y="170" width="220" height="140" rx="20" fill="#1F2937" stroke="#06B6D4" stroke-width="3"/>
+    <text x="630" y="250" font-family="monospace" font-size="40" fill="#06B6D4" text-anchor="middle">QR</text>
+  </g>
+  
+  <!-- Main text -->
+  <text x="600" y="820" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="white" text-anchor="middle">30+ Free</text>
+  <text x="600" y="910" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="url(#accentSq1)" text-anchor="middle">Dev Tools</text>
+  
+  <!-- CTA Button -->
+  <rect x="350" y="970" width="500" height="80" rx="40" fill="url(#accentSq1)"/>
+  <text x="600" y="1025" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="white" text-anchor="middle">Try Free Now →</text>
+  
+  <!-- URL -->
+  <text x="600" y="1130" font-family="Arial, sans-serif" font-size="32" fill="#64748B" text-anchor="middle">devstools.dev</text>
+</svg>

@@ -1,0 +1,84 @@
+<svg width="1200" height="628" viewBox="0 0 1200 628" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg15" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0F172A"/>
+      <stop offset="50%" style="stop-color:#1E1B4B"/>
+      <stop offset="100%" style="stop-color:#0F172A"/>
+    </linearGradient>
+    <linearGradient id="accent15" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0EA5E9"/>
+      <stop offset="50%" style="stop-color:#8B5CF6"/>
+      <stop offset="100%" style="stop-color:#EC4899"/>
+    </linearGradient>
+    <linearGradient id="rainbow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#EF4444"/>
+      <stop offset="20%" style="stop-color:#F59E0B"/>
+      <stop offset="40%" style="stop-color:#22C55E"/>
+      <stop offset="60%" style="stop-color:#06B6D4"/>
+      <stop offset="80%" style="stop-color:#8B5CF6"/>
+      <stop offset="100%" style="stop-color:#EC4899"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="628" fill="url(#bg15)"/>
+  
+  <!-- Animated-like background elements -->
+  <circle cx="150" cy="150" r="100" fill="#0EA5E9" opacity="0.1"/>
+  <circle cx="1050" cy="480" r="120" fill="#EC4899" opacity="0.1"/>
+  <circle cx="600" cy="100" r="80" fill="#8B5CF6" opacity="0.1"/>
+  
+  <!-- Tool icons grid -->
+  <g transform="translate(750, 120)">
+    <!-- Row 1 -->
+    <rect x="0" y="0" width="90" height="90" rx="15" fill="#1F2937" stroke="#0EA5E9" stroke-width="2"/>
+    <text x="45" y="55" font-family="monospace" font-size="28" fill="#0EA5E9" text-anchor="middle">{}</text>
+    
+    <rect x="110" y="0" width="90" height="90" rx="15" fill="#1F2937" stroke="#8B5CF6" stroke-width="2"/>
+    <text x="155" y="55" font-family="monospace" font-size="24" fill="#8B5CF6" text-anchor="middle">#</text>
+    
+    <rect x="220" y="0" width="90" height="90" rx="15" fill="#1F2937" stroke="#EC4899" stroke-width="2"/>
+    <text x="265" y="55" font-family="monospace" font-size="24" fill="#EC4899" text-anchor="middle">.*</text>
+    
+    <!-- Row 2 -->
+    <rect x="0" y="110" width="90" height="90" rx="15" fill="#1F2937" stroke="#22C55E" stroke-width="2"/>
+    <text x="45" y="165" font-family="monospace" font-size="20" fill="#22C55E" text-anchor="middle">b64</text>
+    
+    <rect x="110" y="110" width="90" height="90" rx="15" fill="#1F2937" stroke="#F59E0B" stroke-width="2"/>
+    <text x="155" y="160" font-family="Arial" font-size="18" fill="#F59E0B" text-anchor="middle">UUID</text>
+    
+    <rect x="220" y="110" width="90" height="90" rx="15" fill="#1F2937" stroke="#06B6D4" stroke-width="2"/>
+    <text x="265" y="160" font-family="monospace" font-size="18" fill="#06B6D4" text-anchor="middle">QR</text>
+    
+    <!-- Row 3 -->
+    <rect x="0" y="220" width="90" height="90" rx="15" fill="#1F2937" stroke="#EF4444" stroke-width="2"/>
+    <text x="45" y="275" font-family="monospace" font-size="18" fill="#EF4444" text-anchor="middle">***</text>
+    
+    <rect x="110" y="220" width="90" height="90" rx="15" fill="#1F2937" stroke="#14B8A6" stroke-width="2"/>
+    <text x="155" y="270" font-family="monospace" font-size="18" fill="#14B8A6" text-anchor="middle">RGB</text>
+    
+    <rect x="220" y="220" width="90" height="90" rx="15" fill="#1F2937" stroke="#A855F7" stroke-width="2"/>
+    <text x="265" y="270" font-family="monospace" font-size="16" fill="#A855F7" text-anchor="middle">MD</text>
+  </g>
+  
+  <!-- Main text -->
+  <text x="80" y="180" font-family="Arial, sans-serif" font-size="68" font-weight="bold" fill="white">30+ Free</text>
+  <text x="80" y="260" font-family="Arial, sans-serif" font-size="68" font-weight="bold" fill="url(#accent15)">Dev Tools</text>
+  
+  <text x="80" y="330" font-family="Arial, sans-serif" font-size="26" fill="#94A3B8">JSON • Base64 • UUID • Hash • QR Code</text>
+  <text x="80" y="370" font-family="Arial, sans-serif" font-size="26" fill="#94A3B8">Regex • Password • Color • Markdown</text>
+  <text x="80" y="410" font-family="Arial, sans-serif" font-size="26" fill="#94A3B8">No registration • 100% Free • Fast</text>
+  
+  <!-- CTA Button -->
+  <rect x="80" y="450" width="320" height="65" rx="32" fill="url(#rainbow)"/>
+  <text x="150" y="492" font-family="Arial, sans-serif" font-size="26" font-weight="bold" fill="white">Explore Tools →</text>
+  
+  <!-- Logo -->
+  <g transform="translate(50, 50)">
+    <polygon points="40,0 75,20 75,60 40,80 5,60 5,20" fill="none" stroke="url(#accent15)" stroke-width="2"/>
+    <text x="20" y="48" font-family="monospace" font-size="20" font-weight="bold" fill="white">&lt;/&gt;</text>
+  </g>
+  <text x="140" y="100" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white">DevsTools</text>
+  
+  <!-- URL -->
+  <text x="600" y="590" font-family="Arial, sans-serif" font-size="24" fill="#64748B" text-anchor="middle">devstools.dev</text>
+</svg>

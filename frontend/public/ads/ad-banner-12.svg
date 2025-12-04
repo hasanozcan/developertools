@@ -1,0 +1,60 @@
+<svg width="1200" height="628" viewBox="0 0 1200 628" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg12" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#134E4A"/>
+      <stop offset="50%" style="stop-color:#0F172A"/>
+      <stop offset="100%" style="stop-color:#1E3A5F"/>
+    </linearGradient>
+    <linearGradient id="accent12" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#14B8A6"/>
+      <stop offset="100%" style="stop-color:#06B6D4"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="628" fill="url(#bg12)"/>
+  
+  <!-- Background waves -->
+  <path d="M0,400 Q300,350 600,400 T1200,380 L1200,628 L0,628 Z" fill="#14B8A6" opacity="0.1"/>
+  <path d="M0,450 Q300,400 600,450 T1200,430 L1200,628 L0,628 Z" fill="#14B8A6" opacity="0.05"/>
+  
+  <!-- Color palette icon -->
+  <g transform="translate(850, 150)">
+    <circle cx="100" cy="100" r="120" fill="#1F2937" stroke="#14B8A6" stroke-width="3"/>
+    <circle cx="60" cy="60" r="35" fill="#EF4444"/>
+    <circle cx="140" cy="60" r="35" fill="#22C55E"/>
+    <circle cx="60" cy="140" r="35" fill="#3B82F6"/>
+    <circle cx="140" cy="140" r="35" fill="#F59E0B"/>
+    <circle cx="100" cy="100" r="25" fill="white"/>
+  </g>
+  
+  <!-- Color codes -->
+  <g transform="translate(870, 380)">
+    <rect x="0" y="0" width="160" height="40" rx="8" fill="#EF4444"/>
+    <text x="80" y="28" font-family="monospace" font-size="18" fill="white" text-anchor="middle">#EF4444</text>
+  </g>
+  <g transform="translate(870, 430)">
+    <rect x="0" y="0" width="160" height="40" rx="8" fill="#22C55E"/>
+    <text x="80" y="28" font-family="monospace" font-size="18" fill="white" text-anchor="middle">#22C55E</text>
+  </g>
+  
+  <!-- Main text -->
+  <text x="100" y="200" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="white">Color</text>
+  <text x="100" y="280" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="url(#accent12)">Converter</text>
+  
+  <text x="100" y="350" font-family="Arial, sans-serif" font-size="28" fill="#94A3B8">HEX ↔ RGB ↔ HSL ↔ CMYK</text>
+  <text x="100" y="395" font-family="Arial, sans-serif" font-size="28" fill="#94A3B8">Convert any color format instantly</text>
+  
+  <!-- CTA Button -->
+  <rect x="100" y="440" width="320" height="60" rx="30" fill="url(#accent12)"/>
+  <text x="170" y="480" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">Convert Colors →</text>
+  
+  <!-- Logo -->
+  <g transform="translate(50, 50)">
+    <polygon points="40,0 75,20 75,60 40,80 5,60 5,20" fill="none" stroke="url(#accent12)" stroke-width="2"/>
+    <text x="20" y="48" font-family="monospace" font-size="20" font-weight="bold" fill="white">&lt;/&gt;</text>
+  </g>
+  <text x="140" y="100" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white">DevsTools</text>
+  
+  <!-- URL -->
+  <text x="600" y="590" font-family="Arial, sans-serif" font-size="24" fill="#64748B" text-anchor="middle">devstools.dev</text>
+</svg>

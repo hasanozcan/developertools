@@ -1,0 +1,65 @@
+<svg width="1200" height="628" viewBox="0 0 1200 628" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg11" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E3A5F"/>
+      <stop offset="50%" style="stop-color:#0F172A"/>
+      <stop offset="100%" style="stop-color:#1E1B4B"/>
+    </linearGradient>
+    <linearGradient id="accent11" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#06B6D4"/>
+      <stop offset="100%" style="stop-color:#3B82F6"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="628" fill="url(#bg11)"/>
+  
+  <!-- Grid pattern -->
+  <g opacity="0.1">
+    <line x1="0" y1="100" x2="1200" y2="100" stroke="#06B6D4" stroke-width="1"/>
+    <line x1="0" y1="200" x2="1200" y2="200" stroke="#06B6D4" stroke-width="1"/>
+    <line x1="0" y1="300" x2="1200" y2="300" stroke="#06B6D4" stroke-width="1"/>
+    <line x1="0" y1="400" x2="1200" y2="400" stroke="#06B6D4" stroke-width="1"/>
+    <line x1="0" y1="500" x2="1200" y2="500" stroke="#06B6D4" stroke-width="1"/>
+    <line x1="200" y1="0" x2="200" y2="628" stroke="#06B6D4" stroke-width="1"/>
+    <line x1="400" y1="0" x2="400" y2="628" stroke="#06B6D4" stroke-width="1"/>
+    <line x1="600" y1="0" x2="600" y2="628" stroke="#06B6D4" stroke-width="1"/>
+    <line x1="800" y1="0" x2="800" y2="628" stroke="#06B6D4" stroke-width="1"/>
+    <line x1="1000" y1="0" x2="1000" y2="628" stroke="#06B6D4" stroke-width="1"/>
+  </g>
+  
+  <!-- Diff icon -->
+  <g transform="translate(100, 180)">
+    <rect x="0" y="0" width="180" height="260" rx="15" fill="#1F2937" stroke="#06B6D4" stroke-width="3"/>
+    <rect x="20" y="30" width="140" height="30" rx="5" fill="#EF4444" opacity="0.3"/>
+    <text x="35" y="52" font-family="monospace" font-size="16" fill="#EF4444">- removed line</text>
+    <rect x="20" y="70" width="140" height="30" rx="5" fill="#22C55E" opacity="0.3"/>
+    <text x="35" y="92" font-family="monospace" font-size="16" fill="#22C55E">+ added line</text>
+    <rect x="20" y="110" width="140" height="30" rx="5" fill="#3B82F6" opacity="0.3"/>
+    <text x="35" y="132" font-family="monospace" font-size="16" fill="#3B82F6">~ modified</text>
+    <rect x="20" y="160" width="140" height="30" rx="5" fill="#94A3B8" opacity="0.2"/>
+    <text x="35" y="182" font-family="monospace" font-size="16" fill="#94A3B8">  context</text>
+    <rect x="20" y="200" width="140" height="30" rx="5" fill="#22C55E" opacity="0.3"/>
+    <text x="35" y="222" font-family="monospace" font-size="16" fill="#22C55E">+ new code</text>
+  </g>
+  
+  <!-- Main text -->
+  <text x="350" y="240" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="white">Text Diff</text>
+  <text x="350" y="310" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="url(#accent11)">Checker</text>
+  
+  <text x="350" y="380" font-family="Arial, sans-serif" font-size="28" fill="#94A3B8">Compare texts instantly</text>
+  <text x="350" y="420" font-family="Arial, sans-serif" font-size="28" fill="#94A3B8">See additions, deletions, changes</text>
+  
+  <!-- CTA Button -->
+  <rect x="350" y="460" width="280" height="60" rx="30" fill="url(#accent11)"/>
+  <text x="410" y="500" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">Compare Now →</text>
+  
+  <!-- Logo -->
+  <g transform="translate(1000, 50)">
+    <polygon points="60,0 110,28 110,84 60,112 10,84 10,28" fill="none" stroke="url(#accent11)" stroke-width="3"/>
+    <text x="35" y="65" font-family="monospace" font-size="28" font-weight="bold" fill="white">&lt;/&gt;</text>
+  </g>
+  <text x="970" y="180" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="white">DevsTools</text>
+  
+  <!-- URL -->
+  <text x="600" y="590" font-family="Arial, sans-serif" font-size="24" fill="#64748B" text-anchor="middle">devstools.dev</text>
+</svg>
