@@ -137,6 +137,24 @@ export default function RootLayout({
             crossOrigin="anonymous"
           />
         )}
+        {process.env.NEXT_PUBLIC_GOOGLE_ADS_ID && (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID}`}
+            />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ADS_ID}');
+                `,
+              }}
+            />
+          </>
+        )}
       </head>
       <body className={`${inter.className} antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`} suppressHydrationWarning>
         <Providers>
