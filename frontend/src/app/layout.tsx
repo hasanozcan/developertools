@@ -90,6 +90,21 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const setInitialTheme = `
+    (function() {
+      try {
+        var stored = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = stored === 'light' || stored === 'dark' ? stored : (prefersDark ? 'dark' : 'light');
+        var root = document.documentElement;
+        root.classList.remove('light', 'dark');
+        root.classList.add(theme);
+      } catch (e) {
+        // ignore
+      }
+    })();
+  `;
+
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <head>
@@ -171,10 +186,11 @@ export default function RootLayout({
             )}
           </>
         )}
+        <script dangerouslySetInnerHTML={{ __html: setInitialTheme }} />
       </head>
-      <body className={`${inter.className} antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`} suppressHydrationWarning>
+      <body className={`${inter.className} antialiased text-gray-900 dark:text-gray-100`} suppressHydrationWarning>
         <Providers>
-          <div className="min-h-screen flex flex-col">
+          <div className="flex flex-col flex-1">
             <Header />
             <main className="flex-1">{children}</main>
             <Footer />

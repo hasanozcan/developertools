@@ -13,24 +13,25 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('system');
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === 'undefined') return 'system';
+    const savedTheme = localStorage.getItem('theme') as Theme | null;
+    return savedTheme || 'system';
+  });
   const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light');
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    // Get saved theme from localStorage
+    if (isInitialized) return;
     const savedTheme = localStorage.getItem('theme') as Theme | null;
-    if (savedTheme) {
+    if (savedTheme && savedTheme !== theme) {
       setTheme(savedTheme);
     }
     setIsInitialized(true);
-  }, []);
+  }, [isInitialized, theme]);
 
   useEffect(() => {
     const root = window.document.documentElement;
-
-    // Remove existing theme classes
-    root.classList.remove('light', 'dark');
 
     let resolved: 'light' | 'dark';
 
@@ -43,7 +44,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       resolved = theme;
     }
 
-    root.classList.add(resolved);
+    if (resolved === 'dark') {
+      root.classList.add('dark');
+      root.classList.remove('light');
+    } else {
+      root.classList.add('light');
+      root.classList.remove('dark');
+    }
     setResolvedTheme(resolved);
     
     // Only save to localStorage after initialization
