@@ -248,69 +248,7 @@ export default function SqlFormatterTool() {
   };
 
   const loadSample = () => {
-    setInput(`DECLARE @FirstName      VARCHAR(100) = 'Jordan';
-DECLARE @LastName       VARCHAR(100) = 'Blanchard';
-DECLARE @CoursePattern  VARCHAR(100) = '%Cold Stress%';  -- course name
-;WITH PersonTraineeHistory AS (
-    SELECT
-        th.TraineeHistID,
-        th.TraineeHistCompanyID,
-        p.PersonnelID,
-        p.PersFirstName,
-        p.PersLastName
-    FROM dbo.tblTraineeHistory th
-    JOIN dbo.tblPersonnel p
-         ON p.PersonnelID = th.TraineeHistPersonnelID
-    WHERE p.PersFirstName = @FirstName
-      AND p.PersLastName  = @LastName
-),
-Raw AS (
-    SELECT
-        tpp.TPProgressionTrackID,
-        tpp.TPProgressionTrackTraineeHistID,
-        pth.TraineeHistCompanyID,
-        cTH.CompName AS TraineeHistCompanyName,
-        tpp.TPProgressionTrackTPItemID,
-        tpi.TPItemDetailDesc,
-        tpi.TPItemTypeID,
-        tpi.TPItemCompanyID,
-        cItem.CompName AS TPItemCompanyName,
-        tpp.TPProgressionTrackStartDate,
-        tpp.TPProgressionTrackTrainingCompletionDate,
-        tpp.TPProgressionTrackCompletionDate,
-        tpp.TPProgressionTrackCompletionStatusID,
-        tpp.QuizResults_TQRID,
-        tqr.*,
-        -- helpers
-        ROW_NUMBER() OVER (
-            PARTITION BY tpp.TPProgressionTrackTraineeHistID,
-                         tpi.TPItemID
-            ORDER BY tpp.TPProgressionTrackCompletionDate DESC
-        ) AS rn_per_item,
-        ROW_NUMBER() OVER (
-            PARTITION BY tpp.TPProgressionTrackTraineeHistID,
-                         tpi.TPItemTypeID
-            ORDER BY tpp.TPProgressionTrackCompletionDate DESC
-        ) AS rn_per_type
-    FROM dbo.tblTrainingProgramProgressionTracking tpp
-    JOIN PersonTraineeHistory pth
-         ON pth.TraineeHistID = tpp.TPProgressionTrackTraineeHistID
-    JOIN dbo.tblTrainingProgramItems tpi
-         ON tpi.TPItemID = tpp.TPProgressionTrackTPItemID
-    LEFT JOIN dbo.tblTrainingQuizResults tqr
-         ON tqr.TQRID = tpp.QuizResults_TQRID
-    LEFT JOIN dbo.tblCompany cTH
-         ON cTH.CompanyID = pth.TraineeHistCompanyID
-    LEFT JOIN dbo.tblCompany cItem
-         ON cItem.CompanyID = tpi.TPItemCompanyID
-    WHERE tpi.TPItemDetailDesc LIKE @CoursePattern
-)
-SELECT *
-FROM Raw
-ORDER BY
-    TPProgressionTrackTraineeHistID,
-    TPItemTypeID,                           -- 2: course, 3: online training, 4: exam
-    TPProgressionTrackCompletionDate DESC;`);
+    setInput(`select u.id, u.name, u.email, o.order_id, o.total_amount from users u inner join orders o on u.id = o.user_id where u.status = 'active' and o.created_at > '2024-01-01' and o.total_amount > 100 order by o.created_at desc limit 10;`);
     setError(null);
   };
 
