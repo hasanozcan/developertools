@@ -20,14 +20,26 @@ export const languageNames: Record<Language, string> = {
   zh: '中文',
 };
 
+// Use text codes for consistent rendering across browsers
 export const languageFlags: Record<Language, string> = {
-  en: '🇬🇧',
+  en: '🇺🇸',
   tr: '🇹🇷',
   de: '🇩🇪',
   es: '🇪🇸',
   fr: '🇫🇷',
   ru: '🇷🇺',
   zh: '🇨🇳',
+};
+
+// Twemoji SVG URLs for consistent cross-browser rendering
+export const languageFlagUrls: Record<Language, string> = {
+  en: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1fa-1f1f8.svg', // US
+  tr: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1f9-1f1f7.svg',
+  de: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1e9-1f1ea.svg',
+  es: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1ea-1f1f8.svg',
+  fr: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1eb-1f1f7.svg',
+  ru: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1f7-1f1fa.svg',
+  zh: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f1e8-1f1f3.svg',
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
