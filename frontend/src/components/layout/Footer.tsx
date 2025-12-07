@@ -8,10 +8,10 @@ export default function Footer() {
 
   const footerLinks = {
     tools: [
-      { name: 'JSON Formatter', href: '/tools/json/json-formatter' },
-      { name: 'Base64 Encoder', href: '/tools/encoding/base64' },
-      { name: 'UUID Generator', href: '/tools/generators/uuid-generator' },
-      { name: 'Regex Tester', href: '/tools/text/regex-tester' },
+      { key: 'toolName.json-formatter', fallback: 'JSON Formatter', href: '/tools/json/json-formatter' },
+      { key: 'toolName.base64', fallback: 'Base64 Encoder/Decoder', href: '/tools/encoding/base64' },
+      { key: 'toolName.uuid-generator', fallback: 'UUID Generator', href: '/tools/generators/uuid-generator' },
+      { key: 'toolName.regex-tester', fallback: 'Regex Tester', href: '/tools/text/regex-tester' },
     ],
     categories: [
       { name: t('nav.encoders'), href: '/tools/encoding' },
@@ -63,13 +63,16 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-gray-900 dark:text-white mb-4">{t('footer.popularTools')}</h3>
             <ul className="space-y-2">
-              {footerLinks.tools.map((link) => (
-                <li key={link.name}>
-                  <Link href={link.href} className="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm">
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
+              {footerLinks.tools.map((link) => {
+                const label = t(link.key) !== link.key ? t(link.key) : link.fallback;
+                return (
+                  <li key={link.href}>
+                    <Link href={link.href} className="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm">
+                      {label}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
