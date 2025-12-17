@@ -9,13 +9,15 @@ export default function TimestampConverterTool() {
   const { t } = useLanguage();
   const [timestamp, setTimestamp] = useState('');
   const [dateString, setDateString] = useState('');
-  const [currentTime, setCurrentTime] = useState(Math.floor(Date.now() / 1000));
+  const [currentTime, setCurrentTime] = useState<number | null>(null);
   const [unit, setUnit] = useState<'seconds' | 'milliseconds'>('seconds');
 
   // Update current time every second
   useEffect(() => {
+    const update = () => setCurrentTime(Math.floor(Date.now() / 1000));
+    update();
     const interval = setInterval(() => {
-      setCurrentTime(Math.floor(Date.now() / 1000));
+      update();
     }, 1000);
     return () => clearInterval(interval);
   }, []);
@@ -70,7 +72,7 @@ export default function TimestampConverterTool() {
     return date.toLocaleString();
   };
 
-  const currentDate = new Date(currentTime * 1000);
+  const currentDate = currentTime === null ? null : new Date(currentTime * 1000);
 
   return (
     <div className="space-y-6">
@@ -84,13 +86,15 @@ export default function TimestampConverterTool() {
           <div>
             <span className="text-xs text-gray-500 dark:text-gray-400">Unix Timestamp</span>
             <div className="flex items-center gap-2">
-              <code className="font-mono text-lg text-gray-900 dark:text-white">{currentTime}</code>
-              <CopyButton text={currentTime.toString()} />
+              <code className="font-mono text-lg text-gray-900 dark:text-white">{currentTime ?? '-'}</code>
+              <CopyButton text={currentTime === null ? '' : currentTime.toString()} />
             </div>
           </div>
           <div>
             <span className="text-xs text-gray-500 dark:text-gray-400">Date/Time</span>
-            <div className="font-mono text-lg text-gray-900 dark:text-white">{currentDate.toLocaleString()}</div>
+            <div className="font-mono text-lg text-gray-900 dark:text-white">
+              {currentDate ? currentDate.toLocaleString() : '-'}
+            </div>
           </div>
         </div>
       </div>

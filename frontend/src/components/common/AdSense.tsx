@@ -23,9 +23,9 @@ export default function AdSense({
 }: AdSenseProps) {
   useEffect(() => {
     try {
-      if (typeof window !== 'undefined' && window.adsbygoogle) {
-        window.adsbygoogle.push({});
-      }
+      // Queue render request even if the AdSense script hasn't loaded yet.
+      // This avoids missed renders when the script is loaded after hydration.
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch (error) {
       console.error('AdSense error:', error);
     }
