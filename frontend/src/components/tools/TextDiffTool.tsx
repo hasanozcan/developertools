@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useRef } from 'react';
 import { Copy, Check, ArrowLeftRight } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -13,6 +13,18 @@ interface DiffLine {
 }
 
 type DiffSegment = { type: 'same' | 'added' | 'removed'; text: string };
+
+type DiffOptions = {
+  ignoreWhitespace: boolean;
+  ignoreCase: boolean;
+};
+
+function normalizeForCompare(text: string, { ignoreWhitespace, ignoreCase }: DiffOptions): string {
+  let value = text;
+  if (ignoreWhitespace) value = value.replace(/\s+/g, ' ').trim();
+  if (ignoreCase) value = value.toLowerCase();
+  return value;
+}
 
 function lcsLength(a: string, b: string): number {
   const s1 = Array.from(a);
@@ -34,19 +46,21 @@ function lcsLength(a: string, b: string): number {
   return dp[m][n];
 }
 
-function shouldMergeRemovedAdded(removed?: string, added?: string): boolean {
+function shouldMergeRemovedAdded(removed: string | undefined, added: string | undefined, options: DiffOptions): boolean {
   if (!removed || !added) return false;
-  const a = removed.trim();
-  const b = added.trim();
+  const a = normalizeForCompare(removed, options);
+  const b = normalizeForCompare(added, options);
   if (!a || !b) return false;
   if (a === b) return true;
   const score = lcsLength(a, b) / Math.max(a.length, b.length);
   return score >= 0.6;
 }
 
-function computeDiff(text1: string, text2: string): DiffLine[] {
+function computeDiff(text1: string, text2: string, options: DiffOptions): DiffLine[] {
   const lines1 = text1.split('\n');
   const lines2 = text2.split('\n');
+  const compare1 = lines1.map((line) => normalizeForCompare(line, options));
+  const compare2 = lines2.map((line) => normalizeForCompare(line, options));
   const result: DiffLine[] = [];
 
   // Simple LCS-based diff algorithm
@@ -60,7 +74,7 @@ function computeDiff(text1: string, text2: string): DiffLine[] {
 
   for (let i = 1; i <= m; i++) {
     for (let j = 1; j <= n; j++) {
-      if (lines1[i - 1] === lines2[j - 1]) {
+      if (compare1[i - 1] === compare2[j - 1]) {
         dp[i][j] = dp[i - 1][j - 1] + 1;
       } else {
         dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
@@ -74,7 +88,7 @@ function computeDiff(text1: string, text2: string): DiffLine[] {
   const tempResult: DiffLine[] = [];
 
   while (i > 0 || j > 0) {
-    if (i > 0 && j > 0 && lines1[i - 1] === lines2[j - 1]) {
+    if (i > 0 && j > 0 && compare1[i - 1] === compare2[j - 1]) {
       tempResult.unshift({
         type: 'same',
         lineNumber1: i,
@@ -105,7 +119,11 @@ function computeDiff(text1: string, text2: string): DiffLine[] {
   for (let k = 0; k < tempResult.length; k++) {
     const current = tempResult[k];
     const next = tempResult[k + 1];
-    if (current?.type === 'removed' && next?.type === 'added' && shouldMergeRemovedAdded(current.content1, next.content2)) {
+    if (
+      current?.type === 'removed' &&
+      next?.type === 'added' &&
+      shouldMergeRemovedAdded(current.content1, next.content2, options)
+    ) {
       result.push({
         type: 'modified',
         lineNumber1: current.lineNumber1,
@@ -279,28 +297,32 @@ export default function TextDiffTool() {
   const [text2, setText2] = useState('');
   const [viewMode, setViewMode] = useState<'split' | 'unified'>('split');
   const [ignoreWhitespace, setIgnoreWhitespace] = useState(false);
+  const [ignoreCase, setIgnoreCase] = useState(false);
+  const [showOnlyChanges, setShowOnlyChanges] = useState(false);
+  const [wrapLines, setWrapLines] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const processedText1 = useMemo(() => {
-    if (ignoreWhitespace) {
-      return text1.split('\n').map((line) => line.trim()).join('\n');
-    }
-    return text1;
-  }, [text1, ignoreWhitespace]);
-
-  const processedText2 = useMemo(() => {
-    if (ignoreWhitespace) {
-      return text2.split('\n').map((line) => line.trim()).join('\n');
-    }
-    return text2;
-  }, [text2, ignoreWhitespace]);
-
   const diff = useMemo(() => {
-    if (!processedText1 && !processedText2) return [];
-    return computeDiff(processedText1, processedText2);
-  }, [processedText1, processedText2]);
+    if (!text1 && !text2) return [];
+    return computeDiff(text1, text2, { ignoreWhitespace, ignoreCase });
+  }, [text1, text2, ignoreWhitespace, ignoreCase]);
 
   const stats = useMemo(() => calculateStats(diff), [diff]);
+  const visibleDiff = useMemo(() => {
+    if (!showOnlyChanges) return diff;
+    return diff.filter((line) => line.type !== 'same');
+  }, [diff, showOnlyChanges]);
+
+  const tokenDiffs = useMemo(() => {
+    return visibleDiff.map((line) =>
+      line.type === 'modified' ? computeTokenDiff(line.content1 || '', line.content2 || '') : null
+    );
+  }, [visibleDiff]);
+
+  const codeWhitespaceClass = wrapLines ? 'whitespace-pre-wrap break-words' : 'whitespace-pre';
+  const leftScrollRef = useRef<HTMLDivElement>(null);
+  const rightScrollRef = useRef<HTMLDivElement>(null);
+  const syncingScrollRef = useRef(false);
 
   const swapTexts = useCallback(() => {
     const temp = text1;
@@ -309,7 +331,7 @@ export default function TextDiffTool() {
   }, [text1, text2]);
 
   const copyDiff = useCallback(() => {
-    const diffText = diff
+    const diffText = visibleDiff
       .map((line) => {
         if (line.type === 'same') return `  ${line.content1}`;
         if (line.type === 'added') return `+ ${line.content2}`;
@@ -322,24 +344,67 @@ export default function TextDiffTool() {
     navigator.clipboard.writeText(diffText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
-  }, [diff]);
+  }, [visibleDiff]);
+
+  const syncScroll = useCallback((source: 'left' | 'right') => {
+    if (syncingScrollRef.current) return;
+    const from = source === 'left' ? leftScrollRef.current : rightScrollRef.current;
+    const to = source === 'left' ? rightScrollRef.current : leftScrollRef.current;
+    if (!from || !to) return;
+
+    syncingScrollRef.current = true;
+    to.scrollTop = from.scrollTop;
+    to.scrollLeft = from.scrollLeft;
+    requestAnimationFrame(() => {
+      syncingScrollRef.current = false;
+    });
+  }, []);
 
   const loadSample = useCallback(() => {
-    setText1(`function greet(name) {
+    setText1(`# Text Diff sample
+# Try toggles: Ignore case, Ignore whitespace, Show only changes, Wrap lines
+
+MODE=PRODUCTION
+timeout_ms = 2500
+LOG_LEVEL=INFO
+FEATURE_FLAGS = enableSearch, enableHistory, enableAds
+THEME=dark
+
+# Unchanged block
+owner = DevsTools
+notes = This line stays the same.
+
+API_BASE_URL=https://api.devstools.app/v1
+CACHE_TTL =  3600
+
+function greet(name) {
   console.log("Hello, " + name);
   return true;
 }
 
-const message = "Welcome";
-greet(message);`);
-    setText2(`function greet(name, greeting = "Hello") {
+const VERY_LONG_LINE = "This is a very long line that will overflow horizontally when wrapping is disabled; turn on 'Wrap lines' to see it wrapped nicely in the diff output.";`);
+    setText2(`# Text Diff sample
+# Try toggles: Ignore case, Ignore whitespace, Show only changes, Wrap lines
+
+mode=production
+timeout_ms =    2500
+LOG_LEVEL=info
+FEATURE_FLAGS = enableSearch, enableHistory, enableAds, enableI18n
+THEME=dark
+
+# Unchanged block
+owner = DevsTools
+notes = This line stays the same.
+
+API_BASE_URL=https://api.devstools.app/v2
+CACHE_TTL = 3600
+
+function greet(name, greeting = "Hello") {
   console.log(greeting + ", " + name + "!");
   return true;
 }
 
-const message = "Welcome";
-const customGreeting = "Hi";
-greet(message, customGreeting);`);
+const VERY_LONG_LINE = "This is a very long line that will overflow horizontally when wrapping is disabled; turn on 'Wrap lines' to see it wrapped nicely in the diff output, plus a bit more text so it's definitely long.";`);
   }, []);
 
   return (
@@ -378,6 +443,36 @@ greet(message, customGreeting);`);
           />
           <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.textDiff.ignoreWhitespace')}</span>
         </label>
+
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={ignoreCase}
+            onChange={(e) => setIgnoreCase(e.target.checked)}
+            className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
+          />
+          <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.textDiff.ignoreCase')}</span>
+        </label>
+
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={showOnlyChanges}
+            onChange={(e) => setShowOnlyChanges(e.target.checked)}
+            className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
+          />
+          <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.textDiff.showOnlyChanges')}</span>
+        </label>
+
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={wrapLines}
+            onChange={(e) => setWrapLines(e.target.checked)}
+            className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
+          />
+          <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.textDiff.wrapLines')}</span>
+        </label>
         
         <button
           onClick={swapTexts}
@@ -403,7 +498,7 @@ greet(message, customGreeting);`);
           {t('common.clear')}
         </button>
         
-        {diff.length > 0 && (
+        {visibleDiff.length > 0 && (
           <button
             onClick={copyDiff}
             className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium flex items-center gap-2 text-sm"
@@ -460,81 +555,129 @@ greet(message, customGreeting);`);
             <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{t('tool.textDiff.diffResult')}</span>
           </div>
           
-          {viewMode === 'split' ? (
+          {visibleDiff.length === 0 ? (
+            <div className="p-6 text-center text-sm text-gray-500 dark:text-gray-400">
+              {t('tool.textDiff.noDifferences')}
+            </div>
+          ) : viewMode === 'split' ? (
             <div className="grid grid-cols-2 divide-x divide-gray-300 dark:divide-gray-600">
-              <div className="overflow-auto max-h-96">
-                {diff.map((line, index) => (
-                  <div
-                    key={`left-${index}`}
-                    className={`flex font-mono text-sm ${
-                      line.type === 'removed'
-                        ? 'bg-red-50 dark:bg-red-900/30'
-                        : line.type === 'added' || line.type === 'modified'
-                        ? 'bg-gray-50 dark:bg-gray-800'
-                        : ''
-                    }`}
-                  >
-                    <span className="w-12 px-2 py-1 text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 text-right select-none">
-                      {line.lineNumber1 || ''}
-                    </span>
-                    <span
-                      className={`flex-1 px-3 py-1 whitespace-pre ${
-                        line.type === 'removed' || line.type === 'modified'
-                          ? 'text-red-700 dark:text-red-400'
+              <div ref={leftScrollRef} onScroll={() => syncScroll('left')} className="overflow-auto max-h-96">
+                {visibleDiff.map((line, index) => {
+                  const tokenDiff = tokenDiffs[index];
+
+                  return (
+                    <div
+                      key={`left-${index}`}
+                      className={`flex font-mono text-sm ${
+                        line.type === 'removed'
+                          ? 'bg-red-50 dark:bg-red-900/30'
+                          : line.type === 'modified'
+                          ? 'bg-amber-50 dark:bg-amber-900/30'
                           : line.type === 'added'
-                          ? 'text-gray-400 dark:text-gray-600'
-                          : 'text-gray-900 dark:text-gray-100'
+                          ? 'bg-gray-50 dark:bg-gray-800'
+                          : ''
                       }`}
                     >
-                      {line.type === 'removed' || line.type === 'modified'
-                        ? `- ${line.content1}`
-                        : line.type === 'added'
-                        ? ''
-                        : line.content1}
-                    </span>
-                  </div>
-                ))}
+                      <span className="w-12 px-2 py-1 text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 text-right select-none">
+                        {line.lineNumber1 || ''}
+                      </span>
+
+                      {line.type === 'modified' ? (
+                        <span className={`flex-1 px-3 py-1 ${codeWhitespaceClass}`}>
+                          <span className="text-red-700 dark:text-red-400 select-none">- </span>
+                          {tokenDiff?.oldParts.map((p, i) => (
+                            <span
+                              key={`old-split-${index}-${i}`}
+                              className={
+                                p.type === 'same'
+                                  ? 'text-gray-900 dark:text-gray-100'
+                                  : 'bg-red-200/60 dark:bg-red-800/60 rounded px-0.5 text-red-800 dark:text-red-100'
+                              }
+                            >
+                              {p.text}
+                            </span>
+                          ))}
+                        </span>
+                      ) : (
+                        <span
+                          className={`flex-1 px-3 py-1 ${codeWhitespaceClass} ${
+                            line.type === 'removed'
+                              ? 'text-red-700 dark:text-red-400'
+                              : line.type === 'added'
+                              ? 'text-gray-400 dark:text-gray-600'
+                              : 'text-gray-900 dark:text-gray-100'
+                          }`}
+                        >
+                          {line.type === 'removed' ? `- ${line.content1}` : line.type === 'added' ? '' : line.content1}
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
-              <div className="overflow-auto max-h-96">
-                {diff.map((line, index) => (
-                  <div
-                    key={`right-${index}`}
-                    className={`flex font-mono text-sm ${
-                      line.type === 'added' || line.type === 'modified'
-                        ? 'bg-green-50 dark:bg-green-900/30'
-                        : line.type === 'removed'
-                        ? 'bg-gray-50 dark:bg-gray-800'
-                        : ''
-                    }`}
-                  >
-                    <span className="w-12 px-2 py-1 text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 text-right select-none">
-                      {line.lineNumber2 || ''}
-                    </span>
-                    <span
-                      className={`flex-1 px-3 py-1 whitespace-pre ${
-                        line.type === 'added' || line.type === 'modified'
-                          ? 'text-green-700 dark:text-green-400'
+              <div ref={rightScrollRef} onScroll={() => syncScroll('right')} className="overflow-auto max-h-96">
+                {visibleDiff.map((line, index) => {
+                  const tokenDiff = tokenDiffs[index];
+
+                  return (
+                    <div
+                      key={`right-${index}`}
+                      className={`flex font-mono text-sm ${
+                        line.type === 'added'
+                          ? 'bg-green-50 dark:bg-green-900/30'
+                          : line.type === 'modified'
+                          ? 'bg-amber-50 dark:bg-amber-900/30'
                           : line.type === 'removed'
-                          ? 'text-gray-400 dark:text-gray-600'
-                          : 'text-gray-900 dark:text-gray-100'
+                          ? 'bg-gray-50 dark:bg-gray-800'
+                          : ''
                       }`}
                     >
-                      {line.type === 'added' || line.type === 'modified'
-                        ? `+ ${line.content2}`
-                        : line.type === 'removed'
-                        ? ''
-                        : line.content2}
-                    </span>
-                  </div>
-                ))}
+                      <span className="w-12 px-2 py-1 text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 text-right select-none">
+                        {line.lineNumber2 || ''}
+                      </span>
+
+                      {line.type === 'modified' ? (
+                        <span className={`flex-1 px-3 py-1 ${codeWhitespaceClass}`}>
+                          <span className="text-green-700 dark:text-green-400 select-none">+ </span>
+                          {tokenDiff?.newParts.map((p, i) => (
+                            <span
+                              key={`new-split-${index}-${i}`}
+                              className={
+                                p.type === 'same'
+                                  ? 'text-gray-900 dark:text-gray-100'
+                                  : 'bg-green-200/60 dark:bg-green-800/60 rounded px-0.5 text-green-800 dark:text-green-100'
+                              }
+                            >
+                              {p.text}
+                            </span>
+                          ))}
+                        </span>
+                      ) : (
+                        <span
+                          className={`flex-1 px-3 py-1 ${codeWhitespaceClass} ${
+                            line.type === 'added'
+                              ? 'text-green-700 dark:text-green-400'
+                              : line.type === 'removed'
+                              ? 'text-gray-400 dark:text-gray-600'
+                              : 'text-gray-900 dark:text-gray-100'
+                          }`}
+                        >
+                          {line.type === 'added' ? `+ ${line.content2}` : line.type === 'removed' ? '' : line.content2}
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           ) : (
             <div className="overflow-auto max-h-96">
-                {diff.map((line, index) => {
-                  if (line.type === 'modified') {
-                  const { oldParts, newParts } = computeTokenDiff(line.content1 || '', line.content2 || '');
-                  return (
+                {visibleDiff.map((line, index) => {
+                  const tokenDiff = tokenDiffs[index];
+
+                  if (line.type === 'modified' && tokenDiff) {
+                    const { oldParts, newParts } = tokenDiff;
+                    return (
                     <div
                       key={index}
                       className="flex font-mono text-sm bg-amber-50 dark:bg-amber-900/30"
@@ -545,7 +688,7 @@ greet(message, customGreeting);`);
                       <span className="w-12 px-2 py-1 text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 text-right select-none">
                         {line.lineNumber2 || ''}
                       </span>
-                      <span className="flex-1 px-3 py-1 whitespace-pre space-x-1">
+                      <span className={`flex-1 px-3 py-1 ${codeWhitespaceClass}`}>
                         <span className="text-gray-500 dark:text-gray-400">~</span>
                         {oldParts.map((p, i) => (
                           <span
@@ -559,7 +702,7 @@ greet(message, customGreeting);`);
                             {p.text}
                           </span>
                         ))}
-                        <span className="text-gray-400 dark:text-gray-500">→</span>
+                        <span className="mx-2 text-gray-400 dark:text-gray-500 select-none">→</span>
                         {newParts.map((p, i) => (
                           <span
                             key={`new-${i}`}
@@ -574,8 +717,8 @@ greet(message, customGreeting);`);
                         ))}
                       </span>
                     </div>
-                  );
-                }
+                    );
+                  }
 
                 return (
                   <div
@@ -595,7 +738,7 @@ greet(message, customGreeting);`);
                       {line.lineNumber2 || ''}
                     </span>
                     <span
-                      className={`flex-1 px-3 py-1 whitespace-pre ${
+                      className={`flex-1 px-3 py-1 ${codeWhitespaceClass} ${
                         line.type === 'added'
                           ? 'text-green-700 dark:text-green-400'
                           : line.type === 'removed'
