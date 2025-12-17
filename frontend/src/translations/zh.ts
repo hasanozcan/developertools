@@ -328,6 +328,7 @@ export const zh = {
     'tool.textDiff.modifiedPlaceholder': '输入修改后的文本...',
     'tool.textDiff.additions': '新增',
     'tool.textDiff.deletions': '删除项',
+    'tool.textDiff.modifications': '更改',
     'tool.textDiff.unchanged': '未变',
     'tool.textDiff.splitView': '分屏视图',
     'tool.textDiff.unifiedView': '合并视图',

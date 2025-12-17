@@ -26,34 +26,127 @@ function normalizeForCompare(text: string, { ignoreWhitespace, ignoreCase }: Dif
   return value;
 }
 
-function lcsLength(a: string, b: string): number {
-  const s1 = Array.from(a);
-  const s2 = Array.from(b);
-  const m = s1.length;
-  const n = s2.length;
-  const dp: number[][] = Array(m + 1)
-    .fill(null)
-    .map(() => Array(n + 1).fill(0));
-  for (let i = 1; i <= m; i++) {
-    for (let j = 1; j <= n; j++) {
-      if (s1[i - 1] === s2[j - 1]) {
-        dp[i][j] = dp[i - 1][j - 1] + 1;
-      } else {
-        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
-      }
+type BigramInfo = {
+  counts: Map<string, number>;
+  length: number;
+  total: number;
+};
+
+function getBigramInfo(value: string, cache: Map<string, BigramInfo>): BigramInfo {
+  const cached = cache.get(value);
+  if (cached) return cached;
+
+  const chars = Array.from(value);
+  const counts = new Map<string, number>();
+
+  if (chars.length === 1) {
+    counts.set(chars[0], 1);
+  } else {
+    for (let i = 0; i < chars.length - 1; i++) {
+      const gram = `${chars[i]}${chars[i + 1]}`;
+      counts.set(gram, (counts.get(gram) || 0) + 1);
     }
   }
-  return dp[m][n];
+
+  const info: BigramInfo = {
+    counts,
+    length: chars.length,
+    total: Math.max(1, chars.length - 1),
+  };
+
+  cache.set(value, info);
+  return info;
 }
 
-function shouldMergeRemovedAdded(removed: string | undefined, added: string | undefined, options: DiffOptions): boolean {
-  if (!removed || !added) return false;
-  const a = normalizeForCompare(removed, options);
-  const b = normalizeForCompare(added, options);
-  if (!a || !b) return false;
-  if (a === b) return true;
-  const score = lcsLength(a, b) / Math.max(a.length, b.length);
-  return score >= 0.6;
+function bigramSimilarity(a: string, b: string, cache: Map<string, BigramInfo>): number {
+  if (a === b) return 1;
+  if (!a || !b) return 0;
+
+  const infoA = getBigramInfo(a, cache);
+  const infoB = getBigramInfo(b, cache);
+
+  let intersection = 0;
+  const small = infoA.counts.size <= infoB.counts.size ? infoA : infoB;
+  const large = small === infoA ? infoB : infoA;
+
+  for (const [gram, count] of small.counts) {
+    const other = large.counts.get(gram);
+    if (other) intersection += Math.min(count, other);
+  }
+
+  const dice = (2 * intersection) / (infoA.total + infoB.total);
+  const lengthRatio = Math.min(infoA.length, infoB.length) / Math.max(infoA.length, infoB.length);
+  return dice * lengthRatio;
+}
+
+function alignChangeHunk(removed: DiffLine[], added: DiffLine[], similarity: (a: string, b: string) => number): DiffLine[] {
+  const gapCost = 0.45;
+  const minSimilarity = 0.2;
+
+  const r = removed.length;
+  const a = added.length;
+  const dp: number[][] = Array(r + 1)
+    .fill(null)
+    .map(() => Array(a + 1).fill(0));
+  const dir: Array<Array<'diag' | 'up' | 'left'>> = Array(r + 1)
+    .fill(null)
+    .map(() => Array(a + 1).fill('diag'));
+
+  for (let i = 1; i <= r; i++) {
+    dp[i][0] = dp[i - 1][0] + gapCost;
+    dir[i][0] = 'up';
+  }
+  for (let j = 1; j <= a; j++) {
+    dp[0][j] = dp[0][j - 1] + gapCost;
+    dir[0][j] = 'left';
+  }
+
+  const EPS = 1e-9;
+  for (let i = 1; i <= r; i++) {
+    for (let j = 1; j <= a; j++) {
+      const sim = similarity(removed[i - 1].content1 ?? '', added[j - 1].content2 ?? '');
+      const matchCost = sim >= minSimilarity ? dp[i - 1][j - 1] + (1 - sim) : Number.POSITIVE_INFINITY;
+      const delCost = dp[i - 1][j] + gapCost;
+      const insCost = dp[i][j - 1] + gapCost;
+
+      const best = Math.min(matchCost, delCost, insCost);
+      dp[i][j] = best;
+
+      if (Math.abs(best - matchCost) <= EPS) dir[i][j] = 'diag';
+      else if (Math.abs(best - delCost) <= EPS) dir[i][j] = 'up';
+      else dir[i][j] = 'left';
+    }
+  }
+
+  let i = r;
+  let j = a;
+  const reversed: DiffLine[] = [];
+
+  while (i > 0 || j > 0) {
+    const step = dir[i][j];
+    if (step === 'diag') {
+      const from = removed[i - 1];
+      const to = added[j - 1];
+      reversed.push({
+        type: 'modified',
+        lineNumber1: from.lineNumber1,
+        lineNumber2: to.lineNumber2,
+        content1: from.content1,
+        content2: to.content2,
+      });
+      i--;
+      j--;
+    } else if (step === 'up') {
+      reversed.push(removed[i - 1]);
+      i--;
+    } else {
+      reversed.push(added[j - 1]);
+      j--;
+    }
+  }
+
+  reversed.reverse();
+  return reversed;
 }
 
 function computeDiff(text1: string, text2: string, options: DiffOptions): DiffLine[] {
@@ -62,6 +155,14 @@ function computeDiff(text1: string, text2: string, options: DiffOptions): DiffLi
   const compare1 = lines1.map((line) => normalizeForCompare(line, options));
   const compare2 = lines2.map((line) => normalizeForCompare(line, options));
   const result: DiffLine[] = [];
+  const bigramCache = new Map<string, BigramInfo>();
+  const similarity = (a: string | undefined, b: string | undefined) => {
+    const na = normalizeForCompare(a ?? '', options);
+    const nb = normalizeForCompare(b ?? '', options);
+    if (na === nb) return 1;
+    if (!na || !nb) return 0;
+    return bigramSimilarity(na, nb, bigramCache);
+  };
 
   // Simple LCS-based diff algorithm
   const m = lines1.length;
@@ -115,25 +216,31 @@ function computeDiff(text1: string, text2: string, options: DiffOptions): DiffLi
     }
   }
 
-  // Merge adjacent removed/added pairs into modified entries for clearer display
-  for (let k = 0; k < tempResult.length; k++) {
-    const current = tempResult[k];
-    const next = tempResult[k + 1];
-    if (
-      current?.type === 'removed' &&
-      next?.type === 'added' &&
-      shouldMergeRemovedAdded(current.content1, next.content2, options)
-    ) {
-      result.push({
-        type: 'modified',
-        lineNumber1: current.lineNumber1,
-        lineNumber2: next.lineNumber2,
-        content1: current.content1,
-        content2: next.content2,
-      });
-      k++; // skip the next since it's merged
-    } else {
+  // Pair removed/added lines within each change hunk to better detect modifications
+  let cursor = 0;
+  while (cursor < tempResult.length) {
+    const current = tempResult[cursor];
+    if (current.type === 'same') {
       result.push(current);
+      cursor++;
+      continue;
+    }
+
+    const start = cursor;
+    while (cursor < tempResult.length && tempResult[cursor].type !== 'same') cursor++;
+    const hunk = tempResult.slice(start, cursor);
+
+    const removed = hunk
+      .filter((l) => l.type === 'removed')
+      .sort((a, b) => (a.lineNumber1 || 0) - (b.lineNumber1 || 0));
+    const added = hunk
+      .filter((l) => l.type === 'added')
+      .sort((a, b) => (a.lineNumber2 || 0) - (b.lineNumber2 || 0));
+
+    if (removed.length > 0 && added.length > 0) {
+      result.push(...alignChangeHunk(removed, added, (a, b) => similarity(a, b)));
+    } else {
+      result.push(...hunk);
     }
   }
 
@@ -273,6 +380,7 @@ function computeTokenDiff(a: string, b: string): { oldParts: DiffSegment[]; newP
 interface DiffStats {
   additions: number;
   deletions: number;
+  modifications: number;
   unchanged: number;
 }
 
@@ -281,13 +389,11 @@ function calculateStats(diff: DiffLine[]): DiffStats {
     (acc, line) => {
       if (line.type === 'added') acc.additions++;
       else if (line.type === 'removed') acc.deletions++;
-      else if (line.type === 'modified') {
-        acc.additions++;
-        acc.deletions++;
-      } else if (line.type === 'same') acc.unchanged++;
+      else if (line.type === 'modified') acc.modifications++;
+      else if (line.type === 'same') acc.unchanged++;
       return acc;
     },
-    { additions: 0, deletions: 0, unchanged: 0 }
+    { additions: 0, deletions: 0, modifications: 0, unchanged: 0 }
   );
 }
 
@@ -541,6 +647,9 @@ const VERY_LONG_LINE = "This is a very long line that will overflow horizontally
           </span>
           <span className="px-3 py-1 bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-300 rounded-full">
             -{stats.deletions} {t('tool.textDiff.deletions')}
+          </span>
+          <span className="px-3 py-1 bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-300 rounded-full">
+            ~{stats.modifications} {t('tool.textDiff.modifications')}
           </span>
           <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full">
             {stats.unchanged} {t('tool.textDiff.unchanged')}

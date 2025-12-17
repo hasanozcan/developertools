@@ -373,6 +373,7 @@ export const de = {
     'tool.textDiff.modifiedPlaceholder': 'Geänderten Text eingeben...',
     'tool.textDiff.additions': 'Hinzufügungen',
     'tool.textDiff.deletions': 'Löschungen',
+    'tool.textDiff.modifications': 'Änderungen',
     'tool.textDiff.unchanged': 'unverändert',
     'tool.textDiff.splitView': 'Geteilte Ansicht',
     'tool.textDiff.unifiedView': 'Vereinte Ansicht',

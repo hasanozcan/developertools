@@ -373,6 +373,7 @@ export const tr = {
     'tool.textDiff.modifiedPlaceholder': 'Değiştirilmiş metni girin...',
     'tool.textDiff.additions': 'ekleme',
     'tool.textDiff.deletions': 'silme',
+    'tool.textDiff.modifications': 'değişiklik',
     'tool.textDiff.unchanged': 'değişmemiş',
     'tool.textDiff.splitView': 'Yan yana görünüm',
     'tool.textDiff.unifiedView': 'Birleşik görünüm',

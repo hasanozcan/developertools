@@ -328,6 +328,7 @@ export const ru = {
     'tool.textDiff.modifiedPlaceholder': 'Введите изменённый текст...',
     'tool.textDiff.additions': 'добавления',
     'tool.textDiff.deletions': 'удаления',
+    'tool.textDiff.modifications': 'изменения',
     'tool.textDiff.unchanged': 'без изменений',
     'tool.textDiff.splitView': 'Раздельный вид',
     'tool.textDiff.unifiedView': 'Объединённый вид',
