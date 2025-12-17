@@ -676,4 +676,10 @@ export const en = {
     'terms.intellectualPropertyDesc': 'The Service and its original content are protected by international copyright laws.',
     'terms.disclaimer': 'Disclaimer of Warranties',
     'terms.disclaimerDesc': 'The Service is provided on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind.',
+    // Ad Blocker
+    'adblock.title': 'Ad blocker detected',
+    'adblock.message': 'Please disable your ad blocker (or allow ads for this site) to keep DevsTools free.',
+    'adblock.checking': 'Checking...',
+    'adblock.retry': 'Check again',
+    'adblock.reload': 'Reload page',
 };

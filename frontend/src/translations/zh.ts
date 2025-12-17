@@ -579,4 +579,10 @@ export const zh = {
     'terms.intellectualPropertyDesc': '服务及其原创内容受国际版权法保护。',
     'terms.disclaimer': '免责声明',
     'terms.disclaimerDesc': '服务按"原样"和"可用"提供，不提供任何形式的保证。',
+    // Ad Blocker
+    'adblock.title': '检测到广告拦截器',
+    'adblock.message': '请关闭广告拦截器（或将本站加入白名单），以便 DevsTools 保持免费。',
+    'adblock.checking': '正在检测...',
+    'adblock.retry': '再次检测',
+    'adblock.reload': '刷新页面',
 };

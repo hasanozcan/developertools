@@ -672,4 +672,10 @@ export const fr = {
     'terms.intellectualPropertyDesc': 'Le Service et son contenu original sont protégés par les lois internationales sur le droit d\'auteur.',
     'terms.disclaimer': 'Avertissement',
     'terms.disclaimerDesc': 'Le Service est fourni "TEL QUEL" et "SELON DISPONIBILITÉ" sans aucune garantie.',
+    // Ad Blocker
+    'adblock.title': 'Bloqueur de publicités détecté',
+    'adblock.message': 'Veuillez désactiver votre bloqueur de publicités (ou autoriser les publicités sur ce site) afin que DevsTools reste gratuit.',
+    'adblock.checking': 'Vérification...',
+    'adblock.retry': 'Vérifier à nouveau',
+    'adblock.reload': 'Recharger la page',
 };
