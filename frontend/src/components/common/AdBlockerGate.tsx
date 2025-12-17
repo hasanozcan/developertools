@@ -8,39 +8,58 @@ function sleep(ms: number) {
   return new Promise<void>((resolve) => setTimeout(resolve, ms));
 }
 
-async function isBaitBlocked() {
+function applyBaitStyles(element: HTMLElement) {
+  element.style.position = 'absolute';
+  element.style.left = '-9999px';
+  element.style.top = '-9999px';
+  element.style.width = '1px';
+  element.style.height = '1px';
+  element.style.pointerEvents = 'none';
+  element.style.opacity = '0';
+}
+
+function isElementBlocked(element: HTMLElement) {
+  const computed = window.getComputedStyle(element);
+  return (
+    computed.display === 'none' ||
+    computed.visibility === 'hidden' ||
+    element.offsetHeight === 0 ||
+    element.offsetWidth === 0
+  );
+}
+
+async function isBaitBlocked(adClient: string) {
   if (typeof window === 'undefined' || typeof document === 'undefined') return false;
 
-  const bait = document.createElement('div');
-  bait.className = 'adsbox adsbygoogle ad ad-banner ad-unit ad-zone';
-  bait.style.position = 'absolute';
-  bait.style.left = '-9999px';
-  bait.style.top = '-9999px';
-  bait.style.width = '1px';
-  bait.style.height = '1px';
-  bait.style.pointerEvents = 'none';
-  bait.style.opacity = '0';
+  const divBait = document.createElement('div');
+  divBait.className =
+    'adsbox adsbygoogle ad ad-banner ad-unit ad-zone advertisement ad-container banner-ad sponsor';
+  divBait.id = 'ad-banner';
+  divBait.setAttribute('data-ad-client', adClient);
+  applyBaitStyles(divBait);
 
-  document.body.appendChild(bait);
+  const insBait = document.createElement('ins');
+  insBait.className = 'adsbygoogle';
+  insBait.setAttribute('data-ad-client', adClient);
+  insBait.setAttribute('data-ad-slot', '0000000000');
+  applyBaitStyles(insBait);
+
+  document.body.appendChild(divBait);
+  document.body.appendChild(insBait);
 
   await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
   await sleep(50);
 
-  const computed = window.getComputedStyle(bait);
-  const blocked =
-    computed.display === 'none' ||
-    computed.visibility === 'hidden' ||
-    bait.offsetHeight === 0 ||
-    bait.offsetWidth === 0;
+  const blocked = isElementBlocked(divBait) || isElementBlocked(insBait);
 
-  bait.remove();
+  divBait.remove();
+  insBait.remove();
   return blocked;
 }
 
-async function canReachAdSenseScript(adClient: string) {
+async function canReachUrl(url: string) {
   if (typeof fetch !== 'function') return true;
 
-  const url = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(adClient)}`;
   const timeoutMs = 2500;
 
   let controller: AbortController | undefined;
@@ -68,12 +87,44 @@ async function canReachAdSenseScript(adClient: string) {
   }
 }
 
-async function detectAdBlocker(adClient: string) {
-  const baitBlocked = await isBaitBlocked();
-  if (baitBlocked) return true;
+async function didAnyAdSlotProcess(timeoutMs: number) {
+  if (typeof document === 'undefined') return true;
 
-  const reachable = await canReachAdSenseScript(adClient);
-  return !reachable;
+  const startedAt = Date.now();
+  let sawAnySlot = false;
+
+  while (Date.now() - startedAt < timeoutMs) {
+    const slots = Array.from(document.querySelectorAll('ins.adsbygoogle'));
+    if (slots.length > 0) {
+      sawAnySlot = true;
+      const processed = slots.some((slot) => {
+        const status = slot.getAttribute('data-adsbygoogle-status');
+        const adStatus = slot.getAttribute('data-ad-status');
+        return status === 'done' || adStatus !== null || slot.querySelector('iframe') !== null;
+      });
+      if (processed) return true;
+    }
+
+    await sleep(250);
+  }
+
+  return !sawAnySlot;
+}
+
+async function detectAdBlocker(adClient: string) {
+  const adsenseScriptUrl = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(adClient)}`;
+
+  const [baitBlocked, adsenseReachable, doubleClickReachable, tpcReachable] = await Promise.all([
+    isBaitBlocked(adClient),
+    canReachUrl(adsenseScriptUrl),
+    canReachUrl('https://googleads.g.doubleclick.net/pagead/id'),
+    canReachUrl('https://tpc.googlesyndication.com'),
+  ]);
+
+  if (baitBlocked || !adsenseReachable || !doubleClickReachable || !tpcReachable) return true;
+
+  const processed = await didAnyAdSlotProcess(6000);
+  return !processed;
 }
 
 export default function AdBlockerGate() {
