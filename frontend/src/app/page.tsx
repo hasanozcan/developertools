@@ -266,7 +266,6 @@ export default function Home() {
           <li><strong>{t('home.feature1').split(':')[0]}:</strong> {t('home.feature1').split(':')[1]}</li>
           <li><strong>{t('home.feature2').split(':')[0]}:</strong> {t('home.feature2').split(':')[1]}</li>
           <li><strong>{t('home.feature3').split(':')[0]}:</strong> {t('home.feature3').split(':')[1]}</li>
-          <li><strong>{t('home.feature4').split(':')[0]}:</strong> {t('home.feature4').split(':')[1]}</li>
         </ul>
       </section>
     </div>
