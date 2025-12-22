@@ -50,6 +50,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
+    const params = new URLSearchParams(window.location.search);
+    const queryLanguage = params.get('lang') as Language | null;
+    if (queryLanguage && translations[queryLanguage]) {
+      setLanguageState(queryLanguage);
+      localStorage.setItem('language', queryLanguage);
+      return;
+    }
+
     const savedLanguage = localStorage.getItem('language') as Language;
     if (savedLanguage && translations[savedLanguage]) {
       setLanguageState(savedLanguage);
@@ -59,6 +67,17 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem('language', lang);
+    try {
+      const url = new URL(window.location.href);
+      if (lang === 'en') {
+        url.searchParams.delete('lang');
+      } else {
+        url.searchParams.set('lang', lang);
+      }
+      window.history.replaceState({}, '', url.toString());
+    } catch {
+      // ignore
+    }
   };
 
   const t = (key: string): string => {

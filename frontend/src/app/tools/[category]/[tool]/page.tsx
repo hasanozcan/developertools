@@ -440,6 +440,16 @@ const tools: Record<string, Record<string, {
   },
 };
 
+const canonicalCategories: Record<string, string> = {
+  'json-csv': 'json',
+  'yaml-json': 'json',
+  'image-to-base64': 'encoding',
+  'lorem-ipsum': 'generators',
+  'slug-generator': 'generators',
+  'qr-code': 'generators',
+  'markdown-preview': 'text',
+};
+
 interface PageProps {
   params: Promise<{ category: string; tool: string }>;
 }
@@ -454,29 +464,31 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
-  const toolUrl = `${siteUrl}/tools/${category}/${toolSlug}`;
+  const canonicalCategory = canonicalCategories[toolSlug] || category;
+  const canonicalUrl = `${siteUrl}/tools/${canonicalCategory}/${toolSlug}`;
+  const metaTitle = `${tool.name} - Free Online Tool`;
 
   return {
-    title: `${tool.name} Online - Free Tool | Developer Tools`,
+    title: metaTitle,
     description: tool.description,
     keywords: tool.keywords,
     alternates: {
-      canonical: toolUrl,
+      canonical: canonicalUrl,
       languages: {
-        'en': toolUrl,
-        'tr': `${toolUrl}?lang=tr`,
-        'de': `${toolUrl}?lang=de`,
-        'es': `${toolUrl}?lang=es`,
-        'fr': `${toolUrl}?lang=fr`,
-        'ru': `${toolUrl}?lang=ru`,
-        'zh': `${toolUrl}?lang=zh`,
+        'en': canonicalUrl,
+        'tr': `${canonicalUrl}?lang=tr`,
+        'de': `${canonicalUrl}?lang=de`,
+        'es': `${canonicalUrl}?lang=es`,
+        'fr': `${canonicalUrl}?lang=fr`,
+        'ru': `${canonicalUrl}?lang=ru`,
+        'zh': `${canonicalUrl}?lang=zh`,
       },
     },
     openGraph: {
-      title: `${tool.name} Online - Free Tool`,
+      title: metaTitle,
       description: tool.description,
       type: 'website',
-      url: toolUrl,
+      url: canonicalUrl,
       siteName: 'DevsTools',
       images: [
         {
@@ -489,7 +501,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${tool.name} Online - Free Tool`,
+      title: metaTitle,
       description: tool.description,
       images: [`${siteUrl}/og-image.png`],
     },

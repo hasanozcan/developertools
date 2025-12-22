@@ -182,12 +182,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
   const categoryUrl = `${siteUrl}/tools/${categorySlug}`;
+  const ogImageUrl = `${siteUrl}/og-image.png`;
 
   return {
     title: `${category.name} - Free Online Developer Tools`,
     description: category.description,
     alternates: {
       canonical: categoryUrl,
+      languages: {
+        en: categoryUrl,
+        tr: `${categoryUrl}?lang=tr`,
+        de: `${categoryUrl}?lang=de`,
+        es: `${categoryUrl}?lang=es`,
+        fr: `${categoryUrl}?lang=fr`,
+        ru: `${categoryUrl}?lang=ru`,
+        zh: `${categoryUrl}?lang=zh`,
+      },
     },
     openGraph: {
       title: `${category.name} - Free Online Developer Tools`,
@@ -195,11 +205,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: categoryUrl,
       siteName: 'DevsTools',
       type: 'website',
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: `${category.name} - DevsTools`,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: `${category.name} - Free Online Developer Tools`,
       description: category.description,
+      images: [ogImageUrl],
     },
   };
 }
