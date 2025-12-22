@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Clock, AlertCircle, Calendar, Play, Copy, Check, FileText } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -17,6 +17,168 @@ interface NextRun {
   formatted: string;
 }
 
+const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+const parsePart = (part: string, min: number, max: number): number[] => {
+  const values: number[] = [];
+
+  if (part === '*') {
+    for (let i = min; i <= max; i++) values.push(i);
+    return values;
+  }
+
+  const segments = part.split(',');
+  for (const segment of segments) {
+    if (segment.includes('/')) {
+      const [range, step] = segment.split('/');
+      const stepNum = parseInt(step);
+      let start = min;
+      let end = max;
+
+      if (range !== '*') {
+        if (range.includes('-')) {
+          [start, end] = range.split('-').map(Number);
+        } else {
+          start = parseInt(range);
+        }
+      }
+
+      for (let i = start; i <= end; i += stepNum) values.push(i);
+    } else if (segment.includes('-')) {
+      const [start, end] = segment.split('-').map(Number);
+      for (let i = start; i <= end; i++) values.push(i);
+    } else {
+      values.push(parseInt(segment));
+    }
+  }
+
+  return Array.from(new Set(values)).sort((a, b) => a - b);
+};
+
+const describePart = (part: string, type: 'minute' | 'hour' | 'dayOfMonth' | 'month' | 'dayOfWeek'): string => {
+  if (part === '*') {
+    return type === 'minute' ? 'every minute' :
+           type === 'hour' ? 'every hour' :
+           type === 'dayOfMonth' ? 'every day' :
+           type === 'month' ? 'every month' :
+           'every day of the week';
+  }
+
+  if (part.includes('/')) {
+    const [, step] = part.split('/');
+    return `every ${step} ${type === 'minute' ? 'minutes' : type === 'hour' ? 'hours' : type === 'dayOfMonth' ? 'days' : type === 'month' ? 'months' : 'days'}`;
+  }
+
+  if (type === 'dayOfWeek') {
+    const days = part.split(',').map(d => {
+      if (d.includes('-')) {
+        const [start, end] = d.split('-').map(Number);
+        return `${DAY_NAMES[start]} to ${DAY_NAMES[end]}`;
+      }
+      return DAY_NAMES[parseInt(d)];
+    });
+    return days.join(', ');
+  }
+
+  if (type === 'month') {
+    const months = part.split(',').map(m => {
+      if (m.includes('-')) {
+        const [start, end] = m.split('-').map(Number);
+        return `${MONTH_NAMES[start - 1]} to ${MONTH_NAMES[end - 1]}`;
+      }
+      return MONTH_NAMES[parseInt(m) - 1];
+    });
+    return months.join(', ');
+  }
+
+  return part;
+};
+
+const generateDescription = (parts: CronParts): string => {
+  const { minute, hour, dayOfMonth, month, dayOfWeek } = parts;
+
+  let desc = 'At ';
+
+  // Time
+  if (minute === '*' && hour === '*') {
+    desc = 'Every minute';
+  } else if (minute === '0' && hour === '*') {
+    desc = 'Every hour';
+  } else if (minute === '*') {
+    desc = `Every minute during hour ${hour}`;
+  } else if (hour === '*') {
+    desc = `At minute ${minute} of every hour`;
+  } else {
+    const hourNum = parseInt(hour);
+    const minNum = parseInt(minute);
+    const period = hourNum >= 12 ? 'PM' : 'AM';
+    const displayHour = hourNum > 12 ? hourNum - 12 : hourNum === 0 ? 12 : hourNum;
+    desc = `At ${displayHour}:${minNum.toString().padStart(2, '0')} ${period}`;
+  }
+
+  // Day of month
+  if (dayOfMonth !== '*') {
+    desc += `, on day ${dayOfMonth} of the month`;
+  }
+
+  // Month
+  if (month !== '*') {
+    desc += ` in ${describePart(month, 'month')}`;
+  }
+
+  // Day of week
+  if (dayOfWeek !== '*') {
+    desc += `, only on ${describePart(dayOfWeek, 'dayOfWeek')}`;
+  }
+
+  return desc;
+};
+
+const calculateNextRuns = (parts: CronParts, count: number = 5): NextRun[] => {
+  const runs: NextRun[] = [];
+  const now = new Date();
+  let current = new Date(now);
+  current.setSeconds(0);
+  current.setMilliseconds(0);
+
+  const minutes = parsePart(parts.minute, 0, 59);
+  const hours = parsePart(parts.hour, 0, 23);
+  const daysOfMonth = parsePart(parts.dayOfMonth, 1, 31);
+  const months = parsePart(parts.month, 1, 12);
+  const daysOfWeek = parsePart(parts.dayOfWeek, 0, 6);
+
+  let iterations = 0;
+  const maxIterations = 10000;
+
+  while (runs.length < count && iterations < maxIterations) {
+    iterations++;
+    current.setMinutes(current.getMinutes() + 1);
+
+    const matchMinute = minutes.includes(current.getMinutes());
+    const matchHour = hours.includes(current.getHours());
+    const matchDayOfMonth = parts.dayOfMonth === '*' || daysOfMonth.includes(current.getDate());
+    const matchMonth = parts.month === '*' || months.includes(current.getMonth() + 1);
+    const matchDayOfWeek = parts.dayOfWeek === '*' || daysOfWeek.includes(current.getDay());
+
+    if (matchMinute && matchHour && matchDayOfMonth && matchMonth && matchDayOfWeek) {
+      runs.push({
+        date: new Date(current),
+        formatted: current.toLocaleString('en-US', {
+          weekday: 'short',
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+      });
+    }
+  }
+
+  return runs;
+};
+
 export default function CronParserTool() {
   const { t } = useLanguage();
   const [expression, setExpression] = useState('');
@@ -24,170 +186,9 @@ export default function CronParserTool() {
   const [error, setError] = useState('');
   const [nextRuns, setNextRuns] = useState<NextRun[]>([]);
   const [copied, setCopied] = useState(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-  const parsePart = (part: string, min: number, max: number): number[] => {
-    const values: number[] = [];
-
-    if (part === '*') {
-      for (let i = min; i <= max; i++) values.push(i);
-      return values;
-    }
-
-    const segments = part.split(',');
-    for (const segment of segments) {
-      if (segment.includes('/')) {
-        const [range, step] = segment.split('/');
-        const stepNum = parseInt(step);
-        let start = min;
-        let end = max;
-        
-        if (range !== '*') {
-          if (range.includes('-')) {
-            [start, end] = range.split('-').map(Number);
-          } else {
-            start = parseInt(range);
-          }
-        }
-        
-        for (let i = start; i <= end; i += stepNum) values.push(i);
-      } else if (segment.includes('-')) {
-        const [start, end] = segment.split('-').map(Number);
-        for (let i = start; i <= end; i++) values.push(i);
-      } else {
-        values.push(parseInt(segment));
-      }
-    }
-
-    return Array.from(new Set(values)).sort((a, b) => a - b);
-  };
-
-  const describePart = (part: string, type: 'minute' | 'hour' | 'dayOfMonth' | 'month' | 'dayOfWeek'): string => {
-    if (part === '*') {
-      return type === 'minute' ? 'every minute' :
-             type === 'hour' ? 'every hour' :
-             type === 'dayOfMonth' ? 'every day' :
-             type === 'month' ? 'every month' :
-             'every day of the week';
-    }
-
-    if (part.includes('/')) {
-      const [, step] = part.split('/');
-      return `every ${step} ${type === 'minute' ? 'minutes' : type === 'hour' ? 'hours' : type === 'dayOfMonth' ? 'days' : type === 'month' ? 'months' : 'days'}`;
-    }
-
-    if (type === 'dayOfWeek') {
-      const days = part.split(',').map(d => {
-        if (d.includes('-')) {
-          const [start, end] = d.split('-').map(Number);
-          return `${dayNames[start]} to ${dayNames[end]}`;
-        }
-        return dayNames[parseInt(d)];
-      });
-      return days.join(', ');
-    }
-
-    if (type === 'month') {
-      const months = part.split(',').map(m => {
-        if (m.includes('-')) {
-          const [start, end] = m.split('-').map(Number);
-          return `${monthNames[start - 1]} to ${monthNames[end - 1]}`;
-        }
-        return monthNames[parseInt(m) - 1];
-      });
-      return months.join(', ');
-    }
-
-    return part;
-  };
-
-  const generateDescription = (parts: CronParts): string => {
-    const { minute, hour, dayOfMonth, month, dayOfWeek } = parts;
-    
-    let desc = 'At ';
-    
-    // Time
-    if (minute === '*' && hour === '*') {
-      desc = 'Every minute';
-    } else if (minute === '0' && hour === '*') {
-      desc = 'Every hour';
-    } else if (minute === '*') {
-      desc = `Every minute during hour ${hour}`;
-    } else if (hour === '*') {
-      desc = `At minute ${minute} of every hour`;
-    } else {
-      const hourNum = parseInt(hour);
-      const minNum = parseInt(minute);
-      const period = hourNum >= 12 ? 'PM' : 'AM';
-      const displayHour = hourNum > 12 ? hourNum - 12 : hourNum === 0 ? 12 : hourNum;
-      desc = `At ${displayHour}:${minNum.toString().padStart(2, '0')} ${period}`;
-    }
-
-    // Day of month
-    if (dayOfMonth !== '*') {
-      desc += `, on day ${dayOfMonth} of the month`;
-    }
-
-    // Month
-    if (month !== '*') {
-      desc += ` in ${describePart(month, 'month')}`;
-    }
-
-    // Day of week
-    if (dayOfWeek !== '*') {
-      desc += `, only on ${describePart(dayOfWeek, 'dayOfWeek')}`;
-    }
-
-    return desc;
-  };
-
-  const calculateNextRuns = (parts: CronParts, count: number = 5): NextRun[] => {
-    const runs: NextRun[] = [];
-    const now = new Date();
-    let current = new Date(now);
-    current.setSeconds(0);
-    current.setMilliseconds(0);
-
-    const minutes = parsePart(parts.minute, 0, 59);
-    const hours = parsePart(parts.hour, 0, 23);
-    const daysOfMonth = parsePart(parts.dayOfMonth, 1, 31);
-    const months = parsePart(parts.month, 1, 12);
-    const daysOfWeek = parsePart(parts.dayOfWeek, 0, 6);
-
-    let iterations = 0;
-    const maxIterations = 10000;
-
-    while (runs.length < count && iterations < maxIterations) {
-      iterations++;
-      current.setMinutes(current.getMinutes() + 1);
-
-      const matchMinute = minutes.includes(current.getMinutes());
-      const matchHour = hours.includes(current.getHours());
-      const matchDayOfMonth = parts.dayOfMonth === '*' || daysOfMonth.includes(current.getDate());
-      const matchMonth = parts.month === '*' || months.includes(current.getMonth() + 1);
-      const matchDayOfWeek = parts.dayOfWeek === '*' || daysOfWeek.includes(current.getDay());
-
-      if (matchMinute && matchHour && matchDayOfMonth && matchMonth && matchDayOfWeek) {
-        runs.push({
-          date: new Date(current),
-          formatted: current.toLocaleString('en-US', {
-            weekday: 'short',
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-          }),
-        });
-      }
-    }
-
-    return runs;
-  };
-
-  const parseCron = (expr: string) => {
+  const parseCron = useCallback((expr: string) => {
     const trimmed = expr.trim();
     if (!trimmed) {
       setDescription('');
@@ -224,11 +225,23 @@ export default function CronParserTool() {
       setDescription('');
       setNextRuns([]);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    parseCron(expression);
-  }, [expression]);
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+
+    debounceRef.current = setTimeout(() => {
+      parseCron(expression);
+    }, 200);
+
+    return () => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+    };
+  }, [expression, parseCron]);
 
   const loadPreset = (expr: string) => {
     setExpression(expr);
