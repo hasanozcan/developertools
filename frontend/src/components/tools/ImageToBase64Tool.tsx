@@ -147,7 +147,7 @@ export default function ImageToBase64Tool() {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-500 dark:text-gray-400">{t('tool.imageBase64.dimensions')}:</span>
-                <span className="text-gray-900 dark:text-white font-mono">{imageInfo.width} × {imageInfo.height}</span>
+                <span className="text-gray-900 dark:text-white font-mono">{imageInfo.width} x {imageInfo.height}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-500 dark:text-gray-400">{t('tool.imageBase64.originalSize')}:</span>

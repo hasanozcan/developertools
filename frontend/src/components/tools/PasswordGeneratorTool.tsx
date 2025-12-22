@@ -80,7 +80,7 @@ export default function PasswordGeneratorTool() {
       <div className="relative">
         <div className="flex items-center gap-2 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
           <code className="flex-1 font-mono text-lg break-all text-gray-900 dark:text-white">
-            {showPassword ? password : '•'.repeat(password.length)}
+            {showPassword ? password : '*'.repeat(password.length)}
           </code>
           <button
             onClick={() => setShowPassword(!showPassword)}

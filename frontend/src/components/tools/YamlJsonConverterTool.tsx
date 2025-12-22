@@ -246,7 +246,7 @@ spec:
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200'
             }`}
           >
-            YAML → JSON
+            YAML -&gt; JSON
           </button>
           <button
             onClick={() => { setMode('jsonToYaml'); setInput(''); setOutput(''); setError(null); }}
@@ -256,7 +256,7 @@ spec:
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200'
             }`}
           >
-            JSON → YAML
+            JSON -&gt; YAML
           </button>
         </div>
 

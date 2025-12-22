@@ -338,11 +338,11 @@ export default function JsonValidatorTool() {
           <div>
             <h3 className="font-semibold text-blue-800 dark:text-blue-200">{t('tool.jsonValidator.commonErrors')}</h3>
             <ul className="mt-2 text-sm text-blue-700 dark:text-blue-300 space-y-1">
-              <li>• {t('tool.jsonValidator.error1')}</li>
-              <li>• {t('tool.jsonValidator.error4')}</li>
-              <li>• {t('tool.jsonValidator.error3')}</li>
-              <li>• {t('tool.jsonValidator.error2')}</li>
-              <li>• {t('tool.jsonValidator.error5')}</li>
+              <li>- {t('tool.jsonValidator.error1')}</li>
+              <li>- {t('tool.jsonValidator.error4')}</li>
+              <li>- {t('tool.jsonValidator.error3')}</li>
+              <li>- {t('tool.jsonValidator.error2')}</li>
+              <li>- {t('tool.jsonValidator.error5')}</li>
             </ul>
           </div>
         </div>

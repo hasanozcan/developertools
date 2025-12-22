@@ -224,7 +224,7 @@ export default function JsonCsvConverterTool() {
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            JSON → CSV
+            JSON -&gt; CSV
           </button>
           <button
             onClick={() => { setMode('csvToJson'); setInput(''); setOutput(''); setError(null); }}
@@ -234,7 +234,7 @@ export default function JsonCsvConverterTool() {
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            CSV → JSON
+            CSV -&gt; JSON
           </button>
         </div>
         

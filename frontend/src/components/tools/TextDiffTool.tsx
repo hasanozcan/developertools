@@ -301,7 +301,7 @@ function computeCharDiff(a: string, b: string): { oldParts: DiffSegment[]; newPa
   return { oldParts: group(oldTokens), newParts: group(newTokens) };
 }
 
-// Segment text into rough “word” tokens to avoid noisy char-level output
+// Segment text into rough "word" tokens to avoid noisy char-level output
 function segmentTokens(text: string): string[] {
   const tokens: string[] = [];
   let buffer = '';
@@ -811,7 +811,7 @@ const VERY_LONG_LINE = "This is a very long line that will overflow horizontally
                             {p.text}
                           </span>
                         ))}
-                        <span className="mx-2 text-gray-400 dark:text-gray-500 select-none">→</span>
+                        <span className="mx-2 text-gray-400 dark:text-gray-500 select-none">-&gt;</span>
                         {newParts.map((p, i) => (
                           <span
                             key={`new-${i}`}

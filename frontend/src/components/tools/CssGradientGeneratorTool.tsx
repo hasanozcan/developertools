@@ -166,7 +166,7 @@ background: ${gradient};`;
           {gradientType === 'linear' ? (
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                {t('tool.gradient.angle')}: {angle}°
+                {t('tool.gradient.angle')}: {angle} deg
               </label>
               <input
                 type="range"
@@ -288,7 +288,7 @@ background: ${gradient};`;
                   disabled={stops.length <= 2}
                   className="text-red-500 hover:text-red-700 disabled:opacity-30"
                 >
-                  ×
+                  x
                 </button>
               </div>
             ))}

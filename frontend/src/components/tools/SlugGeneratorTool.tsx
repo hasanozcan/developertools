@@ -38,16 +38,81 @@ export default function SlugGeneratorTool() {
   ];
 
   const transliterationMap: Record<string, string> = {
-    'à': 'a', 'á': 'a', 'â': 'a', 'ã': 'a', 'ä': 'a', 'å': 'a', 'æ': 'ae',
-    'ç': 'c', 'è': 'e', 'é': 'e', 'ê': 'e', 'ë': 'e',
-    'ì': 'i', 'í': 'i', 'î': 'i', 'ï': 'i',
-    'ð': 'd', 'ñ': 'n', 'ò': 'o', 'ó': 'o', 'ô': 'o', 'õ': 'o', 'ö': 'o',
-    'ø': 'o', 'ù': 'u', 'ú': 'u', 'û': 'u', 'ü': 'u',
-    'ý': 'y', 'ÿ': 'y', 'ß': 'ss', 'þ': 'th',
-    'ş': 's', 'ğ': 'g', 'ı': 'i', 'İ': 'i', 'Ç': 'c',
-    'Ş': 's', 'Ğ': 'g', 'Ö': 'o', 'Ü': 'u',
-    'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n', 'ś': 's', 'ź': 'z', 'ż': 'z',
-    'č': 'c', 'ď': 'd', 'ě': 'e', 'ň': 'n', 'ř': 'r', 'š': 's', 'ť': 't', 'ů': 'u', 'ž': 'z',
+    '\u00e0': 'a',
+    '\u00e1': 'a',
+    '\u00e2': 'a',
+    '\u00e3': 'a',
+    '\u00e4': 'a',
+    '\u00e5': 'a',
+    '\u00e6': 'ae',
+    '\u00e7': 'c',
+    '\u00e8': 'e',
+    '\u00e9': 'e',
+    '\u00ea': 'e',
+    '\u00eb': 'e',
+    '\u00ec': 'i',
+    '\u00ed': 'i',
+    '\u00ee': 'i',
+    '\u00ef': 'i',
+    '\u00f0': 'd',
+    '\u00f1': 'n',
+    '\u00f2': 'o',
+    '\u00f3': 'o',
+    '\u00f4': 'o',
+    '\u00f5': 'o',
+    '\u00f6': 'o',
+    '\u00f8': 'o',
+    '\u00f9': 'u',
+    '\u00fa': 'u',
+    '\u00fb': 'u',
+    '\u00fc': 'u',
+    '\u00fd': 'y',
+    '\u00ff': 'y',
+    '\u00df': 'ss',
+    '\u00fe': 'th',
+    '\u00c6': 'ae',
+    '\u0152': 'oe',
+    '\u0153': 'oe',
+    '\u00d8': 'o',
+    '\u0110': 'd',
+    '\u0111': 'd',
+    '\u00d0': 'd',
+    '\u00de': 'th',
+    '\u0141': 'l',
+    '\u0142': 'l',
+    '\u015f': 's',
+    '\u015e': 's',
+    '\u011f': 'g',
+    '\u011e': 'g',
+    '\u0131': 'i',
+    '\u0130': 'i',
+    '\u00c7': 'c',
+    '\u00d6': 'o',
+    '\u00dc': 'u',
+    '\u0105': 'a',
+    '\u0107': 'c',
+    '\u0119': 'e',
+    '\u0144': 'n',
+    '\u015b': 's',
+    '\u017a': 'z',
+    '\u017c': 'z',
+    '\u010d': 'c',
+    '\u010f': 'd',
+    '\u011b': 'e',
+    '\u0148': 'n',
+    '\u0159': 'r',
+    '\u0161': 's',
+    '\u0165': 't',
+    '\u016f': 'u',
+    '\u017e': 'z',
+  };
+
+  const transliterateText = (value: string): string => {
+    const replaced = value
+      .split('')
+      .map((char) => transliterationMap[char] || transliterationMap[char.toLowerCase()] || char)
+      .join('');
+    return replaced.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   };
 
   const generateSlug = (text: string): string => {
@@ -57,10 +122,7 @@ export default function SlugGeneratorTool() {
 
     // Transliterate special characters
     if (options.transliterate) {
-      result = result.split('').map(char => {
-        const lower = char.toLowerCase();
-        return transliterationMap[lower] || transliterationMap[char] || char;
-      }).join('');
+      result = transliterateText(result);
     }
 
     // Convert to lowercase if option enabled
@@ -259,7 +321,7 @@ export default function SlugGeneratorTool() {
             >
               <div className="text-sm text-gray-700 dark:text-gray-300 line-clamp-1">{sample}</div>
               <div className="text-xs text-gray-400 dark:text-gray-500 font-mono mt-1 line-clamp-1">
-                → {generateSlug(sample)}
+                -&gt; {generateSlug(sample)}
               </div>
             </button>
           ))}
@@ -273,27 +335,27 @@ export default function SlugGeneratorTool() {
         </div>
         <div className="p-4 space-y-3 text-sm text-gray-600 dark:text-gray-400">
           <div className="flex items-start gap-2">
-            <span className="text-green-600 dark:text-green-400">✓</span>
+            <span className="text-green-600 dark:text-green-400">OK</span>
             <span>{t('tool.slugGenerator.seoTip1')}</span>
           </div>
           <div className="flex items-start gap-2">
-            <span className="text-green-600 dark:text-green-400">✓</span>
+            <span className="text-green-600 dark:text-green-400">OK</span>
             <span>{t('tool.slugGenerator.seoTip2')}</span>
           </div>
           <div className="flex items-start gap-2">
-            <span className="text-green-600 dark:text-green-400">✓</span>
+            <span className="text-green-600 dark:text-green-400">OK</span>
             <span>{t('tool.slugGenerator.seoTip3')}</span>
           </div>
           <div className="flex items-start gap-2">
-            <span className="text-green-600 dark:text-green-400">✓</span>
+            <span className="text-green-600 dark:text-green-400">OK</span>
             <span>{t('tool.slugGenerator.seoTip4')}</span>
           </div>
           <div className="flex items-start gap-2">
-            <span className="text-red-600 dark:text-red-400">✗</span>
+            <span className="text-red-600 dark:text-red-400">NO</span>
             <span>{t('tool.slugGenerator.seoTip5')}</span>
           </div>
           <div className="flex items-start gap-2">
-            <span className="text-red-600 dark:text-red-400">✗</span>
+            <span className="text-red-600 dark:text-red-400">NO</span>
             <span>{t('tool.slugGenerator.seoTip6')}</span>
           </div>
         </div>

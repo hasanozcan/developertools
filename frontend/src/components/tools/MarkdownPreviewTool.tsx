@@ -141,7 +141,7 @@ Visit [GitHub](https://github.com) for more projects.
 
 ---
 
-*Made with ❤️ by Developer Tools*`);
+*Made with love by Developer Tools*`);
   };
 
   return (
