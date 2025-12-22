@@ -5,12 +5,30 @@ import CodeEditor from '@/components/common/CodeEditor';
 import { CheckCircle, XCircle } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
+function sortJsonKeys(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    return value.map(sortJsonKeys);
+  }
+
+  if (value && typeof value === 'object') {
+    const entries = Object.entries(value as Record<string, unknown>).sort(([a], [b]) => a.localeCompare(b));
+    const sorted: Record<string, unknown> = {};
+    for (const [key, item] of entries) {
+      sorted[key] = sortJsonKeys(item);
+    }
+    return sorted;
+  }
+
+  return value;
+}
+
 export default function JsonFormatterTool() {
   const { t } = useLanguage();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [indentSize, setIndentSize] = useState(2);
+  const [sortKeys, setSortKeys] = useState(false);
 
   const formatJson = useCallback(() => {
     if (!input.trim()) {
@@ -21,7 +39,8 @@ export default function JsonFormatterTool() {
 
     try {
       const parsed = JSON.parse(input);
-      const formatted = JSON.stringify(parsed, null, indentSize);
+      const normalized = sortKeys ? sortJsonKeys(parsed) : parsed;
+      const formatted = JSON.stringify(normalized, null, indentSize);
       setOutput(formatted);
       setError(null);
     } catch (e) {
@@ -39,7 +58,8 @@ export default function JsonFormatterTool() {
 
     try {
       const parsed = JSON.parse(input);
-      const minified = JSON.stringify(parsed);
+      const normalized = sortKeys ? sortJsonKeys(parsed) : parsed;
+      const minified = JSON.stringify(normalized);
       setOutput(minified);
       setError(null);
     } catch (e) {
@@ -88,6 +108,15 @@ export default function JsonFormatterTool() {
         >
           {t('common.loadSample')}
         </button>
+        <label className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+          <input
+            type="checkbox"
+            checked={sortKeys}
+            onChange={(e) => setSortKeys(e.target.checked)}
+            className="rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-primary-600"
+          />
+          {t('tool.jsonFormatter.sortKeys')}
+        </label>
         <div className="flex items-center gap-2">
           <label className="text-sm text-gray-600 dark:text-gray-400">{t('tool.jsonFormatter.indentSize')}:</label>
           <select

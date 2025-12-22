@@ -9,31 +9,63 @@ const LOWERCASE = 'abcdefghijklmnopqrstuvwxyz';
 const UPPERCASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const NUMBERS = '0123456789';
 const SYMBOLS = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+const SIMILAR = 'il1Lo0O';
+
+function filterSimilarChars(chars: string, excludeSimilar: boolean): string {
+  if (!excludeSimilar) return chars;
+  return Array.from(chars).filter((char) => !SIMILAR.includes(char)).join('');
+}
+
+function buildRandomChars(length: number, chars: string): string[] {
+  const array = new Uint32Array(length);
+  crypto.getRandomValues(array);
+  return Array.from(array, (value) => chars[value % chars.length]);
+}
+
+function shuffleChars(items: string[]): void {
+  if (items.length <= 1) return;
+  const array = new Uint32Array(items.length);
+  crypto.getRandomValues(array);
+  for (let i = items.length - 1; i > 0; i--) {
+    const j = array[i] % (i + 1);
+    [items[i], items[j]] = [items[j], items[i]];
+  }
+}
 
 function generatePassword(
   length: number,
   useLowercase: boolean,
   useUppercase: boolean,
   useNumbers: boolean,
-  useSymbols: boolean
+  useSymbols: boolean,
+  excludeSimilar: boolean
 ): string {
-  let chars = '';
-  if (useLowercase) chars += LOWERCASE;
-  if (useUppercase) chars += UPPERCASE;
-  if (useNumbers) chars += NUMBERS;
-  if (useSymbols) chars += SYMBOLS;
+  const sets = [];
+  if (useLowercase) sets.push(filterSimilarChars(LOWERCASE, excludeSimilar));
+  if (useUppercase) sets.push(filterSimilarChars(UPPERCASE, excludeSimilar));
+  if (useNumbers) sets.push(filterSimilarChars(NUMBERS, excludeSimilar));
+  if (useSymbols) sets.push(filterSimilarChars(SYMBOLS, excludeSimilar));
 
-  if (!chars) return '';
+  const activeSets = sets.filter((set) => set.length > 0);
+  if (!activeSets.length) return '';
 
-  let password = '';
-  const array = new Uint32Array(length);
-  crypto.getRandomValues(array);
-  
-  for (let i = 0; i < length; i++) {
-    password += chars[array[i] % chars.length];
+  const allChars = activeSets.join('');
+  if (length <= 0) return '';
+
+  if (length < activeSets.length) {
+    return buildRandomChars(length, allChars).join('');
   }
 
-  return password;
+  const passwordChars: string[] = [];
+  activeSets.forEach((set) => {
+    passwordChars.push(buildRandomChars(1, set)[0]);
+  });
+  const remaining = length - passwordChars.length;
+  if (remaining > 0) {
+    passwordChars.push(...buildRandomChars(remaining, allChars));
+  }
+  shuffleChars(passwordChars);
+  return passwordChars.join('');
 }
 
 function calculateStrength(password: string, t: (key: string) => string): { score: number; label: string; color: string } {
@@ -61,12 +93,20 @@ export default function PasswordGeneratorTool() {
   const [useUppercase, setUseUppercase] = useState(true);
   const [useNumbers, setUseNumbers] = useState(true);
   const [useSymbols, setUseSymbols] = useState(true);
+  const [excludeSimilar, setExcludeSimilar] = useState(false);
   const [showPassword, setShowPassword] = useState(true);
 
   const generate = useCallback(() => {
-    const newPassword = generatePassword(length, useLowercase, useUppercase, useNumbers, useSymbols);
+    const newPassword = generatePassword(
+      length,
+      useLowercase,
+      useUppercase,
+      useNumbers,
+      useSymbols,
+      excludeSimilar
+    );
     setPassword(newPassword);
-  }, [length, useLowercase, useUppercase, useNumbers, useSymbols]);
+  }, [length, useLowercase, useUppercase, useNumbers, useSymbols, excludeSimilar]);
 
   useEffect(() => {
     generate();
@@ -170,6 +210,16 @@ export default function PasswordGeneratorTool() {
               className="rounded border-gray-300 dark:border-gray-600"
             />
             <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.passwordGenerator.symbols')} (!@#$%)</span>
+          </label>
+
+          <label className="flex items-center gap-2 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 border border-transparent dark:border-gray-700">
+            <input
+              type="checkbox"
+              checked={excludeSimilar}
+              onChange={(e) => setExcludeSimilar(e.target.checked)}
+              className="rounded border-gray-300 dark:border-gray-600"
+            />
+            <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.passwordGenerator.excludeSimilar')}</span>
           </label>
         </div>
 

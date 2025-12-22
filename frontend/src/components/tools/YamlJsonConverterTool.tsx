@@ -91,8 +91,8 @@ function parseValue(value: string): unknown {
 }
 
 // JSON to YAML converter
-function jsonToYaml(json: unknown, indent: number = 0): string {
-  const spaces = '  '.repeat(indent);
+function jsonToYaml(json: unknown, indent: number = 0, indentSpaces: number = 2): string {
+  const spaces = ' '.repeat(indent * indentSpaces);
   
   if (json === null) return 'null';
   if (json === undefined) return '';
@@ -111,9 +111,10 @@ function jsonToYaml(json: unknown, indent: number = 0): string {
   if (Array.isArray(json)) {
     if (json.length === 0) return '[]';
     return json.map(item => {
-      const value = jsonToYaml(item, indent + 1);
+      const value = jsonToYaml(item, indent + 1, indentSpaces);
       if (typeof item === 'object' && item !== null) {
-        return `${spaces}- ${value.trim().split('\n').map((line, i) => i === 0 ? line : `${spaces}  ${line}`).join('\n')}`;
+        const continuationIndent = ' '.repeat((indent + 1) * indentSpaces);
+        return `${spaces}- ${value.trim().split('\n').map((line, i) => i === 0 ? line : `${continuationIndent}${line}`).join('\n')}`;
       }
       return `${spaces}- ${value}`;
     }).join('\n');
@@ -124,7 +125,7 @@ function jsonToYaml(json: unknown, indent: number = 0): string {
     if (entries.length === 0) return '{}';
     
     return entries.map(([key, value]) => {
-      const yamlValue = jsonToYaml(value, indent + 1);
+      const yamlValue = jsonToYaml(value, indent + 1, indentSpaces);
       
       if (Array.isArray(value) && value.length > 0) {
         return `${spaces}${key}:\n${yamlValue}`;
@@ -163,7 +164,7 @@ export default function YamlJsonConverterTool() {
         setOutput(JSON.stringify(parsed, null, indentSpaces));
       } else {
         const parsed = JSON.parse(input);
-        setOutput(jsonToYaml(parsed));
+        setOutput(jsonToYaml(parsed, 0, indentSpaces));
       }
       setError(null);
     } catch (e) {
@@ -260,19 +261,17 @@ spec:
           </button>
         </div>
 
-        {mode === 'yamlToJson' && (
-          <div className="flex items-center gap-2">
-            <label className="text-sm text-gray-600 dark:text-gray-400">{t('tool.yamlJson.indent')}:</label>
-            <select
-              value={indentSpaces}
-              onChange={(e) => setIndentSpaces(Number(e.target.value))}
-              className="px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700"
-            >
-              <option value={2}>2 spaces</option>
-              <option value={4}>4 spaces</option>
-            </select>
-          </div>
-        )}
+        <div className="flex items-center gap-2">
+          <label className="text-sm text-gray-600 dark:text-gray-400">{t('tool.yamlJson.indent')}:</label>
+          <select
+            value={indentSpaces}
+            onChange={(e) => setIndentSpaces(Number(e.target.value))}
+            className="px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700"
+          >
+            <option value={2}>2 {t('common.spaces')}</option>
+            <option value={4}>4 {t('common.spaces')}</option>
+          </select>
+        </div>
 
         <button
           onClick={swap}

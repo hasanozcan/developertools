@@ -6,11 +6,12 @@ import { RefreshCw, Trash2 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 function generateUUID(): string {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    const r = (Math.random() * 16) | 0;
-    const v = c === 'x' ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
+  const bytes = new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+  bytes[6] = (bytes[6] & 0x0f) | 0x40;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const hex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
 }
 
 export default function UuidGeneratorTool() {
@@ -18,7 +19,7 @@ export default function UuidGeneratorTool() {
   const [uuids, setUuids] = useState<string[]>([]);
   const [count, setCount] = useState(1);
   const [uppercase, setUppercase] = useState(false);
-  const [noDashes, setNoDashes] = useState(false);
+  const [includeHyphens, setIncludeHyphens] = useState(true);
   const [isInitialized, setIsInitialized] = useState(false);
 
   // Generate initial UUID on client-side only to avoid hydration mismatch
@@ -31,14 +32,14 @@ export default function UuidGeneratorTool() {
 
   const formatUuid = useCallback((uuid: string): string => {
     let formatted = uuid;
-    if (noDashes) {
+    if (!includeHyphens) {
       formatted = formatted.replace(/-/g, '');
     }
     if (uppercase) {
       formatted = formatted.toUpperCase();
     }
     return formatted;
-  }, [uppercase, noDashes]);
+  }, [uppercase, includeHyphens]);
 
   const generateUuids = useCallback(() => {
     const newUuids = Array.from({ length: count }, () => generateUUID());
@@ -80,8 +81,8 @@ export default function UuidGeneratorTool() {
         <label className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
           <input
             type="checkbox"
-            checked={noDashes}
-            onChange={(e) => setNoDashes(e.target.checked)}
+            checked={includeHyphens}
+            onChange={(e) => setIncludeHyphens(e.target.checked)}
             className="rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-primary-600"
           />
           {t('tool.uuidGenerator.hyphens')}

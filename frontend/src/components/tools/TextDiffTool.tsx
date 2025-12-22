@@ -384,6 +384,12 @@ interface DiffStats {
   unchanged: number;
 }
 
+interface TextStats {
+  lines: number;
+  words: number;
+  characters: number;
+}
+
 function calculateStats(diff: DiffLine[]): DiffStats {
   return diff.reduce(
     (acc, line) => {
@@ -395,6 +401,15 @@ function calculateStats(diff: DiffLine[]): DiffStats {
     },
     { additions: 0, deletions: 0, modifications: 0, unchanged: 0 }
   );
+}
+
+function getTextStats(text: string): TextStats {
+  if (!text) return { lines: 0, words: 0, characters: 0 };
+
+  const lines = text.split('\n').length;
+  const trimmed = text.trim();
+  const words = trimmed ? trimmed.split(/\s+/).length : 0;
+  return { lines, words, characters: text.length };
 }
 
 export default function TextDiffTool() {
@@ -414,6 +429,8 @@ export default function TextDiffTool() {
   }, [text1, text2, ignoreWhitespace, ignoreCase]);
 
   const stats = useMemo(() => calculateStats(diff), [diff]);
+  const leftStats = useMemo(() => getTextStats(text1), [text1]);
+  const rightStats = useMemo(() => getTextStats(text2), [text2]);
   const visibleDiff = useMemo(() => {
     if (!showOnlyChanges) return diff;
     return diff.filter((line) => line.type !== 'same');
@@ -618,7 +635,12 @@ const VERY_LONG_LINE = "This is a very long line that will overflow horizontally
       {/* Input Areas */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('tool.textDiff.originalText')}</label>
+          <div className="flex items-center justify-between mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t('tool.textDiff.originalText')}</label>
+            <span className="text-xs text-gray-500 dark:text-gray-400">
+              {leftStats.lines} {t('common.lines')} | {leftStats.words} {t('common.words')} | {leftStats.characters} {t('common.characters')}
+            </span>
+          </div>
           <textarea
             value={text1}
             onChange={(e) => setText1(e.target.value)}
@@ -628,7 +650,12 @@ const VERY_LONG_LINE = "This is a very long line that will overflow horizontally
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('tool.textDiff.modifiedText')}</label>
+          <div className="flex items-center justify-between mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t('tool.textDiff.modifiedText')}</label>
+            <span className="text-xs text-gray-500 dark:text-gray-400">
+              {rightStats.lines} {t('common.lines')} | {rightStats.words} {t('common.words')} | {rightStats.characters} {t('common.characters')}
+            </span>
+          </div>
           <textarea
             value={text2}
             onChange={(e) => setText2(e.target.value)}

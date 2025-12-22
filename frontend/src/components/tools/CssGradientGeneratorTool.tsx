@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useCallback, useRef, useEffect } from 'react';
-import { Copy, Check, RefreshCw, Palette, Download } from 'lucide-react';
+import { useState, useCallback, useRef } from 'react';
+import { Copy, Check, RefreshCw, Download } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 interface GradientStop {
@@ -187,7 +187,7 @@ background: ${gradient};`;
                         : 'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                     }`}
                   >
-                    {a}°
+                    {a}deg
                   </button>
                 ))}
               </div>
@@ -353,3 +353,5 @@ background: ${gradient};`;
     </div>
   );
 }
+
+
