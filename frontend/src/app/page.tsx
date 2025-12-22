@@ -42,6 +42,7 @@ import {
 import AdSense from '@/components/common/AdSense';
 import { getPopularTools, Tool } from '@/lib/api';
 import { useLanguage } from '@/context/LanguageContext';
+import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
 
 const categorySlugs = ['json', 'encoding', 'generators', 'crypto', 'text', 'converters', 'formatters', 'utilities'];
 
@@ -107,9 +108,9 @@ const staticPopularTools: (Tool & { icon: LucideIcon; categorySlug?: string })[]
   { slug: 'js-minifier', categorySlug: 'formatters', icon: FileCode, id: 16, name: '', categoryName: '', isFeatured: true },
   { slug: 'password-generator', categorySlug: 'generators', icon: Key, id: 17, name: '', categoryName: '', isFeatured: true },
   { slug: 'timestamp-converter', categorySlug: 'converters', icon: Timer, id: 18, name: '', categoryName: '', isFeatured: true },
-  { slug: 'lorem-ipsum', categorySlug: 'text', icon: TextQuote, id: 19, name: '', categoryName: '', isFeatured: true },
+  { slug: 'lorem-ipsum', categorySlug: 'generators', icon: TextQuote, id: 19, name: '', categoryName: '', isFeatured: true },
   { slug: 'html-entity', categorySlug: 'encoding', icon: Code2, id: 20, name: '', categoryName: '', isFeatured: true },
-  { slug: 'json-csv', categorySlug: 'converters', icon: FileSpreadsheet, id: 21, name: '', categoryName: '', isFeatured: true },
+  { slug: 'json-csv', categorySlug: 'json', icon: FileSpreadsheet, id: 21, name: '', categoryName: '', isFeatured: true },
   { slug: 'text-diff', categorySlug: 'text', icon: GitCompare, id: 22, name: '', categoryName: '', isFeatured: true },
   { slug: 'json-to-typescript', categorySlug: 'json', icon: FileType, id: 23, name: '', categoryName: '', isFeatured: true },
   { slug: 'yaml-json', categorySlug: 'json', icon: FileJson2, id: 24, name: '', categoryName: '', isFeatured: true },
@@ -144,7 +145,10 @@ export default function Home() {
 
     return sourceTools.map((tool, index) => ({
       ...tool,
-      categorySlug: (tool as any).categorySlug || (tool as any).category || tool.categorySlug || '',
+      categorySlug: getCanonicalToolCategory(
+        tool.slug,
+        (tool as any).categorySlug || (tool as any).category || tool.categorySlug || ''
+      ),
       id: tool.id || index,
     }));
   }, [popularTools]);
@@ -181,7 +185,7 @@ export default function Home() {
             return (
               <Link
                 key={`${tool.slug}-${tool.categorySlug}`}
-                href={`/tools/${tool.categorySlug}/${tool.slug}`}
+                href={buildToolPath(tool.categorySlug, tool.slug)}
                 className="group p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-400 hover:shadow-md transition-all"
               >
                 <div className="flex items-start gap-3">
@@ -220,7 +224,7 @@ export default function Home() {
       />
 
       {/* Categories */}
-      <section className="mb-16">
+      <section className="mb-16" id="categories">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">{t('home.browseByCategory')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((category) => {

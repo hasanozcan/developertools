@@ -11,6 +11,7 @@ interface BreadcrumbProps {
 }
 
 export default function Breadcrumb({ items }: BreadcrumbProps) {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -18,7 +19,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
-      item: item.href ? `${process.env.NEXT_PUBLIC_SITE_URL}${item.href}` : undefined,
+      item: item.href ? `${baseUrl}${item.href}` : undefined,
     })),
   };
 

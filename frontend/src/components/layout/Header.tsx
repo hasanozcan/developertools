@@ -9,6 +9,7 @@ import { useFavorites } from '@/context/FavoritesContext';
 import { useHistory } from '@/context/HistoryContext';
 import { useLanguage } from '@/context/LanguageContext';
 import LanguageSelector from '@/components/common/LanguageSelector';
+import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
 
 // Tool slugs for search - names will be translated dynamically
 const toolSlugs = [
@@ -134,6 +135,7 @@ export default function Header() {
   // All tools with translated names for search
   const allTools = useMemo(() => toolSlugs.map(tool => ({
     ...tool,
+    category: getCanonicalToolCategory(tool.slug, tool.category),
     name: t(`toolName.${tool.slug}`)
   })), [t]);
 
@@ -235,7 +237,7 @@ export default function Header() {
   }, [selectedIndex]);
 
   const handleSelectTool = (tool: typeof allTools[0]) => {
-    router.push(`/tools/${tool.category}/${tool.slug}`);
+    router.push(buildToolPath(tool.category, tool.slug));
     setSearchOpen(false);
     setSearchQuery('');
     setSelectedIndex(-1);
@@ -289,7 +291,7 @@ export default function Header() {
                     {item.tools.map((tool: any) => (
                       <Link
                         key={tool.slug}
-                        href={`/tools/${tool.category}/${tool.slug}`}
+                        href={buildToolPath(tool.category, tool.slug)}
                         className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary-600 dark:hover:text-primary-400"
                       >
                         {tool.name}
@@ -426,7 +428,7 @@ export default function Header() {
                       <button
                         key={item.slug}
                         onClick={() => {
-                          router.push(`/tools/${item.category}/${item.slug}`);
+                          router.push(buildToolPath(item.category, item.slug));
                           setShowHistory(false);
                         }}
                         className="w-full px-4 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white text-sm"
@@ -491,7 +493,7 @@ export default function Header() {
                     {item.tools.map((tool: any) => (
                       <Link
                         key={tool.slug}
-                        href={`/tools/${tool.category}/${tool.slug}`}
+                        href={buildToolPath(tool.category, tool.slug)}
                         className="block py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
                         onClick={() => setMobileMenuOpen(false)}
                       >

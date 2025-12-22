@@ -12,23 +12,23 @@ interface LanguageContextType {
 
 export const languageNames: Record<Language, string> = {
   en: 'English',
-  tr: 'Türkçe',
+  tr: 'Turkce',
   de: 'Deutsch',
-  es: 'Español',
-  fr: 'Français',
-  ru: 'Русский',
-  zh: '中文',
+  es: 'Espanol',
+  fr: 'Francais',
+  ru: 'Russkiy',
+  zh: 'Zhongwen',
 };
 
 // Use text codes for consistent rendering across browsers
 export const languageFlags: Record<Language, string> = {
-  en: '🇺🇸',
-  tr: '🇹🇷',
-  de: '🇩🇪',
-  es: '🇪🇸',
-  fr: '🇫🇷',
-  ru: '🇷🇺',
-  zh: '🇨🇳',
+  en: 'EN',
+  tr: 'TR',
+  de: 'DE',
+  es: 'ES',
+  fr: 'FR',
+  ru: 'RU',
+  zh: 'ZH',
 };
 
 // Twemoji SVG URLs for consistent cross-browser rendering
@@ -46,10 +46,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>('en');
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    setMounted(true);
     const params = new URLSearchParams(window.location.search);
     const queryLanguage = params.get('lang') as Language | null;
     if (queryLanguage && translations[queryLanguage]) {
@@ -63,6 +60,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       setLanguageState(savedLanguage);
     }
   }, []);
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);

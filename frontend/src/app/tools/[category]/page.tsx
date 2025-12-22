@@ -41,6 +41,7 @@ import {
 } from 'lucide-react';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import AdSense from '@/components/common/AdSense';
+import { buildToolPath } from '@/lib/toolRoutes';
 
 // Tool icon mapping
 const toolIcons: Record<string, LucideIcon> = {
@@ -271,7 +272,7 @@ export default async function CategoryPage({ params }: PageProps) {
           return (
             <Link
               key={tool.slug}
-              href={`/tools/${categorySlug}/${tool.slug}`}
+              href={buildToolPath(categorySlug, tool.slug)}
               className="group p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-primary-500 dark:hover:border-primary-500 hover:shadow-lg transition-all"
             >
               <h2 className="font-semibold text-lg text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 flex items-center justify-between mb-2">

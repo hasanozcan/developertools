@@ -29,6 +29,7 @@ import ImageToBase64Tool from '@/components/tools/ImageToBase64Tool';
 import YamlJsonConverterTool from '@/components/tools/YamlJsonConverterTool';
 import CssGradientGeneratorTool from '@/components/tools/CssGradientGeneratorTool';
 import MetaTagsGeneratorTool from '@/components/tools/MetaTagsGeneratorTool';
+import { getCanonicalToolCategory } from '@/lib/toolRoutes';
 
 // Tool configurations
 const tools: Record<string, Record<string, {
@@ -440,16 +441,6 @@ const tools: Record<string, Record<string, {
   },
 };
 
-const canonicalCategories: Record<string, string> = {
-  'json-csv': 'json',
-  'yaml-json': 'json',
-  'image-to-base64': 'encoding',
-  'lorem-ipsum': 'generators',
-  'slug-generator': 'generators',
-  'qr-code': 'generators',
-  'markdown-preview': 'text',
-};
-
 interface PageProps {
   params: Promise<{ category: string; tool: string }>;
 }
@@ -464,7 +455,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
-  const canonicalCategory = canonicalCategories[toolSlug] || category;
+  const canonicalCategory = getCanonicalToolCategory(toolSlug, category);
   const canonicalUrl = `${siteUrl}/tools/${canonicalCategory}/${toolSlug}`;
   const metaTitle = `${tool.name} - Free Online Tool`;
 

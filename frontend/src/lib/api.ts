@@ -35,12 +35,12 @@ export interface ToolDetail extends Tool {
 
 // Static data now that the backend is disabled.
 const staticCategories: Category[] = [
-  { id: 1, slug: 'json', name: 'JSON Tools', description: 'Format, validate, and convert JSON', toolCount: 4 },
-  { id: 2, slug: 'encoding', name: 'Encoding & Decoding', description: 'Base64, URL, HTML encoding tools', toolCount: 4 },
-  { id: 3, slug: 'generators', name: 'Generators', description: 'UUID, password, QR, meta tag generators', toolCount: 6 },
+  { id: 1, slug: 'json', name: 'JSON Tools', description: 'Format, validate, and convert JSON', toolCount: 5 },
+  { id: 2, slug: 'encoding', name: 'Encoding & Decoding', description: 'Base64, URL, HTML encoding tools', toolCount: 5 },
+  { id: 3, slug: 'generators', name: 'Generators', description: 'UUID, password, QR, meta tag generators', toolCount: 7 },
   { id: 4, slug: 'crypto', name: 'Cryptography', description: 'Hash and crypto helpers', toolCount: 2 },
-  { id: 5, slug: 'text', name: 'Text Tools', description: 'Compare, preview, and format text', toolCount: 4 },
-  { id: 6, slug: 'converters', name: 'Converters', description: 'Data and color converters', toolCount: 4 },
+  { id: 5, slug: 'text', name: 'Text Tools', description: 'Compare, preview, and format text', toolCount: 3 },
+  { id: 6, slug: 'converters', name: 'Converters', description: 'Data and color converters', toolCount: 2 },
   { id: 7, slug: 'formatters', name: 'Formatters', description: 'SQL/CSS/JS format & minify', toolCount: 3 },
   { id: 8, slug: 'utilities', name: 'Utilities', description: 'Cron parser and helpers', toolCount: 1 },
 ];
@@ -65,11 +65,11 @@ const staticTools: Tool[] = [
   { id: 17, slug: 'regex-tester', name: 'Regex Tester', shortDescription: 'Test and debug regex patterns', categorySlug: 'text', categoryName: 'Text Tools', isFeatured: true },
   { id: 18, slug: 'text-diff', name: 'Text Diff', shortDescription: 'Compare texts and highlight differences', categorySlug: 'text', categoryName: 'Text Tools', isFeatured: true },
   { id: 19, slug: 'markdown-preview', name: 'Markdown Preview', shortDescription: 'Preview and convert Markdown to HTML', categorySlug: 'text', categoryName: 'Text Tools', isFeatured: true },
-  { id: 20, slug: 'lorem-ipsum', name: 'Lorem Ipsum', shortDescription: 'Generate placeholder text', categorySlug: 'text', categoryName: 'Text Tools', isFeatured: true },
+  { id: 20, slug: 'lorem-ipsum', name: 'Lorem Ipsum', shortDescription: 'Generate placeholder text', categorySlug: 'generators', categoryName: 'Generators', isFeatured: true },
   { id: 21, slug: 'timestamp-converter', name: 'Timestamp Converter', shortDescription: 'Convert timestamps to readable dates', categorySlug: 'converters', categoryName: 'Converters', isFeatured: true },
   { id: 22, slug: 'color-converter', name: 'Color Converter', shortDescription: 'Convert between HEX, RGB, and HSL', categorySlug: 'converters', categoryName: 'Converters', isFeatured: true },
-  { id: 23, slug: 'image-to-base64', name: 'Image to Base64', shortDescription: 'Convert images to Base64', categorySlug: 'converters', categoryName: 'Converters', isFeatured: true },
-  { id: 24, slug: 'yaml-json', name: 'YAML to JSON', shortDescription: 'Convert YAML to JSON and back', categorySlug: 'converters', categoryName: 'Converters', isFeatured: true },
+  { id: 23, slug: 'image-to-base64', name: 'Image to Base64', shortDescription: 'Convert images to Base64', categorySlug: 'encoding', categoryName: 'Encoding & Decoding', isFeatured: true },
+  { id: 24, slug: 'yaml-json', name: 'YAML to JSON', shortDescription: 'Convert YAML to JSON and back', categorySlug: 'json', categoryName: 'JSON Tools', isFeatured: true },
   { id: 25, slug: 'sql-formatter', name: 'SQL Formatter', shortDescription: 'Format SQL queries', categorySlug: 'formatters', categoryName: 'Formatters', isFeatured: true },
   { id: 26, slug: 'css-minifier', name: 'CSS Minifier', shortDescription: 'Minify CSS for production', categorySlug: 'formatters', categoryName: 'Formatters', isFeatured: true },
   { id: 27, slug: 'js-minifier', name: 'JS Minifier', shortDescription: 'Minify JavaScript for production', categorySlug: 'formatters', categoryName: 'Formatters', isFeatured: true },
