@@ -186,7 +186,18 @@ export default function CronParserTool() {
   const [error, setError] = useState('');
   const [nextRuns, setNextRuns] = useState<NextRun[]>([]);
   const [copied, setCopied] = useState(false);
+  const [showBuilder, setShowBuilder] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Builder state
+  const [builderMinute, setBuilderMinute] = useState('*');
+  const [builderMinuteCustom, setBuilderMinuteCustom] = useState('');
+  const [builderHour, setBuilderHour] = useState('*');
+  const [builderHourCustom, setBuilderHourCustom] = useState('');
+  const [builderDayMonth, setBuilderDayMonth] = useState('*');
+  const [builderDayMonthCustom, setBuilderDayMonthCustom] = useState('');
+  const [builderMonth, setBuilderMonth] = useState('*');
+  const [builderDayWeek, setBuilderDayWeek] = useState('*');
 
   const parseCron = useCallback((expr: string) => {
     const trimmed = expr.trim();
@@ -249,6 +260,17 @@ export default function CronParserTool() {
 
   const loadSample = () => {
     setExpression('0 9 * * 1-5');
+  };
+
+  const generateFromBuilder = () => {
+    const minute = builderMinute === 'custom' ? builderMinuteCustom : builderMinute;
+    const hour = builderHour === 'custom' ? builderHourCustom : builderHour;
+    const dayMonth = builderDayMonth === 'custom' ? builderDayMonthCustom : builderDayMonth;
+    const month = builderMonth;
+    const dayWeek = builderDayWeek;
+    
+    const cron = `${minute} ${hour} ${dayMonth} ${month} ${dayWeek}`;
+    setExpression(cron);
   };
 
   const copyToClipboard = async () => {
@@ -316,6 +338,159 @@ export default function CronParserTool() {
           ))}
         </div>
       </div>
+
+      {/* Visual Builder Toggle */}
+      <div>
+        <button
+          onClick={() => setShowBuilder(!showBuilder)}
+          className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium"
+        >
+          {showBuilder ? t('common.hide') : t('common.show')} {t('tool.cronParser.visualBuilder')}
+        </button>
+      </div>
+
+      {/* Visual Builder */}
+      {showBuilder && (
+        <div className="p-6 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">{t('tool.cronParser.visualBuilder')}</h3>
+          
+          <div className="space-y-4">
+            {/* Minute */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Minute</label>
+                <select
+                  value={builderMinute}
+                  onChange={(e) => setBuilderMinute(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                >
+                  <option value="*">Every minute (*)</option>
+                  <option value="0">At minute 0</option>
+                  <option value="*/5">Every 5 minutes (*/5)</option>
+                  <option value="*/15">Every 15 minutes (*/15)</option>
+                  <option value="*/30">Every 30 minutes (*/30)</option>
+                  <option value="custom">Custom...</option>
+                </select>
+                {builderMinute === 'custom' && (
+                  <input
+                    type="text"
+                    value={builderMinuteCustom}
+                    onChange={(e) => setBuilderMinuteCustom(e.target.value)}
+                    placeholder="0-59, e.g., 0,15,30,45"
+                    className="mt-2 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  />
+                )}
+              </div>
+
+              {/* Hour */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Hour</label>
+                <select
+                  value={builderHour}
+                  onChange={(e) => setBuilderHour(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                >
+                  <option value="*">Every hour (*)</option>
+                  <option value="0">At hour 0 (midnight)</option>
+                  <option value="*/2">Every 2 hours (*/2)</option>
+                  <option value="*/6">Every 6 hours (*/6)</option>
+                  <option value="*/12">Every 12 hours (*/12)</option>
+                  <option value="9">At 9 AM</option>
+                  <option value="17">At 5 PM</option>
+                  <option value="custom">Custom...</option>
+                </select>
+                {builderHour === 'custom' && (
+                  <input
+                    type="text"
+                    value={builderHourCustom}
+                    onChange={(e) => setBuilderHourCustom(e.target.value)}
+                    placeholder="0-23, e.g., 9,17"
+                    className="mt-2 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  />
+                )}
+              </div>
+
+              {/* Day of Month */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Day of Month</label>
+                <select
+                  value={builderDayMonth}
+                  onChange={(e) => setBuilderDayMonth(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                >
+                  <option value="*">Every day (*)</option>
+                  <option value="1">1st of month</option>
+                  <option value="15">15th of month</option>
+                  <option value="1,15">1st and 15th</option>
+                  <option value="custom">Custom...</option>
+                </select>
+                {builderDayMonth === 'custom' && (
+                  <input
+                    type="text"
+                    value={builderDayMonthCustom}
+                    onChange={(e) => setBuilderDayMonthCustom(e.target.value)}
+                    placeholder="1-31, e.g., 1,15,30"
+                    className="mt-2 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                  />
+                )}
+              </div>
+
+              {/* Month */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Month</label>
+                <select
+                  value={builderMonth}
+                  onChange={(e) => setBuilderMonth(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                >
+                  <option value="*">Every month (*)</option>
+                  <option value="1">January</option>
+                  <option value="2">February</option>
+                  <option value="3">March</option>
+                  <option value="4">April</option>
+                  <option value="5">May</option>
+                  <option value="6">June</option>
+                  <option value="7">July</option>
+                  <option value="8">August</option>
+                  <option value="9">September</option>
+                  <option value="10">October</option>
+                  <option value="11">November</option>
+                  <option value="12">December</option>
+                </select>
+              </div>
+
+              {/* Day of Week */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Day of Week</label>
+                <select
+                  value={builderDayWeek}
+                  onChange={(e) => setBuilderDayWeek(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                >
+                  <option value="*">Every day (*)</option>
+                  <option value="0">Sunday</option>
+                  <option value="1">Monday</option>
+                  <option value="2">Tuesday</option>
+                  <option value="3">Wednesday</option>
+                  <option value="4">Thursday</option>
+                  <option value="5">Friday</option>
+                  <option value="6">Saturday</option>
+                  <option value="1-5">Weekdays (Mon-Fri)</option>
+                  <option value="0,6">Weekends (Sat-Sun)</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Generate Button */}
+            <button
+              onClick={generateFromBuilder}
+              className="w-full px-4 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
+            >
+              Generate Cron Expression
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Error */}
       {error && (

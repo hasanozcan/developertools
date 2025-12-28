@@ -16,6 +16,7 @@ import {
   KeyRound,
   Hash,
   ShieldCheck,
+  Shield,
   Regex,
   Palette,
   QrCode,
@@ -37,6 +38,11 @@ import {
   Paintbrush,
   Tags,
   CheckCircle,
+  Hash as HashIcon,
+  Layers,
+  SortAsc,
+  SortDesc,
+  Ban,
   LucideIcon
 } from 'lucide-react';
 import Breadcrumb from '@/components/common/Breadcrumb';
@@ -52,6 +58,8 @@ const toolIcons: Record<string, LucideIcon> = {
   'yaml-json': FileJson2,
   'base64': Binary,
   'url-encoder': Link2,
+  'hex-encoder': HashIcon,
+  'binary-encoder': Code2,
   'jwt-decoder': KeyRound,
   'html-entity': Code2,
   'image-to-base64': Image,
@@ -64,14 +72,24 @@ const toolIcons: Record<string, LucideIcon> = {
   'meta-tags': Tags,
   'md5-hash': Hash,
   'sha256-hash': ShieldCheck,
+  'sha512-hash': Shield,
   'regex-tester': Regex,
   'text-diff': GitCompare,
+  'case-converter': Layers,
+  'word-counter': FileText,
+  'remove-duplicates': Ban,
+  'sort-lines': SortAsc,
   'markdown-preview': FileText,
   'timestamp-converter': Timer,
   'color-converter': Palette,
+  'roman-numeral-converter': FileType,
+  'number-base-converter': HashIcon,
   'sql-formatter': Database,
   'css-minifier': Minimize2,
   'js-minifier': FileCode,
+  'html-formatter': Code,
+  'html-minifier': Minimize2,
+  'xml-formatter': FileCode,
   'cron-parser': Clock,
 };
 
@@ -95,6 +113,8 @@ const categories: Record<string, { name: string; description: string; icon: any;
     tools: [
       { name: 'Base64 Encoder/Decoder', slug: 'base64', description: 'Encode or decode Base64 strings' },
       { name: 'URL Encoder/Decoder', slug: 'url-encoder', description: 'Encode or decode URL strings' },
+      { name: 'HEX Encoder/Decoder', slug: 'hex-encoder', description: 'Encode or decode text to/from hexadecimal' },
+      { name: 'Binary Encoder/Decoder', slug: 'binary-encoder', description: 'Encode or decode text to/from binary' },
       { name: 'JWT Decoder', slug: 'jwt-decoder', description: 'Decode and inspect JWT tokens' },
       { name: 'HTML Entity Encoder/Decoder', slug: 'html-entity', description: 'Encode or decode HTML entities' },
       { name: 'Image to Base64', slug: 'image-to-base64', description: 'Convert images to Base64 data URIs' },
@@ -121,6 +141,7 @@ const categories: Record<string, { name: string; description: string; icon: any;
     tools: [
       { name: 'MD5 Hash Generator', slug: 'md5-hash', description: 'Generate MD5 hash from text' },
       { name: 'SHA256 Hash Generator', slug: 'sha256-hash', description: 'Generate SHA256 hash from text' },
+      { name: 'SHA512 Hash Generator', slug: 'sha512-hash', description: 'Generate SHA512 hash from text' },
     ],
   },
   text: {
@@ -128,8 +149,11 @@ const categories: Record<string, { name: string; description: string; icon: any;
     description: 'Text manipulation and formatting tools',
     icon: Type,
     tools: [
+      { name: 'Case Converter', slug: 'case-converter', description: 'Convert text between different cases' },
+      { name: 'Word Counter', slug: 'word-counter', description: 'Count words, characters, lines, sentences' },
       { name: 'Regex Tester', slug: 'regex-tester', description: 'Test and debug regular expressions' },
-      { name: 'Lorem Ipsum Generator', slug: 'lorem-ipsum', description: 'Generate placeholder text' },
+      { name: 'Remove Duplicate Lines', slug: 'remove-duplicates', description: 'Remove duplicate lines from text' },
+      { name: 'Sort Lines', slug: 'sort-lines', description: 'Sort lines alphabetically' },
       { name: 'Text Diff Tool', slug: 'text-diff', description: 'Compare two texts and find differences' },
       { name: 'Markdown Preview', slug: 'markdown-preview', description: 'Preview and convert Markdown to HTML' },
       { name: 'Slug Generator', slug: 'slug-generator', description: 'Generate SEO-friendly URL slugs' },
@@ -142,6 +166,8 @@ const categories: Record<string, { name: string; description: string; icon: any;
     tools: [
       { name: 'Timestamp Converter', slug: 'timestamp-converter', description: 'Convert timestamps to dates' },
       { name: 'Color Converter', slug: 'color-converter', description: 'Convert colors between HEX, RGB, HSL' },
+      { name: 'Roman Numeral Converter', slug: 'roman-numeral-converter', description: 'Convert numbers to Roman numerals' },
+      { name: 'Number Base Converter', slug: 'number-base-converter', description: 'Convert between decimal, hex, octal, binary' },
       { name: 'JSON to CSV Converter', slug: 'json-csv', description: 'Convert JSON to CSV and vice versa' },
       { name: 'YAML ↔ JSON Converter', slug: 'yaml-json', description: 'Convert between YAML and JSON formats' },
       { name: 'Image to Base64', slug: 'image-to-base64', description: 'Convert images to Base64 data URIs' },
@@ -155,6 +181,9 @@ const categories: Record<string, { name: string; description: string; icon: any;
       { name: 'SQL Formatter', slug: 'sql-formatter', description: 'Format and beautify SQL queries' },
       { name: 'CSS Minifier', slug: 'css-minifier', description: 'Minify CSS code for production' },
       { name: 'JavaScript Minifier', slug: 'js-minifier', description: 'Minify JavaScript code for production' },
+      { name: 'HTML Formatter', slug: 'html-formatter', description: 'Format and beautify HTML code' },
+      { name: 'HTML Minifier', slug: 'html-minifier', description: 'Minify HTML code for production' },
+      { name: 'XML Formatter', slug: 'xml-formatter', description: 'Format and beautify XML code' },
     ],
   },
   utilities: {

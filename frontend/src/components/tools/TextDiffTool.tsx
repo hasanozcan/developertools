@@ -421,6 +421,7 @@ export default function TextDiffTool() {
   const [ignoreCase, setIgnoreCase] = useState(false);
   const [showOnlyChanges, setShowOnlyChanges] = useState(false);
   const [wrapLines, setWrapLines] = useState(false);
+  const [charLevelDiff, setCharLevelDiff] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const diff = useMemo(() => {
@@ -437,10 +438,22 @@ export default function TextDiffTool() {
   }, [diff, showOnlyChanges]);
 
   const tokenDiffs = useMemo(() => {
-    return visibleDiff.map((line) =>
-      line.type === 'modified' ? computeTokenDiff(line.content1 || '', line.content2 || '') : null
-    );
-  }, [visibleDiff]);
+    return visibleDiff.map((line) => {
+      if (line.type !== 'modified') return null;
+      
+      const content1 = line.content1 || '';
+      const content2 = line.content2 || '';
+      
+      // Use character-level diff for short strings or when explicitly enabled
+      const isShortString = content1.length < 80 && content2.length < 80;
+      
+      if (charLevelDiff || isShortString) {
+        return computeCharDiff(content1, content2);
+      }
+      
+      return computeTokenDiff(content1, content2);
+    });
+  }, [visibleDiff, charLevelDiff]);
 
   const codeWhitespaceClass = wrapLines ? 'whitespace-pre-wrap break-words' : 'whitespace-pre';
   const leftScrollRef = useRef<HTMLDivElement>(null);
@@ -467,6 +480,72 @@ export default function TextDiffTool() {
     navigator.clipboard.writeText(diffText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  }, [visibleDiff]);
+
+  const exportUnifiedPatch = useCallback(() => {
+    const timestamp = new Date().toISOString();
+    const lines = [
+      `--- Original\t${timestamp}`,
+      `+++ Modified\t${timestamp}`,
+    ];
+
+    let hunkIndex = 0;
+    let hunkStart = 0;
+    let contextLines: DiffLine[] = [];
+    let hunkLines: DiffLine[] = [];
+
+    visibleDiff.forEach((line, idx) => {
+      if (hunkIndex === 0) {
+        hunkStart = idx;
+      }
+
+      if (line.type !== 'same') {
+        hunkLines.push(...contextLines, line);
+        contextLines = [];
+        hunkIndex++;
+      } else if (hunkIndex > 0) {
+        contextLines.push(line);
+        if (contextLines.length > 3) {
+          hunkLines.push(...contextLines.slice(0, 3));
+          contextLines = [];
+          // Output hunk
+          const oldCount = hunkLines.filter(l => l.type === 'same' || l.type === 'removed').length;
+          const newCount = hunkLines.filter(l => l.type === 'same' || l.type === 'added').length;
+          lines.push(`@@ -${hunkStart + 1},${oldCount} +${hunkStart + 1},${newCount} @@`);
+          hunkLines.forEach(l => {
+            if (l.type === 'same') lines.push(` ${l.content1}`);
+            if (l.type === 'removed') lines.push(`-${l.content1}`);
+            if (l.type === 'added') lines.push(`+${l.content2}`);
+          });
+          hunkLines = [];
+          hunkIndex = 0;
+        }
+      }
+    });
+
+    // Handle remaining hunk
+    if (hunkLines.length > 0) {
+      hunkLines.push(...contextLines);
+      const oldCount = hunkLines.filter(l => l.type === 'same' || l.type === 'removed').length;
+      const newCount = hunkLines.filter(l => l.type === 'same' || l.type === 'added').length;
+      lines.push(`@@ -${hunkStart + 1},${oldCount} +${hunkStart + 1},${newCount} @@`);
+      hunkLines.forEach(l => {
+        if (l.type === 'same') lines.push(` ${l.content1}`);
+        if (l.type === 'removed') lines.push(`-${l.content1}`);
+        if (l.type === 'added') lines.push(`+${l.content2}`);
+      });
+    }
+
+    const patchContent = lines.join('\n');
+    const blob = new Blob([patchContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `diff-${Date.now()}.patch`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   }, [visibleDiff]);
 
   const syncScroll = useCallback((source: 'left' | 'right') => {
@@ -596,6 +675,16 @@ const VERY_LONG_LINE = "This is a very long line that will overflow horizontally
           />
           <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.textDiff.wrapLines')}</span>
         </label>
+
+        <label className="flex items-center gap-2 cursor-pointer" title="Enable character-level diff for short strings">
+          <input
+            type="checkbox"
+            checked={charLevelDiff}
+            onChange={(e) => setCharLevelDiff(e.target.checked)}
+            className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
+          />
+          <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.textDiff.charLevel')}</span>
+        </label>
         
         <button
           onClick={swapTexts}
@@ -622,13 +711,21 @@ const VERY_LONG_LINE = "This is a very long line that will overflow horizontally
         </button>
         
         {visibleDiff.length > 0 && (
-          <button
-            onClick={copyDiff}
-            className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium flex items-center gap-2 text-sm"
-          >
-            {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
-            {copied ? t('common.copied') : t('tool.textDiff.copyDiff')}
-          </button>
+          <>
+            <button
+              onClick={copyDiff}
+              className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium flex items-center gap-2 text-sm"
+            >
+              {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+              {copied ? t('common.copied') : t('tool.textDiff.copyDiff')}
+            </button>
+            <button
+              onClick={exportUnifiedPatch}
+              className="px-4 py-2 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-900/70 transition-colors font-medium flex items-center gap-2 text-sm"
+            >
+              {t('tool.textDiff.exportPatch')}
+            </button>
+          </>
         )}
       </div>
 

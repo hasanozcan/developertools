@@ -17,6 +17,9 @@ export default function SlugGeneratorTool() {
   const [input, setInput] = useState('');
   const [slug, setSlug] = useState('');
   const [copied, setCopied] = useState(false);
+  const [bulkMode, setBulkMode] = useState(false);
+  const [bulkSlugs, setBulkSlugs] = useState<Array<{ original: string; slug: string }>>([]);
+  const [bulkCopied, setBulkCopied] = useState(false);
   const [options, setOptions] = useState<SlugOptions>({
     lowercase: true,
     separator: '-',
@@ -157,11 +160,41 @@ export default function SlugGeneratorTool() {
   };
 
   useEffect(() => {
-    setSlug(generateSlug(input));
-  }, [input, options]);
+    if (bulkMode) {
+      // Handle bulk mode
+      if (!input.trim()) {
+        setBulkSlugs([]);
+        return;
+      }
+      const lines = input.split('\n').filter(line => line.trim());
+      const results = lines.map(line => ({
+        original: line,
+        slug: generateSlug(line),
+      }));
+      setBulkSlugs(results);
+      setSlug('');
+    } else {
+      // Single mode
+      setSlug(generateSlug(input));
+      setBulkSlugs([]);
+    }
+  }, [input, options, bulkMode]);
 
   const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(slug);
+    if (bulkMode) {
+      const allSlugs = bulkSlugs.map(item => item.slug).join('\n');
+      await navigator.clipboard.writeText(allSlugs);
+      setBulkCopied(true);
+      setTimeout(() => setBulkCopied(false), 2000);
+    } else {
+      await navigator.clipboard.writeText(slug);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const copySingleSlug = async (slugText: string) => {
+    await navigator.clipboard.writeText(slugText);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -177,16 +210,43 @@ export default function SlugGeneratorTool() {
 
   return (
     <div className="space-y-6">
+      {/* Mode Toggle */}
+      <div className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Mode:</span>
+        <div className="flex rounded-lg overflow-hidden border border-gray-300 dark:border-gray-600">
+          <button
+            onClick={() => { setBulkMode(false); setInput(''); }}
+            className={`px-4 py-2 text-sm font-medium transition-colors ${
+              !bulkMode
+                ? 'bg-primary-600 text-white'
+                : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
+            }`}
+          >
+            Single Slug
+          </button>
+          <button
+            onClick={() => { setBulkMode(true); setInput(''); }}
+            className={`px-4 py-2 text-sm font-medium transition-colors ${
+              bulkMode
+                ? 'bg-primary-600 text-white'
+                : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
+            }`}
+          >
+            Bulk Mode
+          </button>
+        </div>
+      </div>
+
       {/* Input */}
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          {t('tool.slugGenerator.titleOrText')}
+          {bulkMode ? 'Enter Titles (one per line)' : t('tool.slugGenerator.titleOrText')}
         </label>
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          rows={3}
-          placeholder={t('tool.slugGenerator.inputPlaceholder')}
+          rows={bulkMode ? 8 : 3}
+          placeholder={bulkMode ? 'How to Create a REST API\n10 Best Practices for JavaScript\nWhat\'s New in React 19' : t('tool.slugGenerator.inputPlaceholder')}
           className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
         />
       </div>
@@ -266,37 +326,84 @@ export default function SlugGeneratorTool() {
       </div>
 
       {/* Output */}
-      <div>
-        <div className="flex items-center justify-between mb-2">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-            {t('tool.slugGenerator.generatedSlug')}
-          </label>
-          {slug && (
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              {slug.length} {t('tool.slugGenerator.characters')}
-            </span>
-          )}
-        </div>
-        <div className="flex gap-2">
-          <div className="flex-1 flex items-center px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800">
-            <Link2 className="w-4 h-4 text-gray-400 dark:text-gray-500 mr-3 flex-shrink-0" />
-            <span className="font-mono text-sm text-gray-900 dark:text-white break-all">
-              {slug || <span className="text-gray-400 dark:text-gray-500 italic">your-slug-here</span>}
-            </span>
+      {bulkMode ? (
+        // Bulk Output
+        bulkSlugs.length > 0 && (
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                Generated Slugs ({bulkSlugs.length})
+              </label>
+              <button
+                onClick={copyToClipboard}
+                className="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2"
+              >
+                {bulkCopied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+                {bulkCopied ? 'Copied!' : 'Copy All'}
+              </button>
+            </div>
+            <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
+              <div className="max-h-80 overflow-y-auto">
+                {bulkSlugs.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-600 last:border-b-0 hover:bg-gray-50 dark:hover:bg-gray-700/50"
+                  >
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm text-gray-500 dark:text-gray-400 truncate" title={item.original}>
+                        {item.original}
+                      </div>
+                      <div className="font-mono text-sm text-gray-900 dark:text-white truncate">
+                        {item.slug}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => copySingleSlug(item.slug)}
+                      className="ml-3 p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg transition-colors"
+                      title="Copy this slug"
+                    >
+                      {copied && slug === item.slug ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <button
-            onClick={copyToClipboard}
-            disabled={!slug}
-            className="px-4 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-          >
-            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-            {copied ? t('common.copied') : t('common.copy')}
-          </button>
+        )
+      ) : (
+        // Single Output
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              {t('tool.slugGenerator.generatedSlug')}
+            </label>
+            {slug && (
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                {slug.length} {t('tool.slugGenerator.characters')}
+              </span>
+            )}
+          </div>
+          <div className="flex gap-2">
+            <div className="flex-1 flex items-center px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800">
+              <Link2 className="w-4 h-4 text-gray-400 dark:text-gray-500 mr-3 flex-shrink-0" />
+              <span className="font-mono text-sm text-gray-900 dark:text-white break-all">
+                {slug || <span className="text-gray-400 dark:text-gray-500 italic">your-slug-here</span>}
+              </span>
+            </div>
+            <button
+              onClick={copyToClipboard}
+              disabled={!slug}
+              className="px-4 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            >
+              {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              {copied ? t('common.copied') : t('common.copy')}
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* URL Preview */}
-      {slug && (
+      {/* URL Preview - Single mode only */}
+      {slug && !bulkMode && (
         <div className="p-4 bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-lg">
           <label className="block text-sm font-medium text-green-700 dark:text-green-300 mb-2">
             {t('tool.slugGenerator.urlPreview')}

@@ -13,6 +13,8 @@ interface MetaTagsConfig {
   robots: string;
   canonical: string;
   language: string;
+  favicon: string;
+  appleTouchIcon: string;
   // Open Graph
   ogTitle: string;
   ogDescription: string;
@@ -27,6 +29,16 @@ interface MetaTagsConfig {
   twitterTitle: string;
   twitterDescription: string;
   twitterImage: string;
+  // LinkedIn
+  linkedinTitle: string;
+  linkedinDescription: string;
+  linkedinImage: string;
+  linkedinUrl: string;
+  // JSON-LD
+  jsonLdType: string;
+  jsonLdName: string;
+  jsonLdDescription: string;
+  jsonLdImage: string;
 }
 
 const DEFAULT_CONFIG: MetaTagsConfig = {
@@ -37,6 +49,8 @@ const DEFAULT_CONFIG: MetaTagsConfig = {
   robots: 'index, follow',
   canonical: '',
   language: 'en',
+  favicon: '',
+  appleTouchIcon: '',
   ogTitle: '',
   ogDescription: '',
   ogImage: '',
@@ -49,14 +63,23 @@ const DEFAULT_CONFIG: MetaTagsConfig = {
   twitterTitle: '',
   twitterDescription: '',
   twitterImage: '',
+  linkedinTitle: '',
+  linkedinDescription: '',
+  linkedinImage: '',
+  linkedinUrl: '',
+  jsonLdType: 'WebSite',
+  jsonLdName: '',
+  jsonLdDescription: '',
+  jsonLdImage: '',
 };
 
 export default function MetaTagsGeneratorTool() {
   const { t } = useLanguage();
   const [config, setConfig] = useState<MetaTagsConfig>(DEFAULT_CONFIG);
-  const [activeTab, setActiveTab] = useState<'basic' | 'og' | 'twitter'>('basic');
+  const [activeTab, setActiveTab] = useState<'basic' | 'og' | 'twitter' | 'linkedin' | 'jsonld'>('basic');
   const [copied, setCopied] = useState(false);
   const [autoSync, setAutoSync] = useState(true);
+  const [includeJsonLd, setIncludeJsonLd] = useState(false);
 
   const updateConfig = useCallback((key: keyof MetaTagsConfig, value: string) => {
     setConfig(prev => {
@@ -87,6 +110,14 @@ export default function MetaTagsGeneratorTool() {
     // Charset & Viewport
     tags.push('<meta charset="UTF-8">');
     tags.push('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+    
+    // Favicon
+    if (config.favicon) {
+      tags.push(`<link rel="icon" type="image/x-icon" href="${escapeHtml(config.favicon)}">`);
+    }
+    if (config.appleTouchIcon) {
+      tags.push(`<link rel="apple-touch-icon" href="${escapeHtml(config.appleTouchIcon)}">`);
+    }
     
     // Basic meta tags
     if (config.title) {
@@ -151,8 +182,39 @@ export default function MetaTagsGeneratorTool() {
       tags.push(`<meta name="twitter:image" content="${escapeHtml(config.twitterImage || config.ogImage)}">`);
     }
     
+    // LinkedIn tags (uses Open Graph, but we add specific ones)
+    if (config.linkedinTitle || config.title) {
+      tags.push(`<meta property="linkedin:title" content="${escapeHtml(config.linkedinTitle || config.title)}">`);
+    }
+    if (config.linkedinDescription || config.description) {
+      tags.push(`<meta property="linkedin:description" content="${escapeHtml(config.linkedinDescription || config.description)}">`);
+    }
+    if (config.linkedinImage || config.ogImage) {
+      tags.push(`<meta property="linkedin:image" content="${escapeHtml(config.linkedinImage || config.ogImage)}">`);
+    }
+    if (config.linkedinUrl || config.canonical) {
+      tags.push(`<meta property="linkedin:url" content="${escapeHtml(config.linkedinUrl || config.canonical)}">`);
+    }
+    
+    // JSON-LD Structured Data
+    if (includeJsonLd && (config.jsonLdName || config.title)) {
+      const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': config.jsonLdType,
+        'name': config.jsonLdName || config.title,
+        'description': config.jsonLdDescription || config.description,
+        'url': config.canonical,
+        'image': config.jsonLdImage || config.ogImage,
+      };
+      // Remove undefined values
+      const cleanJsonLd = Object.fromEntries(
+        Object.entries(jsonLd).filter(([_, v]) => v !== undefined && v !== '')
+      );
+      tags.push(`<script type="application/ld+json">\n${JSON.stringify(cleanJsonLd, null, 2)}\n</script>`);
+    }
+    
     return tags.join('\n');
-  }, [config]);
+  }, [config, includeJsonLd]);
 
   const escapeHtml = (str: string) => {
     return str
@@ -182,6 +244,8 @@ export default function MetaTagsGeneratorTool() {
       robots: 'index, follow',
       canonical: 'https://example.com/tools',
       language: 'en',
+      favicon: 'https://example.com/favicon.ico',
+      appleTouchIcon: 'https://example.com/apple-touch-icon.png',
       ogTitle: 'Developer Tools - Free Online Web Development Utilities',
       ogDescription: 'A collection of free online tools for developers.',
       ogImage: 'https://example.com/og-image.png',
@@ -194,6 +258,14 @@ export default function MetaTagsGeneratorTool() {
       twitterTitle: 'Developer Tools - Free Online Web Development Utilities',
       twitterDescription: 'A collection of free online tools for developers.',
       twitterImage: 'https://example.com/twitter-image.png',
+      linkedinTitle: 'Developer Tools - Free Online Web Development Utilities',
+      linkedinDescription: 'A collection of free online tools for developers.',
+      linkedinImage: 'https://example.com/linkedin-image.png',
+      linkedinUrl: 'https://example.com/tools',
+      jsonLdType: 'WebSite',
+      jsonLdName: 'Developer Tools',
+      jsonLdDescription: 'A collection of free online tools for developers.',
+      jsonLdImage: 'https://example.com/og-image.png',
     });
   }, []);
 
@@ -201,6 +273,8 @@ export default function MetaTagsGeneratorTool() {
     { id: 'basic', label: t('tool.metaTags.basic') },
     { id: 'og', label: 'Open Graph' },
     { id: 'twitter', label: 'Twitter' },
+    { id: 'linkedin', label: t('tool.metaTags.linkedinCard') },
+    { id: 'jsonld', label: t('tool.metaTags.jsonLd') },
   ] as const;
 
   return (
@@ -319,6 +393,34 @@ export default function MetaTagsGeneratorTool() {
                 value={config.canonical}
                 onChange={(e) => updateConfig('canonical', e.target.value)}
                 placeholder="https://example.com/page"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
+              />
+            </div>
+            
+            {/* Favicon */}
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                {t('tool.metaTags.favicon')}
+              </label>
+              <input
+                type="url"
+                value={config.favicon}
+                onChange={(e) => updateConfig('favicon', e.target.value)}
+                placeholder="https://example.com/favicon.ico"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
+              />
+            </div>
+
+            {/* Apple Touch Icon */}
+            <div className="md:md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                {t('tool.metaTags.appleTouchIcon')}
+              </label>
+              <input
+                type="url"
+                value={config.appleTouchIcon}
+                onChange={(e) => updateConfig('appleTouchIcon', e.target.value)}
+                placeholder="https://example.com/apple-touch-icon.png"
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
@@ -474,6 +576,136 @@ export default function MetaTagsGeneratorTool() {
             </div>
           </>
         )}
+
+        {activeTab === 'linkedin' && (
+          <>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                LinkedIn Title
+              </label>
+              <input
+                type="text"
+                value={config.linkedinTitle}
+                onChange={(e) => updateConfig('linkedinTitle', e.target.value)}
+                placeholder={config.title || 'LinkedIn Title'}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
+              />
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                LinkedIn Description
+              </label>
+              <textarea
+                value={config.linkedinDescription}
+                onChange={(e) => updateConfig('linkedinDescription', e.target.value)}
+                rows={2}
+                placeholder={config.description || 'LinkedIn Description'}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm resize-none"
+              />
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                LinkedIn Image
+              </label>
+              <input
+                type="url"
+                value={config.linkedinImage}
+                onChange={(e) => updateConfig('linkedinImage', e.target.value)}
+                placeholder={config.ogImage || 'https://example.com/linkedin-image.png'}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
+              />
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                LinkedIn URL
+              </label>
+              <input
+                type="url"
+                value={config.linkedinUrl}
+                onChange={(e) => updateConfig('linkedinUrl', e.target.value)}
+                placeholder={config.canonical || 'https://example.com/page'}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
+              />
+            </div>
+          </>
+        )}
+
+        {activeTab === 'jsonld' && (
+          <>
+            <div className="md:col-span-2">
+              <label className="flex items-center gap-2 mb-4">
+                <input
+                  type="checkbox"
+                  checked={includeJsonLd}
+                  onChange={(e) => setIncludeJsonLd(e.target.checked)}
+                  className="w-4 h-4 text-primary-600 rounded border-gray-300 dark:border-gray-600"
+                />
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Include JSON-LD Structured Data
+                </span>
+              </label>
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Schema Type
+              </label>
+              <select
+                value={config.jsonLdType}
+                onChange={(e) => updateConfig('jsonLdType', e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
+              >
+                <option value="WebSite">WebSite</option>
+                <option value="WebPage">WebPage</option>
+                <option value="Article">Article</option>
+                <option value="BlogPosting">BlogPosting</option>
+                <option value="Organization">Organization</option>
+                <option value="Person">Person</option>
+                <option value="Product">Product</option>
+                <option value="LocalBusiness">LocalBusiness</option>
+              </select>
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Name
+              </label>
+              <input
+                type="text"
+                value={config.jsonLdName}
+                onChange={(e) => updateConfig('jsonLdName', e.target.value)}
+                placeholder={config.title || 'Your Site Name'}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
+              />
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Description
+              </label>
+              <textarea
+                value={config.jsonLdDescription}
+                onChange={(e) => updateConfig('jsonLdDescription', e.target.value)}
+                rows={2}
+                placeholder={config.description || 'A description for search engines'}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm resize-none"
+              />
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Image
+              </label>
+              <input
+                type="url"
+                value={config.jsonLdImage}
+                onChange={(e) => updateConfig('jsonLdImage', e.target.value)}
+                placeholder={config.ogImage || 'https://example.com/og-image.png'}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
+              />
+            </div>
+          </>
+        )}
       </div>
 
       {/* Actions */}
@@ -490,6 +722,17 @@ export default function MetaTagsGeneratorTool() {
         >
           <RefreshCw className="w-4 h-4" />
           {t('common.reset')}
+        </button>
+      </div>
+
+      {/* Copy All Button */}
+      <div className="flex justify-end">
+        <button
+          onClick={copyCode}
+          className="px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium flex items-center gap-2"
+        >
+          {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+          {copied ? t('common.copied') : t('tool.metaTags.copyAllTags')}
         </button>
       </div>
 

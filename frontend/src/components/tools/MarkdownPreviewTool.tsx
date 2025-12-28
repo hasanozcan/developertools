@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Eye, Code, Copy, Check, FileText, Trash2 } from 'lucide-react';
+import { Eye, Code, Copy, Check, FileText, Trash2, Download } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { marked } from 'marked';
 
 export default function MarkdownPreviewTool() {
   const { t } = useLanguage();
@@ -11,91 +12,17 @@ export default function MarkdownPreviewTool() {
   const [viewMode, setViewMode] = useState<'preview' | 'html'>('preview');
   const [copied, setCopied] = useState(false);
 
-  const escapeHtml = (text: string): string => {
-    return text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  };
-
-  const parseMarkdown = (md: string): string => {
-    let html = md;
-
-    // Code blocks (must be first)
-    html = html.replace(/```(\w+)?\n([\s\S]*?)```/g, (_, lang, code) => {
-      return `<pre class="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto my-4"><code class="text-sm font-mono">${escapeHtml(code.trim())}</code></pre>`;
-    });
-
-    // Inline code
-    html = html.replace(/`([^`]+)`/g, '<code class="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-sm font-mono text-primary-600 dark:text-primary-400">$1</code>');
-
-    // Headers
-    html = html.replace(/^######\s+(.+)$/gm, '<h6 class="text-sm font-semibold text-gray-900 dark:text-white mt-6 mb-2">$1</h6>');
-    html = html.replace(/^#####\s+(.+)$/gm, '<h5 class="text-base font-semibold text-gray-900 dark:text-white mt-6 mb-2">$1</h5>');
-    html = html.replace(/^####\s+(.+)$/gm, '<h4 class="text-lg font-semibold text-gray-900 dark:text-white mt-6 mb-3">$1</h4>');
-    html = html.replace(/^###\s+(.+)$/gm, '<h3 class="text-xl font-semibold text-gray-900 dark:text-white mt-6 mb-3">$1</h3>');
-    html = html.replace(/^##\s+(.+)$/gm, '<h2 class="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">$1</h2>');
-    html = html.replace(/^#\s+(.+)$/gm, '<h1 class="text-3xl font-bold text-gray-900 dark:text-white mt-8 mb-4">$1</h1>');
-
-    // Blockquotes
-    html = html.replace(/^>\s+(.+)$/gm, '<blockquote class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 py-2 my-4 text-gray-600 dark:text-gray-400 italic">$1</blockquote>');
-
-    // Horizontal rule
-    html = html.replace(/^---$/gm, '<hr class="my-8 border-gray-200 dark:border-gray-700" />');
-    html = html.replace(/^\*\*\*$/gm, '<hr class="my-8 border-gray-200 dark:border-gray-700" />');
-
-    // Bold
-    html = html.replace(/\*\*(.+?)\*\*/g, '<strong class="font-bold">$1</strong>');
-    html = html.replace(/__(.+?)__/g, '<strong class="font-bold">$1</strong>');
-
-    // Italic
-    html = html.replace(/\*(.+?)\*/g, '<em class="italic">$1</em>');
-    html = html.replace(/_(.+?)_/g, '<em class="italic">$1</em>');
-
-    // Strikethrough
-    html = html.replace(/~~(.+?)~~/g, '<del class="line-through">$1</del>');
-
-    // Links
-    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-primary-600 dark:text-primary-400 hover:underline" target="_blank" rel="noopener noreferrer">$1</a>');
-
-    // Images
-    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" class="max-w-full rounded-lg my-4" />');
-
-    // Unordered lists
-    html = html.replace(/^[\*\-]\s+(.+)$/gm, '<li class="ml-4 list-disc text-gray-700 dark:text-gray-300">$1</li>');
-    html = html.replace(/(<li[^>]*>.*<\/li>\n?)+/g, '<ul class="my-4 space-y-1">$&</ul>');
-
-    // Ordered lists  
-    html = html.replace(/^\d+\.\s+(.+)$/gm, '<li class="ml-4 list-decimal text-gray-700 dark:text-gray-300">$1</li>');
-
-    // Task lists
-    html = html.replace(/^[\*\-]\s+\[x\]\s+(.+)$/gm, '<li class="ml-4 flex items-center gap-2"><input type="checkbox" checked disabled class="rounded" /><span class="line-through text-gray-500">$1</span></li>');
-    html = html.replace(/^[\*\-]\s+\[\s\]\s+(.+)$/gm, '<li class="ml-4 flex items-center gap-2"><input type="checkbox" disabled class="rounded" /><span>$1</span></li>');
-
-    // Tables
-    html = html.replace(/^\|(.+)\|$/gm, (match, content) => {
-      const cells = content.split('|').map((cell: string) => cell.trim());
-      const isHeader = cells.some((cell: string) => /^[-:]+$/.test(cell));
-      if (isHeader) return '';
-      
-      const cellHtml = cells.map((cell: string) => `<td class="px-4 py-2 border border-gray-200 dark:border-gray-700">${cell}</td>`).join('');
-      return `<tr>${cellHtml}</tr>`;
-    });
-
-    // Paragraphs
-    html = html.replace(/^(?!<[a-z]|$)(.+)$/gm, '<p class="text-gray-700 dark:text-gray-300 my-3 leading-relaxed">$1</p>');
-
-    // Clean up empty paragraphs
-    html = html.replace(/<p[^>]*>\s*<\/p>/g, '');
-
-    return html;
-  };
+  // Configure marked for better parsing
+  marked.setOptions({
+    breaks: true,
+    gfm: true,
+  });
 
   useEffect(() => {
     if (markdown) {
-      setHtml(parseMarkdown(markdown));
+      // Use marked library for proper markdown parsing
+      const parsedHtml = marked.parse(markdown) as string;
+      setHtml(parsedHtml);
     } else {
       setHtml('');
     }
@@ -105,6 +32,49 @@ export default function MarkdownPreviewTool() {
     await navigator.clipboard.writeText(html);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const downloadHtml = () => {
+    const fullHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown Preview</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+    h1, h2, h3, h4, h5, h6 { margin-top: 24px; margin-bottom: 16px; font-weight: 600; line-height: 1.25; }
+    h1 { font-size: 2em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; }
+    h2 { font-size: 1.5em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; }
+    code { background-color: #f6f8fa; padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace; }
+    pre { background-color: #f6f8fa; padding: 16px; overflow: auto; border-radius: 6px; }
+    pre code { background-color: transparent; padding: 0; }
+    blockquote { border-left: 4px solid #dfe2e5; padding-left: 16px; color: #6a737d; }
+    table { border-collapse: collapse; width: 100%; }
+    table th, table td { border: 1px solid #dfe2e5; padding: 6px 13px; }
+    table th { background-color: #f6f8fa; font-weight: 600; }
+    img { max-width: 100%; }
+    a { color: #0366d6; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    hr { border: 0; border-top: 1px solid #eaecef; height: 0; margin: 24px 0; }
+    input[type="checkbox"] { margin-right: 8px; }
+    del { color: #6a737d; }
+  </style>
+</head>
+<body>
+${html}
+</body>
+</html>`;
+    
+    const blob = new Blob([fullHtml], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'markdown-preview.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   const loadSample = () => {
@@ -138,6 +108,13 @@ Visit [GitHub](https://github.com) for more projects.
 - [x] Learn Markdown
 - [x] Build a preview tool
 - [ ] Share with others
+
+### Table Support
+| Feature | Status |
+|---------|--------|
+| Tables | ✅ Supported |
+| Footnotes | ✅ Supported |
+| Task Lists | ✅ Supported |
 
 ---
 
@@ -189,13 +166,22 @@ Visit [GitHub](https://github.com) for more projects.
             {t('common.clear')}
           </button>
           {html && (
-            <button
-              onClick={copyHtml}
-              className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium flex items-center gap-2 text-sm"
-            >
-              {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
-              {copied ? t('common.copied') : t('tool.markdownPreview.copyHtml')}
-            </button>
+            <>
+              <button
+                onClick={copyHtml}
+                className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium flex items-center gap-2 text-sm"
+              >
+                {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+                {copied ? t('common.copied') : t('tool.markdownPreview.copyHtml')}
+              </button>
+              <button
+                onClick={downloadHtml}
+                className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium flex items-center gap-2 text-sm"
+              >
+                <Download className="w-4 h-4" />
+                Export HTML
+              </button>
+            </>
           )}
         </div>
       </div>
@@ -224,7 +210,7 @@ Visit [GitHub](https://github.com) for more projects.
           <div className="w-full h-[480px] border border-gray-300 dark:border-gray-600 rounded-lg overflow-auto bg-white dark:bg-gray-800">
             {viewMode === 'preview' ? (
               <div 
-                className="p-6 prose dark:prose-invert max-w-none"
+                className="p-6 prose prose-sm dark:prose-invert max-w-none"
                 dangerouslySetInnerHTML={{ __html: html || `<p class="text-gray-400 dark:text-gray-500 italic">${t('tool.markdownPreview.previewPlaceholder')}</p>` }}
               />
             ) : (
@@ -276,15 +262,16 @@ Visit [GitHub](https://github.com) for more projects.
           <div className="space-y-2">
             <h4 className="font-medium text-gray-900 dark:text-white text-sm">{t('tool.markdownPreview.codeBlocks')}</h4>
             <div className="text-xs font-mono text-gray-600 dark:text-gray-400 space-y-1">
-              <div>`inline code`</div>
-              <div>```language</div>
+              <div>\`inline code\`</div>
+              <div>\`\`\`language</div>
               <div>code block</div>
-              <div>```</div>
+              <div>\`\`\`</div>
             </div>
           </div>
           <div className="space-y-2">
-            <h4 className="font-medium text-gray-900 dark:text-white text-sm">{t('tool.markdownPreview.other')}</h4>
+            <h4 className="font-medium text-gray-900 dark:text-white text-sm">Tables & More</h4>
             <div className="text-xs font-mono text-gray-600 dark:text-gray-400 space-y-1">
+              <div>\| Col 1 \| Col 2 \|</div>
               <div>&gt; Blockquote</div>
               <div>--- Horizontal rule</div>
             </div>

@@ -1,51 +1,74 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { QrCode, Download, Copy, Check, RefreshCw, FileText, Palette } from 'lucide-react';
+import { QrCode, Download, Copy, Check, RefreshCw, Palette } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import QRCode from 'qrcode';
 
 interface QrOptions {
   size: number;
   errorCorrection: 'L' | 'M' | 'Q' | 'H';
   foreground: string;
   background: string;
+  format: 'png' | 'svg';
 }
 
 export default function QrCodeGeneratorTool() {
   const { t } = useLanguage();
   const [text, setText] = useState('');
   const [qrDataUrl, setQrDataUrl] = useState('');
+  const [qrSvg, setQrSvg] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
   const [options, setOptions] = useState<QrOptions>({
     size: 256,
     errorCorrection: 'M',
     foreground: '#000000',
     background: '#ffffff',
+    format: 'png',
   });
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // Simple QR Code generation using canvas
-  // This is a simplified implementation - for production, use a library like qrcode
+  // Client-side QR Code generation using qrcode library
   const generateQR = async (data: string) => {
     if (!data.trim()) {
       setQrDataUrl('');
+      setQrSvg('');
       return;
     }
 
-    // Use QR Code API for generation
-    const apiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${options.size}x${options.size}&data=${encodeURIComponent(data)}&ecc=${options.errorCorrection}&color=${options.foreground.slice(1)}&bgcolor=${options.background.slice(1)}`;
-    
+    setIsGenerating(true);
     try {
-      const response = await fetch(apiUrl);
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-        setQrDataUrl(url);
-      }
+      // Generate PNG data URL
+      const pngUrl = await QRCode.toDataURL(data, {
+        errorCorrectionLevel: options.errorCorrection,
+        width: options.size,
+        margin: 1,
+        color: {
+          dark: options.foreground,
+          light: options.background,
+        },
+      });
+      setQrDataUrl(pngUrl);
+
+      // Generate SVG
+      const svgString = await QRCode.toString(data, {
+        type: 'svg',
+        errorCorrectionLevel: options.errorCorrection,
+        width: options.size,
+        margin: 1,
+        color: {
+          dark: options.foreground,
+          light: options.background,
+        },
+      });
+      setQrSvg(svgString);
     } catch (error) {
       console.error('QR generation error:', error);
-      // Fallback: create a placeholder
       setQrDataUrl('');
+      setQrSvg('');
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -57,22 +80,47 @@ export default function QrCodeGeneratorTool() {
     return () => clearTimeout(debounce);
   }, [text, options]);
 
-  const downloadQR = (format: 'png' | 'svg') => {
-    if (!qrDataUrl) return;
+  const downloadQR = async (format: 'png' | 'svg') => {
+    if (!text.trim()) return;
 
-    const link = document.createElement('a');
-    link.download = `qrcode.${format}`;
-    
-    if (format === 'svg') {
-      // For SVG, use API endpoint
-      link.href = `https://api.qrserver.com/v1/create-qr-code/?size=${options.size}x${options.size}&data=${encodeURIComponent(text)}&ecc=${options.errorCorrection}&color=${options.foreground.slice(1)}&bgcolor=${options.background.slice(1)}&format=svg`;
-    } else {
-      link.href = qrDataUrl;
+    try {
+      let data: string;
+      let mimeType: string;
+      
+      if (format === 'svg') {
+        data = await QRCode.toString(text, {
+          type: 'svg',
+          errorCorrectionLevel: options.errorCorrection,
+          width: options.size,
+          margin: 1,
+          color: {
+            dark: options.foreground,
+            light: options.background,
+          },
+        });
+        mimeType = 'image/svg+xml';
+      } else {
+        data = await QRCode.toDataURL(text, {
+          errorCorrectionLevel: options.errorCorrection,
+          width: options.size,
+          margin: 1,
+          color: {
+            dark: options.foreground,
+            light: options.background,
+          },
+        });
+        mimeType = 'image/png';
+      }
+
+      const link = document.createElement('a');
+      link.download = `qrcode.${format}`;
+      link.href = data;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Download error:', error);
     }
-    
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
   };
 
   const copyToClipboard = async () => {
@@ -122,7 +170,7 @@ export default function QrCodeGeneratorTool() {
         />
         <div className="mt-2 flex items-center justify-between">
           <span className="text-sm text-gray-500 dark:text-gray-400">
-            {text.length} characters
+            {text.length} {t('tool.qrCode.characters')}
           </span>
           <button
             onClick={loadSample}
@@ -152,7 +200,7 @@ export default function QrCodeGeneratorTool() {
       </div>
 
       {/* Options */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         {/* Size */}
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -235,6 +283,21 @@ export default function QrCodeGeneratorTool() {
             />
           </div>
         </div>
+
+        {/* Output Format */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            {t('tool.qrCode.outputFormat')}
+          </label>
+          <select
+            value={options.format}
+            onChange={(e) => setOptions({ ...options, format: e.target.value as 'png' | 'svg' })}
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500"
+          >
+            <option value="png">{t('tool.qrCode.pngFormat')}</option>
+            <option value="svg">{t('tool.qrCode.svgFormat')}</option>
+          </select>
+        </div>
       </div>
 
       {/* QR Code Preview */}
@@ -243,7 +306,22 @@ export default function QrCodeGeneratorTool() {
           className="p-6 bg-white dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl"
           style={{ backgroundColor: options.background }}
         >
-          {qrDataUrl ? (
+          {isGenerating ? (
+            <div 
+              className="flex items-center justify-center"
+              style={{ width: Math.min(options.size, 400), height: Math.min(options.size, 400) }}
+            >
+              <div className="text-center text-gray-400 dark:text-gray-500">
+                <RefreshCw className="w-16 h-16 mx-auto mb-2 opacity-50 animate-spin" />
+                <p className="text-sm">{t('tool.qrCode.generating')}</p>
+              </div>
+            </div>
+          ) : (options.format === 'svg' && qrSvg) ? (
+            <div 
+              dangerouslySetInnerHTML={{ __html: qrSvg }}
+              style={{ width: Math.min(options.size, 400), height: Math.min(options.size, 400) }}
+            />
+          ) : qrDataUrl ? (
             <img 
               src={qrDataUrl} 
               alt="QR Code" 
@@ -272,14 +350,14 @@ export default function QrCodeGeneratorTool() {
               className="px-4 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium flex items-center gap-2"
             >
               <Download className="w-4 h-4" />
-              {t('common.download')} PNG
+              {t('tool.qrCode.downloadPng')}
             </button>
             <button
               onClick={() => downloadQR('svg')}
               className="px-4 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium flex items-center gap-2"
             >
               <Download className="w-4 h-4" />
-              {t('common.download')} SVG
+              {t('tool.qrCode.downloadSvg')}
             </button>
             <button
               onClick={copyToClipboard}
@@ -299,7 +377,7 @@ export default function QrCodeGeneratorTool() {
         )}
       </div>
 
-      {/* Info */}
+      {/* Data Types Info */}
       <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
         <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 border-b border-gray-200 dark:border-gray-600">
           <span className="font-medium text-gray-700 dark:text-gray-300">{t('tool.qrCode.dataTypes')}</span>
@@ -330,6 +408,11 @@ export default function QrCodeGeneratorTool() {
             <code className="text-xs text-gray-600 dark:text-gray-400">BEGIN:VCARD...</code>
           </div>
         </div>
+      </div>
+
+      {/* Client-side notice */}
+      <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 text-sm">
+        <p className="text-green-800 dark:text-green-300 font-medium">✓ {t('tool.qrCode.clientSideGeneration')}</p>
       </div>
 
       <canvas ref={canvasRef} className="hidden" />

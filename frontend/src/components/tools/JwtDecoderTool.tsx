@@ -57,13 +57,69 @@ export default function JwtDecoderTool() {
   }, []);
 
   const loadSample = useCallback(() => {
-    const sampleJwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjoxOTE2MjM5MDIyfQ.POstGetfAytaZS82wHcjoTyoqhMyxXiWdR7Nn7A29DN';
+    const sampleJwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjoxOTE2MjM5MDIyLCJuYmYiOjE1MTYyMzkwMDJ9.POstGetfAytaZS86wHcjoTyoqhMyxXiWdR7Nn7A29DN';
     handleInputChange(sampleJwt);
   }, [handleInputChange]);
 
   const isExpired = decoded?.payload?.exp 
     ? (decoded.payload.exp as number) * 1000 < Date.now() 
     : false;
+
+  const getTimestampValidation = () => {
+    if (!decoded?.payload) return null;
+
+    const now = Math.floor(Date.now() / 1000);
+    const iat = decoded.payload.iat as number | undefined;
+    const nbf = decoded.payload.nbf as number | undefined;
+    const exp = decoded.payload.exp as number | undefined;
+
+    const validations: Array<{
+      name: string;
+      value: number;
+      valid: boolean;
+      message: string;
+      color: string;
+    }> = [];
+
+    if (iat) {
+      const iatValid = iat <= now;
+      validations.push({
+        name: 'Issued At (iat)',
+        value: iat,
+        valid: iatValid,
+        message: iatValid ? 'Token was issued in the past' : 'Token issue date is in the future!',
+        color: iatValid ? 'green' : 'red',
+      });
+    }
+
+    if (nbf) {
+      const nbfValid = nbf <= now;
+      validations.push({
+        name: 'Not Before (nbf)',
+        value: nbf,
+        valid: nbfValid,
+        message: nbfValid ? 'Token is now valid' : 'Token not yet valid',
+        color: nbfValid ? 'green' : 'red',
+      });
+    }
+
+    if (exp) {
+      const expValid = exp > now;
+      validations.push({
+        name: 'Expiration (exp)',
+        value: exp,
+        valid: expValid,
+        message: expValid ? 'Token is still valid' : 'Token has expired!',
+        color: expValid ? 'green' : 'red',
+      });
+    }
+
+    return validations;
+  };
+
+  const timestampValidations = getTimestampValidation();
+  const tokenStatus = timestampValidations?.every(v => v.valid) ? 'VALID' : 'INVALID';
+  const tokenStatusColor = timestampValidations?.every(v => v.valid) ? 'green' : 'red';
 
   return (
     <div className="space-y-6">
@@ -98,15 +154,53 @@ export default function JwtDecoderTool() {
       {/* Decoded Output */}
       {decoded && (
         <div className="space-y-4">
-          {/* Token Status */}
-          {decoded.payload.exp && (
-            <div className={`flex items-center gap-2 p-3 rounded-lg ${isExpired ? 'bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400' : 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400'}`}>
-              <span className="font-medium">{isExpired ? t('tool.jwtDecoder.tokenExpired') : t('tool.jwtDecoder.tokenValid')}</span>
-              {decoded.payload.exp && (
-                <span className="text-sm">
-                  (Expires: {formatDate(decoded.payload.exp as number)})
-                </span>
-              )}
+          {/* Token Status Badge */}
+          <div className={`flex items-center justify-center gap-2 p-4 rounded-lg border-2 ${
+            tokenStatusColor === 'green' 
+              ? 'bg-green-50 dark:bg-green-900/30 border-green-500 text-green-700 dark:text-green-400' 
+              : 'bg-red-50 dark:bg-red-900/30 border-red-500 text-red-700 dark:text-red-400'
+          }`}>
+            <span className="font-bold text-lg">Token is {tokenStatus}</span>
+          </div>
+
+          {/* Timestamp Validation */}
+          {timestampValidations && timestampValidations.length > 0 && (
+            <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
+              <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 border-b border-gray-200 dark:border-gray-600">
+                <span className="font-medium text-gray-700 dark:text-gray-300">Timestamp Validation</span>
+              </div>
+              <div className="p-4 space-y-3">
+                {timestampValidations.map((validation, index) => (
+                  <div
+                    key={index}
+                    className={`flex items-center justify-between p-3 rounded-lg ${
+                      validation.color === 'green'
+                        ? 'bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800'
+                        : 'bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className={`w-3 h-3 rounded-full ${
+                        validation.color === 'green' ? 'bg-green-500' : 'bg-red-500'
+                      }`} />
+                      <div>
+                        <div className="font-medium text-gray-900 dark:text-white">{validation.name}</div>
+                        <div className={`text-sm ${validation.color === 'green' ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}>
+                          {validation.message}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="font-mono text-sm text-gray-600 dark:text-gray-400">
+                        {new Date(validation.value * 1000).toLocaleString()}
+                      </div>
+                      <div className="text-xs text-gray-500 dark:text-gray-500">
+                        {Math.floor(validation.value)}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
@@ -141,6 +235,12 @@ export default function JwtDecoderTool() {
                 <div className="bg-gray-50 dark:bg-gray-700 p-2 rounded">
                   <span className="text-gray-500 dark:text-gray-400">{t('tool.jwtDecoder.issuedAt')}</span>{' '}
                   <span className="font-medium text-gray-900 dark:text-white">{formatDate(decoded.payload.iat as number)}</span>
+                </div>
+              )}
+              {decoded.payload.nbf && (
+                <div className="bg-gray-50 dark:bg-gray-700 p-2 rounded">
+                  <span className="text-gray-500 dark:text-gray-400">Not Before</span>{' '}
+                  <span className="font-medium text-gray-900 dark:text-white">{formatDate(decoded.payload.nbf as number)}</span>
                 </div>
               )}
               {decoded.payload.exp && (

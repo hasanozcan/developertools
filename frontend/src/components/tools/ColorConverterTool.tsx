@@ -1,13 +1,18 @@
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
-import { Copy, Check } from 'lucide-react';
+import { Copy, Check, Palette } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 interface ColorValues {
   hex: string;
   rgb: { r: number; g: number; b: number };
   hsl: { h: number; s: number; l: number };
+}
+
+interface PaletteColor {
+  hex: string;
+  name: string;
 }
 
 function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
@@ -93,6 +98,50 @@ function hslToRgb(h: number, s: number, l: number): { r: number; g: number; b: n
   };
 }
 
+function generatePalette(hsl: { h: number; s: number; l: number }): {
+  complementary: PaletteColor[];
+  analogous: PaletteColor[];
+  triadic: PaletteColor[];
+  splitComplementary: PaletteColor[];
+} {
+  const { h, s, l } = hsl;
+  
+  // Helper to convert HSL back to RGB
+  const hslToHex = (h: number, s: number, l: number): string => {
+    const rgb = hslToRgb(h, s, l);
+    return rgbToHex(rgb.r, rgb.g, rgb.b).toUpperCase();
+  };
+
+  // Complementary (opposite on color wheel)
+  const complementary = [
+    { hex: hslToHex(h, s, l), name: 'Original' },
+    { hex: hslToHex((h + 180) % 360, s, l), name: 'Complementary' },
+  ];
+
+  // Analogous (adjacent colors)
+  const analogous = [
+    { hex: hslToHex((h - 30 + 360) % 360, s, l), name: 'Analogous 1' },
+    { hex: hslToHex(h, s, l), name: 'Original' },
+    { hex: hslToHex((h + 30) % 360, s, l), name: 'Analogous 2' },
+  ];
+
+  // Triadic (3 colors equally spaced)
+  const triadic = [
+    { hex: hslToHex(h, s, l), name: 'Primary' },
+    { hex: hslToHex((h + 120) % 360, s, l), name: 'Triadic 1' },
+    { hex: hslToHex((h + 240) % 360, s, l), name: 'Triadic 2' },
+  ];
+
+  // Split Complementary
+  const splitComplementary = [
+    { hex: hslToHex(h, s, l), name: 'Original' },
+    { hex: hslToHex((h + 150) % 360, s, l), name: 'Split 1' },
+    { hex: hslToHex((h + 210) % 360, s, l), name: 'Split 2' },
+  ];
+
+  return { complementary, analogous, triadic, splitComplementary };
+}
+
 export default function ColorConverterTool() {
   const { t } = useLanguage();
   const [color, setColor] = useState<ColorValues>({
@@ -101,6 +150,9 @@ export default function ColorConverterTool() {
     hsl: { h: 217, s: 91, l: 60 },
   });
   const [copied, setCopied] = useState<string | null>(null);
+  const [showPalette, setShowPalette] = useState(true);
+
+  const palette = generatePalette(color.hsl);
 
   const updateFromHex = useCallback((hex: string) => {
     const cleanHex = hex.startsWith('#') ? hex : '#' + hex;
@@ -143,6 +195,36 @@ export default function ColorConverterTool() {
   const rgbString = `rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`;
   const hslString = `hsl(${color.hsl.h}, ${color.hsl.s}%, ${color.hsl.l}%)`;
 
+  const copyToClipboardWithFeedback = useCallback((text: string, type: string) => {
+    navigator.clipboard.writeText(text);
+    setCopied(type);
+    setTimeout(() => setCopied(null), 2000);
+  }, []);
+
+  const ColorSwatch = ({ hex, name }: { hex: string; name: string }) => (
+    <button
+      onClick={() => {
+        copyToClipboardWithFeedback(hex, hex);
+        updateFromHex(hex);
+      }}
+      className="group relative flex flex-col items-center gap-2 transition-transform hover:scale-105"
+    >
+      <div
+        className="w-16 h-16 rounded-lg shadow-md border-2 border-white dark:border-gray-700"
+        style={{ backgroundColor: hex }}
+      />
+      <div className="text-center">
+        <div className="text-xs font-mono text-gray-700 dark:text-gray-300">{hex}</div>
+        <div className="text-xs text-gray-500 dark:text-gray-400">{name}</div>
+      </div>
+      {copied === hex && (
+        <div className="absolute inset-0 bg-black/50 rounded-lg flex items-center justify-center">
+          <Check className="w-6 h-6 text-white" />
+        </div>
+      )}
+    </button>
+  );
+
   return (
     <div className="space-y-6">
       {/* Load Sample Button */}
@@ -153,6 +235,66 @@ export default function ColorConverterTool() {
         >
           {t('common.loadSample')}
         </button>
+      </div>
+
+      {/* Color Palette Generator */}
+      <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
+        <button
+          onClick={() => setShowPalette(!showPalette)}
+          className="w-full bg-gray-50 dark:bg-gray-700 px-4 py-3 border-b border-gray-200 dark:border-gray-600 flex items-center justify-between"
+        >
+          <div className="flex items-center gap-2">
+            <Palette className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+            <span className="font-medium text-gray-700 dark:text-gray-300">{t('tool.colorConverter.generatePalette')}</span>
+          </div>
+          <span className={`transform transition-transform ${showPalette ? 'rotate-180' : ''}`}>
+            ▼
+          </span>
+        </button>
+        
+        {showPalette && (
+          <div className="p-6 space-y-6">
+            {/* Complementary */}
+            <div>
+              <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">{t('tool.colorConverter.paletteComplementary')}</h4>
+              <div className="flex gap-4 justify-center">
+                {palette.complementary.map((color) => (
+                  <ColorSwatch key={color.hex} hex={color.hex} name={color.name} />
+                ))}
+              </div>
+            </div>
+
+            {/* Analogous */}
+            <div>
+              <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Analogous</h4>
+              <div className="flex gap-4 justify-center">
+                {palette.analogous.map((color) => (
+                  <ColorSwatch key={color.hex} hex={color.hex} name={color.name} />
+                ))}
+              </div>
+            </div>
+
+            {/* Triadic */}
+            <div>
+              <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Triadic</h4>
+              <div className="flex gap-4 justify-center">
+                {palette.triadic.map((color) => (
+                  <ColorSwatch key={color.hex} hex={color.hex} name={color.name} />
+                ))}
+              </div>
+            </div>
+
+            {/* Split Complementary */}
+            <div>
+              <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Split Complementary</h4>
+              <div className="flex gap-4 justify-center">
+                {palette.splitComplementary.map((color) => (
+                  <ColorSwatch key={color.hex} hex={color.hex} name={color.name} />
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Color Preview */}

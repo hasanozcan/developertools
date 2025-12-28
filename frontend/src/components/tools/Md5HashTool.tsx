@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import CopyButton from '@/components/common/CopyButton';
 import { useLanguage } from '@/context/LanguageContext';
+import { Upload, X, FileText } from 'lucide-react';
 
 // Simple MD5 implementation (client-side)
 function md5(string: string): string {
@@ -145,11 +146,42 @@ function md5(string: string): string {
   return wordToHex(a) + wordToHex(b) + wordToHex(c) + wordToHex(d);
 }
 
+// Read file and compute MD5 hash
+async function md5File(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const arrayBuffer = e.target?.result as ArrayBuffer;
+      const uint8Array = new Uint8Array(arrayBuffer);
+      
+      // Convert to binary string for MD5
+      let binary = '';
+      const len = uint8Array.byteLength;
+      for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(uint8Array[i]);
+      }
+      
+      resolve(md5(binary));
+    };
+    reader.onerror = () => reject(new Error('Failed to read file'));
+    reader.readAsArrayBuffer(file);
+  });
+}
+
+interface FileInfo {
+  name: string;
+  size: number;
+}
+
 export default function Md5HashTool() {
   const { t } = useLanguage();
   const [input, setInput] = useState('');
   const [hash, setHash] = useState('');
   const [uppercase, setUppercase] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+  const [fileHash, setFileHash] = useState<string | null>(null);
+  const [hashingFile, setHashingFile] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const generateHash = useCallback(() => {
     if (!input) {
@@ -178,6 +210,42 @@ export default function Md5HashTool() {
     setHash(uppercase ? result.toUpperCase() : result);
   }, [uppercase]);
 
+  const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      setFileHash(null);
+      setHashingFile(true);
+      
+      md5File(selectedFile)
+        .then(result => {
+          setFileHash(uppercase ? result.toUpperCase() : result);
+        })
+        .catch(err => {
+          console.error('File hashing error:', err);
+        })
+        .finally(() => {
+          setHashingFile(false);
+        });
+    }
+  }, [uppercase]);
+
+  const removeFile = useCallback(() => {
+    setFile(null);
+    setFileHash(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  }, []);
+
+  const formatFileSize = (bytes: number): string => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+  };
+
   return (
     <div className="space-y-6">
       {/* Controls */}
@@ -205,11 +273,72 @@ export default function Md5HashTool() {
               if (hash) {
                 setHash(e.target.checked ? hash.toUpperCase() : hash.toLowerCase());
               }
+              if (fileHash) {
+                setFileHash(e.target.checked ? fileHash.toUpperCase() : fileHash.toLowerCase());
+              }
             }}
             className="rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-primary-600"
           />
           {t('common.uppercase')}
         </label>
+      </div>
+
+      {/* File Upload Section */}
+      <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          Hash a File
+        </label>
+        
+        {file ? (
+          <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-800">
+            <div className="flex items-center gap-3">
+              <FileText className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+              <div>
+                <div className="font-medium text-gray-900 dark:text-white">{file.name}</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">{formatFileSize(file.size)}</div>
+              </div>
+            </div>
+            <button
+              onClick={removeFile}
+              className="p-2 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+              title="Remove file"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        ) : (
+          <div>
+            <input
+              ref={fileInputRef}
+              type="file"
+              onChange={handleFileSelect}
+              className="hidden"
+            />
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="flex items-center justify-center gap-2 w-full p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-primary-500 dark:hover:border-primary-500 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            >
+              <Upload className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+              <span className="text-gray-600 dark:text-gray-400">
+                {hashingFile ? 'Hashing file...' : 'Click to upload a file'}
+              </span>
+            </button>
+          </div>
+        )}
+        
+        {fileHash && (
+          <div className="mt-3">
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-sm text-gray-600 dark:text-gray-400">File MD5 Hash:</label>
+              <CopyButton text={fileHash} />
+            </div>
+            <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600">
+              <code className="text-sm font-mono text-gray-800 dark:text-gray-200 break-all">
+                {fileHash}
+              </code>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Input */}

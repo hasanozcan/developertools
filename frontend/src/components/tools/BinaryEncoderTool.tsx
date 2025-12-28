@@ -2,7 +2,8 @@
 
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
-import { ArrowDownUp, Check, Layers } from 'lucide-react';
+import CopyButton from '@/components/common/CopyButton';
+import { ArrowDownUp, Layers, Check } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 interface BatchResult {
@@ -11,12 +12,40 @@ interface BatchResult {
   index: number;
 }
 
-export default function UrlEncoderTool() {
+function textToBinary(text: string): string {
+  return text.split('').map(char => {
+    return char.charCodeAt(0).toString(2).padStart(8, '0');
+  }).join(' ');
+}
+
+function binaryToText(binary: string): string {
+  // Remove spaces and any other whitespace
+  const cleanBinary = binary.replace(/\s+/g, ' ').trim();
+  
+  if (!cleanBinary) return '';
+  
+  const binaryArray = cleanBinary.split(' ');
+  let text = '';
+  
+  for (const byte of binaryArray) {
+    if (!/^[01]+$/.test(byte)) {
+      throw new Error(`Invalid binary: "${byte}" is not a valid binary byte`);
+    }
+    if (byte.length > 8) {
+      throw new Error(`Invalid binary byte: "${byte}" is too long (max 8 bits)`);
+    }
+    const charCode = parseInt(byte.padStart(8, '0'), 2);
+    text += String.fromCharCode(charCode);
+  }
+  
+  return text;
+}
+
+export default function BinaryEncoderTool() {
   const { t } = useLanguage();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
-  const [encodeType, setEncodeType] = useState<'component' | 'full'>('component');
   const [error, setError] = useState<string | null>(null);
   const [batchMode, setBatchMode] = useState(false);
   const [batchResults, setBatchResults] = useState<BatchResult[]>([]);
@@ -37,13 +66,9 @@ export default function UrlEncoderTool() {
         const results: BatchResult[] = lines.map((line, index) => {
           let result = '';
           if (mode === 'encode') {
-            result = encodeType === 'component' 
-              ? encodeURIComponent(line)
-              : encodeURI(line);
+            result = textToBinary(line);
           } else {
-            result = encodeType === 'component'
-              ? decodeURIComponent(line)
-              : decodeURI(line);
+            result = binaryToText(line);
           }
           return { input: line, output: result, index };
         });
@@ -52,25 +77,19 @@ export default function UrlEncoderTool() {
       } else {
         // Single processing
         if (mode === 'encode') {
-          const encoded = encodeType === 'component' 
-            ? encodeURIComponent(input)
-            : encodeURI(input);
-          setOutput(encoded);
+          setOutput(textToBinary(input));
         } else {
-          const decoded = encodeType === 'component'
-            ? decodeURIComponent(input)
-            : decodeURI(input);
-          setOutput(decoded);
+          setOutput(binaryToText(input));
         }
         setBatchResults([]);
       }
       setError(null);
     } catch (e) {
-      setError('Invalid input for ' + (mode === 'decode' ? 'decoding' : 'encoding'));
+      setError(e instanceof Error ? e.message : 'Invalid input for decoding');
       setOutput('');
       setBatchResults([]);
     }
-  }, [input, mode, encodeType, batchMode]);
+  }, [input, mode, batchMode]);
 
   const swapMode = useCallback(() => {
     setMode((prev) => (prev === 'encode' ? 'decode' : 'encode'));
@@ -82,13 +101,9 @@ export default function UrlEncoderTool() {
 
   const loadSample = useCallback(() => {
     if (mode === 'encode') {
-      setInput(batchMode 
-        ? 'https://example.com/search?q=hello world\nhttps://example.com/page?name=John Doe\nhttps://example.com/test?data=foo&bar=baz'
-        : 'https://example.com/search?q=hello world&lang=en&special=<>#%');
+      setInput(batchMode ? 'Hello\nWorld\nTest' : 'Hello, World!');
     } else {
-      setInput(batchMode
-        ? 'https%3A%2F%2Fexample.com%2Fsearch%3Fq%3Dhello%20world\nhttps%3A%2F%2Fexample.com%2Fpage%3Fname%3DJohn%20Doe'
-        : 'https%3A%2F%2Fexample.com%2Fsearch%3Fq%3Dhello%20world%26lang%3Den%26special%3D%3C%3E%23%25');
+      setInput(batchMode ? '01001000 01100101 01101100 01101100 01101111\n01010111 01101111 01110010 01101100 01100100' : '01001000 01100101 01101100 01101100 01101111 00101100 00100000 01010111 01101111 01110010 01101100 01100100 00100001');
     }
     setOutput('');
     setError(null);
@@ -106,6 +121,35 @@ export default function UrlEncoderTool() {
     setTimeout(() => setCopied(false), 2000);
   }, [batchMode, batchResults, output]);
 
+  // Auto-convert on input change for single mode
+  const handleInputChange = useCallback((value: string) => {
+    setInput(value);
+    if (batchMode) {
+      setOutput('');
+      setBatchResults([]);
+      setError(null);
+      return;
+    }
+
+    if (!value.trim()) {
+      setOutput('');
+      setError(null);
+      return;
+    }
+
+    try {
+      if (mode === 'encode') {
+        setOutput(textToBinary(value));
+      } else {
+        setOutput(binaryToText(value));
+      }
+      setError(null);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Invalid input for decoding');
+      setOutput('');
+    }
+  }, [mode, batchMode]);
+
   return (
     <div className="space-y-6">
       {/* Controls */}
@@ -119,7 +163,7 @@ export default function UrlEncoderTool() {
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            {t('common.encode')}
+            Encode (Text → Binary)
           </button>
           <button
             onClick={() => setMode('decode')}
@@ -129,18 +173,9 @@ export default function UrlEncoderTool() {
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            {t('common.decode')}
+            Decode (Binary → Text)
           </button>
         </div>
-        
-        <select
-          value={encodeType}
-          onChange={(e) => setEncodeType(e.target.value as 'component' | 'full')}
-          className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-        >
-          <option value="component">{t('tool.urlEncoder.componentOption')}</option>
-          <option value="full">{t('tool.urlEncoder.fullUrlOption')}</option>
-        </select>
 
         {/* Batch Mode Toggle */}
         <label className="flex items-center gap-2 cursor-pointer px-3 py-2 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
@@ -155,31 +190,24 @@ export default function UrlEncoderTool() {
         </label>
 
         <button
-          onClick={handleConvert}
-          className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
-        >
-          {mode === 'encode' ? t('common.encode') : t('common.decode')}
-        </button>
-        
-        <button
           onClick={swapMode}
           className="p-2 text-gray-500 dark:text-gray-400 hover:text-primary-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-          title={t('tool.urlEncoder.swapTooltip')}
+          title="Swap input/output"
         >
           <ArrowDownUp className="w-5 h-5" />
         </button>
-        
+
         <button
           onClick={loadSample}
           className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
         >
-          {t('common.loadSample')}
+          Load Sample
         </button>
       </div>
 
       {/* Error */}
       {error && (
-        <div className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 px-4 py-2 rounded-lg">
+        <div className="p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-300">
           {error}
         </div>
       )}
@@ -190,16 +218,21 @@ export default function UrlEncoderTool() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              {mode === 'encode' ? 'URL Lines (one per line)' : 'Encoded URL Lines (one per line)'}
+              {mode === 'encode' ? 'Text Lines (one per line)' : 'Binary Lines (one per line)'}
             </label>
             <CodeEditor
               value={input}
-              onChange={setInput}
-              placeholder={mode === 'encode' 
-                ? 'https://example.com/page1?query=hello world\nhttps://example.com/page2?name=test'
-                : 'https%3A%2F%2Fexample.com%2Fpage1%3Fquery%3Dhello%20world\nhttps%3A%2F%2Fexample.com%2Fpage2'}
+              onChange={(e) => setInput(e)}
+              placeholder={mode === 'encode' ? 'Line 1\nLine 2\nLine 3' : '01001000 01100101 01101100 01101100 01101111'}
               language="text"
+              minHeight="150px"
             />
+            <button
+              onClick={handleConvert}
+              className="mt-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
+            >
+              Convert All
+            </button>
           </div>
           <div>
             <div className="flex items-center justify-between mb-2">
@@ -234,7 +267,7 @@ export default function UrlEncoderTool() {
                 ))}
                 {batchResults.length === 0 && (
                   <div className="px-4 py-8 text-center text-gray-400 dark:text-gray-500 text-sm">
-                    Enter URLs and click convert to see results
+                    Enter text and click convert to see results
                   </div>
                 )}
               </div>
@@ -242,33 +275,50 @@ export default function UrlEncoderTool() {
           </div>
         </div>
       ) : (
-        // Single Mode Layout
+        // Single Mode Layout (auto-convert)
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              {mode === 'encode' ? t('tool.urlEncoder.plainText') : t('tool.urlEncoder.encodedUrl')}
+              {mode === 'encode' ? 'Text Input' : 'Binary Input'}
             </label>
             <CodeEditor
               value={input}
-              onChange={setInput}
-              placeholder={mode === 'encode' ? t('tool.urlEncoder.enterTextToEncode') : t('tool.urlEncoder.enterTextToDecode')}
+              onChange={handleInputChange}
+              placeholder={mode === 'encode' ? 'Enter text to convert to binary...' : 'Enter binary to decode (e.g., 01001000 01100101)...'}
               language="text"
+              minHeight="150px"
             />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              {mode === 'encode' ? t('tool.urlEncoder.encodedOutput') : t('tool.urlEncoder.decodedText')}
+              {mode === 'encode' ? 'Binary Output' : 'Decoded Text'}
             </label>
-            <CodeEditor
-              value={output}
-              onChange={() => {}}
-              readOnly
-              language="text"
-              placeholder={t('common.result') + '...'}
-            />
+            <div className="relative">
+              <CodeEditor
+                value={output}
+                onChange={() => {}}
+                readOnly
+                language="text"
+                minHeight="150px"
+              />
+              {output && !batchMode && (
+                <div className="absolute top-2 right-2">
+                  <CopyButton text={output} />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
+
+      {/* Info */}
+      <div className="text-sm text-gray-500 dark:text-gray-400">
+        <p>
+          {mode === 'encode' 
+            ? 'Each character is converted to its 8-bit binary representation (ASCII value).'
+            : 'Binary values are converted back to their corresponding characters. Each byte should be 8 bits.'}
+        </p>
+      </div>
     </div>
   );
 }

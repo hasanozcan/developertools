@@ -106,6 +106,26 @@ const tools: Record<string, Record<string, {
         { question: 'Why encode HTML entities?', answer: 'Encoding HTML entities prevents XSS attacks and ensures special characters display correctly in web pages instead of being interpreted as HTML code.' },
       ],
     },
+    'hex-encoder': {
+      name: 'HEX Encoder/Decoder',
+      description: 'Encode or decode text to/from hexadecimal. Free online HEX encoder and decoder.',
+      longDescription: 'Free online HEX encoder and decoder. Convert text to hexadecimal encoding or decode hexadecimal strings back to plain text instantly.',
+      keywords: ['hex encoder', 'hex decoder', 'hexadecimal encoder', 'hex to text', 'text to hex'],
+      faqs: [
+        { question: 'What is hexadecimal encoding?', answer: 'Hexadecimal encoding represents each character as its ASCII value in base-16 notation (0-9, A-F).' },
+        { question: 'How do I use this tool?', answer: 'Enter text in the input field and it will automatically be converted to hexadecimal. You can also paste hexadecimal to decode it back to text.' },
+      ],
+    },
+    'binary-encoder': {
+      name: 'Binary Encoder/Decoder',
+      description: 'Encode or decode text to/from binary. Free online binary encoder and decoder.',
+      longDescription: 'Free online binary encoder and decoder. Convert text to binary encoding (0s and 1s) or decode binary strings back to plain text instantly.',
+      keywords: ['binary encoder', 'binary decoder', 'binary converter', 'text to binary', 'binary to text'],
+      faqs: [
+        { question: 'What is binary encoding?', answer: 'Binary encoding represents each character as its ASCII value in base-2 notation using only 0s and 1s.' },
+        { question: 'How many bits per character?', answer: 'Each character is represented by 8 bits (1 byte) in this tool.' },
+      ],
+    },
     'image-to-base64': {
       name: 'Image to Base64',
       description: 'Convert images to Base64 data URIs. Free online image to Base64 encoder.',
@@ -209,6 +229,16 @@ const tools: Record<string, Record<string, {
         { question: 'Is SHA256 secure?', answer: 'Yes, SHA256 is currently considered secure for cryptographic purposes.' },
       ],
     },
+    'sha512-hash': {
+      name: 'SHA512 Hash Generator',
+      description: 'Generate SHA512 hash from text online. Free SHA512 hash generator.',
+      longDescription: 'Free online SHA512 hash generator. Create SHA512 hash values from any text input. SHA512 produces a 512-bit hash value and is part of the SHA-2 family.',
+      keywords: ['sha512 generator', 'sha512 hash', 'sha512 online', 'generate sha512', 'sha-512'],
+      faqs: [
+        { question: 'What is SHA512?', answer: 'SHA512 (Secure Hash Algorithm 512-bit) is a cryptographic hash function that produces a 512-bit (64-byte) hash value, typically rendered as a 128-digit hexadecimal number.' },
+        { question: 'Is SHA512 secure?', answer: 'Yes, SHA512 is currently considered very secure for cryptographic purposes and is recommended for most applications.' },
+      ],
+    },
   },
   text: {
     'regex-tester': {
@@ -258,6 +288,46 @@ const tools: Record<string, Record<string, {
       faqs: [
         { question: 'What is a URL slug?', answer: 'A URL slug is the part of a URL that identifies a particular page in a human-readable form. For example, in /blog/my-first-post, "my-first-post" is the slug.' },
         { question: 'Why are slugs important for SEO?', answer: 'SEO-friendly slugs help search engines understand your content and improve click-through rates by showing users what the page is about.' },
+      ],
+    },
+    'case-converter': {
+      name: 'Case Converter',
+      description: 'Convert text between different cases. Free online case converter.',
+      longDescription: 'Free online case converter. Convert text between camelCase, PascalCase, kebab-case, snake_case, CONSTANT_CASE, space case, and dot.case instantly.',
+      keywords: ['case converter', 'camel case', 'pascal case', 'snake case', 'kebab case', 'text case converter'],
+      faqs: [
+        { question: 'What case types are supported?', answer: 'This tool supports camelCase, PascalCase, kebab-case, snake_case, CONSTANT_CASE, space case, and dot.case.' },
+        { question: 'What is camelCase?', answer: 'camelCase starts with a lowercase letter and each subsequent word starts with an uppercase letter. Common in programming.' },
+      ],
+    },
+    'word-counter': {
+      name: 'Word Counter',
+      description: 'Count words, characters, lines, sentences, and paragraphs online. Free word counter.',
+      longDescription: 'Free online word counter. Count words, characters, characters without spaces, lines, sentences, paragraphs, and calculate reading time for your text.',
+      keywords: ['word counter', 'character counter', 'word count tool', 'count words online', 'reading time calculator'],
+      faqs: [
+        { question: 'What is counted?', answer: 'This tool counts words, characters (with and without spaces), lines, sentences, paragraphs, and estimates reading time.' },
+        { question: 'How is reading time calculated?', answer: 'Reading time is calculated based on an average reading speed of 200 words per minute.' },
+      ],
+    },
+    'remove-duplicates': {
+      name: 'Remove Duplicate Lines',
+      description: 'Remove duplicate lines from text. Free online duplicate line remover.',
+      longDescription: 'Free online duplicate line remover. Remove duplicate lines from lists, code, or any text content with options for case sensitivity and whitespace trimming.',
+      keywords: ['remove duplicates', 'duplicate line remover', 'remove duplicate lines', 'unique lines', 'deduplicate'],
+      faqs: [
+        { question: 'How does duplicate detection work?', answer: 'The tool compares each line and keeps only the first occurrence. You can toggle case-sensitive matching and whitespace trimming.' },
+        { question: 'What happens to empty lines?', answer: 'Empty lines are preserved in their original positions.' },
+      ],
+    },
+    'sort-lines': {
+      name: 'Sort Lines',
+      description: 'Sort lines alphabetically. Free online line sorter.',
+      longDescription: 'Free online line sorter. Sort lines of text alphabetically in ascending or descending order with options for case-sensitive sorting.',
+      keywords: ['sort lines', 'line sorter', 'alphabetical sort', 'sort text lines', 'sort list'],
+      faqs: [
+        { question: 'How does sorting work?', answer: 'Lines are sorted alphabetically using Unicode character comparison. You can choose ascending or descending order.' },
+        { question: 'Is sorting case-sensitive?', answer: 'By default, sorting is case-insensitive. You can enable case-sensitive sorting in the options.' },
       ],
     },
   },
@@ -311,6 +381,26 @@ const tools: Record<string, Record<string, {
         { question: 'When should I use Base64 images?', answer: 'Base64 images are useful for small icons, logos, or when you want to reduce HTTP requests. Large images should use regular URLs as Base64 increases file size by ~33%.' },
       ],
     },
+    'roman-numeral-converter': {
+      name: 'Roman Numeral Converter',
+      description: 'Convert numbers to Roman numerals and vice versa. Free online Roman numeral converter.',
+      longDescription: 'Free online Roman numeral converter. Convert any number from 1 to 3999 to Roman numerals, or decode Roman numerals back to regular numbers.',
+      keywords: ['roman numeral converter', 'number to roman', 'roman to number', 'roman numerals'],
+      faqs: [
+        { question: 'What is the range?', answer: 'Roman numerals can represent numbers from 1 to 3999. Beyond that, special notation is required.' },
+        { question: 'How are numbers formed?', answer: 'Roman numerals use additive notation (VI = 6) and subtractive notation (IV = 4) using letters I, V, X, L, C, D, M.' },
+      ],
+    },
+    'number-base-converter': {
+      name: 'Number Base Converter',
+      description: 'Convert numbers between decimal, hexadecimal, octal, and binary. Free online number base converter.',
+      longDescription: 'Free online number base converter. Convert numbers between decimal (base-10), hexadecimal (base-16), octal (base-8), and binary (base-2) instantly.',
+      keywords: ['number base converter', 'decimal to hex', 'binary converter', 'hex converter', 'base converter'],
+      faqs: [
+        { question: 'What number bases are supported?', answer: 'This tool supports decimal (base-10), hexadecimal (base-16), octal (base-8), and binary (base-2).' },
+        { question: 'How do I use prefixes?', answer: 'You can use prefixes like 0x for hex, 0o for octal, and 0b for binary. They are automatically handled.' },
+      ],
+    },
   },
   formatters: {
     'sql-formatter': {
@@ -341,6 +431,36 @@ const tools: Record<string, Record<string, {
       faqs: [
         { question: 'What optimizations are applied?', answer: 'The minifier removes comments, whitespace, optional semicolons, and can also remove console.log statements and debugger keywords.' },
         { question: 'Should I use this for production?', answer: 'This is a basic minifier. For production builds, consider using build tools like Webpack, Rollup, or esbuild with Terser for advanced optimizations.' },
+      ],
+    },
+    'html-formatter': {
+      name: 'HTML Formatter',
+      description: 'Format and beautify HTML code online. Free HTML formatter.',
+      longDescription: 'Free online HTML formatter. Beautify and format HTML code with proper indentation. Makes messy HTML readable and well-structured.',
+      keywords: ['html formatter', 'html beautifier', 'format html', 'html pretty print', 'beautify html'],
+      faqs: [
+        { question: 'What does the formatter do?', answer: 'The formatter adds proper indentation, spacing, and line breaks to make HTML code more readable.' },
+        { question: 'Can I choose indent size?', answer: 'Yes! You can choose between 2, 4, or 8 spaces for indentation.' },
+      ],
+    },
+    'html-minifier': {
+      name: 'HTML Minifier',
+      description: 'Minify HTML code for production. Free online HTML minifier.',
+      longDescription: 'Free online HTML minifier. Reduce HTML file size by removing comments and whitespace. Optimize your HTML for faster loading times.',
+      keywords: ['html minifier', 'minify html', 'html compressor', 'html optimizer', 'compress html'],
+      faqs: [
+        { question: 'What optimizations are applied?', answer: 'The minifier removes HTML comments and collapses whitespace. You can choose which options to apply.' },
+        { question: 'How much can HTML be reduced?', answer: 'Minification typically reduces HTML file size by 10-30% depending on the original formatting and comment density.' },
+      ],
+    },
+    'xml-formatter': {
+      name: 'XML Formatter',
+      description: 'Format and beautify XML code online. Free XML formatter.',
+      longDescription: 'Free online XML formatter. Beautify and format XML code with proper indentation. Makes messy XML readable and well-structured. Supports CDATA and comments.',
+      keywords: ['xml formatter', 'xml beautifier', 'format xml', 'xml pretty print', 'beautify xml'],
+      faqs: [
+        { question: 'What XML features are supported?', answer: 'The formatter handles standard XML tags, CDATA sections, comments, processing instructions, and DOCTYPE declarations.' },
+        { question: 'Can I choose indent size?', answer: 'Yes! You can choose between 2, 4, or 8 spaces for indentation.' },
       ],
     },
   },

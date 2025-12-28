@@ -10,12 +10,96 @@ interface RegexMatch {
   groups: string[];
 }
 
+interface CommonPattern {
+  name: string;
+  pattern: string;
+  flags: string;
+  description: string;
+}
+
+const commonPatterns: CommonPattern[] = [
+  {
+    name: 'Email',
+    pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$',
+    flags: '',
+    description: 'Matches most common email formats'
+  },
+  {
+    name: 'URL',
+    pattern: 'https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)',
+    flags: 'i',
+    description: 'Matches HTTP/HTTPS URLs'
+  },
+  {
+    name: 'Date (YYYY-MM-DD)',
+    pattern: '^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$',
+    flags: '',
+    description: 'ISO 8601 date format'
+  },
+  {
+    name: 'IPv4',
+    pattern: '^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$',
+    flags: '',
+    description: 'Valid IPv4 addresses (0.0.0.0 - 255.255.255.255)'
+  },
+  {
+    name: 'Phone (US)',
+    pattern: '^(\\+?1[-.\\s]?)?\\(?\\d{3}\\)?[-.\\s]?\\d{3}[-.\\s]?\\d{4}$',
+    flags: '',
+    description: 'US phone number formats: (555) 123-4567, 555-123-4567, 555.123.4567'
+  },
+  {
+    name: 'Credit Card',
+    pattern: '^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|6(?:011|5[0-9]{2})[0-9]{12})$',
+    flags: '',
+    description: 'Visa, MasterCard, American Express, Discover, Diners Club'
+  },
+  {
+    name: 'Hex Color',
+    pattern: '^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$',
+    flags: '',
+    description: 'Hex color codes: #FFF or #FFFFFF'
+  },
+  {
+    name: 'Time (HH:MM)',
+    pattern: '^([01]\\d|2[0-3]):([0-5]\\d)$',
+    flags: '',
+    description: '24-hour time format'
+  },
+  {
+    name: 'Username',
+    pattern: '^[a-zA-Z0-9_]{3,16}$',
+    flags: '',
+    description: 'Alphanumeric with underscores, 3-16 characters'
+  },
+  {
+    name: 'Strong Password',
+    pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$',
+    flags: '',
+    description: 'Min 8 chars, 1 uppercase, 1 lowercase, 1 number, 1 special char'
+  },
+  {
+    name: 'Postal Code (US)',
+    pattern: '^\\d{5}(-\\d{4})?$',
+    flags: '',
+    description: 'US ZIP codes: 12345 or 12345-6789'
+  },
+  {
+    name: 'MAC Address',
+    pattern: '^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$',
+    flags: '',
+    description: 'MAC addresses: 00:1A:2B:3C:4D:5E'
+  }
+];
+
 export default function RegexTesterTool() {
   const { t } = useLanguage();
   const [pattern, setPattern] = useState('');
   const [flags, setFlags] = useState('g');
   const [testString, setTestString] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [selectedPattern, setSelectedPattern] = useState<CommonPattern | null>(null);
+  const [showPatterns, setShowPatterns] = useState(false);
 
   const matches = useMemo((): RegexMatch[] => {
     if (!pattern || !testString) {
@@ -97,6 +181,13 @@ export default function RegexTesterTool() {
     );
   }, []);
 
+  const selectPattern = useCallback((patternInfo: CommonPattern) => {
+    setPattern(patternInfo.pattern);
+    setFlags(patternInfo.flags);
+    setSelectedPattern(patternInfo);
+    setError(null);
+  }, []);
+
   const loadSample = useCallback(() => {
     setPattern('\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b');
     setTestString('Contact us at support@example.com or sales@company.org for more information. Invalid emails: test@, @domain.com, user@.com');
@@ -106,6 +197,66 @@ export default function RegexTesterTool() {
 
   return (
     <div className="space-y-6">
+      {/* Common Patterns Library */}
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            {t('tool.regexTester.commonPatterns')}
+          </label>
+          <button
+            onClick={() => setShowPatterns(!showPatterns)}
+            className="px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+          >
+            {showPatterns ? t('common.hide') : t('common.show')} {t('tool.regexTester.patterns')}
+          </button>
+        </div>
+        
+        {showPatterns && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600">
+            {commonPatterns.map((patternInfo) => (
+              <button
+                key={patternInfo.name}
+                onClick={() => selectPattern(patternInfo)}
+                className={`text-left p-3 rounded-lg border transition-all ${
+                  selectedPattern?.name === patternInfo.name
+                    ? 'bg-primary-100 dark:bg-primary-900/50 border-primary-500 dark:border-primary-500'
+                    : 'bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:border-primary-400 dark:hover:border-primary-400'
+                }`}
+              >
+                <div className="font-medium text-gray-900 dark:text-white text-sm">
+                  {patternInfo.name}
+                </div>
+                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1 font-mono truncate">
+                  {patternInfo.pattern}
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {selectedPattern && !showPatterns && (
+          <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-medium text-blue-900 dark:text-blue-300">
+                {t('tool.regexTester.selected')}: {selectedPattern.name}
+              </span>
+              <button
+                onClick={() => setSelectedPattern(null)}
+                className="text-xs text-blue-700 dark:text-blue-400 hover:underline"
+              >
+                {t('common.clear')}
+              </button>
+            </div>
+            <div className="text-sm text-blue-800 dark:text-blue-300 mb-2">
+              {selectedPattern.description}
+            </div>
+            <code className="text-xs bg-blue-100 dark:bg-blue-900/50 px-2 py-1 rounded font-mono text-blue-900 dark:text-blue-200">
+              {selectedPattern.pattern}
+            </code>
+          </div>
+        )}
+      </div>
+
       {/* Pattern Input */}
       <div>
         <div className="flex items-center justify-between mb-2">

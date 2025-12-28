@@ -8,6 +8,7 @@ import {
   Wand2,
   Lock,
   Type,
+  Text,
   ArrowLeftRight,
   ChevronRight,
   FileJson,
@@ -37,6 +38,12 @@ import {
   Image,
   Paintbrush,
   Tags,
+  Trash,
+  ArrowUpDown,
+  ArrowUp,
+  Shield,
+  Circle,
+  Calculator,
   LucideIcon
 } from 'lucide-react';
 import AdSense from '@/components/common/AdSense';
@@ -86,6 +93,18 @@ const toolIconMap: Record<string, LucideIcon> = {
   'css-minifier': Minimize2,
   'js-minifier': FileCode,
   'cron-parser': Clock,
+  'case-converter': Text,
+  'word-counter': FileType,
+  'remove-duplicates': Trash,
+  'sort-lines': ArrowUpDown,
+  'hex-encoder': Hash,
+  'binary-encoder': Binary,
+  'html-formatter': FileJson,
+  'html-minifier': Minimize2,
+  'xml-formatter': FileCode,
+  'sha512-hash': ShieldCheck,
+  'roman-numeral-converter': Circle,
+  'number-base-converter': Calculator,
 };
 
 const staticPopularTools: (Tool & { icon: LucideIcon; categorySlug?: string })[] = [
@@ -117,6 +136,18 @@ const staticPopularTools: (Tool & { icon: LucideIcon; categorySlug?: string })[]
   { slug: 'image-to-base64', categorySlug: 'encoding', icon: Image, id: 25, name: '', categoryName: '', isFeatured: true },
   { slug: 'css-gradient', categorySlug: 'generators', icon: Paintbrush, id: 26, name: '', categoryName: '', isFeatured: true },
   { slug: 'meta-tags', categorySlug: 'generators', icon: Tags, id: 27, name: '', categoryName: '', isFeatured: true },
+  { slug: 'case-converter', categorySlug: 'text', icon: Text, id: 29, name: '', categoryName: '', isFeatured: true },
+  { slug: 'word-counter', categorySlug: 'text', icon: FileType, id: 30, name: '', categoryName: '', isFeatured: true },
+  { slug: 'remove-duplicates', categorySlug: 'text', icon: Trash, id: 31, name: '', categoryName: '', isFeatured: true },
+  { slug: 'sort-lines', categorySlug: 'text', icon: ArrowUpDown, id: 32, name: '', categoryName: '', isFeatured: true },
+  { slug: 'hex-encoder', categorySlug: 'encoding', icon: Hash, id: 33, name: '', categoryName: '', isFeatured: true },
+  { slug: 'binary-encoder', categorySlug: 'encoding', icon: Binary, id: 34, name: '', categoryName: '', isFeatured: true },
+  { slug: 'html-formatter', categorySlug: 'formatters', icon: FileJson, id: 35, name: '', categoryName: '', isFeatured: true },
+  { slug: 'html-minifier', categorySlug: 'formatters', icon: Minimize2, id: 36, name: '', categoryName: '', isFeatured: true },
+  { slug: 'xml-formatter', categorySlug: 'formatters', icon: FileCode, id: 37, name: '', categoryName: '', isFeatured: true },
+  { slug: 'sha512-hash', categorySlug: 'crypto', icon: ShieldCheck, id: 38, name: '', categoryName: '', isFeatured: true },
+  { slug: 'roman-numeral-converter', categorySlug: 'converters', icon: Circle, id: 39, name: '', categoryName: '', isFeatured: true },
+  { slug: 'number-base-converter', categorySlug: 'converters', icon: Calculator, id: 40, name: '', categoryName: '', isFeatured: true },
 ];
 const POPULAR_FETCH_COUNT = staticPopularTools.length;
 
