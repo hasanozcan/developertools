@@ -16,6 +16,8 @@ const tools = [
   { category: 'encoding', slug: 'jwt-decoder' },
   { category: 'encoding', slug: 'html-entity' },
   { category: 'encoding', slug: 'image-to-base64' },
+  { category: 'encoding', slug: 'hex-encoder' },
+  { category: 'encoding', slug: 'binary-encoder' },
   // Generator Tools
   { category: 'generators', slug: 'uuid-generator' },
   { category: 'generators', slug: 'password-generator' },
@@ -27,17 +29,27 @@ const tools = [
   // Crypto Tools
   { category: 'crypto', slug: 'md5-hash' },
   { category: 'crypto', slug: 'sha256-hash' },
+  { category: 'crypto', slug: 'sha512-hash' },
   // Text Tools
   { category: 'text', slug: 'regex-tester' },
   { category: 'text', slug: 'text-diff' },
   { category: 'text', slug: 'markdown-preview' },
+  { category: 'text', slug: 'case-converter' },
+  { category: 'text', slug: 'word-counter' },
+  { category: 'text', slug: 'remove-duplicates' },
+  { category: 'text', slug: 'sort-lines' },
   // Converter Tools
   { category: 'converters', slug: 'timestamp-converter' },
   { category: 'converters', slug: 'color-converter' },
+  { category: 'converters', slug: 'roman-numeral-converter' },
+  { category: 'converters', slug: 'number-base-converter' },
   // Formatter Tools
   { category: 'formatters', slug: 'sql-formatter' },
   { category: 'formatters', slug: 'css-minifier' },
   { category: 'formatters', slug: 'js-minifier' },
+  { category: 'formatters', slug: 'html-formatter' },
+  { category: 'formatters', slug: 'html-minifier' },
+  { category: 'formatters', slug: 'xml-formatter' },
   // Utility Tools
   { category: 'utilities', slug: 'cron-parser' },
 ];
