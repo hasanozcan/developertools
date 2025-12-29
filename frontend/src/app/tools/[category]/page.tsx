@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
 import {
   Braces,
   Code,
@@ -214,9 +215,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const categoryUrl = `${siteUrl}/tools/${categorySlug}`;
   const ogImageUrl = `${siteUrl}/og-image.png`;
 
+  // Category-specific keywords
+  const categoryKeywords: Record<string, string[]> = {
+    json: ['json tools', 'json formatter', 'json validator', 'json to csv', 'json to typescript', 'yaml to json', 'json beautifier', 'json parser'],
+    encoding: ['encoding tools', 'base64 encoder', 'base64 decoder', 'url encoder', 'url decoder', 'hex encoder', 'binary encoder', 'jwt decoder', 'html entity encoder'],
+    generators: ['generators', 'uuid generator', 'password generator', 'lorem ipsum generator', 'qr code generator', 'slug generator', 'css gradient generator', 'meta tags generator'],
+    crypto: ['cryptography', 'hash generator', 'md5 generator', 'sha256 generator', 'sha512 generator', 'hash tools'],
+    text: ['text tools', 'regex tester', 'case converter', 'word counter', 'text diff', 'markdown preview', 'sort lines', 'remove duplicates'],
+    converters: ['converters', 'timestamp converter', 'color converter', 'roman numeral converter', 'number base converter', 'json to csv', 'yaml to json'],
+    formatters: ['code formatters', 'sql formatter', 'css minifier', 'javascript minifier', 'html formatter', 'html minifier', 'xml formatter', 'code beautifier'],
+    utilities: ['developer utilities', 'cron parser', 'cron expression', 'development tools'],
+  };
+
   return {
     title: `${category.name} - Free Online Developer Tools`,
     description: category.description,
+    keywords: categoryKeywords[categorySlug] || [category.name.toLowerCase(), 'developer tools', 'online tools', 'free tools'],
     alternates: {
       canonical: categoryUrl,
       languages: {
@@ -266,9 +280,30 @@ export default async function CategoryPage({ params }: PageProps) {
   }
 
   const Icon = category.icon;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
+
+  // CollectionPage structured data for category pages
+  const collectionPageStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `${category.name} - Free Online Developer Tools`,
+    description: category.description,
+    url: `${siteUrl}/tools/${categorySlug}`,
+    about: {
+      '@type': 'Thing',
+      name: category.name,
+      description: category.description,
+    },
+  };
 
   return (
-    <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-8">
+    <>
+      <Script
+        id="category-collectionpage-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageStructuredData) }}
+      />
+      <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-8">
       <Breadcrumb
         items={[
           { name: 'Home', href: '/' },
@@ -326,5 +361,6 @@ export default async function CategoryPage({ params }: PageProps) {
         </p>
       </section>
     </div>
+    </>
   );
 }

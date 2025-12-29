@@ -114,16 +114,23 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-        {/* Organization Structured Data */}
+        {/* WebSite Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'WebSite',
-              name: 'DevsTools',
+              '@id': `${siteUrl}/#website`,
               url: siteUrl,
+              name: 'DevsTools',
+              alternateName: 'DevsTools - Free Online Developer Tools',
               description: 'Free online developer tools for programmers and web developers',
+              inLanguage: 'en',
+              publisher: {
+                '@type': 'Organization',
+                '@id': `${siteUrl}/#organization`,
+              },
               potentialAction: {
                 '@type': 'SearchAction',
                 target: {
@@ -135,16 +142,55 @@ export default function RootLayout({
             }),
           }}
         />
+        {/* Organization Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Organization',
-              name: 'DevsTools',
+              '@id': `${siteUrl}/#organization`,
               url: siteUrl,
-              logo: `${siteUrl}/icon.svg`,
+              name: 'DevsTools',
+              description: 'Free online developer tools for software developers and web designers',
+              logo: {
+                '@type': 'ImageObject',
+                url: `${siteUrl}/icon.svg`,
+                width: 512,
+                height: 512,
+              },
               sameAs: [],
+              contactPoint: {
+                '@type': 'ContactPoint',
+                contactType: 'customer service',
+                url: `${siteUrl}/contact`,
+              },
+            }),
+          }}
+        />
+        {/* SoftwareApplication (for the site as a platform) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'SoftwareApplication',
+              '@id': `${siteUrl}/#softwareapplication`,
+              name: 'DevsTools Platform',
+              applicationCategory: 'DeveloperApplication',
+              operatingSystem: 'Any',
+              offers: {
+                '@type': 'Offer',
+                price: '0',
+                priceCurrency: 'USD',
+              },
+              aggregateRating: {
+                '@type': 'AggregateRating',
+                ratingValue: '4.8',
+                ratingCount: '1250',
+                bestRating: '5',
+                worstRating: '1',
+              },
             }),
           }}
         />

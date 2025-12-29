@@ -586,6 +586,9 @@ export default async function ToolPage({ params }: PageProps) {
     notFound();
   }
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
+  const canonicalCategory = getCanonicalToolCategory(toolSlug, category);
+
   // FAQ structured data for SEO
   const faqStructuredData = {
     '@context': 'https://schema.org',
@@ -598,6 +601,31 @@ export default async function ToolPage({ params }: PageProps) {
         text: faq.answer,
       },
     })),
+  };
+
+  // BreadcrumbList structured data
+  const breadcrumbStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: siteUrl,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: categoryNames[category] || category,
+        item: `${siteUrl}/tools/${canonicalCategory}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: tool.name,
+      },
+    ],
   };
 
   // WebApplication structured data
@@ -618,6 +646,10 @@ export default async function ToolPage({ params }: PageProps) {
   return (
     <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-8">
       {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}

@@ -7,6 +7,7 @@ const ogImageUrl = `${siteUrl}/og-image.png`;
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description: 'Read the DevsTools privacy policy and learn how data is handled in our client-side tools.',
+  keywords: ['privacy policy', 'data privacy', 'client-side processing', 'gdpr', 'user data', 'developer tools privacy'],
   alternates: {
     canonical: pageUrl,
     languages: {

@@ -7,6 +7,7 @@ const ogImageUrl = `${siteUrl}/og-image.png`;
 export const metadata: Metadata = {
   title: 'About',
   description: 'Learn about DevsTools and the free online developer tools available for JSON, Base64, UUID, and more.',
+  keywords: ['about devstools', 'developer tools', 'online tools', 'free tools', 'json formatter', 'base64 encoder', 'uuid generator', 'web development tools'],
   alternates: {
     canonical: pageUrl,
     languages: {

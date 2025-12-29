@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
+import Script from 'next/script';
 import {
   Braces,
   Code,
@@ -191,8 +192,50 @@ export default function Home() {
     icon: categoryIcons[slug],
   }));
 
+  const siteUrl = 'https://devstools.app';
+
+  // BreadcrumbList structured data for homepage
+  const breadcrumbStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: siteUrl,
+      },
+    ],
+  };
+
+  // CollectionPage structured data for homepage
+  const collectionPageStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'DevsTools - Free Online Developer Tools',
+    description: '27+ free online developer tools: JSON formatter, Base64 encoder, UUID generator, hash generators, regex tester, QR code & more. No registration, 100% client-side.',
+    url: siteUrl,
+    about: {
+      '@type': 'Thing',
+      name: 'Developer Tools',
+      description: 'Free online tools for software developers and web designers',
+    },
+  };
+
   return (
-    <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-12">
+    <>
+      {/* Structured Data */}
+      <Script
+        id="homepage-breadcrumb-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
+      />
+      <Script
+        id="homepage-collectionpage-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageStructuredData) }}
+      />
+      <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-12">
       {/* Hero Section */}
       <section className="text-center mb-16">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
@@ -304,5 +347,6 @@ export default function Home() {
         </ul>
       </section>
     </div>
+    </>
   );
 }

@@ -3,12 +3,38 @@
 import { Code2, Shield, Zap, Heart } from 'lucide-react';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import { useLanguage } from '@/context/LanguageContext';
+import Script from 'next/script';
 
 export default function AboutPage() {
   const { t } = useLanguage();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
+
+  // WebPage structured data for About page
+  const webPageStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${siteUrl}/about#webpage`,
+    url: `${siteUrl}/about`,
+    name: 'About DevsTools - Free Online Developer Tools',
+    description: 'Learn about DevsTools - Free online developer tools with privacy-first approach, lightning-fast performance, and forever free access.',
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+    },
+    about: {
+      '@type': 'Organization',
+      '@id': `${siteUrl}/#organization`,
+    },
+  };
 
   return (
-    <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-8">
+    <>
+      <Script
+        id="about-webpage-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageStructuredData) }}
+      />
+      <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-8">
       <Breadcrumb
         items={[
           { name: t('common.home'), href: '/' },
@@ -93,5 +119,6 @@ export default function AboutPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

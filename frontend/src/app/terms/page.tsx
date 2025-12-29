@@ -2,12 +2,35 @@
 
 import { useLanguage } from '@/context/LanguageContext';
 import Breadcrumb from '@/components/common/Breadcrumb';
+import Script from 'next/script';
 
 export default function TermsPage() {
   const { t } = useLanguage();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
+
+  // WebPage structured data for Terms page
+  const webPageStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${siteUrl}/terms#webpage`,
+    url: `${siteUrl}/terms`,
+    name: 'Terms of Service - DevsTools',
+    description: 'Terms of service for DevsTools. Understand your rights and responsibilities when using our free developer tools.',
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+    },
+    dateModified: '2025-12-01',
+  };
 
   return (
-    <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-8">
+    <>
+      <Script
+        id="terms-webpage-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageStructuredData) }}
+      />
+      <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-8">
       <Breadcrumb
         items={[
           { name: t('common.home'), href: '/' },
@@ -69,5 +92,6 @@ export default function TermsPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

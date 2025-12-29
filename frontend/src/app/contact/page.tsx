@@ -4,9 +4,38 @@ import { useState } from 'react';
 import { Mail, MessageSquare, Send, CheckCircle } from 'lucide-react';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import { useLanguage } from '@/context/LanguageContext';
+import Script from 'next/script';
 
 export default function ContactPage() {
   const { t } = useLanguage();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
+
+  // ContactPage structured data
+  const contactPageStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    '@id': `${siteUrl}/contact#contactpage`,
+    url: `${siteUrl}/contact`,
+    name: 'Contact DevsTools - Get in Touch',
+    description: 'Contact DevsTools for feedback, bug reports, feature requests, or questions. We value your input and strive to improve our developer tools.',
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+    },
+    mainEntity: {
+      '@type': 'Organization',
+      '@id': `${siteUrl}/#organization`,
+      name: 'DevsTools',
+      url: siteUrl,
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'customer service',
+        email: 'support@devstools.app',
+        url: `${siteUrl}/contact`,
+        availableLanguage: ['English', 'Turkish', 'German', 'Spanish', 'French', 'Russian', 'Chinese'],
+      },
+    },
+  };
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -48,7 +77,13 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-8">
+    <>
+      <Script
+        id="contact-contactpage-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageStructuredData) }}
+      />
+      <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-8">
       <Breadcrumb
         items={[
           { name: t('common.home'), href: '/' },
@@ -210,5 +245,6 @@ export default function ContactPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

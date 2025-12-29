@@ -2,12 +2,35 @@
 
 import { useLanguage } from '@/context/LanguageContext';
 import Breadcrumb from '@/components/common/Breadcrumb';
+import Script from 'next/script';
 
 export default function PrivacyPage() {
   const { t } = useLanguage();
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
+
+  // WebPage structured data for Privacy page
+  const webPageStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${siteUrl}/privacy#webpage`,
+    url: `${siteUrl}/privacy`,
+    name: 'Privacy Policy - DevsTools',
+    description: 'Privacy policy for DevsTools. Learn how we protect your privacy with client-side processing and no data collection.',
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+    },
+    dateModified: '2025-12-01',
+  };
 
   return (
-    <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-8">
+    <>
+      <Script
+        id="privacy-webpage-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageStructuredData) }}
+      />
+      <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-8">
       <Breadcrumb
         items={[
           { name: t('common.home'), href: '/' },
@@ -75,5 +98,6 @@ export default function PrivacyPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

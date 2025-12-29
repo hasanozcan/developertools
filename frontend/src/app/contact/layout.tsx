@@ -7,6 +7,7 @@ const ogImageUrl = `${siteUrl}/og-image.png`;
 export const metadata: Metadata = {
   title: 'Contact',
   description: 'Contact the DevsTools team with feedback, bug reports, or feature requests.',
+  keywords: ['contact devstools', 'feedback', 'bug report', 'feature request', 'support', 'developer tools'],
   alternates: {
     canonical: pageUrl,
     languages: {
