@@ -160,37 +160,6 @@ export default function RootLayout({
                 height: 512,
               },
               sameAs: [],
-              contactPoint: {
-                '@type': 'ContactPoint',
-                contactType: 'customer service',
-                url: `${siteUrl}/contact`,
-              },
-            }),
-          }}
-        />
-        {/* SoftwareApplication (for the site as a platform) */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'SoftwareApplication',
-              '@id': `${siteUrl}/#softwareapplication`,
-              name: 'DevsTools Platform',
-              applicationCategory: 'DeveloperApplication',
-              operatingSystem: 'Any',
-              offers: {
-                '@type': 'Offer',
-                price: '0',
-                priceCurrency: 'USD',
-              },
-              aggregateRating: {
-                '@type': 'AggregateRating',
-                ratingValue: '4.8',
-                ratingCount: '1250',
-                bestRating: '5',
-                worstRating: '1',
-              },
             }),
           }}
         />
