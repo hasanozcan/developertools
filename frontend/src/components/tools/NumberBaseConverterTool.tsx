@@ -274,7 +274,7 @@ export default function NumberBaseConverterTool() {
                 { char: ' ', dec: 32 },
               ].map(({ char, dec }) => (
                 <tr key={char} className="border-b border-gray-100 dark:border-gray-800">
-                  <td className="px-3 py-2 font-mono">'{char === ' ' ? 'space' : char}'</td>
+                  <td className="px-3 py-2 font-mono">{`'${char === ' ' ? 'space' : char}'`}</td>
                   <td className="px-3 py-2 font-mono text-gray-600 dark:text-gray-400">{dec}</td>
                   <td className="px-3 py-2 font-mono text-gray-600 dark:text-gray-400">0x{dec.toString(16).toUpperCase()}</td>
                   <td className="px-3 py-2 font-mono text-gray-600 dark:text-gray-400">0o{dec.toString(8)}</td>

@@ -587,6 +587,9 @@ export const zh = {
     'toolName.sha512-hash': 'SHA512 哈希生成器',
     'toolName.roman-numeral-converter': '罗马数字转换器',
     'toolName.number-base-converter': '进制转换器',
+    'toolName.unicode-escape': 'Unicode 转义编码/解码',
+    'toolName.url-parser': 'URL 解析器',
+    'toolName.http-status-codes': 'HTTP 状态码',
     // Tool Descriptions
     'toolDesc.json-formatter': '用语法高亮格式化、校验并清理 JSON。',
     'toolDesc.json-validator': '检查 JSON 语法错误，立即看到准确位置。',
@@ -628,6 +631,9 @@ export const zh = {
     'toolDesc.sha512-hash': '从文本生成 SHA512 哈希用于完整性检查。',
     'toolDesc.roman-numeral-converter': '数字与罗马数字之间的转换。',
     'toolDesc.number-base-converter': '在十进制、二进制、十六进��和八进制之间转换数字。',
+    'toolDesc.unicode-escape': '将普通文本编码为 Unicode 转义序列，或将转义文本解码。',
+    'toolDesc.url-parser': '将 URL 解析为协议、主机、路径、哈希和查询参数。',
+    'toolDesc.http-status-codes': '搜索并查询常见的 HTTP 响应状态码。',
     // Privacy Page
     'privacy.title': '隐私政策',
     'privacy.lastUpdated': '最后更新',

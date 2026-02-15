@@ -835,6 +835,9 @@ export const de = {
     'toolName.sha512-hash': 'SHA512-Hash-Generator',
     'toolName.roman-numeral-converter': 'Römische Zahlen Konverter',
     'toolName.number-base-converter': 'Zahlenbasis-Konverter',
+    'toolName.unicode-escape': 'Unicode-Escape-Encoder/Decoder',
+    'toolName.url-parser': 'URL-Parser',
+    'toolName.http-status-codes': 'HTTP-Statuscodes',
     // Tool Descriptions
     'toolDesc.json-formatter': 'JSON mit Syntax-Highlighting formatieren, validieren und bereinigen.',
     'toolDesc.json-validator': 'JSON-Syntaxfehler prüfen und genaue Fehlstellen sofort sehen.',
@@ -876,6 +879,9 @@ export const de = {
     'toolDesc.sha512-hash': 'SHA512-Hashes aus Text für Integritätsprüfungen generieren.',
     'toolDesc.roman-numeral-converter': 'Zahlen in römische Zahlen und umgekehrt konvertieren.',
     'toolDesc.number-base-converter': 'Zahlen zwischen Dezimal, Binär, Hex und Oktal konvertieren.',
+    'toolDesc.unicode-escape': 'Klartext in Unicode-Escape-Sequenzen kodieren oder escaped Text dekodieren.',
+    'toolDesc.url-parser': 'URLs in Protokoll, Host, Pfad, Hash und Query-Parameter aufteilen.',
+    'toolDesc.http-status-codes': 'Häufige HTTP-Antwort-Statuscodes suchen und nachschlagen.',
     // Privacy Page
     'privacy.title': 'Datenschutzrichtlinie',
     'privacy.lastUpdated': 'Letzte Aktualisierung',

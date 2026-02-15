@@ -75,6 +75,7 @@ const toolIconMap: Record<string, LucideIcon> = {
   'url-encoder': Link2,
   'jwt-decoder': KeyRound,
   'html-entity': Code2,
+  'unicode-escape': Code2,
   'image-to-base64': Image,
   'uuid-generator': Fingerprint,
   'password-generator': Key,
@@ -90,6 +91,7 @@ const toolIconMap: Record<string, LucideIcon> = {
   'markdown-preview': FileText,
   'timestamp-converter': Timer,
   'color-converter': Palette,
+  'url-parser': Link2,
   'sql-formatter': Database,
   'css-minifier': Minimize2,
   'js-minifier': FileCode,
@@ -106,6 +108,7 @@ const toolIconMap: Record<string, LucideIcon> = {
   'sha512-hash': ShieldCheck,
   'roman-numeral-converter': Circle,
   'number-base-converter': Calculator,
+  'http-status-codes': FileText,
 };
 
 const staticPopularTools: (Tool & { icon: LucideIcon; categorySlug?: string })[] = [

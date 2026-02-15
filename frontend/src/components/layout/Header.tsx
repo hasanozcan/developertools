@@ -19,6 +19,7 @@ const toolSlugs = [
   { slug: 'base64', category: 'encoding', keywords: ['base64', 'encode', 'decode'] },
   { slug: 'url-encoder', category: 'encoding', keywords: ['url', 'encode', 'decode', 'percent'] },
   { slug: 'jwt-decoder', category: 'encoding', keywords: ['jwt', 'token', 'decode', 'json web token'] },
+  { slug: 'unicode-escape', category: 'encoding', keywords: ['unicode', 'escape', 'encode', 'decode', '\\u'] },
   { slug: 'image-to-base64', category: 'encoding', keywords: ['image', 'base64', 'convert', 'data uri', 'png', 'jpg'] },
   { slug: 'uuid-generator', category: 'generators', keywords: ['uuid', 'guid', 'generate', 'random'] },
   { slug: 'password-generator', category: 'generators', keywords: ['password', 'generate', 'secure', 'random'] },
@@ -29,6 +30,7 @@ const toolSlugs = [
   { slug: 'regex-tester', category: 'text', keywords: ['regex', 'regular expression', 'test', 'match'] },
   { slug: 'timestamp-converter', category: 'converters', keywords: ['timestamp', 'unix', 'epoch', 'date', 'time'] },
   { slug: 'color-converter', category: 'converters', keywords: ['color', 'hex', 'rgb', 'hsl', 'converter'] },
+  { slug: 'url-parser', category: 'converters', keywords: ['url', 'parser', 'query', 'hostname', 'path'] },
   { slug: 'lorem-ipsum', category: 'text', keywords: ['lorem', 'ipsum', 'placeholder', 'text'] },
   { slug: 'html-entity', category: 'encoding', keywords: ['html', 'entity', 'encode', 'decode'] },
   { slug: 'json-csv', category: 'converters', keywords: ['json', 'csv', 'convert', 'export'] },
@@ -39,6 +41,7 @@ const toolSlugs = [
   { slug: 'css-minifier', category: 'formatters', keywords: ['css', 'minify', 'compress', 'optimize'] },
   { slug: 'js-minifier', category: 'formatters', keywords: ['javascript', 'js', 'minify', 'compress'] },
   { slug: 'cron-parser', category: 'utilities', keywords: ['cron', 'schedule', 'crontab', 'job'] },
+  { slug: 'http-status-codes', category: 'utilities', keywords: ['http', 'status', '404', '500', 'response code'] },
   { slug: 'markdown-preview', category: 'utilities', keywords: ['markdown', 'md', 'preview', 'editor'] },
 ];
 
@@ -81,6 +84,7 @@ export default function Header() {
         { slug: 'url-encoder', category: 'encoding', name: t('toolName.url-encoder') },
         { slug: 'jwt-decoder', category: 'encoding', name: t('toolName.jwt-decoder') },
         { slug: 'html-entity', category: 'encoding', name: t('toolName.html-entity') },
+        { slug: 'unicode-escape', category: 'encoding', name: t('toolName.unicode-escape') },
         { slug: 'image-to-base64', category: 'encoding', name: t('toolName.image-to-base64') },
       ]
     },
@@ -112,6 +116,7 @@ export default function Header() {
       tools: [
         { slug: 'timestamp-converter', category: 'converters', name: t('toolName.timestamp-converter') },
         { slug: 'color-converter', category: 'converters', name: t('toolName.color-converter') },
+        { slug: 'url-parser', category: 'converters', name: t('toolName.url-parser') },
         { slug: 'json-csv', category: 'converters', name: t('toolName.json-csv') },
         { slug: 'json-to-typescript', category: 'json', name: t('toolName.json-to-typescript') },
         { slug: 'yaml-json', category: 'json', name: t('toolName.yaml-json') },
@@ -126,6 +131,7 @@ export default function Header() {
         { slug: 'lorem-ipsum', category: 'text', name: t('toolName.lorem-ipsum') },
         { slug: 'markdown-preview', category: 'utilities', name: t('toolName.markdown-preview') },
         { slug: 'cron-parser', category: 'utilities', name: t('toolName.cron-parser') },
+        { slug: 'http-status-codes', category: 'utilities', name: t('toolName.http-status-codes') },
         { slug: 'md5-hash', category: 'crypto', name: t('toolName.md5-hash') },
         { slug: 'sha256-hash', category: 'crypto', name: t('toolName.sha256-hash') },
       ]

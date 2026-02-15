@@ -63,6 +63,7 @@ const toolIcons: Record<string, LucideIcon> = {
   'binary-encoder': Code2,
   'jwt-decoder': KeyRound,
   'html-entity': Code2,
+  'unicode-escape': Code2,
   'image-to-base64': Image,
   'uuid-generator': Fingerprint,
   'password-generator': Key,
@@ -85,6 +86,7 @@ const toolIcons: Record<string, LucideIcon> = {
   'color-converter': Palette,
   'roman-numeral-converter': FileType,
   'number-base-converter': HashIcon,
+  'url-parser': Link2,
   'sql-formatter': Database,
   'css-minifier': Minimize2,
   'js-minifier': FileCode,
@@ -92,6 +94,7 @@ const toolIcons: Record<string, LucideIcon> = {
   'html-minifier': Minimize2,
   'xml-formatter': FileCode,
   'cron-parser': Clock,
+  'http-status-codes': CheckCircle,
 };
 
 const categories: Record<string, { name: string; description: string; icon: any; tools: { name: string; slug: string; description: string }[] }> = {
@@ -118,6 +121,7 @@ const categories: Record<string, { name: string; description: string; icon: any;
       { name: 'Binary Encoder/Decoder', slug: 'binary-encoder', description: 'Encode or decode text to/from binary' },
       { name: 'JWT Decoder', slug: 'jwt-decoder', description: 'Decode and inspect JWT tokens' },
       { name: 'HTML Entity Encoder/Decoder', slug: 'html-entity', description: 'Encode or decode HTML entities' },
+      { name: 'Unicode Escape Encoder/Decoder', slug: 'unicode-escape', description: 'Convert text to and from Unicode escape sequences' },
       { name: 'Image to Base64', slug: 'image-to-base64', description: 'Convert images to Base64 data URIs' },
     ],
   },
@@ -172,6 +176,7 @@ const categories: Record<string, { name: string; description: string; icon: any;
       { name: 'JSON to CSV Converter', slug: 'json-csv', description: 'Convert JSON to CSV and vice versa' },
       { name: 'YAML ↔ JSON Converter', slug: 'yaml-json', description: 'Convert between YAML and JSON formats' },
       { name: 'Image to Base64', slug: 'image-to-base64', description: 'Convert images to Base64 data URIs' },
+      { name: 'URL Parser', slug: 'url-parser', description: 'Parse URLs into protocol, host, path, and query params' },
     ],
   },
   formatters: {
@@ -193,6 +198,7 @@ const categories: Record<string, { name: string; description: string; icon: any;
     icon: Wand2,
     tools: [
       { name: 'Cron Expression Parser', slug: 'cron-parser', description: 'Parse and explain cron expressions' },
+      { name: 'HTTP Status Codes', slug: 'http-status-codes', description: 'Search and reference common HTTP status codes' },
       { name: 'QR Code Generator', slug: 'qr-code', description: 'Generate QR codes from text or URLs' },
       { name: 'Markdown Preview', slug: 'markdown-preview', description: 'Preview and convert Markdown to HTML' },
     ],
@@ -218,13 +224,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // Category-specific keywords
   const categoryKeywords: Record<string, string[]> = {
     json: ['json tools', 'json formatter', 'json validator', 'json to csv', 'json to typescript', 'yaml to json', 'json beautifier', 'json parser'],
-    encoding: ['encoding tools', 'base64 encoder', 'base64 decoder', 'url encoder', 'url decoder', 'hex encoder', 'binary encoder', 'jwt decoder', 'html entity encoder'],
+    encoding: ['encoding tools', 'base64 encoder', 'base64 decoder', 'url encoder', 'url decoder', 'hex encoder', 'binary encoder', 'jwt decoder', 'html entity encoder', 'unicode escape'],
     generators: ['generators', 'uuid generator', 'password generator', 'lorem ipsum generator', 'qr code generator', 'slug generator', 'css gradient generator', 'meta tags generator'],
     crypto: ['cryptography', 'hash generator', 'md5 generator', 'sha256 generator', 'sha512 generator', 'hash tools'],
     text: ['text tools', 'regex tester', 'case converter', 'word counter', 'text diff', 'markdown preview', 'sort lines', 'remove duplicates'],
-    converters: ['converters', 'timestamp converter', 'color converter', 'roman numeral converter', 'number base converter', 'json to csv', 'yaml to json'],
+    converters: ['converters', 'timestamp converter', 'color converter', 'roman numeral converter', 'number base converter', 'json to csv', 'yaml to json', 'url parser'],
     formatters: ['code formatters', 'sql formatter', 'css minifier', 'javascript minifier', 'html formatter', 'html minifier', 'xml formatter', 'code beautifier'],
-    utilities: ['developer utilities', 'cron parser', 'cron expression', 'development tools'],
+    utilities: ['developer utilities', 'cron parser', 'cron expression', 'development tools', 'http status codes'],
   };
 
   return {

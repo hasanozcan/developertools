@@ -136,6 +136,16 @@ const tools: Record<string, Record<string, {
         { question: 'When should I use Base64 images?', answer: 'Base64 images are useful for small icons, logos, or when you want to reduce HTTP requests. Large images should use regular URLs as Base64 increases file size by ~33%.' },
       ],
     },
+    'unicode-escape': {
+      name: 'Unicode Escape Encoder/Decoder',
+      description: 'Encode plain text into Unicode escape sequences and decode escaped text back.',
+      longDescription: 'Free online Unicode escape converter. Encode text to \\uXXXX format or decode escaped values back to readable text. Supports \\uXXXX and \\u{XXXXX} forms.',
+      keywords: ['unicode escape', 'unicode encoder', 'unicode decoder', 'escape sequence', '\\uXXXX'],
+      faqs: [
+        { question: 'What is Unicode escaping?', answer: 'Unicode escaping represents characters using hexadecimal code points, such as \\u0041 for "A".' },
+        { question: 'When should I use this tool?', answer: 'Use it when working with JSON, logs, source code, or APIs that contain escaped Unicode text.' },
+      ],
+    },
   },
   generators: {
     'uuid-generator': {
@@ -401,6 +411,16 @@ const tools: Record<string, Record<string, {
         { question: 'How do I use prefixes?', answer: 'You can use prefixes like 0x for hex, 0o for octal, and 0b for binary. They are automatically handled.' },
       ],
     },
+    'url-parser': {
+      name: 'URL Parser',
+      description: 'Parse URLs and inspect protocol, host, path, and query parameters.',
+      longDescription: 'Free online URL parser. Break down any URL into protocol, domain, port, path, query parameters, and hash. Useful for debugging redirects, APIs, and tracking links.',
+      keywords: ['url parser', 'parse url', 'url analyzer', 'query parameters', 'url components'],
+      faqs: [
+        { question: 'Can this parse URLs without protocol?', answer: 'Yes. If no protocol is provided, the tool tries to parse the input by assuming HTTPS.' },
+        { question: 'Does it support repeated query params?', answer: 'Yes. Repeated query parameters are preserved and returned as arrays.' },
+      ],
+    },
   },
   formatters: {
     'sql-formatter': {
@@ -495,6 +515,16 @@ const tools: Record<string, Record<string, {
         { question: 'Can I export the HTML?', answer: 'Yes! You can copy the generated HTML output to use in your projects.' },
       ],
     },
+    'http-status-codes': {
+      name: 'HTTP Status Codes',
+      description: 'Search, filter, and reference common HTTP response status codes.',
+      longDescription: 'Free online HTTP status code reference. Quickly find informational, success, redirect, client error, and server error codes with clear descriptions.',
+      keywords: ['http status codes', 'status code reference', '404', '500', 'http errors'],
+      faqs: [
+        { question: 'What are HTTP status codes?', answer: 'HTTP status codes are standardized server responses that indicate whether a request succeeded, failed, or was redirected.' },
+        { question: 'Which status code classes exist?', answer: '1xx informational, 2xx success, 3xx redirection, 4xx client errors, and 5xx server errors.' },
+      ],
+    },
   },
 };
 
@@ -575,6 +605,8 @@ const categoryNames: Record<string, string> = {
   crypto: 'Cryptography',
   text: 'Text Tools',
   converters: 'Converters',
+  formatters: 'Code Formatters',
+  utilities: 'Developer Utilities',
 };
 
 export default async function ToolPage({ params }: PageProps) {

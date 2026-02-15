@@ -711,6 +711,9 @@ export const ru = {
     'toolName.sha512-hash': 'Генератор хеша SHA512',
     'toolName.roman-numeral-converter': 'Конвертер римских цифр',
     'toolName.number-base-converter': 'Конвертер систем счисления',
+    'toolName.unicode-escape': 'Unicode Escape кодировщик/декодировщик',
+    'toolName.url-parser': 'Парсер URL',
+    'toolName.http-status-codes': 'Коды состояния HTTP',
     // Tool Descriptions
     'toolDesc.json-formatter': 'Форматируйте, проверяйте и очищайте JSON с подсветкой синтаксиса.',
     'toolDesc.json-validator': 'Проверяйте ошибки синтаксиса JSON и сразу видьте точное место.',
@@ -752,6 +755,9 @@ export const ru = {
     'toolDesc.sha512-hash': 'Генерируйте SHA512-хэши из текста для проверки целостности.',
     'toolDesc.roman-numeral-converter': 'Конвертируйте числа в римские цифры и наоборот.',
     'toolDesc.number-base-converter': 'Конвертируйте числа между десятичной, двоичной, hex и восьмеричной системами.',
+    'toolDesc.unicode-escape': 'Кодируйте обычный текст в Unicode escape-последовательности или декодируйте экранированный текст.',
+    'toolDesc.url-parser': 'Разберите URL на протокол, хост, путь, хэш и параметры запроса.',
+    'toolDesc.http-status-codes': 'Ищите и справочно используйте распространенные коды состояния HTTP.',
     // Privacy Page
     'privacy.title': 'Политика конфиденциальности',
     'privacy.lastUpdated': 'Последнее обновление',

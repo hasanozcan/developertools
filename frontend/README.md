@@ -84,3 +84,28 @@ NEXT_PUBLIC_GOOGLE_VERIFICATION=xxxxxxxxxxxxxxxx
 npm run build
 npm start
 ```
+
+## Quality & Analysis
+
+```bash
+# Lint
+npm run lint
+
+# Type checks
+npm run type-check
+
+# Unit tests (Vitest)
+npm run test
+
+# Full quality pipeline
+npm run check
+
+# Bundle analyzer reports
+npm run analyze
+```
+
+Bundle analyzer raporlarÄ±:
+
+- `.next/analyze/client.html`
+- `.next/analyze/nodejs.html`
+- `.next/analyze/edge.html`

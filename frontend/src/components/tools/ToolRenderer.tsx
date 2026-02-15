@@ -20,6 +20,7 @@ const toolComponents = {
   'binary-encoder': dynamic(() => import('./BinaryEncoderTool'), { loading: Loading, ssr: false }),
   'jwt-decoder': dynamic(() => import('./JwtDecoderTool'), { loading: Loading, ssr: false }),
   'html-entity': dynamic(() => import('./HtmlEntityTool'), { loading: Loading, ssr: false }),
+  'unicode-escape': dynamic(() => import('./UnicodeEscapeTool'), { loading: Loading, ssr: false }),
   'image-to-base64': dynamic(() => import('./ImageToBase64Tool'), { loading: Loading, ssr: false }),
   'uuid-generator': dynamic(() => import('./UuidGeneratorTool'), { loading: Loading, ssr: false }),
   'password-generator': dynamic(() => import('./PasswordGeneratorTool'), { loading: Loading, ssr: false }),
@@ -42,6 +43,7 @@ const toolComponents = {
   'color-converter': dynamic(() => import('./ColorConverterTool'), { loading: Loading, ssr: false }),
   'roman-numeral-converter': dynamic(() => import('./RomanNumeralConverterTool'), { loading: Loading, ssr: false }),
   'number-base-converter': dynamic(() => import('./NumberBaseConverterTool'), { loading: Loading, ssr: false }),
+  'url-parser': dynamic(() => import('./UrlParserTool'), { loading: Loading, ssr: false }),
   'sql-formatter': dynamic(() => import('./SqlFormatterTool'), { loading: Loading, ssr: false }),
   'css-minifier': dynamic(() => import('./CssMinifierTool'), { loading: Loading, ssr: false }),
   'js-minifier': dynamic(() => import('./JsMinifierTool'), { loading: Loading, ssr: false }),
@@ -49,6 +51,7 @@ const toolComponents = {
   'html-minifier': dynamic(() => import('./HtmlMinifierTool'), { loading: Loading, ssr: false }),
   'xml-formatter': dynamic(() => import('./XmlFormatterTool'), { loading: Loading, ssr: false }),
   'cron-parser': dynamic(() => import('./CronParserTool'), { loading: Loading, ssr: false }),
+  'http-status-codes': dynamic(() => import('./HttpStatusCodesTool'), { loading: Loading, ssr: false }),
 } as const;
 
 type ToolSlug = keyof typeof toolComponents;

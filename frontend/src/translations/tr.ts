@@ -853,6 +853,9 @@ export const tr = {
     'toolName.image-to-base64': 'Görsel\'den Base64\'e',
     'toolName.css-gradient': 'CSS Gradient Oluşturucu',
     'toolName.meta-tags': 'Meta Etiket Oluşturucu',
+    'toolName.unicode-escape': 'Unicode Escape Kodlayıcı/Çözücü',
+    'toolName.url-parser': 'URL Ayrıştırıcı',
+    'toolName.http-status-codes': 'HTTP Durum Kodları',
     // Tool Descriptions
     'toolDesc.json-formatter': 'JSON\'u sözdizimi vurgusuyla biçimlendir, doğrula ve temizle.',
     'toolDesc.json-validator': 'JSON sözdizimi hatalarını kontrol et, konumu anında gör.',
@@ -894,6 +897,9 @@ export const tr = {
     'toolDesc.sha512-hash': 'Metinden bütünlük kontrolleri için SHA512 hash\'leri üretin.',
     'toolDesc.roman-numeral-converter': 'Sayıları Roma rakamlarına ve tam tersini dönüştürün.',
     'toolDesc.number-base-converter': 'Sayıları ondalık, ikilik, hex ve sekizlik tabanları arasında dönüştürün.',
+    'toolDesc.unicode-escape': 'Düz metni Unicode escape dizilerine kodlayın veya escape metni geri çözün.',
+    'toolDesc.url-parser': 'URL\'yi protokol, host, path, hash ve sorgu parametrelerine ayırın.',
+    'toolDesc.http-status-codes': 'Yaygın HTTP yanıt durum kodlarını arayın ve referans alın.',
     // Privacy Page
     'privacy.title': 'Gizlilik Politikası',
     'privacy.lastUpdated': 'Son güncelleme',
