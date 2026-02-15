@@ -906,6 +906,11 @@ export const de = {
     'terms.intellectualPropertyDesc': 'Der Dienst und sein ursprünglicher Inhalt sind durch internationale Urheberrechtsgesetze geschützt.',
     'terms.disclaimer': 'Haftungsausschluss',
     'terms.disclaimerDesc': 'Der Dienst wird ohne jegliche Garantien auf einer "WIE BESEHEN" und "WIE VERFÜGBAR" Basis bereitgestellt.',
+    // Ads Fallback
+    'ads.fallback.badge': 'Sponsorenbereich',
+    'ads.fallback.title': 'Platzieren Sie Ihre Marke hier',
+    'ads.fallback.subtitle': 'Erreichen Sie Entwickler mit DevsTools',
+    'ads.fallback.cta': 'Kontakt',
     // Ad Blocker
     'adblock.title': 'Werbeblocker erkannt',
     'adblock.message': 'Bitte deaktiviere deinen Werbeblocker (oder erlaube Werbung für diese Seite), damit DevsTools kostenlos bleibt.',

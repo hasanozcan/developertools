@@ -782,6 +782,11 @@ export const ru = {
     'terms.intellectualPropertyDesc': 'Сервис и его оригинальный контент защищены международными законами об авторском праве.',
     'terms.disclaimer': 'Отказ от гарантий',
     'terms.disclaimerDesc': 'Сервис предоставляется "КАК ЕСТЬ" и "ПО МЕРЕ ДОСТУПНОСТИ" без каких-либо гарантий.',
+    // Ads Fallback
+    'ads.fallback.badge': 'Спонсорский блок',
+    'ads.fallback.title': 'Разместите здесь ваш бренд',
+    'ads.fallback.subtitle': 'Охватите разработчиков с DevsTools',
+    'ads.fallback.cta': 'Связаться',
     // Ad Blocker
     'adblock.title': 'Обнаружен блокировщик рекламы',
     'adblock.message': 'Пожалуйста, отключите блокировщик рекламы (или разрешите рекламу на этом сайте), чтобы DevsTools оставался бесплатным.',

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useLanguage } from '@/context/LanguageContext';
 
 declare global {
   interface Window {
@@ -15,12 +16,13 @@ interface AdSenseProps {
   className?: string;
 }
 
-export default function AdSense({ 
-  slot, 
-  format = 'auto', 
+export default function AdSense({
+  slot,
+  format = 'auto',
   responsive = true,
-  className = ''
+  className = '',
 }: AdSenseProps) {
+  const { t, language } = useLanguage();
   const adRef = useRef<HTMLElement | null>(null);
   const pushedRef = useRef(false);
   const [showFallback, setShowFallback] = useState(false);
@@ -99,6 +101,7 @@ export default function AdSense({
   }, [slot, format, responsive]);
 
   const adClient = process.env.NEXT_PUBLIC_ADSENSE_ID;
+  const contactHref = language === 'en' ? '/contact' : `/contact?lang=${language}`;
 
   return (
     <div className={className}>
@@ -116,18 +119,18 @@ export default function AdSense({
         />
       ) : (
         <a
-          href="/contact"
+          href={contactHref}
           className="flex h-full min-h-[96px] w-full items-center justify-between gap-4 rounded-lg border border-gray-200 bg-gradient-to-r from-gray-50 to-white px-4 py-3 text-gray-700 transition-colors hover:border-primary-400 hover:from-primary-50 hover:to-white dark:border-gray-700 dark:from-gray-900 dark:to-gray-800 dark:text-gray-200 dark:hover:border-primary-500 dark:hover:from-primary-950/40"
         >
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-wide text-primary-700 dark:text-primary-300">
-              Sponsor Alanı
+              {t('ads.fallback.badge')}
             </p>
-            <p className="truncate text-sm font-medium">Markanız burada görünsün</p>
-            <p className="truncate text-xs text-gray-500 dark:text-gray-400">DevsTools ile geliştiricilere ulaşın</p>
+            <p className="truncate text-sm font-medium">{t('ads.fallback.title')}</p>
+            <p className="truncate text-xs text-gray-500 dark:text-gray-400">{t('ads.fallback.subtitle')}</p>
           </div>
           <span className="shrink-0 rounded-md bg-primary-600 px-3 py-1.5 text-xs font-semibold text-white dark:bg-primary-500">
-            İletişim
+            {t('ads.fallback.cta')}
           </span>
         </a>
       )}

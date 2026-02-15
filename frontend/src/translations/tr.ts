@@ -924,6 +924,11 @@ export const tr = {
     'terms.intellectualPropertyDesc': 'Hizmet ve orijinal içeriği uluslararası telif hakkı yasalarıyla korunmaktadır.',
     'terms.disclaimer': 'Garanti Reddi',
     'terms.disclaimerDesc': 'Hizmet, herhangi bir garanti olmaksızın "OLDUĞU GİBİ" ve "MEVCUT OLDUĞU GİBİ" temelinde sağlanmaktadır.',
+    // Ads Fallback
+    'ads.fallback.badge': 'Sponsor Alanı',
+    'ads.fallback.title': 'Markanızı burada gösterin',
+    'ads.fallback.subtitle': 'DevsTools ile geliştiricilere ulaşın',
+    'ads.fallback.cta': 'İletişim',
     // Ad Blocker
     'adblock.title': 'Reklam engelleyici tespit edildi',
     'adblock.message': 'DevsTools\'un ücretsiz kalabilmesi için reklam gösteriyoruz. Devam etmek için lütfen reklam engelleyicinizi devre dışı bırakın (veya bu siteyi izinli listeye ekleyin).',

@@ -658,6 +658,11 @@ export const zh = {
     'terms.intellectualPropertyDesc': '服务及其原创内容受国际版权法保护。',
     'terms.disclaimer': '免责声明',
     'terms.disclaimerDesc': '服务按"原样"和"可用"提供，不提供任何形式的保证。',
+    // Ads Fallback
+    'ads.fallback.badge': '赞助位',
+    'ads.fallback.title': '在这里展示您的品牌',
+    'ads.fallback.subtitle': '通过 DevsTools 触达开发者',
+    'ads.fallback.cta': '联系',
     // Ad Blocker
     'adblock.title': '检测到广告拦截器',
     'adblock.message': '请关闭广告拦截器（或将本站加入白名单），以便 DevsTools 保持免费。',
