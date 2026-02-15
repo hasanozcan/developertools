@@ -21,6 +21,7 @@ const toolComponents = {
   'jwt-decoder': dynamic(() => import('./JwtDecoderTool'), { loading: Loading, ssr: false }),
   'html-entity': dynamic(() => import('./HtmlEntityTool'), { loading: Loading, ssr: false }),
   'unicode-escape': dynamic(() => import('./UnicodeEscapeTool'), { loading: Loading, ssr: false }),
+  'json-string-escape': dynamic(() => import('./JsonStringEscapeTool'), { loading: Loading, ssr: false }),
   'image-to-base64': dynamic(() => import('./ImageToBase64Tool'), { loading: Loading, ssr: false }),
   'uuid-generator': dynamic(() => import('./UuidGeneratorTool'), { loading: Loading, ssr: false }),
   'password-generator': dynamic(() => import('./PasswordGeneratorTool'), { loading: Loading, ssr: false }),
@@ -44,14 +45,18 @@ const toolComponents = {
   'roman-numeral-converter': dynamic(() => import('./RomanNumeralConverterTool'), { loading: Loading, ssr: false }),
   'number-base-converter': dynamic(() => import('./NumberBaseConverterTool'), { loading: Loading, ssr: false }),
   'url-parser': dynamic(() => import('./UrlParserTool'), { loading: Loading, ssr: false }),
+  'query-string-parser': dynamic(() => import('./QueryStringParserTool'), { loading: Loading, ssr: false }),
   'sql-formatter': dynamic(() => import('./SqlFormatterTool'), { loading: Loading, ssr: false }),
   'css-minifier': dynamic(() => import('./CssMinifierTool'), { loading: Loading, ssr: false }),
   'js-minifier': dynamic(() => import('./JsMinifierTool'), { loading: Loading, ssr: false }),
   'html-formatter': dynamic(() => import('./HtmlFormatterTool'), { loading: Loading, ssr: false }),
   'html-minifier': dynamic(() => import('./HtmlMinifierTool'), { loading: Loading, ssr: false }),
   'xml-formatter': dynamic(() => import('./XmlFormatterTool'), { loading: Loading, ssr: false }),
+  'regex-escape': dynamic(() => import('./RegexEscapeTool'), { loading: Loading, ssr: false }),
   'cron-parser': dynamic(() => import('./CronParserTool'), { loading: Loading, ssr: false }),
+  'http-headers-parser': dynamic(() => import('./HttpHeadersParserTool'), { loading: Loading, ssr: false }),
   'http-status-codes': dynamic(() => import('./HttpStatusCodesTool'), { loading: Loading, ssr: false }),
+  'user-agent-parser': dynamic(() => import('./UserAgentParserTool'), { loading: Loading, ssr: false }),
 } as const;
 
 type ToolSlug = keyof typeof toolComponents;

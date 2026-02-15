@@ -146,6 +146,16 @@ const tools: Record<string, Record<string, {
         { question: 'When should I use this tool?', answer: 'Use it when working with JSON, logs, source code, or APIs that contain escaped Unicode text.' },
       ],
     },
+    'json-string-escape': {
+      name: 'JSON String Escape',
+      description: 'Escape and unescape JSON string content online.',
+      longDescription: 'Free online JSON string escape tool. Convert raw text into escaped JSON string format or decode escaped JSON string fragments back to readable text.',
+      keywords: ['json string escape', 'json escape', 'json unescape', 'string escaping'],
+      faqs: [
+        { question: 'What does JSON string escaping do?', answer: 'It converts special characters like newlines, tabs, and quotes into escaped forms such as \\n, \\t, and \\\".' },
+        { question: 'When is this useful?', answer: 'It is useful when you need to embed strings safely in JSON payloads, configuration files, or API requests.' },
+      ],
+    },
   },
   generators: {
     'uuid-generator': {
@@ -258,6 +268,16 @@ const tools: Record<string, Record<string, {
       keywords: ['regex tester', 'regex online', 'test regex', 'regular expression tester'],
       faqs: [
         { question: 'What is regex?', answer: 'Regular expressions (regex) are patterns used to match character combinations in strings. They are used for searching, replacing, and validating text.' },
+      ],
+    },
+    'regex-escape': {
+      name: 'Regex Escape',
+      description: 'Escape or unescape text for safe regular expression usage.',
+      longDescription: 'Free online regex escape tool. Escape special characters before building regex patterns, or unescape escaped regex text back to normal form.',
+      keywords: ['regex escape', 'escape regex', 'unescape regex', 'regular expression escape'],
+      faqs: [
+        { question: 'Why escape regex characters?', answer: 'Escaping treats special regex symbols as literal characters, preventing unintended matching behavior.' },
+        { question: 'When should I use this tool?', answer: 'Use it when creating dynamic regex patterns from user input or raw text.' },
       ],
     },
     'lorem-ipsum': {
@@ -421,6 +441,16 @@ const tools: Record<string, Record<string, {
         { question: 'Does it support repeated query params?', answer: 'Yes. Repeated query parameters are preserved and returned as arrays.' },
       ],
     },
+    'query-string-parser': {
+      name: 'Query String Parser',
+      description: 'Parse query strings to JSON and build query strings from JSON.',
+      longDescription: 'Free online query string parser and builder. Decode URL query parameters into structured JSON or generate query strings from JSON objects.',
+      keywords: ['query string parser', 'url parameters', 'parse query string', 'query builder'],
+      faqs: [
+        { question: 'Can I parse a full URL?', answer: 'Yes. You can paste a full URL and the tool will extract and parse the query string portion.' },
+        { question: 'Does it support repeated keys?', answer: 'Yes. Repeated keys are preserved as arrays when parsing.' },
+      ],
+    },
   },
   formatters: {
     'sql-formatter': {
@@ -515,6 +545,16 @@ const tools: Record<string, Record<string, {
         { question: 'Can I export the HTML?', answer: 'Yes! You can copy the generated HTML output to use in your projects.' },
       ],
     },
+    'http-headers-parser': {
+      name: 'HTTP Headers Parser',
+      description: 'Parse raw HTTP headers to JSON and build raw headers from JSON.',
+      longDescription: 'Free online HTTP headers parser. Convert header blocks into JSON format and generate header blocks back from JSON for quick debugging and API testing.',
+      keywords: ['http headers parser', 'parse headers', 'request headers', 'response headers'],
+      faqs: [
+        { question: 'Can it parse duplicate headers?', answer: 'Yes. Duplicate header keys are grouped into arrays in the parsed JSON output.' },
+        { question: 'What input format is expected?', answer: 'Use one header per line in the format "Header-Name: value".' },
+      ],
+    },
     'http-status-codes': {
       name: 'HTTP Status Codes',
       description: 'Search, filter, and reference common HTTP response status codes.',
@@ -523,6 +563,16 @@ const tools: Record<string, Record<string, {
       faqs: [
         { question: 'What are HTTP status codes?', answer: 'HTTP status codes are standardized server responses that indicate whether a request succeeded, failed, or was redirected.' },
         { question: 'Which status code classes exist?', answer: '1xx informational, 2xx success, 3xx redirection, 4xx client errors, and 5xx server errors.' },
+      ],
+    },
+    'user-agent-parser': {
+      name: 'User-Agent Parser',
+      description: 'Analyze user-agent strings to detect browser, OS, and device type.',
+      longDescription: 'Free online user-agent parser. Inspect UA strings and extract browser name/version, operating system, rendering engine, device type, and bot signals.',
+      keywords: ['user-agent parser', 'ua parser', 'browser detection', 'device detection'],
+      faqs: [
+        { question: 'How accurate is UA parsing?', answer: 'It provides practical detection for common browsers and devices, but user-agent strings can be spoofed.' },
+        { question: 'Can it detect bots?', answer: 'Yes. It flags common bot signatures based on known keywords in the user-agent string.' },
       ],
     },
   },
