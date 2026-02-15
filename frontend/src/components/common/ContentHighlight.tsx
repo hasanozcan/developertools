@@ -34,7 +34,7 @@ export default function ContentHighlight({
     const imageSrc = `/api/content/${item.imageId}`;
 
     return (
-        <div className={`content-highlight ${className}`}>
+        <div className={`content-highlight relative overflow-hidden ${className}`}>
             <a
                 href={item.href}
                 target="_blank"
@@ -45,7 +45,8 @@ export default function ContentHighlight({
                 <img
                     src={imageSrc}
                     alt={item.alt}
-                    className="w-full h-full object-cover rounded-lg"
+                    className="w-full h-full object-contain rounded-lg"
+                    style={{ maxWidth: '100%', maxHeight: '100%' }}
                     loading="lazy"
                 />
             </a>

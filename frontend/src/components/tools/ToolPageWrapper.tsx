@@ -25,17 +25,17 @@ export default function ToolPageWrapper({
   const { t } = useLanguage();
 
   // Get translated tool name, fallback to default
-  const toolName = t(`toolName.${toolSlug}`) !== `toolName.${toolSlug}` 
-    ? t(`toolName.${toolSlug}`) 
+  const toolName = t(`toolName.${toolSlug}`) !== `toolName.${toolSlug}`
+    ? t(`toolName.${toolSlug}`)
     : defaultName;
 
   // Get translated tool description, fallback to default
-  const toolDescription = t(`toolDesc.${toolSlug}`) !== `toolDesc.${toolSlug}` 
-    ? t(`toolDesc.${toolSlug}`) 
+  const toolDescription = t(`toolDesc.${toolSlug}`) !== `toolDesc.${toolSlug}`
+    ? t(`toolDesc.${toolSlug}`)
     : defaultDescription;
 
   // Get translated category name
-  const translatedCategoryName = t(`cat.${category === 'json' ? 'json' : category === 'encoding' ? 'encoding' : category === 'generators' ? 'generators' : category === 'crypto' ? 'crypto' : category === 'text' ? 'text' : category === 'converters' ? 'converters' : category === 'formatters' ? 'formatters' : 'utilities'}`) !== `cat.${category}` 
+  const translatedCategoryName = t(`cat.${category === 'json' ? 'json' : category === 'encoding' ? 'encoding' : category === 'generators' ? 'generators' : category === 'crypto' ? 'crypto' : category === 'text' ? 'text' : category === 'converters' ? 'converters' : category === 'formatters' ? 'formatters' : 'utilities'}`) !== `cat.${category}`
     ? t(`cat.${category === 'json' ? 'json' : category === 'encoding' ? 'encoding' : category === 'generators' ? 'generators' : category === 'crypto' ? 'crypto' : category === 'text' ? 'text' : category === 'converters' ? 'converters' : category === 'formatters' ? 'formatters' : 'utilities'}`)
     : categoryName;
 
@@ -84,10 +84,10 @@ export default function ToolPageWrapper({
           </div>
 
           {/* Ad Banner - After Tool */}
-          <AdSense 
-            slot="1733348098" 
-            format="horizontal" 
-            className="h-24 rounded-lg mb-8 overflow-hidden"
+          <AdSense
+            slot="1733348098"
+            format="horizontal"
+            className="h-24 max-h-24 rounded-lg mb-8 overflow-hidden"
           />
 
           {/* How to Use Section */}
@@ -123,20 +123,20 @@ export default function ToolPageWrapper({
         {/* Sidebar - Sticky Ad */}
         <div className="lg:col-span-1">
           <div className="sticky top-24">
-            <AdSense 
-              slot="2449208552" 
-              format="vertical" 
-              className="min-h-[300px] rounded-lg overflow-hidden"
+            <AdSense
+              slot="2449208552"
+              format="vertical"
+              className="h-[300px] max-h-[600px] rounded-lg overflow-hidden"
             />
           </div>
         </div>
       </div>
 
       {/* Ad Banner - Bottom */}
-      <AdSense 
-        slot="7781534087" 
-        format="horizontal" 
-        className="h-24 rounded-lg mt-8 overflow-hidden"
+      <AdSense
+        slot="7781534087"
+        format="horizontal"
+        className="h-24 max-h-24 rounded-lg mt-8 overflow-hidden"
       />
     </>
   );
