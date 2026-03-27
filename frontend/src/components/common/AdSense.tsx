@@ -85,7 +85,7 @@ export default function AdSense({
       }
 
       // Check if this slot already has an ins element with ads
-      const existingIns = shadowRoot.querySelector('ins.adsbygoogle[data-ad-slot="' + slot + '"]');
+      const existingIns = shadowRoot.querySelector('ins.adsbygoogle[data-ad-slot="' + slot + '"]') as HTMLElement | null;
       if (existingIns) {
         // Already initialized, skip
         adRef.current = existingIns;
