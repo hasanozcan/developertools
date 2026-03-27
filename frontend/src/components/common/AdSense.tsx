@@ -9,6 +9,9 @@ declare global {
   }
 }
 
+// Global tracking for initialized ad slots to prevent duplicate pushes
+const initializedSlots = new Set<string>();
+
 interface AdSenseProps {
   slot: string;
   format?: 'auto' | 'fluid' | 'rectangle' | 'vertical' | 'horizontal';
@@ -33,8 +36,8 @@ export default function AdSense({
 }: AdSenseProps) {
   const adRef = useRef<HTMLElement | null>(null);
   const shadowHostRef = useRef<HTMLDivElement>(null);
-  const initializedRef = useRef(false);
   const [showFallback, setShowFallback] = useState(false);
+  const instanceIdRef = useRef<string>(`${slot}-${Date.now()}-${Math.random().toString(36).slice(2)}`);
 
   useEffect(() => {
     const adClient = process.env.NEXT_PUBLIC_ADSENSE_ID;
@@ -50,6 +53,7 @@ export default function AdSense({
 
     let isCancelled = false;
     let intervalId: ReturnType<typeof setInterval> | undefined;
+    let pushTimeoutId: ReturnType<typeof setTimeout> | undefined;
 
     const activateFallback = () => {
       if (!isCancelled) setShowFallback(true);
@@ -84,11 +88,24 @@ export default function AdSense({
         shadowRoot = host.attachShadow({ mode: 'open' });
       }
 
-      // Check if this slot already has an ins element with ads
+      // Check if this slot already has an ins element that has been processed
       const existingIns = shadowRoot.querySelector('ins.adsbygoogle[data-ad-slot="' + slot + '"]') as HTMLElement | null;
       if (existingIns) {
-        // Already initialized, skip
-        adRef.current = existingIns;
+        const existingStatus = existingIns.getAttribute('data-adsbygoogle-status');
+        // If already processed, just reference it and skip push
+        if (existingStatus === 'done') {
+          adRef.current = existingIns;
+          return;
+        }
+        // If pending but not done, check if we already pushed for this slot
+        if (initializedSlots.has(slot)) {
+          adRef.current = existingIns;
+          return;
+        }
+      }
+
+      // Check if this slot was already initialized globally
+      if (initializedSlots.has(slot)) {
         return;
       }
 
@@ -108,18 +125,22 @@ export default function AdSense({
       // Update ref to point to shadow DOM element
       adRef.current = ins;
 
-      // Only push if script is loaded and not already initialized
-      if (initializedRef.current) return;
-
-      initializedRef.current = true;
+      // Mark this slot as initialized BEFORE pushing to prevent race conditions
+      initializedSlots.add(slot);
 
       // Wait for adsbygoogle to be available, then push
       const tryPush = () => {
+        if (isCancelled) return;
+        
         if (window.adsbygoogle) {
-          (window.adsbygoogle = window.adsbygoogle || []).push({});
+          try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          } catch {
+            // Silently handle push errors - already pushed
+          }
         } else {
           // Script not loaded yet, try again in 100ms
-          setTimeout(tryPush, 100);
+          pushTimeoutId = setTimeout(tryPush, 100);
         }
       };
       tryPush();
@@ -149,6 +170,9 @@ export default function AdSense({
     return () => {
       isCancelled = true;
       if (intervalId) clearInterval(intervalId);
+      if (pushTimeoutId) clearTimeout(pushTimeoutId);
+      // Remove from initialized slots on unmount so it can be re-initialized if remounted
+      initializedSlots.delete(slot);
     };
   }, [slot, format, responsive]);
 
