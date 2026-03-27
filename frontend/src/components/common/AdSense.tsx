@@ -33,7 +33,7 @@ export default function AdSense({
 }: AdSenseProps) {
   const adRef = useRef<HTMLElement | null>(null);
   const shadowHostRef = useRef<HTMLDivElement>(null);
-  const pushedRef = useRef(false);
+  const initializedRef = useRef(false);
   const [showFallback, setShowFallback] = useState(false);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function AdSense({
     }
 
     const host = shadowHostRef.current;
-    if (!host || pushedRef.current) return;
+    if (!host) return;
 
     let isCancelled = false;
     let intervalId: ReturnType<typeof setInterval> | undefined;
@@ -84,6 +84,14 @@ export default function AdSense({
         shadowRoot = host.attachShadow({ mode: 'open' });
       }
 
+      // Check if this slot already has an ins element with ads
+      const existingIns = shadowRoot.querySelector('ins.adsbygoogle[data-ad-slot="' + slot + '"]');
+      if (existingIns) {
+        // Already initialized, skip
+        adRef.current = existingIns;
+        return;
+      }
+
       // Create ins element inside shadow DOM
       const ins = document.createElement('ins');
       ins.className = 'adsbygoogle';
@@ -100,12 +108,21 @@ export default function AdSense({
       // Update ref to point to shadow DOM element
       adRef.current = ins;
 
-      // Mark as pushed before calling adsbygoogle
-      pushedRef.current = true;
+      // Only push if script is loaded and not already initialized
+      if (initializedRef.current) return;
 
-      // Queue render request even if the AdSense script hasn't loaded yet.
-      // If script/network is blocked we switch to fallback after checks.
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
+      initializedRef.current = true;
+
+      // Wait for adsbygoogle to be available, then push
+      const tryPush = () => {
+        if (window.adsbygoogle) {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } else {
+          // Script not loaded yet, try again in 100ms
+          setTimeout(tryPush, 100);
+        }
+      };
+      tryPush();
     } catch (error) {
       console.error('AdSense error:', error);
       activateFallback();

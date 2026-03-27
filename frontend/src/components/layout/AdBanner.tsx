@@ -10,14 +10,13 @@ interface AdBannerProps {
 
 export default function AdBanner({ slot, format = 'auto', className = '' }: AdBannerProps) {
   const shadowHostRef = useRef<HTMLDivElement>(null);
-  const pushedRef = useRef(false);
+  const initializedRef = useRef(false);
 
   useEffect(() => {
     const adClient = process.env.NEXT_PUBLIC_ADSENSE_ID;
     const host = shadowHostRef.current;
 
-    // Skip if no client, no host, or already pushed for this mount
-    if (!adClient || !host || pushedRef.current) return;
+    if (!adClient || !host) return;
 
     try {
       // Create or reuse shadow root
@@ -25,6 +24,10 @@ export default function AdBanner({ slot, format = 'auto', className = '' }: AdBa
       if (!shadowRoot) {
         shadowRoot = host.attachShadow({ mode: 'open' });
       }
+
+      // Check if already initialized
+      const existingIns = shadowRoot.querySelector('ins.adsbygoogle[data-ad-slot="' + slot + '"]');
+      if (existingIns) return;
 
       // Create ins element inside shadow DOM
       const ins = document.createElement('ins');
@@ -39,9 +42,18 @@ export default function AdBanner({ slot, format = 'auto', className = '' }: AdBa
       shadowRoot.innerHTML = '';
       shadowRoot.appendChild(ins);
 
-      // Mark as pushed before calling adsbygoogle
-      pushedRef.current = true;
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
+      // Only push once globally
+      if (initializedRef.current) return;
+      initializedRef.current = true;
+
+      const tryPush = () => {
+        if (window.adsbygoogle) {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } else {
+          setTimeout(tryPush, 100);
+        }
+      };
+      tryPush();
     } catch (err) {
       console.error('AdSense error:', err);
     }
