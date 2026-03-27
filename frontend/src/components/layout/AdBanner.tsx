@@ -8,6 +8,9 @@ interface AdBannerProps {
   className?: string;
 }
 
+// Track pushed state per slot to avoid duplicate push errors
+const pushedSlotsRegistry = new Set<string>();
+
 export default function AdBanner({ slot, format = 'auto', className = '' }: AdBannerProps) {
   const shadowHostRef = useRef<HTMLDivElement>(null);
 
@@ -37,8 +40,11 @@ export default function AdBanner({ slot, format = 'auto', className = '' }: AdBa
       shadowRoot.innerHTML = '';
       shadowRoot.appendChild(ins);
 
-      // Push to adsbygoogle
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
+      // Only push once per slot to avoid "already have ads in them" error
+      if (!pushedSlotsRegistry.has(slot)) {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        pushedSlotsRegistry.add(slot);
+      }
     } catch (err) {
       console.error('AdSense error:', err);
     }

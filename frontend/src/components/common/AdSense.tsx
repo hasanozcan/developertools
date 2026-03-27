@@ -33,7 +33,8 @@ export default function AdSense({
 }: AdSenseProps) {
   const adRef = useRef<HTMLElement | null>(null);
   const shadowHostRef = useRef<HTMLDivElement>(null);
-  const pushedRef = useRef(false);
+  // Track pushed state per slot to avoid duplicate push errors
+  const pushedSlotsRef = useRef<Set<string>>(new Set());
   const [showFallback, setShowFallback] = useState(false);
 
   useEffect(() => {
@@ -100,11 +101,12 @@ export default function AdSense({
       // Update ref to point to shadow DOM element
       adRef.current = ins;
 
-      if (!pushedRef.current) {
+      // Only push once per slot to avoid "already have ads in them" error
+      if (!pushedSlotsRef.current.has(slot)) {
         // Queue render request even if the AdSense script hasn't loaded yet.
         // If script/network is blocked we switch to fallback after checks.
         (window.adsbygoogle = window.adsbygoogle || []).push({});
-        pushedRef.current = true;
+        pushedSlotsRef.current.add(slot);
       }
     } catch (error) {
       console.error('AdSense error:', error);
