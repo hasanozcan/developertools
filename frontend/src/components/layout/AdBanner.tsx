@@ -8,17 +8,16 @@ interface AdBannerProps {
   className?: string;
 }
 
-// Track pushed state per slot to avoid duplicate push errors
-const pushedSlotsRegistry = new Set<string>();
-
 export default function AdBanner({ slot, format = 'auto', className = '' }: AdBannerProps) {
   const shadowHostRef = useRef<HTMLDivElement>(null);
+  const pushedRef = useRef(false);
 
   useEffect(() => {
     const adClient = process.env.NEXT_PUBLIC_ADSENSE_ID;
     const host = shadowHostRef.current;
 
-    if (!adClient || !host) return;
+    // Skip if no client, no host, or already pushed for this mount
+    if (!adClient || !host || pushedRef.current) return;
 
     try {
       // Create or reuse shadow root
@@ -40,11 +39,9 @@ export default function AdBanner({ slot, format = 'auto', className = '' }: AdBa
       shadowRoot.innerHTML = '';
       shadowRoot.appendChild(ins);
 
-      // Only push once per slot to avoid "already have ads in them" error
-      if (!pushedSlotsRegistry.has(slot)) {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-        pushedSlotsRegistry.add(slot);
-      }
+      // Mark as pushed before calling adsbygoogle
+      pushedRef.current = true;
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch (err) {
       console.error('AdSense error:', err);
     }
