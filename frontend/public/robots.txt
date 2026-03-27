@@ -1,0 +1,13 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Disallow admin or private areas
+Disallow: /api/
+Disallow: /admin/
+
+# Sitemap
+Sitemap: https://devstools.app/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1

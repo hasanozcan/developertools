@@ -54,7 +54,7 @@ const staticTools: Tool[] = [
   { id: 6, slug: 'url-encoder', name: 'URL Encoder/Decoder', shortDescription: 'Encode or decode URL strings', categorySlug: 'encoding', categoryName: 'Encoding & Decoding', isFeatured: true },
   { id: 7, slug: 'jwt-decoder', name: 'JWT Decoder', shortDescription: 'Inspect JWT headers and payloads', categorySlug: 'encoding', categoryName: 'Encoding & Decoding', isFeatured: true },
   { id: 8, slug: 'html-entity', name: 'HTML Entity Encoder/Decoder', shortDescription: 'Encode or decode HTML entities', categorySlug: 'encoding', categoryName: 'Encoding & Decoding', isFeatured: true },
-  { id: 9, slug: 'uuid-generator', name: 'UUID Generator', shortDescription: 'Generate random UUIDs', categorySlug: 'generators', categoryName: 'Generators', isFeatured: true },
+  { id: 9, slug: 'uuid-generator', name: 'UUID Generator', shortDescription: 'Generate UUIDs in all versions (v1, v3, v4, v5)', categorySlug: 'generators', categoryName: 'Generators', isFeatured: true },
   { id: 10, slug: 'password-generator', name: 'Password Generator', shortDescription: 'Create strong random passwords', categorySlug: 'generators', categoryName: 'Generators', isFeatured: true },
   { id: 11, slug: 'qr-code', name: 'QR Code Generator', shortDescription: 'Create QR codes from text or URLs', categorySlug: 'generators', categoryName: 'Generators', isFeatured: true },
   { id: 12, slug: 'slug-generator', name: 'Slug Generator', shortDescription: 'Generate clean URL slugs', categorySlug: 'generators', categoryName: 'Generators', isFeatured: true },
@@ -74,6 +74,18 @@ const staticTools: Tool[] = [
   { id: 26, slug: 'css-minifier', name: 'CSS Minifier', shortDescription: 'Minify CSS for production', categorySlug: 'formatters', categoryName: 'Formatters', isFeatured: true },
   { id: 27, slug: 'js-minifier', name: 'JS Minifier', shortDescription: 'Minify JavaScript for production', categorySlug: 'formatters', categoryName: 'Formatters', isFeatured: true },
   { id: 28, slug: 'cron-parser', name: 'Cron Parser', shortDescription: 'Parse and explain cron expressions', categorySlug: 'utilities', categoryName: 'Utilities', isFeatured: true },
+  // New tools - Generators
+  { id: 29, slug: 'hash-generator', name: 'Hash Generator', shortDescription: 'Generate MD5, SHA1, SHA256, SHA384, SHA512 hashes', categorySlug: 'crypto', categoryName: 'Cryptography', isFeatured: true },
+  { id: 30, slug: 'js-beautifier', name: 'JavaScript Beautifier', shortDescription: 'Beautify and format JavaScript code', categorySlug: 'formatters', categoryName: 'Formatters', isFeatured: true },
+  { id: 31, slug: 'html-validator', name: 'HTML Validator', shortDescription: 'Validate HTML syntax and find errors', categorySlug: 'text', categoryName: 'Text Tools', isFeatured: true },
+  { id: 32, slug: 'yaml-validator', name: 'YAML Validator', shortDescription: 'Validate YAML syntax', categorySlug: 'json', categoryName: 'JSON Tools', isFeatured: true },
+  { id: 33, slug: 'curl-generator', name: 'cURL Generator', shortDescription: 'Generate cURL commands from URL and options', categorySlug: 'encoding', categoryName: 'Encoding & Decoding', isFeatured: true },
+  { id: 34, slug: 'sql-insert-generator', name: 'SQL Insert Generator', shortDescription: 'Generate SQL INSERT statements from JSON/CSV', categorySlug: 'generators', categoryName: 'Generators', isFeatured: true },
+  { id: 35, slug: 'regex-generator', name: 'Regex Generator', shortDescription: 'Generate regex patterns from sample text', categorySlug: 'text', categoryName: 'Text Tools', isFeatured: true },
+  { id: 36, slug: 'jwt-generator', name: 'JWT Generator', shortDescription: 'Generate JWT tokens from header and payload', categorySlug: 'encoding', categoryName: 'Encoding & Decoding', isFeatured: true },
+  { id: 37, slug: 'xpath-tester', name: 'XPath Tester', shortDescription: 'Test XPath expressions against XML/HTML', categorySlug: 'text', categoryName: 'Text Tools', isFeatured: true },
+  { id: 38, slug: 'random-string-generator', name: 'Random String Generator', shortDescription: 'Generate random strings with custom character sets', categorySlug: 'generators', categoryName: 'Generators', isFeatured: true },
+  { id: 39, slug: 'cron-generator', name: 'Cron Generator', shortDescription: 'Generate cron expressions from human descriptions', categorySlug: 'utilities', categoryName: 'Utilities', isFeatured: true },
 ];
 
 function asDetail(tool: Tool): ToolDetail {
