@@ -328,14 +328,14 @@ export default function XpathTesterTool() {
           XPath Quick Reference
         </summary>
         <div className="mt-2 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg grid grid-cols-2 md:grid-cols-4 gap-2 text-xs font-mono text-gray-700 dark:text-gray-300">
-          <div><code>//tag</code> <span>Any descendant element</span></div>
-          <div><code>/tag</code> <span>Root element</span></div>
-          <div><code>@attr</code> <span>Attribute selection</span></div>
-          <div><code>text()</code> <span>Text node</span></div>
-          <div><code>[1]</code> <span>Position filter</span></div>
-          <div><code>[last()]</code> <span>Last position</span></div>
-          <div><code>[contains()]</code> <span>Partial text match</span></div>
-          <div><code>[starts-with()]</code> <span>Prefix match</span></div>
+          <div><code>{'//tag'}</code> <span>Any descendant element</span></div>
+          <div><code>{'/tag'}</code> <span>Root element</span></div>
+          <div><code>{'@attr'}</code> <span>Attribute selection</span></div>
+          <div><code>{'text()'}</code> <span>Text node</span></div>
+          <div><code>{'[1]'}</code> <span>Position filter</span></div>
+          <div><code>{'[last()]'}</code> <span>Last position</span></div>
+          <div><code>{'[contains()]'}</code> <span>Partial text match</span></div>
+          <div><code>{'[starts-with()]'}</code> <span>Prefix match</span></div>
         </div>
       </details>
     </div>
