@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useLanguage } from '@/context/LanguageContext';
 import ContentHighlight from '@/components/common/ContentHighlight';
 
 declare global {
@@ -32,8 +31,8 @@ export default function AdSense({
   responsive = true,
   className = '',
 }: AdSenseProps) {
-  const { t, language } = useLanguage();
   const adRef = useRef<HTMLElement | null>(null);
+  const shadowHostRef = useRef<HTMLDivElement>(null);
   const pushedRef = useRef(false);
   const [showFallback, setShowFallback] = useState(false);
 
@@ -46,6 +45,9 @@ export default function AdSense({
       return;
     }
 
+    const host = shadowHostRef.current;
+    if (!host) return;
+
     let isCancelled = false;
     let intervalId: ReturnType<typeof setInterval> | undefined;
 
@@ -57,6 +59,7 @@ export default function AdSense({
       const slotElement = adRef.current;
       if (!slotElement) return 'pending' as const;
 
+      // For Shadow DOM, we need to check the element inside shadow root
       const computed = window.getComputedStyle(slotElement);
       const isHidden =
         computed.display === 'none' ||
@@ -75,6 +78,28 @@ export default function AdSense({
     };
 
     try {
+      // Create or reuse shadow root
+      let shadowRoot = host.shadowRoot;
+      if (!shadowRoot) {
+        shadowRoot = host.attachShadow({ mode: 'open' });
+      }
+
+      // Create ins element inside shadow DOM
+      const ins = document.createElement('ins');
+      ins.className = 'adsbygoogle';
+      ins.style.display = 'block';
+      ins.setAttribute('data-ad-client', adClient);
+      ins.setAttribute('data-ad-slot', slot);
+      ins.setAttribute('data-ad-format', format);
+      ins.setAttribute('data-full-width-responsive', responsive ? 'true' : 'false');
+
+      // Clear previous content (for reload scenarios)
+      shadowRoot.innerHTML = '';
+      shadowRoot.appendChild(ins);
+
+      // Update ref to point to shadow DOM element
+      adRef.current = ins;
+
       if (!pushedRef.current) {
         // Queue render request even if the AdSense script hasn't loaded yet.
         // If script/network is blocked we switch to fallback after checks.
@@ -112,27 +137,18 @@ export default function AdSense({
 
   const adClient = process.env.NEXT_PUBLIC_ADSENSE_ID;
 
-  return (
-    <div className={className}>
-      {adClient && !showFallback ? (
-        <ins
-          ref={(node) => {
-            adRef.current = node;
-          }}
-          className="adsbygoogle"
-          style={{ display: 'block' }}
-          data-ad-client={adClient}
-          data-ad-slot={slot}
-          data-ad-format={format}
-          data-full-width-responsive={responsive ? 'true' : 'false'}
-        />
-      ) : (
-        /* Self-hosted promotion — renders even with content blockers active */
+  // Show fallback when AdSense is not configured or failed to load
+  if (!adClient || showFallback) {
+    return (
+      <div className={className}>
         <ContentHighlight
           variant={formatToVariant(format ?? 'auto')}
           className="w-full h-full"
         />
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
+
+  // Shadow DOM host - ad blocker cannot see elements inside shadow root
+  return <div ref={shadowHostRef} className={className} />;
 }
