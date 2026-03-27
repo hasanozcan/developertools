@@ -57,18 +57,6 @@ const toolComponents = {
   'http-headers-parser': dynamic(() => import('./HttpHeadersParserTool'), { loading: Loading, ssr: false }),
   'http-status-codes': dynamic(() => import('./HttpStatusCodesTool'), { loading: Loading, ssr: false }),
   'user-agent-parser': dynamic(() => import('./UserAgentParserTool'), { loading: Loading, ssr: false }),
-  // New tools
-  'hash-generator': dynamic(() => import('./HashGeneratorTool'), { loading: Loading, ssr: false }),
-  'js-beautifier': dynamic(() => import('./JsBeautifierTool'), { loading: Loading, ssr: false }),
-  'html-validator': dynamic(() => import('./HtmlValidatorTool'), { loading: Loading, ssr: false }),
-  'yaml-validator': dynamic(() => import('./YamlValidatorTool'), { loading: Loading, ssr: false }),
-  'curl-generator': dynamic(() => import('./CurlGeneratorTool'), { loading: Loading, ssr: false }),
-  'sql-insert-generator': dynamic(() => import('./SqlInsertGeneratorTool'), { loading: Loading, ssr: false }),
-  'regex-generator': dynamic(() => import('./RegexGeneratorTool'), { loading: Loading, ssr: false }),
-  'jwt-generator': dynamic(() => import('./JwtGeneratorTool'), { loading: Loading, ssr: false }),
-  'xpath-tester': dynamic(() => import('./XpathTesterTool'), { loading: Loading, ssr: false }),
-  'random-string-generator': dynamic(() => import('./RandomStringGeneratorTool'), { loading: Loading, ssr: false }),
-  'cron-generator': dynamic(() => import('./CronGeneratorTool'), { loading: Loading, ssr: false }),
 } as const;
 
 type ToolSlug = keyof typeof toolComponents;

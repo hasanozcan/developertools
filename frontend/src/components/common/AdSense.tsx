@@ -63,34 +63,22 @@ export default function AdSense({
       const slotElement = adRef.current;
       if (!slotElement) return 'pending' as const;
 
-      try {
-        // For Shadow DOM, we need to check the element inside shadow root
-        // Use safe checks that won't throw if element is detached or modified
-        const offsetHeight = slotElement.offsetHeight ?? 0;
-        const offsetWidth = slotElement.offsetWidth ?? 0;
-        
-        // Check visibility without getComputedStyle to avoid cross-origin issues
-        const isHidden = offsetHeight === 0 || offsetWidth === 0;
+      // For Shadow DOM, we need to check the element inside shadow root
+      const computed = window.getComputedStyle(slotElement);
+      const isHidden =
+        computed.display === 'none' ||
+        computed.visibility === 'hidden' ||
+        slotElement.offsetHeight === 0 ||
+        slotElement.offsetWidth === 0;
 
-        const adsByGoogleStatus = slotElement.getAttribute('data-adsbygoogle-status');
-        const adStatus = slotElement.getAttribute('data-ad-status');
-        
-        // Safe iframe check - handle case where element might be detached
-        let hasIframe = false;
-        try {
-          hasIframe = slotElement.querySelector('iframe') !== null;
-        } catch {
-          // Element might be in a detached state, ignore querySelector error
-        }
+      const adsByGoogleStatus = slotElement.getAttribute('data-adsbygoogle-status');
+      const adStatus = slotElement.getAttribute('data-ad-status');
+      const hasIframe = slotElement.querySelector('iframe') !== null;
 
-        if (isHidden || adStatus === 'unfilled') return 'fallback' as const;
-        if (hasIframe || adsByGoogleStatus === 'done' || adStatus === 'filled') return 'loaded' as const;
+      if (isHidden || adStatus === 'unfilled') return 'fallback' as const;
+      if (hasIframe || adsByGoogleStatus === 'done' || adStatus === 'filled') return 'loaded' as const;
 
-        return 'pending' as const;
-      } catch {
-        // If evaluation fails for any reason, return pending
-        return 'pending' as const;
-      }
+      return 'pending' as const;
     };
 
     try {
