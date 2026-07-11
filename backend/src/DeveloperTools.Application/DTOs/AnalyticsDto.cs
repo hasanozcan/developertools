@@ -1,8 +1,13 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace DeveloperTools.Application.DTOs;
 
 public record TrackUsageRequest(
+    [property: Required, StringLength(150), RegularExpression("^[a-z0-9]+(?:-[a-z0-9]+)*$")]
     string ToolSlug,
+    [property: StringLength(100)]
     string? SessionId,
+    [property: StringLength(500), Url]
     string? Referrer
 );
 

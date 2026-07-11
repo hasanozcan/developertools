@@ -1,0 +1,13 @@
+.env
+.env.*
+**/.env
+**/.env.*
+**/appsettings.Development.json
+**/bin
+**/obj
+**/*.db
+**/*.sqlite
+.vs
+.vscode
+README.md
+render.yaml

@@ -293,7 +293,7 @@ export const zh = {
     'tool.md5Hash.inputPlaceholder': '输入要哈希的文本...',
     'tool.md5Hash.generateHash': '生成哈希',
     'tool.md5Hash.md5Hash': 'MD5哈希',
-    'tool.md5Hash.infoText': 'MD5生成128位（16字节）哈希值，表示为32个十六进制字符。',
+    'tool.md5Hash.infoText': 'MD5已无法抵抗碰撞攻击。请勿将其用于密码、签名或对抗攻击者的文件完整性校验；应优先使用SHA-256。MD5仅适合旧系统兼容和检测意外损坏。',
     'tool.sha256Hash': 'SHA256 哈希生成器',
     'tool.sha256Hash.desc': '从文本生成 SHA256 哈希',
     'tool.sha256Hash.inputPlaceholder': '输入要哈希的文本...',

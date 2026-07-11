@@ -109,3 +109,27 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
 Project: https://github.com/fastify/fast-uri
+
+## DOMPurify 3.4.12
+
+Copyright Cure53 and other contributors.
+
+DOMPurify is dual-licensed under the Mozilla Public License 2.0 or the
+Apache License 2.0. This project uses it under the Apache License 2.0.
+
+License: https://www.apache.org/licenses/LICENSE-2.0
+
+Project: https://github.com/cure53/DOMPurify
+
+## @wordlist/english-eff 1.0.1
+
+Copyright Xyfir LLC and other contributors.
+
+Licensed under the MIT License. The package contains word lists based on the
+Electronic Frontier Foundation's dice-generated passphrase lists.
+
+License: https://opensource.org/license/mit
+
+Project: https://github.com/xyfir/wordlist/tree/main/packages/english-eff
+
+Word-list source: https://www.eff.org/dice

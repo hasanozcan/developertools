@@ -34,6 +34,9 @@ public class ToolsController : ControllerBase
     [ResponseCache(Duration = 300)]
     public async Task<ActionResult<ToolDetailDto>> GetBySlug(string slug)
     {
+        if (!IsValidSlug(slug))
+            return BadRequest(new { message = "Invalid tool slug" });
+
         var tool = await _toolRepository.GetBySlugAsync(slug);
         
         if (tool == null)
@@ -49,6 +52,9 @@ public class ToolsController : ControllerBase
     [ResponseCache(Duration = 300)]
     public async Task<ActionResult<IEnumerable<ToolSummaryDto>>> GetByCategory(string categorySlug)
     {
+        if (!IsValidSlug(categorySlug))
+            return BadRequest(new { message = "Invalid category slug" });
+
         var tools = await _toolRepository.GetByCategoryAsync(categorySlug);
         return Ok(tools.Select(t => t.ToSummaryDto()));
     }
@@ -60,6 +66,9 @@ public class ToolsController : ControllerBase
     [ResponseCache(Duration = 600)]
     public async Task<ActionResult<IEnumerable<ToolSummaryDto>>> GetFeatured([FromQuery] int count = 10)
     {
+        if (count is < 1 or > 100)
+            return BadRequest(new { message = "count must be between 1 and 100" });
+
         var tools = await _toolRepository.GetFeaturedAsync(count);
         return Ok(tools.Select(t => t.ToSummaryDto()));
     }
@@ -71,6 +80,9 @@ public class ToolsController : ControllerBase
     [ResponseCache(Duration = 300)]
     public async Task<ActionResult<IEnumerable<ToolSummaryDto>>> GetPopular([FromQuery] int count = 10)
     {
+        if (count is < 1 or > 100)
+            return BadRequest(new { message = "count must be between 1 and 100" });
+
         var tools = await _toolRepository.GetPopularAsync(count);
         return Ok(tools.Select(t => t.ToSummaryDto()));
     }
@@ -82,6 +94,11 @@ public class ToolsController : ControllerBase
     [ResponseCache(Duration = 600)]
     public async Task<ActionResult<IEnumerable<ToolSummaryDto>>> GetRelated(string slug, [FromQuery] int count = 5)
     {
+        if (!IsValidSlug(slug))
+            return BadRequest(new { message = "Invalid tool slug" });
+        if (count is < 1 or > 20)
+            return BadRequest(new { message = "count must be between 1 and 20" });
+
         var tool = await _toolRepository.GetBySlugAsync(slug);
         
         if (tool == null)
@@ -90,4 +107,8 @@ public class ToolsController : ControllerBase
         var relatedTools = await _toolRepository.GetRelatedToolsAsync(tool.Id, count);
         return Ok(relatedTools.Select(t => t.ToSummaryDto()));
     }
+
+    private static bool IsValidSlug(string slug) =>
+        slug.Length is > 0 and <= 150 &&
+        slug.All(character => char.IsAsciiLetterOrDigit(character) || character == '-');
 }

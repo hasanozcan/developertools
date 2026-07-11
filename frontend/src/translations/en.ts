@@ -355,7 +355,7 @@ export const en = {
     'tool.md5Hash.inputPlaceholder': 'Enter text to hash...',
     'tool.md5Hash.generateHash': 'Generate Hash',
     'tool.md5Hash.md5Hash': 'MD5 Hash',
-    'tool.md5Hash.infoText': 'MD5 produces a 128-bit (16-byte) hash value, expressed as a 32-character hexadecimal number.',
+    'tool.md5Hash.infoText': 'MD5 is collision-broken. Do not use it for passwords, signatures, or adversarial file integrity; prefer SHA-256. It remains useful only for legacy compatibility and accidental corruption checks.',
     'tool.md5Hash.hashFile': 'Hash File',
     'tool.md5Hash.dropFile': 'Drop file here or click to upload',
     'tool.md5Hash.file': 'File: {name}',

@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net9.0": {
+      "developertools.core": {
+        "type": "Project"
+      }
+    }
+  }
+}

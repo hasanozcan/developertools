@@ -1,12 +1,22 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
 using DeveloperTools.Core.Interfaces;
 using DeveloperTools.Infrastructure.Data;
 using DeveloperTools.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    throw new InvalidOperationException(
+        "ConnectionStrings:DefaultConnection must be supplied through environment variables or user secrets.");
+}
 
 // Add services to the container
 builder.Services.AddControllers();
+builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -15,11 +25,11 @@ builder.Services.AddSwaggerGen(c =>
 
 // Health checks
 builder.Services.AddHealthChecks()
-    .AddNpgSql(builder.Configuration.GetConnectionString("DefaultConnection") ?? "");
+    .AddNpgSql(connectionString);
 
 // Database
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString));
 
 // Repositories
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -38,15 +48,34 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowCredentials();
     });
-    
-    // Development policy - more permissive
-    options.AddPolicy("Development", policy =>
-    {
-        policy.SetIsOriginAllowed(_ => true)
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials();
-    });
+});
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
+        HttpMethods.IsPost(context.Request.Method) &&
+        context.Request.Path.StartsWithSegments("/api/analytics/track")
+            ? RateLimitPartition.GetFixedWindowLimiter(
+                "analytics-global",
+                _ => new FixedWindowRateLimiterOptions
+                {
+                    PermitLimit = 300,
+                    Window = TimeSpan.FromMinutes(1),
+                    QueueLimit = 0,
+                    AutoReplenishment = true
+                })
+            : RateLimitPartition.GetNoLimiter("unlimited"));
+    options.AddPolicy("analytics-write", context =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 10,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 0,
+                AutoReplenishment = true
+            }));
 });
 
 // Response Caching
@@ -54,29 +83,34 @@ builder.Services.AddResponseCaching();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline - Enable Swagger in all environments
-app.UseSwagger();
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Developer Tools API v1");
-    c.RoutePrefix = "swagger";
-});
-
-// Redirect root to swagger
-app.MapGet("/", () => Results.Redirect("/swagger"));
-
-app.UseHttpsRedirection();
-
-// Use Development CORS policy in development
 if (app.Environment.IsDevelopment())
 {
-    app.UseCors("Development");
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Developer Tools API v1");
+        c.RoutePrefix = "swagger";
+    });
 }
 else
 {
-    app.UseCors();
+    app.UseHsts();
 }
 
+app.MapGet("/", () => Results.Ok(new { service = "Developer Tools API", status = "ok" }));
+
+app.UseHttpsRedirection();
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.TryAdd("Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'");
+    context.Response.Headers.TryAdd("Referrer-Policy", "no-referrer");
+    context.Response.Headers.TryAdd("X-Content-Type-Options", "nosniff");
+    context.Response.Headers.TryAdd("X-Frame-Options", "DENY");
+    await next();
+});
+
+app.UseCors();
+app.UseRateLimiter();
 app.UseResponseCaching();
 app.UseAuthorization();
 app.MapControllers();

@@ -11,7 +11,9 @@ services:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
       - key: ASPNETCORE_URLS
-        value: http://+:80
+        value: http://+:8080
+      - key: ASPNETCORE_FORWARDEDHEADERS_ENABLED
+        value: true
       - key: ConnectionStrings__DefaultConnection
         fromDatabase:
           name: developertools-db

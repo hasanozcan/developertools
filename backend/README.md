@@ -90,12 +90,15 @@ dotnet ef migrations add MigrationName --project src/DeveloperTools.Infrastructu
 
 ## Veritabanı Bağlantısı
 
-`appsettings.Development.json`:
+Veritabanı parolasını izlenen `appsettings` dosyalarına yazmayın. Yerel geliştirme için
+.NET User Secrets kullanın:
 
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Host=localhost;Port=5432;Database=developertools_dev;Username=postgres;Password=postgres"
-  }
-}
+```bash
+dotnet user-secrets set \
+  "ConnectionStrings:DefaultConnection" \
+  "Host=localhost;Port=5432;Database=developertools_dev;Username=developertools;Password=<strong-local-password>" \
+  --project src/DeveloperTools.Api
 ```
+
+Dağıtım ortamında aynı değer `ConnectionStrings__DefaultConnection` environment variable
+olarak sağlanmalıdır.

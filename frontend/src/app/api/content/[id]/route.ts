@@ -15,36 +15,33 @@ import path from 'path';
  */
 
 const ALLOWED_IDS = new Set([
-    ...Array.from({ length: 15 }, (_, i) => `banner-${i + 1}`),
-    ...Array.from({ length: 2 }, (_, i) => `vertical-${i + 1}`),
-    ...Array.from({ length: 2 }, (_, i) => `square-${i + 1}`),
+  ...Array.from({ length: 15 }, (_, i) => `banner-${i + 1}`),
+  ...Array.from({ length: 2 }, (_, i) => `vertical-${i + 1}`),
+  ...Array.from({ length: 2 }, (_, i) => `square-${i + 1}`),
 ]);
 
-export async function GET(
-    _request: NextRequest,
-    { params }: { params: { id: string } },
-) {
-    const { id } = params;
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
 
-    if (!ALLOWED_IDS.has(id)) {
-        return NextResponse.json({ error: 'Not found' }, { status: 404 });
-    }
+  if (!ALLOWED_IDS.has(id)) {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
 
-    // Map clean id → actual filename
-    const filename = `ad-${id}.png`;
-    const filePath = path.join(process.cwd(), 'public', 'ads', filename);
+  // Map clean id → actual filename
+  const filename = `ad-${id}.png`;
+  const filePath = path.join(process.cwd(), 'public', 'ads', filename);
 
-    try {
-        const buffer = await readFile(filePath);
+  try {
+    const buffer = await readFile(filePath);
 
-        return new NextResponse(new Uint8Array(buffer), {
-            status: 200,
-            headers: {
-                'Content-Type': 'image/png',
-                'Cache-Control': 'public, max-age=86400, immutable',
-            },
-        });
-    } catch {
-        return NextResponse.json({ error: 'Not found' }, { status: 404 });
-    }
+    return new NextResponse(new Uint8Array(buffer), {
+      status: 200,
+      headers: {
+        'Content-Type': 'image/png',
+        'Cache-Control': 'public, max-age=86400, immutable',
+      },
+    });
+  } catch {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
 }

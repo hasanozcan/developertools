@@ -1,32 +1,16 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Eye, Code, Copy, Check, FileText, Trash2, Download } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
-import { marked } from 'marked';
+import { renderSafeMarkdown } from '@/lib/markdown';
 
 export default function MarkdownPreviewTool() {
   const { t } = useLanguage();
   const [markdown, setMarkdown] = useState('');
-  const [html, setHtml] = useState('');
   const [viewMode, setViewMode] = useState<'preview' | 'html'>('preview');
   const [copied, setCopied] = useState(false);
-
-  // Configure marked for better parsing
-  marked.setOptions({
-    breaks: true,
-    gfm: true,
-  });
-
-  useEffect(() => {
-    if (markdown) {
-      // Use marked library for proper markdown parsing
-      const parsedHtml = marked.parse(markdown) as string;
-      setHtml(parsedHtml);
-    } else {
-      setHtml('');
-    }
-  }, [markdown]);
+  const html = useMemo(() => (markdown ? renderSafeMarkdown(markdown) : ''), [markdown]);
 
   const copyHtml = async () => {
     await navigator.clipboard.writeText(html);
@@ -65,7 +49,7 @@ export default function MarkdownPreviewTool() {
 ${html}
 </body>
 </html>`;
-    
+
     const blob = new Blob([fullHtml], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -171,7 +155,11 @@ Visit [GitHub](https://github.com) for more projects.
                 onClick={copyHtml}
                 className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium flex items-center gap-2 text-sm"
               >
-                {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+                {copied ? (
+                  <Check className="w-4 h-4 text-green-600" />
+                ) : (
+                  <Copy className="w-4 h-4" />
+                )}
                 {copied ? t('common.copied') : t('tool.markdownPreview.copyHtml')}
               </button>
               <button
@@ -205,13 +193,19 @@ Visit [GitHub](https://github.com) for more projects.
         {/* Output */}
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            {viewMode === 'preview' ? t('tool.markdownPreview.preview') : t('tool.markdownPreview.htmlOutput')}
+            {viewMode === 'preview'
+              ? t('tool.markdownPreview.preview')
+              : t('tool.markdownPreview.htmlOutput')}
           </label>
           <div className="w-full h-[480px] border border-gray-300 dark:border-gray-600 rounded-lg overflow-auto bg-white dark:bg-gray-800">
             {viewMode === 'preview' ? (
-              <div 
+              <div
                 className="p-6 prose prose-sm dark:prose-invert max-w-none"
-                dangerouslySetInnerHTML={{ __html: html || `<p class="text-gray-400 dark:text-gray-500 italic">${t('tool.markdownPreview.previewPlaceholder')}</p>` }}
+                dangerouslySetInnerHTML={{
+                  __html:
+                    html ||
+                    `<p class="text-gray-400 dark:text-gray-500 italic">${t('tool.markdownPreview.previewPlaceholder')}</p>`,
+                }}
               />
             ) : (
               <pre className="p-4 text-sm font-mono text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
@@ -225,11 +219,15 @@ Visit [GitHub](https://github.com) for more projects.
       {/* Cheat Sheet */}
       <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
         <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 border-b border-gray-200 dark:border-gray-600">
-          <span className="font-medium text-gray-700 dark:text-gray-300">{t('tool.markdownPreview.cheatSheet')}</span>
+          <span className="font-medium text-gray-700 dark:text-gray-300">
+            {t('tool.markdownPreview.cheatSheet')}
+          </span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
           <div className="space-y-2">
-            <h4 className="font-medium text-gray-900 dark:text-white text-sm">{t('tool.markdownPreview.headers')}</h4>
+            <h4 className="font-medium text-gray-900 dark:text-white text-sm">
+              {t('tool.markdownPreview.headers')}
+            </h4>
             <div className="text-xs font-mono text-gray-600 dark:text-gray-400 space-y-1">
               <div># H1</div>
               <div>## H2</div>
@@ -237,7 +235,9 @@ Visit [GitHub](https://github.com) for more projects.
             </div>
           </div>
           <div className="space-y-2">
-            <h4 className="font-medium text-gray-900 dark:text-white text-sm">{t('tool.markdownPreview.emphasis')}</h4>
+            <h4 className="font-medium text-gray-900 dark:text-white text-sm">
+              {t('tool.markdownPreview.emphasis')}
+            </h4>
             <div className="text-xs font-mono text-gray-600 dark:text-gray-400 space-y-1">
               <div>**bold** or __bold__</div>
               <div>*italic* or _italic_</div>
@@ -245,7 +245,9 @@ Visit [GitHub](https://github.com) for more projects.
             </div>
           </div>
           <div className="space-y-2">
-            <h4 className="font-medium text-gray-900 dark:text-white text-sm">{t('tool.markdownPreview.lists')}</h4>
+            <h4 className="font-medium text-gray-900 dark:text-white text-sm">
+              {t('tool.markdownPreview.lists')}
+            </h4>
             <div className="text-xs font-mono text-gray-600 dark:text-gray-400 space-y-1">
               <div>- Unordered item</div>
               <div>1. Ordered item</div>
@@ -253,14 +255,18 @@ Visit [GitHub](https://github.com) for more projects.
             </div>
           </div>
           <div className="space-y-2">
-            <h4 className="font-medium text-gray-900 dark:text-white text-sm">{t('tool.markdownPreview.linksImages')}</h4>
+            <h4 className="font-medium text-gray-900 dark:text-white text-sm">
+              {t('tool.markdownPreview.linksImages')}
+            </h4>
             <div className="text-xs font-mono text-gray-600 dark:text-gray-400 space-y-1">
               <div>[link text](url)</div>
               <div>![alt text](image-url)</div>
             </div>
           </div>
           <div className="space-y-2">
-            <h4 className="font-medium text-gray-900 dark:text-white text-sm">{t('tool.markdownPreview.codeBlocks')}</h4>
+            <h4 className="font-medium text-gray-900 dark:text-white text-sm">
+              {t('tool.markdownPreview.codeBlocks')}
+            </h4>
             <div className="text-xs font-mono text-gray-600 dark:text-gray-400 space-y-1">
               <div>\`inline code\`</div>
               <div>\`\`\`language</div>

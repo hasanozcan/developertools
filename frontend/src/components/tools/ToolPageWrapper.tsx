@@ -4,6 +4,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import FavoriteButton from '@/components/common/FavoriteButton';
 import HistoryTracker from '@/components/common/HistoryTracker';
 import AdSense from '@/components/common/AdSense';
+import Link from 'next/link';
 
 interface ToolPageWrapperProps {
   toolSlug: string;
@@ -89,15 +90,15 @@ export default function ToolPageWrapper({
       <nav className="mb-6">
         <ol className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
           <li>
-            <a href="/" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+            <Link href="/" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
               {t('nav.home') || 'Home'}
-            </a>
+            </Link>
           </li>
           <li className="text-gray-400">/</li>
           <li>
-            <a href={`/tools/${category}`} className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+            <Link href={`/tools/${category}`} className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
               {translatedCategoryName}
-            </a>
+            </Link>
           </li>
           <li className="text-gray-400">/</li>
           <li className="text-gray-900 dark:text-white font-medium">{toolName}</li>

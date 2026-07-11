@@ -352,7 +352,7 @@ export const tr = {
     'tool.md5Hash.inputPlaceholder': 'Hash\'lenecek metin girin...',
     'tool.md5Hash.generateHash': 'Hash Oluştur',
     'tool.md5Hash.md5Hash': 'MD5 Hash',
-    'tool.md5Hash.infoText': 'MD5, 128-bit (16-byte) hash değeri üretir, 32 karakterlik onaltılık sayı olarak ifade edilir.',
+    'tool.md5Hash.infoText': 'MD5 çakışma saldırılarına karşı güvenli değildir. Parola, imza veya saldırgana dayanıklı dosya bütünlüğü için kullanmayın; SHA-256 tercih edin. Yalnızca eski sistem uyumluluğu ve kazara bozulma kontrolü için uygundur.',
     'tool.md5Hash.hashFile': 'Dosya Hashle',
     'tool.md5Hash.dropFile': 'Dosyayı buraya bırakın veya yüklemek için tıklayın',
     'tool.md5Hash.file': 'Dosya: {name}',

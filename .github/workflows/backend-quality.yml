@@ -1,0 +1,54 @@
+name: Backend Quality
+
+on:
+  push:
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-quality.yml"
+  pull_request:
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-quality.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      ContinuousIntegrationBuild: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+        with:
+          dotnet-version: "9.0.x"
+
+      - name: Restore locked dependencies
+        run: dotnet restore backend/DeveloperTools.sln --locked-mode
+
+      - name: Audit NuGet dependencies
+        run: dotnet list backend/src/DeveloperTools.Api/DeveloperTools.Api.csproj package --vulnerable --include-transitive --no-restore
+
+      - name: Build backend
+        run: dotnet build backend/DeveloperTools.sln --configuration Release --no-restore
+
+      - name: Build container image
+        run: docker build --tag developertools-api:ci backend
+
+      - name: Scan container image
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: developertools-api:ci
+          format: table
+          exit-code: "1"
+          ignore-unfixed: true
+          vuln-type: os,library
+          severity: CRITICAL,HIGH

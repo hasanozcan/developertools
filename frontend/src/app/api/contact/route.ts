@@ -5,6 +5,18 @@ import {
   MAX_CONTACT_BODY_BYTES,
   validateContactPayload,
 } from '@/lib/contactForm';
+import {
+  ContactRequestError,
+  consumeContactRateLimits,
+  FixedWindowRateLimiter,
+  getContactClientKey,
+  isTrustedContactRequest,
+  readLimitedJsonBody,
+} from '@/lib/contactRequestSecurity';
+
+const clientRateLimiter = new FixedWindowRateLimiter(5, 10 * 60 * 1000);
+const globalRateLimiter = new FixedWindowRateLimiter(100, 60 * 1000);
+const NO_STORE_HEADERS = { 'Cache-Control': 'no-store' };
 
 const parseBooleanEnv = (value?: string) => {
   if (typeof value !== 'string') return undefined;
@@ -13,15 +25,40 @@ const parseBooleanEnv = (value?: string) => {
 
 export async function POST(request: Request) {
   try {
-    const contentLength = Number(request.headers.get('content-length') || 0);
-    if (contentLength > MAX_CONTACT_BODY_BYTES) {
-      return NextResponse.json({ error: 'Request body is too large' }, { status: 413 });
+    if (!isTrustedContactRequest(request)) {
+      return NextResponse.json(
+        { error: 'Cross-site requests are not allowed' },
+        { status: 403, headers: NO_STORE_HEADERS },
+      );
     }
 
-    const validation = validateContactPayload(await request.json());
+    const rateLimitDecision = consumeContactRateLimits(
+      clientRateLimiter,
+      globalRateLimiter,
+      getContactClientKey(request),
+    );
+    if (!rateLimitDecision.allowed) {
+      return NextResponse.json(
+        { error: 'Too many requests' },
+        {
+          status: 429,
+          headers: {
+            ...NO_STORE_HEADERS,
+            'Retry-After': String(rateLimitDecision.retryAfterSeconds),
+          },
+        },
+      );
+    }
+
+    const validation = validateContactPayload(
+      await readLimitedJsonBody(request, MAX_CONTACT_BODY_BYTES),
+    );
 
     if (!validation.ok) {
-      return NextResponse.json({ error: validation.error }, { status: 400 });
+      return NextResponse.json(
+        { error: validation.error },
+        { status: 400, headers: NO_STORE_HEADERS },
+      );
     }
 
     const { name, email, subject, message } = validation.value;
@@ -34,7 +71,6 @@ export async function POST(request: Request) {
     const smtpHost = process.env.SMTP_HOST;
     const smtpPortRaw = process.env.SMTP_PORT;
     const smtpSecureRaw = process.env.SMTP_SECURE;
-    const smtpRejectUnauthorizedRaw = process.env.SMTP_TLS_REJECT_UNAUTHORIZED;
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASS;
     const smtpFrom =
@@ -43,11 +79,21 @@ export async function POST(request: Request) {
 
     const smtpPort = smtpPortRaw ? Number(smtpPortRaw) : 465;
     const smtpSecure = parseBooleanEnv(smtpSecureRaw);
-    const smtpRejectUnauthorized = parseBooleanEnv(smtpRejectUnauthorizedRaw);
 
-    if (!smtpHost || !smtpUser || !smtpPass || Number.isNaN(smtpPort)) {
+    if (
+      !smtpHost ||
+      !smtpUser ||
+      !smtpPass ||
+      !Number.isInteger(smtpPort) ||
+      smtpPort < 1 ||
+      smtpPort > 65_535 ||
+      targetEmail.length === 0
+    ) {
       console.error('SMTP configuration is incomplete.');
-      return NextResponse.json({ error: 'Email service is not configured' }, { status: 500 });
+      return NextResponse.json(
+        { error: 'Email service is not configured' },
+        { status: 500, headers: NO_STORE_HEADERS },
+      );
     }
 
     const transporter = nodemailer.createTransport({
@@ -58,10 +104,9 @@ export async function POST(request: Request) {
         user: smtpUser,
         pass: smtpPass,
       },
-      tls:
-        typeof smtpRejectUnauthorized === 'boolean'
-          ? { rejectUnauthorized: smtpRejectUnauthorized }
-          : undefined,
+      connectionTimeout: 10_000,
+      greetingTimeout: 10_000,
+      socketTimeout: 20_000,
     });
 
     try {
@@ -74,12 +119,24 @@ export async function POST(request: Request) {
       });
     } catch (sendError) {
       console.error('SMTP send failed:', sendError);
-      return NextResponse.json({ error: 'Failed to send message' }, { status: 502 });
+      return NextResponse.json(
+        { error: 'Failed to send message' },
+        { status: 502, headers: NO_STORE_HEADERS },
+      );
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true }, { headers: NO_STORE_HEADERS });
   } catch (error) {
+    if (error instanceof ContactRequestError) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: error.status, headers: NO_STORE_HEADERS },
+      );
+    }
     console.error('Contact form submission failed:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500, headers: NO_STORE_HEADERS },
+    );
   }
 }

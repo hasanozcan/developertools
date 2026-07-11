@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using DeveloperTools.Core.Entities;
 using DeveloperTools.Core.Interfaces;
 using DeveloperTools.Application.DTOs;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace DeveloperTools.Api.Controllers;
 
@@ -19,30 +20,34 @@ public class AnalyticsController : ControllerBase
     }
 
     /// <summary>
-    /// Track tool usage (works even if tool doesn't exist in DB)
+    /// Track usage for a known tool.
     /// </summary>
     [HttpPost("track")]
+    [EnableRateLimiting("analytics-write")]
+    [RequestSizeLimit(16 * 1024)]
     public async Task<IActionResult> TrackUsage([FromBody] TrackUsageRequest request)
     {
-        if (string.IsNullOrEmpty(request.ToolSlug))
-            return BadRequest(new { message = "ToolSlug is required" });
+        var toolSlug = request.ToolSlug.Trim();
+        var sessionId = request.SessionId?.Trim();
+        var referrer = request.Referrer?.Trim();
 
-        // Try to find tool, but don't fail if not found
-        var tool = await _toolRepository.GetBySlugAsync(request.ToolSlug);
+        var tool = await _toolRepository.GetBySlugAsync(toolSlug);
+        if (tool == null)
+            return BadRequest(new { message = "Unknown tool slug" });
 
         // Check if there's an existing record for this session and tool
         ToolUsage? existingUsage = null;
-        if (!string.IsNullOrEmpty(request.SessionId))
+        if (!string.IsNullOrEmpty(sessionId))
         {
-            existingUsage = await _usageRepository.GetBySessionAndSlugAsync(request.SessionId, request.ToolSlug);
+            existingUsage = await _usageRepository.GetBySessionAndSlugAsync(sessionId, toolSlug);
         }
 
         if (existingUsage != null)
         {
             // Update existing record - increment click count
             existingUsage.ClickCount++;
-            existingUsage.Referrer = request.Referrer ?? existingUsage.Referrer;
-            existingUsage.UserAgent = Request.Headers.UserAgent.ToString();
+            existingUsage.Referrer = referrer ?? existingUsage.Referrer;
+            existingUsage.UserAgent = GetBoundedUserAgent();
             await _usageRepository.UpdateAsync(existingUsage);
         }
         else
@@ -50,21 +55,18 @@ public class AnalyticsController : ControllerBase
             // Create new record
             var usage = new ToolUsage
             {
-                ToolId = tool?.Id,
-                ToolSlug = request.ToolSlug,
-                SessionId = request.SessionId,
-                Referrer = request.Referrer,
-                UserAgent = Request.Headers.UserAgent.ToString(),
+                ToolId = tool.Id,
+                ToolSlug = toolSlug,
+                SessionId = sessionId,
+                Referrer = referrer,
+                UserAgent = GetBoundedUserAgent(),
                 CountryCode = GetCountryFromHeaders(),
                 ClickCount = 1
             };
             await _usageRepository.CreateAsync(usage);
         }
         
-        if (tool != null)
-        {
-            await _toolRepository.IncrementUsageCountAsync(tool.Id);
-        }
+        await _toolRepository.IncrementUsageCountAsync(tool.Id);
 
         return Ok(new { success = true });
     }
@@ -76,6 +78,9 @@ public class AnalyticsController : ControllerBase
     [ResponseCache(Duration = 60)]
     public async Task<ActionResult<IEnumerable<ToolUsageStatsDto>>> GetUsageStats([FromQuery] int days = 30)
     {
+        if (days is < 1 or > 365)
+            return BadRequest(new { message = "days must be between 1 and 365" });
+
         var stats = await _usageRepository.GetUsageStatsAsync(days);
         return Ok(stats);
     }
@@ -87,6 +92,11 @@ public class AnalyticsController : ControllerBase
     [ResponseCache(Duration = 300)]
     public async Task<ActionResult<IEnumerable<object>>> GetTopTools([FromQuery] int count = 10, [FromQuery] int days = 30)
     {
+        if (count is < 1 or > 100)
+            return BadRequest(new { message = "count must be between 1 and 100" });
+        if (days is < 1 or > 365)
+            return BadRequest(new { message = "days must be between 1 and 365" });
+
         var topTools = await _usageRepository.GetTopToolsAsync(count, days);
         return Ok(topTools);
     }
@@ -115,13 +125,27 @@ public class AnalyticsController : ControllerBase
     {
         // Cloudflare header
         if (Request.Headers.TryGetValue("CF-IPCountry", out var cfCountry))
-            return cfCountry.ToString();
+            return NormalizeCountryCode(cfCountry.ToString());
         
         // Vercel/other headers
         if (Request.Headers.TryGetValue("X-Vercel-IP-Country", out var vercelCountry))
-            return vercelCountry.ToString();
+            return NormalizeCountryCode(vercelCountry.ToString());
 
         return null;
+    }
+
+    private string? GetBoundedUserAgent()
+    {
+        var userAgent = Request.Headers.UserAgent.ToString();
+        return userAgent.Length <= 500 ? userAgent : userAgent[..500];
+    }
+
+    private static string? NormalizeCountryCode(string value)
+    {
+        var countryCode = value.Trim().ToUpperInvariant();
+        return countryCode.Length == 2 && countryCode.All(char.IsAsciiLetter)
+            ? countryCode
+            : null;
     }
 
 }

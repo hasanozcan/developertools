@@ -5,7 +5,7 @@ Yazılımcılar için ücretsiz online araçlar sunan, organik Google trafiği v
 ## Teknoloji Stack
 
 - **Backend**: .NET Core 9 + Entity Framework Core
-- **Frontend**: Next.js 14 (React) + Tailwind CSS
+- **Frontend**: Next.js 16 + React 19 + Tailwind CSS
 - **Database**: PostgreSQL
 - **SEO**: Server-Side Rendering, Structured Data, Sitemap
 
@@ -21,7 +21,7 @@ DeveloperTools/
 │   │   └── DeveloperTools.Infrastructure/
 │   └── DeveloperTools.sln
 │
-└── frontend/                   # Next.js 14 Frontend
+└── frontend/                   # Next.js 16 Frontend
     ├── src/
     │   ├── app/
     │   ├── components/
@@ -73,10 +73,10 @@ DeveloperTools/
 cd backend
 
 # PostgreSQL veritabanını oluşturun
-# Connection string: appsettings.Development.json
+# Connection string: user secrets veya ConnectionStrings__DefaultConnection
 
 # NuGet paketlerini yükle
-dotnet restore
+dotnet restore --locked-mode
 
 # Migration uygula
 dotnet ef database update --project src/DeveloperTools.Infrastructure --startup-project src/DeveloperTools.Api
@@ -95,7 +95,7 @@ Swagger: `http://localhost:5000/swagger`
 cd frontend
 
 # Bağımlılıkları yükle
-npm install
+npm ci
 
 # Geliştirme sunucusunu başlat
 npm run dev
@@ -134,17 +134,11 @@ NEXT_PUBLIC_ADSENSE_ID=ca-pub-xxxxxxxxxxxxxxxx
 NEXT_PUBLIC_GOOGLE_VERIFICATION=your-verification-code
 ```
 
-### Backend (appsettings.json)
+### Backend (environment variable / user secrets)
 
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Host=localhost;Database=developertools;Username=postgres;Password=xxx"
-  },
-  "Cors": {
-    "AllowedOrigins": ["http://localhost:3000", "https://yoursite.com"]
-  }
-}
+```env
+ConnectionStrings__DefaultConnection=Host=localhost;Database=developertools;Username=developertools;Password=<strong-password>
+Cors__AllowedOrigins__0=http://localhost:3000
 ```
 
 ## Production Deployment

@@ -1,12 +1,12 @@
 # Developer Tools - Frontend
 
-Next.js 14 ile oluşturulmuş SEO-odaklı developer tools sitesi.
+Next.js 16 ve React 19 ile oluşturulmuş SEO-odaklı developer tools sitesi.
 
 ## Kurulum
 
 ```bash
 cd frontend
-npm install
+npm ci
 ```
 
 ## Geliştirme
@@ -99,6 +99,10 @@ npm run test
 
 # Full quality pipeline
 npm run check
+
+# Dependency advisories and registry signatures
+npm run audit:security
+npm audit signatures
 
 # Bundle analyzer reports
 npm run analyze

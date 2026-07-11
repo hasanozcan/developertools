@@ -34,6 +34,12 @@ public class CategoriesController : ControllerBase
     [ResponseCache(Duration = 300)]
     public async Task<ActionResult<CategoryDetailDto>> GetBySlug(string slug)
     {
+        if (slug.Length is < 1 or > 100 ||
+            !slug.All(character => char.IsAsciiLetterOrDigit(character) || character == '-'))
+        {
+            return BadRequest(new { message = "Invalid category slug" });
+        }
+
         var category = await _categoryRepository.GetBySlugAsync(slug);
         
         if (category == null)

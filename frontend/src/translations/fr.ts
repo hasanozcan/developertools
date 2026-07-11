@@ -318,7 +318,7 @@ export const fr = {
     'tool.md5Hash.inputPlaceholder': 'Entrez du texte à hasher...',
     'tool.md5Hash.generateHash': 'Générer le hash',
     'tool.md5Hash.md5Hash': 'Hash MD5',
-    'tool.md5Hash.infoText': 'MD5 produit une valeur de hachage de 128 bits (16 octets), exprimée sous forme de nombre hexadécimal de 32 caractères.',
+    'tool.md5Hash.infoText': 'MD5 ne résiste pas aux collisions. Ne l’utilisez pas pour les mots de passe, les signatures ou l’intégrité de fichiers face à un attaquant ; préférez SHA-256. Réservez-le aux systèmes anciens et aux corruptions accidentelles.',
     'tool.sha256Hash': 'Générateur de Hash SHA256',
     'tool.sha256Hash.desc': 'Générer un hash SHA256 à partir de texte',
     'tool.sha256Hash.inputPlaceholder': 'Entrez du texte à hasher...',

@@ -332,7 +332,7 @@ export const es = {
     'tool.md5Hash.inputPlaceholder': 'Ingresa texto para hashear...',
     'tool.md5Hash.generateHash': 'Generar hash',
     'tool.md5Hash.md5Hash': 'Hash MD5',
-    'tool.md5Hash.infoText': 'MD5 produce un valor hash de 128 bits (16 bytes), expresado como un número hexadecimal de 32 caracteres.',
+    'tool.md5Hash.infoText': 'MD5 no es seguro frente a colisiones. No lo uses para contraseñas, firmas ni integridad de archivos ante atacantes; prefiere SHA-256. Úsalo solo por compatibilidad heredada o para detectar daños accidentales.',
     'tool.md5Hash.hashFile': 'Hashear Archivo',
     'tool.md5Hash.dropFile': 'Arrastra archivo aquí o haz clic para seleccionar',
     'tool.md5Hash.file': 'Archivo: {name}',
