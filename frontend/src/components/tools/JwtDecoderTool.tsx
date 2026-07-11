@@ -98,7 +98,7 @@ export default function JwtDecoderTool() {
         name: 'Not Before (nbf)',
         value: nbf,
         valid: nbfValid,
-        message: nbfValid ? 'Token is now valid' : 'Token not yet valid',
+        message: nbfValid ? 'Not-before time has passed' : 'Not-before time is in the future',
         color: nbfValid ? 'green' : 'red',
       });
     }
@@ -109,7 +109,7 @@ export default function JwtDecoderTool() {
         name: 'Expiration (exp)',
         value: exp,
         valid: expValid,
-        message: expValid ? 'Token is still valid' : 'Token has expired!',
+        message: expValid ? 'Expiration time is in the future' : 'Expiration time has passed',
         color: expValid ? 'green' : 'red',
       });
     }
@@ -118,9 +118,6 @@ export default function JwtDecoderTool() {
   };
 
   const timestampValidations = getTimestampValidation();
-  const tokenStatus = timestampValidations?.every(v => v.valid) ? 'VALID' : 'INVALID';
-  const tokenStatusColor = timestampValidations?.every(v => v.valid) ? 'green' : 'red';
-
   return (
     <div className="space-y-6">
       {/* Input */}
@@ -154,13 +151,10 @@ export default function JwtDecoderTool() {
       {/* Decoded Output */}
       {decoded && (
         <div className="space-y-4">
-          {/* Token Status Badge */}
-          <div className={`flex items-center justify-center gap-2 p-4 rounded-lg border-2 ${
-            tokenStatusColor === 'green' 
-              ? 'bg-green-50 dark:bg-green-900/30 border-green-500 text-green-700 dark:text-green-400' 
-              : 'bg-red-50 dark:bg-red-900/30 border-red-500 text-red-700 dark:text-red-400'
-          }`}>
-            <span className="font-bold text-lg">Token is {tokenStatus}</span>
+          {/* Decoding never establishes authenticity. */}
+          <div className="flex items-center justify-center gap-2 p-4 rounded-lg border-2 bg-amber-50 dark:bg-amber-900/30 border-amber-500 text-amber-800 dark:text-amber-300">
+            <AlertCircle className="w-5 h-5" />
+            <span className="font-bold text-lg">Decoded only — signature not verified</span>
           </div>
 
           {/* Timestamp Validation */}

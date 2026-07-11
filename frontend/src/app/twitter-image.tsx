@@ -147,7 +147,7 @@ export default async function Image() {
                         marginBottom: 16,
                     }}
                 >
-                    27+ Free Tools - No Registration - 100% Client-Side
+                    48 Free Tools - No Registration - 100% Client-Side
                 </div>
 
                 {/* URL */}

@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import Script from 'next/script';
 import {
   Braces,
   Code,
@@ -48,6 +47,7 @@ import {
 } from 'lucide-react';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import AdSense from '@/components/common/AdSense';
+import EncodingWorkbench from '@/components/tools/EncodingWorkbench';
 import { buildToolPath } from '@/lib/toolRoutes';
 
 // Tool icon mapping
@@ -102,7 +102,18 @@ const toolIcons: Record<string, LucideIcon> = {
   'user-agent-parser': Fingerprint,
 };
 
-const categories: Record<string, { name: string; description: string; icon: any; tools: { name: string; slug: string; description: string }[] }> = {
+interface CategoryConfig {
+  name: string;
+  metadataTitle?: string;
+  description: string;
+  icon: any;
+  tools: { name: string; slug: string; description: string }[];
+  answerSections?: { heading: string; paragraphs?: string[]; bullets?: string[] }[];
+  faqs?: { question: string; answer: string }[];
+  sources?: { name: string; url: string }[];
+}
+
+const categories: Record<string, CategoryConfig> = {
   json: {
     name: 'JSON Tools',
     description: 'JSON formatting, validation, and conversion tools for developers',
@@ -116,8 +127,9 @@ const categories: Record<string, { name: string; description: string; icon: any;
     ],
   },
   encoding: {
-    name: 'Encoding & Decoding',
-    description: 'Base64, URL encoding and decoding tools',
+    name: 'Encoder Online',
+    metadataTitle: 'Encoder Online – Base64, URL, Hex & Text Decoder',
+    description: 'Encode or decode Base64, URL components, hexadecimal, binary, and JSON strings in one browser-based workbench, with dedicated tools for HTML, Unicode, JWTs, and images.',
     icon: Code,
     tools: [
       { name: 'Base64 Encoder/Decoder', slug: 'base64', description: 'Encode or decode Base64 strings' },
@@ -130,13 +142,60 @@ const categories: Record<string, { name: string; description: string; icon: any;
       { name: 'JSON String Escape', slug: 'json-string-escape', description: 'Escape and unescape JSON string content' },
       { name: 'Image to Base64', slug: 'image-to-base64', description: 'Convert images to Base64 data URIs' },
     ],
+    answerSections: [
+      {
+        heading: 'Which online encoder should I use?',
+        paragraphs: [
+          'Use the workbench on this page for quick Base64, URL-component, hexadecimal, binary, or JSON-string conversion. Choose the representation required by the system that will consume the result, or open a dedicated tool when you need format-specific options.',
+        ],
+        bullets: [
+          'Base64 converts text to and from Base64; Image to Base64 creates a data URI for an image.',
+          'URL Encoder percent-encodes a full URL or one URL component.',
+          'HTML Entity handles characters used in HTML source.',
+          'Unicode Escape represents code points with escape sequences, while JSON String Escape prepares or reads string content used inside JSON.',
+          'HEX Encoder and Binary Encoder expose character data as hexadecimal or bit values.',
+          'JWT Decoder displays a token\'s Base64url-encoded header and payload for debugging, but decoding does not verify its signature or prove its claims are trustworthy.',
+        ],
+      },
+      {
+        heading: 'Encoding is not encryption or hashing',
+        paragraphs: [
+          'Encoding changes a value\'s representation so compatible software can reverse it; it is not a security control. Encryption uses a key to protect confidentiality, while hashing produces a digest intended to be one-way. Base64, percent encoding, HTML entities, hexadecimal, binary, Unicode escapes, and JSON escaping do not hide secrets. Use encryption when confidentiality is required, a keyed message-authentication code or digital signature when authenticity and integrity are required, and a dedicated salted, deliberately slow password-hashing scheme for stored passwords.',
+        ],
+      },
+      {
+        heading: 'Client-side processing and privacy',
+        paragraphs: [
+          'These encoding and decoding tools run in the current browser. Text transformations use browser JavaScript, and image conversion uses FileReader instead of uploading the selected file to a conversion service. That client-side boundary reduces routine data transfer, but it does not make sensitive material safe on every device. Clipboard history, browser extensions, third-party page scripts, screen sharing, or a shared computer can expose input. Do not paste production credentials, private keys, session tokens, or confidential JWT claims.',
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: 'Which online encoder should I use?',
+        answer: 'Use this page for Base64, URL-component, hexadecimal, binary, or JSON-string conversion. Use HTML entities for HTML source, Unicode escaping for code points, JWT Decoder for token inspection, and Image to Base64 for image data URIs.',
+      },
+      {
+        question: 'Is encoding the same as encryption or hashing?',
+        answer: 'No. Encoding is reversible representation and provides no confidentiality. Encryption protects data with a key, while hashing produces a digest that is generally intended to be one-way.',
+      },
+      {
+        question: 'Do these encoding tools upload my input?',
+        answer: 'The current tools perform their transformations in your browser and do not submit entered values or selected images to a conversion API. Clipboard history, extensions, page scripts, and shared devices can still expose sensitive input.',
+      },
+    ],
+    sources: [
+      { name: 'RFC 4648: Base-N Encodings', url: 'https://www.rfc-editor.org/rfc/rfc4648' },
+      { name: 'WHATWG URL Standard: Percent-encoded bytes', url: 'https://url.spec.whatwg.org/#percent-encoded-bytes' },
+      { name: 'NIST SP 800-63B: Authentication and Authenticator Management', url: 'https://pages.nist.gov/800-63-4/sp800-63b.html' },
+    ],
   },
   generators: {
     name: 'Generators',
     description: 'UUID, password, and other generators',
     icon: Wand2,
     tools: [
-      { name: 'UUID Generator', slug: 'uuid-generator', description: 'Generate random UUIDs/GUIDs' },
+      { name: 'UUID v4 & v7 Generator', slug: 'uuid-generator', description: 'Generate random v4 or timestamp-based v7 UUIDs/GUIDs' },
       { name: 'Password Generator', slug: 'password-generator', description: 'Generate secure random passwords' },
       { name: 'Lorem Ipsum Generator', slug: 'lorem-ipsum', description: 'Generate placeholder text' },
       { name: 'QR Code Generator', slug: 'qr-code', description: 'Generate QR codes from text or URLs' },
@@ -230,11 +289,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
   const categoryUrl = `${siteUrl}/tools/${categorySlug}`;
   const ogImageUrl = `${siteUrl}/og-image.png`;
+  const pageTitle = category.metadataTitle || `${category.name} - Free Online Developer Tools`;
 
   // Category-specific keywords
   const categoryKeywords: Record<string, string[]> = {
     json: ['json tools', 'json formatter', 'json validator', 'json to csv', 'json to typescript', 'yaml to json', 'json beautifier', 'json parser'],
-    encoding: ['encoding tools', 'base64 encoder', 'base64 decoder', 'url encoder', 'url decoder', 'hex encoder', 'binary encoder', 'jwt decoder', 'html entity encoder', 'unicode escape', 'json string escape'],
+    encoding: ['online encoder', 'encoder online', 'online decoder', 'encoding tools', 'base64 encoder', 'base64 decoder', 'url encoder', 'url decoder', 'hex encoder', 'binary encoder', 'jwt decoder', 'html entity encoder', 'unicode escape', 'json string escape'],
     generators: ['generators', 'uuid generator', 'password generator', 'lorem ipsum generator', 'qr code generator', 'slug generator', 'css gradient generator', 'meta tags generator'],
     crypto: ['cryptography', 'hash generator', 'md5 generator', 'sha256 generator', 'sha512 generator', 'hash tools'],
     text: ['text tools', 'regex tester', 'regex escape', 'case converter', 'word counter', 'text diff', 'markdown preview', 'sort lines', 'remove duplicates'],
@@ -244,23 +304,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 
   return {
-    title: `${category.name} - Free Online Developer Tools`,
+    title: pageTitle,
     description: category.description,
     keywords: categoryKeywords[categorySlug] || [category.name.toLowerCase(), 'developer tools', 'online tools', 'free tools'],
     alternates: {
       canonical: categoryUrl,
-      languages: {
-        en: categoryUrl,
-        tr: `${categoryUrl}?lang=tr`,
-        de: `${categoryUrl}?lang=de`,
-        es: `${categoryUrl}?lang=es`,
-        fr: `${categoryUrl}?lang=fr`,
-        ru: `${categoryUrl}?lang=ru`,
-        zh: `${categoryUrl}?lang=zh`,
-      },
     },
     openGraph: {
-      title: `${category.name} - Free Online Developer Tools`,
+      title: pageTitle,
       description: category.description,
       url: categoryUrl,
       siteName: 'DevsTools',
@@ -276,7 +327,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${category.name} - Free Online Developer Tools`,
+      title: pageTitle,
       description: category.description,
       images: [ogImageUrl],
     },
@@ -297,28 +348,100 @@ export default async function CategoryPage({ params }: PageProps) {
 
   const Icon = category.icon;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
+  const answerSections = category.answerSections || [];
+  const faqs = category.faqs || [];
+  const sources = category.sources || [];
 
   // CollectionPage structured data for category pages
   const collectionPageStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: `${category.name} - Free Online Developer Tools`,
+    name: category.metadataTitle || `${category.name} - Free Online Developer Tools`,
     description: category.description,
     url: `${siteUrl}/tools/${categorySlug}`,
+    ...(categorySlug === 'encoding' ? { dateModified: '2026-07-11' } : {}),
     about: {
       '@type': 'Thing',
       name: category.name,
       description: category.description,
     },
+    citation: sources.map((source) => source.url),
+    mainEntity: {
+      '@type': 'ItemList',
+      name: `${category.name} tools`,
+      itemListElement: category.tools.map((tool, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: tool.name,
+        url: `${siteUrl}${buildToolPath(categorySlug, tool.slug)}`,
+      })),
+    },
   };
+
+  const faqStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  };
+
+  const encodingApplicationStructuredData = categorySlug === 'encoding' ? {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    '@id': `${siteUrl}/tools/encoding#application`,
+    url: `${siteUrl}/tools/encoding`,
+    name: 'Encoder Online',
+    description: category.description,
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Any',
+    isAccessibleForFree: true,
+    dateModified: '2026-07-11',
+    citation: sources.map((source) => source.url),
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+  } : null;
+
+  const renderAnswerSection = (
+    section: { heading: string; paragraphs?: string[]; bullets?: string[] },
+    answerFirst = false,
+  ) => (
+    <section key={section.heading} className="mb-8" data-answer-first={answerFirst ? 'true' : undefined}>
+      <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{section.heading}</h2>
+      <div className="space-y-3 text-gray-600 dark:text-gray-300">
+        {section.paragraphs?.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+        {section.bullets && (
+          <ul className="list-disc pl-6 space-y-2">
+            {section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
+          </ul>
+        )}
+      </div>
+    </section>
+  );
 
   return (
     <>
-      <Script
-        id="category-collectionpage-structured-data"
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageStructuredData) }}
       />
+      {faqs.length > 0 && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
+        />
+      )}
+      {encodingApplicationStructuredData && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(encodingApplicationStructuredData) }}
+        />
+      )}
       <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-8">
       <Breadcrumb
         items={[
@@ -338,6 +461,28 @@ export default async function CategoryPage({ params }: PageProps) {
         </div>
       </div>
 
+      {answerSections.slice(0, 1).map((section) => renderAnswerSection(section, true))}
+
+      {categorySlug === 'encoding' && (
+        <nav aria-label="Encoding tool shortcuts" className="mb-8 text-gray-600 dark:text-gray-300">
+          Open an encoder or decoder:{' '}
+          {category.tools.map((tool, index) => (
+            <span key={`reader-${tool.slug}`}>
+              {index > 0 ? ', ' : ''}
+              <Link
+                href={buildToolPath(categorySlug, tool.slug)}
+                className="text-primary-600 dark:text-primary-400 hover:underline"
+              >
+                {tool.name}
+              </Link>
+            </span>
+          ))}
+          .
+        </nav>
+      )}
+
+      {categorySlug === 'encoding' && <EncodingWorkbench />}
+
       {/* Ad Banner */}
       <AdSense
         slot="1733348098"
@@ -346,7 +491,11 @@ export default async function CategoryPage({ params }: PageProps) {
       />
 
       {/* Tools Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        data-topic-interface="true"
+        data-related-tools="true"
+      >
         {category.tools.map((tool) => {
           const ToolIcon = toolIcons[tool.slug] || Wand2;
           return (
@@ -368,11 +517,56 @@ export default async function CategoryPage({ params }: PageProps) {
         })}
       </div>
 
+      <div className="mt-12">
+        {answerSections.slice(1).map((section) => renderAnswerSection(section))}
+      </div>
+
+      {faqs.length > 0 && (
+        <section className="mb-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Frequently asked questions</h2>
+          <dl className="space-y-4">
+            {faqs.map((faq) => (
+              <div key={faq.question} className="border-b border-gray-100 dark:border-gray-700 pb-4">
+                <dt><h3 className="font-semibold text-gray-900 dark:text-white mb-2">{faq.question}</h3></dt>
+                <dd className="text-gray-600 dark:text-gray-300">{faq.answer}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
+
+      {sources.length > 0 && (
+        <section className="mb-8" aria-labelledby="sources-heading">
+          <h2 id="sources-heading" className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+            Sources &amp; references
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300">
+            Primary references:{' '}
+            {sources.map((source, index) => (
+              <span key={source.url}>
+                {index > 0 ? '; ' : ''}
+                <a href={source.url} target="_blank" rel="noopener noreferrer" className="text-primary-600 dark:text-primary-400 hover:underline">
+                  {source.name}
+                </a>
+              </span>
+            ))}
+            .
+          </p>
+          {categorySlug === 'encoding' && (
+            <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
+              Last reviewed: <time dateTime="2026-07-11">2026-07-11</time>
+            </p>
+          )}
+        </section>
+      )}
+
       {/* SEO Content */}
       <section className="mt-12 prose prose-gray dark:prose-invert max-w-none">
         <h2 className="text-gray-900 dark:text-white">About {category.name}</h2>
         <p className="text-gray-600 dark:text-gray-300">
-          Our {category.name.toLowerCase()} are designed to help developers work more efficiently.
+          {categorySlug === 'encoding'
+            ? 'This encoder online workbench and its dedicated tools are designed to help developers work more efficiently. '
+            : `Our ${category.name.toLowerCase()} are designed to help developers work more efficiently. `}
           All tools are free to use, require no registration, and process data client-side for maximum privacy.
         </p>
       </section>

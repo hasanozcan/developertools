@@ -47,7 +47,7 @@ export default function JsonFormatterTool() {
       setError((e as Error).message);
       setOutput('');
     }
-  }, [input, indentSize]);
+  }, [input, indentSize, sortKeys]);
 
   const minifyJson = useCallback(() => {
     if (!input.trim()) {
@@ -66,7 +66,7 @@ export default function JsonFormatterTool() {
       setError((e as Error).message);
       setOutput('');
     }
-  }, [input]);
+  }, [input, sortKeys]);
 
   const loadSample = useCallback(() => {
     const sampleJson = {

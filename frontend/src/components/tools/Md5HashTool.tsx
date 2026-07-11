@@ -6,8 +6,8 @@ import CopyButton from '@/components/common/CopyButton';
 import { useLanguage } from '@/context/LanguageContext';
 import { Upload, X, FileText } from 'lucide-react';
 
-// Simple MD5 implementation (client-side)
-function md5(string: string): string {
+// Simple MD5 implementation (client-side) for UTF-8 text or exact file bytes.
+export function md5(input: string | Uint8Array): string {
   function rotateLeft(value: number, shift: number): number {
     return (value << shift) | (value >>> (32 - shift));
   }
@@ -40,16 +40,18 @@ function md5(string: string): string {
     return addUnsigned(rotateLeft(a, s), b);
   }
 
-  function convertToWordArray(str: string): number[] {
-    const utf8str = unescape(encodeURIComponent(str));
-    const lWordCount = (((utf8str.length + 8) >> 6) + 1) * 16;
+  function convertToWordArray(value: string | Uint8Array): number[] {
+    const bytes = typeof value === 'string' ? new TextEncoder().encode(value) : value;
+    const lWordCount = (((bytes.length + 8) >> 6) + 1) * 16;
     const lWordArray = new Array(lWordCount).fill(0);
     
-    for (let i = 0; i < utf8str.length; i++) {
-      lWordArray[i >> 2] |= utf8str.charCodeAt(i) << ((i % 4) * 8);
+    for (let i = 0; i < bytes.length; i++) {
+      lWordArray[i >> 2] |= bytes[i] << ((i % 4) * 8);
     }
-    lWordArray[utf8str.length >> 2] |= 0x80 << ((utf8str.length % 4) * 8);
-    lWordArray[lWordCount - 2] = utf8str.length * 8;
+    lWordArray[bytes.length >> 2] |= 0x80 << ((bytes.length % 4) * 8);
+    const bitLength = bytes.length * 8;
+    lWordArray[lWordCount - 2] = bitLength >>> 0;
+    lWordArray[lWordCount - 1] = Math.floor(bitLength / 0x100000000);
     
     return lWordArray;
   }
@@ -63,7 +65,7 @@ function md5(string: string): string {
     return hex;
   }
 
-  const x = convertToWordArray(string);
+  const x = convertToWordArray(input);
   let [a, b, c, d] = [0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476];
 
   for (let k = 0; k < x.length; k += 16) {
@@ -154,14 +156,7 @@ async function md5File(file: File): Promise<string> {
       const arrayBuffer = e.target?.result as ArrayBuffer;
       const uint8Array = new Uint8Array(arrayBuffer);
       
-      // Convert to binary string for MD5
-      let binary = '';
-      const len = uint8Array.byteLength;
-      for (let i = 0; i < len; i++) {
-        binary += String.fromCharCode(uint8Array[i]);
-      }
-      
-      resolve(md5(binary));
+      resolve(md5(uint8Array));
     };
     reader.onerror = () => reject(new Error('Failed to read file'));
     reader.readAsArrayBuffer(file);

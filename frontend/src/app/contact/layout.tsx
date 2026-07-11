@@ -8,18 +8,9 @@ export const metadata: Metadata = {
   title: 'Contact',
   description: 'Contact the DevsTools team with feedback, bug reports, or feature requests.',
   keywords: ['contact devstools', 'feedback', 'bug report', 'feature request', 'support', 'developer tools'],
-  alternates: {
-    canonical: pageUrl,
-    languages: {
-      en: pageUrl,
-      tr: `${pageUrl}?lang=tr`,
-      de: `${pageUrl}?lang=de`,
-      es: `${pageUrl}?lang=es`,
-      fr: `${pageUrl}?lang=fr`,
-      ru: `${pageUrl}?lang=ru`,
-      zh: `${pageUrl}?lang=zh`,
+    alternates: {
+      canonical: pageUrl,
     },
-  },
   openGraph: {
     title: 'Contact DevsTools',
     description: 'Contact the DevsTools team with feedback, bug reports, or feature requests.',

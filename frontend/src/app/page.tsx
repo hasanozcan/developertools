@@ -221,7 +221,7 @@ export default function Home() {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: 'DevsTools - Free Online Developer Tools',
-    description: '27+ free online developer tools: JSON formatter, Base64 encoder, UUID generator, hash generators, regex tester, QR code & more. No registration, 100% client-side.',
+    description: '48 free online developer tools: JSON formatter, Base64 encoder, UUID generator, hash generators, regex tester, QR code & more. No registration, 100% client-side.',
     url: siteUrl,
     about: {
       '@type': 'Thing',

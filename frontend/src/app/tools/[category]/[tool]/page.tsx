@@ -1,27 +1,71 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import ToolPageWrapper from '@/components/tools/ToolPageWrapper';
 import ToolRenderer from '@/components/tools/ToolRenderer';
-import { getCanonicalToolCategory } from '@/lib/toolRoutes';
+import { getToolBySlug } from '@/lib/api';
+import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
+import { getToolSources } from '@/lib/toolSources';
+
+const LAST_REVIEWED = '2026-07-11';
 
 // Tool configurations
 const tools: Record<string, Record<string, {
   name: string;
+  metadataTitle?: string;
   description: string;
   longDescription: string;
   keywords: string[];
   faqs: { question: string; answer: string }[];
+  answerSections?: { heading: string; paragraphs?: string[]; bullets?: string[] }[];
+  howToUseSteps?: string[];
 }>> = {
   json: {
     'json-formatter': {
       name: 'JSON Formatter',
-      description: 'Format and beautify JSON data online. Free JSON formatter and validator.',
-      longDescription: 'Our free online JSON formatter helps you format, beautify, and validate JSON data instantly. Simply paste your JSON and get perfectly indented, readable output.',
-      keywords: ['json formatter', 'json beautifier', 'format json online', 'json pretty print'],
+      metadataTitle: 'JSON Formatter & Validator Online – Beautify, Minify, Sort',
+      description: 'Format, validate, beautify, minify, and recursively sort JSON in your browser. Get immediate syntax errors without uploading data.',
+      longDescription: 'Free online JSON formatter and minifier. Paste valid JSON to create consistently indented, readable output or a compact representation without changing the intended data.',
+      keywords: ['json formatter', 'json beautifier', 'format json online', 'json pretty print', 'json minifier'],
       faqs: [
         { question: 'What is JSON?', answer: 'JSON (JavaScript Object Notation) is a lightweight data interchange format that is easy for humans to read and write, and easy for machines to parse and generate.' },
-        { question: 'How do I format JSON?', answer: 'Simply paste your JSON data in the input field. The tool will automatically format and beautify your JSON with proper indentation.' },
+        { question: 'How do I format JSON?', answer: 'Paste valid JSON in the input field, choose the indentation and key-sorting options you need, then select Format JSON.' },
         { question: 'Is my data safe?', answer: 'Yes! All processing happens in your browser. Your data never leaves your computer.' },
+      ],
+      answerSections: [
+        {
+          heading: 'What the JSON Formatter does',
+          paragraphs: [
+            'A JSON formatter parses JSON text and serializes the resulting value with consistent whitespace. This tool can pretty-print with the selected indentation, minify the result, and optionally sort object keys recursively. RFC 8259 requires double-quoted object names and strings; comments, trailing commas, NaN, and Infinity are outside the JSON grammar. Formatting changes presentation, not the intended data meaning.',
+          ],
+        },
+        {
+          heading: 'Common uses and validation boundary',
+          paragraphs: [
+            'Use the formatter when you need to inspect or normalize JSON during development:',
+          ],
+          bullets: [
+            'Make a compact API response, webhook body, configuration, or log entry easier to read.',
+            'Minify valid JSON before copying it into a request, test fixture, or environment variable.',
+            'Sort keys for a more predictable manual comparison between two objects.',
+            'Expose parse errors caused by missing commas, mismatched brackets, or invalid quotation marks.',
+            'Treat a successful parse as a syntax check only. It does not apply JSON Schema, API contracts, required fields, domain types, or business rules.',
+          ],
+        },
+        {
+          heading: 'Worked formatting example',
+          paragraphs: [
+            'Input {"active":true,"user":{"id":42,"roles":["admin","editor"]}} becomes an indented object whose nested user value and roles array are visible at a glance. Minifying produces the compact form again. If the input contained a trailing comma, the browser parser would reject it instead of silently repairing the document.',
+          ],
+        },
+        {
+          heading: 'Limitations and privacy',
+          bullets: [
+            'Parsing uses JavaScript numbers, so integers beyond the reliably representable range can lose precision.',
+            'Duplicate object names may collapse during parsing; avoid parse-and-reserialize workflows when duplicate preservation matters.',
+            'Sorted output is convenient, but it is not a cryptographic JSON canonicalization format and should not be used to prepare signed data.',
+            'Processing runs in the browser. Sensitive JSON can still be exposed through clipboard history, browser extensions, screen sharing, or a shared device.',
+          ],
+        },
       ],
     },
     'json-validator': {
@@ -88,12 +132,50 @@ const tools: Record<string, Record<string, {
     },
     'jwt-decoder': {
       name: 'JWT Decoder',
-      description: 'Decode and inspect JWT tokens online. View header, payload, and signature.',
+      metadataTitle: 'JWT Decoder Online – Inspect Claims Privately',
+      description: 'Decode JWT headers, payloads, timestamps, and claims privately in your browser. Decoding does not verify the token signature.',
       longDescription: 'Free online JWT decoder. Decode JSON Web Tokens and inspect their header, payload, and signature. Useful for debugging authentication issues.',
       keywords: ['jwt decoder', 'decode jwt', 'jwt parser', 'json web token decoder'],
       faqs: [
         { question: 'What is a JWT?', answer: 'JWT (JSON Web Token) is a compact, URL-safe means of representing claims to be transferred between two parties.' },
-        { question: 'Is it safe to paste my JWT here?', answer: 'Yes! All decoding happens in your browser. Your token never leaves your computer.' },
+        { question: 'Does decoding verify the JWT signature?', answer: 'No. Decoding only reads the Base64URL-encoded header and payload. A trusted server and the correct key are required to verify the signature.' },
+        { question: 'Is it safe to paste my JWT here?', answer: 'Decoding happens in your browser and the token is not uploaded. Still avoid using production tokens on shared devices because JWT payloads can contain sensitive claims.' },
+      ],
+      answerSections: [
+        {
+          heading: 'What the JWT Decoder does',
+          paragraphs: [
+            'The decoder splits a three-part compact token into header, payload, and signature segments. It Base64URL-decodes the first two segments, parses their JSON, and displays the signature segment without checking it. RFC 7519 defines JWT as a compact claims representation; common registered claims include iss, sub, aud, exp, nbf, iat, and jti. Decoded claims are readable, but not automatically trustworthy.',
+          ],
+        },
+        {
+          heading: 'Common JWT debugging uses',
+          paragraphs: [
+            'Decoding is useful for examining what an application received before investigating verification failures:',
+          ],
+          bullets: [
+            'Inspect alg, kid, and typ header parameters used during key and algorithm selection.',
+            'Review subject, issuer, audience, roles, scopes, and application-specific claims.',
+            'Convert NumericDate claims such as exp, nbf, and iat from epoch seconds into readable dates.',
+            'Compare token claims with the issuer, audience, and authorization rules expected by an API.',
+            'Remember that every displayed header and claim remains untrusted until the token is verified.',
+          ],
+        },
+        {
+          heading: 'Worked decoding example',
+          paragraphs: [
+            'A token might decode to header {"alg":"HS256","typ":"JWT"} and payload {"sub":"123","iss":"https://issuer.example","aud":"api","exp":1916239022}. The tool can show the expiration time and compare timestamp claims with the current clock. An authentication service must still allow the expected algorithm, verify the signature with the correct key, and enforce issuer, audience, time, and application policy.',
+          ],
+        },
+        {
+          heading: 'Verification limits and privacy',
+          bullets: [
+            'The displayed signature is not verified. A favorable timestamp badge does not mean the token is authentic or acceptable.',
+            'This decoder expects three segments; it does not decrypt a five-part encrypted JWE.',
+            'It does not check key trust, issuer, audience, nonce, revocation, permissions, or server-specific clock leeway.',
+            'Decoding runs in the browser, but bearer tokens are credentials. Avoid live production tokens, shared devices, clipboard history, browser extensions, and screen sharing.',
+          ],
+        },
       ],
     },
     'html-entity': {
@@ -160,12 +242,60 @@ const tools: Record<string, Record<string, {
   generators: {
     'uuid-generator': {
       name: 'UUID Generator',
-      description: 'Generate random UUIDs/GUIDs online. Create single or bulk UUIDs instantly.',
-      longDescription: 'Free online UUID v4 generator. Generate random universally unique identifiers (UUIDs/GUIDs) instantly. Create single or multiple UUIDs at once.',
-      keywords: ['uuid generator', 'guid generator', 'random uuid', 'uuid v4'],
+      metadataTitle: 'UUID v4 & v7 Generator Online – Bulk GUIDs',
+      description: 'Generate up to 1,000 cryptographically random UUID v4 or RFC 9562 UUID v7 identifiers locally, then format, copy, or download the batch.',
+      longDescription: 'Free online UUID v4 and v7 generator. Create random v4 or Unix-millisecond-based v7 identifiers, format them as UUIDs or GUIDs, and export a batch without an API upload.',
+      keywords: ['uuid generator', 'guid generator', 'random uuid', 'uuid v4', 'uuid v7', 'time ordered uuid'],
       faqs: [
-        { question: 'What is a UUID?', answer: 'UUID (Universally Unique Identifier) is a 128-bit identifier that is unique across both space and time.' },
+        { question: 'What is a UUID?', answer: 'UUID (Universally Unique Identifier) is a 128-bit identifier designed to be globally unique without a central issuing authority.' },
         { question: 'What is UUID v4?', answer: 'UUID version 4 is randomly generated. It has 122 random bits and 6 bits for version and variant information.' },
+        { question: 'What is UUID v7?', answer: 'UUID version 7 starts with a 48-bit Unix timestamp in milliseconds and uses 74 additional bits for random data. Values with increasing encoded timestamps sort chronologically, but same-millisecond values are randomized and a backward system-clock adjustment can reverse generation order.' },
+        { question: 'Should I choose UUID v4 or v7?', answer: 'Choose v4 when you want an opaque random identifier. Choose v7 when timestamp locality and chronological database indexing are useful. Neither version should be treated as a secret.' },
+        { question: 'Are the generated UUIDs cryptographically random?', answer: 'The browser cryptography API supplies the 122 random bits in UUID v4 and the 74 random payload bits in UUID v7. UUID v7 also exposes its creation millisecond, so UUIDs are identifiers rather than passwords or tokens.' },
+      ],
+      howToUseSteps: [
+        'Choose UUID v4 for random identifiers or UUID v7 for timestamp-based identifiers.',
+        'Set a quantity from 1 through 1,000 and choose uppercase, braces, or hyphen formatting.',
+        'Select Generate to create the batch locally in your browser.',
+        'Copy the newline-separated values or download them as a UTF-8 text file.',
+      ],
+      answerSections: [
+        {
+          heading: 'What this UUID v4 and v7 generator does',
+          paragraphs: [
+            'This generator creates RFC 9562 UUID version 4 or version 7 values entirely in the browser. Version 4 uses 122 cryptographically random bits. Version 7 stores the current Unix millisecond in its first 48 bits and fills its remaining 74 payload bits from crypto.getRandomValues(). Both set the RFC version and variant fields and use the canonical 8-4-4-4-12 hexadecimal layout.',
+          ],
+        },
+        {
+          heading: 'Choose v4 or v7',
+          paragraphs: [
+            'Use UUID v4 for an opaque random identifier with no timestamp. Use UUID v7 when records should group chronologically by creation millisecond, which can improve index locality compared with random v4 values. Ordering follows the encoded clock value: same-millisecond random tails are not strictly ordered, and a backward system-clock adjustment can reverse generation order.',
+          ],
+        },
+        {
+          heading: 'Bulk formatting and export',
+          paragraphs: [
+            'Generate from 1 through 1,000 values, switch hexadecimal letters to uppercase, remove hyphens, or wrap each value in braces for GUID-oriented workflows. Copy the newline-separated result or download the same batch as a UTF-8 text file.',
+          ],
+          bullets: [
+            'Create database or application identifiers without coordinating a central counter.',
+            'Populate test fixtures, mock API responses, and sample records.',
+            'Attach correlation IDs to requests, jobs, logs, or messages.',
+            'Prepare small batches for imports, prototypes, and local development.',
+          ],
+        },
+        {
+          heading: 'Format examples',
+          paragraphs: [
+            'A v4 result can look like 3f2504e0-4f89-41d3-9a0c-0305e82c3301, while a v7 result has 7 as its version nibble, such as 0190b0cc-4f71-7a8e-9c9a-6a74fbb21a92. Uppercase, hyphenless, and brace options change only presentation; downstream parsers may require the canonical lowercase hyphenated form.',
+          ],
+        },
+        {
+          heading: 'Limitations and privacy',
+          paragraphs: [
+            'UUID uniqueness is probabilistic, and this generator does not check a registry or guarantee uniqueness. UUID v7 exposes its creation millisecond, assumes a non-regressing system clock for generation-order sorting, and random values created within one millisecond are not strictly monotonic. A UUID is an identifier, not automatically a password, API key, or session token. Generation happens locally in the browser; anything you copy, paste, download, transmit, or store is handled by the destination you choose.',
+          ],
+        },
       ],
     },
     'password-generator': {
@@ -231,22 +361,70 @@ const tools: Record<string, Record<string, {
   crypto: {
     'md5-hash': {
       name: 'MD5 Hash Generator',
-      description: 'Generate MD5 hash from text online. Free MD5 hash generator.',
+      metadataTitle: 'MD5 Hash Generator Online – Text & File Checksums',
+      description: 'Generate a 32-character MD5 digest from UTF-8 text or exact file bytes in your browser. Use MD5 only for legacy, non-security checksums.',
       longDescription: 'Free online MD5 hash generator. Create MD5 hash values from any text input instantly. Useful for checksums and data verification.',
       keywords: ['md5 generator', 'md5 hash', 'md5 online', 'generate md5'],
       faqs: [
         { question: 'What is MD5?', answer: 'MD5 (Message Digest 5) is a cryptographic hash function that produces a 128-bit (16-byte) hash value.' },
         { question: 'Is MD5 secure?', answer: 'MD5 is no longer considered secure for cryptographic purposes but is still useful for checksums and non-security-critical applications.' },
       ],
+      answerSections: [
+        {
+          heading: 'What does this MD5 hash generator do?',
+          paragraphs: [
+            'This MD5 hash generator turns text or a selected file into the 128-bit message digest defined by RFC 1321 and renders it as 32 hexadecimal characters. Text is converted to UTF-8 bytes; file mode hashes the file bytes. Lowercase and uppercase are display choices for the same digest. The calculation runs in browser code, so the hashing flow requires no server upload.',
+          ],
+        },
+        {
+          heading: 'MD5 worked example and file checksum',
+          paragraphs: [
+            'For the exact three-character input abc—without quotation marks, spaces, or a trailing line break—the result is 900150983cd24fb0d6963f7d28e17f72. RFC 1321 publishes this test vector. Uppercase display changes only the representation, not the digest bits.',
+            'For a file checksum, select a file and compare all 32 hexadecimal characters with an expected value. A mismatch proves the file bytes differ from those used for the expected digest. A match can support accidental-error detection, but the source of the expected value matters and an MD5 match is not proof against deliberate substitution.',
+          ],
+        },
+        {
+          heading: 'Can MD5 be decrypted, and when should it be used?',
+          paragraphs: [
+            'This is an MD5 generator, not an MD5 decrypt or reverse-hash service. Hashing is not encryption, and a fixed-size digest does not contain a reversible copy of the input. Attempts to reverse a digest normally guess candidate inputs and hash each candidate for comparison.',
+            'RFC 6151 states that MD5 is no longer acceptable when collision resistance is required, including digital signatures. Do not rely on MD5 to detect deliberate tampering. The RFC allows an MD5 checksum used solely to protect against errors, but applications must state what security service, if any, they expect from it.',
+            'Browser-side calculation reduces the need to transmit text or files for hashing, but it does not make MD5 cryptographically safe. Avoid entering passwords or other secrets into an online hash page.',
+          ],
+        },
+      ],
     },
     'sha256-hash': {
       name: 'SHA256 Hash Generator',
-      description: 'Generate SHA256 hash from text online. Free SHA256 hash generator.',
+      metadataTitle: 'SHA-256 Generator Online – Text & File Hashes',
+      description: 'Generate a 64-character SHA-256 digest from UTF-8 text or exact file bytes locally in your browser, with no calculation upload.',
       longDescription: 'Free online SHA256 hash generator. Create SHA256 hash values from any text input. SHA256 is part of the SHA-2 family of cryptographic hash functions.',
       keywords: ['sha256 generator', 'sha256 hash', 'sha256 online', 'generate sha256'],
       faqs: [
         { question: 'What is SHA256?', answer: 'SHA256 (Secure Hash Algorithm 256-bit) is a cryptographic hash function that produces a 256-bit (32-byte) hash value.' },
         { question: 'Is SHA256 secure?', answer: 'Yes, SHA256 is currently considered secure for cryptographic purposes.' },
+      ],
+      answerSections: [
+        {
+          heading: 'What does this SHA-256 generator do?',
+          paragraphs: [
+            'This SHA-256 generator computes the 256-bit message digest specified by NIST FIPS 180-4 for text or a selected file and renders it as 64 hexadecimal characters. In text mode, the browser converts characters to UTF-8 bytes. File mode digests the selected bytes. Lowercase and uppercase are display choices for the same value.',
+          ],
+        },
+        {
+          heading: 'SHA-256 worked example and file verification',
+          paragraphs: [
+            'For the exact three-character input abc—without quotation marks, spaces, or a trailing line break—the result is ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad. A newline, different capitalization, or a different encoding changes the input bytes and produces a different calculation.',
+            'To check a file, generate its SHA-256 value and compare all 64 hexadecimal characters with a value obtained from a trusted source. A mismatch proves the file bytes differ from those used for the expected digest. A match verifies the comparison, but the source of the expected value still matters.',
+          ],
+        },
+        {
+          heading: 'Can SHA-256 be decrypted, and what does it prove?',
+          paragraphs: [
+            'This is a SHA-256 generator, not a decrypt or reverse-hash service. A digest compresses input into a fixed 256-bit result; it is not an encrypted or lossless copy that can be decoded to the original. Finding a likely original means guessing candidates and hashing them for comparison.',
+            'FIPS 180-4 specifies SHA-256 as a secure hash algorithm and describes hashes as components used with applications such as digital signatures and keyed message authentication. This unkeyed generator does not sign data, authenticate a sender, or encrypt content. Do not treat a digest supplied beside an untrusted file as independent proof of origin.',
+            'The text and file hashing paths run in browser code and require no server upload for the calculation. That privacy property does not make a hash encryption; avoid entering secrets into any online utility unless its execution environment is appropriate for your data.',
+          ],
+        },
       ],
     },
     'sha512-hash': {
@@ -263,11 +441,43 @@ const tools: Record<string, Record<string, {
   text: {
     'regex-tester': {
       name: 'Regex Tester',
-      description: 'Test and debug regular expressions online. Real-time regex matching.',
+      metadataTitle: 'JavaScript Regex Tester Online – Matches, Groups & Flags',
+      description: 'Test JavaScript regular expressions online with live match highlighting, indices, capture groups, and browser-supported flags.',
       longDescription: 'Free online regex tester. Test your regular expressions in real-time with match highlighting. Supports JavaScript regex syntax.',
       keywords: ['regex tester', 'regex online', 'test regex', 'regular expression tester'],
       faqs: [
         { question: 'What is regex?', answer: 'Regular expressions (regex) are patterns used to match character combinations in strings. They are used for searching, replacing, and validating text.' },
+        { question: 'Which regex flavor is supported?', answer: 'This tester uses the JavaScript RegExp engine and supports ECMAScript syntax and flags available in your browser. Invalid patterns are reported as syntax errors.' },
+        { question: 'Which regex flags can I test?', answer: 'You can test the standard JavaScript flags supported by your browser, including global, case-insensitive, multiline, dotAll, Unicode, and sticky matching.' },
+      ],
+      answerSections: [
+        {
+          heading: 'What this JavaScript regex tester does',
+          paragraphs: [
+            'This tester compiles the pattern and flags with the browser\'s JavaScript RegExp engine, applies it to the supplied text, highlights each match, and reports its starting index and capture groups. Enter the pattern source without surrounding slash delimiters. Add g to collect every match; without it, JavaScript returns only the first match. Use the match count and indices to confirm repeated matches occur where expected.',
+          ],
+        },
+        {
+          heading: 'Common use cases',
+          bullets: [
+            'Prototype validation rules for identifiers, dates, log lines, or other constrained text.',
+            'Extract repeated values such as email-like strings, ticket numbers, or named fields.',
+            'Compare case-sensitive and case-insensitive behavior with i, or line anchors with m.',
+            'Inspect capturing groups before moving a pattern into JavaScript or TypeScript code.',
+          ],
+        },
+        {
+          heading: 'Worked example',
+          paragraphs: [
+            'Pattern: \\b([A-Za-z0-9._%+-]+)@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})\\b. Flags: gi. Test text: "Contact Ada at ada@example.com or SUPPORT@EXAMPLE.ORG." The result is two highlighted matches. Capture group 1 contains each local part, while group 2 contains each domain. The g flag continues after the first match, and i makes letter case irrelevant.',
+          ],
+        },
+        {
+          heading: 'Limitations and privacy',
+          paragraphs: [
+            'This tool follows ECMAScript regular-expression syntax available in the current browser; PCRE, Python, .NET, and Java-specific constructs may fail or behave differently. A successful match proves only that the pattern matched, not that an email, URL, date, or other value is semantically valid. Ambiguous nested quantifiers can cause expensive backtracking on long input. Pattern evaluation and test text stay in the browser; still avoid sensitive production data on shared devices.',
+          ],
+        },
       ],
     },
     'regex-escape': {
@@ -566,13 +776,44 @@ const tools: Record<string, Record<string, {
       ],
     },
     'user-agent-parser': {
-      name: 'User-Agent Parser',
-      description: 'Analyze user-agent strings to detect browser, OS, and device type.',
-      longDescription: 'Free online user-agent parser. Inspect UA strings and extract browser name/version, operating system, rendering engine, device type, and bot signals.',
-      keywords: ['user-agent parser', 'ua parser', 'browser detection', 'device detection'],
+      name: 'User Agent Parser Online',
+      metadataTitle: 'User Agent Parser Online – Browser, OS, Device & Bots',
+      description: 'Parse one or many User-Agent strings online into browser/version, OS, engine, device vendor/model/type, CPU, and bot fields in your browser.',
+      longDescription: 'Online user-agent parser powered by the bundled UAParser.js 1.0.41 ruleset. Inspect one string or batch lines and extract browser/version, operating system, rendering engine, device vendor/model/type, CPU architecture, and known bot signals without a parsing API upload.',
+      keywords: ['user agent parser online', 'online user agent parser', 'ua parser online', 'browser detection', 'device detection', 'bot detection'],
       faqs: [
-        { question: 'How accurate is UA parsing?', answer: 'It provides practical detection for common browsers and devices, but user-agent strings can be spoofed.' },
-        { question: 'Can it detect bots?', answer: 'Yes. It flags common bot signatures based on known keywords in the user-agent string.' },
+        { question: 'How accurate is UA parsing?', answer: 'The tool uses the bundled UAParser.js 1.0.41 ruleset, but results remain heuristic because User-Agent strings are self-reported, reduced, and can be spoofed.' },
+        { question: 'Can it detect bots?', answer: 'It identifies common named search and AI crawler tokens and applies a fallback bot/crawler/spider heuristic. An unlisted or disguised crawler can still be missed.' },
+        { question: 'Can I parse multiple User-Agent strings?', answer: 'Yes. Enable batch mode and paste one User-Agent string per line to receive a JSON array of parsed results.' },
+      ],
+      answerSections: [
+        {
+          heading: 'What this online user-agent parser returns',
+          paragraphs: [
+            'Paste one user-agent string—or enable batch mode for one string per line—to parse browser name/version, operating system, rendering engine, device vendor/model/type, CPU architecture, and known bot signals. RFC 9110 defines User-Agent as a request field containing product identifiers and optional comments about the software originating a request. This tool reads those self-reported tokens; it does not contact the device or inspect the browser that submitted them.',
+          ],
+        },
+        {
+          heading: 'How detection works',
+          bullets: [
+            'The bundled UAParser.js 1.0.41 ruleset applies its browser, engine, OS, device, and CPU regular-expression data in the browser.',
+            'The result exposes versions plus device vendor and model when the pasted string actually contains enough information.',
+            'A separate bot layer recognizes named tokens such as Googlebot, Bingbot, OAI-SearchBot, GPTBot, PerplexityBot, ClaudeBot, and Applebot, then applies a generic crawler keyword fallback.',
+            'Use my User-Agent reads navigator.userAgent from this browser; batch mode parses one pasted string per line.',
+          ],
+        },
+        {
+          heading: 'Accuracy and limitations',
+          paragraphs: [
+            'Treat every result as a clue, not verified identity. User-agent strings can be changed or spoofed, compatibility tokens can name several browsers, and reduced strings may omit versions or device detail. Unknown values remain Unknown, while an unrecognized non-mobile string falls back to Desktop. Bot detection is also heuristic: an unlisted or disguised crawler can be missed, and an ordinary product name containing a crawler keyword can be flagged. Client Hints and capability detection can provide different or more useful signals when you control the application.',
+          ],
+        },
+        {
+          heading: 'Privacy and safe use',
+          paragraphs: [
+            'Parsing happens in your browser as you type. The input is not sent to a parsing API, but user-agent values can contribute to fingerprinting when combined with other data. Avoid treating this output as authentication, authorization, fraud proof, or a substitute for capability detection.',
+          ],
+        },
       ],
     },
   },
@@ -594,7 +835,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
   const canonicalCategory = getCanonicalToolCategory(toolSlug, category);
   const canonicalUrl = `${siteUrl}/tools/${canonicalCategory}/${toolSlug}`;
-  const metaTitle = `${tool.name} - Free Online Tool`;
+  const metaTitle = tool.metadataTitle || `${tool.name} - Free Online Tool`;
 
   return {
     title: metaTitle,
@@ -602,15 +843,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     keywords: tool.keywords,
     alternates: {
       canonical: canonicalUrl,
-      languages: {
-        'en': canonicalUrl,
-        'tr': `${canonicalUrl}?lang=tr`,
-        'de': `${canonicalUrl}?lang=de`,
-        'es': `${canonicalUrl}?lang=es`,
-        'fr': `${canonicalUrl}?lang=fr`,
-        'ru': `${canonicalUrl}?lang=ru`,
-        'zh': `${canonicalUrl}?lang=zh`,
-      },
     },
     openGraph: {
       title: metaTitle,
@@ -671,6 +903,19 @@ export default async function ToolPage({ params }: PageProps) {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
   const canonicalCategory = getCanonicalToolCategory(toolSlug, category);
 
+  if (category !== canonicalCategory) {
+    permanentRedirect(`/tools/${canonicalCategory}/${toolSlug}`);
+  }
+
+  const canonicalUrl = `${siteUrl}/tools/${canonicalCategory}/${toolSlug}`;
+  const sources = getToolSources(toolSlug);
+  const toolDetail = await getToolBySlug(toolSlug);
+  const relatedTools = (toolDetail?.relatedTools || []).map((relatedTool) => ({
+    name: relatedTool.name,
+    description: relatedTool.shortDescription || `Open the ${relatedTool.name} tool.`,
+    href: buildToolPath(relatedTool.categorySlug, relatedTool.slug),
+  }));
+
   // FAQ structured data for SEO
   const faqStructuredData = {
     '@context': 'https://schema.org',
@@ -714,15 +959,32 @@ export default async function ToolPage({ params }: PageProps) {
   const appStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
+    '@id': `${canonicalUrl}#application`,
+    url: canonicalUrl,
     name: tool.name,
     description: tool.description,
     applicationCategory: 'DeveloperApplication',
     operatingSystem: 'Any',
+    isAccessibleForFree: true,
+    dateModified: LAST_REVIEWED,
+    citation: sources.map((source) => source.url),
     offers: {
       '@type': 'Offer',
       price: '0',
       priceCurrency: 'USD',
     },
+  };
+
+  const relatedToolsStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `Tools related to ${tool.name}`,
+    itemListElement: relatedTools.map((relatedTool, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: relatedTool.name,
+      url: `${siteUrl}${relatedTool.href}`,
+    })),
   };
 
   return (
@@ -740,6 +1002,10 @@ export default async function ToolPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(appStructuredData) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(relatedToolsStructuredData) }}
+      />
 
       <ToolPageWrapper
         toolSlug={toolSlug}
@@ -747,6 +1013,12 @@ export default async function ToolPage({ params }: PageProps) {
         categoryName={categoryNames[category] || category}
         defaultName={tool.name}
         defaultDescription={tool.longDescription}
+        faqs={tool.faqs}
+        sources={sources}
+        answerSections={tool.answerSections || []}
+        relatedTools={relatedTools}
+        lastReviewed={LAST_REVIEWED}
+        howToUseSteps={tool.howToUseSteps}
       >
         <ToolRenderer toolSlug={toolSlug} />
       </ToolPageWrapper>

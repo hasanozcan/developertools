@@ -8,18 +8,9 @@ export const metadata: Metadata = {
   title: 'Terms of Service',
   description: 'Review the DevsTools terms of service for using our free online developer tools.',
   keywords: ['terms of service', 'terms and conditions', 'legal', 'user agreement', 'developer tools terms'],
-  alternates: {
-    canonical: pageUrl,
-    languages: {
-      en: pageUrl,
-      tr: `${pageUrl}?lang=tr`,
-      de: `${pageUrl}?lang=de`,
-      es: `${pageUrl}?lang=es`,
-      fr: `${pageUrl}?lang=fr`,
-      ru: `${pageUrl}?lang=ru`,
-      zh: `${pageUrl}?lang=zh`,
+    alternates: {
+      canonical: pageUrl,
     },
-  },
   openGraph: {
     title: 'Terms of Service',
     description: 'Review the DevsTools terms of service for using our free online developer tools.',
