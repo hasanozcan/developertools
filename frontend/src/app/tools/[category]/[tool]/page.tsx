@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { notFound, permanentRedirect } from 'next/navigation';
 import ToolPageWrapper from '@/components/tools/ToolPageWrapper';
 import ToolRenderer from '@/components/tools/ToolRenderer';
-import { getToolBySlug } from '@/lib/api';
+import { getToolBySlug, toolCatalog } from '@/lib/api';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
 import { getToolSources } from '@/lib/toolSources';
 
@@ -79,6 +79,41 @@ const tools: Record<string, Record<string, {
         { question: 'Is my data safe?', answer: 'Yes! All validation happens in your browser. Your data never leaves your computer.' },
       ],
     },
+    'json-schema-validator': {
+      name: 'JSON Schema Validator',
+      metadataTitle: 'JSON Schema Validator Online - Ajv Error Details',
+      description: 'Validate a JSON document against a Draft 7-compatible JSON Schema locally in your browser with detailed Ajv error paths.',
+      longDescription: 'Free online JSON Schema validator powered by Ajv. Check required properties, types, formats, ranges, nested structures, and additional-property rules without uploading your document.',
+      keywords: ['json schema validator', 'validate json schema', 'ajv validator', 'json contract checker', 'draft 7 json schema'],
+      faqs: [
+        { question: 'How is this different from the JSON Validator?', answer: 'JSON Validator checks whether text is valid JSON syntax. JSON Schema Validator also checks the parsed value against rules such as required properties, types, ranges, and nested structures.' },
+        { question: 'Which JSON Schema version does this tool support?', answer: 'The tool uses Ajv v8 with its default Draft 7-compatible validator. Unknown extension keywords are ignored with a visible warning, while schemas requiring another meta-schema may need draft-specific configuration.' },
+        { question: 'Is my JSON uploaded?', answer: 'No. Parsing, schema compilation, and validation run in your browser. Avoid sensitive data on shared devices because clipboard history and browser extensions can still expose it.' },
+      ],
+      answerSections: [
+        {
+          heading: 'What JSON Schema validation checks',
+          paragraphs: [
+            'JSON syntax validation only proves that text can be parsed. JSON Schema validation applies a contract to the parsed value. It can require properties, constrain value types and ranges, reject unexpected fields, and validate nested arrays or objects. The result includes the instance path, schema path, keyword, and message for every detected rule failure.',
+          ],
+        },
+        {
+          heading: 'How to use the validator',
+          bullets: [
+            'Paste the JSON value you want to test into the document editor.',
+            'Paste a Draft 7-compatible JSON Schema into the schema editor.',
+            'Select Validate to compile the schema and report all matching errors.',
+            'Use instance paths to locate bad document values and schema paths to locate the rule that rejected them.',
+          ],
+        },
+        {
+          heading: 'Limits and privacy',
+          paragraphs: [
+            'A valid result means the current document satisfies every rule recognized from the supplied schema; it does not prove the schema expresses every business rule. Unknown extension keywords are ignored with a visible warning. External schemas are not fetched automatically, and schemas targeting unsupported drafts or remote references can require application-specific configuration. Both document and schema are parsed with JavaScript numbers, so integers outside the safe integer range can lose precision.',
+          ],
+        },
+      ],
+    },
     'json-csv': {
       name: 'JSON to CSV Converter',
       description: 'Convert JSON to CSV and CSV to JSON. Free online format converter.',
@@ -107,6 +142,7 @@ const tools: Record<string, Record<string, {
       faqs: [
         { question: 'What is YAML?', answer: 'YAML (YAML Ain\'t Markup Language) is a human-readable data serialization format commonly used for configuration files, especially in DevOps and cloud environments.' },
         { question: 'When should I use YAML vs JSON?', answer: 'YAML is preferred for configuration files due to better readability. JSON is better for data interchange and API responses due to universal support.' },
+        { question: 'Which YAML compatibility mode is used?', answer: 'Conversion uses the js-yaml YAML 1.1 compatibility schema so anchors, aliases, merge keys, explicit tags, and typed scalars work as shown in the sample. YAML 1.1 can interpret some plain scalars differently from YAML 1.2.' },
       ],
     },
   },
@@ -435,6 +471,41 @@ const tools: Record<string, Record<string, {
       faqs: [
         { question: 'What is SHA512?', answer: 'SHA512 (Secure Hash Algorithm 512-bit) is a cryptographic hash function that produces a 512-bit (64-byte) hash value, typically rendered as a 128-digit hexadecimal number.' },
         { question: 'Is SHA512 secure?', answer: 'Yes, SHA512 is currently considered very secure for cryptographic purposes and is recommended for most applications.' },
+      ],
+    },
+    'hmac-generator': {
+      name: 'HMAC Generator & Verifier',
+      metadataTitle: 'HMAC Generator & Verifier - SHA-256, SHA-384, SHA-512',
+      description: 'Generate or verify HMAC-SHA-256, HMAC-SHA-384, and HMAC-SHA-512 signatures in hexadecimal or Base64, locally in your browser.',
+      longDescription: 'Free online HMAC generator and verifier using the browser Web Crypto API. Authenticate a message with a shared secret and compare supplied signatures without uploading the message or key.',
+      keywords: ['hmac generator', 'hmac verifier', 'hmac sha256', 'hmac sha512', 'webhook signature verifier', 'message authentication code'],
+      faqs: [
+        { question: 'What is HMAC?', answer: 'HMAC is a keyed message authentication code that combines a cryptographic hash function with a shared secret to check message integrity and authenticity.' },
+        { question: 'Is HMAC encryption?', answer: 'No. HMAC does not hide the message. It lets parties that share a secret detect changes and authenticate the message source.' },
+        { question: 'Which algorithms and output formats are supported?', answer: 'The tool supports HMAC with SHA-256, SHA-384, or SHA-512 and displays or verifies signatures in hexadecimal or standard Base64.' },
+      ],
+      answerSections: [
+        {
+          heading: 'Generate and verify HMAC signatures',
+          paragraphs: [
+            'Enter the exact message bytes represented by your text, a shared secret, the expected SHA-2 variant, and the signature encoding. Generate produces a signature; Verify recalculates it with the same inputs and compares the decoded bytes. A different newline, character encoding, secret, algorithm, or output encoding changes the result.',
+          ],
+        },
+        {
+          heading: 'Common webhook and API uses',
+          bullets: [
+            'Reproduce a webhook signature while debugging an integration.',
+            'Compare a locally calculated HMAC with a signature from a trusted sender.',
+            'Convert the same HMAC bytes between hexadecimal and Base64 representations.',
+            'Confirm that message changes cause signature verification to fail.',
+          ],
+        },
+        {
+          heading: 'Security boundary',
+          paragraphs: [
+            'HMAC requires a strong shared secret delivered and stored securely. This browser tool is useful for test data, but production secrets should remain in controlled application environments. HMAC authenticates data; it does not encrypt it and it is not a password-storage scheme. Signature checking is delegated to the browser Web Crypto API instead of comparing signature bytes in application JavaScript.',
+          ],
+        },
       ],
     },
   },
@@ -819,6 +890,37 @@ const tools: Record<string, Record<string, {
   },
 };
 
+function assertToolPageCatalogIntegrity(): void {
+  const configuredRoutes = new Set<string>();
+  const catalogBySlug = new Map(toolCatalog.map((tool) => [tool.slug, tool]));
+  const invalidRoutes: string[] = [];
+
+  for (const [category, categoryTools] of Object.entries(tools)) {
+    for (const toolSlug of Object.keys(categoryTools)) {
+      configuredRoutes.add(`${category}/${toolSlug}`);
+      const catalogTool = catalogBySlug.get(toolSlug);
+      const canonicalCategory = getCanonicalToolCategory(toolSlug, category);
+
+      if (!catalogTool || catalogTool.categorySlug !== canonicalCategory) {
+        invalidRoutes.push(`${category}/${toolSlug}`);
+      }
+    }
+  }
+
+  const canonicalRoutes = new Set(
+    toolCatalog.map((tool) => `${tool.categorySlug}/${tool.slug}`),
+  );
+  const missingRoutes = [...canonicalRoutes].filter((route) => !configuredRoutes.has(route));
+
+  if (missingRoutes.length || invalidRoutes.length) {
+    throw new Error(
+      `Tool page catalog mismatch. Missing: ${missingRoutes.join(', ') || 'none'}. Invalid: ${invalidRoutes.join(', ') || 'none'}.`,
+    );
+  }
+}
+
+assertToolPageCatalogIntegrity();
+
 interface PageProps {
   params: Promise<{ category: string; tool: string }>;
 }
@@ -869,15 +971,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export async function generateStaticParams() {
-  const params: { category: string; tool: string }[] = [];
-
-  for (const [category, categoryTools] of Object.entries(tools)) {
-    for (const toolSlug of Object.keys(categoryTools)) {
-      params.push({ category, tool: toolSlug });
-    }
-  }
-
-  return params;
+  return toolCatalog.map((tool) => ({
+    category: tool.categorySlug,
+    tool: tool.slug,
+  }));
 }
 
 const categoryNames: Record<string, string> = {

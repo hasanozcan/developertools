@@ -34,18 +34,18 @@ export interface ToolDetail extends Tool {
 }
 
 // Static data now that the backend is disabled.
-const staticCategories: Category[] = [
-  { id: 1, slug: 'json', name: 'JSON Tools', description: 'JSON formatting, validation, and conversion tools for developers', toolCount: 5 },
+export const categoryCatalog: Category[] = [
+  { id: 1, slug: 'json', name: 'JSON Tools', description: 'JSON formatting, validation, and conversion tools for developers', toolCount: 6 },
   { id: 2, slug: 'encoding', name: 'Encoder Online', description: 'Encode and decode Base64, URL components, hexadecimal, binary, JSON strings, and more', toolCount: 9 },
   { id: 3, slug: 'generators', name: 'Generators', description: 'UUID, password, and other generators', toolCount: 7 },
-  { id: 4, slug: 'crypto', name: 'Cryptography', description: 'Hash generators and encryption tools', toolCount: 3 },
+  { id: 4, slug: 'crypto', name: 'Cryptography', description: 'Hash generators and message authentication tools', toolCount: 4 },
   { id: 5, slug: 'text', name: 'Text Tools', description: 'Text manipulation and formatting tools', toolCount: 8 },
   { id: 6, slug: 'converters', name: 'Converters', description: 'Data format converters', toolCount: 6 },
   { id: 7, slug: 'formatters', name: 'Code Formatters', description: 'Format and minify code in various languages', toolCount: 6 },
   { id: 8, slug: 'utilities', name: 'Developer Utilities', description: 'Essential utilities for developers', toolCount: 4 },
 ];
 
-const staticTools: Tool[] = [
+export const toolCatalog: Tool[] = [
   { id: 1, slug: 'json-formatter', name: 'JSON Formatter', shortDescription: 'Format and beautify JSON data', categorySlug: 'json', categoryName: 'JSON Tools', isFeatured: true },
   { id: 2, slug: 'json-validator', name: 'JSON Validator', shortDescription: 'Validate JSON syntax and structure', categorySlug: 'json', categoryName: 'JSON Tools', isFeatured: true },
   { id: 3, slug: 'json-csv', name: 'JSON to CSV', shortDescription: 'Convert JSON arrays to CSV and back', categorySlug: 'json', categoryName: 'JSON Tools', isFeatured: true },
@@ -94,6 +94,8 @@ const staticTools: Tool[] = [
   { id: 46, slug: 'http-headers-parser', name: 'HTTP Headers Parser', shortDescription: 'Convert raw HTTP headers to JSON and back', categorySlug: 'utilities', categoryName: 'Developer Utilities', isFeatured: true },
   { id: 47, slug: 'http-status-codes', name: 'HTTP Status Codes', shortDescription: 'Search and reference common HTTP status codes', categorySlug: 'utilities', categoryName: 'Developer Utilities', isFeatured: true },
   { id: 48, slug: 'user-agent-parser', name: 'User Agent Parser Online', shortDescription: 'Parse browser, OS, engine, device, CPU, and bot fields from one or many User-Agent strings', categorySlug: 'utilities', categoryName: 'Developer Utilities', isFeatured: true },
+  { id: 49, slug: 'json-schema-validator', name: 'JSON Schema Validator', shortDescription: 'Validate JSON documents against JSON Schema rules', categorySlug: 'json', categoryName: 'JSON Tools', isFeatured: true },
+  { id: 50, slug: 'hmac-generator', name: 'HMAC Generator & Verifier', shortDescription: 'Generate and verify keyed SHA message authentication codes', categorySlug: 'crypto', categoryName: 'Cryptography', isFeatured: true },
 ];
 
 const curatedRelatedToolSlugs: Record<string, string[]> = {
@@ -101,20 +103,21 @@ const curatedRelatedToolSlugs: Record<string, string[]> = {
   'jwt-decoder': ['base64', 'json-formatter', 'url-encoder'],
   'regex-tester': ['regex-escape', 'text-diff', 'case-converter'],
   'uuid-generator': ['password-generator', 'qr-code', 'slug-generator'],
-  'md5-hash': ['sha256-hash', 'sha512-hash', 'password-generator'],
-  'sha256-hash': ['sha512-hash', 'md5-hash', 'password-generator'],
-  'sha512-hash': ['sha256-hash', 'md5-hash', 'password-generator'],
+  'md5-hash': ['sha256-hash', 'sha512-hash', 'hmac-generator'],
+  'sha256-hash': ['sha512-hash', 'hmac-generator', 'md5-hash'],
+  'sha512-hash': ['sha256-hash', 'hmac-generator', 'md5-hash'],
+  'hmac-generator': ['sha256-hash', 'sha512-hash', 'md5-hash'],
 };
 
 function relatedToolsFor(tool: Tool, count: number = 3): Tool[] {
-  const categoryTools = staticTools.filter((candidate) => candidate.categorySlug === tool.categorySlug);
+  const categoryTools = toolCatalog.filter((candidate) => candidate.categorySlug === tool.categorySlug);
   const categoryIndex = categoryTools.findIndex((candidate) => candidate.slug === tool.slug);
   const categoryRing = categoryTools.slice(categoryIndex + 1).concat(categoryTools.slice(0, categoryIndex));
-  const globalIndex = staticTools.findIndex((candidate) => candidate.slug === tool.slug);
-  const globalRing = staticTools.slice(globalIndex + 1).concat(staticTools.slice(0, globalIndex));
+  const globalIndex = toolCatalog.findIndex((candidate) => candidate.slug === tool.slug);
+  const globalRing = toolCatalog.slice(globalIndex + 1).concat(toolCatalog.slice(0, globalIndex));
   const candidates = [
     ...(curatedRelatedToolSlugs[tool.slug] || [])
-      .map((slug) => staticTools.find((candidate) => candidate.slug === slug))
+      .map((slug) => toolCatalog.find((candidate) => candidate.slug === slug))
       .filter((candidate): candidate is Tool => Boolean(candidate)),
     ...categoryRing,
     ...globalRing,
@@ -146,29 +149,29 @@ function asDetail(tool: Tool): ToolDetail {
 
 // Categories API (static)
 export async function getCategories(): Promise<Category[]> {
-  return staticCategories;
+  return categoryCatalog;
 }
 
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
-  return staticCategories.find((cat) => cat.slug === slug) || null;
+  return categoryCatalog.find((cat) => cat.slug === slug) || null;
 }
 
 // Tools API (static)
 export async function getTools(): Promise<Tool[]> {
-  return staticTools;
+  return toolCatalog;
 }
 
 export async function getToolBySlug(slug: string): Promise<ToolDetail | null> {
-  const tool = staticTools.find((t) => t.slug === slug);
+  const tool = toolCatalog.find((t) => t.slug === slug);
   return tool ? asDetail(tool) : null;
 }
 
 export async function getFeaturedTools(count: number = 10): Promise<Tool[]> {
-  return staticTools.filter((t) => t.isFeatured).slice(0, count);
+  return toolCatalog.filter((t) => t.isFeatured).slice(0, count);
 }
 
-export async function getPopularTools(count: number = staticTools.length): Promise<Tool[]> {
-  return staticTools.slice(0, count);
+export async function getPopularTools(count: number = toolCatalog.length): Promise<Tool[]> {
+  return toolCatalog.slice(0, count);
 }
 
 // Analytics API (noop)

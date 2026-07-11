@@ -6,6 +6,7 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Providers } from '@/components/Providers';
+import { toolCatalog } from '@/lib/api';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -22,14 +23,15 @@ const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 const googleAdsSendTo = process.env.NEXT_PUBLIC_GOOGLE_ADS_SEND_TO;
 const googleAdsConversionValue = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_VALUE;
 const googleAdsConversionCurrency = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_CURRENCY;
+const TOOL_COUNT = toolCatalog.length;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'DevsTools - 48 Free Online Developer Tools',
+    default: `DevsTools - ${TOOL_COUNT} Free Online Developer Tools`,
     template: '%s | DevsTools',
   },
-  description: 'DevsTools - 48 free online developer tools: JSON formatter, Base64 encoder/decoder, UUID generator, MD5/SHA hash generators, regex tester, QR code generator & more. No registration, 100% client-side.',
+  description: `DevsTools - ${TOOL_COUNT} free online developer tools: JSON formatter, Base64 encoder/decoder, UUID generator, MD5/SHA hash generators, regex tester, QR code generator & more. No registration, 100% client-side.`,
   keywords: ['developer tools', 'online tools', 'json formatter', 'base64 encoder', 'uuid generator', 'hash generator', 'regex tester', 'qr code generator', 'free developer tools', 'web developer tools', 'programming tools', 'devstools'],
   authors: [{ name: 'DevsTools' }],
   creator: 'DevsTools',
@@ -42,8 +44,8 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: siteUrl,
     siteName: 'DevsTools',
-    title: 'DevsTools - 48 Free Online Developer Tools',
-    description: '48 free online developer tools: JSON formatter, Base64 encoder, UUID generator, hash generators, regex tester, QR code & more. No registration, 100% client-side.',
+    title: `DevsTools - ${TOOL_COUNT} Free Online Developer Tools`,
+    description: `${TOOL_COUNT} free online developer tools: JSON formatter, Base64 encoder, UUID generator, hash generators, regex tester, QR code & more. No registration, 100% client-side.`,
     images: [
       {
         url: `${siteUrl}/og-image.png`,
@@ -55,8 +57,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'DevsTools - 48 Free Online Developer Tools',
-    description: '48 free online developer tools: JSON formatter, Base64 encoder, UUID generator, hash generators, regex tester, QR code & more. No registration required.',
+    title: `DevsTools - ${TOOL_COUNT} Free Online Developer Tools`,
+    description: `${TOOL_COUNT} free online developer tools: JSON formatter, Base64 encoder, UUID generator, hash generators, regex tester, QR code & more. No registration required.`,
     images: [`${siteUrl}/og-image.png`],
   },
   robots: {
@@ -115,8 +117,8 @@ export default function RootLayout({
               '@id': `${siteUrl}/#website`,
               url: siteUrl,
               name: 'DevsTools',
-              alternateName: 'DevsTools - 48 Free Online Developer Tools',
-              description: '48 free online developer tools for programmers and web developers',
+              alternateName: `DevsTools - ${TOOL_COUNT} Free Online Developer Tools`,
+              description: `${TOOL_COUNT} free online developer tools for programmers and web developers`,
               inLanguage: 'en',
               publisher: {
                 '@type': 'Organization',
@@ -135,7 +137,7 @@ export default function RootLayout({
               '@id': `${siteUrl}/#organization`,
               url: siteUrl,
               name: 'DevsTools',
-              description: '48 free online developer tools for software developers and web designers',
+              description: `${TOOL_COUNT} free online developer tools for software developers and web designers`,
               logo: {
                 '@type': 'ImageObject',
                 url: `${siteUrl}/icon.svg`,

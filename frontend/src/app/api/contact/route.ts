@@ -1,20 +1,10 @@
 import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
-
-interface ContactPayload {
-  name?: string;
-  email?: string;
-  subject?: string;
-  message?: string;
-}
-
-const buildEmailBody = ({ name, email, subject, message }: Required<ContactPayload>) => `
-  <p><strong>Name:</strong> ${name}</p>
-  <p><strong>Email:</strong> ${email}</p>
-  <p><strong>Subject:</strong> ${subject}</p>
-  <p><strong>Message:</strong></p>
-  <p>${message.replace(/\n/g, '<br />')}</p>
-`;
+import {
+  buildContactEmailBody,
+  MAX_CONTACT_BODY_BYTES,
+  validateContactPayload,
+} from '@/lib/contactForm';
 
 const parseBooleanEnv = (value?: string) => {
   if (typeof value !== 'string') return undefined;
@@ -23,12 +13,18 @@ const parseBooleanEnv = (value?: string) => {
 
 export async function POST(request: Request) {
   try {
-    const payload: ContactPayload = await request.json();
-    const { name, email, subject, message } = payload;
-
-    if (!name || !email || !subject || !message) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    const contentLength = Number(request.headers.get('content-length') || 0);
+    if (contentLength > MAX_CONTACT_BODY_BYTES) {
+      return NextResponse.json({ error: 'Request body is too large' }, { status: 413 });
     }
+
+    const validation = validateContactPayload(await request.json());
+
+    if (!validation.ok) {
+      return NextResponse.json({ error: validation.error }, { status: 400 });
+    }
+
+    const { name, email, subject, message } = validation.value;
 
     const targetEmail = (process.env.CONTACT_TO_EMAIL || 'support@devstools.app')
       .split(',')
@@ -72,9 +68,9 @@ export async function POST(request: Request) {
       await transporter.sendMail({
         from: smtpFrom,
         to: targetEmail,
-        replyTo: email,
+        replyTo: { name, address: email },
         subject: `[Contact] ${subject}`,
-        html: buildEmailBody({ name, email, subject, message }),
+        html: buildContactEmailBody({ name, email, subject, message }),
       });
     } catch (sendError) {
       console.error('SMTP send failed:', sendError);

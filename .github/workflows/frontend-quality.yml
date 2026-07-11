@@ -33,3 +33,6 @@ jobs:
 
       - name: Run quality checks
         run: npm run check
+
+      - name: Verify production build
+        run: npm run build

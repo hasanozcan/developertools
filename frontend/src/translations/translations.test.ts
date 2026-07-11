@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { Language } from './index';
 import { translations } from './index';
+import { toolCatalog } from '@/lib/api';
 
 const BASE_LANGUAGE: Language = 'en';
 const COVERAGE_THRESHOLD = 0.65;
@@ -51,14 +52,12 @@ describe('translations', () => {
     });
   });
 
-  it('defines both toolName and toolDesc entries for each tool in English', () => {
-    const englishKeys = Object.keys(translations[BASE_LANGUAGE]);
-    const toolNameKeys = englishKeys.filter((key) => key.startsWith('toolName.'));
-    const toolDescKeys = new Set(englishKeys.filter((key) => key.startsWith('toolDesc.')));
+  it('defines a name and description for every catalog tool in English', () => {
+    const english: Record<string, string> = translations[BASE_LANGUAGE];
 
-    toolNameKeys.forEach((toolNameKey) => {
-      const toolSlug = toolNameKey.replace('toolName.', '');
-      expect(toolDescKeys.has(`toolDesc.${toolSlug}`)).toBe(true);
-    });
+    for (const tool of toolCatalog) {
+      expect(english[`toolName.${tool.slug}`], `${tool.slug} name`).toBeTruthy();
+      expect(english[`toolDesc.${tool.slug}`], `${tool.slug} description`).toBeTruthy();
+    }
   });
 });

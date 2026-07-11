@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { RefreshCw, Eye, EyeOff, Volume2 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
@@ -176,9 +176,10 @@ export default function PasswordGeneratorTool() {
     }
     setPassword(newPassword);
   }, [length, useLowercase, useUppercase, useNumbers, useSymbols, excludeSimilar, usePassphrase, passphraseWordCount, passphraseSeparator]);
+  const initialGenerate = useRef(generate);
 
   useEffect(() => {
-    generate();
+    initialGenerate.current();
   }, []);
 
   const strength = calculateStrength(password, t);

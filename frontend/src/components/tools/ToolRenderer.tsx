@@ -11,6 +11,7 @@ const Loading = () => (
 const toolComponents = {
   'json-formatter': dynamic(() => import('./JsonFormatterTool'), { loading: Loading, ssr: false }),
   'json-validator': dynamic(() => import('./JsonValidatorTool'), { loading: Loading, ssr: false }),
+  'json-schema-validator': dynamic(() => import('./JsonSchemaValidatorTool'), { loading: Loading, ssr: false }),
   'json-csv': dynamic(() => import('./JsonCsvConverterTool'), { loading: Loading, ssr: false }),
   'json-to-typescript': dynamic(() => import('./JsonToTypescriptTool'), { loading: Loading, ssr: false }),
   'yaml-json': dynamic(() => import('./YamlJsonConverterTool'), { loading: Loading, ssr: false }),
@@ -33,6 +34,7 @@ const toolComponents = {
   'md5-hash': dynamic(() => import('./Md5HashTool'), { loading: Loading, ssr: false }),
   'sha256-hash': dynamic(() => import('./Sha256HashTool'), { loading: Loading, ssr: false }),
   'sha512-hash': dynamic(() => import('./Sha512HashTool'), { loading: Loading, ssr: false }),
+  'hmac-generator': dynamic(() => import('./HmacGeneratorTool'), { loading: Loading, ssr: false }),
   'regex-tester': dynamic(() => import('./RegexTesterTool'), { loading: Loading, ssr: false }),
   'text-diff': dynamic(() => import('./TextDiffTool'), { loading: Loading, ssr: false }),
   'case-converter': dynamic(() => import('./CaseConverterTool'), { loading: Loading, ssr: false }),
@@ -58,6 +60,8 @@ const toolComponents = {
   'http-status-codes': dynamic(() => import('./HttpStatusCodesTool'), { loading: Loading, ssr: false }),
   'user-agent-parser': dynamic(() => import('./UserAgentParserTool'), { loading: Loading, ssr: false }),
 } as const;
+
+export const toolComponentSlugs = Object.keys(toolComponents);
 
 type ToolSlug = keyof typeof toolComponents;
 

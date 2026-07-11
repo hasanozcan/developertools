@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useCallback, useRef } from 'react';
-import { Copy, Check, Upload, Image, Trash2 } from 'lucide-react';
+import NextImage from 'next/image';
+import { Copy, Check, Upload, Image as ImageIcon, Trash2 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function ImageToBase64Tool() {
@@ -114,7 +115,7 @@ export default function ImageToBase64Tool() {
           <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-medium text-gray-900 dark:text-white flex items-center gap-2">
-                <Image className="w-5 h-5" />
+                <ImageIcon className="w-5 h-5" />
                 {t('tool.imageBase64.preview')}
               </h3>
               <button
@@ -125,9 +126,12 @@ export default function ImageToBase64Tool() {
               </button>
             </div>
             <div className="flex justify-center bg-white dark:bg-gray-900 rounded-lg p-4" style={{ backgroundImage: 'linear-gradient(45deg, #ccc 25%, transparent 25%), linear-gradient(-45deg, #ccc 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ccc 75%), linear-gradient(-45deg, transparent 75%, #ccc 75%)', backgroundSize: '20px 20px', backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px' }}>
-              <img
+              <NextImage
                 src={dataUri}
-                alt="Preview"
+                alt={imageInfo.name}
+                width={imageInfo.width || 1}
+                height={imageInfo.height || 1}
+                unoptimized
                 className="max-w-full max-h-64 object-contain"
               />
             </div>

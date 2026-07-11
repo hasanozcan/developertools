@@ -54,6 +54,7 @@ import { buildToolPath } from '@/lib/toolRoutes';
 const toolIcons: Record<string, LucideIcon> = {
   'json-formatter': FileJson,
   'json-validator': CheckCircle,
+  'json-schema-validator': ShieldCheck,
   'json-csv': FileSpreadsheet,
   'json-to-typescript': FileType,
   'yaml-json': FileJson2,
@@ -76,6 +77,7 @@ const toolIcons: Record<string, LucideIcon> = {
   'md5-hash': Hash,
   'sha256-hash': ShieldCheck,
   'sha512-hash': Shield,
+  'hmac-generator': KeyRound,
   'regex-tester': Regex,
   'text-diff': GitCompare,
   'regex-escape': Regex,
@@ -121,6 +123,7 @@ const categories: Record<string, CategoryConfig> = {
     tools: [
       { name: 'JSON Formatter', slug: 'json-formatter', description: 'Format and beautify JSON data' },
       { name: 'JSON Validator', slug: 'json-validator', description: 'Validate JSON syntax' },
+      { name: 'JSON Schema Validator', slug: 'json-schema-validator', description: 'Validate JSON documents against JSON Schema rules' },
       { name: 'JSON to CSV Converter', slug: 'json-csv', description: 'Convert JSON to CSV and vice versa' },
       { name: 'JSON to TypeScript', slug: 'json-to-typescript', description: 'Generate TypeScript interfaces from JSON' },
       { name: 'YAML ↔ JSON Converter', slug: 'yaml-json', description: 'Convert between YAML and JSON formats' },
@@ -206,12 +209,13 @@ const categories: Record<string, CategoryConfig> = {
   },
   crypto: {
     name: 'Cryptography',
-    description: 'Hash generators and encryption tools',
+    description: 'Hash generators and message authentication tools',
     icon: Lock,
     tools: [
       { name: 'MD5 Hash Generator', slug: 'md5-hash', description: 'Generate MD5 hash from text' },
       { name: 'SHA256 Hash Generator', slug: 'sha256-hash', description: 'Generate SHA256 hash from text' },
       { name: 'SHA512 Hash Generator', slug: 'sha512-hash', description: 'Generate SHA512 hash from text' },
+      { name: 'HMAC Generator & Verifier', slug: 'hmac-generator', description: 'Generate and verify keyed SHA message authentication codes' },
     ],
   },
   text: {
@@ -293,10 +297,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   // Category-specific keywords
   const categoryKeywords: Record<string, string[]> = {
-    json: ['json tools', 'json formatter', 'json validator', 'json to csv', 'json to typescript', 'yaml to json', 'json beautifier', 'json parser'],
+    json: ['json tools', 'json formatter', 'json validator', 'json schema validator', 'json to csv', 'json to typescript', 'yaml to json', 'json beautifier', 'json parser'],
     encoding: ['online encoder', 'encoder online', 'online decoder', 'encoding tools', 'base64 encoder', 'base64 decoder', 'url encoder', 'url decoder', 'hex encoder', 'binary encoder', 'jwt decoder', 'html entity encoder', 'unicode escape', 'json string escape'],
     generators: ['generators', 'uuid generator', 'password generator', 'lorem ipsum generator', 'qr code generator', 'slug generator', 'css gradient generator', 'meta tags generator'],
-    crypto: ['cryptography', 'hash generator', 'md5 generator', 'sha256 generator', 'sha512 generator', 'hash tools'],
+    crypto: ['cryptography', 'hash generator', 'hmac generator', 'hmac verifier', 'md5 generator', 'sha256 generator', 'sha512 generator', 'hash tools'],
     text: ['text tools', 'regex tester', 'regex escape', 'case converter', 'word counter', 'text diff', 'markdown preview', 'sort lines', 'remove duplicates'],
     converters: ['converters', 'timestamp converter', 'color converter', 'roman numeral converter', 'number base converter', 'json to csv', 'yaml to json', 'url parser', 'query string parser'],
     formatters: ['code formatters', 'sql formatter', 'css minifier', 'javascript minifier', 'html formatter', 'html minifier', 'xml formatter', 'code beautifier'],

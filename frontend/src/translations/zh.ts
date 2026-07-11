@@ -44,7 +44,7 @@ export const zh = {
     'cat.generators': '生成器',
     'cat.generators.desc': 'UUID、密码、二维码生成器',
     'cat.crypto': '加密',
-    'cat.crypto.desc': '哈希生成器和加密',
+    'cat.crypto.desc': '哈希生成器和消息认证',
     'cat.text': '文本工具',
     'cat.text.desc': '文本处理和 Markdown',
     'cat.converters': '转换器',
@@ -551,6 +551,8 @@ export const zh = {
     // Tool Names
     'toolName.json-formatter': 'JSON 格式化工具',
     'toolName.json-validator': 'JSON 验证工具',
+    'toolName.json-schema-validator': 'JSON Schema 验证工具',
+    'toolName.hmac-generator': 'HMAC 生成与验证工具',
     'toolName.json-csv': 'JSON 转 CSV 转换器',
     'toolName.base64': 'Base64 编码/解码器',
     'toolName.url-encoder': 'URL 编码/解码器',
@@ -600,6 +602,8 @@ export const zh = {
     // Tool Descriptions
     'toolDesc.json-formatter': '用语法高亮格式化、校验并清理 JSON。',
     'toolDesc.json-validator': '检查 JSON 语法错误，立即看到准确位置。',
+    'toolDesc.json-schema-validator': '根据 JSON Schema 规则验证 JSON 文档并显示详细错误路径。',
+    'toolDesc.hmac-generator': '以十六进制或 Base64 格式生成并验证 HMAC-SHA 签名。',
     'toolDesc.json-csv': '把 JSON 数组转成 CSV，再把 CSV 文件转回 JSON。',
     'toolDesc.base64': '将文本编码为 Base64，或把 Base64 字符串解码回文本。',
     'toolDesc.url-encoder': '安全地编码/解码 URL 字符串和查询参数。',

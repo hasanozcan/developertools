@@ -44,7 +44,7 @@ export const tr = {
     'cat.generators': 'Oluşturucular',
     'cat.generators.desc': 'UUID, şifre, QR kod oluşturucular',
     'cat.crypto': 'Kriptografi',
-    'cat.crypto.desc': 'Hash oluşturucular ve şifreleme',
+    'cat.crypto.desc': 'Hash oluşturucular ve mesaj doğrulama',
     'cat.text': 'Metin Araçları',
     'cat.text.desc': 'Metin manipülasyonu ve Markdown',
     'cat.converters': 'Dönüştürücüler',
@@ -829,6 +829,8 @@ export const tr = {
     // Tool Names
     'toolName.json-formatter': 'JSON Biçimlendirici',
     'toolName.json-validator': 'JSON Doğrulayıcı',
+    'toolName.json-schema-validator': 'JSON Schema Doğrulayıcı',
+    'toolName.hmac-generator': 'HMAC Oluşturucu ve Doğrulayıcı',
     'toolName.json-csv': 'JSON - CSV Dönüştürücü',
     'toolName.base64': 'Base64 Kodlayıcı/Çözücü',
     'toolName.url-encoder': 'URL Kodlayıcı/Çözücü',
@@ -866,6 +868,8 @@ export const tr = {
     // Tool Descriptions
     'toolDesc.json-formatter': 'JSON\'u sözdizimi vurgusuyla biçimlendir, doğrula ve temizle.',
     'toolDesc.json-validator': 'JSON sözdizimi hatalarını kontrol et, konumu anında gör.',
+    'toolDesc.json-schema-validator': 'JSON belgelerini ayrıntılı hata yollarıyla JSON Schema kurallarına göre doğrulayın.',
+    'toolDesc.hmac-generator': 'HMAC-SHA imzalarını onaltılık veya Base64 biçiminde oluşturun ve doğrulayın.',
     'toolDesc.json-csv': 'JSON dizilerini CSV\'ye, CSV\'leri JSON\'a dönüştür.',
     'toolDesc.base64': 'Metni Base64\'e kodla veya Base64 stringleri çözüp metne çevir.',
     'toolDesc.url-encoder': 'URL metinlerini ve sorgu parametrelerini güvenle kodla veya çöz.',

@@ -78,7 +78,7 @@ export default function UrlEncoderTool() {
     setOutput('');
     setError(null);
     setBatchResults([]);
-  }, [input, output]);
+  }, [output]);
 
   const loadSample = useCallback(() => {
     if (mode === 'encode') {

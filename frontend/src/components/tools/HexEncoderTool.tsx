@@ -92,7 +92,7 @@ export default function HexEncoderTool() {
     setOutput('');
     setError(null);
     setBatchResults([]);
-  }, [input, output]);
+  }, [output]);
 
   const loadSample = useCallback(() => {
     if (mode === 'encode') {

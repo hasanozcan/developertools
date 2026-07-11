@@ -43,7 +43,7 @@ export const es = {
     'cat.generators': 'Generadores',
     'cat.generators.desc': 'Generadores de UUID, contraseñas, códigos QR',
     'cat.crypto': 'Criptografía',
-    'cat.crypto.desc': 'Generadores de hash y cifrado',
+    'cat.crypto.desc': 'Generadores de hash y autenticación de mensajes',
     'cat.text': 'Herramientas de Texto',
     'cat.text.desc': 'Manipulación de texto y Markdown',
     'cat.converters': 'Convertidores',
@@ -764,6 +764,8 @@ export const es = {
     // Tool Names
     'toolName.json-formatter': 'Formateador JSON',
     'toolName.json-validator': 'Validador JSON',
+    'toolName.json-schema-validator': 'Validador JSON Schema',
+    'toolName.hmac-generator': 'Generador y Verificador HMAC',
     'toolName.json-csv': 'Conversor JSON a CSV',
     'toolName.base64': 'Codificador/Decodificador Base64',
     'toolName.url-encoder': 'Codificador/Decodificador URL',
@@ -813,6 +815,8 @@ export const es = {
     // Tool Descriptions
     'toolDesc.json-formatter': 'Formatea, valida y limpia JSON con resaltado de sintaxis.',
     'toolDesc.json-validator': 'Revisa errores de sintaxis JSON y ve la ubicación exacta al instante.',
+    'toolDesc.json-schema-validator': 'Valida documentos JSON con reglas JSON Schema y rutas de error detalladas.',
+    'toolDesc.hmac-generator': 'Genera y verifica firmas HMAC-SHA en hexadecimal o Base64.',
     'toolDesc.json-csv': 'Convierte arreglos JSON a CSV y archivos CSV de vuelta a JSON.',
     'toolDesc.base64': 'Codifica texto a Base64 o decodifica cadenas Base64 a texto.',
     'toolDesc.url-encoder': 'Codifica o decodifica cadenas y parámetros de URL de forma segura.',

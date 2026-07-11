@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import Image from 'next/image';
 import { QrCode, Download, Copy, Check, RefreshCw, Palette } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import QRCode from 'qrcode';
@@ -30,7 +31,7 @@ export default function QrCodeGeneratorTool() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Client-side QR Code generation using qrcode library
-  const generateQR = async (data: string) => {
+  const generateQR = useCallback(async (data: string) => {
     if (!data.trim()) {
       setQrDataUrl('');
       setQrSvg('');
@@ -70,7 +71,7 @@ export default function QrCodeGeneratorTool() {
     } finally {
       setIsGenerating(false);
     }
-  };
+  }, [options]);
 
   useEffect(() => {
     const debounce = setTimeout(() => {
@@ -78,7 +79,7 @@ export default function QrCodeGeneratorTool() {
     }, 300);
 
     return () => clearTimeout(debounce);
-  }, [text, options]);
+  }, [text, generateQR]);
 
   const downloadQR = async (format: 'png' | 'svg') => {
     if (!text.trim()) return;
@@ -322,11 +323,12 @@ export default function QrCodeGeneratorTool() {
               style={{ width: Math.min(options.size, 400), height: Math.min(options.size, 400) }}
             />
           ) : qrDataUrl ? (
-            <img 
+            <Image
               src={qrDataUrl} 
               alt="QR Code" 
               width={options.size > 400 ? 400 : options.size}
               height={options.size > 400 ? 400 : options.size}
+              unoptimized
               className="max-w-full"
             />
           ) : (

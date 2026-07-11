@@ -44,7 +44,7 @@ export const ru = {
     'cat.generators': 'Генераторы',
     'cat.generators.desc': 'Генераторы UUID, паролей, QR-кодов',
     'cat.crypto': 'Криптография',
-    'cat.crypto.desc': 'Генераторы хэшей и шифрование',
+    'cat.crypto.desc': 'Генераторы хэшей и аутентификация сообщений',
     'cat.text': 'Текстовые Инструменты',
     'cat.text.desc': 'Обработка текста и Markdown',
     'cat.converters': 'Конвертеры',
@@ -675,6 +675,8 @@ export const ru = {
     // Tool Names
     'toolName.json-formatter': 'Форматировщик JSON',
     'toolName.json-validator': 'Валидатор JSON',
+    'toolName.json-schema-validator': 'Валидатор JSON Schema',
+    'toolName.hmac-generator': 'Генератор и проверка HMAC',
     'toolName.json-csv': 'Конвертер JSON в CSV',
     'toolName.base64': 'Кодировщик/Декодер Base64',
     'toolName.url-encoder': 'Кодировщик/Декодер URL',
@@ -724,6 +726,8 @@ export const ru = {
     // Tool Descriptions
     'toolDesc.json-formatter': 'Форматируйте, проверяйте и очищайте JSON с подсветкой синтаксиса.',
     'toolDesc.json-validator': 'Проверяйте ошибки синтаксиса JSON и сразу видьте точное место.',
+    'toolDesc.json-schema-validator': 'Проверяйте JSON-документы по правилам JSON Schema с подробными путями ошибок.',
+    'toolDesc.hmac-generator': 'Создавайте и проверяйте подписи HMAC-SHA в шестнадцатеричном формате или Base64.',
     'toolDesc.json-csv': 'Преобразуйте массивы JSON в CSV и файлы CSV обратно в JSON.',
     'toolDesc.base64': 'Кодируйте текст в Base64 или декодируйте строки Base64 в текст.',
     'toolDesc.url-encoder': 'Безопасно кодируйте или декодируйте URL-строки и query-параметры.',

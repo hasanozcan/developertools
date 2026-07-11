@@ -69,7 +69,7 @@ export default function Base64Tool() {
     setOutput('');
     setError(null);
     setBatchResults([]);
-  }, [input, output]);
+  }, [output]);
 
   const loadSample = useCallback(() => {
     if (mode === 'encode') {

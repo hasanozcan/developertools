@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 import { Copy, Check, ArrowLeftRight, FileText, Trash2 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
-import * as yaml from 'js-yaml';
+import { convertJsonToYaml, convertYamlToJson } from '@/lib/yamlJson';
 
 interface YamlError {
   message: string;
@@ -31,21 +31,9 @@ export default function YamlJsonConverterTool() {
 
     try {
       if (mode === 'yamlToJson') {
-        // Use js-yaml library for proper YAML parsing
-        const parsed = yaml.load(input, {
-          schema: yaml.FAILSAFE_SCHEMA,
-        });
-        setOutput(JSON.stringify(parsed, null, indentSpaces));
+        setOutput(convertYamlToJson(input, indentSpaces));
       } else {
-        const parsed = JSON.parse(input);
-        // Use js-yaml for YAML generation with better formatting
-        const yamlString = yaml.dump(parsed, {
-          indent: indentSpaces,
-          lineWidth: -1, // No line wrapping
-          noRefs: true, // Don't use anchors/aliases
-          sortKeys: false, // Preserve key order
-        });
-        setOutput(yamlString);
+        setOutput(convertJsonToYaml(input, indentSpaces));
       }
       setError(null);
       setErrorLine(null);
@@ -323,7 +311,7 @@ service:
       <div className="text-sm text-gray-500 dark:text-gray-400 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
         <p className="font-medium text-blue-900 dark:text-blue-300 mb-2">{t('tool.yamlJson.tip')}</p>
         <p className="mb-2">{t('tool.yamlJson.tipText')}</p>
-        <p className="text-blue-700 dark:text-blue-400 font-medium">Now using js-yaml library for full YAML spec support:</p>
+        <p className="text-blue-700 dark:text-blue-400 font-medium">YAML 1.1 compatibility mode powered by js-yaml:</p>
         <ul className="mt-1 ml-4 list-disc space-y-1">
           <li>✓ Anchors (&amp;) and aliases (*)</li>
           <li>✓ Multi-line strings (|, &gt;)</li>

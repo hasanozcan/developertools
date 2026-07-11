@@ -29,12 +29,13 @@ DeveloperTools/
     └── package.json
 ```
 
-## Araçlar (27 adet)
+## Öne Çıkan Araçlar
 
 | Araç | Kategori | İşlem Tipi |
 |------|----------|------------|
 | JSON Formatter | JSON Tools | Client-side |
 | JSON Validator | JSON Tools | Client-side |
+| JSON Schema Validator | JSON Tools | Client-side |
 | JSON to CSV Converter | JSON Tools | Client-side |
 | JSON to TypeScript | JSON Tools | Client-side |
 | YAML ↔ JSON Converter | JSON Tools | Client-side |
@@ -52,6 +53,8 @@ DeveloperTools/
 | Meta Tags Generator | Generators | Client-side |
 | MD5 Hash Generator | Crypto | Client-side |
 | SHA256 Hash Generator | Crypto | Client-side |
+| SHA512 Hash Generator | Crypto | Client-side |
+| HMAC Generator & Verifier | Crypto | Client-side |
 | Regex Tester | Text Tools | Client-side |
 | Text Diff Tool | Text Tools | Client-side |
 | Markdown Preview | Text Tools | Client-side |

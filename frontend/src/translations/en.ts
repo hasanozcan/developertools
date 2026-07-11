@@ -44,7 +44,7 @@ export const en = {
     'cat.generators': 'Generators',
     'cat.generators.desc': 'UUID, password, QR code generators',
     'cat.crypto': 'Cryptography',
-    'cat.crypto.desc': 'Hash generators and encryption',
+    'cat.crypto.desc': 'Hash generators and message authentication',
     'cat.text': 'Text Tools',
     'cat.text.desc': 'Text manipulation and Markdown',
     'cat.converters': 'Converters',
@@ -835,6 +835,8 @@ export const en = {
     // Tool Names
     'toolName.json-formatter': 'JSON Formatter',
     'toolName.json-validator': 'JSON Validator',
+    'toolName.json-schema-validator': 'JSON Schema Validator',
+    'toolName.hmac-generator': 'HMAC Generator & Verifier',
     'toolName.json-csv': 'JSON to CSV Converter',
     'toolName.base64': 'Base64 Encoder/Decoder',
     'toolName.url-encoder': 'URL Encoder/Decoder',
@@ -884,6 +886,8 @@ export const en = {
     // Tool Descriptions
     'toolDesc.json-formatter': 'Format, validate, and clean JSON with syntax highlighting.',
     'toolDesc.json-validator': 'Check JSON syntax errors and get precise error locations instantly.',
+    'toolDesc.json-schema-validator': 'Validate JSON documents against JSON Schema rules with detailed error paths.',
+    'toolDesc.hmac-generator': 'Generate and verify HMAC-SHA signatures in hexadecimal or Base64.',
     'toolDesc.json-csv': 'Convert JSON arrays to CSV and CSV files back to JSON.',
     'toolDesc.base64': 'Encode text to Base64 or decode Base64 strings back to text.',
     'toolDesc.url-encoder': 'Safely encode or decode URL strings and query params.',

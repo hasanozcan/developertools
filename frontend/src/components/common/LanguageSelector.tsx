@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 import { ChevronDown } from 'lucide-react';
 import { useLanguage, Language, languageNames, languageFlags, languageFlagUrls } from '@/context/LanguageContext';
 
@@ -10,9 +11,12 @@ function FlagIcon({ lang }: { lang: Language }) {
 
   return (
     <span className="inline-flex items-center justify-center w-5 h-5">
-      <img
+      <Image
         src={src}
         alt={emojiFallback}
+        width={20}
+        height={20}
+        unoptimized
         className="w-5 h-5"
         onError={(e) => {
           // Hide broken image; emoji fallback will still render via aria-label

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link2, Copy, Check, FileText, Settings, RefreshCw } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -28,7 +28,7 @@ export default function SlugGeneratorTool() {
     transliterate: true,
   });
 
-  const stopWords = [
+  const stopWords = useMemo(() => [
     'a', 'an', 'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for',
     'of', 'with', 'by', 'from', 'as', 'is', 'was', 'are', 'were', 'been',
     'be', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could',
@@ -38,9 +38,9 @@ export default function SlugGeneratorTool() {
     'when', 'why', 'how', 'all', 'each', 'every', 'both', 'few', 'more',
     'most', 'other', 'some', 'such', 'no', 'not', 'only', 'same', 'so',
     'than', 'too', 'very', 'just', 'also',
-  ];
+  ], []);
 
-  const transliterationMap: Record<string, string> = {
+  const transliterationMap = useMemo<Record<string, string>>(() => ({
     '\u00e0': 'a',
     '\u00e1': 'a',
     '\u00e2': 'a',
@@ -108,17 +108,17 @@ export default function SlugGeneratorTool() {
     '\u0165': 't',
     '\u016f': 'u',
     '\u017e': 'z',
-  };
+  }), []);
 
-  const transliterateText = (value: string): string => {
+  const transliterateText = useCallback((value: string): string => {
     const replaced = value
       .split('')
       .map((char) => transliterationMap[char] || transliterationMap[char.toLowerCase()] || char)
       .join('');
     return replaced.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  };
+  }, [transliterationMap]);
 
-  const generateSlug = (text: string): string => {
+  const generateSlug = useCallback((text: string): string => {
     if (!text.trim()) return '';
 
     let result = text;
@@ -157,7 +157,7 @@ export default function SlugGeneratorTool() {
     }
 
     return result;
-  };
+  }, [options, stopWords, transliterateText]);
 
   useEffect(() => {
     if (bulkMode) {
@@ -178,7 +178,7 @@ export default function SlugGeneratorTool() {
       setSlug(generateSlug(input));
       setBulkSlugs([]);
     }
-  }, [input, options, bulkMode]);
+  }, [input, bulkMode, generateSlug]);
 
   const copyToClipboard = async () => {
     if (bulkMode) {

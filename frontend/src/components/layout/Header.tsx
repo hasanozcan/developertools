@@ -9,46 +9,20 @@ import { useFavorites } from '@/context/FavoritesContext';
 import { useHistory } from '@/context/HistoryContext';
 import { useLanguage } from '@/context/LanguageContext';
 import LanguageSelector from '@/components/common/LanguageSelector';
+import { toolCatalog } from '@/lib/api';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
 
-// Tool slugs for search - names will be translated dynamically
-const toolSlugs = [
-  { slug: 'json-formatter', category: 'json', keywords: ['json', 'format', 'beautify', 'validate'] },
-  { slug: 'json-to-typescript', category: 'json', keywords: ['json', 'typescript', 'ts', 'interface', 'type', 'convert'] },
-  { slug: 'yaml-json', category: 'json', keywords: ['yaml', 'json', 'convert', 'yml'] },
-  { slug: 'base64', category: 'encoding', keywords: ['base64', 'encode', 'decode'] },
-  { slug: 'url-encoder', category: 'encoding', keywords: ['url', 'encode', 'decode', 'percent'] },
-  { slug: 'jwt-decoder', category: 'encoding', keywords: ['jwt', 'token', 'decode', 'json web token'] },
-  { slug: 'unicode-escape', category: 'encoding', keywords: ['unicode', 'escape', 'encode', 'decode', '\\u'] },
-  { slug: 'json-string-escape', category: 'encoding', keywords: ['json', 'string', 'escape', 'unescape'] },
-  { slug: 'image-to-base64', category: 'encoding', keywords: ['image', 'base64', 'convert', 'data uri', 'png', 'jpg'] },
-  { slug: 'uuid-generator', category: 'generators', keywords: ['uuid', 'guid', 'generate', 'random'] },
-  { slug: 'password-generator', category: 'generators', keywords: ['password', 'generate', 'secure', 'random'] },
-  { slug: 'css-gradient', category: 'generators', keywords: ['css', 'gradient', 'linear', 'radial', 'color'] },
-  { slug: 'meta-tags', category: 'generators', keywords: ['meta', 'tags', 'seo', 'og', 'twitter', 'html'] },
-  { slug: 'md5-hash', category: 'crypto', keywords: ['md5', 'hash', 'checksum'] },
-  { slug: 'sha256-hash', category: 'crypto', keywords: ['sha256', 'sha-256', 'hash', 'secure'] },
-  { slug: 'regex-tester', category: 'text', keywords: ['regex', 'regular expression', 'test', 'match'] },
-  { slug: 'regex-escape', category: 'text', keywords: ['regex', 'escape', 'special characters'] },
-  { slug: 'timestamp-converter', category: 'converters', keywords: ['timestamp', 'unix', 'epoch', 'date', 'time'] },
-  { slug: 'color-converter', category: 'converters', keywords: ['color', 'hex', 'rgb', 'hsl', 'converter'] },
-  { slug: 'url-parser', category: 'converters', keywords: ['url', 'parser', 'query', 'hostname', 'path'] },
-  { slug: 'query-string-parser', category: 'converters', keywords: ['query string', 'url params', 'parse', 'builder'] },
-  { slug: 'lorem-ipsum', category: 'text', keywords: ['lorem', 'ipsum', 'placeholder', 'text'] },
-  { slug: 'html-entity', category: 'encoding', keywords: ['html', 'entity', 'encode', 'decode'] },
-  { slug: 'json-csv', category: 'converters', keywords: ['json', 'csv', 'convert', 'export'] },
-  { slug: 'text-diff', category: 'text', keywords: ['diff', 'compare', 'text', 'difference'] },
-  { slug: 'qr-code', category: 'generators', keywords: ['qr', 'qr code', 'barcode', 'generate'] },
-  { slug: 'slug-generator', category: 'generators', keywords: ['slug', 'url', 'seo', 'permalink'] },
-  { slug: 'sql-formatter', category: 'formatters', keywords: ['sql', 'format', 'beautify', 'query'] },
-  { slug: 'css-minifier', category: 'formatters', keywords: ['css', 'minify', 'compress', 'optimize'] },
-  { slug: 'js-minifier', category: 'formatters', keywords: ['javascript', 'js', 'minify', 'compress'] },
-  { slug: 'cron-parser', category: 'utilities', keywords: ['cron', 'schedule', 'crontab', 'job'] },
-  { slug: 'http-headers-parser', category: 'utilities', keywords: ['http headers', 'request headers', 'response headers'] },
-  { slug: 'http-status-codes', category: 'utilities', keywords: ['http', 'status', '404', '500', 'response code'] },
-  { slug: 'user-agent-parser', category: 'utilities', keywords: ['user agent', 'browser detection', 'os detection'] },
-  { slug: 'markdown-preview', category: 'utilities', keywords: ['markdown', 'md', 'preview', 'editor'] },
-];
+// Derive search coverage from the same catalog that powers the home page and API.
+const toolSlugs = toolCatalog.map((tool) => ({
+  slug: tool.slug,
+  category: tool.categorySlug,
+  keywords: [
+    tool.slug.replace(/-/g, ' '),
+    tool.name.toLowerCase(),
+    tool.shortDescription?.toLowerCase() || '',
+    ...tool.slug.split('-'),
+  ],
+}));
 
 // Tool type for search results
 type ToolItem = {
@@ -142,6 +116,8 @@ export default function Header() {
         { slug: 'cron-parser', category: 'utilities', name: t('toolName.cron-parser') },
         { slug: 'http-status-codes', category: 'utilities', name: t('toolName.http-status-codes') },
         { slug: 'user-agent-parser', category: 'utilities', name: t('toolName.user-agent-parser') },
+        { slug: 'json-schema-validator', category: 'json', name: t('toolName.json-schema-validator') },
+        { slug: 'hmac-generator', category: 'crypto', name: t('toolName.hmac-generator') },
         { slug: 'md5-hash', category: 'crypto', name: t('toolName.md5-hash') },
         { slug: 'sha256-hash', category: 'crypto', name: t('toolName.sha256-hash') },
       ]
@@ -154,6 +130,15 @@ export default function Header() {
     category: getCanonicalToolCategory(tool.slug, tool.category),
     name: t(`toolName.${tool.slug}`)
   })), [t]);
+
+  const handleSelectTool = useCallback((tool: typeof allTools[number]) => {
+    router.push(buildToolPath(tool.category, tool.slug));
+    setSearchOpen(false);
+    setSearchQuery('');
+    setSelectedIndex(-1);
+    setShowFavorites(false);
+    setShowHistory(false);
+  }, [router]);
 
   // Handle search
   useEffect(() => {
@@ -240,7 +225,7 @@ export default function Header() {
         }
         break;
     }
-  }, [searchResults, selectedIndex]);
+  }, [handleSelectTool, searchResults, selectedIndex]);
 
   // Scroll selected item into view
   useEffect(() => {
@@ -251,15 +236,6 @@ export default function Header() {
       }
     }
   }, [selectedIndex]);
-
-  const handleSelectTool = (tool: typeof allTools[0]) => {
-    router.push(buildToolPath(tool.category, tool.slug));
-    setSearchOpen(false);
-    setSearchQuery('');
-    setSelectedIndex(-1);
-    setShowFavorites(false);
-    setShowHistory(false);
-  };
 
   const favoriteTools = allTools.filter(t => favorites.includes(t.slug));
 

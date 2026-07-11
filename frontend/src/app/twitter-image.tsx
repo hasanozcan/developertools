@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og';
+import { toolCatalog } from '@/lib/api';
 
 export const runtime = 'edge';
 export const alt = 'DevsTools - Free Online Developer Tools';
@@ -147,7 +148,7 @@ export default async function Image() {
                         marginBottom: 16,
                     }}
                 >
-                    48 Free Tools - No Registration - 100% Client-Side
+                    {toolCatalog.length} Free Tools - No Registration - 100% Client-Side
                 </div>
 
                 {/* URL */}
