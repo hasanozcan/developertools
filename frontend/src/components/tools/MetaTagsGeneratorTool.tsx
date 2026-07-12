@@ -3,6 +3,7 @@
 import { useState, useCallback } from 'react';
 import { Copy, Check, RefreshCw, Info } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { serializeJsonForHtmlScript } from '@/lib/scriptSafeJson';
 
 interface MetaTagsConfig {
   // Basic
@@ -210,7 +211,7 @@ export default function MetaTagsGeneratorTool() {
       const cleanJsonLd = Object.fromEntries(
         Object.entries(jsonLd).filter(([_, v]) => v !== undefined && v !== '')
       );
-      tags.push(`<script type="application/ld+json">\n${JSON.stringify(cleanJsonLd, null, 2)}\n</script>`);
+      tags.push(`<script type="application/ld+json">\n${serializeJsonForHtmlScript(cleanJsonLd, 2)}\n</script>`);
     }
     
     return tags.join('\n');

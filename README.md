@@ -55,6 +55,7 @@ DeveloperTools/
 | SHA256 Hash Generator | Crypto | Client-side |
 | SHA512 Hash Generator | Crypto | Client-side |
 | HMAC Generator & Verifier | Crypto | Client-side |
+| PKCE Generator & Verifier | Crypto | Client-side |
 | Regex Tester | Text Tools | Client-side |
 | Text Diff Tool | Text Tools | Client-side |
 | Markdown Preview | Text Tools | Client-side |
@@ -64,6 +65,7 @@ DeveloperTools/
 | CSS Minifier | Formatters | Client-side |
 | JavaScript Minifier | Formatters | Client-side |
 | Cron Expression Parser | Utilities | Client-side |
+| IPv4 CIDR Calculator | Utilities | Client-side |
 
 ## Hızlı Başlangıç
 

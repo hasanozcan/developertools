@@ -1,70 +1,18 @@
 'use client';
 
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import CopyButton from '@/components/common/CopyButton';
-import { useLanguage } from '@/context/LanguageContext';
-
-type Base = 'decimal' | 'hex' | 'octal' | 'binary';
-
-const baseInfo: Record<Base, { name: string; radix: number; prefix: string }> = {
-  decimal: { name: 'Decimal', radix: 10, prefix: '' },
-  hex: { name: 'Hexadecimal', radix: 16, prefix: '0x' },
-  octal: { name: 'Octal', radix: 8, prefix: '0o' },
-  binary: { name: 'Binary', radix: 2, prefix: '0b' },
-};
-
-function convertNumber(value: string, fromBase: Base, toBase: Base): string {
-  if (!value.trim()) return '';
-
-  try {
-    // Parse input based on source base
-    let cleanValue = value.trim();
-    
-    // Remove prefix if present
-    const prefixes: Record<string, Base> = {
-      '0x': 'hex',
-      '0X': 'hex',
-      '0o': 'octal',
-      '0O': 'octal',
-      '0b': 'binary',
-      '0B': 'binary',
-    };
-
-    for (const [prefix, baseType] of Object.entries(prefixes)) {
-      if (cleanValue.startsWith(prefix)) {
-        cleanValue = cleanValue.substring(prefix.length);
-        break;
-      }
-    }
-
-    // Parse the number
-    const num = parseInt(cleanValue, baseInfo[fromBase].radix);
-    
-    if (isNaN(num)) {
-      throw new Error('Invalid number');
-    }
-
-    // Convert to target base
-    const converted = num.toString(baseInfo[toBase].radix);
-    
-    // Add prefix if not decimal
-    const prefix = toBase === 'decimal' ? '' : baseInfo[toBase].prefix;
-    return prefix + converted.toUpperCase();
-  } catch {
-    throw new Error('Invalid input');
-  }
-}
+import { convertIntegerToAllBases, type NumberBase } from '@/lib/numberBase';
 
 export default function NumberBaseConverterTool() {
-  const { t } = useLanguage();
   const [decimal, setDecimal] = useState('');
   const [hex, setHex] = useState('');
   const [octal, setOctal] = useState('');
   const [binary, setBinary] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  const convertAll = useCallback((value: string, sourceBase: Base) => {
+  const convertAll = useCallback((value: string, sourceBase: NumberBase) => {
     if (!value.trim()) {
       setDecimal('');
       setHex('');
@@ -75,29 +23,18 @@ export default function NumberBaseConverterTool() {
     }
 
     try {
-      const bases: Base[] = ['decimal', 'hex', 'octal', 'binary'];
-      
-      for (const targetBase of bases) {
-        const result = convertNumber(value, sourceBase, targetBase);
-        
-        switch (targetBase) {
-          case 'decimal':
-            setDecimal(result);
-            break;
-          case 'hex':
-            setHex(result);
-            break;
-          case 'octal':
-            setOctal(result);
-            break;
-          case 'binary':
-            setBinary(result);
-            break;
-        }
-      }
+      const converted = convertIntegerToAllBases(value, sourceBase);
+      setDecimal(converted.decimal);
+      setHex(converted.hex);
+      setOctal(converted.octal);
+      setBinary(converted.binary);
       setError(null);
-    } catch (e) {
-      setError('Invalid number input');
+    } catch (error) {
+      setDecimal(sourceBase === 'decimal' ? value : '');
+      setHex(sourceBase === 'hex' ? value : '');
+      setOctal(sourceBase === 'octal' ? value : '');
+      setBinary(sourceBase === 'binary' ? value : '');
+      setError(error instanceof Error ? error.message : 'Invalid integer input');
     }
   }, []);
 

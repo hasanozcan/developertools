@@ -60,4 +60,19 @@ describe('translations', () => {
       expect(english[`toolDesc.${tool.slug}`], `${tool.slug} description`).toBeTruthy();
     }
   });
+
+  it('keeps the new and enhanced tool interfaces localized in every supported language', () => {
+    const localizedKeys = Object.keys(translations[BASE_LANGUAGE]).filter(
+      (key) =>
+        key.startsWith('tool.pkce.') ||
+        key.startsWith('tool.cidr.') ||
+        key.startsWith('tool.cronParser.description.'),
+    );
+
+    (Object.keys(translations) as Language[]).forEach((language) => {
+      for (const key of localizedKeys) {
+        expect(translations[language][key], `${language}: ${key}`).toBeTruthy();
+      }
+    });
+  });
 });

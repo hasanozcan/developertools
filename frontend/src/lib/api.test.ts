@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { categoryCatalog, getToolBySlug, getTools, toolCatalog } from './api';
 import { toolComponentSlugs } from '@/components/tools/ToolRenderer';
+import { getToolSources } from './toolSources';
 
 describe('static tool relationships', () => {
   it('keeps catalog identifiers unique and category counts accurate', () => {
@@ -17,6 +18,14 @@ describe('static tool relationships', () => {
 
   it('keeps a renderable component registered for every catalog tool', () => {
     expect([...toolComponentSlugs].sort()).toEqual(toolCatalog.map((tool) => tool.slug).sort());
+  });
+
+  it('keeps at least one primary reference for every catalog tool', () => {
+    for (const tool of toolCatalog) {
+      const sources = getToolSources(tool.slug);
+      expect(sources.length, tool.slug).toBeGreaterThan(0);
+      expect(sources.every((source) => source.url.startsWith('https://')), tool.slug).toBe(true);
+    }
   });
 
   it('gives every canonical tool three unique, non-self related tools', async () => {

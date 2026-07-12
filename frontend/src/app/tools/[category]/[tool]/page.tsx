@@ -6,7 +6,7 @@ import { getToolBySlug, toolCatalog } from '@/lib/api';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
 import { getToolSources } from '@/lib/toolSources';
 
-const LAST_REVIEWED = '2026-07-11';
+const LAST_REVIEWED = '2026-07-12';
 
 // Tool configurations
 const tools: Record<string, Record<string, {
@@ -508,6 +508,47 @@ const tools: Record<string, Record<string, {
         },
       ],
     },
+    'pkce-generator': {
+      name: 'PKCE Generator & Verifier',
+      metadataTitle: 'PKCE Generator & Verifier - OAuth S256 Challenge',
+      description: 'Generate cryptographically random OAuth PKCE code verifiers, derive S256 code challenges, and verify existing pairs locally in your browser.',
+      longDescription: 'Free OAuth PKCE generator and verifier using secure browser randomness and the Web Crypto SHA-256 implementation. Create standards-compatible verifier and S256 challenge pairs without sending them to a server.',
+      keywords: ['pkce generator', 'pkce verifier', 'oauth pkce', 'code challenge generator', 's256 challenge', 'oauth security'],
+      faqs: [
+        { question: 'What is PKCE?', answer: 'PKCE is an OAuth extension that binds an authorization request to a secret code verifier held by the client, reducing authorization-code interception risk.' },
+        { question: 'Which challenge method does this tool use?', answer: 'It uses S256: SHA-256 of the code verifier encoded as unpadded Base64url. The plain method is intentionally not generated.' },
+        { question: 'Can I use the generated value in production?', answer: 'The values use secure browser randomness and valid PKCE characters, but you should generate and retain production verifiers inside the OAuth client that will complete the token exchange.' },
+      ],
+      answerSections: [
+        {
+          heading: 'How the PKCE S256 pair is created',
+          paragraphs: [
+            'A PKCE client creates a high-entropy code verifier, hashes its exact ASCII value with SHA-256, and sends the unpadded Base64url result as the code challenge. The authorization request includes code_challenge and code_challenge_method=S256. The later token request sends the original code_verifier so the authorization server can derive and compare the same challenge.',
+          ],
+        },
+        {
+          heading: 'Verifier rules and verification',
+          bullets: [
+            'Generate creates 43 to 128 characters from the RFC 7636 unreserved character set using rejection-sampled secure random bytes.',
+            'Derive accepts an existing verifier only when its full value satisfies the length and character rules.',
+            'Verify derives S256 again and compares it with an exact 43-character Base64url challenge.',
+            'Whitespace is significant. Copy the verifier exactly and retain it only for the matching authorization flow.',
+          ],
+        },
+        {
+          heading: 'Security boundary',
+          paragraphs: [
+            'PKCE protects an authorization code from being redeemed without the matching verifier; it does not replace redirect URI validation, OAuth state or OIDC nonce checks, TLS, secure token storage, or authorization-server validation. Generation and hashing happen locally in this browser, but clipboard history, extensions, logs, or a shared device can still expose copied values.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose a verifier length from 43 to 128 characters and generate a secure pair.',
+        'Send the challenge with code_challenge_method=S256 in the authorization request.',
+        'Keep the verifier in the OAuth client and send it only during the matching token exchange.',
+        'To debug an existing pair, paste the verifier and expected challenge, then verify them.',
+      ],
+    },
   },
   text: {
     'regex-tester': {
@@ -704,12 +745,13 @@ const tools: Record<string, Record<string, {
     },
     'number-base-converter': {
       name: 'Number Base Converter',
-      description: 'Convert numbers between decimal, hexadecimal, octal, and binary. Free online number base converter.',
-      longDescription: 'Free online number base converter. Convert numbers between decimal (base-10), hexadecimal (base-16), octal (base-8), and binary (base-2) instantly.',
+      description: 'Convert whole integers between decimal, hexadecimal, octal, and binary without JavaScript number precision loss.',
+      longDescription: 'Free online integer base converter backed by BigInt arithmetic. Convert complete base-10, base-16, base-8, and base-2 values without silently rounding large integers, with a practical input bound that protects the browser UI.',
       keywords: ['number base converter', 'decimal to hex', 'binary converter', 'hex converter', 'base converter'],
       faqs: [
         { question: 'What number bases are supported?', answer: 'This tool supports decimal (base-10), hexadecimal (base-16), octal (base-8), and binary (base-2).' },
         { question: 'How do I use prefixes?', answer: 'You can use prefixes like 0x for hex, 0o for octal, and 0b for binary. They are automatically handled.' },
+        { question: 'Can it convert integers larger than Number.MAX_SAFE_INTEGER?', answer: 'Yes. Conversion uses BigInt and validates the entire input, so large whole integers are preserved instead of rounded. Inputs are limited to 10,000 digits to keep the browser responsive, and fractions are intentionally not supported.' },
       ],
     },
     'url-parser': {
@@ -803,7 +845,7 @@ const tools: Record<string, Record<string, {
       keywords: ['cron parser', 'cron expression', 'cron schedule', 'crontab helper', 'cron generator'],
       faqs: [
         { question: 'What is a cron expression?', answer: 'A cron expression is a string of five fields (minute, hour, day, month, weekday) that defines a schedule for running automated tasks.' },
-        { question: 'What format does this tool use?', answer: 'This tool uses the standard 5-field cron format: minute (0-59), hour (0-23), day of month (1-31), month (1-12), day of week (0-6).' },
+        { question: 'What format does this tool use?', answer: 'This tool uses the numeric 5-field Cronie format: minute (0-59), hour (0-23), day of month (1-31), month (1-12), and day of week (0-7, where 0 and 7 are Sunday). Month/day names and tilde randomization are not supported.' },
       ],
     },
     'qr-code': {
@@ -885,6 +927,47 @@ const tools: Record<string, Record<string, {
             'Parsing happens in your browser as you type. The input is not sent to a parsing API, but user-agent values can contribute to fingerprinting when combined with other data. Avoid treating this output as authentication, authorization, fraud proof, or a substitute for capability detection.',
           ],
         },
+      ],
+    },
+    'cidr-calculator': {
+      name: 'IPv4 CIDR Calculator',
+      metadataTitle: 'IPv4 CIDR Calculator - Subnet, Mask & Host Range',
+      description: 'Calculate an IPv4 network address, applicable broadcast address, netmask, wildcard mask, address count, and usable host range from CIDR or dotted mask input.',
+      longDescription: 'Free IPv4 CIDR and subnet calculator. Enter an address with a prefix length or contiguous dotted-decimal mask to inspect the canonical network and host range without uploading data.',
+      keywords: ['cidr calculator', 'subnet calculator', 'ipv4 calculator', 'network address calculator', 'netmask calculator', 'wildcard mask'],
+      faqs: [
+        { question: 'What input formats are supported?', answer: 'Enter a canonical dotted-decimal IPv4 address and either a prefix such as /24 or a contiguous subnet mask such as 255.255.255.0.' },
+        { question: 'How are /31 and /32 networks handled?', answer: 'A /31 is shown with the RFC 3021 point-to-point interpretation, where both endpoints are usable and no broadcast address exists; confirm that the target link supports it. A /32 represents one host route and also has no broadcast address.' },
+        { question: 'Does this calculator support IPv6?', answer: 'No. This version deliberately validates IPv4 only so its address and host-range semantics remain explicit.' },
+      ],
+      answerSections: [
+        {
+          heading: 'What the IPv4 CIDR calculator returns',
+          paragraphs: [
+            'CIDR combines an IPv4 address with a prefix length that states how many leading bits identify the network. The calculator normalizes the entered address to its canonical network, then displays the broadcast boundary, dotted netmask, inverse wildcard mask, total address count, and usable host range.',
+          ],
+        },
+        {
+          heading: 'Strict input and edge cases',
+          bullets: [
+            'IPv4 input must contain four decimal octets from 0 through 255; ambiguous leading-zero and shorthand forms are rejected.',
+            'Prefix lengths from /0 through /32 are supported, as are contiguous dotted-decimal masks.',
+            'For /0 through /30, the network and broadcast boundaries are excluded from the usable host range.',
+            'For /31, both point-to-point endpoints are usable under RFC 3021; /32 represents one host route.',
+          ],
+        },
+        {
+          heading: 'Operational boundary',
+          paragraphs: [
+            'The result describes address arithmetic, not routing reachability, firewall policy, DHCP allocation, cloud-provider reservations, VLAN membership, or whether an address is publicly routable. Apply the rules of the target network platform before allocating hosts.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Enter an IPv4 address such as 192.168.1.130.',
+        'Enter a CIDR prefix such as /26 or a contiguous mask such as 255.255.255.192.',
+        'Calculate the subnet and review the canonical network, boundaries, masks, and host range.',
+        'Copy the result only after confirming the target platform uses the same host semantics.',
       ],
     },
   },

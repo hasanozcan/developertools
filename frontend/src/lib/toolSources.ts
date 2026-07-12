@@ -31,6 +31,10 @@ const sources = {
   hmac: { name: 'RFC 2104: HMAC - Keyed-Hashing for Message Authentication', url: 'https://www.rfc-editor.org/rfc/rfc2104' },
   hmacSha2: { name: 'RFC 4231: HMAC-SHA-2 Identifiers and Test Vectors', url: 'https://www.rfc-editor.org/rfc/rfc4231' },
   webCryptoHmac: { name: 'W3C Web Cryptography API: HMAC', url: 'https://www.w3.org/TR/webcrypto/#hmac' },
+  pkce: { name: 'RFC 7636: Proof Key for Code Exchange by OAuth Public Clients', url: 'https://www.rfc-editor.org/rfc/rfc7636' },
+  ipv4: { name: 'RFC 791: Internet Protocol', url: 'https://www.rfc-editor.org/rfc/rfc791' },
+  cidr: { name: 'RFC 4632: Classless Inter-domain Routing', url: 'https://www.rfc-editor.org/rfc/rfc4632' },
+  rfc3021: { name: 'RFC 3021: Using 31-Bit Prefixes on IPv4 Point-to-Point Links', url: 'https://www.rfc-editor.org/rfc/rfc3021' },
   regex: { name: 'ECMAScript specification: RegExp objects', url: 'https://tc39.es/ecma262/multipage/text-processing.html#sec-regexp-regular-expression-objects' },
   diff: { name: 'GNU Diffutils Manual', url: 'https://www.gnu.org/software/diffutils/manual/diffutils.html' },
   text: { name: 'Unicode Standard Annex #29: Text Segmentation', url: 'https://www.unicode.org/reports/tr29/' },
@@ -77,6 +81,7 @@ const sourceByTool: Record<string, ToolSource | ToolSource[]> = {
   'sha256-hash': sources.sha,
   'sha512-hash': sources.sha,
   'hmac-generator': [sources.hmac, sources.hmacSha2, sources.webCryptoHmac],
+  'pkce-generator': sources.pkce,
   'regex-tester': sources.regex,
   'regex-escape': sources.regex,
   'text-diff': sources.diff,
@@ -101,6 +106,7 @@ const sourceByTool: Record<string, ToolSource | ToolSource[]> = {
   'http-headers-parser': sources.http,
   'http-status-codes': sources.http,
   'user-agent-parser': [sources.http, sources.userAgent, sources.uaParser],
+  'cidr-calculator': [sources.ipv4, sources.cidr, sources.rfc3021],
 };
 
 export function getToolSources(toolSlug: string): ToolSource[] {

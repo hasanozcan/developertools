@@ -43,6 +43,7 @@ import {
   SortAsc,
   SortDesc,
   Ban,
+  Network,
   LucideIcon
 } from 'lucide-react';
 import Breadcrumb from '@/components/common/Breadcrumb';
@@ -78,6 +79,7 @@ const toolIcons: Record<string, LucideIcon> = {
   'sha256-hash': ShieldCheck,
   'sha512-hash': Shield,
   'hmac-generator': KeyRound,
+  'pkce-generator': KeyRound,
   'regex-tester': Regex,
   'text-diff': GitCompare,
   'regex-escape': Regex,
@@ -102,6 +104,7 @@ const toolIcons: Record<string, LucideIcon> = {
   'http-headers-parser': FileText,
   'http-status-codes': CheckCircle,
   'user-agent-parser': Fingerprint,
+  'cidr-calculator': Network,
 };
 
 interface CategoryConfig {
@@ -209,13 +212,14 @@ const categories: Record<string, CategoryConfig> = {
   },
   crypto: {
     name: 'Cryptography',
-    description: 'Hash generators and message authentication tools',
+    description: 'Hashing, message authentication, and OAuth security tools',
     icon: Lock,
     tools: [
       { name: 'MD5 Hash Generator', slug: 'md5-hash', description: 'Generate MD5 hash from text' },
       { name: 'SHA256 Hash Generator', slug: 'sha256-hash', description: 'Generate SHA256 hash from text' },
       { name: 'SHA512 Hash Generator', slug: 'sha512-hash', description: 'Generate SHA512 hash from text' },
       { name: 'HMAC Generator & Verifier', slug: 'hmac-generator', description: 'Generate and verify keyed SHA message authentication codes' },
+      { name: 'PKCE Generator & Verifier', slug: 'pkce-generator', description: 'Generate and verify OAuth PKCE S256 pairs' },
     ],
   },
   text: {
@@ -272,6 +276,7 @@ const categories: Record<string, CategoryConfig> = {
       { name: 'HTTP Headers Parser', slug: 'http-headers-parser', description: 'Convert raw HTTP headers to JSON and back' },
       { name: 'HTTP Status Codes', slug: 'http-status-codes', description: 'Search and reference common HTTP status codes' },
       { name: 'User-Agent Parser', slug: 'user-agent-parser', description: 'Detect browser, OS, and device from user-agent strings' },
+      { name: 'IPv4 CIDR Calculator', slug: 'cidr-calculator', description: 'Calculate IPv4 subnet ranges, masks, and usable hosts' },
       { name: 'QR Code Generator', slug: 'qr-code', description: 'Generate QR codes from text or URLs' },
       { name: 'Markdown Preview', slug: 'markdown-preview', description: 'Preview and convert Markdown to HTML' },
     ],
@@ -300,11 +305,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     json: ['json tools', 'json formatter', 'json validator', 'json schema validator', 'json to csv', 'json to typescript', 'yaml to json', 'json beautifier', 'json parser'],
     encoding: ['online encoder', 'encoder online', 'online decoder', 'encoding tools', 'base64 encoder', 'base64 decoder', 'url encoder', 'url decoder', 'hex encoder', 'binary encoder', 'jwt decoder', 'html entity encoder', 'unicode escape', 'json string escape'],
     generators: ['generators', 'uuid generator', 'password generator', 'lorem ipsum generator', 'qr code generator', 'slug generator', 'css gradient generator', 'meta tags generator'],
-    crypto: ['cryptography', 'hash generator', 'hmac generator', 'hmac verifier', 'md5 generator', 'sha256 generator', 'sha512 generator', 'hash tools'],
+    crypto: ['cryptography', 'hash generator', 'hmac generator', 'hmac verifier', 'pkce generator', 'oauth pkce', 'md5 generator', 'sha256 generator', 'sha512 generator', 'hash tools'],
     text: ['text tools', 'regex tester', 'regex escape', 'case converter', 'word counter', 'text diff', 'markdown preview', 'sort lines', 'remove duplicates'],
     converters: ['converters', 'timestamp converter', 'color converter', 'roman numeral converter', 'number base converter', 'json to csv', 'yaml to json', 'url parser', 'query string parser'],
     formatters: ['code formatters', 'sql formatter', 'css minifier', 'javascript minifier', 'html formatter', 'html minifier', 'xml formatter', 'code beautifier'],
-    utilities: ['developer utilities', 'cron parser', 'cron expression', 'development tools', 'http status codes', 'http headers parser', 'user agent parser'],
+    utilities: ['developer utilities', 'cron parser', 'cron expression', 'development tools', 'http status codes', 'http headers parser', 'user agent parser', 'cidr calculator', 'subnet calculator'],
   };
 
   return {

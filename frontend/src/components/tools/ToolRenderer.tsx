@@ -35,6 +35,7 @@ const toolComponents = {
   'sha256-hash': dynamic(() => import('./Sha256HashTool'), { loading: Loading, ssr: false }),
   'sha512-hash': dynamic(() => import('./Sha512HashTool'), { loading: Loading, ssr: false }),
   'hmac-generator': dynamic(() => import('./HmacGeneratorTool'), { loading: Loading, ssr: false }),
+  'pkce-generator': dynamic(() => import('./PkceGeneratorTool'), { loading: Loading, ssr: false }),
   'regex-tester': dynamic(() => import('./RegexTesterTool'), { loading: Loading, ssr: false }),
   'text-diff': dynamic(() => import('./TextDiffTool'), { loading: Loading, ssr: false }),
   'case-converter': dynamic(() => import('./CaseConverterTool'), { loading: Loading, ssr: false }),
@@ -59,6 +60,7 @@ const toolComponents = {
   'http-headers-parser': dynamic(() => import('./HttpHeadersParserTool'), { loading: Loading, ssr: false }),
   'http-status-codes': dynamic(() => import('./HttpStatusCodesTool'), { loading: Loading, ssr: false }),
   'user-agent-parser': dynamic(() => import('./UserAgentParserTool'), { loading: Loading, ssr: false }),
+  'cidr-calculator': dynamic(() => import('./CidrCalculatorTool'), { loading: Loading, ssr: false }),
 } as const;
 
 export const toolComponentSlugs = Object.keys(toolComponents);

@@ -44,6 +44,7 @@ import {
   Shield,
   Circle,
   Calculator,
+  Network,
   LucideIcon
 } from 'lucide-react';
 import AdSense from '@/components/common/AdSense';
@@ -111,10 +112,12 @@ const toolIconMap: Record<string, LucideIcon> = {
   'xml-formatter': FileCode,
   'sha512-hash': ShieldCheck,
   'hmac-generator': KeyRound,
+  'pkce-generator': KeyRound,
   'roman-numeral-converter': Circle,
   'number-base-converter': Calculator,
   'http-status-codes': FileText,
   'user-agent-parser': Fingerprint,
+  'cidr-calculator': Network,
 };
 
 export default function Home() {
