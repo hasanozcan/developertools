@@ -11,6 +11,7 @@ interface ContentBlockerOverlayProps {
 }
 
 const reloadCurrentPage = () => window.location.reload();
+const RECHECK_INTERVAL_MS = 30_000;
 
 export default function ContentBlockerOverlay({
   reloadPage = reloadCurrentPage,
@@ -23,6 +24,7 @@ export default function ContentBlockerOverlay({
   const [checking, setChecking] = useState(true);
   const checkRunId = useRef(0);
   const detectedRef = useRef(false);
+  const hasMonetizedContentRef = useRef(false);
   const dialogRef = useRef<HTMLDivElement>(null);
 
   const runDetection = useCallback(async () => {
@@ -42,17 +44,22 @@ export default function ContentBlockerOverlay({
       reloadPage();
       return;
     }
-    if (result === 'unknown' && detectedRef.current) {
-      setChecking(false);
-      return;
-    }
-    setDetected(result === 'blocked');
+    // Fail closed: an inconclusive Google probe must never unlock monetized content.
+    setDetected(result !== 'clear');
     setChecking(false);
   }, [adClient, hasMonetizedContent, pathname, reloadPage]);
 
   useEffect(() => {
     const updateSlotPresence = () => {
-      setHasMonetizedContent(document.querySelector('[data-site-support-slot="true"]') !== null);
+      const hasSlot = document.querySelector('[data-site-support-slot="true"]') !== null;
+      const slotAppeared = hasSlot && !hasMonetizedContentRef.current;
+      hasMonetizedContentRef.current = hasSlot;
+      setHasMonetizedContent(hasSlot);
+      if (slotAppeared) {
+        detectedRef.current = true;
+        setDetected(true);
+        setChecking(true);
+      }
     };
 
     updateSlotPresence();
@@ -74,7 +81,7 @@ export default function ContentBlockerOverlay({
   }, [runDetection]);
 
   useEffect(() => {
-    if (!adClient || !detected) return;
+    if (!adClient || !hasMonetizedContent) return;
 
     const recheck = () => void runDetection();
     const onVisibilityChange = () => {
@@ -83,11 +90,13 @@ export default function ContentBlockerOverlay({
 
     window.addEventListener('focus', recheck);
     document.addEventListener('visibilitychange', onVisibilityChange);
+    const intervalId = window.setInterval(recheck, RECHECK_INTERVAL_MS);
     return () => {
       window.removeEventListener('focus', recheck);
       document.removeEventListener('visibilitychange', onVisibilityChange);
+      window.clearInterval(intervalId);
     };
-  }, [adClient, detected, runDetection]);
+  }, [adClient, hasMonetizedContent, runDetection]);
 
   useEffect(() => {
     detectedRef.current = detected;

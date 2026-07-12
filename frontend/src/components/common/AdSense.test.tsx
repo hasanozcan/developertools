@@ -1,11 +1,7 @@
 import { StrictMode } from 'react';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import AdSense from './AdSense';
-
-vi.mock('@/components/common/ContentHighlight', () => ({
-  default: () => <div data-testid="ad-fallback" />,
-}));
 
 describe('AdSense', () => {
   beforeEach(() => {
@@ -14,17 +10,16 @@ describe('AdSense', () => {
   });
 
   afterEach(() => {
-    vi.useRealTimers();
     vi.unstubAllEnvs();
     Reflect.deleteProperty(window, 'adsbygoogle');
   });
 
-  it('renders self-hosted content when AdSense is not configured', () => {
+  it('renders nothing when AdSense is not configured', () => {
     vi.stubEnv('NEXT_PUBLIC_ADSENSE_ID', '');
 
     const { container } = render(<AdSense slot="123" />);
 
-    expect(screen.getByTestId('ad-fallback')).toBeInTheDocument();
+    expect(container).toBeEmptyDOMElement();
     expect(container.querySelector('ins.adsbygoogle')).toBeNull();
   });
 
@@ -66,26 +61,14 @@ describe('AdSense', () => {
     expect(window.adsbygoogle).toHaveLength(3);
   });
 
-  it('switches to fallback when AdSense marks a slot unfilled', async () => {
+  it('never replaces an unfilled Google slot with a site advertisement', () => {
     const { container } = render(<AdSense slot="123" />);
     const ad = container.querySelector('ins.adsbygoogle');
     expect(ad).not.toBeNull();
 
     ad?.setAttribute('data-ad-status', 'unfilled');
 
-    await waitFor(() => expect(screen.getByTestId('ad-fallback')).toBeInTheDocument());
-    expect(container.querySelector('ins.adsbygoogle')).toBeNull();
-  });
-
-  it('stops waiting and shows fallback when a slot never renders', () => {
-    vi.useFakeTimers();
-    const { container } = render(<AdSense slot="123" />);
-
-    act(() => {
-      vi.advanceTimersByTime(8000);
-    });
-
-    expect(screen.getByTestId('ad-fallback')).toBeInTheDocument();
-    expect(container.querySelector('ins.adsbygoogle')).toBeNull();
+    expect(container.querySelector('ins.adsbygoogle')).not.toBeNull();
+    expect(container.querySelector('[data-testid="ad-fallback"]')).toBeNull();
   });
 });

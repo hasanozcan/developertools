@@ -127,6 +127,16 @@ describe('ContentBlockerOverlay', () => {
     expect(reloadPage).not.toHaveBeenCalled();
   });
 
+  it('fails closed when the initial Google ad check is inconclusive', async () => {
+    detector.mockResolvedValue('unknown');
+
+    renderOverlay();
+
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    await waitFor(() => expect(detector).toHaveBeenCalledOnce());
+    expect(screen.getByRole('dialog')).toHaveAttribute('aria-busy', 'false');
+  });
+
   it('wraps keyboard focus between the modal buttons', async () => {
     detector.mockResolvedValue('blocked');
     renderOverlay();
