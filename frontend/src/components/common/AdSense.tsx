@@ -2,15 +2,15 @@
 
 import { useEffect, useRef, useState } from 'react';
 import ContentHighlight from '@/components/common/ContentHighlight';
+import { normalizeAdSenseClientId } from '@/lib/adsense';
 
 declare global {
   interface Window {
-    adsbygoogle: any[];
+    adsbygoogle: unknown[];
   }
 }
 
-// Global tracking for initialized ad slots to prevent duplicate pushes
-const initializedSlots = new Set<string>();
+const AD_RENDER_TIMEOUT_MS = 8000;
 
 interface AdSenseProps {
   slot: string;
@@ -19,9 +19,6 @@ interface AdSenseProps {
   className?: string;
 }
 
-/**
- * Map AdSense format to ContentHighlight variant.
- */
 function formatToVariant(format: string): 'horizontal' | 'vertical' | 'rectangle' {
   if (format === 'vertical') return 'vertical';
   if (format === 'rectangle') return 'rectangle';
@@ -34,162 +31,101 @@ export default function AdSense({
   responsive = true,
   className = '',
 }: AdSenseProps) {
+  const adClient = normalizeAdSenseClientId(process.env.NEXT_PUBLIC_ADSENSE_ID);
+  const requestKey = `${adClient ?? 'fallback'}:${slot}:${format}:${responsive}`;
   const adRef = useRef<HTMLElement | null>(null);
-  const shadowHostRef = useRef<HTMLDivElement>(null);
-  const [showFallback, setShowFallback] = useState(false);
-  const instanceIdRef = useRef<string>(`${slot}-${Date.now()}-${Math.random().toString(36).slice(2)}`);
+  const pushedRequestRef = useRef<string | null>(null);
+  const [failedRequestKey, setFailedRequestKey] = useState<string | null>(null);
+  const showFallback = !adClient || failedRequestKey === requestKey;
 
   useEffect(() => {
-    const adClient = process.env.NEXT_PUBLIC_ADSENSE_ID;
+    const slotElement = adRef.current;
+    if (!adClient || !slotElement || showFallback) return;
 
-    // Always show self-hosted content when AdSense is not configured.
-    if (!adClient) {
-      setShowFallback(true);
-      return;
-    }
+    let cancelled = false;
+    let settled = false;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    let observer: MutationObserver | undefined;
 
-    const host = shadowHostRef.current;
-    if (!host) return;
-
-    let isCancelled = false;
-    let intervalId: ReturnType<typeof setInterval> | undefined;
-    let pushTimeoutId: ReturnType<typeof setTimeout> | undefined;
+    const stopWatching = () => {
+      settled = true;
+      observer?.disconnect();
+      if (timeoutId) clearTimeout(timeoutId);
+    };
 
     const activateFallback = () => {
-      if (!isCancelled) setShowFallback(true);
+      if (cancelled || settled) return;
+      stopWatching();
+      setFailedRequestKey(requestKey);
     };
 
     const evaluateSlot = () => {
-      const slotElement = adRef.current;
-      if (!slotElement) return 'pending' as const;
+      if (cancelled || settled) return;
 
-      // For Shadow DOM, we need to check the element inside shadow root
       const computed = window.getComputedStyle(slotElement);
-      const isHidden =
-        computed.display === 'none' ||
-        computed.visibility === 'hidden' ||
-        slotElement.offsetHeight === 0 ||
-        slotElement.offsetWidth === 0;
-
-      const adsByGoogleStatus = slotElement.getAttribute('data-adsbygoogle-status');
       const adStatus = slotElement.getAttribute('data-ad-status');
       const hasIframe = slotElement.querySelector('iframe') !== null;
 
-      if (isHidden || adStatus === 'unfilled') return 'fallback' as const;
-      if (hasIframe || adsByGoogleStatus === 'done' || adStatus === 'filled') return 'loaded' as const;
-
-      return 'pending' as const;
-    };
-
-    try {
-      // Create or reuse shadow root
-      let shadowRoot = host.shadowRoot;
-      if (!shadowRoot) {
-        shadowRoot = host.attachShadow({ mode: 'open' });
-      }
-
-      // Check if this slot already has an ins element that has been processed
-      const existingIns = shadowRoot.querySelector('ins.adsbygoogle[data-ad-slot="' + slot + '"]') as HTMLElement | null;
-      if (existingIns) {
-        const existingStatus = existingIns.getAttribute('data-adsbygoogle-status');
-        // If already processed, just reference it and skip push
-        if (existingStatus === 'done') {
-          adRef.current = existingIns;
-          return;
-        }
-        // If pending but not done, check if we already pushed for this slot
-        if (initializedSlots.has(slot)) {
-          adRef.current = existingIns;
-          return;
-        }
-      }
-
-      // Check if this slot was already initialized globally
-      if (initializedSlots.has(slot)) {
+      if (
+        computed.display === 'none' ||
+        computed.visibility === 'hidden' ||
+        adStatus === 'unfilled'
+      ) {
+        activateFallback();
         return;
       }
 
-      // Create ins element inside shadow DOM
-      const ins = document.createElement('ins');
-      ins.className = 'adsbygoogle';
-      ins.style.display = 'block';
-      ins.setAttribute('data-ad-client', adClient);
-      ins.setAttribute('data-ad-slot', slot);
-      ins.setAttribute('data-ad-format', format);
-      ins.setAttribute('data-full-width-responsive', responsive ? 'true' : 'false');
+      if (hasIframe || adStatus === 'filled') stopWatching();
+    };
 
-      // Clear previous content (for reload scenarios)
-      shadowRoot.innerHTML = '';
-      shadowRoot.appendChild(ins);
+    observer = new MutationObserver(evaluateSlot);
+    observer.observe(slotElement, {
+      attributes: true,
+      childList: true,
+      subtree: true,
+    });
+    timeoutId = setTimeout(activateFallback, AD_RENDER_TIMEOUT_MS);
 
-      // Update ref to point to shadow DOM element
-      adRef.current = ins;
-
-      // Mark this slot as initialized BEFORE pushing to prevent race conditions
-      initializedSlots.add(slot);
-
-      // Wait for adsbygoogle to be available, then push
-      const tryPush = () => {
-        if (isCancelled) return;
-        
-        if (window.adsbygoogle) {
-          try {
-            (window.adsbygoogle = window.adsbygoogle || []).push({});
-          } catch {
-            // Silently handle push errors - already pushed
-          }
-        } else {
-          // Script not loaded yet, try again in 100ms
-          pushTimeoutId = setTimeout(tryPush, 100);
-        }
-      };
-      tryPush();
+    try {
+      if (pushedRequestRef.current !== requestKey) {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        pushedRequestRef.current = requestKey;
+      }
+      evaluateSlot();
     } catch (error) {
       console.error('AdSense error:', error);
       activateFallback();
-      return;
     }
 
-    let attempts = 0;
-    const maxAttempts = 5;
-    intervalId = setInterval(() => {
-      attempts += 1;
-      const result = evaluateSlot();
-
-      if (result === 'loaded') {
-        if (intervalId) clearInterval(intervalId);
-        return;
-      }
-
-      if (result === 'fallback' || attempts >= maxAttempts) {
-        if (intervalId) clearInterval(intervalId);
-        activateFallback();
-      }
-    }, 1500);
-
     return () => {
-      isCancelled = true;
-      if (intervalId) clearInterval(intervalId);
-      if (pushTimeoutId) clearTimeout(pushTimeoutId);
-      // Remove from initialized slots on unmount so it can be re-initialized if remounted
-      initializedSlots.delete(slot);
+      cancelled = true;
+      observer?.disconnect();
+      if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [slot, format, responsive]);
+  }, [adClient, requestKey, showFallback]);
 
-  const adClient = process.env.NEXT_PUBLIC_ADSENSE_ID;
-
-  // Show fallback when AdSense is not configured or failed to load
-  if (!adClient || showFallback) {
+  if (showFallback) {
     return (
-      <div className={className}>
-        <ContentHighlight
-          variant={formatToVariant(format ?? 'auto')}
-          className="w-full h-full"
-        />
+      <div data-site-support-slot="true" className={className}>
+        <ContentHighlight variant={formatToVariant(format)} className="h-full w-full" />
       </div>
     );
   }
 
-  // Shadow DOM host - ad blocker cannot see elements inside shadow root
-  return <div ref={shadowHostRef} className={className} />;
+  return (
+    <div data-site-support-slot="true" className={className}>
+      <ins
+        key={requestKey}
+        ref={(node) => {
+          adRef.current = node;
+        }}
+        className="adsbygoogle"
+        style={{ display: 'block' }}
+        data-ad-client={adClient}
+        data-ad-slot={slot}
+        data-ad-format={format}
+        data-full-width-responsive={responsive ? 'true' : 'false'}
+      />
+    </div>
+  );
 }

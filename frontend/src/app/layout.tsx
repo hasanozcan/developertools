@@ -7,6 +7,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Providers } from '@/components/Providers';
 import { toolCatalog } from '@/lib/api';
+import { normalizeAdSenseClientId } from '@/lib/adsense';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -23,6 +24,7 @@ const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 const googleAdsSendTo = process.env.NEXT_PUBLIC_GOOGLE_ADS_SEND_TO;
 const googleAdsConversionValue = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_VALUE;
 const googleAdsConversionCurrency = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_CURRENCY;
+const adSenseClientId = normalizeAdSenseClientId(process.env.NEXT_PUBLIC_ADSENSE_ID);
 const TOOL_COUNT = toolCatalog.length;
 
 export const metadata: Metadata = {
@@ -149,12 +151,12 @@ export default function RootLayout({
           }}
         />
         {/* Google AdSense */}
-        {process.env.NEXT_PUBLIC_ADSENSE_ID && (
+        {adSenseClientId && (
           <Script
             id="adsbygoogle-js"
             async
             strategy="afterInteractive"
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_ID}`}
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adSenseClientId}`}
             crossOrigin="anonymous"
           />
         )}
