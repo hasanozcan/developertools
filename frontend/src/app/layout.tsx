@@ -7,7 +7,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Providers } from '@/components/Providers';
 import { toolCatalog } from '@/lib/api';
-import { normalizeAdSenseClientId } from '@/lib/adsense';
+import { normalizeAdSenseClientId, normalizeAdSensePublisherId } from '@/lib/adsense';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -25,7 +25,25 @@ const googleAdsSendTo = process.env.NEXT_PUBLIC_GOOGLE_ADS_SEND_TO;
 const googleAdsConversionValue = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_VALUE;
 const googleAdsConversionCurrency = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_CURRENCY;
 const adSenseClientId = normalizeAdSenseClientId(process.env.NEXT_PUBLIC_ADSENSE_ID);
+const adSensePublisherId = normalizeAdSensePublisherId(process.env.NEXT_PUBLIC_ADSENSE_ID);
 const TOOL_COUNT = toolCatalog.length;
+
+const signalGoogleFundingChoices = `(function() {
+  function signalGooglefcPresent() {
+    if (!window.frames['googlefcPresent']) {
+      if (document.body) {
+        const iframe = document.createElement('iframe');
+        iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
+        iframe.style.display = 'none';
+        iframe.name = 'googlefcPresent';
+        document.body.appendChild(iframe);
+      } else {
+        setTimeout(signalGooglefcPresent, 0);
+      }
+    }
+  }
+  signalGooglefcPresent();
+})();`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -151,6 +169,15 @@ export default function RootLayout({
           }}
         />
         {/* Google AdSense */}
+        {adSensePublisherId && (
+          <>
+            <script
+              async
+              src={`https://fundingchoicesmessages.google.com/i/${adSensePublisherId}?ers=1`}
+            />
+            <script dangerouslySetInnerHTML={{ __html: signalGoogleFundingChoices }} />
+          </>
+        )}
         {adSenseClientId && (
           <Script
             id="adsbygoogle-js"
