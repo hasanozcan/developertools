@@ -51,8 +51,7 @@ export const metadata: Metadata = {
     default: `DevsTools - ${TOOL_COUNT} Free Online Developer Tools`,
     template: '%s | DevsTools',
   },
-  description: `DevsTools - ${TOOL_COUNT} free online developer tools: JSON formatter, Base64 encoder/decoder, UUID generator, MD5/SHA hash generators, regex tester, QR code generator & more. No registration, 100% client-side.`,
-  keywords: ['developer tools', 'online tools', 'json formatter', 'base64 encoder', 'uuid generator', 'hash generator', 'regex tester', 'qr code generator', 'free developer tools', 'web developer tools', 'programming tools', 'devstools'],
+  description: 'DevsTools offers free online developer tools for JSON formatting, Base64 encoding, UUIDs, hashing, regex testing, QR codes and more. Private and client-side.',
   authors: [{ name: 'DevsTools' }],
   creator: 'DevsTools',
   publisher: 'DevsTools',
@@ -121,8 +120,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-        <link rel="apple-touch-icon" href="/apple-icon.svg" />
+        <link rel="icon" type="image/x-icon" sizes="any" href="/favicon.ico" />
+        <link rel="icon" type="image/svg+xml" sizes="any" href="/icon.svg" />
+        <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/apple-icon.png" />
+        <link rel="manifest" href="/site.webmanifest" />
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

@@ -208,6 +208,7 @@ export default function Home() {
           </p>
           <a
             href="#tools"
+            title={`Browse ${toolCatalog.length} free developer tools`}
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-950/20 transition hover:-translate-y-0.5 hover:bg-indigo-600 dark:bg-white dark:text-slate-950 dark:hover:bg-indigo-200"
           >
             <Search className="h-4 w-4" /> {t('home.popularTools')}
@@ -240,6 +241,7 @@ export default function Home() {
                 <Link
                   key={`${tool.slug}-${tool.categorySlug}`}
                   href={buildToolPath(tool.categorySlug, tool.slug)}
+                  title={`${toolName} - ${toolDesc || `Open the ${toolName} developer tool`}`}
                   className="interactive-card group rounded-2xl p-4"
                 >
                   <div className="flex items-start gap-3">
@@ -290,6 +292,7 @@ export default function Home() {
                 <Link
                   key={category.slug}
                   href={`/tools/${category.slug}`}
+                  title={`${category.name} - ${category.description}`}
                   className="interactive-card group rounded-3xl p-6"
                 >
                   <div className="flex items-start gap-4">
