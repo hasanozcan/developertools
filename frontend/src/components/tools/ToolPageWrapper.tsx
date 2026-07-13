@@ -38,19 +38,24 @@ export default function ToolPageWrapper({
   const { t } = useLanguage();
 
   // Get translated tool name, fallback to default
-  const toolName = t(`toolName.${toolSlug}`) !== `toolName.${toolSlug}`
-    ? t(`toolName.${toolSlug}`)
-    : defaultName;
+  const toolName =
+    t(`toolName.${toolSlug}`) !== `toolName.${toolSlug}` ? t(`toolName.${toolSlug}`) : defaultName;
 
   // Get translated tool description, fallback to default
-  const toolDescription = t(`toolDesc.${toolSlug}`) !== `toolDesc.${toolSlug}`
-    ? t(`toolDesc.${toolSlug}`)
-    : defaultDescription;
+  const toolDescription =
+    t(`toolDesc.${toolSlug}`) !== `toolDesc.${toolSlug}`
+      ? t(`toolDesc.${toolSlug}`)
+      : defaultDescription;
 
   // Get translated category name
-  const translatedCategoryName = t(`cat.${category === 'json' ? 'json' : category === 'encoding' ? 'encoding' : category === 'generators' ? 'generators' : category === 'crypto' ? 'crypto' : category === 'text' ? 'text' : category === 'converters' ? 'converters' : category === 'formatters' ? 'formatters' : 'utilities'}`) !== `cat.${category}`
-    ? t(`cat.${category === 'json' ? 'json' : category === 'encoding' ? 'encoding' : category === 'generators' ? 'generators' : category === 'crypto' ? 'crypto' : category === 'text' ? 'text' : category === 'converters' ? 'converters' : category === 'formatters' ? 'formatters' : 'utilities'}`)
-    : categoryName;
+  const translatedCategoryName =
+    t(
+      `cat.${category === 'json' ? 'json' : category === 'encoding' ? 'encoding' : category === 'generators' ? 'generators' : category === 'crypto' ? 'crypto' : category === 'text' ? 'text' : category === 'converters' ? 'converters' : category === 'formatters' ? 'formatters' : 'utilities'}`,
+    ) !== `cat.${category}`
+      ? t(
+          `cat.${category === 'json' ? 'json' : category === 'encoding' ? 'encoding' : category === 'generators' ? 'generators' : category === 'crypto' ? 'crypto' : category === 'text' ? 'text' : category === 'converters' ? 'converters' : category === 'formatters' ? 'formatters' : 'utilities'}`,
+        )
+      : categoryName;
 
   const howToUseSteps = customHowToUseSteps || t('toolPage.howToUseSteps').split('\n');
 
@@ -63,9 +68,7 @@ export default function ToolPageWrapper({
       className="mb-8"
       data-answer-first={answerFirst ? 'true' : undefined}
     >
-      <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-        {section.heading}
-      </h2>
+      <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{section.heading}</h2>
       <div className="space-y-3 text-gray-600 dark:text-gray-300">
         {section.paragraphs?.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
@@ -87,16 +90,22 @@ export default function ToolPageWrapper({
       <HistoryTracker slug={toolSlug} name={toolName} category={category} />
 
       {/* Breadcrumb */}
-      <nav className="mb-6">
+      <nav className="mb-6 overflow-x-auto rounded-full border border-white/80 bg-white/60 px-4 py-2.5 backdrop-blur dark:border-white/10 dark:bg-white/5">
         <ol className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
           <li>
-            <Link href="/" className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+            <Link
+              href="/"
+              className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+            >
               {t('nav.home') || 'Home'}
             </Link>
           </li>
           <li className="text-gray-400">/</li>
           <li>
-            <Link href={`/tools/${category}`} className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+            <Link
+              href={`/tools/${category}`}
+              className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+            >
               {translatedCategoryName}
             </Link>
           </li>
@@ -106,10 +115,13 @@ export default function ToolPageWrapper({
       </nav>
 
       {/* Header */}
-      <div className="mb-8 flex items-start justify-between gap-4">
+      <div className="surface-card mb-8 flex items-start justify-between gap-4 rounded-3xl p-6 sm:p-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{toolName}</h1>
-          <p className="text-gray-600 dark:text-gray-300">{toolDescription}</p>
+          <span className="eyebrow mb-3">{translatedCategoryName}</span>
+          <h1 className="mb-2 text-3xl font-extrabold tracking-tight text-gray-950 dark:text-white sm:text-4xl">
+            {toolName}
+          </h1>
+          <p className="max-w-3xl leading-7 text-gray-600 dark:text-gray-300">{toolDescription}</p>
         </div>
         <FavoriteButton toolSlug={toolSlug} />
       </div>
@@ -122,10 +134,7 @@ export default function ToolPageWrapper({
           {answerSections.slice(0, 1).map((section) => renderAnswerSection(section, true))}
 
           {/* Tool Component */}
-          <div
-            className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 mb-8"
-            data-tool-interface="true"
-          >
+          <div className="surface-card mb-8 rounded-3xl p-4 sm:p-7" data-tool-interface="true">
             {children}
           </div>
 
@@ -164,7 +173,7 @@ export default function ToolPageWrapper({
                 <a
                   key={relatedTool.href}
                   href={relatedTool.href}
-                  className="block rounded-lg border border-gray-200 dark:border-gray-700 p-4 hover:border-primary-500 dark:hover:border-primary-500 transition-colors"
+                  className="interactive-card block rounded-2xl p-4"
                 >
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
                     {relatedTool.name}

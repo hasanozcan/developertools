@@ -8,9 +8,9 @@ body {
 }
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 250, 250, 250;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 15, 23, 42;
+  --background-start-rgb: 248, 250, 252;
+  --background-end-rgb: 238, 242, 255;
 }
 
 .dark {
@@ -21,10 +21,48 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-start-rgb));
+  background:
+    radial-gradient(circle at 8% 0%, rgba(99, 102, 241, 0.12), transparent 28rem),
+    radial-gradient(circle at 92% 8%, rgba(6, 182, 212, 0.1), transparent 30rem),
+    linear-gradient(180deg, rgb(var(--background-start-rgb)), rgb(var(--background-end-rgb)));
+  background-attachment: fixed;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+::selection {
+  color: white;
+  background: #4f46e5;
+}
+
+@layer components {
+  .page-shell {
+    @apply relative mx-auto w-full max-w-[1600px] px-4 py-8 sm:px-6 sm:py-10 lg:px-10 xl:px-12;
+  }
+
+  .surface-card {
+    @apply border border-white/80 bg-white/80 shadow-[0_18px_55px_-35px_rgba(15,23,42,0.45)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/75 dark:shadow-black/20;
+  }
+
+  .interactive-card {
+    @apply surface-card transition duration-300 hover:-translate-y-1 hover:border-indigo-200 hover:shadow-[0_24px_65px_-32px_rgba(79,70,229,0.4)] dark:hover:border-indigo-500/40;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-indigo-200/80 bg-indigo-50/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-indigo-700 dark:border-indigo-400/20 dark:bg-indigo-400/10 dark:text-indigo-300;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-indigo-600 via-violet-600 to-cyan-500 bg-clip-text text-transparent dark:from-indigo-300 dark:via-violet-300 dark:to-cyan-300;
+  }
+}
+
+.dark body {
+  background:
+    radial-gradient(circle at 8% 0%, rgba(99, 102, 241, 0.18), transparent 30rem),
+    radial-gradient(circle at 92% 8%, rgba(6, 182, 212, 0.12), transparent 30rem),
+    linear-gradient(180deg, #070b16 0%, #0f172a 55%, #111827 100%);
 }
 
 /* Code editor styling */
