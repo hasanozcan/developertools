@@ -76,6 +76,46 @@ describe('ContentBlockerOverlay', () => {
     act(() => lateSlot.remove());
   });
 
+  it('keeps the gate closed while the initial check is pending, then clears without reloading', async () => {
+    let resolveInitial: ((result: 'clear') => void) | undefined;
+    const reloadPage = vi.fn();
+    detector.mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          resolveInitial = resolve;
+        }),
+    );
+
+    renderOverlay(reloadPage);
+
+    expect(await screen.findByRole('dialog')).toHaveAttribute('aria-busy', 'true');
+    resolveInitial?.('clear');
+
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+    expect(reloadPage).not.toHaveBeenCalled();
+  });
+
+  it('does not flash the gate during a background recheck after a clear result', async () => {
+    let resolveRecheck: ((result: 'clear') => void) | undefined;
+    detector.mockResolvedValueOnce('clear').mockImplementationOnce(
+      () =>
+        new Promise((resolve) => {
+          resolveRecheck = resolve;
+        }),
+    );
+
+    renderOverlay();
+    await screen.findByRole('dialog');
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+
+    fireEvent.focus(window);
+    await waitFor(() => expect(detector).toHaveBeenCalledTimes(2));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
+    resolveRecheck?.('clear');
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+  });
+
   it('shows a non-dismissible modal and ignores the old localStorage bypass', async () => {
     localStorage.setItem('cb_dismissed', String(Date.now()));
     detector.mockResolvedValue('blocked');
