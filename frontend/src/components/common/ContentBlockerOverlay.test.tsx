@@ -132,40 +132,41 @@ describe('ContentBlockerOverlay', () => {
     expect(document.body.style.overflow).toBe('');
   });
 
-  it('keeps the gate open and reloads after a clear retry result', async () => {
-    let resolveRetry: ((result: 'clear') => void) | undefined;
+  it('reloads immediately when the user checks again after allowing ads', async () => {
     const reloadPage = vi.fn();
-    detector.mockResolvedValueOnce('blocked').mockImplementationOnce(
-      () =>
-        new Promise((resolve) => {
-          resolveRetry = resolve;
-        }),
-    );
+    detector.mockResolvedValue('blocked');
 
     renderOverlay(reloadPage);
     await screen.findByRole('dialog');
 
     fireEvent.click(screen.getByRole('button', { name: 'Check again' }));
-    expect(screen.getByRole('dialog')).toHaveAttribute('aria-busy', 'true');
-    expect(screen.getByRole('button', { name: 'Checking...' })).toBeDisabled();
-
-    resolveRetry?.('clear');
-    await waitFor(() => expect(reloadPage).toHaveBeenCalledOnce());
-    expect(screen.getByRole('dialog')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Check again' })).toBeEnabled();
-    expect(detector).toHaveBeenCalledTimes(2);
+    expect(reloadPage).toHaveBeenCalledOnce();
+    expect(detector).toHaveBeenCalledOnce();
   });
 
-  it('keeps an active gate open when a retry is inconclusive', async () => {
+  it('reloads after an inconclusive initial check so blocked scripts can retry', async () => {
     const reloadPage = vi.fn();
-    detector.mockResolvedValueOnce('blocked').mockResolvedValueOnce('unknown');
+    detector.mockResolvedValue('unknown');
 
     renderOverlay(reloadPage);
     await screen.findByRole('dialog');
     fireEvent.click(screen.getByRole('button', { name: 'Check again' }));
 
-    await waitFor(() => expect(detector).toHaveBeenCalledTimes(2));
-    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(reloadPage).toHaveBeenCalledOnce();
+    expect(detector).toHaveBeenCalledOnce();
+  });
+
+  it('does not disable the retry button with background checks while the gate is open', async () => {
+    const reloadPage = vi.fn();
+    detector.mockResolvedValue('blocked');
+
+    renderOverlay(reloadPage);
+    await screen.findByRole('dialog');
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Check again' })).toBeEnabled());
+
+    fireEvent.focus(window);
+
+    expect(detector).toHaveBeenCalledOnce();
     expect(screen.getByRole('button', { name: 'Check again' })).toBeEnabled();
     expect(reloadPage).not.toHaveBeenCalled();
   });

@@ -108,7 +108,7 @@ export default function ContentBlockerOverlay({
   }, [runDetection]);
 
   useEffect(() => {
-    if (!adClient || !hasMonetizedContent) return;
+    if (!adClient || !hasMonetizedContent || detected) return;
 
     const recheck = () => void runDetection();
     const onVisibilityChange = () => {
@@ -123,7 +123,7 @@ export default function ContentBlockerOverlay({
       document.removeEventListener('visibilitychange', onVisibilityChange);
       window.clearInterval(intervalId);
     };
-  }, [adClient, hasMonetizedContent, runDetection]);
+  }, [adClient, detected, hasMonetizedContent, runDetection]);
 
   useEffect(() => {
     if (!detected) return;
@@ -213,7 +213,7 @@ export default function ContentBlockerOverlay({
         <div className="flex flex-col gap-3">
           <button
             type="button"
-            onClick={() => void runDetection()}
+            onClick={reloadPage}
             disabled={checking}
             className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-primary-500 dark:hover:bg-primary-600"
           >
