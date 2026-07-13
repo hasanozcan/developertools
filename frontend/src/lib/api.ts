@@ -35,14 +35,14 @@ export interface ToolDetail extends Tool {
 
 // Static data now that the backend is disabled.
 export const categoryCatalog: Category[] = [
-  { id: 1, slug: 'json', name: 'JSON Tools', description: 'JSON formatting, validation, and conversion tools for developers', toolCount: 6 },
+  { id: 1, slug: 'json', name: 'JSON Tools', description: 'JSON formatting, validation, and conversion tools for developers', toolCount: 7 },
   { id: 2, slug: 'encoding', name: 'Encoder Online', description: 'Encode and decode Base64, URL components, hexadecimal, binary, JSON strings, and more', toolCount: 9 },
   { id: 3, slug: 'generators', name: 'Generators', description: 'UUID, password, and other generators', toolCount: 7 },
   { id: 4, slug: 'crypto', name: 'Cryptography', description: 'Hashing, message authentication, and OAuth security tools', toolCount: 5 },
   { id: 5, slug: 'text', name: 'Text Tools', description: 'Text manipulation and formatting tools', toolCount: 8 },
   { id: 6, slug: 'converters', name: 'Converters', description: 'Data format converters', toolCount: 6 },
   { id: 7, slug: 'formatters', name: 'Code Formatters', description: 'Format and minify code in various languages', toolCount: 6 },
-  { id: 8, slug: 'utilities', name: 'Developer Utilities', description: 'Essential utilities for developers', toolCount: 5 },
+  { id: 8, slug: 'utilities', name: 'Developer Utilities', description: 'Essential utilities for developers', toolCount: 7 },
 ];
 
 export const toolCatalog: Tool[] = [
@@ -98,6 +98,9 @@ export const toolCatalog: Tool[] = [
   { id: 50, slug: 'hmac-generator', name: 'HMAC Generator & Verifier', shortDescription: 'Generate and verify keyed SHA message authentication codes', categorySlug: 'crypto', categoryName: 'Cryptography', isFeatured: true },
   { id: 51, slug: 'pkce-generator', name: 'PKCE Generator & Verifier', shortDescription: 'Generate and verify OAuth PKCE S256 verifier and challenge pairs', categorySlug: 'crypto', categoryName: 'Cryptography', isFeatured: true },
   { id: 52, slug: 'cidr-calculator', name: 'IPv4 CIDR Calculator', shortDescription: 'Calculate IPv4 network ranges, masks, broadcasts, and usable hosts', categorySlug: 'utilities', categoryName: 'Developer Utilities', isFeatured: true },
+  { id: 53, slug: 'json-pointer', name: 'JSON Pointer Evaluator', shortDescription: 'Resolve RFC 6901 JSON Pointer paths against JSON documents', categorySlug: 'json', categoryName: 'JSON Tools', isFeatured: true },
+  { id: 54, slug: 'chmod-calculator', name: 'Chmod Calculator', shortDescription: 'Convert Unix file permissions between octal and symbolic modes', categorySlug: 'utilities', categoryName: 'Developer Utilities', isFeatured: true },
+  { id: 55, slug: 'cache-control', name: 'Cache-Control Parser & Builder', shortDescription: 'Parse, normalize, and check HTTP Cache-Control directives', categorySlug: 'utilities', categoryName: 'Developer Utilities', isFeatured: true },
 ];
 
 const curatedRelatedToolSlugs: Record<string, string[]> = {
@@ -110,9 +113,12 @@ const curatedRelatedToolSlugs: Record<string, string[]> = {
   'sha512-hash': ['sha256-hash', 'hmac-generator', 'md5-hash'],
   'hmac-generator': ['pkce-generator', 'sha256-hash', 'md5-hash'],
   'url-parser': ['cidr-calculator', 'query-string-parser', 'url-encoder'],
-  'http-headers-parser': ['cidr-calculator', 'http-status-codes', 'user-agent-parser'],
+  'http-headers-parser': ['cache-control', 'http-status-codes', 'user-agent-parser'],
   'pkce-generator': ['sha256-hash', 'hmac-generator', 'uuid-generator'],
   'cidr-calculator': ['url-parser', 'http-headers-parser', 'http-status-codes'],
+  'json-pointer': ['json-formatter', 'json-validator', 'json-schema-validator'],
+  'chmod-calculator': ['cidr-calculator', 'cron-parser', 'http-headers-parser'],
+  'cache-control': ['http-headers-parser', 'cron-parser', 'http-status-codes'],
 };
 
 function relatedToolsFor(tool: Tool, count: number = 3): Tool[] {

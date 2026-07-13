@@ -61,6 +61,9 @@ const toolComponents = {
   'http-status-codes': dynamic(() => import('./HttpStatusCodesTool'), { loading: Loading, ssr: false }),
   'user-agent-parser': dynamic(() => import('./UserAgentParserTool'), { loading: Loading, ssr: false }),
   'cidr-calculator': dynamic(() => import('./CidrCalculatorTool'), { loading: Loading, ssr: false }),
+  'json-pointer': dynamic(() => import('./JsonPointerTool'), { loading: Loading, ssr: false }),
+  'chmod-calculator': dynamic(() => import('./ChmodCalculatorTool'), { loading: Loading, ssr: false }),
+  'cache-control': dynamic(() => import('./CacheControlTool'), { loading: Loading, ssr: false }),
 } as const;
 
 export const toolComponentSlugs = Object.keys(toolComponents);

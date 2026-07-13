@@ -105,6 +105,9 @@ const toolIcons: Record<string, LucideIcon> = {
   'http-status-codes': CheckCircle,
   'user-agent-parser': Fingerprint,
   'cidr-calculator': Network,
+  'json-pointer': FileJson,
+  'chmod-calculator': Lock,
+  'cache-control': Clock,
 };
 
 interface CategoryConfig {
@@ -149,6 +152,11 @@ const categories: Record<string, CategoryConfig> = {
         name: 'YAML ↔ JSON Converter',
         slug: 'yaml-json',
         description: 'Convert between YAML and JSON formats',
+      },
+      {
+        name: 'JSON Pointer Evaluator',
+        slug: 'json-pointer',
+        description: 'Resolve RFC 6901 pointers against JSON documents',
       },
     ],
   },
@@ -486,6 +494,16 @@ const categories: Record<string, CategoryConfig> = {
         name: 'IPv4 CIDR Calculator',
         slug: 'cidr-calculator',
         description: 'Calculate IPv4 subnet ranges, masks, and usable hosts',
+      },
+      {
+        name: 'Chmod Calculator',
+        slug: 'chmod-calculator',
+        description: 'Convert Unix permissions between octal and symbolic modes',
+      },
+      {
+        name: 'Cache-Control Parser & Builder',
+        slug: 'cache-control',
+        description: 'Parse, normalize, and check HTTP caching directives',
       },
       {
         name: 'QR Code Generator',

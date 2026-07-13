@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { detectContentBlocker } from '@/lib/contentBlockerDetection';
@@ -67,10 +67,13 @@ describe('ContentBlockerOverlay', () => {
 
     const lateSlot = document.createElement('div');
     lateSlot.setAttribute('data-site-support-slot', 'true');
-    document.body.appendChild(lateSlot);
+    await act(async () => {
+      document.body.appendChild(lateSlot);
+      await Promise.resolve();
+    });
 
     await waitFor(() => expect(detector).toHaveBeenCalledWith('ca-pub-123'));
-    lateSlot.remove();
+    act(() => lateSlot.remove());
   });
 
   it('shows a non-dismissible modal and ignores the old localStorage bypass', async () => {

@@ -6,7 +6,7 @@ import { getToolBySlug, toolCatalog } from '@/lib/api';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
 import { getToolSources } from '@/lib/toolSources';
 
-const LAST_REVIEWED = '2026-07-12';
+const LAST_REVIEWED = '2026-07-13';
 
 // Tool configurations
 const tools: Record<
@@ -251,6 +251,54 @@ const tools: Record<
           answer:
             'Conversion uses the js-yaml YAML 1.1 compatibility schema so anchors, aliases, merge keys, explicit tags, and typed scalars work as shown in the sample. YAML 1.1 can interpret some plain scalars differently from YAML 1.2.',
         },
+      ],
+    },
+    'json-pointer': {
+      name: 'JSON Pointer Evaluator',
+      metadataTitle: 'JSON Pointer Evaluator Online - RFC 6901',
+      description:
+        'Evaluate RFC 6901 JSON Pointer paths against a JSON document in your browser, including escaped slash and tilde member names.',
+      longDescription:
+        'Free online JSON Pointer evaluator. Resolve an empty pointer or slash-separated reference tokens against JSON objects and arrays without uploading the document.',
+      keywords: ['json pointer', 'rfc 6901', 'json path evaluator', 'json reference token'],
+      faqs: [
+        {
+          question: 'Is JSON Pointer the same as JSONPath?',
+          answer:
+            'No. JSON Pointer is the compact RFC 6901 syntax for identifying one value. JSONPath is a separate query language with filters, wildcards, and other selection features.',
+        },
+        {
+          question: 'How do I reference a slash or tilde in a key?',
+          answer:
+            'Encode a tilde as ~0 and a slash as ~1 inside each reference token. For example, /a~1b selects the object member named a/b.',
+        },
+        {
+          question: 'What does an empty pointer select?',
+          answer: 'The empty JSON Pointer selects the complete JSON document.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the JSON Pointer evaluator does',
+          paragraphs: [
+            'JSON Pointer identifies one value by walking slash-separated reference tokens through a JSON document. Object tokens match member names exactly, while array tokens use zero-based indexes. The evaluator reports a missing member, invalid escape, invalid array index, or attempt to traverse through a primitive instead of silently returning the wrong value.',
+          ],
+        },
+        {
+          heading: 'Syntax and boundaries',
+          bullets: [
+            'Use an empty string for the document root and / for an object member whose name is empty.',
+            'Encode ~ as ~0 and / as ~1 inside a token; decoding happens in that order as RFC 6901 requires.',
+            'Array indexes are canonical non-negative decimal integers. The special - token is useful for JSON Patch append operations but does not identify an existing value.',
+            'The tool evaluates JSON Pointer syntax only; it does not implement JSONPath filters, JSON Patch operations, URI fragment decoding, or schema validation.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste or edit a valid JSON document.',
+        'Enter an empty pointer or an RFC 6901 pointer beginning with /.',
+        'Review the resolved value or the precise path error.',
+        'Copy the selected JSON value when needed.',
       ],
     },
   },
@@ -1728,6 +1776,114 @@ const tools: Record<
         'Enter a CIDR prefix such as /26 or a contiguous mask such as 255.255.255.192.',
         'Calculate the subnet and review the canonical network, boundaries, masks, and host range.',
         'Copy the result only after confirming the target platform uses the same host semantics.',
+      ],
+    },
+    'chmod-calculator': {
+      name: 'Chmod Calculator',
+      metadataTitle: 'Chmod Calculator - Octal & Symbolic Permissions',
+      description:
+        'Convert Unix file permissions between octal digits, rwx symbolic mode, and a ready-to-copy chmod command, including setuid, setgid, and sticky bits.',
+      longDescription:
+        'Free Unix chmod calculator. Enter a three- or four-digit octal mode or toggle permission bits to inspect the matching symbolic mode and command locally.',
+      keywords: [
+        'chmod calculator',
+        'linux permissions calculator',
+        'octal permissions',
+        'rwx converter',
+      ],
+      faqs: [
+        {
+          question: 'What do 755 and 644 mean?',
+          answer:
+            'Each octal digit combines read (4), write (2), and execute (1). Mode 755 is rwxr-xr-x, while 644 is rw-r--r--.',
+        },
+        {
+          question: 'What are setuid, setgid, and sticky bits?',
+          answer:
+            'They are special mode bits represented by a leading octal digit. Their exact security effect depends on the object type, operating system, filesystem, mount options, and execution context.',
+        },
+        {
+          question: 'Does this tool change a file?',
+          answer:
+            'No. It only calculates and copies permission notation; it cannot access or modify your filesystem.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How the chmod calculator works',
+          paragraphs: [
+            'Unix permission modes group read, write, and execute bits for the owner, group, and others. Adding the bit values produces each octal digit: read is 4, write is 2, and execute is 1. The calculator keeps the octal, rwx, and checkbox representations synchronized.',
+          ],
+        },
+        {
+          heading: 'Security boundary',
+          bullets: [
+            'Avoid broad write permissions such as 777 unless the exact threat model and environment require them.',
+            'A mode does not show file ownership, ACLs, capabilities, SELinux or AppArmor rules, mount flags, container mappings, or inherited policy.',
+            'Uppercase S or T means the special bit is set while the corresponding execute bit is not set.',
+            'Review the target path and ownership before running any copied chmod command, especially recursively.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Enter a three- or four-digit octal mode such as 755 or 4755.',
+        'Alternatively, toggle read, write, execute, and special bits.',
+        'Review the synchronized octal and symbolic representations.',
+        'Copy the command only after checking the target path and ownership.',
+      ],
+    },
+    'cache-control': {
+      name: 'Cache-Control Parser & Builder',
+      metadataTitle: 'Cache-Control Header Parser & Builder Online',
+      description:
+        'Parse and normalize HTTP Cache-Control directives, inspect values, load common response-header presets, and flag frequent directive conflicts.',
+      longDescription:
+        'Free Cache-Control header parser and builder. Inspect caching directives and common semantic conflicts locally before applying a header to an origin, CDN, or framework.',
+      keywords: [
+        'cache control header',
+        'cache-control parser',
+        'http caching',
+        'cache header builder',
+      ],
+      faqs: [
+        {
+          question: 'What is the difference between no-cache and no-store?',
+          answer:
+            'no-cache allows a stored response but requires validation before reuse. no-store tells caches not to store the response. They are not interchangeable.',
+        },
+        {
+          question: 'What does s-maxage control?',
+          answer:
+            's-maxage sets freshness for shared caches and takes precedence over max-age there. Browser and private-cache behavior can still differ.',
+        },
+        {
+          question: 'Can this tool guarantee CDN behavior?',
+          answer:
+            'No. It validates syntax and flags common conflicts, but actual behavior depends on the complete response, request directives, cache implementation, CDN policy, framework defaults, and invalidation state.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the Cache-Control tool checks',
+          paragraphs: [
+            'The parser separates comma-delimited directives without splitting commas inside quoted values, normalizes directive names, removes duplicate names in the formatted output, and warns about common conflicts such as public with private or non-numeric freshness values.',
+          ],
+        },
+        {
+          heading: 'Operational limits',
+          bullets: [
+            'Cache-Control semantics differ between requests and responses; the presets are response-oriented examples.',
+            'A valid header does not override every CDN rule, surrogate header, framework cache, service worker, browser heuristic, or explicit purge.',
+            'immutable is most appropriate for versioned resources whose URL changes whenever content changes.',
+            'Do not cache personalized or sensitive responses publicly without a complete review of authentication, Vary, cookies, and intermediary behavior.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste a Cache-Control header value or choose a response-oriented preset.',
+        'Review the parsed directives, normalized header, and any conflict warnings.',
+        'Adjust directive values for the origin and cache architecture you actually use.',
+        'Verify the deployed response headers and cache behavior after publishing.',
       ],
     },
   },

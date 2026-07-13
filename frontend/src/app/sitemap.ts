@@ -3,7 +3,7 @@ import { categoryCatalog, toolCatalog } from '@/lib/api';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
 // Update this only after a meaningful site-wide content or structured-data revision.
-const CONTENT_LAST_MODIFIED = new Date('2026-07-12T00:00:00.000Z');
+const CONTENT_LAST_MODIFIED = new Date('2026-07-13T00:00:00.000Z');
 
 // Static pages
 const staticPages = ['about', 'privacy', 'terms', 'contact'];

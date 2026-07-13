@@ -36,6 +36,7 @@ DeveloperTools/
 | JSON Formatter | JSON Tools | Client-side |
 | JSON Validator | JSON Tools | Client-side |
 | JSON Schema Validator | JSON Tools | Client-side |
+| JSON Pointer Evaluator | JSON Tools | Client-side |
 | JSON to CSV Converter | JSON Tools | Client-side |
 | JSON to TypeScript | JSON Tools | Client-side |
 | YAML ↔ JSON Converter | JSON Tools | Client-side |
@@ -66,6 +67,8 @@ DeveloperTools/
 | JavaScript Minifier | Formatters | Client-side |
 | Cron Expression Parser | Utilities | Client-side |
 | IPv4 CIDR Calculator | Utilities | Client-side |
+| Chmod Calculator | Utilities | Client-side |
+| Cache-Control Parser & Builder | Utilities | Client-side |
 
 ## Hızlı Başlangıç
 

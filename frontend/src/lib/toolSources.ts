@@ -52,6 +52,9 @@ const sources = {
   http: { name: 'RFC 9110: HTTP Semantics', url: 'https://www.rfc-editor.org/rfc/rfc9110' },
   userAgent: { name: 'MDN: User-Agent header', url: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent' },
   uaParser: { name: 'UAParser.js 1.0.41 source and parser data', url: 'https://github.com/faisalman/ua-parser-js/tree/1.0.41' },
+  jsonPointer: { name: 'RFC 6901: JavaScript Object Notation (JSON) Pointer', url: 'https://www.rfc-editor.org/rfc/rfc6901' },
+  chmod: { name: 'POSIX chmod utility specification', url: 'https://pubs.opengroup.org/onlinepubs/9799919799/utilities/chmod.html' },
+  cacheControl: { name: 'RFC 9111: HTTP Caching', url: 'https://www.rfc-editor.org/rfc/rfc9111' },
 } satisfies Record<string, ToolSource>;
 
 const sourceByTool: Record<string, ToolSource | ToolSource[]> = {
@@ -107,6 +110,9 @@ const sourceByTool: Record<string, ToolSource | ToolSource[]> = {
   'http-status-codes': sources.http,
   'user-agent-parser': [sources.http, sources.userAgent, sources.uaParser],
   'cidr-calculator': [sources.ipv4, sources.cidr, sources.rfc3021],
+  'json-pointer': [sources.jsonPointer, sources.json],
+  'chmod-calculator': sources.chmod,
+  'cache-control': [sources.cacheControl, sources.http],
 };
 
 export function getToolSources(toolSlug: string): ToolSource[] {
