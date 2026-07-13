@@ -108,6 +108,9 @@ const toolIcons: Record<string, LucideIcon> = {
   'json-pointer': FileJson,
   'chmod-calculator': Lock,
   'cache-control': Clock,
+  'jsonpath-tester': Braces,
+  'csp-builder': ShieldCheck,
+  'curl-to-fetch': Code2,
 };
 
 interface CategoryConfig {
@@ -124,7 +127,7 @@ interface CategoryConfig {
 const categories: Record<string, CategoryConfig> = {
   json: {
     name: 'JSON Tools',
-    description: 'JSON formatting, validation, and conversion tools for developers',
+    description: 'JSON formatting, validation, querying, and conversion tools for developers',
     icon: Braces,
     tools: [
       {
@@ -157,6 +160,11 @@ const categories: Record<string, CategoryConfig> = {
         name: 'JSON Pointer Evaluator',
         slug: 'json-pointer',
         description: 'Resolve RFC 6901 pointers against JSON documents',
+      },
+      {
+        name: 'JSONPath Tester',
+        slug: 'jsonpath-tester',
+        description: 'Query JSON with paths, wildcards, slices, and recursive descent',
       },
     ],
   },
@@ -467,7 +475,7 @@ const categories: Record<string, CategoryConfig> = {
   },
   utilities: {
     name: 'Developer Utilities',
-    description: 'Essential utilities for developers',
+    description: 'HTTP, security, network, and request utilities for developers',
     icon: Wand2,
     tools: [
       {
@@ -504,6 +512,16 @@ const categories: Record<string, CategoryConfig> = {
         name: 'Cache-Control Parser & Builder',
         slug: 'cache-control',
         description: 'Parse, normalize, and check HTTP caching directives',
+      },
+      {
+        name: 'CSP Header Builder & Analyzer',
+        slug: 'csp-builder',
+        description: 'Build and inspect Content Security Policy headers',
+      },
+      {
+        name: 'cURL Builder & Fetch Converter',
+        slug: 'curl-to-fetch',
+        description: 'Build cURL requests or convert supported cURL input to fetch',
       },
       {
         name: 'QR Code Generator',
@@ -548,6 +566,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       'yaml to json',
       'json beautifier',
       'json parser',
+      'jsonpath tester',
+      'jsonpath online',
     ],
     encoding: [
       'online encoder',
@@ -629,6 +649,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       'user agent parser',
       'cidr calculator',
       'subnet calculator',
+      'content security policy builder',
+      'csp analyzer',
+      'curl to fetch',
+      'curl command builder',
     ],
   };
 

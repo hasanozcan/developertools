@@ -64,6 +64,9 @@ const toolComponents = {
   'json-pointer': dynamic(() => import('./JsonPointerTool'), { loading: Loading, ssr: false }),
   'chmod-calculator': dynamic(() => import('./ChmodCalculatorTool'), { loading: Loading, ssr: false }),
   'cache-control': dynamic(() => import('./CacheControlTool'), { loading: Loading, ssr: false }),
+  'jsonpath-tester': dynamic(() => import('./JsonPathTool'), { loading: Loading, ssr: false }),
+  'csp-builder': dynamic(() => import('./CspBuilderTool'), { loading: Loading, ssr: false }),
+  'curl-to-fetch': dynamic(() => import('./CurlRequestTool'), { loading: Loading, ssr: false }),
 } as const;
 
 export const toolComponentSlugs = Object.keys(toolComponents);

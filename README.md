@@ -37,6 +37,7 @@ DeveloperTools/
 | JSON Validator | JSON Tools | Client-side |
 | JSON Schema Validator | JSON Tools | Client-side |
 | JSON Pointer Evaluator | JSON Tools | Client-side |
+| JSONPath Tester | JSON Tools | Client-side |
 | JSON to CSV Converter | JSON Tools | Client-side |
 | JSON to TypeScript | JSON Tools | Client-side |
 | YAML ↔ JSON Converter | JSON Tools | Client-side |
@@ -69,6 +70,8 @@ DeveloperTools/
 | IPv4 CIDR Calculator | Utilities | Client-side |
 | Chmod Calculator | Utilities | Client-side |
 | Cache-Control Parser & Builder | Utilities | Client-side |
+| CSP Header Builder & Analyzer | Utilities | Client-side |
+| cURL Builder & Fetch Converter | Utilities | Client-side |
 
 ## Hızlı Başlangıç
 

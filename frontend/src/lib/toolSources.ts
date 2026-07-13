@@ -55,6 +55,11 @@ const sources = {
   jsonPointer: { name: 'RFC 6901: JavaScript Object Notation (JSON) Pointer', url: 'https://www.rfc-editor.org/rfc/rfc6901' },
   chmod: { name: 'POSIX chmod utility specification', url: 'https://pubs.opengroup.org/onlinepubs/9799919799/utilities/chmod.html' },
   cacheControl: { name: 'RFC 9111: HTTP Caching', url: 'https://www.rfc-editor.org/rfc/rfc9111' },
+  jsonPath: { name: 'RFC 9535: JSONPath Query Expressions for JSON', url: 'https://www.rfc-editor.org/rfc/rfc9535' },
+  csp: { name: 'W3C Content Security Policy Level 3', url: 'https://www.w3.org/TR/CSP3/' },
+  curl: { name: 'curl command-line tool manual', url: 'https://curl.se/docs/manpage.html' },
+  fetch: { name: 'WHATWG Fetch Standard', url: 'https://fetch.spec.whatwg.org/' },
+  posixShell: { name: 'POSIX Shell Command Language: Quoting', url: 'https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_19_02' },
 } satisfies Record<string, ToolSource>;
 
 const sourceByTool: Record<string, ToolSource | ToolSource[]> = {
@@ -113,6 +118,9 @@ const sourceByTool: Record<string, ToolSource | ToolSource[]> = {
   'json-pointer': [sources.jsonPointer, sources.json],
   'chmod-calculator': sources.chmod,
   'cache-control': [sources.cacheControl, sources.http],
+  'jsonpath-tester': [sources.jsonPath, sources.json],
+  'csp-builder': [sources.csp, sources.http],
+  'curl-to-fetch': [sources.curl, sources.fetch, sources.posixShell, sources.http],
 };
 
 export function getToolSources(toolSlug: string): ToolSource[] {

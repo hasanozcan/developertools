@@ -301,6 +301,67 @@ const tools: Record<
         'Copy the selected JSON value when needed.',
       ],
     },
+    'jsonpath-tester': {
+      name: 'JSONPath Tester',
+      metadataTitle: 'JSONPath Tester Online - RFC 9535 Query Evaluator',
+      description:
+        'Test JSONPath queries against JSON in your browser with child selectors, array indexes, wildcards, slices, and recursive descent.',
+      longDescription:
+        'Free online JSONPath tester for selecting one or more values from a JSON document. Inspect each matched value and its normalized path without uploading the input or evaluating scripts.',
+      keywords: [
+        'jsonpath tester',
+        'jsonpath online',
+        'json path evaluator',
+        'rfc 9535',
+        'query json online',
+      ],
+      faqs: [
+        {
+          question: 'How is JSONPath different from JSON Pointer?',
+          answer:
+            'JSON Pointer identifies one exact value with slash-separated tokens. JSONPath is a query language that can select multiple values with wildcards, slices, and recursive descent.',
+        },
+        {
+          question: 'Does this tester support filter expressions?',
+          answer:
+            'No. It intentionally supports a safe RFC 9535 core subset and rejects filters or script expressions instead of evaluating code. Use child names, indexes, wildcards, slices, or recursive descent.',
+        },
+        {
+          question: 'Is the JSON document uploaded?',
+          answer:
+            'No. JSON parsing and path evaluation run in your browser. Clipboard history, extensions, page scripts, and shared devices can still expose sensitive input.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the JSONPath tester selects',
+          paragraphs: [
+            "A JSONPath query starts at $ and walks object members or array elements. A singular path such as $.store.book[0].title selects one value, while wildcards, slices, and recursive descent can produce an ordered list of matches. Each result includes the selected value and a normalized path back to its location in the input document.",
+          ],
+        },
+        {
+          heading: 'Supported syntax and safety boundary',
+          bullets: [
+            "Use .name or ['name'] for object members and [0] or [-1] for array indexes.",
+            'Use .* or [*] for child wildcards, [start:end:step] for array slices, and ..name or ..* for recursive descent.',
+            'Filter selectors, embedded JavaScript, functions, and shell-like expressions are rejected; the tool never evaluates query text as code.',
+            'The tester validates JSON syntax before querying. It does not apply JSON Schema or prove that selected values satisfy an API contract.',
+          ],
+        },
+        {
+          heading: 'JSONPath result interpretation',
+          paragraphs: [
+            'Zero matches means the valid query did not select a value in the current document; it is different from selecting a JSON null. Wildcards and recursive descent can return many values, and duplicate values at different locations remain separate matches because their normalized paths differ.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste or edit a valid JSON document.',
+        'Enter an RFC 9535-style path beginning with $.',
+        'Review every matched path and value, or correct the reported syntax error.',
+        'Copy the result list when you need it for debugging or tests.',
+      ],
+    },
   },
   encoding: {
     base64: {
@@ -1884,6 +1945,129 @@ const tools: Record<
         'Review the parsed directives, normalized header, and any conflict warnings.',
         'Adjust directive values for the origin and cache architecture you actually use.',
         'Verify the deployed response headers and cache behavior after publishing.',
+      ],
+    },
+    'csp-builder': {
+      name: 'CSP Header Builder & Analyzer',
+      metadataTitle: 'Content Security Policy (CSP) Builder & Analyzer',
+      description:
+        'Build and normalize a Content-Security-Policy header, inspect every directive, and flag common unsafe sources or missing baseline restrictions.',
+      longDescription:
+        'Free CSP header builder and static analyzer. Start from a strict preset, add or replace directives, and review common security findings locally before testing a policy in Report-Only mode.',
+      keywords: [
+        'content security policy builder',
+        'csp generator',
+        'csp analyzer',
+        'csp header checker',
+        'content-security-policy online',
+      ],
+      faqs: [
+        {
+          question: 'Can the analyzer prove that a CSP is secure?',
+          answer:
+            'No. It flags common static problems, but it cannot understand every application flow, browser behavior, nonce lifecycle, third-party integration, reporting endpoint, or bypass in the protected application.',
+        },
+        {
+          question: 'Why should I start with Report-Only mode?',
+          answer:
+            'Content-Security-Policy-Report-Only records violations without enforcing the policy. It helps identify required resources before enforcement, although reports still need careful review and can contain sensitive URLs.',
+        },
+        {
+          question: 'What happens to duplicate directives?',
+          answer:
+            'Browsers use the first occurrence and ignore later duplicate directives. The analyzer reports duplicates, and the normalized builder output keeps one explicit directive.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the CSP builder checks',
+          paragraphs: [
+            "Content Security Policy restricts where a document can load or execute resources. This tool parses semicolon-delimited directives, normalizes their values, detects duplicates, and highlights common risks such as broad script sources, data: scripts, 'unsafe-eval', or 'unsafe-inline' without a nonce or hash.",
+          ],
+        },
+        {
+          heading: 'Baseline directives and findings',
+          bullets: [
+            'default-src provides a fallback for fetch directives that are not declared explicitly.',
+            "object-src 'none' blocks legacy plugin content when the application does not need it.",
+            "base-uri limits changes to the document base URL, while frame-ancestors controls which parents may embed the page.",
+            'A syntactically valid policy can still break production or permit an unsafe flow. Validate required origins, nonces, hashes, workers, frames, forms, and reporting separately.',
+          ],
+        },
+        {
+          heading: 'Safe deployment workflow',
+          paragraphs: [
+            'Begin with a least-privilege draft, deploy it as Content-Security-Policy-Report-Only, exercise real application paths, and inspect violations. Remove accidental dependencies or add the narrowest required sources, then enforce the tested policy. Keep the header under version control and re-test it when frameworks, CDNs, analytics, ads, or authentication flows change.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste an existing policy or load a strict starting preset.',
+        'Add or replace directives with the builder and copy the normalized policy.',
+        'Resolve high and medium findings in the context of the real application.',
+        'Deploy in Report-Only mode, test real flows, then enforce the verified policy.',
+      ],
+    },
+    'curl-to-fetch': {
+      name: 'cURL Builder & Fetch Converter',
+      metadataTitle: 'cURL to Fetch Converter & Request Builder Online',
+      description:
+        'Build a quoted cURL request and JavaScript fetch snippet, or convert supported pasted cURL syntax without executing the command.',
+      longDescription:
+        'Free browser-based cURL command builder and cURL-to-fetch converter. Configure a method, URL, query parameters, headers, and body or parse a supported cURL command with sensitive-header redaction.',
+      keywords: [
+        'curl to fetch',
+        'curl converter',
+        'curl command builder',
+        'generate curl command',
+        'curl to javascript',
+      ],
+      faqs: [
+        {
+          question: 'Does this tool run the cURL command?',
+          answer:
+            'No. It only tokenizes supported input and generates text. It never starts a shell, contacts the target URL, or sends the headers and body.',
+        },
+        {
+          question: 'Which cURL options can be converted?',
+          answer:
+            'The converter handles common request options including method, URL, headers, and data, plus harmless location or compression flags. Unsupported or ambiguous shell features are rejected instead of guessed.',
+        },
+        {
+          question: 'Are cURL and fetch always equivalent?',
+          answer:
+            'No. Redirects, cookies, TLS, proxies, compression, streaming, CORS, browser-forbidden headers, credentials, and multipart uploads can behave differently. Review and test the generated code in its real runtime.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the cURL and fetch converter does',
+          paragraphs: [
+            'The request builder turns structured method, URL, query, header, and body input into a POSIX-shell-quoted cURL command and a JavaScript fetch example. The converter tokenizes a supported pasted cURL command without executing it, then maps the request data to fetch syntax.',
+          ],
+        },
+        {
+          heading: 'Parsing and security boundaries',
+          bullets: [
+            'Shell substitutions, backticks, NUL bytes, malformed quoting, CRLF header injection, and unsupported options are rejected.',
+            'Sensitive Authorization, Cookie, proxy authorization, and API-key values can be redacted in generated output and are redacted by default in the interface.',
+            'POSIX shell quoting is not PowerShell or Windows cmd quoting. Review the target shell before running copied text.',
+            'Repeated request headers may be combined by the Fetch Headers API; the generated snippet calls out duplicate names for manual review.',
+            'The tool does not send a request, validate a remote server, store credentials, or prove that copied secrets are safe from extensions, page scripts, clipboard history, or screen sharing.',
+          ],
+        },
+        {
+          heading: 'Why generated fetch may need changes',
+          paragraphs: [
+            'Browser fetch applies CORS and forbidden-header rules that the curl command-line client does not. Server-side JavaScript has another cookie, proxy, and TLS environment. Multipart form uploads, streaming request bodies, client certificates, custom DNS resolution, or curl-specific retry behavior require runtime-specific code beyond a direct conversion.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Build a request from fields or paste a supported cURL command.',
+        'Keep sensitive-header redaction enabled when sharing or reviewing output.',
+        'Copy the POSIX cURL command or JavaScript fetch snippet.',
+        'Review shell, CORS, credential, redirect, and body semantics before running it.',
       ],
     },
   },
