@@ -3,16 +3,15 @@ const DEFAULT_NETWORK_TIMEOUT_MS = 2500;
 
 type FetchLike = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 type ProbeResult = 'reachable' | 'failed' | 'timeout';
-type ScriptProbe = (url: string, timeoutMs: number) => Promise<ProbeResult>;
+type RuntimeProbe = (timeoutMs: number) => Promise<ProbeResult>;
 
 export type ContentBlockerDetection = 'clear' | 'blocked' | 'unknown';
 
 interface DetectionOptions {
   fetchImpl?: FetchLike;
-  scriptProbeImpl?: ScriptProbe;
+  runtimeProbeImpl?: RuntimeProbe;
   baitSettleMs?: number;
   networkTimeoutMs?: number;
-  now?: () => number;
 }
 
 function wait(ms: number) {
@@ -65,39 +64,35 @@ async function probeUrl(
   }
 }
 
-/**
- * Requests the AdSense URL as a script without executing it. Content blockers
- * commonly apply different rules to script requests than to fetch/XHR calls.
- */
-export function probeScriptResource(url: string, timeoutMs: number): Promise<ProbeResult> {
+function isAdSenseRuntimeLoaded() {
+  const queue = Reflect.get(window, 'adsbygoogle') as { loaded?: unknown } | undefined;
+  return queue?.loaded === true;
+}
+
+/** Waits for the real AdSense script on the page to initialize its runtime. */
+export function probeAdSenseRuntime(timeoutMs: number): Promise<ProbeResult> {
+  if (isAdSenseRuntimeLoaded()) return Promise.resolve('reachable');
+
   return new Promise((resolve) => {
-    const preload = document.createElement('link');
     let settled = false;
 
     const finish = (result: ProbeResult) => {
       if (settled) return;
       settled = true;
       clearTimeout(timeoutId);
-      preload.onload = null;
-      preload.onerror = null;
-      preload.remove();
+      clearInterval(intervalId);
       resolve(result);
     };
 
-    preload.rel = 'preload';
-    preload.setAttribute('as', 'script');
-    preload.href = url;
-    preload.setAttribute('data-content-blocker-probe', 'script');
-    preload.onload = () => finish('reachable');
-    preload.onerror = () => finish('failed');
-
+    const intervalId = setInterval(() => {
+      if (isAdSenseRuntimeLoaded()) finish('reachable');
+    }, 50);
     const timeoutId = setTimeout(() => finish('timeout'), timeoutMs);
-    document.head.appendChild(preload);
   });
 }
 
 /**
- * Detects content filtering with a DOM bait and an AdSense script probe.
+ * Detects content filtering with a DOM bait and the real AdSense runtime.
  * A same-origin probe distinguishes blocking from a general connection error.
  */
 export async function detectContentBlocker(
@@ -106,10 +101,9 @@ export async function detectContentBlocker(
 ): Promise<ContentBlockerDetection> {
   const {
     fetchImpl = globalThis.fetch?.bind(globalThis),
-    scriptProbeImpl = probeScriptResource,
+    runtimeProbeImpl = probeAdSenseRuntime,
     baitSettleMs = DEFAULT_BAIT_SETTLE_MS,
     networkTimeoutMs = DEFAULT_NETWORK_TIMEOUT_MS,
-    now = Date.now,
   } = options;
 
   const bait = document.createElement('div');
@@ -126,16 +120,12 @@ export async function detectContentBlocker(
     await wait(baitSettleMs);
     if (isBaitBlocked(bait)) return 'blocked';
 
-    const nonce = now();
-    const adUrl =
-      `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js` +
-      `?client=${encodeURIComponent(adClient)}&adblock_probe=${nonce}`;
-    const adProbe = await scriptProbeImpl(adUrl, networkTimeoutMs);
+    const adProbe = await runtimeProbeImpl(networkTimeoutMs);
 
     if (adProbe === 'reachable') return 'clear';
-    if (adProbe === 'timeout') return 'unknown';
     if (!fetchImpl) return 'unknown';
 
+    const nonce = Date.now();
     const firstPartyProbe = await probeUrl(
       fetchImpl,
       `/favicon.svg?content_blocker_probe=${nonce}`,
