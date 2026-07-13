@@ -23,8 +23,8 @@ const SAMPLE_CURL = [
   '  --location --compressed',
 ].join('\n');
 
-function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : 'Unable to generate the request.';
+function indexedLabel(template: string, index: number): string {
+  return template.replace('{index}', String(index + 1));
 }
 
 function activeRows<T extends RequestHeader | RequestQueryParameter>(rows: readonly T[]): T[] {
@@ -70,17 +70,17 @@ export default function CurlRequestTool() {
 
     try {
       curl = generateCurl(request, options);
-    } catch (error) {
-      curlError = errorMessage(error);
+    } catch {
+      curlError = t('tool.curl.error');
     }
     try {
       fetch = generateFetch(request, options);
-    } catch (error) {
-      fetchError = errorMessage(error);
+    } catch {
+      fetchError = t('tool.curl.error');
     }
 
     return { curl, fetch, curlError, fetchError };
-  }, [redactSensitiveHeaders, request]);
+  }, [redactSensitiveHeaders, request, t]);
 
   const convertedFetch = useMemo(
     () => (parsedRequest ? generateFetch(parsedRequest, { redactSensitiveHeaders }) : ''),
@@ -105,17 +105,16 @@ export default function CurlRequestTool() {
       generateFetch(parsed, { redactSensitiveHeaders });
       setParsedRequest(parsed);
       setConverterError(null);
-    } catch (error) {
+    } catch {
       setParsedRequest(null);
-      setConverterError(errorMessage(error));
+      setConverterError(t('tool.curl.error'));
     }
   };
 
   return (
     <div className="space-y-8">
       <div className="rounded-xl border border-sky-200 bg-sky-50 p-4 text-sm text-sky-900 dark:border-sky-800 dark:bg-sky-950/40 dark:text-sky-200">
-        <strong>Text-only and local:</strong> this tool never runs cURL, executes shell syntax, or
-        sends a network request.
+        <strong>{t('tool.curl.localTitle')}</strong> {t('tool.curl.localDescription')}
       </div>
 
       <label className="flex items-start gap-3 rounded-xl border border-gray-200 p-4 dark:border-gray-700">
@@ -127,17 +126,17 @@ export default function CurlRequestTool() {
         />
         <span>
           <span className="block text-sm font-medium text-gray-900 dark:text-white">
-            Redact sensitive headers
+            {t('tool.curl.redactTitle')}
           </span>
           <span className="text-xs text-gray-500 dark:text-gray-400">
-            Authorization, Cookie, API key, and token headers become [REDACTED] in copied output.
+            {t('tool.curl.redactDescription')}
           </span>
         </span>
       </label>
 
       {!redactSensitiveHeaders && (
         <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-200">
-          Redaction is off. Generated text may contain credentials; review it before sharing.
+          {t('tool.curl.redactionWarning')}
         </div>
       )}
 
@@ -147,10 +146,10 @@ export default function CurlRequestTool() {
             id="curl-builder-heading"
             className="text-xl font-semibold text-gray-900 dark:text-white"
           >
-            Request builder
+            {t('tool.curl.builderTitle')}
           </h2>
           <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            Build matching POSIX cURL and JavaScript Fetch snippets.
+            {t('tool.curl.builderDescription')}
           </p>
         </div>
 
@@ -160,7 +159,7 @@ export default function CurlRequestTool() {
               htmlFor="curl-method"
               className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Method
+              {t('tool.curl.method')}
             </label>
             <select
               id="curl-method"
@@ -178,7 +177,7 @@ export default function CurlRequestTool() {
               htmlFor="curl-url"
               className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              HTTP(S) URL
+              {t('tool.curl.url')}
             </label>
             <input
               id="curl-url"
@@ -193,35 +192,35 @@ export default function CurlRequestTool() {
         <div className="space-y-3">
           <div className="flex items-center justify-between gap-3">
             <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Query parameters
+              {t('tool.curl.queryParameters')}
             </h3>
             <button
               type="button"
               onClick={() => setQuery((rows) => [...rows, { name: '', value: '' }])}
               className="text-sm font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400"
             >
-              + Add parameter
+              {t('tool.curl.addParameter')}
             </button>
           </div>
           {query.map((row, index) => (
             <div key={`query-${index}`} className="grid grid-cols-[1fr_1fr_auto] gap-2">
               <input
-                aria-label={`Query parameter ${index + 1} name`}
-                placeholder="name"
+                aria-label={indexedLabel(t('tool.curl.queryNameAria'), index)}
+                placeholder={t('tool.curl.namePlaceholder')}
                 value={row.name}
                 onChange={(event) => updateQuery(index, 'name', event.target.value)}
                 className="min-w-0 rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-sm dark:border-gray-600 dark:bg-gray-900 dark:text-white"
               />
               <input
-                aria-label={`Query parameter ${index + 1} value`}
-                placeholder="value"
+                aria-label={indexedLabel(t('tool.curl.queryValueAria'), index)}
+                placeholder={t('tool.curl.valuePlaceholder')}
                 value={row.value}
                 onChange={(event) => updateQuery(index, 'value', event.target.value)}
                 className="min-w-0 rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-sm dark:border-gray-600 dark:bg-gray-900 dark:text-white"
               />
               <button
                 type="button"
-                aria-label={`Remove query parameter ${index + 1}`}
+                aria-label={indexedLabel(t('tool.curl.removeQueryAria'), index)}
                 onClick={() => setQuery((rows) => rows.filter((_, rowIndex) => rowIndex !== index))}
                 className="rounded-lg border border-gray-300 px-3 text-gray-500 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-800"
               >
@@ -233,26 +232,28 @@ export default function CurlRequestTool() {
 
         <div className="space-y-3">
           <div className="flex items-center justify-between gap-3">
-            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Headers</h3>
+            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              {t('tool.curl.headers')}
+            </h3>
             <button
               type="button"
               onClick={() => setHeaders((rows) => [...rows, { name: '', value: '' }])}
               className="text-sm font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400"
             >
-              + Add header
+              {t('tool.curl.addHeader')}
             </button>
           </div>
           {headers.map((row, index) => (
             <div key={`header-${index}`} className="grid grid-cols-[1fr_1fr_auto] gap-2">
               <input
-                aria-label={`Header ${index + 1} name`}
+                aria-label={indexedLabel(t('tool.curl.headerNameAria'), index)}
                 placeholder="Content-Type"
                 value={row.name}
                 onChange={(event) => updateHeader(index, 'name', event.target.value)}
                 className="min-w-0 rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-sm dark:border-gray-600 dark:bg-gray-900 dark:text-white"
               />
               <input
-                aria-label={`Header ${index + 1} value`}
+                aria-label={indexedLabel(t('tool.curl.headerValueAria'), index)}
                 placeholder="application/json"
                 value={row.value}
                 onChange={(event) => updateHeader(index, 'value', event.target.value)}
@@ -260,7 +261,7 @@ export default function CurlRequestTool() {
               />
               <button
                 type="button"
-                aria-label={`Remove header ${index + 1}`}
+                aria-label={indexedLabel(t('tool.curl.removeHeaderAria'), index)}
                 onClick={() =>
                   setHeaders((rows) => rows.filter((_, rowIndex) => rowIndex !== index))
                 }
@@ -274,13 +275,13 @@ export default function CurlRequestTool() {
 
         <div>
           <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Request body (optional)
+            {t('tool.curl.bodyLabel')}
           </label>
           <CodeEditor
             value={body}
             onChange={setBody}
             language="text"
-            placeholder="Request body..."
+            placeholder={t('tool.curl.bodyPlaceholder')}
             minHeight="140px"
           />
         </div>
@@ -293,7 +294,7 @@ export default function CurlRequestTool() {
               onChange={(event) => setFollowRedirects(event.target.checked)}
               className="rounded border-gray-300 text-primary-600"
             />
-            Follow redirects
+            {t('tool.curl.followRedirects')}
           </label>
           <label className="flex items-center gap-2">
             <input
@@ -302,7 +303,7 @@ export default function CurlRequestTool() {
               onChange={(event) => setCompressed(event.target.checked)}
               className="rounded border-gray-300 text-primary-600"
             />
-            Request compressed responses
+            {t('tool.curl.compressedResponses')}
           </label>
         </div>
 
@@ -311,35 +312,43 @@ export default function CurlRequestTool() {
             role="alert"
             className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-300"
           >
-            {builderResult.curlError && <p>cURL: {builderResult.curlError}</p>}
-            {builderResult.fetchError && <p>Fetch: {builderResult.fetchError}</p>}
+            {builderResult.curlError && (
+              <p>
+                {t('tool.curl.curlLabel')}: {builderResult.curlError}
+              </p>
+            )}
+            {builderResult.fetchError && (
+              <p>
+                {t('tool.curl.fetchLabel')}: {builderResult.fetchError}
+              </p>
+            )}
           </div>
         )}
 
         <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
           <div>
             <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-              cURL (POSIX shell)
+              {t('tool.curl.curlLabel')}
             </label>
             <CodeEditor
               value={builderResult.curl}
               onChange={() => {}}
               readOnly
               language="bash"
-              placeholder="Valid request output appears here..."
+              placeholder={t('tool.curl.outputPlaceholder')}
               minHeight="280px"
             />
           </div>
           <div>
             <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Fetch
+              {t('tool.curl.fetchLabel')}
             </label>
             <CodeEditor
               value={builderResult.fetch}
               onChange={() => {}}
               readOnly
               language="javascript"
-              placeholder="Valid request output appears here..."
+              placeholder={t('tool.curl.outputPlaceholder')}
               minHeight="280px"
             />
           </div>
@@ -355,11 +364,10 @@ export default function CurlRequestTool() {
             id="curl-converter-heading"
             className="text-xl font-semibold text-gray-900 dark:text-white"
           >
-            Paste cURL → Fetch
+            {t('tool.curl.converterTitle')}
           </h2>
           <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            Supports request, header, data, URL, location, and compressed flags. Shell substitutions
-            and file-backed inputs are rejected.
+            {t('tool.curl.converterDescription')}
           </p>
         </div>
         <CodeEditor
@@ -370,7 +378,7 @@ export default function CurlRequestTool() {
             setConverterError(null);
           }}
           language="bash"
-          placeholder="Paste a cURL command..."
+          placeholder={t('tool.curl.pastePlaceholder')}
           minHeight="220px"
         />
         <div className="flex flex-wrap gap-3">
@@ -379,7 +387,7 @@ export default function CurlRequestTool() {
             onClick={convertPastedCurl}
             className="rounded-lg bg-primary-600 px-4 py-2 font-medium text-white hover:bg-primary-700"
           >
-            Convert to Fetch
+            {t('tool.curl.convert')}
           </button>
           <button
             type="button"
@@ -414,14 +422,14 @@ export default function CurlRequestTool() {
         )}
         <div>
           <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-            Converted Fetch
+            {t('tool.curl.convertedFetch')}
           </label>
           <CodeEditor
             value={convertedFetch}
             onChange={() => {}}
             readOnly
             language="javascript"
-            placeholder="Convert a supported cURL command..."
+            placeholder={t('tool.curl.convertedPlaceholder')}
             minHeight="260px"
           />
         </div>

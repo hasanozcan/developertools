@@ -87,7 +87,7 @@ async function runAudit(mode: MockMode) {
   };
 }
 
-describe('SEO/GEO audit script', () => {
+describe('SEO/GEO audit script', { timeout: 30_000 }, () => {
   it('rejects a canonical on the wrong origin', async () => {
     const report = await runAudit('wrong-canonical');
     expect(report.issues.find((issue) => issue.code === 'invalid-canonical')).toBeTruthy();

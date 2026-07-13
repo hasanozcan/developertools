@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   analyzeCsp,
+  CSP_FINDING_CODES,
   CspError,
   formatCsp,
   parseCsp,
@@ -30,17 +31,30 @@ describe('Content Security Policy helpers', () => {
   });
 
   it('reports dangerous sources, duplicates, and missing baseline directives', () => {
-    const messages = analyzeCsp(
+    const findings = analyzeCsp(
       parseCsp(
         "script-src * 'unsafe-inline' 'unsafe-eval' data:; script-src 'self'; img-src http:",
       ),
-    ).map((finding) => `${finding.severity}:${finding.message}`);
+    );
+    const messages = findings.map((finding) => `${finding.severity}:${finding.message}`);
 
     expect(messages.some((message) => message.includes('script-src appears 2 times'))).toBe(true);
     expect(messages.some((message) => message.includes("'unsafe-eval'"))).toBe(true);
     expect(messages.some((message) => message.includes("'unsafe-inline'"))).toBe(true);
     expect(messages.some((message) => message.includes('Missing default-src'))).toBe(true);
     expect(messages.some((message) => message.includes("object-src 'none'"))).toBe(true);
+    expect(findings).toContainEqual(
+      expect.objectContaining({
+        code: 'duplicateDirective',
+        params: { directive: 'script-src', count: 2 },
+      }),
+    );
+    expect(findings).toContainEqual(
+      expect.objectContaining({
+        code: 'broadOrInsecureSource',
+        params: { directive: 'img-src', sources: 'http:' },
+      }),
+    );
   });
 
   it('accepts a strict baseline without high or medium findings', () => {
@@ -52,6 +66,7 @@ describe('Content Security Policy helpers', () => {
     expect(findings).toEqual([
       {
         severity: 'info',
+        code: 'baselineOk',
         message:
           'No common baseline issue was detected. Test the policy in Report-Only mode before enforcing it.',
       },
@@ -73,8 +88,18 @@ describe('Content Security Policy helpers', () => {
       ),
     );
     expect(findings).toContainEqual(
-      expect.objectContaining({ severity: 'high', message: expect.stringContaining('https:') }),
+      expect.objectContaining({
+        severity: 'high',
+        code: 'broadSchemeScript',
+        params: { sources: 'https:' },
+        message: expect.stringContaining('https:'),
+      }),
     );
+  });
+
+  it('keeps finding codes stable and unique for localization consumers', () => {
+    expect(CSP_FINDING_CODES).toHaveLength(16);
+    expect(new Set(CSP_FINDING_CODES).size).toBe(CSP_FINDING_CODES.length);
   });
 
   it.each([

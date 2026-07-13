@@ -6,7 +6,6 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Providers } from '@/components/Providers';
-import { toolCatalog } from '@/lib/api';
 import { normalizeAdSenseClientId, normalizeAdSensePublisherId } from '@/lib/adsense';
 
 const inter = Inter({
@@ -26,7 +25,6 @@ const googleAdsConversionValue = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_V
 const googleAdsConversionCurrency = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_CURRENCY;
 const adSenseClientId = normalizeAdSenseClientId(process.env.NEXT_PUBLIC_ADSENSE_ID);
 const adSensePublisherId = normalizeAdSensePublisherId(process.env.NEXT_PUBLIC_ADSENSE_ID);
-const TOOL_COUNT = toolCatalog.length;
 
 const signalGoogleFundingChoices = `(function() {
   function signalGooglefcPresent() {
@@ -48,10 +46,11 @@ const signalGoogleFundingChoices = `(function() {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `DevsTools - ${TOOL_COUNT} Free Online Developer Tools`,
+    default: 'Free Online Developer Tools | DevsTools',
     template: '%s | DevsTools',
   },
-  description: 'DevsTools offers free online developer tools for JSON formatting, Base64 encoding, UUIDs, hashing, regex testing, QR codes and more. Private and client-side.',
+  description:
+    'DevsTools offers free online developer tools for JSON formatting, Base64 encoding, UUIDs, hashing, regex testing, QR codes and more. Private and client-side.',
   authors: [{ name: 'DevsTools' }],
   creator: 'DevsTools',
   publisher: 'DevsTools',
@@ -63,8 +62,9 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: siteUrl,
     siteName: 'DevsTools',
-    title: `DevsTools - ${TOOL_COUNT} Free Online Developer Tools`,
-    description: `${TOOL_COUNT} free online developer tools: JSON formatter, Base64 encoder, UUID generator, hash generators, regex tester, QR code & more. No registration, 100% client-side.`,
+    title: 'Free Online Developer Tools | DevsTools',
+    description:
+      'Free online developer tools for JSON, encoding, UUIDs, hashing, regex, QR codes, HTTP utilities and more. No registration required.',
     images: [
       {
         url: `${siteUrl}/og-image.png`,
@@ -76,8 +76,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `DevsTools - ${TOOL_COUNT} Free Online Developer Tools`,
-    description: `${TOOL_COUNT} free online developer tools: JSON formatter, Base64 encoder, UUID generator, hash generators, regex tester, QR code & more. No registration required.`,
+    title: 'Free Online Developer Tools | DevsTools',
+    description:
+      'Free online developer tools for JSON, encoding, UUIDs, hashing, regex, QR codes, HTTP utilities and more. No registration required.',
     images: [`${siteUrl}/og-image.png`],
   },
   robots: {
@@ -97,11 +98,7 @@ export const metadata: Metadata = {
   category: 'technology',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const setInitialTheme = `
     (function() {
       try {
@@ -118,7 +115,11 @@ export default function RootLayout({
   `;
 
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${inter.variable} ${jetbrainsMono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <link rel="icon" type="image/x-icon" sizes="any" href="/favicon.ico" />
         <link rel="icon" type="image/svg+xml" sizes="any" href="/icon.svg" />
@@ -138,8 +139,8 @@ export default function RootLayout({
               '@id': `${siteUrl}/#website`,
               url: siteUrl,
               name: 'DevsTools',
-              alternateName: `DevsTools - ${TOOL_COUNT} Free Online Developer Tools`,
-              description: `${TOOL_COUNT} free online developer tools for programmers and web developers`,
+              alternateName: 'Free Online Developer Tools | DevsTools',
+              description: 'Free online tools for programmers and web developers',
               inLanguage: 'en',
               publisher: {
                 '@type': 'Organization',
@@ -158,7 +159,7 @@ export default function RootLayout({
               '@id': `${siteUrl}/#organization`,
               url: siteUrl,
               name: 'DevsTools',
-              description: `${TOOL_COUNT} free online developer tools for software developers and web designers`,
+              description: 'Free online tools for software developers and web designers',
               logo: {
                 '@type': 'ImageObject',
                 url: `${siteUrl}/icon.svg`,
@@ -220,7 +221,10 @@ export default function RootLayout({
         )}
         <script dangerouslySetInnerHTML={{ __html: setInitialTheme }} />
       </head>
-      <body className={`${inter.className} antialiased text-gray-900 dark:text-gray-100`} suppressHydrationWarning>
+      <body
+        className={`${inter.className} antialiased text-gray-900 dark:text-gray-100`}
+        suppressHydrationWarning
+      >
         <Providers>
           <div className="flex flex-col flex-1">
             <Header />

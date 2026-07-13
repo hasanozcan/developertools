@@ -3,12 +3,14 @@
 import { useMemo, useState } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import CopyButton from '@/components/common/CopyButton';
+import { useLanguage } from '@/context/LanguageContext';
 import { evaluateJsonPath } from '@/lib/jsonPath';
 
 const SAMPLE =
   '{\n  "store": {\n    "book": [\n      { "title": "The Pragmatic Programmer", "price": 8.95 },\n      { "title": "Clean Code", "price": 12.5 }\n    ],\n    "bicycle": { "color": "red", "price": 19.95 }\n  }\n}';
 
 export default function JsonPathTool() {
+  const { t } = useLanguage();
   const [document, setDocument] = useState(SAMPLE);
   const [path, setPath] = useState('$..price');
 
@@ -16,13 +18,13 @@ export default function JsonPathTool() {
     try {
       const parsed = JSON.parse(document) as unknown;
       return { output: JSON.stringify(evaluateJsonPath(parsed, path), null, 2), error: '' };
-    } catch (error) {
+    } catch {
       return {
         output: '',
-        error: error instanceof Error ? error.message : 'Unable to evaluate the JSONPath.',
+        error: t('tool.jsonpath.error'),
       };
     }
-  }, [document, path]);
+  }, [document, path, t]);
 
   return (
     <div className="space-y-6">
@@ -31,7 +33,7 @@ export default function JsonPathTool() {
           htmlFor="json-path"
           className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
         >
-          JSONPath
+          {t('tool.jsonpath.pathLabel')}
         </label>
         <input
           id="json-path"
@@ -42,8 +44,7 @@ export default function JsonPathTool() {
           className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-sm text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
         <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-          Supports $, child names, array indices, wildcards, slices, and recursive descent such as
-          ..price or ..*. Filter and script expressions are intentionally disabled.
+          {t('tool.jsonpath.syntaxHint')}
         </p>
       </div>
 
@@ -59,14 +60,14 @@ export default function JsonPathTool() {
       <div className="grid gap-6 lg:grid-cols-2">
         <div>
           <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-            JSON document
+            {t('tool.jsonpath.documentLabel')}
           </label>
           <CodeEditor value={document} onChange={setDocument} language="json" minHeight="320px" />
         </div>
         <div>
           <div className="mb-2 flex items-center justify-between gap-3">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Matches (normalized path + value)
+              {t('tool.jsonpath.matchesLabel')}
             </label>
             <CopyButton text={result.output} />
           </div>
@@ -76,7 +77,7 @@ export default function JsonPathTool() {
             readOnly
             language="json"
             minHeight="320px"
-            placeholder="Matching paths and values appear here."
+            placeholder={t('tool.jsonpath.matchesPlaceholder')}
           />
         </div>
       </div>

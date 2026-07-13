@@ -5,8 +5,33 @@ export interface CspDirective {
   values: string[];
 }
 
+export const CSP_FINDING_CODES = [
+  'duplicateDirective',
+  'missingDefaultSrc',
+  'missingScriptRestriction',
+  'unsafeEval',
+  'unsafeInlineMitigated',
+  'unsafeInline',
+  'wildcardScript',
+  'dataScript',
+  'broadSchemeScript',
+  'broadOrInsecureSource',
+  'missingObjectSrc',
+  'unsafeObjectSrc',
+  'missingBaseUri',
+  'missingFrameAncestors',
+  'deprecatedReportUri',
+  'baselineOk',
+] as const;
+
+export type CspFindingCode = (typeof CSP_FINDING_CODES)[number];
+export type CspFindingParams = Readonly<Record<string, string | number>>;
+
 export interface CspFinding {
   severity: CspSeverity;
+  code: CspFindingCode;
+  params?: CspFindingParams;
+  /** English compatibility text for non-UI consumers. */
   message: string;
 }
 
@@ -185,6 +210,8 @@ export function analyzeCsp(directives: CspDirective[]): CspFinding[] {
     if (count > 1) {
       findings.push({
         severity: 'medium',
+        code: 'duplicateDirective',
+        params: { directive: name, count },
         message: `${name} appears ${count} times. Browsers ignore later duplicate directives, so keep one explicit value.`,
       });
     }
@@ -194,6 +221,7 @@ export function analyzeCsp(directives: CspDirective[]): CspFinding[] {
   if (!defaultSources) {
     findings.push({
       severity: 'high',
+      code: 'missingDefaultSrc',
       message: 'Missing default-src leaves fetch directives without an explicit fallback policy.',
     });
   }
@@ -202,12 +230,14 @@ export function analyzeCsp(directives: CspDirective[]): CspFinding[] {
   if (!scriptSources) {
     findings.push({
       severity: 'high',
+      code: 'missingScriptRestriction',
       message: 'No script-src or default-src restriction is present.',
     });
   } else {
     if (hasSource(scriptSources, "'unsafe-eval'")) {
       findings.push({
         severity: 'high',
+        code: 'unsafeEval',
         message: "script-src allows 'unsafe-eval', which enables string-to-code execution paths.",
       });
     }
@@ -215,16 +245,25 @@ export function analyzeCsp(directives: CspDirective[]): CspFinding[] {
       const hasNonceOrHash = scriptSources.some((source) => NONCE_OR_HASH_SOURCE.test(source));
       findings.push({
         severity: hasNonceOrHash ? 'medium' : 'high',
+        code: hasNonceOrHash ? 'unsafeInlineMitigated' : 'unsafeInline',
         message: hasNonceOrHash
           ? "script-src includes 'unsafe-inline'. A valid nonce or hash can cause browsers to ignore it, but removing the keyword is clearer."
           : "script-src allows 'unsafe-inline' without a nonce or hash.",
       });
     }
     if (hasSource(scriptSources, '*')) {
-      findings.push({ severity: 'high', message: 'script-src allows every network host with *.' });
+      findings.push({
+        severity: 'high',
+        code: 'wildcardScript',
+        message: 'script-src allows every network host with *.',
+      });
     }
     if (hasSource(scriptSources, 'data:')) {
-      findings.push({ severity: 'high', message: 'script-src allows data: URLs.' });
+      findings.push({
+        severity: 'high',
+        code: 'dataScript',
+        message: 'script-src allows data: URLs.',
+      });
     }
     const broadSchemeSources = scriptSources.filter(
       (source) => /^[a-z][a-z0-9+.-]*:$/i.test(source) && source.toLowerCase() !== 'data:',
@@ -232,6 +271,8 @@ export function analyzeCsp(directives: CspDirective[]): CspFinding[] {
     if (broadSchemeSources.length > 0) {
       findings.push({
         severity: 'high',
+        code: 'broadSchemeScript',
+        params: { sources: broadSchemeSources.join(', ') },
         message: `script-src allows entire URL schemes (${broadSchemeSources.join(', ')}). Prefer explicit hosts, nonces, or hashes.`,
       });
     }
@@ -239,11 +280,14 @@ export function analyzeCsp(directives: CspDirective[]): CspFinding[] {
 
   for (const directive of directives) {
     if (directive.values.some((value) => value === '*' || /^http:/i.test(value))) {
+      const sources = directive.values
+        .filter((value) => value === '*' || /^http:/i.test(value))
+        .join(', ');
       findings.push({
         severity: directive.name === 'script-src' ? 'high' : 'medium',
-        message: `${directive.name} contains a broad or insecure source (${directive.values
-          .filter((value) => value === '*' || /^http:/i.test(value))
-          .join(', ')}).`,
+        code: 'broadOrInsecureSource',
+        params: { directive: directive.name, sources },
+        message: `${directive.name} contains a broad or insecure source (${sources}).`,
       });
     }
   }
@@ -252,11 +296,13 @@ export function analyzeCsp(directives: CspDirective[]): CspFinding[] {
   if (!objectSources) {
     findings.push({
       severity: 'medium',
+      code: 'missingObjectSrc',
       message: "Add object-src 'none' unless plugins are required.",
     });
   } else if (!(objectSources.length === 1 && hasSource(objectSources, "'none'"))) {
     findings.push({
       severity: 'medium',
+      code: 'unsafeObjectSrc',
       message: "object-src is safest as the single source 'none'.",
     });
   }
@@ -264,18 +310,21 @@ export function analyzeCsp(directives: CspDirective[]): CspFinding[] {
   if (!valuesFor(directives, 'base-uri')) {
     findings.push({
       severity: 'medium',
+      code: 'missingBaseUri',
       message: "Add base-uri 'self' or 'none' to restrict base URL changes.",
     });
   }
   if (!valuesFor(directives, 'frame-ancestors')) {
     findings.push({
       severity: 'medium',
+      code: 'missingFrameAncestors',
       message: "Add frame-ancestors 'none' or an explicit allowlist to control embedding.",
     });
   }
   if (valuesFor(directives, 'report-uri')) {
     findings.push({
       severity: 'info',
+      code: 'deprecatedReportUri',
       message:
         'report-uri is deprecated. Prefer report-to while retaining report-uri only for legacy coverage.',
     });
@@ -284,6 +333,7 @@ export function analyzeCsp(directives: CspDirective[]): CspFinding[] {
   if (findings.length === 0) {
     findings.push({
       severity: 'info',
+      code: 'baselineOk',
       message:
         'No common baseline issue was detected. Test the policy in Report-Only mode before enforcing it.',
     });

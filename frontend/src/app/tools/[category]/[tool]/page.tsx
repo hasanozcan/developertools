@@ -336,7 +336,7 @@ const tools: Record<
         {
           heading: 'What the JSONPath tester selects',
           paragraphs: [
-            "A JSONPath query starts at $ and walks object members or array elements. A singular path such as $.store.book[0].title selects one value, while wildcards, slices, and recursive descent can produce an ordered list of matches. Each result includes the selected value and a normalized path back to its location in the input document.",
+            'A JSONPath query starts at $ and walks object members or array elements. A singular path such as $.store.book[0].title selects one value, while wildcards, slices, and recursive descent can produce an ordered list of matches. Each result includes the selected value and a normalized path back to its location in the input document.',
           ],
         },
         {
@@ -461,10 +461,11 @@ const tools: Record<
     },
     'html-entity': {
       name: 'HTML Entity Encoder/Decoder',
+      metadataTitle: 'HTML Entity Decoder & Encoder Online',
       description:
-        'Encode or decode HTML entities online. Convert special characters to HTML entities.',
+        'Decode named, decimal, and hexadecimal HTML entities, or encode reserved HTML characters and non-ASCII text locally in your browser.',
       longDescription:
-        'Free online HTML entity encoder and decoder. Convert special characters like <, >, & to their HTML entity equivalents or decode HTML entities back to characters.',
+        'Free online HTML entity decoder and encoder. Decode named or numeric references and encode reserved HTML characters without sending the text to a conversion API.',
       keywords: [
         'html entity encoder',
         'html entity decoder',
@@ -480,8 +481,42 @@ const tools: Record<
         {
           question: 'Why encode HTML entities?',
           answer:
-            'Encoding HTML entities prevents XSS attacks and ensures special characters display correctly in web pages instead of being interpreted as HTML code.',
+            'Encoding reserved characters can keep text from being interpreted as markup in an HTML text context. It is not a complete XSS defense: attributes, URLs, CSS, JavaScript, and untrusted HTML require context-specific escaping or sanitization.',
         },
+        {
+          question: 'Which entity formats can this tool decode?',
+          answer:
+            'It decodes browser-recognized named references such as &amp;, decimal numeric references such as &#169;, and hexadecimal references such as &#xA9;.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the HTML entity decoder and encoder does',
+          paragraphs: [
+            'HTML character references represent characters that would otherwise be ambiguous in markup. The encoder replaces reserved characters such as ampersand, less-than, greater-than, quotation mark, and apostrophe. Its extended option also emits decimal references for non-ASCII characters. The decoder resolves named, decimal, and hexadecimal references using the browser HTML parser.',
+          ],
+        },
+        {
+          heading: 'HTML entity examples',
+          bullets: [
+            '&lt; becomes the less-than character, while &gt; becomes greater-than.',
+            '&amp; becomes an ampersand and &quot; becomes a quotation mark.',
+            '&#169; and &#xA9; are decimal and hexadecimal references for the copyright symbol.',
+            'Encoding <p>Research & Development</p> produces text that can be displayed as markup characters instead of being parsed as the same element.',
+          ],
+        },
+        {
+          heading: 'Security and rendering boundaries',
+          paragraphs: [
+            'Entity encoding is context-sensitive. Escaping text for an HTML text node does not make the same value safe inside an event handler, URL, CSS declaration, JavaScript string, or arbitrary HTML fragment. Use framework escaping by default and a maintained sanitizer when trusted formatting must be preserved. Decoding untrusted entities should produce text for inspection, not a reason to inject the result with innerHTML.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose Encode to escape text or Decode to resolve character references.',
+        'Paste the source text and optionally enable the extended encoding option.',
+        'Select Encode or Decode, then review the converted output.',
+        'Apply context-specific escaping or sanitization before using untrusted output in an application.',
       ],
     },
     'hex-encoder': {
@@ -858,11 +893,11 @@ const tools: Record<
     },
     'sha256-hash': {
       name: 'SHA256 Hash Generator',
-      metadataTitle: 'SHA-256 Generator Online – Text & File Hashes',
+      metadataTitle: 'SHA-256 Hash Generator & File Checksum Online',
       description:
-        'Generate a 64-character SHA-256 digest from UTF-8 text or exact file bytes locally in your browser, with no calculation upload.',
+        'Generate a 64-character SHA-256 digest from UTF-8 text or exact file bytes, then compare it with an expected checksum in your browser.',
       longDescription:
-        'Free online SHA256 hash generator. Create SHA256 hash values from any text input. SHA256 is part of the SHA-2 family of cryptographic hash functions.',
+        'Free online SHA-256 hash generator for UTF-8 text and local file bytes. Check the hexadecimal digest against an expected checksum from a trusted source.',
       keywords: ['sha256 generator', 'sha256 hash', 'sha256 online', 'generate sha256'],
       faqs: [
         {
@@ -872,7 +907,13 @@ const tools: Record<
         },
         {
           question: 'Is SHA256 secure?',
-          answer: 'Yes, SHA256 is currently considered secure for cryptographic purposes.',
+          answer:
+            'SHA-256 remains suitable for many integrity applications, but an unkeyed digest does not authenticate its source and is not a password-hashing function. Use a trusted expected checksum for file verification and a purpose-built password hash for passwords.',
+        },
+        {
+          question: 'How do I verify a file checksum?',
+          answer:
+            'Select the file and enter a 64-character SHA-256 value from a trusted independent source in the expected-checksum field. The tool reports whether the generated and expected digests match.',
         },
       ],
       answerSections: [
@@ -886,7 +927,7 @@ const tools: Record<
           heading: 'SHA-256 worked example and file verification',
           paragraphs: [
             'For the exact three-character input abc—without quotation marks, spaces, or a trailing line break—the result is ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad. A newline, different capitalization, or a different encoding changes the input bytes and produces a different calculation.',
-            'To check a file, generate its SHA-256 value and compare all 64 hexadecimal characters with a value obtained from a trusted source. A mismatch proves the file bytes differ from those used for the expected digest. A match verifies the comparison, but the source of the expected value still matters.',
+            'To check a file, generate its SHA-256 value and enter the expected 64-character digest obtained from a trusted source. The comparison reports a match or mismatch. A mismatch proves the bytes differ from those used for the expected digest. A match verifies the comparison, but the source of the expected value still matters.',
           ],
         },
         {
@@ -897,6 +938,12 @@ const tools: Record<
             'The text and file hashing paths run in browser code and require no server upload for the calculation. That privacy property does not make a hash encryption; avoid entering secrets into any online utility unless its execution environment is appropriate for your data.',
           ],
         },
+      ],
+      howToUseSteps: [
+        'Enter text or select a local file to generate its SHA-256 digest.',
+        'Choose lowercase or uppercase display; the underlying digest is unchanged.',
+        'For verification, enter a 64-character expected SHA-256 checksum from a trusted source.',
+        'Review the match or mismatch result and investigate any unexpected difference.',
       ],
     },
     'sha512-hash': {
@@ -1717,9 +1764,9 @@ const tools: Record<
     },
     'user-agent-parser': {
       name: 'User Agent Parser Online',
-      metadataTitle: 'User Agent Parser Online – Browser, OS, Device & Bots',
+      metadataTitle: 'User Agent Parser – Browser, OS & Device Online',
       description:
-        'Parse one or many User-Agent strings online into browser/version, OS, engine, device vendor/model/type, CPU, and bot fields in your browser.',
+        'Parse single or batch User-Agent strings into browser, version, OS, engine, device, CPU, and known bot signals locally in your browser.',
       longDescription:
         'Online user-agent parser powered by the bundled UAParser.js 1.0.41 ruleset. Inspect one string or batch lines and extract browser/version, operating system, rendering engine, device vendor/model/type, CPU architecture, and known bot signals without a parsing API upload.',
       keywords: [
@@ -1949,9 +1996,9 @@ const tools: Record<
     },
     'csp-builder': {
       name: 'CSP Header Builder & Analyzer',
-      metadataTitle: 'Content Security Policy (CSP) Builder & Analyzer',
+      metadataTitle: 'CSP Generator & Content Security Policy Analyzer',
       description:
-        'Build and normalize a Content-Security-Policy header, inspect every directive, and flag common unsafe sources or missing baseline restrictions.',
+        'Generate, normalize, and statically analyze a Content-Security-Policy header. Flag duplicate directives, unsafe script sources, and missing baseline restrictions.',
       longDescription:
         'Free CSP header builder and static analyzer. Start from a strict preset, add or replace directives, and review common security findings locally before testing a policy in Report-Only mode.',
       keywords: [
@@ -1990,7 +2037,7 @@ const tools: Record<
           bullets: [
             'default-src provides a fallback for fetch directives that are not declared explicitly.',
             "object-src 'none' blocks legacy plugin content when the application does not need it.",
-            "base-uri limits changes to the document base URL, while frame-ancestors controls which parents may embed the page.",
+            'base-uri limits changes to the document base URL, while frame-ancestors controls which parents may embed the page.',
             'A syntactically valid policy can still break production or permit an unsafe flow. Validate required origins, nonces, hashes, workers, frames, forms, and reporting separately.',
           ],
         },
@@ -2012,7 +2059,7 @@ const tools: Record<
       name: 'cURL Builder & Fetch Converter',
       metadataTitle: 'cURL to Fetch Converter & Request Builder Online',
       description:
-        'Build a quoted cURL request and JavaScript fetch snippet, or convert supported pasted cURL syntax without executing the command.',
+        'Convert supported cURL commands to JavaScript Fetch, or build quoted cURL and Fetch requests from method, URL, headers, query, and body input. Nothing is executed.',
       longDescription:
         'Free browser-based cURL command builder and cURL-to-fetch converter. Configure a method, URL, query parameters, headers, and body or parse a supported cURL command with sensitive-header redaction.',
       keywords: [
