@@ -1076,7 +1076,7 @@ export const de = {
     'privacy.localStorage': 'Lokaler Speicher',
     'privacy.localStorageDesc': 'Wir verwenden den lokalen Speicher des Browsers, um Ihre Einstellungen wie Theme-Einstellungen, Favoriten-Tools und Tool-Nutzungsverlauf zu speichern.',
     'privacy.analytics': 'Analytik',
-    'privacy.analyticsDesc': 'Wir können datenschutzfreundliche Analytik verwenden, um zu verstehen, wie unsere Tools verwendet werden.',
+    'privacy.analyticsDesc': 'Wir verwenden Vercel Analytics und Speed Insights, um die Seitenleistung und zusammengefasste Aktionen wie das Öffnen, Kopieren, Favorisieren oder Auswählen eines Tools zu messen. Unsere benutzerdefinierten Ereigniseigenschaften enthalten nur Katalogkennungen und Zählwerte, niemals in Tools eingefügte Texte, erzeugte Ausgaben, Kontaktformularinhalte, Referrer oder eigene Sitzungskennungen. Eine Google-Ads-Conversion kann nur nach erfolgreichem Absenden des Kontaktformulars gesendet werden.',
     'privacy.cookies': 'Cookies',
     'privacy.cookiesDesc': 'Wir verwenden minimale Cookies, die für den Betrieb unserer Website erforderlich sind.',
     // Terms Page

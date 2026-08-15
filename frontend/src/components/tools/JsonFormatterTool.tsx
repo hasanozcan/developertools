@@ -118,8 +118,14 @@ export default function JsonFormatterTool() {
           {t('tool.jsonFormatter.sortKeys')}
         </label>
         <div className="flex items-center gap-2">
-          <label className="text-sm text-gray-600 dark:text-gray-400">{t('tool.jsonFormatter.indentSize')}:</label>
+          <label
+            htmlFor="json-indent-size"
+            className="text-sm text-gray-600 dark:text-gray-400"
+          >
+            {t('tool.jsonFormatter.indentSize')}:
+          </label>
           <select
+            id="json-indent-size"
             value={indentSize}
             onChange={(e) => setIndentSize(Number(e.target.value))}
             className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"

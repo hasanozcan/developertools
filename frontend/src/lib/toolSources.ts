@@ -1,3 +1,5 @@
+import { isToolSlug, type ToolSlug } from './api';
+
 export interface ToolSource {
   name: string;
   url: string;
@@ -62,7 +64,7 @@ const sources = {
   posixShell: { name: 'POSIX Shell Command Language: Quoting', url: 'https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_19_02' },
 } satisfies Record<string, ToolSource>;
 
-const sourceByTool: Record<string, ToolSource | ToolSource[]> = {
+const sourceByTool = {
   'json-formatter': sources.json,
   'json-validator': sources.json,
   'json-schema-validator': [sources.jsonSchemaDraft7, sources.ajvFormats, sources.json],
@@ -121,10 +123,10 @@ const sourceByTool: Record<string, ToolSource | ToolSource[]> = {
   'jsonpath-tester': [sources.jsonPath, sources.json],
   'csp-builder': [sources.csp, sources.http],
   'curl-to-fetch': [sources.curl, sources.fetch, sources.posixShell, sources.http],
-};
+} satisfies Record<ToolSlug, ToolSource | ToolSource[]>;
 
 export function getToolSources(toolSlug: string): ToolSource[] {
+  if (!isToolSlug(toolSlug)) return [];
   const source = sourceByTool[toolSlug];
-  if (!source) return [];
   return Array.isArray(source) ? source : [source];
 }

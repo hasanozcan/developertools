@@ -1106,7 +1106,7 @@ export const tr = {
     'privacy.localStorage': 'Yerel Depolama',
     'privacy.localStorageDesc': 'Tema ayarları, favori araçlar ve araç kullanım geçmişi gibi tercihlerinizi kaydetmek için tarayıcı yerel depolamasını kullanıyoruz. Bu veriler yalnızca cihazınızda saklanır.',
     'privacy.analytics': 'Analitik',
-    'privacy.analyticsDesc': 'Araçlarımızın nasıl kullanıldığını anlamak için gizlilik dostu analitik kullanabiliriz. Bu, hizmetlerimizi geliştirmemize yardımcı olur.',
+    'privacy.analyticsDesc': 'Sayfa performansını ve bir aracı açma, kopyalama, favoriye ekleme veya seçme gibi toplu işlemleri ölçmek için Vercel Analytics ve Speed Insights kullanırız. Özel etkinlik özelliklerimiz yalnızca katalog kimlikleri ve sayıları içerir; araçlara yapıştırılan metni, üretilen çıktıyı, iletişim formu içeriğini, yönlendiren adresi veya özel oturum kimliğini içermez. Google Ads dönüşümü yalnızca iletişim formu başarıyla gönderildikten sonra iletilebilir.',
     'privacy.cookies': 'Çerezler',
     'privacy.cookiesDesc': 'Web sitemizin çalışması için gerekli minimum çerezleri kullanıyoruz.',
     // Terms Page

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using DeveloperTools.Core.Interfaces;
 using DeveloperTools.Application.DTOs;
 using DeveloperTools.Application.Mappings;
+using DeveloperTools.Api.Validation;
 
 namespace DeveloperTools.Api.Controllers;
 
@@ -34,7 +35,7 @@ public class ToolsController : ControllerBase
     [ResponseCache(Duration = 300)]
     public async Task<ActionResult<ToolDetailDto>> GetBySlug(string slug)
     {
-        if (!IsValidSlug(slug))
+        if (!SlugValidator.IsValid(slug, 150))
             return BadRequest(new { message = "Invalid tool slug" });
 
         var tool = await _toolRepository.GetBySlugAsync(slug);
@@ -52,7 +53,7 @@ public class ToolsController : ControllerBase
     [ResponseCache(Duration = 300)]
     public async Task<ActionResult<IEnumerable<ToolSummaryDto>>> GetByCategory(string categorySlug)
     {
-        if (!IsValidSlug(categorySlug))
+        if (!SlugValidator.IsValid(categorySlug, 100))
             return BadRequest(new { message = "Invalid category slug" });
 
         var tools = await _toolRepository.GetByCategoryAsync(categorySlug);
@@ -94,7 +95,7 @@ public class ToolsController : ControllerBase
     [ResponseCache(Duration = 600)]
     public async Task<ActionResult<IEnumerable<ToolSummaryDto>>> GetRelated(string slug, [FromQuery] int count = 5)
     {
-        if (!IsValidSlug(slug))
+        if (!SlugValidator.IsValid(slug, 150))
             return BadRequest(new { message = "Invalid tool slug" });
         if (count is < 1 or > 20)
             return BadRequest(new { message = "count must be between 1 and 20" });
@@ -107,8 +108,4 @@ public class ToolsController : ControllerBase
         var relatedTools = await _toolRepository.GetRelatedToolsAsync(tool.Id, count);
         return Ok(relatedTools.Select(t => t.ToSummaryDto()));
     }
-
-    private static bool IsValidSlug(string slug) =>
-        slug.Length is > 0 and <= 150 &&
-        slug.All(character => char.IsAsciiLetterOrDigit(character) || character == '-');
 }

@@ -11,6 +11,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import LanguageSelector from '@/components/common/LanguageSelector';
 import { toolCatalog } from '@/lib/api';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
+import { trackToolEvent } from '@/lib/analytics';
 
 // Derive search coverage from the same catalog that powers the home page and API.
 const toolSlugs = toolCatalog.map((tool) => ({
@@ -171,7 +172,13 @@ export default function Header() {
   );
 
   const handleSelectTool = useCallback(
-    (tool: (typeof allTools)[number]) => {
+    (tool: ToolItem, source: 'favorites' | 'search' = 'search') => {
+      if (source === 'search') {
+        trackToolEvent('tool_search_selected', tool.slug, tool.category, {
+          query_length: searchQuery.trim().length,
+          result_count: searchResults.length,
+        });
+      }
       router.push(buildToolPath(tool.category, tool.slug));
       setSearchOpen(false);
       setSearchQuery('');
@@ -179,7 +186,7 @@ export default function Header() {
       setShowFavorites(false);
       setShowHistory(false);
     },
-    [router],
+    [router, searchQuery, searchResults.length],
   );
 
   // Handle search
@@ -285,7 +292,10 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/70 bg-white/75 shadow-[0_8px_30px_-24px_rgba(15,23,42,0.6)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/75">
-      <nav className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-10 xl:px-12">
+      <nav
+        aria-label="Primary navigation"
+        className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-10 xl:px-12"
+      >
         <div className="flex h-[4.5rem] items-center">
           {/* Logo - Sol */}
           <Link href="/" className="group flex shrink-0 items-center gap-2.5">
@@ -341,7 +351,7 @@ export default function Header() {
                   <ChevronDown className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
                 </Link>
                 {/* Dropdown Menu */}
-                <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50">
                   <div className="surface-card min-w-[220px] rounded-2xl py-2 shadow-2xl">
                     {item.tools.map((tool: any) => (
                       <Link
@@ -378,11 +388,14 @@ export default function Header() {
               {!searchOpen ? (
                 <button
                   onClick={() => setSearchOpen(true)}
+                  aria-label={t('search')}
+                  aria-expanded={searchOpen}
+                  aria-controls="tool-search-results"
                   className="flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-3 py-2 text-slate-500 transition hover:border-indigo-200 hover:text-indigo-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-400"
                 >
                   <Search className="w-4 h-4" />
                   <span className="text-sm">{t('search')}...</span>
-                  <kbd className="hidden lg:inline-flex items-center px-1.5 py-0.5 text-xs text-gray-400 bg-white dark:bg-gray-700 rounded border border-gray-200 dark:border-gray-600">
+                  <kbd className="hidden lg:inline-flex items-center px-1.5 py-0.5 text-xs text-gray-600 bg-white dark:bg-gray-700 dark:text-gray-200 rounded border border-gray-200 dark:border-gray-600">
                     Ctrl+K
                   </kbd>
                 </button>
@@ -397,18 +410,32 @@ export default function Header() {
                       onChange={(e) => setSearchQuery(e.target.value)}
                       onKeyDown={handleSearchKeyDown}
                       placeholder={t('search.placeholder')}
+                      role="combobox"
+                      aria-label={t('search')}
+                      aria-autocomplete="list"
+                      aria-expanded={searchResults.length > 0}
+                      aria-controls="tool-search-results"
+                      aria-activedescendant={
+                        selectedIndex >= 0 ? `tool-search-option-${selectedIndex}` : undefined
+                      }
                       className="w-full rounded-full border border-indigo-300 bg-white py-2 pl-10 pr-4 text-sm text-gray-900 shadow-lg shadow-indigo-500/10 focus:outline-none focus:ring-4 focus:ring-indigo-500/15 dark:border-indigo-500/50 dark:bg-slate-900 dark:text-white"
                     />
                   </div>
                   {searchResults.length > 0 && (
                     <div
+                      id="tool-search-results"
                       ref={resultsRef}
+                      role="listbox"
+                      aria-label={t('search')}
                       className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden z-[100] max-h-80 overflow-y-auto"
                     >
                       {searchResults.map((tool, index) => (
                         <button
+                          id={`tool-search-option-${index}`}
                           key={tool.slug}
                           onClick={() => handleSelectTool(tool)}
+                          role="option"
+                          aria-selected={index === selectedIndex}
                           className={`w-full px-4 py-3 text-left flex items-center justify-between border-b border-gray-100 dark:border-gray-700 last:border-0 transition-colors ${
                             index === selectedIndex
                               ? 'bg-primary-50 dark:bg-primary-900/20'
@@ -428,7 +455,10 @@ export default function Header() {
                     </div>
                   )}
                   {searchQuery && searchResults.length === 0 && (
-                    <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-4 text-center text-gray-500 dark:text-gray-400 text-sm z-[100]">
+                    <div
+                      role="status"
+                      className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-4 text-center text-gray-500 dark:text-gray-400 text-sm z-[100]"
+                    >
                       {t('noResults')} &quot;{searchQuery}&quot;
                     </div>
                   )}
@@ -449,11 +479,17 @@ export default function Header() {
                     : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
                 }`}
                 title={t('favorites')}
+                aria-label={t('favorites')}
+                aria-expanded={showFavorites}
+                aria-controls="favorite-tools-menu"
               >
                 <Star className={`w-5 h-5 ${favoriteTools.length > 0 ? 'fill-current' : ''}`} />
               </button>
               {showFavorites && (
-                <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden z-[100]">
+                <div
+                  id="favorite-tools-menu"
+                  className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden z-[100]"
+                >
                   <div className="px-4 py-2 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
                     <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                       {t('favorites')}
@@ -463,7 +499,7 @@ export default function Header() {
                     favoriteTools.map((tool) => (
                       <button
                         key={tool.slug}
-                        onClick={() => handleSelectTool(tool)}
+                        onClick={() => handleSelectTool(tool, 'favorites')}
                         className="w-full px-4 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white text-sm"
                       >
                         {tool.name}
@@ -487,11 +523,17 @@ export default function Header() {
                 }}
                 className="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                 title={t('recent')}
+                aria-label={t('recent')}
+                aria-expanded={showHistory}
+                aria-controls="recent-tools-menu"
               >
                 <Clock className="w-5 h-5" />
               </button>
               {showHistory && (
-                <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden z-[100]">
+                <div
+                  id="recent-tools-menu"
+                  className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden z-[100]"
+                >
                   <div className="px-4 py-2 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
                     <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                       {t('recent')}
@@ -527,6 +569,7 @@ export default function Header() {
               onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
               className="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
               title={resolvedTheme === 'dark' ? t('lightMode') : t('darkMode')}
+              aria-label={resolvedTheme === 'dark' ? t('lightMode') : t('darkMode')}
             >
               {resolvedTheme === 'dark' ? (
                 <Sun className="w-5 h-5" />
@@ -540,6 +583,9 @@ export default function Header() {
           <button
             className="ml-auto rounded-xl border border-slate-200 bg-white/70 p-2 text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 md:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? 'Close navigation' : 'Open navigation'}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -547,14 +593,19 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-100 dark:border-gray-700">
-            {navigation.map((item) => (
+          <div
+            id="mobile-navigation"
+            className="md:hidden py-4 border-t border-gray-100 dark:border-gray-700"
+          >
+            {navigation.map((item, index) => (
               <div
                 key={item.name}
                 className="border-b border-gray-100 dark:border-gray-700 last:border-b-0"
               >
                 <button
                   onClick={() => setActiveDropdown(activeDropdown === item.name ? null : item.name)}
+                  aria-expanded={activeDropdown === item.name}
+                  aria-controls={`mobile-navigation-group-${index}`}
                   className="w-full flex items-center justify-between py-3 text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium"
                 >
                   <span>{item.name}</span>
@@ -563,7 +614,7 @@ export default function Header() {
                   />
                 </button>
                 {activeDropdown === item.name && item.tools.length > 0 && (
-                  <div className="pb-2 pl-4">
+                  <div id={`mobile-navigation-group-${index}`} className="pb-2 pl-4">
                     {item.href !== '/#categories' && (
                       <Link
                         href={item.href}

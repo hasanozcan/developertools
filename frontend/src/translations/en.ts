@@ -1112,7 +1112,7 @@ export const en = {
     'privacy.localStorage': 'Local Storage',
     'privacy.localStorageDesc': 'We use browser local storage to save your preferences such as theme settings, favorite tools, and tool usage history. This data is stored only on your device and is never transmitted to our servers.',
     'privacy.analytics': 'Analytics',
-    'privacy.analyticsDesc': 'We may use privacy-friendly analytics to understand how our tools are used. This helps us improve our services.',
+    'privacy.analyticsDesc': 'We use Vercel Analytics and Speed Insights to measure page performance and aggregate actions such as opening, copying, favoriting, or selecting a tool. Our custom event properties contain catalog identifiers and counts, never text pasted into tools, generated output, contact form contents, referrers, or custom session IDs. A Google Ads conversion may be sent only after a contact form submission succeeds.',
     'privacy.cookies': 'Cookies',
     'privacy.cookiesDesc': 'We use minimal cookies necessary for the operation of our website.',
     // Terms Page

@@ -116,11 +116,16 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
 
-// Auto migrate database
-using (var scope = app.Services.CreateScope())
+if (builder.Configuration.GetValue<bool>("Database:AutoMigrate"))
 {
+    await using var scope = app.Services.CreateAsyncScope();
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
+    app.Logger.LogInformation("Applying configured database migrations before accepting traffic");
+    await db.Database.MigrateAsync();
+}
+else
+{
+    app.Logger.LogInformation("Automatic database migration is disabled");
 }
 
 app.Run();

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import Script from 'next/script';
 import './globals.css';
 import Header from '@/components/layout/Header';
@@ -20,11 +21,10 @@ const jetbrainsMono = JetBrains_Mono({
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
 const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
-const googleAdsSendTo = process.env.NEXT_PUBLIC_GOOGLE_ADS_SEND_TO;
-const googleAdsConversionValue = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_VALUE;
-const googleAdsConversionCurrency = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_CURRENCY;
 const adSenseClientId = normalizeAdSenseClientId(process.env.NEXT_PUBLIC_ADSENSE_ID);
 const adSensePublisherId = normalizeAdSensePublisherId(process.env.NEXT_PUBLIC_ADSENSE_ID);
+const enableVercelObservability =
+  process.env.VERCEL === '1' || process.env.NEXT_PUBLIC_ENABLE_VERCEL_ANALYTICS === 'true';
 
 const signalGoogleFundingChoices = `(function() {
   function signalGooglefcPresent() {
@@ -170,61 +170,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }),
           }}
         />
-        {/* Google AdSense */}
-        {adSensePublisherId && (
-          <>
-            <script
-              async
-              src={`https://fundingchoicesmessages.google.com/i/${adSensePublisherId}?ers=1`}
-            />
-            <script dangerouslySetInnerHTML={{ __html: signalGoogleFundingChoices }} />
-          </>
-        )}
-        {adSenseClientId && (
-          <Script
-            id="adsbygoogle-js"
-            async
-            strategy="afterInteractive"
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adSenseClientId}`}
-            crossOrigin="anonymous"
-          />
-        )}
-        {googleAdsId && (
-          <>
-            {/* Google tag (gtag.js) */}
-            <script async src={`https://www.googletagmanager.com/gtag/js?id=${googleAdsId}`} />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', '${googleAdsId}');
-                `,
-              }}
-            />
-            {googleAdsSendTo && googleAdsConversionValue && googleAdsConversionCurrency && (
-              /* Event snippet for Sayfa görüntüleme conversion page */
-              <script
-                dangerouslySetInnerHTML={{
-                  __html: `
-                    gtag('event', 'conversion', {
-                      'send_to': '${googleAdsSendTo}',
-                      'value': ${googleAdsConversionValue},
-                      'currency': '${googleAdsConversionCurrency}'
-                    });
-                  `,
-                }}
-              />
-            )}
-          </>
-        )}
-        <script dangerouslySetInnerHTML={{ __html: setInitialTheme }} />
       </head>
       <body
         className={`${inter.className} antialiased text-gray-900 dark:text-gray-100`}
         suppressHydrationWarning
       >
+        <Script id="theme-init" strategy="beforeInteractive">
+          {setInitialTheme}
+        </Script>
         <Providers>
           <div className="flex flex-col flex-1">
             <Header />
@@ -232,7 +185,49 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Footer />
           </div>
         </Providers>
-        <Analytics />
+        {adSensePublisherId && (
+          <>
+            <Script
+              id="google-funding-choices"
+              strategy="afterInteractive"
+              src={`https://fundingchoicesmessages.google.com/i/${adSensePublisherId}?ers=1`}
+            />
+            <Script id="google-funding-choices-signal" strategy="afterInteractive">
+              {signalGoogleFundingChoices}
+            </Script>
+          </>
+        )}
+        {adSenseClientId && (
+          <Script
+            id="adsbygoogle-js"
+            strategy="afterInteractive"
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adSenseClientId}`}
+            crossOrigin="anonymous"
+          />
+        )}
+        {googleAdsId && (
+          <>
+            <Script
+              id="google-tag-loader"
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${googleAdsId}`}
+            />
+            <Script id="google-tag-config" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                window.gtag = function gtag(){window.dataLayer.push(arguments);};
+                window.gtag('js', new Date());
+                window.gtag('config', '${googleAdsId}');
+              `}
+            </Script>
+          </>
+        )}
+        {enableVercelObservability && (
+          <>
+            <Analytics />
+            <SpeedInsights />
+          </>
+        )}
       </body>
     </html>
   );

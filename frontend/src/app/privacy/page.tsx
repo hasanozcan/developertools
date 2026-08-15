@@ -15,12 +15,12 @@ export default function PrivacyPage() {
     '@id': `${siteUrl}/privacy#webpage`,
     url: `${siteUrl}/privacy`,
     name: 'Privacy Policy - DevsTools',
-    description: 'Privacy policy for DevsTools. Learn how we protect your privacy with client-side processing and no data collection.',
+    description: 'Privacy policy for DevsTools, including client-side processing and limited analytics measurement.',
     isPartOf: {
       '@type': 'WebSite',
       '@id': `${siteUrl}/#website`,
     },
-    dateModified: '2025-12-01',
+    dateModified: '2026-08-15',
   };
 
   return (
@@ -43,7 +43,7 @@ export default function PrivacyPage() {
         
         <div className="prose prose-gray dark:prose-invert max-w-none">
           <p className="text-gray-600 dark:text-gray-300 mb-6">
-            {t('privacy.lastUpdated')}: December 1, 2025
+            {t('privacy.lastUpdated')}: August 15, 2026
           </p>
 
           <section className="mb-8">

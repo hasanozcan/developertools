@@ -1,6 +1,8 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import type { ComponentType } from 'react';
+import { isToolSlug, type ToolSlug } from '@/lib/api';
 
 const Loading = () => (
   <div className="flex items-center justify-center py-10 text-sm text-gray-500 dark:text-gray-400">
@@ -67,16 +69,12 @@ const toolComponents = {
   'jsonpath-tester': dynamic(() => import('./JsonPathTool'), { loading: Loading, ssr: false }),
   'csp-builder': dynamic(() => import('./CspBuilderTool'), { loading: Loading, ssr: false }),
   'curl-to-fetch': dynamic(() => import('./CurlRequestTool'), { loading: Loading, ssr: false }),
-} as const;
+} as const satisfies Record<ToolSlug, ComponentType>;
 
-export const toolComponentSlugs = Object.keys(toolComponents);
-
-type ToolSlug = keyof typeof toolComponents;
+export const toolComponentSlugs = Object.keys(toolComponents) as ToolSlug[];
 
 export default function ToolRenderer({ toolSlug }: { toolSlug: string }) {
-  const Component = toolComponents[toolSlug as ToolSlug];
-
-  if (!Component) {
+  if (!isToolSlug(toolSlug)) {
     return (
       <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/30 dark:text-red-300">
         Tool component not found.
@@ -84,5 +82,6 @@ export default function ToolRenderer({ toolSlug }: { toolSlug: string }) {
     );
   }
 
+  const Component = toolComponents[toolSlug];
   return <Component />;
 }

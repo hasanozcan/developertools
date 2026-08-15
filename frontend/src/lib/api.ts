@@ -34,7 +34,7 @@ export interface ToolDetail extends Tool {
 }
 
 // Static data now that the backend is disabled.
-export const categoryCatalog: Category[] = [
+export const categoryCatalog = [
   { id: 1, slug: 'json', name: 'JSON Tools', description: 'JSON formatting, validation, querying, and conversion tools for developers', toolCount: 8 },
   { id: 2, slug: 'encoding', name: 'Encoder Online', description: 'Encode and decode Base64, URL components, hexadecimal, binary, JSON strings, and more', toolCount: 9 },
   { id: 3, slug: 'generators', name: 'Generators', description: 'UUID, password, and other generators', toolCount: 7 },
@@ -43,9 +43,11 @@ export const categoryCatalog: Category[] = [
   { id: 6, slug: 'converters', name: 'Converters', description: 'Data format converters', toolCount: 6 },
   { id: 7, slug: 'formatters', name: 'Code Formatters', description: 'Format and minify code in various languages', toolCount: 6 },
   { id: 8, slug: 'utilities', name: 'Developer Utilities', description: 'HTTP, security, network, and request utilities for developers', toolCount: 9 },
-];
+] as const satisfies readonly Category[];
 
-export const toolCatalog: Tool[] = [
+export type CategorySlug = (typeof categoryCatalog)[number]['slug'];
+
+export const toolCatalog = [
   { id: 1, slug: 'json-formatter', name: 'JSON Formatter', shortDescription: 'Format and beautify JSON data', categorySlug: 'json', categoryName: 'JSON Tools', isFeatured: true },
   { id: 2, slug: 'json-validator', name: 'JSON Validator', shortDescription: 'Validate JSON syntax and structure', categorySlug: 'json', categoryName: 'JSON Tools', isFeatured: true },
   { id: 3, slug: 'json-csv', name: 'JSON to CSV', shortDescription: 'Convert JSON arrays to CSV and back', categorySlug: 'json', categoryName: 'JSON Tools', isFeatured: true },
@@ -104,7 +106,22 @@ export const toolCatalog: Tool[] = [
   { id: 56, slug: 'jsonpath-tester', name: 'JSONPath Tester', shortDescription: 'Query JSON with RFC 9535-style paths, wildcards, slices, and recursive descent', categorySlug: 'json', categoryName: 'JSON Tools', isFeatured: true },
   { id: 57, slug: 'csp-builder', name: 'CSP Header Builder & Analyzer', shortDescription: 'Build, normalize, and inspect Content Security Policy headers', categorySlug: 'utilities', categoryName: 'Developer Utilities', isFeatured: true },
   { id: 58, slug: 'curl-to-fetch', name: 'cURL Builder & Fetch Converter', shortDescription: 'Build cURL requests or convert safe cURL input to JavaScript fetch', categorySlug: 'utilities', categoryName: 'Developer Utilities', isFeatured: true },
-];
+] as const satisfies readonly Tool[];
+
+export type ToolSlug = (typeof toolCatalog)[number]['slug'];
+
+const categoryBySlug = new Map<string, Category>(
+  categoryCatalog.map((category) => [category.slug, category]),
+);
+const toolBySlug = new Map<string, Tool>(toolCatalog.map((tool) => [tool.slug, tool]));
+
+export function findCatalogTool(slug: string): Tool | undefined {
+  return toolBySlug.get(slug);
+}
+
+export function isToolSlug(slug: string): slug is ToolSlug {
+  return toolBySlug.has(slug);
+}
 
 const curatedRelatedToolSlugs: Record<string, string[]> = {
   'json-formatter': ['json-validator', 'json-to-typescript', 'json-csv'],
@@ -136,7 +153,9 @@ function relatedToolsFor(tool: Tool, count: number = 3): Tool[] {
   const candidates = [
     ...(curatedRelatedToolSlugs[tool.slug] || [])
       .map((slug) => toolCatalog.find((candidate) => candidate.slug === slug))
-      .filter((candidate): candidate is Tool => Boolean(candidate)),
+      .filter(
+        (candidate): candidate is (typeof toolCatalog)[number] => candidate !== undefined,
+      ),
     ...categoryRing,
     ...globalRing,
   ];
@@ -167,20 +186,20 @@ function asDetail(tool: Tool): ToolDetail {
 
 // Categories API (static)
 export async function getCategories(): Promise<Category[]> {
-  return categoryCatalog;
+  return [...categoryCatalog];
 }
 
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
-  return categoryCatalog.find((cat) => cat.slug === slug) || null;
+  return categoryBySlug.get(slug) || null;
 }
 
 // Tools API (static)
 export async function getTools(): Promise<Tool[]> {
-  return toolCatalog;
+  return [...toolCatalog];
 }
 
 export async function getToolBySlug(slug: string): Promise<ToolDetail | null> {
-  const tool = toolCatalog.find((t) => t.slug === slug);
+  const tool = findCatalogTool(slug);
   return tool ? asDetail(tool) : null;
 }
 
@@ -190,9 +209,4 @@ export async function getFeaturedTools(count: number = 10): Promise<Tool[]> {
 
 export async function getPopularTools(count: number = toolCatalog.length): Promise<Tool[]> {
   return toolCatalog.slice(0, count);
-}
-
-// Analytics API (noop)
-export async function trackToolUsage(_toolSlug: string, _sessionId?: string, _referrer?: string): Promise<void> {
-  return;
 }

@@ -2,24 +2,12 @@
 
 import { useEffect, useRef } from 'react';
 import { useHistory } from '@/context/HistoryContext';
-import { trackToolUsage } from '@/lib/api';
+import { trackToolEvent } from '@/lib/analytics';
 
 interface HistoryTrackerProps {
   slug: string;
   name: string;
   category: string;
-}
-
-// Generate or get session ID
-function getSessionId(): string {
-  if (typeof window === 'undefined') return '';
-  
-  let sessionId = sessionStorage.getItem('devtools_session_id');
-  if (!sessionId) {
-    sessionId = crypto.randomUUID();
-    sessionStorage.setItem('devtools_session_id', sessionId);
-  }
-  return sessionId;
 }
 
 export default function HistoryTracker({ slug, name, category }: HistoryTrackerProps) {
@@ -33,10 +21,8 @@ export default function HistoryTracker({ slug, name, category }: HistoryTrackerP
       // Add to local history
       addToHistory({ slug, name, category });
       
-      // Track usage in backend (fire and forget)
-      const sessionId = getSessionId();
-      const referrer = typeof document !== 'undefined' ? (document.referrer || window.location.href) : undefined;
-      trackToolUsage(slug, sessionId, referrer);
+      // Track only catalog identifiers; never send tool input, referrer, or a session identifier.
+      trackToolEvent('tool_opened', slug, category);
     }
   }, [slug, name, category, addToHistory]);
 

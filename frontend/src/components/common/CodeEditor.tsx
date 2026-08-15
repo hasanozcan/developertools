@@ -36,7 +36,7 @@ export default function CodeEditor({
     <div className="relative border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-gray-50 dark:bg-gray-900">
       {/* Toolbar */}
       <div className="flex items-center justify-between px-3 py-2 bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{language}</span>
+        <span className="text-xs font-medium text-gray-600 dark:text-gray-300 uppercase">{language}</span>
         <div className="flex items-center gap-2">
           {!readOnly && value && (
             <button

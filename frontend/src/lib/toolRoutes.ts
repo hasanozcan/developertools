@@ -1,15 +1,7 @@
-export const canonicalToolCategories: Record<string, string> = {
-  'json-csv': 'json',
-  'yaml-json': 'json',
-  'image-to-base64': 'encoding',
-  'lorem-ipsum': 'generators',
-  'slug-generator': 'generators',
-  'qr-code': 'generators',
-  'markdown-preview': 'text',
-};
+import { findCatalogTool } from './api';
 
 export function getCanonicalToolCategory(slug: string, category?: string): string {
-  return canonicalToolCategories[slug] || category || '';
+  return findCatalogTool(slug)?.categorySlug || category || '';
 }
 
 export function buildToolPath(category: string, slug: string): string {

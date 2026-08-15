@@ -834,7 +834,7 @@ export const zh = {
     'privacy.localStorage': '本地存储',
     'privacy.localStorageDesc': '我们使用浏览器本地存储来保存您的偏好设置，如主题设置、收藏工具和使用历史。',
     'privacy.analytics': '分析',
-    'privacy.analyticsDesc': '我们可能会使用尊重隐私的分析来了解我们的工具是如何被使用的。',
+    'privacy.analyticsDesc': '我们使用 Vercel Analytics 和 Speed Insights 来衡量页面性能以及打开、复制、收藏或选择工具等汇总操作。自定义事件属性仅包含目录标识符和计数，不包含粘贴到工具中的文本、生成的输出、联系表单内容、来源网址或自定义会话标识符。只有在联系表单提交成功后，才可能发送 Google Ads 转化事件。',
     'privacy.cookies': 'Cookies',
     'privacy.cookiesDesc': '我们使用最少的必要 cookies 来运行我们的网站。',
     // Terms Page

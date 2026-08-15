@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { toolCatalog } from '@/lib/api';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 export const alt = 'DevsTools - Free Online Developer Tools';
 export const size = {
     width: 1200,
@@ -143,6 +143,7 @@ export default async function Image() {
                 {/* Bottom text */}
                 <div
                     style={{
+                        display: 'flex',
                         fontSize: 20,
                         color: '#64748b',
                         marginBottom: 16,

@@ -66,6 +66,8 @@ build/
 coverage/
 .nyc_output/
 *.lcov
+frontend/output/
+backend/output/
 
 # Cache
 .cache/

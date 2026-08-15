@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { notFound, permanentRedirect } from 'next/navigation';
 import ToolPageWrapper from '@/components/tools/ToolPageWrapper';
 import ToolRenderer from '@/components/tools/ToolRenderer';
-import { getToolBySlug, toolCatalog } from '@/lib/api';
+import { categoryCatalog, findCatalogTool, getToolBySlug, toolCatalog } from '@/lib/api';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
 import { getToolSources } from '@/lib/toolSources';
 
@@ -2122,13 +2122,12 @@ const tools: Record<
 
 function assertToolPageCatalogIntegrity(): void {
   const configuredRoutes = new Set<string>();
-  const catalogBySlug = new Map(toolCatalog.map((tool) => [tool.slug, tool]));
   const invalidRoutes: string[] = [];
 
   for (const [category, categoryTools] of Object.entries(tools)) {
     for (const toolSlug of Object.keys(categoryTools)) {
       configuredRoutes.add(`${category}/${toolSlug}`);
-      const catalogTool = catalogBySlug.get(toolSlug);
+      const catalogTool = findCatalogTool(toolSlug);
       const canonicalCategory = getCanonicalToolCategory(toolSlug, category);
 
       if (!catalogTool || catalogTool.categorySlug !== canonicalCategory) {
@@ -2205,16 +2204,9 @@ export async function generateStaticParams() {
   }));
 }
 
-const categoryNames: Record<string, string> = {
-  json: 'JSON Tools',
-  encoding: 'Encoding & Decoding',
-  generators: 'Generators',
-  crypto: 'Cryptography',
-  text: 'Text Tools',
-  converters: 'Converters',
-  formatters: 'Code Formatters',
-  utilities: 'Developer Utilities',
-};
+const categoryNames = Object.fromEntries(
+  categoryCatalog.map((category) => [category.slug, category.name]),
+) as Record<string, string>;
 
 export default async function ToolPage({ params }: PageProps) {
   const { category, tool: toolSlug } = await params;

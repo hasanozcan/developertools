@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using DeveloperTools.Core.Interfaces;
 using DeveloperTools.Application.DTOs;
 using DeveloperTools.Application.Mappings;
+using DeveloperTools.Api.Validation;
 
 namespace DeveloperTools.Api.Controllers;
 
@@ -34,8 +35,7 @@ public class CategoriesController : ControllerBase
     [ResponseCache(Duration = 300)]
     public async Task<ActionResult<CategoryDetailDto>> GetBySlug(string slug)
     {
-        if (slug.Length is < 1 or > 100 ||
-            !slug.All(character => char.IsAsciiLetterOrDigit(character) || character == '-'))
+        if (!SlugValidator.IsValid(slug, 100))
         {
             return BadRequest(new { message = "Invalid category slug" });
         }

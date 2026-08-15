@@ -5,6 +5,8 @@ import { Mail, MessageSquare, Send, CheckCircle } from 'lucide-react';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import { useLanguage } from '@/context/LanguageContext';
 import Script from 'next/script';
+import { trackProductEvent } from '@/lib/analytics';
+import { trackGoogleAdsConversion } from '@/lib/googleAds';
 
 export default function ContactPage() {
   const { t } = useLanguage();
@@ -60,6 +62,8 @@ export default function ContactPage() {
         throw new Error('Failed to submit form');
       }
 
+      trackProductEvent('contact_submitted');
+      trackGoogleAdsConversion();
       setIsSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
@@ -133,7 +137,7 @@ export default function ContactPage() {
           <div className="md:col-span-2">
             <div className="p-8 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
               {isSubmitted ? (
-                <div className="text-center py-8">
+                <div className="text-center py-8" role="status" aria-live="polite">
                   <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('contact.thankYou')}</h3>
                   <p className="text-gray-600 dark:text-gray-400 mb-6">
@@ -224,6 +228,7 @@ export default function ContactPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
+                    aria-busy={isSubmitting}
                     className="w-full px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? (

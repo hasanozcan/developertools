@@ -1041,7 +1041,7 @@ export const es = {
     'privacy.localStorage': 'Almacenamiento Local',
     'privacy.localStorageDesc': 'Usamos el almacenamiento local del navegador para guardar sus preferencias como configuración de tema, herramientas favoritas e historial de uso.',
     'privacy.analytics': 'Analíticas',
-    'privacy.analyticsDesc': 'Podemos usar analíticas respetuosas con la privacidad para entender cómo se usan nuestras herramientas.',
+    'privacy.analyticsDesc': 'Usamos Vercel Analytics y Speed Insights para medir el rendimiento de las páginas y acciones agregadas como abrir, copiar, marcar como favorita o seleccionar una herramienta. Las propiedades de nuestros eventos personalizados solo contienen identificadores del catálogo y recuentos, nunca texto pegado en las herramientas, resultados generados, contenido del formulario de contacto, referencias ni identificadores de sesión personalizados. Solo se puede enviar una conversión de Google Ads después de que el formulario de contacto se envíe correctamente.',
     'privacy.cookies': 'Cookies',
     'privacy.cookiesDesc': 'Usamos cookies mínimas necesarias para el funcionamiento de nuestro sitio web.',
     // Terms Page

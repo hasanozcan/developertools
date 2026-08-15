@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import { Copy, Check } from 'lucide-react';
+import { trackCurrentToolEvent } from '@/lib/analytics';
 
 interface CopyButtonProps {
   text: string;
@@ -14,6 +15,7 @@ export default function CopyButton({ text, className = '' }: CopyButtonProps) {
   const handleCopy = useCallback(async () => {
     await navigator.clipboard.writeText(text);
     setCopied(true);
+    trackCurrentToolEvent('tool_copied');
     setTimeout(() => setCopied(false), 2000);
   }, [text]);
 
@@ -23,6 +25,7 @@ export default function CopyButton({ text, className = '' }: CopyButtonProps) {
       className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-md
         bg-gray-100 hover:bg-gray-200 text-gray-700 transition-colors ${className}`}
       disabled={!text}
+      aria-live="polite"
     >
       {copied ? (
         <>

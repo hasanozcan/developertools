@@ -1,6 +1,8 @@
 name: Frontend Quality
 
 on:
+  schedule:
+    - cron: "17 4 * * 1"
   push:
     paths:
       - "frontend/**"
@@ -44,4 +46,14 @@ jobs:
         run: npm run check
 
       - name: Verify production build
+        env:
+          NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_CURRENCY: USD
+          NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_VALUE: "1"
+          NEXT_PUBLIC_GOOGLE_ADS_SEND_TO: AW-TEST/contact
         run: npm run build
+
+      - name: Install browser runtime
+        run: npx playwright install --with-deps chromium
+
+      - name: Run browser, route, conversion, and accessibility checks
+        run: npm run test:e2e

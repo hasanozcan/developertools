@@ -254,7 +254,7 @@ export default function Home() {
                           {toolName}
                         </h3>
                         {categoryLabel && (
-                          <span className="whitespace-nowrap rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-500 dark:bg-slate-800 dark:text-slate-300">
+                          <span className="whitespace-nowrap rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300">
                             {categoryLabel}
                           </span>
                         )}
