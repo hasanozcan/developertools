@@ -529,8 +529,7 @@ const tools: Record<
       faqs: [
         {
           question: 'What is hexadecimal encoding?',
-          answer:
-            'Hexadecimal encoding represents each character as its ASCII value in base-16 notation (0-9, A-F).',
+          answer: 'Hexadecimal encoding represents UTF-8 bytes in base-16 notation (0-9, A-F).',
         },
         {
           question: 'How do I use this tool?',
@@ -554,8 +553,7 @@ const tools: Record<
       faqs: [
         {
           question: 'What is binary encoding?',
-          answer:
-            'Binary encoding represents each character as its ASCII value in base-2 notation using only 0s and 1s.',
+          answer: 'Binary encoding represents UTF-8 bytes in base-2 notation using only 0s and 1s.',
         },
         {
           question: 'How many bits per character?',
@@ -1585,7 +1583,7 @@ const tools: Record<
         {
           question: 'Should I use this for production?',
           answer:
-            'This is a basic minifier. For production builds, consider using build tools like Webpack, Rollup, or esbuild with Terser for advanced optimizations.',
+            'This tool uses Terser for parser-backed JavaScript minification. Production builds should still integrate minification into a bundler such as Webpack, Rollup, or esbuild.',
         },
       ],
     },

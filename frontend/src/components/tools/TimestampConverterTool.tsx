@@ -2,15 +2,16 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import CopyButton from '@/components/common/CopyButton';
-import { ArrowDownUp, Clock } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { dateToTimestamp, timestampToIso, type TimestampUnit } from '@/lib/timestamp';
 
 export default function TimestampConverterTool() {
   const { t } = useLanguage();
   const [timestamp, setTimestamp] = useState('');
   const [dateString, setDateString] = useState('');
   const [currentTime, setCurrentTime] = useState<number | null>(null);
-  const [unit, setUnit] = useState<'seconds' | 'milliseconds'>('seconds');
+  const [unit, setUnit] = useState<TimestampUnit>('seconds');
 
   // Update current time every second
   useEffect(() => {
@@ -22,36 +23,31 @@ export default function TimestampConverterTool() {
     return () => clearInterval(interval);
   }, []);
 
-  const timestampToDate = useCallback((ts: string, unit: 'seconds' | 'milliseconds'): string => {
-    const num = parseInt(ts, 10);
-    if (isNaN(num)) return '';
-    
-    const ms = unit === 'seconds' ? num * 1000 : num;
-    const date = new Date(ms);
-    
-    if (isNaN(date.getTime())) return '';
-    return date.toISOString();
-  }, []);
+  const handleTimestampChange = useCallback(
+    (value: string) => {
+      setTimestamp(value);
+      const date = timestampToIso(value, unit);
+      setDateString(date);
+    },
+    [unit],
+  );
 
-  const dateToTimestamp = useCallback((dateStr: string, unit: 'seconds' | 'milliseconds'): string => {
-    const date = new Date(dateStr);
-    if (isNaN(date.getTime())) return '';
-    
-    const ms = date.getTime();
-    return unit === 'seconds' ? Math.floor(ms / 1000).toString() : ms.toString();
-  }, []);
+  const handleDateChange = useCallback(
+    (value: string) => {
+      setDateString(value);
+      const ts = dateToTimestamp(value, unit);
+      setTimestamp(ts);
+    },
+    [unit],
+  );
 
-  const handleTimestampChange = useCallback((value: string) => {
-    setTimestamp(value);
-    const date = timestampToDate(value, unit);
-    setDateString(date);
-  }, [unit, timestampToDate]);
-
-  const handleDateChange = useCallback((value: string) => {
-    setDateString(value);
-    const ts = dateToTimestamp(value, unit);
-    setTimestamp(ts);
-  }, [unit, dateToTimestamp]);
+  const handleUnitChange = useCallback(
+    (nextUnit: TimestampUnit) => {
+      setUnit(nextUnit);
+      setDateString(timestamp.trim() ? timestampToIso(timestamp, nextUnit) : '');
+    },
+    [timestamp],
+  );
 
   const setNow = useCallback(() => {
     const now = unit === 'seconds' ? Math.floor(Date.now() / 1000) : Date.now();
@@ -63,8 +59,8 @@ export default function TimestampConverterTool() {
     // Use a specific sample timestamp (Jan 1, 2024 12:00:00 UTC)
     const sampleTs = unit === 'seconds' ? '1704110400' : '1704110400000';
     setTimestamp(sampleTs);
-    setDateString(timestampToDate(sampleTs, unit));
-  }, [unit, timestampToDate]);
+    setDateString(timestampToIso(sampleTs, unit));
+  }, [unit]);
 
   const formatLocalDate = (isoString: string): string => {
     if (!isoString) return '';
@@ -73,6 +69,7 @@ export default function TimestampConverterTool() {
   };
 
   const currentDate = currentTime === null ? null : new Date(currentTime * 1000);
+  const parsedTimestamp = timestampToIso(timestamp, unit) ? Number(timestamp.trim()) : null;
 
   return (
     <div className="space-y-6">
@@ -86,7 +83,9 @@ export default function TimestampConverterTool() {
           <div>
             <span className="text-xs text-gray-500 dark:text-gray-400">Unix Timestamp</span>
             <div className="flex items-center gap-2">
-              <code className="font-mono text-lg text-gray-900 dark:text-white">{currentTime ?? '-'}</code>
+              <code className="font-mono text-lg text-gray-900 dark:text-white">
+                {currentTime ?? '-'}
+              </code>
               <CopyButton text={currentTime === null ? '' : currentTime.toString()} />
             </div>
           </div>
@@ -101,10 +100,12 @@ export default function TimestampConverterTool() {
 
       {/* Unit Toggle */}
       <div className="flex items-center gap-4">
-        <span className="text-sm text-gray-600 dark:text-gray-400">{t('tool.timestampConverter.unit')}:</span>
+        <span className="text-sm text-gray-600 dark:text-gray-400">
+          {t('tool.timestampConverter.unit')}:
+        </span>
         <div className="flex rounded-lg overflow-hidden border border-gray-300 dark:border-gray-600">
           <button
-            onClick={() => setUnit('seconds')}
+            onClick={() => handleUnitChange('seconds')}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
               unit === 'seconds'
                 ? 'bg-primary-600 text-white'
@@ -114,7 +115,7 @@ export default function TimestampConverterTool() {
             {t('tool.timestampConverter.seconds')}
           </button>
           <button
-            onClick={() => setUnit('milliseconds')}
+            onClick={() => handleUnitChange('milliseconds')}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
               unit === 'milliseconds'
                 ? 'bg-primary-600 text-white'
@@ -178,26 +179,46 @@ export default function TimestampConverterTool() {
       {/* Conversion Result */}
       {(timestamp || dateString) && (
         <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-100 dark:border-blue-800">
-          <h3 className="font-medium text-blue-900 dark:text-blue-300 mb-3">{t('tool.timestampConverter.conversionResult')}</h3>
+          <h3 className="font-medium text-blue-900 dark:text-blue-300 mb-3">
+            {t('tool.timestampConverter.conversionResult')}
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div>
-              <span className="text-blue-600 dark:text-blue-400">{t('tool.timestampConverter.localTime')}:</span>
-              <div className="font-mono text-blue-900 dark:text-blue-200">{formatLocalDate(dateString) || '-'}</div>
-            </div>
-            <div>
-              <span className="text-blue-600 dark:text-blue-400">{t('tool.timestampConverter.utcTime')}:</span>
-              <div className="font-mono text-blue-900 dark:text-blue-200">{dateString || '-'}</div>
-            </div>
-            <div>
-              <span className="text-blue-600 dark:text-blue-400">{t('tool.timestampConverter.timestampSeconds')}:</span>
+              <span className="text-blue-600 dark:text-blue-400">
+                {t('tool.timestampConverter.localTime')}
+              </span>
               <div className="font-mono text-blue-900 dark:text-blue-200">
-                {timestamp ? (unit === 'seconds' ? timestamp : Math.floor(parseInt(timestamp) / 1000)) : '-'}
+                {formatLocalDate(dateString) || '-'}
               </div>
             </div>
             <div>
-              <span className="text-blue-600 dark:text-blue-400">{t('tool.timestampConverter.timestampMilliseconds')}:</span>
+              <span className="text-blue-600 dark:text-blue-400">
+                {t('tool.timestampConverter.utcTime')}
+              </span>
+              <div className="font-mono text-blue-900 dark:text-blue-200">{dateString || '-'}</div>
+            </div>
+            <div>
+              <span className="text-blue-600 dark:text-blue-400">
+                {t('tool.timestampConverter.timestampSeconds')}
+              </span>
               <div className="font-mono text-blue-900 dark:text-blue-200">
-                {timestamp ? (unit === 'milliseconds' ? timestamp : parseInt(timestamp) * 1000) : '-'}
+                {parsedTimestamp === null
+                  ? '-'
+                  : unit === 'seconds'
+                    ? parsedTimestamp
+                    : Math.floor(parsedTimestamp / 1000)}
+              </div>
+            </div>
+            <div>
+              <span className="text-blue-600 dark:text-blue-400">
+                {t('tool.timestampConverter.timestampMilliseconds')}
+              </span>
+              <div className="font-mono text-blue-900 dark:text-blue-200">
+                {parsedTimestamp === null
+                  ? '-'
+                  : unit === 'milliseconds'
+                    ? parsedTimestamp
+                    : parsedTimestamp * 1000}
               </div>
             </div>
           </div>

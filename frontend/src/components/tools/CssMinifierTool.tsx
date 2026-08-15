@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Minimize2, Copy, Check, FileText, Trash2, Info } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { minifyStylesheet } from '@/lib/codeMinifiers';
 
 interface MinifyStats {
   original: number;
@@ -18,94 +19,67 @@ export default function CssMinifierTool() {
   const [copied, setCopied] = useState(false);
   const [stats, setStats] = useState<MinifyStats | null>(null);
   const [removeComments, setRemoveComments] = useState(true);
-
-  const minifyCss = (css: string): string => {
-    if (!css.trim()) return '';
-
-    let result = css;
-
-    // Remove comments
-    if (removeComments) {
-      result = result.replace(/\/\*[\s\S]*?\*\//g, '');
-    }
-
-    // Remove newlines and extra whitespace
-    result = result.replace(/\s+/g, ' ');
-
-    // Remove spaces around special characters
-    result = result.replace(/\s*([{};:,>~+])\s*/g, '$1');
-
-    // Remove semicolon before closing brace
-    result = result.replace(/;}/g, '}');
-
-    // Remove spaces around !important
-    result = result.replace(/\s*!important/g, '!important');
-
-    // Remove leading zeros
-    result = result.replace(/:0\./g, ':.');
-    result = result.replace(/\s0\./g, ' .');
-
-    // Remove units from zero values
-    result = result.replace(/(:|\s)0(px|em|rem|%|vh|vw|pt|cm|mm|in|pc|ex|ch)/g, '$10');
-
-    // Shorten hex colors
-    result = result.replace(/#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3/g, '#$1$2$3');
-
-    // Remove last semicolon in each block
-    result = result.replace(/;}/g, '}');
-
-    // Trim
-    result = result.trim();
-
-    return result;
-  };
+  const [error, setError] = useState<string | null>(null);
+  const [isMinifying, setIsMinifying] = useState(false);
 
   const beautifyCss = (css: string): string => {
     if (!css.trim()) return '';
 
     let result = css;
-    
+
     // First minify to normalize
     result = result.replace(/\s+/g, ' ');
-    
+
     // Add newline after each rule
     result = result.replace(/}/g, '}\n');
-    
+
     // Add newline after opening brace
     result = result.replace(/{/g, ' {\n  ');
-    
+
     // Add newline after semicolons
     result = result.replace(/;/g, ';\n  ');
-    
+
     // Fix double spaces
     result = result.replace(/\n  }/g, '\n}');
-    
+
     // Add space before opening brace
     result = result.replace(/([^\s]){/g, '$1 {');
-    
+
     return result.trim();
   };
 
-  const handleMinify = () => {
-    const minified = minifyCss(input);
-    setOutput(minified);
-    
-    const original = input.length;
-    const minifiedLength = minified.length;
-    const saved = original - minifiedLength;
-    const percentage = original > 0 ? Math.round((saved / original) * 100) : 0;
-    
-    setStats({
-      original,
-      minified: minifiedLength,
-      saved,
-      percentage,
-    });
+  const handleMinify = async () => {
+    setIsMinifying(true);
+    setError(null);
+
+    try {
+      const minified = await minifyStylesheet(input, { removeComments });
+      setOutput(minified);
+
+      const original = input.length;
+      const minifiedLength = minified.length;
+      const saved = original - minifiedLength;
+      const percentage = original > 0 ? Math.round((saved / original) * 100) : 0;
+
+      setStats({
+        original,
+        minified: minifiedLength,
+        saved,
+        percentage,
+      });
+    } catch (caughtError) {
+      setOutput('');
+      setStats(null);
+      setError(caughtError instanceof Error ? caughtError.message : 'CSS minification failed.');
+    } finally {
+      setIsMinifying(false);
+    }
   };
 
   const handleBeautify = () => {
     setOutput(beautifyCss(input));
     setStats(null);
+    setError(null);
   };
 
   const copyOutput = async () => {
@@ -177,7 +151,9 @@ export default function CssMinifierTool() {
             onChange={(e) => setRemoveComments(e.target.checked)}
             className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
           />
-          <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.cssMinifier.removeComments')}</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">
+            {t('tool.cssMinifier.removeComments')}
+          </span>
         </label>
 
         <div className="flex gap-2">
@@ -189,7 +165,12 @@ export default function CssMinifierTool() {
             {t('common.loadSample')}
           </button>
           <button
-            onClick={() => { setInput(''); setOutput(''); setStats(null); }}
+            onClick={() => {
+              setInput('');
+              setOutput('');
+              setStats(null);
+              setError(null);
+            }}
             className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2"
           >
             <Trash2 className="w-4 h-4" />
@@ -219,7 +200,8 @@ export default function CssMinifierTool() {
       <div className="flex flex-wrap gap-3">
         <button
           onClick={handleMinify}
-          disabled={!input.trim()}
+          disabled={!input.trim() || isMinifying}
+          aria-busy={isMinifying}
           className="px-6 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Minimize2 className="w-4 h-4" />
@@ -234,24 +216,49 @@ export default function CssMinifierTool() {
         </button>
       </div>
 
+      {error ? (
+        <div
+          role="alert"
+          className="p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-300"
+        >
+          {error}
+        </div>
+      ) : null}
+
       {/* Stats */}
       {stats && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg text-center">
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.original.toLocaleString()}</div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">{t('tool.cssMinifier.original')}</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">
+              {stats.original.toLocaleString()}
+            </div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">
+              {t('tool.cssMinifier.original')}
+            </div>
           </div>
           <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg text-center">
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.minified.toLocaleString()}</div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">{t('tool.cssMinifier.minified')}</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">
+              {stats.minified.toLocaleString()}
+            </div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">
+              {t('tool.cssMinifier.minified')}
+            </div>
           </div>
           <div className="p-4 bg-green-50 dark:bg-green-900/30 rounded-lg text-center">
-            <div className="text-2xl font-bold text-green-600 dark:text-green-400">{stats.saved.toLocaleString()}</div>
-            <div className="text-sm text-green-600 dark:text-green-400">{t('tool.cssMinifier.bytesSaved')}</div>
+            <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+              {stats.saved.toLocaleString()}
+            </div>
+            <div className="text-sm text-green-600 dark:text-green-400">
+              {t('tool.cssMinifier.bytesSaved')}
+            </div>
           </div>
           <div className="p-4 bg-green-50 dark:bg-green-900/30 rounded-lg text-center">
-            <div className="text-2xl font-bold text-green-600 dark:text-green-400">{stats.percentage}%</div>
-            <div className="text-sm text-green-600 dark:text-green-400">{t('tool.cssMinifier.reduction')}</div>
+            <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+              {stats.percentage}%
+            </div>
+            <div className="text-sm text-green-600 dark:text-green-400">
+              {t('tool.cssMinifier.reduction')}
+            </div>
           </div>
         </div>
       )}

@@ -3,13 +3,10 @@
 import React, { useState } from 'react';
 import { Minimize2, Copy, Check, FileText, Trash2, Info, Code } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
-
-interface MinifyOptions {
-  removeComments: boolean;
-  removeConsole: boolean;
-  removeDebugger: boolean;
-  shortenBooleans: boolean;
-}
+import {
+  minifyJavaScript,
+  type JavaScriptMinifyOptions as MinifyOptions,
+} from '@/lib/codeMinifiers';
 
 interface MinifyStats {
   original: number;
@@ -24,74 +21,14 @@ export default function JsMinifierTool() {
   const [output, setOutput] = useState('');
   const [copied, setCopied] = useState(false);
   const [stats, setStats] = useState<MinifyStats | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isMinifying, setIsMinifying] = useState(false);
   const [options, setOptions] = useState<MinifyOptions>({
     removeComments: true,
     removeConsole: false,
     removeDebugger: true,
     shortenBooleans: true,
   });
-
-  const minifyJs = (js: string): string => {
-    if (!js.trim()) return '';
-
-    let result = js;
-
-    // Remove single-line comments (but not URLs)
-    if (options.removeComments) {
-      // Remove multi-line comments
-      result = result.replace(/\/\*[\s\S]*?\*\//g, '');
-      // Remove single-line comments (careful with URLs)
-      result = result.replace(/(?<!:)\/\/[^\n]*/g, '');
-    }
-
-    // Remove console statements
-    if (options.removeConsole) {
-      result = result.replace(/console\.(log|info|warn|error|debug|trace|dir|table|time|timeEnd|group|groupEnd|count|assert)\s*\([^)]*\);?/g, '');
-    }
-
-    // Remove debugger statements
-    if (options.removeDebugger) {
-      result = result.replace(/debugger;?/g, '');
-    }
-
-    // Shorten booleans
-    if (options.shortenBooleans) {
-      result = result.replace(/\btrue\b/g, '!0');
-      result = result.replace(/\bfalse\b/g, '!1');
-    }
-
-    // Remove newlines and extra whitespace
-    result = result.replace(/\s+/g, ' ');
-
-    // Remove spaces around operators (careful with regex and strings)
-    result = result.replace(/\s*([{};:,=<>!+\-*/%&|^~?])\s*/g, '$1');
-
-    // Fix for statements and keywords
-    result = result.replace(/\b(if|else|for|while|do|switch|case|break|continue|return|throw|try|catch|finally|new|typeof|instanceof|void|delete)\b/g, ' $1 ');
-
-    // Remove spaces in specific patterns
-    result = result.replace(/\s*\(\s*/g, '(');
-    result = result.replace(/\s*\)\s*/g, ')');
-    result = result.replace(/\s*\[\s*/g, '[');
-    result = result.replace(/\s*\]\s*/g, ']');
-    
-    // Fix function declarations
-    result = result.replace(/function\s+/g, 'function ');
-    result = result.replace(/\bfunction\s*\(/g, 'function(');
-
-    // Fix arrow functions
-    result = result.replace(/\s*=>\s*/g, '=>');
-
-    // Clean up multiple spaces
-    result = result.replace(/\s+/g, ' ');
-
-    // Fix specific patterns
-    result = result.replace(/;\s*}/g, '}');
-    result = result.replace(/{\s*/g, '{');
-    result = result.replace(/\s*}/g, '}');
-
-    return result.trim();
-  };
 
   const beautifyJs = (js: string): string => {
     if (!js.trim()) return '';
@@ -142,26 +79,40 @@ export default function JsMinifierTool() {
     return output.replace(/\n\s*\n/g, '\n').trim();
   };
 
-  const handleMinify = () => {
-    const minified = minifyJs(input);
-    setOutput(minified);
+  const handleMinify = async () => {
+    setIsMinifying(true);
+    setError(null);
 
-    const original = input.length;
-    const minifiedLength = minified.length;
-    const saved = original - minifiedLength;
-    const percentage = original > 0 ? Math.round((saved / original) * 100) : 0;
+    try {
+      const minified = await minifyJavaScript(input, options);
+      setOutput(minified);
 
-    setStats({
-      original,
-      minified: minifiedLength,
-      saved,
-      percentage,
-    });
+      const original = input.length;
+      const minifiedLength = minified.length;
+      const saved = original - minifiedLength;
+      const percentage = original > 0 ? Math.round((saved / original) * 100) : 0;
+
+      setStats({
+        original,
+        minified: minifiedLength,
+        saved,
+        percentage,
+      });
+    } catch (caughtError) {
+      setOutput('');
+      setStats(null);
+      setError(
+        caughtError instanceof Error ? caughtError.message : 'JavaScript minification failed.',
+      );
+    } finally {
+      setIsMinifying(false);
+    }
   };
 
   const handleBeautify = () => {
     setOutput(beautifyJs(input));
     setStats(null);
+    setError(null);
   };
 
   const copyOutput = async () => {
@@ -231,37 +182,53 @@ export default UserAuth;`);
             <input
               type="checkbox"
               checked={options.removeComments}
-              onChange={(e) => setOptions({ ...options, removeComments: e.target.checked })}
+              onChange={(e) =>
+                setOptions((current) => ({ ...current, removeComments: e.target.checked }))
+              }
               className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
             />
-            <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.jsMinifier.removeComments')}</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300">
+              {t('tool.jsMinifier.removeComments')}
+            </span>
           </label>
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="checkbox"
               checked={options.removeConsole}
-              onChange={(e) => setOptions({ ...options, removeConsole: e.target.checked })}
+              onChange={(e) =>
+                setOptions((current) => ({ ...current, removeConsole: e.target.checked }))
+              }
               className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
             />
-            <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.jsMinifier.removeConsole')}</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300">
+              {t('tool.jsMinifier.removeConsole')}
+            </span>
           </label>
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="checkbox"
               checked={options.removeDebugger}
-              onChange={(e) => setOptions({ ...options, removeDebugger: e.target.checked })}
+              onChange={(e) =>
+                setOptions((current) => ({ ...current, removeDebugger: e.target.checked }))
+              }
               className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
             />
-            <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.jsMinifier.removeDebugger')}</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300">
+              {t('tool.jsMinifier.removeDebugger')}
+            </span>
           </label>
           <label className="flex items-center gap-2 cursor-pointer">
             <input
               type="checkbox"
               checked={options.shortenBooleans}
-              onChange={(e) => setOptions({ ...options, shortenBooleans: e.target.checked })}
+              onChange={(e) =>
+                setOptions((current) => ({ ...current, shortenBooleans: e.target.checked }))
+              }
               className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
             />
-            <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.jsMinifier.shortenBooleans')}</span>
+            <span className="text-sm text-gray-700 dark:text-gray-300">
+              {t('tool.jsMinifier.shortenBooleans')}
+            </span>
           </label>
         </div>
 
@@ -274,7 +241,12 @@ export default UserAuth;`);
             {t('common.loadSample')}
           </button>
           <button
-            onClick={() => { setInput(''); setOutput(''); setStats(null); }}
+            onClick={() => {
+              setInput('');
+              setOutput('');
+              setStats(null);
+              setError(null);
+            }}
             className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2"
           >
             <Trash2 className="w-4 h-4" />
@@ -304,7 +276,8 @@ export default UserAuth;`);
       <div className="flex flex-wrap gap-3">
         <button
           onClick={handleMinify}
-          disabled={!input.trim()}
+          disabled={!input.trim() || isMinifying}
+          aria-busy={isMinifying}
           className="px-6 py-2.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Minimize2 className="w-4 h-4" />
@@ -320,24 +293,49 @@ export default UserAuth;`);
         </button>
       </div>
 
+      {error ? (
+        <div
+          role="alert"
+          className="p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-300"
+        >
+          {error}
+        </div>
+      ) : null}
+
       {/* Stats */}
       {stats && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg text-center">
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.original.toLocaleString()}</div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">{t('tool.jsMinifier.original')}</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">
+              {stats.original.toLocaleString()}
+            </div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">
+              {t('tool.jsMinifier.original')}
+            </div>
           </div>
           <div className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg text-center">
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.minified.toLocaleString()}</div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">{t('tool.jsMinifier.minified')}</div>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">
+              {stats.minified.toLocaleString()}
+            </div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">
+              {t('tool.jsMinifier.minified')}
+            </div>
           </div>
           <div className="p-4 bg-green-50 dark:bg-green-900/30 rounded-lg text-center">
-            <div className="text-2xl font-bold text-green-600 dark:text-green-400">{stats.saved.toLocaleString()}</div>
-            <div className="text-sm text-green-600 dark:text-green-400">{t('tool.jsMinifier.bytesSaved')}</div>
+            <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+              {stats.saved.toLocaleString()}
+            </div>
+            <div className="text-sm text-green-600 dark:text-green-400">
+              {t('tool.jsMinifier.bytesSaved')}
+            </div>
           </div>
           <div className="p-4 bg-green-50 dark:bg-green-900/30 rounded-lg text-center">
-            <div className="text-2xl font-bold text-green-600 dark:text-green-400">{stats.percentage}%</div>
-            <div className="text-sm text-green-600 dark:text-green-400">{t('tool.jsMinifier.reduction')}</div>
+            <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+              {stats.percentage}%
+            </div>
+            <div className="text-sm text-green-600 dark:text-green-400">
+              {t('tool.jsMinifier.reduction')}
+            </div>
           </div>
         </div>
       )}

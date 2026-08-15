@@ -5,6 +5,7 @@ import CodeEditor from '@/components/common/CodeEditor';
 import CopyButton from '@/components/common/CopyButton';
 import { ArrowDownUp, Layers, Check } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { convertEncoding } from '@/lib/encodingWorkbench';
 
 interface BatchResult {
   input: string;
@@ -13,32 +14,11 @@ interface BatchResult {
 }
 
 function textToBinary(text: string): string {
-  return text.split('').map(char => {
-    return char.charCodeAt(0).toString(2).padStart(8, '0');
-  }).join(' ');
+  return convertEncoding(text, 'binary', 'encode');
 }
 
 function binaryToText(binary: string): string {
-  // Remove spaces and any other whitespace
-  const cleanBinary = binary.replace(/\s+/g, ' ').trim();
-  
-  if (!cleanBinary) return '';
-  
-  const binaryArray = cleanBinary.split(' ');
-  let text = '';
-  
-  for (const byte of binaryArray) {
-    if (!/^[01]+$/.test(byte)) {
-      throw new Error(`Invalid binary: "${byte}" is not a valid binary byte`);
-    }
-    if (byte.length > 8) {
-      throw new Error(`Invalid binary byte: "${byte}" is too long (max 8 bits)`);
-    }
-    const charCode = parseInt(byte.padStart(8, '0'), 2);
-    text += String.fromCharCode(charCode);
-  }
-  
-  return text;
+  return convertEncoding(binary, 'binary', 'decode');
 }
 
 export default function BinaryEncoderTool() {
@@ -315,7 +295,7 @@ export default function BinaryEncoderTool() {
       <div className="text-sm text-gray-500 dark:text-gray-400">
         <p>
           {mode === 'encode' 
-            ? 'Each character is converted to its 8-bit binary representation (ASCII value).'
+            ? 'Text is encoded as UTF-8 bytes, then each byte is shown as 8-bit binary.'
             : 'Binary values are converted back to their corresponding characters. Each byte should be 8 bits.'}
         </p>
       </div>

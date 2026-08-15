@@ -5,6 +5,7 @@ import CodeEditor from '@/components/common/CodeEditor';
 import CopyButton from '@/components/common/CopyButton';
 import { ArrowDownUp, Layers, Check } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { convertEncoding } from '@/lib/encodingWorkbench';
 
 interface BatchResult {
   input: string;
@@ -13,27 +14,12 @@ interface BatchResult {
 }
 
 function textToHex(text: string): string {
-  let hex = '';
-  for (let i = 0; i < text.length; i++) {
-    hex += text.charCodeAt(i).toString(16).padStart(2, '0') + ' ';
-  }
-  return hex.trim();
+  const encoded = convertEncoding(text, 'hex', 'encode');
+  return encoded.match(/.{2}/g)?.join(' ') ?? '';
 }
 
 function hexToText(hex: string): string {
-  // Remove spaces, 0x prefix, and other formatting
-  const cleanHex = hex.replace(/[^0-9A-Fa-f]/g, '');
-  
-  if (cleanHex.length % 2 !== 0) {
-    throw new Error('Invalid hex string: length must be even');
-  }
-  
-  let text = '';
-  for (let i = 0; i < cleanHex.length; i += 2) {
-    const charCode = parseInt(cleanHex.substr(i, 2), 16);
-    text += String.fromCharCode(charCode);
-  }
-  return text;
+  return convertEncoding(hex, 'hex', 'decode');
 }
 
 export default function HexEncoderTool() {
@@ -310,7 +296,7 @@ export default function HexEncoderTool() {
       <div className="text-sm text-gray-500 dark:text-gray-400">
         <p>
           {mode === 'encode' 
-            ? 'Each character is converted to its hexadecimal representation (ASCII value).'
+            ? 'Text is encoded as UTF-8 bytes, then each byte is shown in hexadecimal.'
             : 'Hexadecimal values are converted back to their corresponding characters.'}
         </p>
       </div>

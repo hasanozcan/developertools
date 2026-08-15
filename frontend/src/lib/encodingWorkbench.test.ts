@@ -18,11 +18,16 @@ describe('encoding workbench conversions', () => {
     expect(convertEncoding('48 69', 'hex', 'decode')).toBe('Hi');
     const encoded = convertEncoding('✓', 'hex', 'encode');
     expect(convertEncoding(encoded, 'hex', 'decode')).toBe('✓');
+    const emoji = convertEncoding('👋', 'hex', 'encode');
+    expect(emoji).toBe('f09f918b');
+    expect(convertEncoding(emoji, 'hex', 'decode')).toBe('👋');
   });
 
   it('encodes and decodes binary UTF-8 bytes', () => {
     expect(convertEncoding('A', 'binary', 'encode')).toBe('01000001');
     expect(convertEncoding('01000001', 'binary', 'decode')).toBe('A');
+    const emoji = convertEncoding('👋', 'binary', 'encode');
+    expect(convertEncoding(emoji, 'binary', 'decode')).toBe('👋');
   });
 
   it('escapes and unescapes JSON string content', () => {

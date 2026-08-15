@@ -5,129 +5,18 @@ import CodeEditor from '@/components/common/CodeEditor';
 import CopyButton from '@/components/common/CopyButton';
 import { ArrowDownUp } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { numberToRoman, parseRomanNumberInput, romanToNumber } from '@/lib/romanNumerals';
 
-// Roman numeral conversion
-const romanNumerals = [
-  { value: 1000, numeral: 'M' },
-  { value: 900, numeral: 'CM' },
-  { value: 500, numeral: 'D' },
-  { value: 400, numeral: 'CD' },
-  { value: 100, numeral: 'C' },
-  { value: 90, numeral: 'XC' },
-  { value: 50, numeral: 'L' },
-  { value: 40, numeral: 'XL' },
-  { value: 10, numeral: 'X' },
-  { value: 9, numeral: 'IX' },
-  { value: 5, numeral: 'V' },
-  { value: 4, numeral: 'IV' },
-  { value: 1, numeral: 'I' },
-];
-
-function numberToRoman(num: number): string {
-  if (num <= 0 || num > 3999) {
-    throw new Error('Number must be between 1 and 3999');
-  }
-
-  let result = '';
-  let remaining = num;
-
-  for (const { value, numeral } of romanNumerals) {
-    while (remaining >= value) {
-      result += numeral;
-      remaining -= value;
-    }
-  }
-
-  return result;
-}
-
-function romanToNumber(roman: string): number {
-  const upperRoman = roman.toUpperCase().trim();
-  
-  // Validate Roman numeral
-  if (!/^[MDCLXVI]+$/.test(upperRoman)) {
-    throw new Error('Invalid Roman numeral');
-  }
-
-  let result = 0;
-  let prevValue = 0;
-
-  for (let i = upperRoman.length - 1; i >= 0; i--) {
-    const char = upperRoman[i];
-    const value = romanNumerals.find(r => r.numeral === char)?.value ?? 0;
-    
-    if (value === 0) {
-      throw new Error(`Invalid Roman numeral character: ${char}`);
-    }
-
-    if (value < prevValue) {
-      result -= value;
-    } else {
-      result += value;
-      prevValue = value;
-    }
-  }
-
-  // Validate the result is a proper Roman numeral
-  if (result > 3999 || result < 1) {
-    throw new Error('Roman numeral must represent a number between 1 and 3999');
-  }
-
-  return result;
-}
+type ConversionMode = 'toRoman' | 'toNumber';
 
 export default function RomanNumeralConverterTool() {
   const { t } = useLanguage();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
-  const [mode, setMode] = useState<'toRoman' | 'toNumber'>('toRoman');
+  const [mode, setMode] = useState<ConversionMode>('toRoman');
   const [error, setError] = useState<string | null>(null);
 
-  const handleConvert = useCallback(() => {
-    if (!input.trim()) {
-      setOutput('');
-      setError(null);
-      return;
-    }
-
-    try {
-      if (mode === 'toRoman') {
-        const num = parseInt(input, 10);
-        if (isNaN(num)) {
-          throw new Error('Please enter a valid number');
-        }
-        setOutput(numberToRoman(num));
-      } else {
-        const num = romanToNumber(input);
-        setOutput(num.toString());
-      }
-      setError(null);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Conversion error');
-      setOutput('');
-    }
-  }, [input, mode]);
-
-  const swapMode = useCallback(() => {
-    setMode((prev) => (prev === 'toRoman' ? 'toNumber' : 'toRoman'));
-    setInput(output);
-    setOutput(input);
-    setError(null);
-  }, [input, output]);
-
-  const loadSample = useCallback(() => {
-    if (mode === 'toRoman') {
-      setInput('2024');
-    } else {
-      setInput('MMXXIV');
-    }
-    setOutput('');
-    setError(null);
-  }, [mode]);
-
-  // Auto-convert on input change
-  const handleInputChange = useCallback((value: string) => {
-    setInput(value);
+  const applyConversion = useCallback((value: string, conversionMode: ConversionMode) => {
     if (!value.trim()) {
       setOutput('');
       setError(null);
@@ -135,22 +24,48 @@ export default function RomanNumeralConverterTool() {
     }
 
     try {
-      if (mode === 'toRoman') {
-        const num = parseInt(value, 10);
-        if (isNaN(num)) {
-          throw new Error('Please enter a valid number');
-        }
-        setOutput(numberToRoman(num));
-      } else {
-        const num = romanToNumber(value);
-        setOutput(num.toString());
-      }
+      const result =
+        conversionMode === 'toRoman'
+          ? numberToRoman(parseRomanNumberInput(value))
+          : romanToNumber(value).toString();
+      setOutput(result);
       setError(null);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Conversion error');
       setOutput('');
     }
-  }, [mode]);
+  }, []);
+
+  const handleModeChange = useCallback(
+    (nextMode: ConversionMode) => {
+      setMode(nextMode);
+      applyConversion(input, nextMode);
+    },
+    [applyConversion, input],
+  );
+
+  const swapMode = useCallback(() => {
+    const nextMode = mode === 'toRoman' ? 'toNumber' : 'toRoman';
+    const nextInput = output;
+    setMode(nextMode);
+    setInput(nextInput);
+    applyConversion(nextInput, nextMode);
+  }, [applyConversion, mode, output]);
+
+  const loadSample = useCallback(() => {
+    const sample = mode === 'toRoman' ? '2024' : 'MMXXIV';
+    setInput(sample);
+    applyConversion(sample, mode);
+  }, [applyConversion, mode]);
+
+  // Auto-convert on input change
+  const handleInputChange = useCallback(
+    (value: string) => {
+      setInput(value);
+      applyConversion(value, mode);
+    },
+    [applyConversion, mode],
+  );
 
   // Quick reference table
   const referenceTable = useMemo(() => {
@@ -177,7 +92,7 @@ export default function RomanNumeralConverterTool() {
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex rounded-lg overflow-hidden border border-gray-300 dark:border-gray-600">
           <button
-            onClick={() => setMode('toRoman')}
+            onClick={() => handleModeChange('toRoman')}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
               mode === 'toRoman'
                 ? 'bg-primary-600 text-white'
@@ -187,7 +102,7 @@ export default function RomanNumeralConverterTool() {
             Number → Roman
           </button>
           <button
-            onClick={() => setMode('toNumber')}
+            onClick={() => handleModeChange('toNumber')}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
               mode === 'toNumber'
                 ? 'bg-primary-600 text-white'
@@ -230,7 +145,11 @@ export default function RomanNumeralConverterTool() {
           <CodeEditor
             value={input}
             onChange={handleInputChange}
-            placeholder={mode === 'toRoman' ? 'Enter a number (e.g., 2024)...' : 'Enter Roman numeral (e.g., MMXXIV)...'}
+            placeholder={
+              mode === 'toRoman'
+                ? 'Enter a number (e.g., 2024)...'
+                : 'Enter Roman numeral (e.g., MMXXIV)...'
+            }
             language="text"
             minHeight="100px"
           />
@@ -258,7 +177,9 @@ export default function RomanNumeralConverterTool() {
 
       {/* Reference Table */}
       <div>
-        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Quick Reference</h3>
+        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+          Quick Reference
+        </h3>
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-2">
           {referenceTable.map(({ number, roman }) => (
             <div
@@ -274,7 +195,10 @@ export default function RomanNumeralConverterTool() {
 
       {/* Info */}
       <div className="text-sm text-gray-500 dark:text-gray-400">
-        <p>Roman numerals can represent numbers from 1 to 3999. The system uses additive notation (VI = 5 + 1 = 6) and subtractive notation (IV = 5 - 1 = 4) for specific combinations.</p>
+        <p>
+          Roman numerals can represent numbers from 1 to 3999. The system uses additive notation (VI
+          = 5 + 1 = 6) and subtractive notation (IV = 5 - 1 = 4) for specific combinations.
+        </p>
       </div>
     </div>
   );

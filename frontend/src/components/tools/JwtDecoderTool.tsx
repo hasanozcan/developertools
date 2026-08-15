@@ -5,41 +5,37 @@ import CodeEditor from '@/components/common/CodeEditor';
 import CopyButton from '@/components/common/CopyButton';
 import { AlertCircle } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
-
-interface JwtPayload {
-  header: Record<string, any>;
-  payload: Record<string, any>;
-  signature: string;
-}
-
-function decodeJwt(token: string): JwtPayload | null {
-  try {
-    const parts = token.split('.');
-    if (parts.length !== 3) return null;
-
-    const header = JSON.parse(atob(parts[0].replace(/-/g, '+').replace(/_/g, '/')));
-    const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
-    const signature = parts[2];
-
-    return { header, payload, signature };
-  } catch {
-    return null;
-  }
-}
+import { decodeJwt, type DecodedJwt } from '@/lib/jwt';
 
 function formatDate(timestamp: number): string {
   return new Date(timestamp * 1000).toLocaleString();
 }
 
+function getNumericClaim(
+  payload: Record<string, unknown> | undefined,
+  name: string,
+): number | undefined {
+  const value = payload?.[name];
+  return typeof value === 'number' && Number.isFinite(value) ? value : undefined;
+}
+
+function getStringClaim(
+  payload: Record<string, unknown> | undefined,
+  name: string,
+): string | undefined {
+  const value = payload?.[name];
+  return typeof value === 'string' ? value : undefined;
+}
+
 export default function JwtDecoderTool() {
   const { t } = useLanguage();
   const [input, setInput] = useState('');
-  const [decoded, setDecoded] = useState<JwtPayload | null>(null);
+  const [decoded, setDecoded] = useState<DecodedJwt | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleInputChange = useCallback((value: string) => {
     setInput(value);
-    
+
     if (!value.trim()) {
       setDecoded(null);
       setError(null);
@@ -57,21 +53,25 @@ export default function JwtDecoderTool() {
   }, []);
 
   const loadSample = useCallback(() => {
-    const sampleJwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjoxOTE2MjM5MDIyLCJuYmYiOjE1MTYyMzkwMDJ9.POstGetfAytaZS86wHcjoTyoqhMyxXiWdR7Nn7A29DN';
+    const sampleJwt =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjoxOTE2MjM5MDIyLCJuYmYiOjE1MTYyMzkwMDJ9.POstGetfAytaZS86wHcjoTyoqhMyxXiWdR7Nn7A29DN';
     handleInputChange(sampleJwt);
   }, [handleInputChange]);
 
-  const isExpired = decoded?.payload?.exp 
-    ? (decoded.payload.exp as number) * 1000 < Date.now() 
-    : false;
+  const issuedAt = getNumericClaim(decoded?.payload, 'iat');
+  const notBefore = getNumericClaim(decoded?.payload, 'nbf');
+  const expiresAt = getNumericClaim(decoded?.payload, 'exp');
+  const subject = getStringClaim(decoded?.payload, 'sub');
+  const issuer = getStringClaim(decoded?.payload, 'iss');
+  const isExpired = expiresAt !== undefined ? expiresAt * 1000 < Date.now() : false;
 
   const getTimestampValidation = () => {
     if (!decoded?.payload) return null;
 
     const now = Math.floor(Date.now() / 1000);
-    const iat = decoded.payload.iat as number | undefined;
-    const nbf = decoded.payload.nbf as number | undefined;
-    const exp = decoded.payload.exp as number | undefined;
+    const iat = issuedAt;
+    const nbf = notBefore;
+    const exp = expiresAt;
 
     const validations: Array<{
       name: string;
@@ -81,7 +81,7 @@ export default function JwtDecoderTool() {
       color: string;
     }> = [];
 
-    if (iat) {
+    if (iat !== undefined) {
       const iatValid = iat <= now;
       validations.push({
         name: 'Issued At (iat)',
@@ -92,7 +92,7 @@ export default function JwtDecoderTool() {
       });
     }
 
-    if (nbf) {
+    if (nbf !== undefined) {
       const nbfValid = nbf <= now;
       validations.push({
         name: 'Not Before (nbf)',
@@ -103,7 +103,7 @@ export default function JwtDecoderTool() {
       });
     }
 
-    if (exp) {
+    if (exp !== undefined) {
       const expValid = exp > now;
       validations.push({
         name: 'Expiration (exp)',
@@ -123,7 +123,9 @@ export default function JwtDecoderTool() {
       {/* Input */}
       <div>
         <div className="flex items-center justify-between mb-2">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t('tool.jwtDecoder.jwtToken')}</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            {t('tool.jwtDecoder.jwtToken')}
+          </label>
           <button
             onClick={loadSample}
             className="px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
@@ -161,7 +163,9 @@ export default function JwtDecoderTool() {
           {timestampValidations && timestampValidations.length > 0 && (
             <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
               <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 border-b border-gray-200 dark:border-gray-600">
-                <span className="font-medium text-gray-700 dark:text-gray-300">Timestamp Validation</span>
+                <span className="font-medium text-gray-700 dark:text-gray-300">
+                  Timestamp Validation
+                </span>
               </div>
               <div className="p-4 space-y-3">
                 {timestampValidations.map((validation, index) => (
@@ -174,12 +178,18 @@ export default function JwtDecoderTool() {
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className={`w-3 h-3 rounded-full ${
-                        validation.color === 'green' ? 'bg-green-500' : 'bg-red-500'
-                      }`} />
+                      <div
+                        className={`w-3 h-3 rounded-full ${
+                          validation.color === 'green' ? 'bg-green-500' : 'bg-red-500'
+                        }`}
+                      />
                       <div>
-                        <div className="font-medium text-gray-900 dark:text-white">{validation.name}</div>
-                        <div className={`text-sm ${validation.color === 'green' ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}>
+                        <div className="font-medium text-gray-900 dark:text-white">
+                          {validation.name}
+                        </div>
+                        <div
+                          className={`text-sm ${validation.color === 'green' ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}
+                        >
                           {validation.message}
                         </div>
                       </div>
@@ -201,7 +211,9 @@ export default function JwtDecoderTool() {
           {/* Header */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t('tool.jwtDecoder.header')}</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                {t('tool.jwtDecoder.header')}
+              </label>
               <CopyButton text={JSON.stringify(decoded.header, null, 2)} />
             </div>
             <div className="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-4 border border-blue-100 dark:border-blue-800">
@@ -214,7 +226,9 @@ export default function JwtDecoderTool() {
           {/* Payload */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t('tool.jwtDecoder.payload')}</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                {t('tool.jwtDecoder.payload')}
+              </label>
               <CopyButton text={JSON.stringify(decoded.payload, null, 2)} />
             </div>
             <div className="bg-purple-50 dark:bg-purple-900/30 rounded-lg p-4 border border-purple-100 dark:border-purple-800">
@@ -222,45 +236,61 @@ export default function JwtDecoderTool() {
                 {JSON.stringify(decoded.payload, null, 2)}
               </pre>
             </div>
-            
+
             {/* Common claims */}
             <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
-              {decoded.payload.iat && (
+              {issuedAt !== undefined ? (
                 <div className="bg-gray-50 dark:bg-gray-700 p-2 rounded">
-                  <span className="text-gray-500 dark:text-gray-400">{t('tool.jwtDecoder.issuedAt')}</span>{' '}
-                  <span className="font-medium text-gray-900 dark:text-white">{formatDate(decoded.payload.iat as number)}</span>
+                  <span className="text-gray-500 dark:text-gray-400">
+                    {t('tool.jwtDecoder.issuedAt')}
+                  </span>{' '}
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {formatDate(issuedAt)}
+                  </span>
                 </div>
-              )}
-              {decoded.payload.nbf && (
+              ) : null}
+              {notBefore !== undefined ? (
                 <div className="bg-gray-50 dark:bg-gray-700 p-2 rounded">
                   <span className="text-gray-500 dark:text-gray-400">Not Before</span>{' '}
-                  <span className="font-medium text-gray-900 dark:text-white">{formatDate(decoded.payload.nbf as number)}</span>
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {formatDate(notBefore)}
+                  </span>
                 </div>
-              )}
-              {decoded.payload.exp && (
+              ) : null}
+              {expiresAt !== undefined ? (
                 <div className="bg-gray-50 dark:bg-gray-700 p-2 rounded">
-                  <span className="text-gray-500 dark:text-gray-400">{t('tool.jwtDecoder.expires')}</span>{' '}
-                  <span className="font-medium text-gray-900 dark:text-white">{formatDate(decoded.payload.exp as number)}</span>
+                  <span className="text-gray-500 dark:text-gray-400">
+                    {t('tool.jwtDecoder.expires')}
+                  </span>{' '}
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {formatDate(expiresAt)}
+                  </span>
                 </div>
-              )}
-              {decoded.payload.sub && (
+              ) : null}
+              {subject !== undefined ? (
                 <div className="bg-gray-50 dark:bg-gray-700 p-2 rounded">
-                  <span className="text-gray-500 dark:text-gray-400">{t('tool.jwtDecoder.subject')}</span>{' '}
-                  <span className="font-medium text-gray-900 dark:text-white">{decoded.payload.sub as string}</span>
+                  <span className="text-gray-500 dark:text-gray-400">
+                    {t('tool.jwtDecoder.subject')}
+                  </span>{' '}
+                  <span className="font-medium text-gray-900 dark:text-white">{subject}</span>
                 </div>
-              )}
-              {decoded.payload.iss && (
+              ) : null}
+              {issuer !== undefined ? (
                 <div className="bg-gray-50 dark:bg-gray-700 p-2 rounded">
-                  <span className="text-gray-500 dark:text-gray-400">{t('tool.jwtDecoder.issuer')}</span>{' '}
-                  <span className="font-medium text-gray-900 dark:text-white">{decoded.payload.iss as string}</span>
+                  <span className="text-gray-500 dark:text-gray-400">
+                    {t('tool.jwtDecoder.issuer')}
+                  </span>{' '}
+                  <span className="font-medium text-gray-900 dark:text-white">{issuer}</span>
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
 
           {/* Signature */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('tool.jwtDecoder.signature')}</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              {t('tool.jwtDecoder.signature')}
+            </label>
             <div className="bg-red-50 dark:bg-red-900/30 rounded-lg p-4 border border-red-100 dark:border-red-800">
               <code className="font-mono text-sm text-red-900 dark:text-red-200 break-all">
                 {decoded.signature}

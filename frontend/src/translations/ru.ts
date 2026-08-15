@@ -526,6 +526,7 @@ export const ru = {
     'tool.timestampConverter.unixTimestamp': 'Unix временная метка',
     'tool.timestampConverter.dateTime': 'Дата и Время',
     'tool.timestampConverter.now': 'Сейчас',
+    'tool.timestampConverter.unit': 'Единица',
     'tool.timestampConverter.seconds': 'Секунды',
     'tool.timestampConverter.milliseconds': 'Миллисекунды',
     'tool.colorConverter': 'Конвертер цветов',

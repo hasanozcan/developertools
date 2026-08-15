@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { Copy, Check, Download, Eye } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { csvToJson, generateCsvPreview } from '@/lib/csv';
 
 interface JsonToCsvOptions {
   delimiter: string;
@@ -12,17 +13,13 @@ interface JsonToCsvOptions {
   nestedHandling: 'flatten' | 'expand' | 'jsonString';
 }
 
-interface PreviewRow {
-  [key: string]: string;
-}
-
 function flattenObject(obj: Record<string, unknown>, prefix = ''): Record<string, unknown> {
   const result: Record<string, unknown> = {};
-  
+
   for (const key in obj) {
     const newKey = prefix ? `${prefix}.${key}` : key;
     const value = obj[key];
-    
+
     if (value && typeof value === 'object' && !Array.isArray(value)) {
       Object.assign(result, flattenObject(value as Record<string, unknown>, newKey));
     } else if (Array.isArray(value)) {
@@ -31,7 +28,7 @@ function flattenObject(obj: Record<string, unknown>, prefix = ''): Record<string
       result[newKey] = value;
     }
   }
-  
+
   return result;
 }
 
@@ -39,14 +36,14 @@ function escapeCSVField(field: unknown, delimiter: string): string {
   if (field === null || field === undefined) {
     return '';
   }
-  
+
   const str = String(field);
-  
+
   // If field contains delimiter, quotes, or newlines, wrap in quotes
   if (str.includes(delimiter) || str.includes('"') || str.includes('\n') || str.includes('\r')) {
     return `"${str.replace(/"/g, '""')}"`;
   }
-  
+
   return str;
 }
 
@@ -58,7 +55,7 @@ function jsonToCsv(json: unknown[], options: JsonToCsvOptions): string {
   // Process objects based on nested handling option
   const processedData = json.map((item) => {
     const obj = item as Record<string, unknown>;
-    
+
     if (options.nestedHandling === 'flatten') {
       return flattenObject(obj);
     } else if (options.nestedHandling === 'jsonString') {
@@ -94,7 +91,9 @@ function jsonToCsv(json: unknown[], options: JsonToCsvOptions): string {
 
   // Add headers
   if (options.includeHeaders) {
-    lines.push(headerArray.map((h) => escapeCSVField(h, options.delimiter)).join(options.delimiter));
+    lines.push(
+      headerArray.map((h) => escapeCSVField(h, options.delimiter)).join(options.delimiter),
+    );
   }
 
   // Add data rows
@@ -109,116 +108,6 @@ function jsonToCsv(json: unknown[], options: JsonToCsvOptions): string {
   return lines.join('\n');
 }
 
-function generatePreview(csv: string, maxRows: number = 5): { headers: string[]; rows: PreviewRow[] } {
-  const lines = csv.split(/\r?\n/).filter((line) => line.trim());
-  
-  if (lines.length === 0) {
-    return { headers: [], rows: [] };
-  }
-
-  // First line is headers
-  const headers = lines[0].split(',').map((h) => h.replace(/^"|"$/g, '').replace(/""/g, '"'));
-  
-  // Get data rows (limited by maxRows)
-  const rows: PreviewRow[] = [];
-  const dataLines = lines.slice(1, Math.min(maxRows + 1, lines.length));
-  
-  for (const line of dataLines) {
-    const values: string[] = [];
-    let inQuotes = false;
-    let current = '';
-    
-    for (let i = 0; i < line.length; i++) {
-      const char = line[i];
-      
-      if (char === '"') {
-        if (inQuotes && line[i + 1] === '"') {
-          current += '"';
-          i++;
-        } else {
-          inQuotes = !inQuotes;
-        }
-      } else if (char === ',' && !inQuotes) {
-        values.push(current);
-        current = '';
-      } else {
-        current += char;
-      }
-    }
-    values.push(current);
-    
-    const row: PreviewRow = {};
-    headers.forEach((header, index) => {
-      row[header] = values[index] || '';
-    });
-    rows.push(row);
-  }
-  
-  return { headers, rows };
-}
-
-function csvToJson(csv: string, options: { delimiter: string; hasHeaders: boolean }): unknown[] {
-  const lines = csv.split(/\r?\n/).filter((line) => line.trim());
-  
-  if (lines.length === 0) {
-    throw new Error('CSV is empty');
-  }
-
-  const parseCSVLine = (line: string): string[] => {
-    const result: string[] = [];
-    let current = '';
-    let inQuotes = false;
-    
-    for (let i = 0; i < line.length; i++) {
-      const char = line[i];
-      
-      if (char === '"') {
-        if (inQuotes && line[i + 1] === '"') {
-          current += '"';
-          i++;
-        } else {
-          inQuotes = !inQuotes;
-        }
-      } else if (char === options.delimiter && !inQuotes) {
-        result.push(current);
-        current = '';
-      } else {
-        current += char;
-      }
-    }
-    result.push(current);
-    
-    return result;
-  };
-
-  let headers: string[];
-  let dataStartIndex: number;
-
-  if (options.hasHeaders) {
-    headers = parseCSVLine(lines[0]);
-    dataStartIndex = 1;
-  } else {
-    const firstRow = parseCSVLine(lines[0]);
-    headers = firstRow.map((_, index) => `column${index + 1}`);
-    dataStartIndex = 0;
-  }
-
-  const result: Record<string, string>[] = [];
-
-  for (let i = dataStartIndex; i < lines.length; i++) {
-    const values = parseCSVLine(lines[i]);
-    const obj: Record<string, string> = {};
-    
-    headers.forEach((header, index) => {
-      obj[header] = values[index] || '';
-    });
-    
-    result.push(obj);
-  }
-
-  return result;
-}
-
 export default function JsonCsvConverterTool() {
   const { t } = useLanguage();
   const [input, setInput] = useState('');
@@ -226,12 +115,14 @@ export default function JsonCsvConverterTool() {
   const [mode, setMode] = useState<'jsonToCsv' | 'csvToJson'>('jsonToCsv');
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  
+
   // Options
   const [delimiter, setDelimiter] = useState(',');
   const [includeHeaders, setIncludeHeaders] = useState(true);
   const [flattenNested, setFlattenNested] = useState(true);
-  const [nestedHandling, setNestedHandling] = useState<'flatten' | 'expand' | 'jsonString'>('flatten');
+  const [nestedHandling, setNestedHandling] = useState<'flatten' | 'expand' | 'jsonString'>(
+    'flatten',
+  );
   const [showPreview, setShowPreview] = useState(false);
 
   const handleConvert = useCallback(() => {
@@ -257,7 +148,7 @@ export default function JsonCsvConverterTool() {
     }
   }, [input, mode, delimiter, includeHeaders, flattenNested, nestedHandling]);
 
-  const preview = output && mode === 'jsonToCsv' ? generatePreview(output, 5) : null;
+  const preview = output && mode === 'jsonToCsv' ? generateCsvPreview(output, delimiter, 5) : null;
 
   const copyToClipboard = useCallback(() => {
     navigator.clipboard.writeText(output);
@@ -266,7 +157,9 @@ export default function JsonCsvConverterTool() {
   }, [output]);
 
   const downloadFile = useCallback(() => {
-    const blob = new Blob([output], { type: mode === 'jsonToCsv' ? 'text/csv' : 'application/json' });
+    const blob = new Blob([output], {
+      type: mode === 'jsonToCsv' ? 'text/csv' : 'application/json',
+    });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -279,13 +172,36 @@ export default function JsonCsvConverterTool() {
 
   const loadSampleData = useCallback(() => {
     if (mode === 'jsonToCsv') {
-      setInput(JSON.stringify([
-        { name: 'John Doe', age: 30, email: 'john@example.com', address: { city: 'New York', country: 'USA' } },
-        { name: 'Jane Smith', age: 25, email: 'jane@example.com', address: { city: 'London', country: 'UK' } },
-        { name: 'Bob Johnson', age: 35, email: 'bob@example.com', address: { city: 'Tokyo', country: 'Japan' } },
-      ], null, 2));
+      setInput(
+        JSON.stringify(
+          [
+            {
+              name: 'John Doe',
+              age: 30,
+              email: 'john@example.com',
+              address: { city: 'New York', country: 'USA' },
+            },
+            {
+              name: 'Jane Smith',
+              age: 25,
+              email: 'jane@example.com',
+              address: { city: 'London', country: 'UK' },
+            },
+            {
+              name: 'Bob Johnson',
+              age: 35,
+              email: 'bob@example.com',
+              address: { city: 'Tokyo', country: 'Japan' },
+            },
+          ],
+          null,
+          2,
+        ),
+      );
     } else {
-      setInput('name,age,email,city\nJohn Doe,30,john@example.com,New York\nJane Smith,25,jane@example.com,London\nBob Johnson,35,bob@example.com,Tokyo');
+      setInput(
+        'name,age,email,city\nJohn Doe,30,john@example.com,New York\nJane Smith,25,jane@example.com,London\nBob Johnson,35,bob@example.com,Tokyo',
+      );
     }
   }, [mode]);
 
@@ -295,7 +211,12 @@ export default function JsonCsvConverterTool() {
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex rounded-lg overflow-hidden border border-gray-300 dark:border-gray-600">
           <button
-            onClick={() => { setMode('jsonToCsv'); setInput(''); setOutput(''); setError(null); }}
+            onClick={() => {
+              setMode('jsonToCsv');
+              setInput('');
+              setOutput('');
+              setError(null);
+            }}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
               mode === 'jsonToCsv'
                 ? 'bg-primary-600 text-white'
@@ -305,7 +226,12 @@ export default function JsonCsvConverterTool() {
             {t('tool.jsonCsv.jsonToCsv')}
           </button>
           <button
-            onClick={() => { setMode('csvToJson'); setInput(''); setOutput(''); setError(null); }}
+            onClick={() => {
+              setMode('csvToJson');
+              setInput('');
+              setOutput('');
+              setError(null);
+            }}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
               mode === 'csvToJson'
                 ? 'bg-primary-600 text-white'
@@ -315,7 +241,7 @@ export default function JsonCsvConverterTool() {
             {t('tool.jsonCsv.csvToJson')}
           </button>
         </div>
-        
+
         <button
           onClick={loadSampleData}
           className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
@@ -327,7 +253,9 @@ export default function JsonCsvConverterTool() {
       {/* Options */}
       <div className="flex flex-wrap items-center gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
         <div className="flex items-center gap-2">
-          <label className="text-sm text-gray-700 dark:text-gray-300">{t('tool.jsonCsv.delimiter')}:</label>
+          <label className="text-sm text-gray-700 dark:text-gray-300">
+            {t('tool.jsonCsv.delimiter')}:
+          </label>
           <select
             value={delimiter}
             onChange={(e) => setDelimiter(e.target.value)}
@@ -339,7 +267,7 @@ export default function JsonCsvConverterTool() {
             <option value="|">{t('tool.jsonCsv.pipe')} (|)</option>
           </select>
         </div>
-        
+
         <label className="flex items-center gap-2 cursor-pointer">
           <input
             type="checkbox"
@@ -348,17 +276,23 @@ export default function JsonCsvConverterTool() {
             className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
           />
           <span className="text-sm text-gray-700 dark:text-gray-300">
-            {mode === 'jsonToCsv' ? t('tool.jsonCsv.includeHeaders') : t('tool.jsonCsv.firstRowHeaders')}
+            {mode === 'jsonToCsv'
+              ? t('tool.jsonCsv.includeHeaders')
+              : t('tool.jsonCsv.firstRowHeaders')}
           </span>
         </label>
-        
+
         {mode === 'jsonToCsv' && (
           <>
             <div className="flex items-center gap-2">
-              <label className="text-sm text-gray-700 dark:text-gray-300 mr-2">{t('tool.jsonCsv.nestedHandling')}:</label>
+              <label className="text-sm text-gray-700 dark:text-gray-300 mr-2">
+                {t('tool.jsonCsv.nestedHandling')}:
+              </label>
               <select
                 value={nestedHandling}
-                onChange={(e) => setNestedHandling(e.target.value as 'flatten' | 'expand' | 'jsonString')}
+                onChange={(e) =>
+                  setNestedHandling(e.target.value as 'flatten' | 'expand' | 'jsonString')
+                }
                 className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
               >
                 <option value="flatten">{t('tool.jsonCsv.nestedFlatten')}</option>
@@ -373,7 +307,9 @@ export default function JsonCsvConverterTool() {
                 onChange={(e) => setFlattenNested(e.target.checked)}
                 className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
               />
-              <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.jsonCsv.flattenObjects')}</span>
+              <span className="text-sm text-gray-700 dark:text-gray-300">
+                {t('tool.jsonCsv.flattenObjects')}
+              </span>
             </label>
           </>
         )}
@@ -423,7 +359,9 @@ export default function JsonCsvConverterTool() {
           <CodeEditor
             value={input}
             onChange={setInput}
-            placeholder={mode === 'jsonToCsv' ? '[{"name": "John", "age": 30}]' : 'name,age\nJohn,30'}
+            placeholder={
+              mode === 'jsonToCsv' ? '[{"name": "John", "age": 30}]' : 'name,age\nJohn,30'
+            }
             language={mode === 'jsonToCsv' ? 'json' : 'text'}
           />
         </div>
@@ -445,7 +383,9 @@ export default function JsonCsvConverterTool() {
       {showPreview && preview && mode === 'jsonToCsv' && (
         <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
           <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 border-b border-gray-200 dark:border-gray-600 flex items-center justify-between">
-            <span className="font-medium text-gray-700 dark:text-gray-300">CSV Preview (First 5 rows)</span>
+            <span className="font-medium text-gray-700 dark:text-gray-300">
+              CSV Preview (First 5 rows)
+            </span>
             <button
               onClick={() => setShowPreview(false)}
               className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
@@ -458,7 +398,10 @@ export default function JsonCsvConverterTool() {
               <thead className="bg-gray-50 dark:bg-gray-700/50">
                 <tr>
                   {preview.headers.map((header) => (
-                    <th key={header} className="px-4 py-2 text-left text-gray-700 dark:text-gray-300 font-medium border-b border-gray-200 dark:border-gray-600">
+                    <th
+                      key={header}
+                      className="px-4 py-2 text-left text-gray-700 dark:text-gray-300 font-medium border-b border-gray-200 dark:border-gray-600"
+                    >
                       {header}
                     </th>
                   ))}
@@ -468,7 +411,10 @@ export default function JsonCsvConverterTool() {
                 {preview.rows.map((row, index) => (
                   <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-700/30">
                     {preview.headers.map((header) => (
-                      <td key={header} className="px-4 py-2 text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-600">
+                      <td
+                        key={header}
+                        className="px-4 py-2 text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-600"
+                      >
                         <span className="block max-w-xs truncate" title={row[header]}>
                           {row[header] || <span className="text-gray-400">-</span>}
                         </span>

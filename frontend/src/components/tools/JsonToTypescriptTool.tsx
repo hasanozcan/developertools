@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react';
 import { Copy, Check, FileCode, Trash2 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
-interface TypeOptions {
+export interface TypeOptions {
   rootName: string;
   useInterface: boolean;
   optionalProperties: boolean;
@@ -39,11 +39,27 @@ function detectType(value: unknown): string {
   return 'unknown';
 }
 
+function formatPropertyName(name: string): string {
+  return /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(name) ? name : JSON.stringify(name);
+}
+
+function mergeObjectSamples(samples: Record<string, unknown>[]): Record<string, unknown> {
+  const merged: Record<string, unknown> = {};
+  for (const sample of samples) {
+    for (const [key, value] of Object.entries(sample)) {
+      if (!(key in merged)) merged[key] = value;
+    }
+  }
+  return merged;
+}
+
 function analyzeArrayTypes(arr: unknown[]): { types: string[]; hasObjects: boolean } {
   const types = new Set<string>();
-  const hasObjects = arr.some(item => item !== null && typeof item === 'object' && !Array.isArray(item));
-  
-  arr.forEach(item => {
+  const hasObjects = arr.some(
+    (item) => item !== null && typeof item === 'object' && !Array.isArray(item),
+  );
+
+  arr.forEach((item) => {
     if (item === null) {
       types.add('null');
     } else if (Array.isArray(item)) {
@@ -54,7 +70,7 @@ function analyzeArrayTypes(arr: unknown[]): { types: string[]; hasObjects: boole
       types.add(detectType(item));
     }
   });
-  
+
   return { types: Array.from(types), hasObjects };
 }
 
@@ -63,17 +79,20 @@ function extractInterfaces(
   name: string,
   options: TypeOptions,
   interfaces: Map<string, InterfaceInfo>,
-  parentPath = ''
+  parentPath = '',
 ): string {
-  
-  function processObject(obj: Record<string, unknown>, typeName: string, currentPath: string): string {
+  function processObject(
+    obj: Record<string, unknown>,
+    typeName: string,
+    currentPath: string,
+  ): string {
     const properties: PropertyInfo[] = [];
-    
+
     Object.entries(obj).forEach(([key, value]) => {
       const propertyPath = currentPath ? `${currentPath}.${key}` : key;
       let typeName = detectType(value);
       let isOptional = options.optionalProperties;
-      
+
       if (value === null) {
         typeName = 'null';
         isOptional = true;
@@ -82,13 +101,16 @@ function extractInterfaces(
           typeName = 'unknown[]';
         } else {
           const { types, hasObjects } = analyzeArrayTypes(value);
-          
+
           if (options.extractNested && hasObjects) {
             // Extract object items as separate interface
-            const nestedName = toPascalCase(`${typeName}_${key}`);
-            const firstObj = value.find(v => v !== null && typeof v === 'object' && !Array.isArray(v)) as Record<string, unknown>;
-            if (firstObj) {
-              processObject(firstObj, nestedName, propertyPath);
+            const nestedName = toPascalCase(`${key}_item`);
+            const objectItems = value.filter(
+              (item): item is Record<string, unknown> =>
+                item !== null && typeof item === 'object' && !Array.isArray(item),
+            );
+            if (objectItems.length > 0) {
+              processObject(mergeObjectSamples(objectItems), nestedName, propertyPath);
               typeName = `${nestedName}[]`;
             }
           } else if (options.detectUnions && types.length > 1) {
@@ -96,7 +118,7 @@ function extractInterfaces(
             typeName = `(${types.join(' | ')})[]`;
           } else {
             const itemTypes = new Set<string>();
-            value.forEach(item => {
+            value.forEach((item) => {
               if (item !== null && typeof item === 'object' && !Array.isArray(item)) {
                 itemTypes.add('object');
               } else {
@@ -104,7 +126,8 @@ function extractInterfaces(
               }
             });
             const uniqueTypes = Array.from(itemTypes);
-            typeName = uniqueTypes.length === 1 ? `${uniqueTypes[0]}[]` : `(${uniqueTypes.join(' | ')})[]`;
+            typeName =
+              uniqueTypes.length === 1 ? `${uniqueTypes[0]}[]` : `(${uniqueTypes.join(' | ')})[]`;
           }
         }
       } else if (typeof value === 'object' && value !== null) {
@@ -116,7 +139,7 @@ function extractInterfaces(
           typeName = generateInlineType(value, propertyPath);
         }
       }
-      
+
       const comment = options.addJSDoc ? generatePropertyComment(key, value) : undefined;
       properties.push({
         name: key,
@@ -125,47 +148,48 @@ function extractInterfaces(
         comment,
       });
     });
-    
-    if (options.extractNested && currentPath === '') {
+
+    if (options.extractNested) {
       interfaces.set(typeName, { name: typeName, properties });
       return typeName;
     }
-    
+
     return generateInlineTypeFromProperties(properties);
   }
-  
+
   function generateInlineType(obj: unknown, path: string): string {
     if (obj === null) return 'null';
     if (typeof obj !== 'object' || Array.isArray(obj)) return detectType(obj);
-    
+
     const entries = Object.entries(obj as Record<string, unknown>);
     if (entries.length === 0) return 'Record<string, unknown>';
-    
+
     const props = entries.map(([key, value]) => {
-      const validKey = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(key) ? key : `'${key}'`;
+      const validKey = formatPropertyName(key);
       const optional = options.optionalProperties ? '?' : '';
-      const valueType = typeof value === 'object' && value !== null && !Array.isArray(value)
-        ? generateInlineType(value, `${path}.${key}`)
-        : detectType(value);
+      const valueType =
+        typeof value === 'object' && value !== null && !Array.isArray(value)
+          ? generateInlineType(value, `${path}.${key}`)
+          : detectType(value);
       return `${validKey}${optional}: ${valueType}`;
     });
-    
+
     return `{ ${props.join('; ')} }`;
   }
-  
+
   function generateInlineTypeFromProperties(properties: PropertyInfo[]): string {
     if (properties.length === 0) return '{}';
-    const props = properties.map(p => {
-      const validKey = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(p.name) ? p.name : `'${p.name}'`;
+    const props = properties.map((p) => {
+      const validKey = formatPropertyName(p.name);
       const optional = p.optional ? '?' : '';
       return `${validKey}${optional}: ${p.type}`;
     });
     return `{ ${props.join('; ')} }`;
   }
-  
+
   function generatePropertyComment(key: string, value: unknown): string {
     const comments: string[] = [];
-    
+
     if (value === null) {
       comments.push('Can be null');
     } else if (Array.isArray(value)) {
@@ -178,18 +202,23 @@ function extractInterfaces(
     } else {
       comments.push(`Example: ${value}`);
     }
-    
+
     return comments.join('. ');
   }
-  
+
   if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) {
     return detectType(obj);
   }
-  
+
   return processObject(obj as Record<string, unknown>, name, parentPath);
 }
 
-function jsonToTypeScript(json: unknown, name: string, options: TypeOptions, indent: number = 0): string {
+export function jsonToTypeScript(
+  json: unknown,
+  name: string,
+  options: TypeOptions,
+  indent: number = 0,
+): string {
   const spaces = '  '.repeat(indent);
   const typeKeyword = options.useInterface ? 'interface' : 'type';
   const exportKeyword = options.addExport ? 'export ' : '';
@@ -202,74 +231,91 @@ function jsonToTypeScript(json: unknown, name: string, options: TypeOptions, ind
   if (typeof json === 'boolean') return 'boolean';
 
   const interfaces = new Map<string, InterfaceInfo>();
-  
+
   if (options.extractNested) {
+    if (Array.isArray(json)) {
+      const arrayType = jsonToTypeScript(
+        json,
+        `${name}Item`,
+        { ...options, addExport: false, extractNested: false, addJSDoc: false },
+        0,
+      );
+      return `${exportKeyword}type ${name} = ${arrayType};`;
+    }
+
     extractInterfaces(json, name, options, interfaces);
-    
+
     const results: string[] = [];
-    
+
     // Generate all nested interfaces first
     interfaces.forEach((iface) => {
       if (iface.name === name) return; // Skip root, will generate it separately
-      
-      const props = iface.properties.map(p => {
-        const validKey = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(p.name) ? p.name : `'${p.name}'`;
+
+      const props = iface.properties.map((p) => {
+        const validKey = formatPropertyName(p.name);
         const optional = p.optional ? '?' : '';
         const jsdoc = p.comment ? `\n  /** ${p.comment} */\n  ` : '';
         return `${jsdoc}${validKey}${optional}: ${p.type};`;
       });
-      
+
       if (options.useInterface) {
         results.push(`${exportKeyword}interface ${iface.name} {\n${props.join('\n')}\n}`);
       } else {
         results.push(`${exportKeyword}type ${iface.name} = {\n${props.join('\n')}\n};`);
       }
     });
-    
+
     // Generate root interface
     const rootIface = interfaces.get(name);
     if (rootIface) {
-      const props = rootIface.properties.map(p => {
-        const validKey = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(p.name) ? p.name : `'${p.name}'`;
+      const props = rootIface.properties.map((p) => {
+        const validKey = formatPropertyName(p.name);
         const optional = p.optional ? '?' : '';
         const jsdoc = p.comment ? `\n  /** ${p.comment} */\n  ` : '';
         return `${jsdoc}${validKey}${optional}: ${p.type};`;
       });
-      
+
       if (options.useInterface) {
         results.unshift(`${exportKeyword}interface ${name} {\n${props.join('\n')}\n}`);
       } else {
         results.unshift(`${exportKeyword}type ${name} = {\n${props.join('\n')}\n};`);
       }
     }
-    
+
     return results.join('\n\n');
   }
 
   if (Array.isArray(json)) {
     if (json.length === 0) return 'unknown[]';
-    
+
     const itemTypes = new Set<string>();
     const objectItems: object[] = [];
-    
-    json.forEach(item => {
+
+    json.forEach((item) => {
       if (item !== null && typeof item === 'object' && !Array.isArray(item)) {
         objectItems.push(item);
       } else {
-        itemTypes.add(jsonToTypeScript(item, '', { ...options, extractNested: false, addJSDoc: false }, 0));
+        itemTypes.add(
+          jsonToTypeScript(item, '', { ...options, extractNested: false, addJSDoc: false }, 0),
+        );
       }
     });
 
     if (objectItems.length > 0) {
       const mergedObj: Record<string, unknown> = {};
-      objectItems.forEach(obj => {
+      objectItems.forEach((obj) => {
         Object.entries(obj).forEach(([key, value]) => {
           if (!(key in mergedObj)) {
             mergedObj[key] = value;
           }
         });
       });
-      const objType = jsonToTypeScript(mergedObj, '', { ...options, addExport: false, extractNested: false, addJSDoc: false }, indent);
+      const objType = jsonToTypeScript(
+        mergedObj,
+        '',
+        { ...options, addExport: false, extractNested: false, addJSDoc: false },
+        indent,
+      );
       itemTypes.add(objType);
     }
 
@@ -290,8 +336,13 @@ function jsonToTypeScript(json: unknown, name: string, options: TypeOptions, ind
     }
 
     const props = entries.map(([key, value]) => {
-      const validKey = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(key) ? key : `'${key}'`;
-      const valueType = jsonToTypeScript(value, toPascalCase(key), { ...options, addExport: false, extractNested: false, addJSDoc: false }, indent + 1);
+      const validKey = formatPropertyName(key);
+      const valueType = jsonToTypeScript(
+        value,
+        toPascalCase(key),
+        { ...options, addExport: false, extractNested: false, addJSDoc: false },
+        indent + 1,
+      );
       const optional = options.optionalProperties ? '?' : '';
       const comment = options.addJSDoc ? `\n  /** Property: ${key} */\n  ` : '';
       return `${comment}${validKey}${optional}: ${valueType};`;
@@ -312,9 +363,11 @@ function jsonToTypeScript(json: unknown, name: string, options: TypeOptions, ind
 }
 
 function toPascalCase(str: string): string {
-  return str
-    .replace(/[-_](.)/g, (_, c) => c.toUpperCase())
-    .replace(/^(.)/, (_, c) => c.toUpperCase());
+  const words = str.trim().match(/[a-zA-Z0-9]+/g) ?? [];
+  const result = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join('');
+
+  if (!result) return 'Root';
+  return /^\d/.test(result) ? `Type${result}` : result;
 }
 
 export default function JsonToTypescriptTool() {
@@ -342,7 +395,7 @@ export default function JsonToTypescriptTool() {
 
     try {
       const json = JSON.parse(input);
-      const result = jsonToTypeScript(json, options.rootName, options, 0);
+      const result = jsonToTypeScript(json, toPascalCase(options.rootName), options, 0);
       setOutput(result);
       setError(null);
     } catch (e) {
@@ -358,31 +411,37 @@ export default function JsonToTypescriptTool() {
   }, [output]);
 
   const loadSample = useCallback(() => {
-    setInput(JSON.stringify({
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      isActive: true,
-      roles: ["admin", "user"],
-      metadata: {
-        created: "2024-01-01T00:00:00Z",
-        updated: "2024-01-15T00:00:00Z"
-      },
-      tags: ["premium", null, "verified"],
-      address: {
-        street: "123 Main St",
-        city: "New York",
-        country: "USA"
-      },
-      orders: [
-        { id: 101, total: 99.99, items: ["item1", "item2"] },
-        { id: 102, total: 149.99, items: ["item3"] }
-      ],
-      settings: {
-        theme: "dark",
-        notifications: true
-      }
-    }, null, 2));
+    setInput(
+      JSON.stringify(
+        {
+          id: 1,
+          name: 'John Doe',
+          email: 'john@example.com',
+          isActive: true,
+          roles: ['admin', 'user'],
+          metadata: {
+            created: '2024-01-01T00:00:00Z',
+            updated: '2024-01-15T00:00:00Z',
+          },
+          tags: ['premium', null, 'verified'],
+          address: {
+            street: '123 Main St',
+            city: 'New York',
+            country: 'USA',
+          },
+          orders: [
+            { id: 101, total: 99.99, items: ['item1', 'item2'] },
+            { id: 102, total: 149.99, items: ['item3'] },
+          ],
+          settings: {
+            theme: 'dark',
+            notifications: true,
+          },
+        },
+        null,
+        2,
+      ),
+    );
     setOutput('');
     setError(null);
   }, []);
@@ -392,11 +451,15 @@ export default function JsonToTypescriptTool() {
       {/* Options */}
       <div className="flex flex-wrap items-center gap-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
         <div className="flex items-center gap-2">
-          <label className="text-sm text-gray-700 dark:text-gray-300">{t('tool.jsonToTs.rootName')}:</label>
+          <label className="text-sm text-gray-700 dark:text-gray-300">
+            {t('tool.jsonToTs.rootName')}:
+          </label>
           <input
             type="text"
             value={options.rootName}
-            onChange={(e) => setOptions({ ...options, rootName: e.target.value || 'Root' })}
+            onChange={(e) =>
+              setOptions((current) => ({ ...current, rootName: e.target.value || 'Root' }))
+            }
             className="px-3 py-1.5 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white w-32"
           />
         </div>
@@ -405,60 +468,80 @@ export default function JsonToTypescriptTool() {
           <input
             type="checkbox"
             checked={options.useInterface}
-            onChange={(e) => setOptions({ ...options, useInterface: e.target.checked })}
+            onChange={(e) =>
+              setOptions((current) => ({ ...current, useInterface: e.target.checked }))
+            }
             className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded"
           />
-          <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.jsonToTs.useInterface')}</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">
+            {t('tool.jsonToTs.useInterface')}
+          </span>
         </label>
 
         <label className="flex items-center gap-2 cursor-pointer">
           <input
             type="checkbox"
             checked={options.optionalProperties}
-            onChange={(e) => setOptions({ ...options, optionalProperties: e.target.checked })}
+            onChange={(e) =>
+              setOptions((current) => ({ ...current, optionalProperties: e.target.checked }))
+            }
             className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded"
           />
-          <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.jsonToTs.optionalProps')}</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">
+            {t('tool.jsonToTs.optionalProps')}
+          </span>
         </label>
 
         <label className="flex items-center gap-2 cursor-pointer">
           <input
             type="checkbox"
             checked={options.addExport}
-            onChange={(e) => setOptions({ ...options, addExport: e.target.checked })}
+            onChange={(e) => setOptions((current) => ({ ...current, addExport: e.target.checked }))}
             className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded"
           />
-          <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.jsonToTs.addExport')}</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">
+            {t('tool.jsonToTs.addExport')}
+          </span>
         </label>
 
         <label className="flex items-center gap-2 cursor-pointer">
           <input
             type="checkbox"
             checked={options.extractNested}
-            onChange={(e) => setOptions({ ...options, extractNested: e.target.checked })}
+            onChange={(e) =>
+              setOptions((current) => ({ ...current, extractNested: e.target.checked }))
+            }
             className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded"
           />
-          <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.jsonToTs.extractNested')}</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">
+            {t('tool.jsonToTs.extractNested')}
+          </span>
         </label>
 
         <label className="flex items-center gap-2 cursor-pointer">
           <input
             type="checkbox"
             checked={options.detectUnions}
-            onChange={(e) => setOptions({ ...options, detectUnions: e.target.checked })}
+            onChange={(e) =>
+              setOptions((current) => ({ ...current, detectUnions: e.target.checked }))
+            }
             className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded"
           />
-          <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.jsonToTs.detectUnions')}</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">
+            {t('tool.jsonToTs.detectUnions')}
+          </span>
         </label>
 
         <label className="flex items-center gap-2 cursor-pointer">
           <input
             type="checkbox"
             checked={options.addJSDoc}
-            onChange={(e) => setOptions({ ...options, addJSDoc: e.target.checked })}
+            onChange={(e) => setOptions((current) => ({ ...current, addJSDoc: e.target.checked }))}
             className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded"
           />
-          <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.jsonToTs.jsdocComments')}</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">
+            {t('tool.jsonToTs.jsdocComments')}
+          </span>
         </label>
 
         <div className="flex-1" />
@@ -470,7 +553,11 @@ export default function JsonToTypescriptTool() {
           {t('common.loadSample')}
         </button>
         <button
-          onClick={() => { setInput(''); setOutput(''); setError(null); }}
+          onClick={() => {
+            setInput('');
+            setOutput('');
+            setError(null);
+          }}
           className="p-2 text-gray-500 dark:text-gray-400 hover:text-red-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
         >
           <Trash2 className="w-5 h-5" />
@@ -518,7 +605,11 @@ export default function JsonToTypescriptTool() {
                 onClick={copyOutput}
                 className="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2"
               >
-                {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+                {copied ? (
+                  <Check className="w-4 h-4 text-green-600" />
+                ) : (
+                  <Copy className="w-4 h-4" />
+                )}
                 {copied ? t('common.copied') : t('common.copy')}
               </button>
             )}
@@ -531,12 +622,23 @@ export default function JsonToTypescriptTool() {
 
       {/* Features Info */}
       <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-        <p className="font-medium text-blue-900 dark:text-blue-300 mb-2">Smart Type Detection Features:</p>
+        <p className="font-medium text-blue-900 dark:text-blue-300 mb-2">
+          Smart Type Detection Features:
+        </p>
         <ul className="text-sm text-blue-800 dark:text-blue-300 space-y-1">
-          <li>✓ <strong>Extract Nested:</strong> Creates separate interfaces for nested objects</li>
-          <li>✓ <strong>Detect Unions:</strong> Creates union types for mixed arrays (e.g., string | null)</li>
-          <li>✓ <strong>JSDoc Comments:</strong> Adds documentation comments for properties</li>
-          <li>✓ <strong>Type Detection:</strong> Recognizes Date strings from ISO format</li>
+          <li>
+            ✓ <strong>Extract Nested:</strong> Creates separate interfaces for nested objects
+          </li>
+          <li>
+            ✓ <strong>Detect Unions:</strong> Creates union types for mixed arrays (e.g., string |
+            null)
+          </li>
+          <li>
+            ✓ <strong>JSDoc Comments:</strong> Adds documentation comments for properties
+          </li>
+          <li>
+            ✓ <strong>Type Detection:</strong> Recognizes Date strings from ISO format
+          </li>
         </ul>
       </div>
     </div>

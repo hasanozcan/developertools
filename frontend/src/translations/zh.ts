@@ -402,6 +402,7 @@ export const zh = {
     'tool.timestampConverter.unixTimestamp': 'Unix 时间戳',
     'tool.timestampConverter.dateTime': '日期和时间',
     'tool.timestampConverter.now': '现在',
+    'tool.timestampConverter.unit': '单位',
     'tool.timestampConverter.seconds': '秒',
     'tool.timestampConverter.milliseconds': '毫秒',
     'tool.colorConverter': '颜色转换器',
