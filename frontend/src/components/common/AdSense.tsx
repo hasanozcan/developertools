@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { normalizeAdSenseClientId } from '@/lib/adsense';
 
 declare global {
@@ -24,12 +24,36 @@ export default function AdSense({
 }: AdSenseProps) {
   const adClient = normalizeAdSenseClientId(process.env.NEXT_PUBLIC_ADSENSE_ID);
   const requestKey = `${adClient}:${slot}:${format}:${responsive}`;
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const adRef = useRef<HTMLElement | null>(null);
   const pushedRequestRef = useRef<string | null>(null);
+  const [shouldRequestAd, setShouldRequestAd] = useState(false);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!adClient || !container) return;
+
+    if (!('IntersectionObserver' in window)) {
+      setShouldRequestAd(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        setShouldRequestAd(true);
+        observer.disconnect();
+      },
+      { rootMargin: '400px 0px' },
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [adClient]);
 
   useEffect(() => {
     const slotElement = adRef.current;
-    if (!adClient || !slotElement) return;
+    if (!adClient || !slotElement || !shouldRequestAd) return;
 
     try {
       if (pushedRequestRef.current !== requestKey) {
@@ -39,12 +63,16 @@ export default function AdSense({
     } catch (error) {
       console.error('AdSense error:', error);
     }
-  }, [adClient, requestKey]);
+  }, [adClient, requestKey, shouldRequestAd]);
 
   if (!adClient) return null;
 
   return (
-    <div data-site-support-slot="true" className={className}>
+    <div
+      ref={containerRef}
+      data-site-support-slot={shouldRequestAd ? 'true' : undefined}
+      className={className}
+    >
       <ins
         key={requestKey}
         ref={(node) => {

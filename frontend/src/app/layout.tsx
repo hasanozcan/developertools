@@ -17,6 +17,8 @@ const inter = Inter({
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
+  display: 'swap',
+  preload: false,
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
@@ -125,9 +127,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" type="image/svg+xml" sizes="any" href="/icon.svg" />
         <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/apple-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
-        {/* Preconnect for performance */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         {/* WebSite Structured Data */}
         <script
@@ -200,7 +199,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {adSenseClientId && (
           <Script
             id="adsbygoogle-js"
-            strategy="afterInteractive"
+            strategy="lazyOnload"
             src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adSenseClientId}`}
             crossOrigin="anonymous"
           />
@@ -209,10 +208,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <>
             <Script
               id="google-tag-loader"
-              strategy="afterInteractive"
+              strategy="lazyOnload"
               src={`https://www.googletagmanager.com/gtag/js?id=${googleAdsId}`}
             />
-            <Script id="google-tag-config" strategy="afterInteractive">
+            <Script id="google-tag-config" strategy="lazyOnload">
               {`
                 window.dataLayer = window.dataLayer || [];
                 window.gtag = function gtag(){window.dataLayer.push(arguments);};

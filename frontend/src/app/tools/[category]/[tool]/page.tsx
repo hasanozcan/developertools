@@ -6,8 +6,6 @@ import { categoryCatalog, findCatalogTool, getToolBySlug, toolCatalog } from '@/
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
 import { getToolSources } from '@/lib/toolSources';
 
-const LAST_REVIEWED = '2026-07-13';
-
 // Tool configurations
 const tools: Record<
   string,
@@ -385,16 +383,57 @@ const tools: Record<
     },
     'url-encoder': {
       name: 'URL Encoder/Decoder',
-      description: 'Encode or decode URL strings online. Free URL encoder and decoder.',
+      metadataTitle: 'URL Encoder & Decoder Online - URI Component or Full URL',
+      description:
+        'Encode or decode URI components, complete URLs, or multiple lines locally in your browser with clear malformed-input errors.',
       longDescription:
-        'Free online URL encoder and decoder. Percent-encode special characters for URLs or decode percent-encoded strings.',
+        'Free online URL encoder and decoder. Percent-encode a query value or preserve URL separators in full-URL mode, then decode valid percent-encoded text without uploading it.',
       keywords: ['url encoder', 'url decoder', 'urlencode online', 'percent encoding'],
       faqs: [
         {
           question: 'What is URL encoding?',
           answer:
-            'URL encoding converts characters into a format that can be transmitted over the Internet. Special characters are replaced with % followed by hex digits.',
+            'Percent-encoding represents a UTF-8 byte as % followed by two hexadecimal digits. It is used when a character cannot safely appear in a particular part of a URI.',
         },
+        {
+          question: 'Should I encode a component or a full URL?',
+          answer:
+            'Use component mode for one query value, path segment, or fragment value because it also escapes separators such as &, =, /, and ?. Use full URL mode when the input already contains a complete URL and its structural separators must remain readable.',
+        },
+        {
+          question: 'Why does decoding sometimes fail?',
+          answer:
+            'A percent sign must be followed by two hexadecimal digits and the resulting byte sequence must be decodable. Incomplete sequences such as %2 or malformed UTF-8 are rejected instead of being silently changed.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the URL encoder changes',
+          paragraphs: [
+            'Component mode uses the browser encodeURIComponent and decodeURIComponent behavior. It is appropriate for an individual query value or path segment because reserved URL separators are encoded as data. Full URL mode uses encodeURI and decodeURI, which preserve structural characters such as :, /, ?, #, &, and = so an already assembled URL keeps its shape.',
+          ],
+        },
+        {
+          heading: 'Worked percent-encoding example',
+          paragraphs: [
+            'Encoding the component "hello world&role=admin" produces hello%20world%26role%3Dadmin. If the same text were inserted into a query string without component encoding, the ampersand and equals sign could be interpreted as new query parameters rather than part of the value. Batch mode applies the selected operation independently to every non-empty input line.',
+          ],
+        },
+        {
+          heading: 'Boundaries and privacy',
+          bullets: [
+            'This is URI percent-encoding, not application/x-www-form-urlencoded serialization; form encoders commonly represent spaces with + and apply field-level rules.',
+            'Decoding does not validate whether the result is a safe, reachable, or trusted URL. Validate schemes, hosts, and redirect destinations separately.',
+            'Do not repeatedly encode an already encoded value unless double encoding is intentional; % can become %25.',
+            'Conversion runs in the browser. Clipboard history, extensions, shared devices, and any destination where you paste the result remain separate exposure paths.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose Encode or Decode.',
+        'Select Component for one URL value or Full URL for an already assembled URL.',
+        'Paste one value, or enable Batch Mode for one value per line.',
+        'Convert, review any malformed-input error, and copy the result you need.',
       ],
     },
     'jwt-decoder': {
@@ -715,9 +754,11 @@ const tools: Record<
     },
     'password-generator': {
       name: 'Password Generator',
-      description: 'Generate secure random passwords with customizable length and character sets.',
+      metadataTitle: 'Secure Password & Passphrase Generator - Local CSPRNG',
+      description:
+        'Generate random passwords or EFF-word-list passphrases locally with browser cryptographic randomness and an explicit entropy estimate.',
       longDescription:
-        'Free online password generator. Create strong, secure random passwords with customizable options including length, uppercase, lowercase, numbers, and special characters.',
+        'Free online password and passphrase generator. Choose character sets, length, similar-character filtering, or a six-to-twelve-word EFF passphrase while generation stays in your browser.',
       keywords: [
         'password generator',
         'random password',
@@ -728,8 +769,47 @@ const tools: Record<
         {
           question: 'How strong should my password be?',
           answer:
-            'A strong password should be at least 12 characters long and include a mix of uppercase, lowercase, numbers, and special characters.',
+            'Prefer a unique password generated and stored by a password manager. Sixteen or more random characters from a broad pool, or a six-or-more-word random passphrase, is a practical baseline when the destination accepts it; account-specific requirements can differ.',
         },
+        {
+          question: 'How is randomness generated?',
+          answer:
+            'The generator uses crypto.getRandomValues with rejection sampling, not Math.random. Random-character mode includes at least one character from every selected set when the requested length permits it, then securely shuffles the result.',
+        },
+        {
+          question: 'Are generated passwords uploaded or saved?',
+          answer:
+            'No. Generation and entropy estimation run locally and the app does not save the generated value. Copying can still place it in operating-system clipboard history, extensions can observe page content, and shared devices require extra care.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How secure password generation works',
+          paragraphs: [
+            'Random-character mode draws from the enabled lowercase, uppercase, number, and symbol sets with the browser cryptographic random-number generator. Rejection sampling avoids modulo bias. Passphrase mode selects each word independently from the EFF long word list and supports six to twelve words with a chosen separator.',
+          ],
+        },
+        {
+          heading: 'Choosing a password or passphrase',
+          bullets: [
+            'Use a unique value for every account; password reuse turns one breach into access to multiple services.',
+            'Prefer the longest value the destination reliably supports. Length usually contributes more than predictable substitutions such as replacing a with @.',
+            'Use passphrase mode when a value must be typed or read aloud, and random-character mode when a password manager will store and fill it.',
+            'Enable multi-factor authentication where available, especially for email, finance, cloud, and administrator accounts.',
+          ],
+        },
+        {
+          heading: 'Entropy estimate and privacy limits',
+          paragraphs: [
+            'The displayed entropy is a theoretical estimate based on independent uniform choices from the selected pool or word list. It is not a cracking-time promise and does not account for a compromised browser, device, clipboard, password manager, destination service, or recovery process. The generator does not test passwords against breach databases because doing so would require a separate privacy-preserving lookup design.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose Random Characters or Passphrase mode.',
+        'Set the length and character sets, or choose the word count and separator.',
+        'Generate a new value and review the estimated entropy and any destination-specific rules.',
+        'Store the value directly in a trusted password manager and clear clipboard history when appropriate.',
       ],
     },
     'lorem-ipsum': {
@@ -1140,20 +1220,57 @@ const tools: Record<
     },
     'regex-escape': {
       name: 'Regex Escape',
-      description: 'Escape or unescape text for safe regular expression usage.',
+      metadataTitle: 'Regex Escape Online - Literal Text for JavaScript RegExp',
+      description:
+        'Escape JavaScript regular-expression metacharacters and literal slashes, or reverse only those supported escapes, entirely in your browser.',
       longDescription:
-        'Free online regex escape tool. Escape special characters before building regex patterns, or unescape escaped regex text back to normal form.',
+        'Free online regex escape tool. Convert literal text into a JavaScript-compatible pattern fragment without turning punctuation into unintended regex operators.',
       keywords: ['regex escape', 'escape regex', 'unescape regex', 'regular expression escape'],
       faqs: [
         {
           question: 'Why escape regex characters?',
           answer:
-            'Escaping treats special regex symbols as literal characters, preventing unintended matching behavior.',
+            'Characters such as ., *, +, ?, (, ), [, ], {, }, ^, $, |, and backslash have structural meaning in a regular expression. Prefixing them with a backslash makes the generated pattern fragment match those characters literally.',
         },
         {
           question: 'When should I use this tool?',
-          answer: 'Use it when creating dynamic regex patterns from user input or raw text.',
+          answer:
+            'Use it before inserting trusted or untrusted literal text into a larger JavaScript regular expression. Escaping prevents the inserted text from changing the pattern structure, but the surrounding expression can still be inefficient or incorrect.',
         },
+        {
+          question: 'Does unescape interpret sequences such as \\n or \\d?',
+          answer:
+            'No. Unescape reverses only the metacharacter and slash escapes produced by this tool. It deliberately preserves regex tokens and string escapes that could carry a different meaning.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What Regex Escape produces',
+          paragraphs: [
+            'The escape operation prefixes JavaScript regular-expression metacharacters with a backslash and also escapes / for convenient use inside a /pattern/ literal. For example, price (USD) + tax? becomes price \\(USD\\) \\+ tax\\?. The result is a pattern fragment; flags, anchors, capture groups, and the surrounding expression remain your responsibility.',
+          ],
+        },
+        {
+          heading: 'Dynamic-pattern safety boundary',
+          bullets: [
+            'Escape only the literal portion. Do not escape the operators you intentionally add around it, such as ^, $, or a capture group.',
+            'Escaping prevents regex syntax injection from that fragment, but it does not prevent catastrophic backtracking created elsewhere in the final pattern.',
+            'JavaScript RegExp syntax differs from PCRE, Python, .NET, Java, and other engines; test the final pattern in the same runtime that will execute it.',
+            'If the pattern is placed inside a JavaScript string, source-code string escaping is an additional layer separate from regex escaping.',
+          ],
+        },
+        {
+          heading: 'Unescape and privacy limits',
+          paragraphs: [
+            'Unescape is intentionally conservative: it removes a backslash only before punctuation handled by the escape operation. It does not parse a complete regular expression or convert tokens such as \\d, \\b, \\n, or Unicode escapes into text. Processing remains in the browser, while clipboard and destination-code handling remain outside the tool.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose Escape for literal text or Unescape for a fragment previously produced by this tool.',
+        'Paste the text and select Convert.',
+        'Insert the escaped fragment into the intended JavaScript regular expression.',
+        'Test the complete expression with representative and adversarial input before production use.',
       ],
     },
     'lorem-ipsum': {
@@ -1201,9 +1318,11 @@ const tools: Record<
     },
     'markdown-preview': {
       name: 'Markdown Preview',
-      description: 'Preview Markdown in real-time and export to HTML. Free online Markdown editor.',
+      metadataTitle: 'Markdown Preview Online - Sanitized GFM to HTML',
+      description:
+        'Preview GitHub Flavored Markdown, inspect sanitized HTML, and export a standalone HTML file locally in your browser.',
       longDescription:
-        'Free online Markdown preview tool. Write Markdown and see the rendered output in real-time. Export to HTML with proper styling.',
+        'Free online Markdown preview tool. Render GitHub Flavored Markdown with line breaks, tables, tasks, and code blocks, then copy sanitized HTML or download a styled document.',
       keywords: ['markdown preview', 'markdown editor', 'markdown to html', 'md preview'],
       faqs: [
         {
@@ -1213,8 +1332,43 @@ const tools: Record<
         },
         {
           question: 'Can I export the HTML?',
-          answer: 'Yes! You can copy the generated HTML output to use in your projects.',
+          answer:
+            'Yes. You can copy the sanitized fragment or download a standalone HTML document with basic responsive styles. Review the exported markup and links before publishing it in another security context.',
         },
+        {
+          question: 'Is raw HTML in Markdown safe to preview?',
+          answer:
+            'Rendered output is sanitized with DOMPurify. Scripts, forms, iframes, style attributes, and other high-risk elements are removed, but remote images or links that remain in the document can still contact external sites when opened or displayed.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the Markdown preview supports',
+          paragraphs: [
+            'The renderer uses GitHub Flavored Markdown with hard line-break support. Headings, emphasis, links, images, ordered and unordered lists, task lists, tables, blockquotes, inline code, fenced code blocks, strikethrough, and horizontal rules can be previewed as you type. The HTML view exposes the generated sanitized fragment rather than executing Markdown as code.',
+          ],
+        },
+        {
+          heading: 'Sanitization and publishing boundary',
+          bullets: [
+            'DOMPurify removes scripts, forms, frames, embedded objects, style elements, style attributes, and other disallowed markup before preview or export.',
+            'Sanitization is context-specific. Re-sanitise or safely render the output again if another application modifies it, combines it with templates, or places it in a non-HTML context.',
+            'Syntax highlighting is not applied; fenced code language labels are preserved as markup hints only.',
+            'Relative links and assets resolve according to the page where exported HTML is opened, so validate them for the final publishing location.',
+          ],
+        },
+        {
+          heading: 'Privacy and external-resource note',
+          paragraphs: [
+            'Markdown parsing and sanitization run locally and the text is not uploaded by this tool. A Markdown image that points to a remote URL can still trigger a request from the browser during preview, and following a link contacts its destination. Clipboard history, downloaded files, browser extensions, and the location where you publish the exported HTML are separate data paths.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Type Markdown or load the example document.',
+        'Switch between Preview and HTML to inspect the rendered result.',
+        'Check links, remote images, tables, and code blocks for the destination where they will be published.',
+        'Copy the sanitized HTML fragment or export the standalone HTML document.',
       ],
     },
     'slug-generator': {
@@ -1335,9 +1489,11 @@ const tools: Record<
   converters: {
     'timestamp-converter': {
       name: 'Timestamp Converter',
-      description: 'Convert Unix timestamps to human-readable dates and vice versa.',
+      metadataTitle: 'Unix Timestamp Converter - Seconds, Milliseconds, UTC & Local',
+      description:
+        'Convert signed Unix timestamps in seconds or milliseconds to ISO UTC and local time, or convert a parseable date back to epoch time.',
       longDescription:
-        'Free online timestamp converter. Convert Unix timestamps (epoch time) to human-readable dates and vice versa. Supports multiple formats.',
+        'Free online Unix timestamp converter. Switch explicitly between seconds and milliseconds, inspect ISO UTC and browser-local output, or convert a valid date string back to epoch time.',
       keywords: ['timestamp converter', 'unix timestamp', 'epoch converter', 'date converter'],
       faqs: [
         {
@@ -1345,6 +1501,45 @@ const tools: Record<
           answer:
             'A Unix timestamp is the number of seconds that have elapsed since January 1, 1970 (UTC), also known as the Unix epoch.',
         },
+        {
+          question: 'Should I use seconds or milliseconds?',
+          answer:
+            'Unix tools and many server APIs commonly use seconds, while JavaScript Date.now() returns milliseconds. A current value therefore has about 10 digits in seconds and 13 digits in milliseconds; select the unit explicitly instead of relying on digit guessing.',
+        },
+        {
+          question: 'How are time zones handled?',
+          answer:
+            'Timestamp output is shown as an ISO 8601 UTC value and as a local value using the browser time zone. When converting text to a timestamp, include Z or an explicit offset when the intended instant must be unambiguous.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How Unix timestamp conversion works',
+          paragraphs: [
+            'A Unix timestamp identifies an instant relative to 1970-01-01T00:00:00Z. The converter accepts an integer in the selected seconds or milliseconds unit, turns it into an ISO 8601 UTC string, and also formats the same instant in the browser local time zone. Reverse conversion parses a date string and returns the selected epoch unit.',
+          ],
+        },
+        {
+          heading: 'Worked seconds and milliseconds example',
+          paragraphs: [
+            'The timestamp 1704110400 seconds and 1704110400000 milliseconds represent the same instant: 2024-01-01T12:00:00.000Z. Choosing the wrong unit moves the value far outside the intended date or makes it invalid. Negative timestamps can represent supported dates before the Unix epoch.',
+          ],
+        },
+        {
+          heading: 'Parsing limits and precision',
+          bullets: [
+            'Timestamp input must be a signed safe JavaScript integer. Fractions, exponent notation, and integers outside the safe range are rejected.',
+            'Date strings without Z or an explicit numeric offset can be interpreted in the browser local time zone; include an offset for reproducible conversion.',
+            'JavaScript Date follows its supported calendar range and does not model leap seconds.',
+            'Conversion runs locally. The displayed local time depends on the device time-zone configuration and historical rules available to the browser.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Select Seconds or Milliseconds to match the source system.',
+        'Enter an integer timestamp, or enter an ISO date with an explicit offset.',
+        'Compare the UTC and browser-local representations.',
+        'Copy the required unit and verify it against the destination API contract.',
       ],
     },
     'color-converter': {
@@ -1589,9 +1784,11 @@ const tools: Record<
     },
     'html-formatter': {
       name: 'HTML Formatter',
-      description: 'Format and beautify HTML code online. Free HTML formatter.',
+      metadataTitle: 'HTML Formatter Online - Indent & Beautify Markup Locally',
+      description:
+        'Indent HTML with selectable spacing and inspect output statistics locally, without executing or uploading the pasted markup.',
       longDescription:
-        'Free online HTML formatter. Beautify and format HTML code with proper indentation. Makes messy HTML readable and well-structured.',
+        'Free online HTML formatter. Apply consistent two, four, or eight-space indentation to ordinary HTML markup while preserving comments and inline text for easier review.',
       keywords: [
         'html formatter',
         'html beautifier',
@@ -1603,12 +1800,46 @@ const tools: Record<
         {
           question: 'What does the formatter do?',
           answer:
-            'The formatter adds proper indentation, spacing, and line breaks to make HTML code more readable.',
+            'The formatter tokenizes tags, comments, and text, then adds indentation and line breaks around recognized block-level structure. It is a readability helper, not an HTML parser, validator, sanitizer, or browser rendering engine.',
         },
         {
           question: 'Can I choose indent size?',
           answer: 'Yes! You can choose between 2, 4, or 8 spaces for indentation.',
         },
+        {
+          question: 'Does formatting fix invalid or unsafe HTML?',
+          answer:
+            'No. It does not repair mismatched tags, validate attributes, remove scripts, or prove that markup is safe. Use an HTML validator and a context-appropriate sanitizer when correctness or untrusted content matters.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the HTML formatter changes',
+          paragraphs: [
+            'The formatter separates ordinary block tags onto readable lines, keeps a known set of inline elements with surrounding text, preserves comments, and indents nested structure with the selected number of spaces. The output panel also reports character and line counts so the result can be compared with the input.',
+          ],
+        },
+        {
+          heading: 'Formatter versus parser or validator',
+          bullets: [
+            'Formatting changes whitespace and layout; it does not construct a browser DOM or apply the HTML parsing algorithm.',
+            'Mismatched, omitted, or malformed tags are not repaired and may produce misleading indentation.',
+            'Scripts, event-handler attributes, unsafe URLs, and other active content are preserved as text. Formatting is not sanitization.',
+            'Embedded script, style, template, SVG, or attribute content containing angle brackets can exceed the simple tokenizer boundary and should be handled by a parser-aware development tool.',
+          ],
+        },
+        {
+          heading: 'Whitespace and privacy limits',
+          paragraphs: [
+            'Whitespace can be meaningful in preformatted text, inline flows, templates, emails, and framework directives. Compare behavior in the target browser or template engine before replacing production source. Formatting runs in the browser and the editor does not execute the pasted HTML, but clipboard history, extensions, and any later destination remain separate exposure paths.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste the HTML source or load the sample.',
+        'Choose two, four, or eight spaces for indentation.',
+        'Review the formatted structure and check complex embedded content manually.',
+        'Validate and test the result in the target browser or template engine before production use.',
       ],
     },
     'html-minifier': {
@@ -1638,9 +1869,11 @@ const tools: Record<
     },
     'xml-formatter': {
       name: 'XML Formatter',
-      description: 'Format and beautify XML code online. Free XML formatter.',
+      metadataTitle: 'XML Formatter Online - Indent XML, CDATA & Comments',
+      description:
+        'Indent ordinary XML markup with selectable spacing while preserving comments, CDATA, processing instructions, and simple DOCTYPE declarations.',
       longDescription:
-        'Free online XML formatter. Beautify and format XML code with proper indentation. Makes messy XML readable and well-structured. Supports CDATA and comments.',
+        'Free online XML formatter. Apply consistent indentation to XML tags and inspect comments, CDATA, processing instructions, and text locally in your browser.',
       keywords: [
         'xml formatter',
         'xml beautifier',
@@ -1652,12 +1885,46 @@ const tools: Record<
         {
           question: 'What XML features are supported?',
           answer:
-            'The formatter handles standard XML tags, CDATA sections, comments, processing instructions, and DOCTYPE declarations.',
+            'The tokenizer recognizes ordinary tags, self-closing tags, comments, CDATA sections, processing instructions, and simple DOCTYPE declarations. It does not resolve schemas, namespaces, entities, or external DTD resources.',
         },
         {
           question: 'Can I choose indent size?',
           answer: 'Yes! You can choose between 2, 4, or 8 spaces for indentation.',
         },
+        {
+          question: 'Does this tool validate well-formed XML?',
+          answer:
+            'No. It formats token-like markup but does not perform a standards-compliant XML parse. Use an XML parser or validator to detect mismatched tags, invalid names, entity errors, schema violations, and namespace problems.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the XML formatter changes',
+          paragraphs: [
+            'The formatter walks recognizable XML tags and content, decreases indentation before a closing tag, increases it after an opening tag, and preserves self-closing tags, comments, CDATA, processing instructions, and simple DOCTYPE tokens. Two, four, or eight spaces can be selected without sending the document to a server.',
+          ],
+        },
+        {
+          heading: 'Formatting is not XML validation',
+          bullets: [
+            'The tool does not verify one root element, matching tag names, legal attributes, namespace bindings, entity declarations, XSD, DTD, or business rules.',
+            'A formatted result can still be malformed XML; validate it with the parser and schema used by the destination system.',
+            'Complex internal DTD subsets and unusual markup containing > inside declarations can exceed the simple tokenizer boundary.',
+            'External entities are not resolved, which avoids fetching them but also means entity-dependent correctness is not checked.',
+          ],
+        },
+        {
+          heading: 'Mixed content, signatures, and privacy',
+          paragraphs: [
+            'The formatter trims text tokens and inserts whitespace, so mixed-content documents where spaces are semantically significant require careful review. Do not format canonicalized or digitally signed XML because any byte change can invalidate a signature. Processing is local, while clipboard history, extensions, shared devices, and the destination where output is pasted remain separate risks.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste XML or load the sample document.',
+        'Choose the indentation width.',
+        'Review comments, CDATA, mixed content, and declarations in the formatted output.',
+        'Run the result through the destination XML parser and schema validator before use.',
       ],
     },
   },
@@ -2163,6 +2430,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const canonicalCategory = getCanonicalToolCategory(toolSlug, category);
   const canonicalUrl = `${siteUrl}/tools/${canonicalCategory}/${toolSlug}`;
   const metaTitle = tool.metadataTitle || `${tool.name} - Free Online Tool`;
+  const ogImageUrl = `${canonicalUrl}/opengraph-image`;
 
   return {
     title: metaTitle,
@@ -2179,7 +2447,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: 'DevsTools',
       images: [
         {
-          url: `${siteUrl}/og-image.png`,
+          url: ogImageUrl,
           width: 1200,
           height: 630,
           alt: tool.name,
@@ -2190,7 +2458,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: 'summary_large_image',
       title: metaTitle,
       description: tool.description,
-      images: [`${siteUrl}/og-image.png`],
+      images: [ogImageUrl],
     },
   };
 }
@@ -2281,7 +2549,6 @@ export default async function ToolPage({ params }: PageProps) {
     applicationCategory: 'DeveloperApplication',
     operatingSystem: 'Any',
     isAccessibleForFree: true,
-    dateModified: LAST_REVIEWED,
     citation: sources.map((source) => source.url),
     offers: {
       '@type': 'Offer',
@@ -2332,7 +2599,6 @@ export default async function ToolPage({ params }: PageProps) {
         sources={sources}
         answerSections={tool.answerSections || []}
         relatedTools={relatedTools}
-        lastReviewed={LAST_REVIEWED}
         howToUseSteps={tool.howToUseSteps}
       >
         <ToolRenderer toolSlug={toolSlug} />

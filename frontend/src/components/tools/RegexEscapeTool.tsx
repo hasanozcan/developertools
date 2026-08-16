@@ -6,12 +6,12 @@ import { useLanguage } from '@/context/LanguageContext';
 
 type Mode = 'escape' | 'unescape';
 
-function escapeRegex(input: string): string {
-  return input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+export function escapeRegex(input: string): string {
+  return input.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&');
 }
 
-function unescapeRegex(input: string): string {
-  return input.replace(/\\([.*+?^${}()|[\]\\])/g, '$1');
+export function unescapeRegex(input: string): string {
+  return input.replace(/\\([.*+?^${}()|[\]\\/])/g, '$1');
 }
 
 export default function RegexEscapeTool() {
@@ -38,7 +38,7 @@ export default function RegexEscapeTool() {
     if (mode === 'escape') {
       setInput('https://example.com/users/(.*)?q=test+1');
     } else {
-      setInput('https:\\/\\/example\\.com\\/users\\/\\(\\.\\*\\)\\?q\\=test\\+1');
+      setInput('https:\\/\\/example\\.com\\/users\\/\\(\\.\\*\\)\\?q=test\\+1');
     }
     setOutput('');
   }, [mode]);
@@ -98,7 +98,9 @@ export default function RegexEscapeTool() {
             value={input}
             onChange={setInput}
             language="text"
-            placeholder={mode === 'escape' ? 'Enter raw text for regex...' : 'Enter escaped regex text...'}
+            placeholder={
+              mode === 'escape' ? 'Enter raw text for regex...' : 'Enter escaped regex text...'
+            }
             minHeight="220px"
           />
         </div>

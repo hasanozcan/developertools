@@ -1,16 +1,72 @@
 import { StrictMode } from 'react';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import AdSense from './AdSense';
+
+interface ObservedAd {
+  callback: IntersectionObserverCallback;
+  target?: Element;
+  active: boolean;
+  observer: IntersectionObserver;
+}
+
+let observedAds: ObservedAd[] = [];
+
+function revealObservedAds() {
+  act(() => {
+    observedAds
+      .filter((item) => item.active && item.target)
+      .forEach((item) => {
+        item.callback(
+          [{ isIntersecting: true, target: item.target } as IntersectionObserverEntry],
+          item.observer,
+        );
+      });
+  });
+}
 
 describe('AdSense', () => {
   beforeEach(() => {
     vi.stubEnv('NEXT_PUBLIC_ADSENSE_ID', 'ca-pub-123');
     Reflect.deleteProperty(window, 'adsbygoogle');
+    observedAds = [];
+    vi.stubGlobal(
+      'IntersectionObserver',
+      class IntersectionObserverMock implements IntersectionObserver {
+        readonly root = null;
+        readonly rootMargin = '400px 0px';
+        readonly thresholds = [0];
+        private readonly observed: ObservedAd;
+
+        constructor(callback: IntersectionObserverCallback) {
+          this.observed = {
+            callback,
+            active: true,
+            observer: this,
+          };
+          observedAds.push(this.observed);
+        }
+
+        disconnect() {
+          this.observed.active = false;
+        }
+
+        observe(target: Element) {
+          this.observed.target = target;
+        }
+
+        takeRecords() {
+          return [];
+        }
+
+        unobserve() {}
+      },
+    );
   });
 
   afterEach(() => {
     vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
     Reflect.deleteProperty(window, 'adsbygoogle');
   });
 
@@ -23,7 +79,7 @@ describe('AdSense', () => {
     expect(container.querySelector('ins.adsbygoogle')).toBeNull();
   });
 
-  it('renders the official ad element in the document DOM and queues one request in StrictMode', () => {
+  it('queues one request in StrictMode only when the slot approaches the viewport', () => {
     const { container } = render(
       <StrictMode>
         <AdSense slot="123" />
@@ -35,6 +91,12 @@ describe('AdSense', () => {
     expect(ad?.getRootNode()).toBe(document);
     expect(ad).toHaveAttribute('data-ad-client', 'ca-pub-123');
     expect(ad).toHaveAttribute('data-ad-slot', '123');
+    expect(container.firstChild).not.toHaveAttribute('data-site-support-slot');
+    expect(Reflect.get(window, 'adsbygoogle')).toBeUndefined();
+
+    revealObservedAds();
+
+    expect(container.firstChild).toHaveAttribute('data-site-support-slot', 'true');
     expect(window.adsbygoogle).toHaveLength(1);
   });
 
@@ -47,11 +109,13 @@ describe('AdSense', () => {
     );
 
     expect(container.querySelectorAll('ins.adsbygoogle')).toHaveLength(2);
+    revealObservedAds();
     expect(window.adsbygoogle).toHaveLength(2);
   });
 
   it('queues a fresh request whenever a reused component changes slots', () => {
     const { container, rerender } = render(<AdSense slot="123" />);
+    revealObservedAds();
 
     rerender(<AdSense slot="456" />);
     expect(container.querySelector('ins.adsbygoogle')).toHaveAttribute('data-ad-slot', '456');

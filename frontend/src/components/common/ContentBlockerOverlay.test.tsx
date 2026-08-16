@@ -76,7 +76,7 @@ describe('ContentBlockerOverlay', () => {
     act(() => lateSlot.remove());
   });
 
-  it('keeps the gate closed while the initial check is pending, then clears without reloading', async () => {
+  it('keeps content available while the initial check is pending, then clears without reloading', async () => {
     let resolveInitial: ((result: 'clear') => void) | undefined;
     const reloadPage = vi.fn();
     detector.mockImplementationOnce(
@@ -88,7 +88,8 @@ describe('ContentBlockerOverlay', () => {
 
     renderOverlay(reloadPage);
 
-    expect(await screen.findByRole('dialog')).toHaveAttribute('aria-busy', 'true');
+    await waitFor(() => expect(detector).toHaveBeenCalledOnce());
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     resolveInitial?.('clear');
 
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
@@ -105,7 +106,7 @@ describe('ContentBlockerOverlay', () => {
     );
 
     renderOverlay();
-    await screen.findByRole('dialog');
+    await waitFor(() => expect(detector).toHaveBeenCalledOnce());
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
 
     fireEvent.focus(window);
@@ -144,16 +145,17 @@ describe('ContentBlockerOverlay', () => {
     expect(detector).toHaveBeenCalledOnce();
   });
 
-  it('reloads after an inconclusive initial check so blocked scripts can retry', async () => {
-    const reloadPage = vi.fn();
-    detector.mockResolvedValue('unknown');
+  it('keeps content available after an inconclusive check and retries on focus', async () => {
+    detector.mockResolvedValueOnce('unknown').mockResolvedValueOnce('clear');
 
-    renderOverlay(reloadPage);
-    await screen.findByRole('dialog');
-    fireEvent.click(screen.getByRole('button', { name: 'Check again' }));
+    renderOverlay();
+    await waitFor(() => expect(detector).toHaveBeenCalledOnce());
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 
-    expect(reloadPage).toHaveBeenCalledOnce();
-    expect(detector).toHaveBeenCalledOnce();
+    fireEvent.focus(window);
+
+    await waitFor(() => expect(detector).toHaveBeenCalledTimes(2));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('does not disable the retry button with background checks while the gate is open', async () => {
@@ -171,14 +173,13 @@ describe('ContentBlockerOverlay', () => {
     expect(reloadPage).not.toHaveBeenCalled();
   });
 
-  it('fails closed when the initial Google ad check is inconclusive', async () => {
+  it('fails open when the initial Google ad check is inconclusive', async () => {
     detector.mockResolvedValue('unknown');
 
     renderOverlay();
 
-    expect(await screen.findByRole('dialog')).toBeInTheDocument();
     await waitFor(() => expect(detector).toHaveBeenCalledOnce());
-    expect(screen.getByRole('dialog')).toHaveAttribute('aria-busy', 'false');
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
   it('wraps keyboard focus between the modal buttons', async () => {

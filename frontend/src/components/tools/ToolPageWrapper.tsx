@@ -16,7 +16,6 @@ interface ToolPageWrapperProps {
   sources: { name: string; url: string }[];
   answerSections: { heading: string; paragraphs?: string[]; bullets?: string[] }[];
   relatedTools: { name: string; description: string; href: string }[];
-  lastReviewed: string;
   howToUseSteps?: string[];
   children: React.ReactNode;
 }
@@ -31,7 +30,6 @@ export default function ToolPageWrapper({
   sources,
   answerSections,
   relatedTools,
-  lastReviewed,
   howToUseSteps: customHowToUseSteps,
   children,
 }: ToolPageWrapperProps) {
@@ -246,7 +244,8 @@ export default function ToolPageWrapper({
               .
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Last reviewed: <time dateTime={lastReviewed}>{lastReviewed}</time>
+              Review policy: references and behavior notes are checked whenever the tool
+              implementation changes.
             </p>
           </section>
         </div>

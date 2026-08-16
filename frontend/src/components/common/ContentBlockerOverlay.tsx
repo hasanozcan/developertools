@@ -11,7 +11,6 @@ interface ContentBlockerOverlayProps {
 }
 
 const reloadCurrentPage = () => window.location.reload();
-const RECHECK_INTERVAL_MS = 30_000;
 
 export default function ContentBlockerOverlay({
   reloadPage = reloadCurrentPage,
@@ -21,10 +20,8 @@ export default function ContentBlockerOverlay({
   const adClient = normalizeAdSenseClientId(process.env.NEXT_PUBLIC_ADSENSE_ID);
   const [hasMonetizedContent, setHasMonetizedContent] = useState(false);
   const [detected, setDetected] = useState(false);
-  const [checking, setChecking] = useState(true);
+  const [checking, setChecking] = useState(false);
   const checkRunId = useRef(0);
-  const blockerConfirmedRef = useRef(false);
-  const initialCheckCompletedRef = useRef(false);
   const hasMonetizedContentRef = useRef(false);
   const dialogRef = useRef<HTMLDivElement>(null);
 
@@ -34,8 +31,6 @@ export default function ContentBlockerOverlay({
       // Ignore the initial effect's stale `false` value when the slot observer
       // has already found monetized content and queued the next render.
       if (!adClient || !pathname || !hasMonetizedContentRef.current) {
-        blockerConfirmedRef.current = false;
-        initialCheckCompletedRef.current = false;
         setDetected(false);
         setChecking(false);
       }
@@ -43,33 +38,15 @@ export default function ContentBlockerOverlay({
     }
 
     const runId = ++checkRunId.current;
-    // Fail closed on the first check. Once a clear result is established,
-    // background rechecks stay invisible unless blocking is actually detected.
-    if (!initialCheckCompletedRef.current || blockerConfirmedRef.current) {
-      setDetected(true);
-    }
     setChecking(true);
     const result = await detectContentBlocker(adClient);
 
     if (checkRunId.current !== runId) return;
-    if (result === 'clear') {
-      initialCheckCompletedRef.current = true;
-      if (blockerConfirmedRef.current) {
-        setChecking(false);
-        reloadPage();
-        return;
-      }
-
-      setDetected(false);
-      setChecking(false);
-      return;
-    }
-    // Fail closed: an inconclusive Google probe must never unlock monetized content.
-    initialCheckCompletedRef.current = true;
-    blockerConfirmedRef.current = true;
-    setDetected(true);
+    // Keep useful content available while the probe is pending or inconclusive.
+    // Only a positive blocker signal may open the modal.
+    setDetected(result === 'blocked');
     setChecking(false);
-  }, [adClient, hasMonetizedContent, pathname, reloadPage]);
+  }, [adClient, hasMonetizedContent, pathname]);
 
   useEffect(() => {
     const updateSlotPresence = () => {
@@ -78,12 +55,9 @@ export default function ContentBlockerOverlay({
       hasMonetizedContentRef.current = hasSlot;
       setHasMonetizedContent(hasSlot);
       if (slotAppeared) {
-        initialCheckCompletedRef.current = false;
-        setDetected(true);
+        setDetected(false);
         setChecking(true);
       } else if (!hasSlot) {
-        blockerConfirmedRef.current = false;
-        initialCheckCompletedRef.current = false;
         setDetected(false);
         setChecking(false);
       }
@@ -117,11 +91,9 @@ export default function ContentBlockerOverlay({
 
     window.addEventListener('focus', recheck);
     document.addEventListener('visibilitychange', onVisibilityChange);
-    const intervalId = window.setInterval(recheck, RECHECK_INTERVAL_MS);
     return () => {
       window.removeEventListener('focus', recheck);
       document.removeEventListener('visibilitychange', onVisibilityChange);
-      window.clearInterval(intervalId);
     };
   }, [adClient, detected, hasMonetizedContent, runDetection]);
 
