@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
-import CopyButton from '@/components/common/CopyButton';
 import { useLanguage } from '@/context/LanguageContext';
 
 function formatXml(xml: string, indentSize: number = 2): string {
@@ -223,11 +222,6 @@ export default function XmlFormatterTool() {
               language="xml"
               minHeight="300px"
             />
-            {formatted && (
-              <div className="absolute top-2 right-2">
-                <CopyButton text={formatted} />
-              </div>
-            )}
           </div>
         </div>
       </div>

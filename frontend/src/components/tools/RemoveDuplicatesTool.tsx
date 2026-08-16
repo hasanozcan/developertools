@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useCallback, useMemo } from 'react';
+import { useCallback, useDeferredValue, useMemo, useState } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
-import CopyButton from '@/components/common/CopyButton';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function RemoveDuplicatesTool() {
@@ -10,11 +9,13 @@ export default function RemoveDuplicatesTool() {
   const [input, setInput] = useState('');
   const [caseSensitive, setCaseSensitive] = useState(true);
   const [trimWhitespace, setTrimWhitespace] = useState(true);
+  const deferredInput = useDeferredValue(input);
+  const isUpdating = input !== deferredInput;
 
   const result = useMemo(() => {
-    if (!input.trim()) return '';
+    if (!deferredInput) return '';
     
-    const lines = input.split('\n');
+    const lines = deferredInput.split('\n');
     const seen = new Set<string>();
     const unique: string[] = [];
 
@@ -29,17 +30,17 @@ export default function RemoveDuplicatesTool() {
     }
 
     return unique.join('\n');
-  }, [input, caseSensitive, trimWhitespace]);
+  }, [caseSensitive, deferredInput, trimWhitespace]);
 
   const stats = useMemo(() => {
-    const originalLines = input.split('\n').filter(l => l.trim());
-    const resultLines = result.split('\n').filter(l => l.trim());
+    const originalLines = deferredInput ? deferredInput.split('\n') : [];
+    const resultLines = result ? result.split('\n') : [];
     return {
       original: originalLines.length,
       unique: resultLines.length,
       duplicates: originalLines.length - resultLines.length,
     };
-  }, [input, result]);
+  }, [deferredInput, result]);
 
   const loadSample = useCallback(() => {
     setInput(`apple
@@ -79,6 +80,7 @@ fig`);
         </label>
 
         <button
+          type="button"
           onClick={loadSample}
           className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
         >
@@ -87,53 +89,67 @@ fig`);
       </div>
 
       {/* Stats */}
-      {input && (
-        <div className="flex flex-wrap gap-4 text-sm">
+      {deferredInput ? (
+        <div
+          aria-busy={isUpdating}
+          className={`flex flex-wrap gap-4 text-sm ${isUpdating ? 'opacity-70' : 'opacity-100'}`}
+        >
           <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full">
             Original: {stats.original} lines
           </span>
           <span className="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 rounded-full">
             Unique: {stats.unique} lines
           </span>
-          {stats.duplicates > 0 && (
+          {stats.duplicates > 0 ? (
             <span className="px-3 py-1 bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-300 rounded-full">
               Removed: {stats.duplicates} duplicates
             </span>
-          )}
+          ) : null}
         </div>
-      )}
+      ) : null}
 
       {/* Input/Output */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label
+            htmlFor="remove-duplicates-input"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+          >
             Input Text
           </label>
           <CodeEditor
+            id="remove-duplicates-input"
             value={input}
             onChange={setInput}
             placeholder="Enter text with duplicate lines..."
             language="text"
             minHeight="250px"
+            maxLength={250_000}
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Result (Unique Lines)
-          </label>
-          <div className="relative">
+          <div className="mb-2 flex min-h-5 items-center justify-between gap-3">
+            <label
+              htmlFor="remove-duplicates-output"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Result (Unique Lines)
+            </label>
+            {isUpdating ? (
+              <span role="status" className="text-xs text-gray-500 dark:text-gray-400">
+                {t('common.updating')}
+              </span>
+            ) : null}
+          </div>
+          <div aria-busy={isUpdating} className={isUpdating ? 'opacity-70' : 'opacity-100'}>
             <CodeEditor
+              id="remove-duplicates-output"
               value={result}
               onChange={() => {}}
               readOnly
               language="text"
               minHeight="250px"
             />
-            {result && (
-              <div className="absolute top-2 right-2">
-                <CopyButton text={result} />
-              </div>
-            )}
           </div>
         </div>
       </div>

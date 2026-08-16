@@ -75,6 +75,7 @@ export default function JsonPathTool() {
             value={result.output}
             onChange={() => {}}
             readOnly
+            showCopy={false}
             language="json"
             minHeight="320px"
             placeholder={t('tool.jsonpath.matchesPlaceholder')}

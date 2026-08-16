@@ -2,7 +2,6 @@
 
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
-import CopyButton from '@/components/common/CopyButton';
 import { ArrowDownUp, Layers, Check } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { convertEncoding } from '@/lib/encodingWorkbench';
@@ -281,11 +280,6 @@ export default function BinaryEncoderTool() {
                 language="text"
                 minHeight="150px"
               />
-              {output && !batchMode && (
-                <div className="absolute top-2 right-2">
-                  <CopyButton text={output} />
-                </div>
-              )}
             </div>
           </div>
         </div>

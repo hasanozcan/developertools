@@ -6,62 +6,201 @@ export interface ToolSource {
 }
 
 const sources = {
-  json: { name: 'RFC 8259: The JavaScript Object Notation (JSON) Data Interchange Format', url: 'https://www.rfc-editor.org/rfc/rfc8259' },
-  jsonSchemaDraft7: { name: 'JSON Schema Draft 7: Validation', url: 'https://json-schema.org/draft-07/json-schema-validation' },
-  ajvFormats: { name: 'Ajv Formats: JSON Schema format validation for Ajv v8', url: 'https://github.com/ajv-validator/ajv-formats' },
+  json: {
+    name: 'RFC 8259: The JavaScript Object Notation (JSON) Data Interchange Format',
+    url: 'https://www.rfc-editor.org/rfc/rfc8259',
+  },
+  jsonSchemaDraft7: {
+    name: 'JSON Schema Draft 7: Validation',
+    url: 'https://json-schema.org/draft-07/json-schema-validation',
+  },
+  ajvFormats: {
+    name: 'Ajv Formats: JSON Schema format validation for Ajv v8',
+    url: 'https://github.com/ajv-validator/ajv-formats',
+  },
   yaml: { name: 'YAML 1.2.2 Specification', url: 'https://yaml.org/spec/1.2.2/' },
   yaml11: { name: 'YAML 1.1 Specification', url: 'https://yaml.org/spec/1.1/' },
-  typescript: { name: 'TypeScript Handbook: Object Types', url: 'https://www.typescriptlang.org/docs/handbook/2/objects.html' },
+  typescript: {
+    name: 'TypeScript Handbook: Object Types',
+    url: 'https://www.typescriptlang.org/docs/handbook/2/objects.html',
+  },
   base64: { name: 'RFC 4648: Base-N Encodings', url: 'https://www.rfc-editor.org/rfc/rfc4648' },
   url: { name: 'WHATWG URL Standard', url: 'https://url.spec.whatwg.org/' },
   jwt: { name: 'RFC 7519: JSON Web Token (JWT)', url: 'https://www.rfc-editor.org/rfc/rfc7519' },
   html: { name: 'WHATWG HTML Living Standard', url: 'https://html.spec.whatwg.org/' },
   unicode: { name: 'The Unicode Standard', url: 'https://www.unicode.org/versions/latest/' },
   dataUri: { name: 'RFC 2397: The data URL Scheme', url: 'https://www.rfc-editor.org/rfc/rfc2397' },
-  uuid: { name: 'RFC 9562: Universally Unique IDentifiers (UUIDs)', url: 'https://www.rfc-editor.org/rfc/rfc9562' },
-  webCrypto: { name: 'W3C Web Cryptography API: getRandomValues()', url: 'https://www.w3.org/TR/webcrypto/#Crypto-method-getRandomValues' },
-  password: { name: 'NIST SP 800-63B: Authentication and Authenticator Management', url: 'https://pages.nist.gov/800-63-4/sp800-63b.html' },
+  uuid: {
+    name: 'RFC 9562: Universally Unique IDentifiers (UUIDs)',
+    url: 'https://www.rfc-editor.org/rfc/rfc9562',
+  },
+  webCrypto: {
+    name: 'W3C Web Cryptography API',
+    url: 'https://www.w3.org/TR/webcrypto/',
+  },
+  password: {
+    name: 'NIST SP 800-63B: Authentication and Authenticator Management',
+    url: 'https://pages.nist.gov/800-63-4/sp800-63b.html',
+  },
   lorem: { name: 'Lorem Ipsum reference and history', url: 'https://www.lipsum.com/' },
   qr: { name: 'DENSO WAVE: What is a QR Code?', url: 'https://www.qrcode.com/en/about/' },
-  slug: { name: 'Google Search Central: URL structure best practices', url: 'https://developers.google.com/search/docs/crawling-indexing/url-structure' },
-  css: { name: 'MDN: CSS gradients', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/gradient' },
+  slug: {
+    name: 'Google Search Central: URL structure best practices',
+    url: 'https://developers.google.com/search/docs/crawling-indexing/url-structure',
+  },
+  css: {
+    name: 'MDN: CSS gradients',
+    url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/gradient',
+  },
   cssSyntax: { name: 'W3C CSS Syntax Module Level 3', url: 'https://www.w3.org/TR/css-syntax-3/' },
-  meta: { name: 'MDN: The metadata element', url: 'https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta' },
-  md5: { name: 'RFC 1321: The MD5 Message-Digest Algorithm', url: 'https://www.rfc-editor.org/rfc/rfc1321' },
-  md5Security: { name: 'RFC 6151: Updated Security Considerations for MD5', url: 'https://www.rfc-editor.org/rfc/rfc6151' },
-  sha: { name: 'NIST FIPS 180-4: Secure Hash Standard', url: 'https://csrc.nist.gov/pubs/fips/180-4/upd1/final' },
-  hmac: { name: 'RFC 2104: HMAC - Keyed-Hashing for Message Authentication', url: 'https://www.rfc-editor.org/rfc/rfc2104' },
-  hmacSha2: { name: 'RFC 4231: HMAC-SHA-2 Identifiers and Test Vectors', url: 'https://www.rfc-editor.org/rfc/rfc4231' },
-  webCryptoHmac: { name: 'W3C Web Cryptography API: HMAC', url: 'https://www.w3.org/TR/webcrypto/#hmac' },
-  pkce: { name: 'RFC 7636: Proof Key for Code Exchange by OAuth Public Clients', url: 'https://www.rfc-editor.org/rfc/rfc7636' },
+  meta: {
+    name: 'MDN: The metadata element',
+    url: 'https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta',
+  },
+  md5: {
+    name: 'RFC 1321: The MD5 Message-Digest Algorithm',
+    url: 'https://www.rfc-editor.org/rfc/rfc1321',
+  },
+  md5Security: {
+    name: 'RFC 6151: Updated Security Considerations for MD5',
+    url: 'https://www.rfc-editor.org/rfc/rfc6151',
+  },
+  sha: {
+    name: 'NIST FIPS 180-4: Secure Hash Standard',
+    url: 'https://csrc.nist.gov/pubs/fips/180-4/upd1/final',
+  },
+  hmac: {
+    name: 'RFC 2104: HMAC - Keyed-Hashing for Message Authentication',
+    url: 'https://www.rfc-editor.org/rfc/rfc2104',
+  },
+  hmacSha2: {
+    name: 'RFC 4231: HMAC-SHA-2 Identifiers and Test Vectors',
+    url: 'https://www.rfc-editor.org/rfc/rfc4231',
+  },
+  webCryptoHmac: {
+    name: 'W3C Web Cryptography API: HMAC',
+    url: 'https://www.w3.org/TR/webcrypto/#hmac',
+  },
+  pkce: {
+    name: 'RFC 7636: Proof Key for Code Exchange by OAuth Public Clients',
+    url: 'https://www.rfc-editor.org/rfc/rfc7636',
+  },
   ipv4: { name: 'RFC 791: Internet Protocol', url: 'https://www.rfc-editor.org/rfc/rfc791' },
-  cidr: { name: 'RFC 4632: Classless Inter-domain Routing', url: 'https://www.rfc-editor.org/rfc/rfc4632' },
-  rfc3021: { name: 'RFC 3021: Using 31-Bit Prefixes on IPv4 Point-to-Point Links', url: 'https://www.rfc-editor.org/rfc/rfc3021' },
-  regex: { name: 'ECMAScript specification: RegExp objects', url: 'https://tc39.es/ecma262/multipage/text-processing.html#sec-regexp-regular-expression-objects' },
-  diff: { name: 'GNU Diffutils Manual', url: 'https://www.gnu.org/software/diffutils/manual/diffutils.html' },
-  text: { name: 'Unicode Standard Annex #29: Text Segmentation', url: 'https://www.unicode.org/reports/tr29/' },
-  set: { name: 'MDN: JavaScript Set', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set' },
-  sort: { name: 'MDN: Array.prototype.sort()', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort' },
+  cidr: {
+    name: 'RFC 4632: Classless Inter-domain Routing',
+    url: 'https://www.rfc-editor.org/rfc/rfc4632',
+  },
+  rfc3021: {
+    name: 'RFC 3021: Using 31-Bit Prefixes on IPv4 Point-to-Point Links',
+    url: 'https://www.rfc-editor.org/rfc/rfc3021',
+  },
+  regex: {
+    name: 'ECMAScript specification: RegExp objects',
+    url: 'https://tc39.es/ecma262/multipage/text-processing.html#sec-regexp-regular-expression-objects',
+  },
+  diff: {
+    name: 'GNU Diffutils Manual',
+    url: 'https://www.gnu.org/software/diffutils/manual/diffutils.html',
+  },
+  text: {
+    name: 'Unicode Standard Annex #29: Text Segmentation',
+    url: 'https://www.unicode.org/reports/tr29/',
+  },
+  set: {
+    name: 'MDN: JavaScript Set',
+    url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set',
+  },
+  sort: {
+    name: 'MDN: Array.prototype.sort()',
+    url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort',
+  },
   markdown: { name: 'CommonMark Specification', url: 'https://spec.commonmark.org/current/' },
-  timestamp: { name: 'POSIX.1-2024: Seconds Since the Epoch', url: 'https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap04.html#tag_04_19' },
+  timestamp: {
+    name: 'POSIX.1-2024: Seconds Since the Epoch',
+    url: 'https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap04.html#tag_04_19',
+  },
   color: { name: 'W3C CSS Color Module Level 4', url: 'https://www.w3.org/TR/css-color-4/' },
-  roman: { name: 'Unicode Number Forms chart: Roman numerals', url: 'https://www.unicode.org/charts/PDF/U2150.pdf' },
-  number: { name: 'MDN: Number systems and numeric conversion', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt' },
-  sql: { name: 'PostgreSQL: SQL Syntax and Lexical Structure', url: 'https://www.postgresql.org/docs/current/sql-syntax-lexical.html' },
+  roman: {
+    name: 'Unicode Number Forms chart: Roman numerals',
+    url: 'https://www.unicode.org/charts/PDF/U2150.pdf',
+  },
+  number: {
+    name: 'MDN: Number systems and numeric conversion',
+    url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt',
+  },
+  sql: {
+    name: 'PostgreSQL: SQL Syntax and Lexical Structure',
+    url: 'https://www.postgresql.org/docs/current/sql-syntax-lexical.html',
+  },
   javascript: { name: 'ECMAScript Language Specification', url: 'https://tc39.es/ecma262/' },
   xml: { name: 'W3C: Extensible Markup Language (XML) 1.0', url: 'https://www.w3.org/TR/xml/' },
-  cron: { name: 'Linux manual: crontab(5)', url: 'https://man7.org/linux/man-pages/man5/crontab.5.html' },
+  cron: {
+    name: 'Linux manual: crontab(5)',
+    url: 'https://man7.org/linux/man-pages/man5/crontab.5.html',
+  },
   http: { name: 'RFC 9110: HTTP Semantics', url: 'https://www.rfc-editor.org/rfc/rfc9110' },
-  userAgent: { name: 'MDN: User-Agent header', url: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent' },
-  uaParser: { name: 'UAParser.js 1.0.41 source and parser data', url: 'https://github.com/faisalman/ua-parser-js/tree/1.0.41' },
-  jsonPointer: { name: 'RFC 6901: JavaScript Object Notation (JSON) Pointer', url: 'https://www.rfc-editor.org/rfc/rfc6901' },
-  chmod: { name: 'POSIX chmod utility specification', url: 'https://pubs.opengroup.org/onlinepubs/9799919799/utilities/chmod.html' },
+  userAgent: {
+    name: 'MDN: User-Agent header',
+    url: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent',
+  },
+  uaParser: {
+    name: 'UAParser.js 1.0.41 source and parser data',
+    url: 'https://github.com/faisalman/ua-parser-js/tree/1.0.41',
+  },
+  jsonPointer: {
+    name: 'RFC 6901: JavaScript Object Notation (JSON) Pointer',
+    url: 'https://www.rfc-editor.org/rfc/rfc6901',
+  },
+  chmod: {
+    name: 'POSIX chmod utility specification',
+    url: 'https://pubs.opengroup.org/onlinepubs/9799919799/utilities/chmod.html',
+  },
   cacheControl: { name: 'RFC 9111: HTTP Caching', url: 'https://www.rfc-editor.org/rfc/rfc9111' },
-  jsonPath: { name: 'RFC 9535: JSONPath Query Expressions for JSON', url: 'https://www.rfc-editor.org/rfc/rfc9535' },
+  jsonPath: {
+    name: 'RFC 9535: JSONPath Query Expressions for JSON',
+    url: 'https://www.rfc-editor.org/rfc/rfc9535',
+  },
   csp: { name: 'W3C Content Security Policy Level 3', url: 'https://www.w3.org/TR/CSP3/' },
   curl: { name: 'curl command-line tool manual', url: 'https://curl.se/docs/manpage.html' },
   fetch: { name: 'WHATWG Fetch Standard', url: 'https://fetch.spec.whatwg.org/' },
-  posixShell: { name: 'POSIX Shell Command Language: Quoting', url: 'https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_19_02' },
+  posixShell: {
+    name: 'POSIX Shell Command Language: Quoting',
+    url: 'https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_19_02',
+  },
+  dotenv: {
+    name: 'Node.js: DotEnv file format',
+    url: 'https://nodejs.org/api/environment_variables.html#dotenv',
+  },
+  zod: { name: 'Zod documentation', url: 'https://zod.dev/' },
+  bcrypt: {
+    name: 'OWASP Password Storage Cheat Sheet: bcrypt',
+    url: 'https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html#bcrypt',
+  },
+  bcryptJs: {
+    name: 'bcrypt.js: optimized bcrypt in JavaScript',
+    url: 'https://github.com/dcodeIO/bcrypt.js',
+  },
+  jsonPatch: {
+    name: 'RFC 6902: JavaScript Object Notation (JSON) Patch',
+    url: 'https://www.rfc-editor.org/rfc/rfc6902',
+  },
+  jose: {
+    name: 'RFC 7515: JSON Web Signature (JWS)',
+    url: 'https://www.rfc-editor.org/rfc/rfc7515',
+  },
+  wcagContrast: {
+    name: 'W3C WCAG 2.2: Contrast (Minimum)',
+    url: 'https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html',
+  },
+  x509: {
+    name: 'RFC 5280: Internet X.509 Public Key Infrastructure Certificate Profile',
+    url: 'https://www.rfc-editor.org/rfc/rfc5280',
+  },
+  pem: {
+    name: 'RFC 7468: Textual Encodings of PKIX Structures',
+    url: 'https://www.rfc-editor.org/rfc/rfc7468',
+  },
+  openapi: { name: 'OpenAPI Specification', url: 'https://spec.openapis.org/oas/' },
 } satisfies Record<string, ToolSource>;
 
 const sourceByTool = {
@@ -75,7 +214,7 @@ const sourceByTool = {
   'url-encoder': sources.url,
   'hex-encoder': sources.base64,
   'binary-encoder': sources.number,
-  'jwt-decoder': sources.jwt,
+  'jwt-decoder': [sources.jwt, sources.jose, sources.webCryptoHmac],
   'html-entity': sources.html,
   'unicode-escape': sources.unicode,
   'json-string-escape': sources.json,
@@ -123,6 +262,13 @@ const sourceByTool = {
   'jsonpath-tester': [sources.jsonPath, sources.json],
   'csp-builder': [sources.csp, sources.http],
   'curl-to-fetch': [sources.curl, sources.fetch, sources.posixShell, sources.http],
+  'env-to-json': [sources.dotenv, sources.json],
+  'json-to-zod': [sources.zod, sources.json, sources.typescript],
+  'bcrypt-generator': [sources.bcrypt, sources.bcryptJs],
+  'json-diff-patch': [sources.jsonPatch, sources.jsonPointer, sources.json],
+  'color-contrast-checker': [sources.wcagContrast, sources.color],
+  'certificate-decoder': [sources.x509, sources.pem, sources.webCrypto],
+  'openapi-validator': [sources.openapi, sources.yaml, sources.jsonPointer],
 } satisfies Record<ToolSlug, ToolSource | ToolSource[]>;
 
 export function getToolSources(toolSlug: string): ToolSource[] {

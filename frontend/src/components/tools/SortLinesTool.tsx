@@ -1,9 +1,8 @@
 'use client';
 
-import { useState, useCallback, useMemo } from 'react';
+import { useCallback, useDeferredValue, useMemo, useState } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
-import CopyButton from '@/components/common/CopyButton';
-import { ArrowUpDown, ArrowDownAZ, ArrowUpAZ } from 'lucide-react';
+import { ArrowDownAZ, ArrowUpAZ } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 type SortOrder = 'asc' | 'desc';
@@ -13,11 +12,13 @@ export default function SortLinesTool() {
   const [input, setInput] = useState('');
   const [order, setOrder] = useState<SortOrder>('asc');
   const [caseSensitive, setCaseSensitive] = useState(false);
+  const deferredInput = useDeferredValue(input);
+  const isUpdating = input !== deferredInput;
 
   const result = useMemo(() => {
-    if (!input.trim()) return '';
+    if (!deferredInput.trim()) return '';
     
-    const lines = input.split('\n');
+    const lines = deferredInput.split('\n');
     
     const sorted = [...lines].sort((a, b) => {
       let compareA = a;
@@ -33,7 +34,7 @@ export default function SortLinesTool() {
     });
 
     return sorted.join('\n');
-  }, [input, order, caseSensitive]);
+  }, [caseSensitive, deferredInput, order]);
 
   const toggleOrder = useCallback(() => {
     setOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
@@ -56,6 +57,7 @@ grape`);
       {/* Controls */}
       <div className="flex flex-wrap items-center gap-4">
         <button
+          type="button"
           onClick={toggleOrder}
           className={`px-4 py-2 rounded-lg transition-colors font-medium flex items-center gap-2 ${
             order === 'asc'
@@ -78,6 +80,7 @@ grape`);
         </label>
 
         <button
+          type="button"
           onClick={loadSample}
           className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
         >
@@ -88,34 +91,45 @@ grape`);
       {/* Input/Output */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+          <label
+            htmlFor="sort-lines-input"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+          >
             Input Lines
           </label>
           <CodeEditor
+            id="sort-lines-input"
             value={input}
             onChange={setInput}
             placeholder="Enter lines to sort (one per line)..."
             language="text"
             minHeight="250px"
+            maxLength={250_000}
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Sorted Lines ({order === 'asc' ? 'A-Z' : 'Z-A'})
-          </label>
-          <div className="relative">
+          <div className="mb-2 flex min-h-5 items-center justify-between gap-3">
+            <label
+              htmlFor="sort-lines-output"
+              className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Sorted Lines ({order === 'asc' ? 'A-Z' : 'Z-A'})
+            </label>
+            {isUpdating ? (
+              <span role="status" className="text-xs text-gray-500 dark:text-gray-400">
+                {t('common.updating')}
+              </span>
+            ) : null}
+          </div>
+          <div aria-busy={isUpdating} className={isUpdating ? 'opacity-70' : 'opacity-100'}>
             <CodeEditor
+              id="sort-lines-output"
               value={result}
               onChange={() => {}}
               readOnly
               language="text"
               minHeight="250px"
             />
-            {result && (
-              <div className="absolute top-2 right-2">
-                <CopyButton text={result} />
-              </div>
-            )}
           </div>
         </div>
       </div>

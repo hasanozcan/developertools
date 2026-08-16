@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useMemo } from 'react';
+import { useCallback, useDeferredValue, useMemo, useState } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -54,8 +54,10 @@ function calculateStats(text: string): TextStats {
 export default function WordCounterTool() {
   const { t } = useLanguage();
   const [input, setInput] = useState('');
+  const deferredInput = useDeferredValue(input);
+  const isUpdating = input !== deferredInput;
 
-  const stats = useMemo(() => calculateStats(input), [input]);
+  const stats = useMemo(() => calculateStats(deferredInput), [deferredInput]);
 
   const loadSample = useCallback(() => {
     setInput(`The quick brown fox jumps over the lazy dog.
@@ -65,44 +67,52 @@ This is a second paragraph with more text to count. It contains multiple sentenc
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`);
   }, []);
 
-  const clearText = useCallback(() => {
-    setInput('');
-  }, []);
-
   return (
     <div className="space-y-6">
       {/* Controls */}
       <div className="flex flex-wrap items-center gap-4">
         <button
+          type="button"
           onClick={loadSample}
           className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
         >
           Load Sample
         </button>
-        <button
-          onClick={clearText}
-          className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
-        >
-          Clear
-        </button>
       </div>
 
       {/* Input */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Enter Your Text
-        </label>
+        <div className="mb-2 flex min-h-5 items-center justify-between gap-3">
+          <label
+            htmlFor="word-counter-input"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+          >
+            Enter Your Text
+          </label>
+          {isUpdating ? (
+            <span role="status" className="text-xs text-gray-500 dark:text-gray-400">
+              {t('common.updating')}
+            </span>
+          ) : null}
+        </div>
         <CodeEditor
+          id="word-counter-input"
           value={input}
           onChange={setInput}
           placeholder="Type or paste your text here to count words, characters, lines, sentences, and paragraphs..."
           language="text"
           minHeight="200px"
+          maxLength={250_000}
         />
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div
+        aria-busy={isUpdating}
+        className={`grid grid-cols-2 gap-4 transition-opacity sm:grid-cols-3 lg:grid-cols-4 ${
+          isUpdating ? 'opacity-70' : 'opacity-100'
+        }`}
+      >
         <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
           <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{stats.words}</div>
           <div className="text-sm text-gray-600 dark:text-gray-400">Words</div>

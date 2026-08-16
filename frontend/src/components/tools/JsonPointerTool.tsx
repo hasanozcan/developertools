@@ -79,6 +79,7 @@ export default function JsonPointerTool() {
             value={result.output}
             onChange={() => {}}
             readOnly
+            showCopy={false}
             language="json"
             minHeight="280px"
             placeholder="The selected value appears here."

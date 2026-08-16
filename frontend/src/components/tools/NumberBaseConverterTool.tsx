@@ -2,7 +2,6 @@
 
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
-import CopyButton from '@/components/common/CopyButton';
 import { convertIntegerToAllBases, type NumberBase } from '@/lib/numberBase';
 
 export default function NumberBaseConverterTool() {
@@ -112,11 +111,6 @@ export default function NumberBaseConverterTool() {
               language="text"
               minHeight="80px"
             />
-            {decimal && (
-              <div className="absolute top-2 right-2">
-                <CopyButton text={decimal} />
-              </div>
-            )}
           </div>
         </div>
 
@@ -133,11 +127,6 @@ export default function NumberBaseConverterTool() {
               language="text"
               minHeight="80px"
             />
-            {hex && (
-              <div className="absolute top-2 right-2">
-                <CopyButton text={hex} />
-              </div>
-            )}
           </div>
         </div>
 
@@ -154,11 +143,6 @@ export default function NumberBaseConverterTool() {
               language="text"
               minHeight="80px"
             />
-            {octal && (
-              <div className="absolute top-2 right-2">
-                <CopyButton text={octal} />
-              </div>
-            )}
           </div>
         </div>
 
@@ -175,11 +159,6 @@ export default function NumberBaseConverterTool() {
               language="text"
               minHeight="80px"
             />
-            {binary && (
-              <div className="absolute top-2 right-2">
-                <CopyButton text={binary} />
-              </div>
-            )}
           </div>
         </div>
       </div>

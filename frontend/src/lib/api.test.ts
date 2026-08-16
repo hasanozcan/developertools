@@ -24,7 +24,10 @@ describe('static tool relationships', () => {
     for (const tool of toolCatalog) {
       const sources = getToolSources(tool.slug);
       expect(sources.length, tool.slug).toBeGreaterThan(0);
-      expect(sources.every((source) => source.url.startsWith('https://')), tool.slug).toBe(true);
+      expect(
+        sources.every((source) => source.url.startsWith('https://')),
+        tool.slug,
+      ).toBe(true);
     }
   });
 
@@ -59,7 +62,7 @@ describe('static tool relationships', () => {
 
   it.each([
     ['json-formatter', ['json-validator', 'json-to-typescript', 'json-csv']],
-    ['jwt-decoder', ['base64', 'json-formatter', 'url-encoder']],
+    ['jwt-decoder', ['certificate-decoder', 'hmac-generator', 'base64']],
     ['regex-tester', ['regex-escape', 'text-diff', 'case-converter']],
     ['uuid-generator', ['password-generator', 'qr-code', 'slug-generator']],
   ])('uses the curated topic cluster for %s', async (slug, expected) => {

@@ -360,6 +360,136 @@ const tools: Record<
         'Copy the result list when you need it for debugging or tests.',
       ],
     },
+    'json-to-zod': {
+      name: 'JSON to Zod Schema',
+      metadataTitle: 'JSON to Zod Schema Generator Online - TypeScript',
+      description:
+        'Convert JSON samples to Zod object, array, union, and format-aware schemas with an optional inferred TypeScript type, entirely in your browser.',
+      longDescription:
+        'Free online JSON to Zod generator. Paste a representative JSON value and produce a readable Zod schema plus an optional z.infer TypeScript type without uploading the sample.',
+      keywords: [
+        'json to zod',
+        'zod schema generator',
+        'json to zod schema',
+        'generate zod from json',
+        'typescript validation schema',
+      ],
+      faqs: [
+        {
+          question: 'Can one JSON sample describe every valid payload?',
+          answer:
+            'No. The generator can infer only the values and shapes present in the sample. Review required versus optional fields, business constraints, enums, defaults, refinements, and transformations against the real API contract.',
+        },
+        {
+          question: 'How are arrays and missing object properties handled?',
+          answer:
+            'Array element types are merged. Objects found in the same array share a combined shape, and a property missing from any sample object becomes optional. Mixed primitive arrays become Zod unions, while empty arrays use z.unknown() elements.',
+        },
+        {
+          question: 'Is my JSON uploaded?',
+          answer:
+            'No. JSON parsing and schema generation run in your browser. Sensitive data can still be exposed through clipboard history, browser extensions, screen sharing, or a shared device, so use sanitized examples when possible.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the JSON to Zod generator produces',
+          paragraphs: [
+            'The generator parses one JSON value and maps strings, numbers, integers, booleans, nulls, arrays, and objects to Zod expressions. The root name is normalized into a TypeScript-safe schema identifier. When inferred types are enabled, the output also includes a z.infer alias so the runtime validator and compile-time type come from the same schema.',
+          ],
+        },
+        {
+          heading: 'Inference rules worth reviewing',
+          bullets: [
+            'Integers become z.number().int(), while values containing a fractional part become z.number().',
+            'Mixed array samples become unions. Arrays of objects merge observed keys and mark keys missing from any sample as optional.',
+            'Optional format inference recognizes representative UUID, ISO date-time, email, and HTTP(S) URL strings with Zod string checks.',
+            'Strict object mode appends .strict() so unknown keys are rejected instead of silently stripped by the generated object schemas.',
+            'Empty arrays cannot reveal an element type and therefore become z.array(z.unknown()).',
+          ],
+        },
+        {
+          heading: 'Sample inference is a starting point, not a contract',
+          paragraphs: [
+            'A sample cannot prove minimum lengths, numeric ranges, permitted enum values, cross-field rules, defaults, coercion behavior, or whether a field that happened to be present is always required. Compare the result with API documentation and real edge cases, then add Zod refinements and tests before accepting untrusted input. The tool generates source text only; it does not execute the schema or install Zod in your project.',
+          ],
+        },
+        {
+          heading: 'Privacy and input limits',
+          paragraphs: [
+            'Generation is local and deterministic for the same options and input. Deeply nested input is capped to keep the browser responsive. Avoid pasting production tokens or personal data even into local tools when a sanitized payload can describe the same structure.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste a representative valid JSON object, array, or primitive value.',
+        'Choose the schema name and whether to infer common string formats, use strict objects, and include a TypeScript alias.',
+        'Generate the Zod source and review unions, optional fields, unknown arrays, and inferred formats.',
+        'Copy the result, install the appropriate Zod version in your project, and add contract-specific constraints and tests.',
+      ],
+    },
+    'json-diff-patch': {
+      name: 'JSON Diff & Patch Generator',
+      metadataTitle: 'JSON Diff & RFC 6902 Patch Generator Online',
+      description:
+        'Compare two JSON values, generate deterministic RFC 6902 add, remove, and replace operations, then edit and apply any JSON Patch locally.',
+      longDescription:
+        'Free local JSON Diff and Patch tool. Generate an RFC 6902 patch from source and target JSON, inspect escaped JSON Pointer paths, and apply add, remove, replace, move, copy, or test operations.',
+      keywords: [
+        'json diff',
+        'json patch generator',
+        'rfc 6902',
+        'apply json patch',
+        'json compare online',
+      ],
+      faqs: [
+        {
+          question: 'Which JSON Patch operations are supported?',
+          answer:
+            'The applicator supports add, remove, replace, move, copy, and test. Generated patches use deterministic add, remove, and replace operations; changed arrays are replaced as one value instead of attempting an unstable element-by-element diff.',
+        },
+        {
+          question: 'How are slash and tilde characters represented in paths?',
+          answer:
+            'JSON Patch paths use RFC 6901 JSON Pointer. A slash inside an object key becomes ~1 and a tilde becomes ~0, so a key named a/b is addressed as /a~1b.',
+        },
+        {
+          question: 'Does applying a patch change the source editor?',
+          answer:
+            'No. The source JSON is cloned before operations run, and the result is shown separately. Removing the complete document root is rejected because the tool always returns a valid JSON value.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How the JSON diff becomes a patch',
+          paragraphs: [
+            'Object keys are compared in sorted order so the same input produces the same operation sequence. Missing keys become remove operations, new keys become add operations, and changed primitive or array values become replace operations. Nested objects are traversed recursively, while every emitted path is escaped as an RFC 6901 JSON Pointer.',
+          ],
+        },
+        {
+          heading: 'Patch application and failure behavior',
+          bullets: [
+            'Array indexes are validated strictly, and the special - token appends only during add operations.',
+            'Replace, remove, move, copy, and test require their source paths to exist; failures identify the operation number.',
+            'Move rejects placing a value inside one of its own descendants and applies array index changes in operation order.',
+            'Test uses structural JSON equality rather than object identity or serialized key order.',
+            'Special object names such as __proto__ are created as own data properties without changing object prototypes.',
+          ],
+        },
+        {
+          heading: 'Determinism, privacy, and review',
+          paragraphs: [
+            'Generation and application run entirely in this browser. The generated diff is intentionally predictable rather than guaranteed minimal, especially for arrays. Review operation order, array replacement cost, concurrent document versions, and application authorization before using a patch against persistent data or an API.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste valid source and target JSON values, or load the sample.',
+        'Generate the deterministic patch and inspect each JSON Pointer path.',
+        'Edit or paste any supported RFC 6902 operation sequence if needed.',
+        'Apply the patch to the source and compare the separate result with the intended target.',
+      ],
+    },
   },
   encoding: {
     base64: {
@@ -437,65 +567,65 @@ const tools: Record<
       ],
     },
     'jwt-decoder': {
-      name: 'JWT Decoder',
-      metadataTitle: 'JWT Decoder Online – Inspect Claims Privately',
+      name: 'JWT Decoder, Signer & HMAC Verifier',
+      metadataTitle: 'JWT Decoder, HS256 Signer & Verifier Online',
       description:
-        'Decode JWT headers, payloads, timestamps, and claims privately in your browser. Decoding does not verify the token signature.',
+        'Decode compact JWTs, create HS256, HS384, or HS512 signatures, and verify HMAC signatures plus time, issuer, and audience claims locally.',
       longDescription:
-        'Free online JWT decoder. Decode JSON Web Tokens and inspect their header, payload, and signature. Useful for debugging authentication issues.',
-      keywords: ['jwt decoder', 'decode jwt', 'jwt parser', 'json web token decoder'],
+        'Free browser-based JWT decoder, HMAC signer, and verifier for development. Inspect claims, verify supported shared-secret signatures, or create a synthetic test token without uploading its fields.',
+      keywords: [
+        'jwt decoder',
+        'jwt verifier',
+        'jwt signature validator',
+        'hs256 jwt generator',
+        'jwt parser',
+      ],
       faqs: [
         {
-          question: 'What is a JWT?',
+          question: 'Does decoding prove that a JWT is authentic?',
           answer:
-            'JWT (JSON Web Token) is a compact, URL-safe means of representing claims to be transferred between two parties.',
+            'No. Anyone can Base64URL-encode a header and payload. Authenticity is established only after an allowed algorithm verifies with the correct key and every required claim policy passes.',
         },
         {
-          question: 'Does decoding verify the JWT signature?',
+          question: 'Which JWT algorithms can this page sign and verify?',
           answer:
-            'No. Decoding only reads the Base64URL-encoded header and payload. A trusted server and the correct key are required to verify the signature.',
+            'It supports HMAC algorithms HS256, HS384, and HS512 with a text secret. It deliberately rejects alg:none and does not accept RSA, ECDSA, EdDSA, JWK, JWKS, or certificate keys.',
         },
         {
-          question: 'Is it safe to paste my JWT here?',
+          question: 'Are tokens and secrets uploaded?',
           answer:
-            'Decoding happens in your browser and the token is not uploaded. Still avoid using production tokens on shared devices because JWT payloads can contain sensitive claims.',
+            'No. Decoding, Web Crypto HMAC signing, and signature verification run in the browser. Bearer tokens and secrets remain sensitive to clipboard history, extensions, screen sharing, and shared devices, so use synthetic data.',
         },
       ],
       answerSections: [
         {
-          heading: 'What the JWT Decoder does',
+          heading: 'Decode, verify, and sign are separate operations',
           paragraphs: [
-            'The decoder splits a three-part compact token into header, payload, and signature segments. It Base64URL-decodes the first two segments, parses their JSON, and displays the signature segment without checking it. RFC 7519 defines JWT as a compact claims representation; common registered claims include iss, sub, aud, exp, nbf, iat, and jti. Decoded claims are readable, but not automatically trustworthy.',
+            'Decode splits a three-part compact token and reads its JSON header and claims without trusting them. Verify selects HS256, HS384, or HS512 from the protected header, checks the exact signing input with Web Crypto, then evaluates exp, nbf, iat and optional issuer or audience expectations. Sign serializes the supplied JSON objects, overwrites header.alg with the selected HMAC algorithm, and creates a compact JWS for testing.',
           ],
         },
         {
-          heading: 'Common JWT debugging uses',
-          paragraphs: [
-            'Decoding is useful for examining what an application received before investigating verification failures:',
-          ],
+          heading: 'Verification rules and debugging signals',
           bullets: [
-            'Inspect alg, kid, and typ header parameters used during key and algorithm selection.',
-            'Review subject, issuer, audience, roles, scopes, and application-specific claims.',
-            'Convert NumericDate claims such as exp, nbf, and iat from epoch seconds into readable dates.',
-            'Compare token claims with the issuer, audience, and authorization rules expected by an API.',
-            'Remember that every displayed header and claim remains untrusted until the token is verified.',
+            'A valid HMAC signature proves that the signer held the same secret; it does not prove the secret was stored or distributed safely.',
+            'The token is rejected when its header omits alg, selects none, or requests an unsupported asymmetric algorithm.',
+            'Expiration, not-before, and issued-at values must be finite NumericDate seconds; clock skew can be set from zero through 300 seconds.',
+            'Optional issuer matching is exact. Audience matching accepts the expected value as either the aud string or one item in an aud array.',
+            'Authorization claims such as roles and scopes are displayed but remain application-specific and are not evaluated by this page.',
           ],
         },
         {
-          heading: 'Worked decoding example',
+          heading: 'Security and interoperability boundary',
           paragraphs: [
-            'A token might decode to header {"alg":"HS256","typ":"JWT"} and payload {"sub":"123","iss":"https://issuer.example","aud":"api","exp":1916239022}. The tool can show the expiration time and compare timestamp claims with the current clock. An authentication service must still allow the expected algorithm, verify the signature with the correct key, and enforce issuer, audience, time, and application policy.',
+            'A production verifier should configure its allowed algorithm independently, select keys from a trusted issuer configuration, enforce all application claims, rotate secrets, and handle replay or revocation policy. This page does not decrypt JWE, resolve JWK or JWKS documents, validate certificates, or reproduce library-specific JSON serialization. Generate production tokens only in the trusted identity system that owns the key.',
           ],
         },
-        {
-          heading: 'Verification limits and privacy',
-          bullets: [
-            'The displayed signature is not verified. A favorable timestamp badge does not mean the token is authentic or acceptable.',
-            'This decoder expects three segments; it does not decrypt a five-part encrypted JWE.',
-            'It does not check key trust, issuer, audience, nonce, revocation, permissions, or server-specific clock leeway.',
-            'Decoding runs in the browser, but bearer tokens are credentials. Avoid live production tokens, shared devices, clipboard history, browser extensions, and screen sharing.',
-          ],
-        },
+      ],
+      howToUseSteps: [
+        'Paste a compact three-part JWT or load the synthetic HS256 sample.',
+        'Inspect decoded fields, remembering they are untrusted until verification succeeds.',
+        'For HMAC verification, enter the matching test secret and any expected issuer or audience, then verify.',
+        'To create a test token, open the signing section, edit header and payload JSON, select HS256, HS384, or HS512, and sign.',
       ],
     },
     'html-entity': {
@@ -1161,6 +1291,134 @@ const tools: Record<
         'To debug an existing pair, paste the verifier and expected challenge, then verify them.',
       ],
     },
+    'bcrypt-generator': {
+      name: 'Bcrypt Generator & Verifier',
+      metadataTitle: 'Bcrypt Hash Generator & Verifier Online - Local',
+      description:
+        'Generate salted bcrypt hashes with an adjustable cost or verify a test password against an existing $2a$, $2b$, or $2y$ hash locally.',
+      longDescription:
+        'Free browser-based bcrypt generator and verifier for development and QA. Create a new salted hash or test a password/hash pair without sending field values to a server.',
+      keywords: [
+        'bcrypt generator',
+        'bcrypt hash generator',
+        'bcrypt verifier',
+        'bcrypt compare online',
+        'bcrypt password hash',
+      ],
+      faqs: [
+        {
+          question: 'Why does the same password produce a different hash each time?',
+          answer:
+            'Bcrypt generates a fresh random salt for every hash and stores the salt and cost inside the encoded result. Different hashes can therefore verify the same password without requiring a separate salt column.',
+        },
+        {
+          question: 'What does the bcrypt cost control?',
+          answer:
+            'The cost is a base-two work factor. Increasing it by one approximately doubles the hashing work. Choose a production cost by benchmarking your own authentication infrastructure rather than copying a browser timing.',
+        },
+        {
+          question: 'Why are passwords longer than 72 UTF-8 bytes rejected?',
+          answer:
+            'Bcrypt processes only the first 72 bytes. Rejecting longer input prevents two visibly different passwords from being silently treated as the same truncated byte sequence.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the bcrypt generator and verifier do',
+          paragraphs: [
+            'Generate creates a random salt, applies bcrypt with the selected cost, and returns the standard modular hash string containing the version, cost, salt, and checksum. Verify reads those parameters from an existing hash and performs bcrypt again before reporting whether the supplied test password matches. Bcrypt is deliberately slow, unlike fast checksum hashes such as MD5 or SHA-256.',
+          ],
+        },
+        {
+          heading: 'Cost, salt, and the 72-byte boundary',
+          bullets: [
+            'The interface offers browser-safe costs from 8 through 14; higher values can take noticeably longer on slower devices.',
+            'Every generated hash uses a new cryptographically random salt, so repeated generation should not return identical strings.',
+            'The complete encoded hash should be stored. Its salt and cost are already embedded and are used automatically during verification.',
+            'The tool counts UTF-8 bytes rather than JavaScript characters and rejects values over bcrypt’s 72-byte processing limit.',
+          ],
+        },
+        {
+          heading: 'Safe usage boundary',
+          paragraphs: [
+            'Use this page with synthetic development or QA data. Production password hashing belongs in a trusted server-side authentication flow with rate limiting, secure transport, breach monitoring, and a documented upgrade strategy. A successful comparison proves only that one password matches one encoded hash; it does not assess password strength, account security, or whether the selected cost is suitable for your servers.',
+          ],
+        },
+        {
+          heading: 'Local processing and compatibility',
+          paragraphs: [
+            'The bcrypt implementation is loaded only after an operation starts, and hashing or comparison runs in this browser. The verifier accepts standard $2a$, $2b$, and $2y$ forms within the cost limit. Clipboard managers, extensions, screen sharing, or an already-compromised device can still expose values, so do not paste real user credentials.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Enter a synthetic test password and choose a cost appropriate for an interactive browser check.',
+        'Generate the hash, then copy the complete encoded value if it is needed in a test fixture.',
+        'To verify, enter the candidate password and paste a supported bcrypt hash.',
+        'Review the match result and benchmark the final cost in the actual server environment before production use.',
+      ],
+    },
+    'certificate-decoder': {
+      name: 'PEM / X.509 Certificate Decoder',
+      metadataTitle: 'X.509 Certificate Decoder Online – PEM Inspector',
+      description:
+        'Decode one X.509 certificate or a PEM chain locally and inspect subject, issuer, dates, SANs, algorithms, extensions, and SHA-256 fingerprints.',
+      longDescription:
+        'Free browser-based PEM and X.509 certificate decoder. Inspect up to ten certificates from a PEM chain or Base64 DER without uploading certificate data.',
+      keywords: [
+        'certificate decoder',
+        'x509 certificate viewer',
+        'pem decoder',
+        'ssl certificate checker',
+        'certificate fingerprint',
+      ],
+      faqs: [
+        {
+          question: 'Does decoding prove that a certificate is trusted?',
+          answer:
+            'No. Parsing shows encoded fields and can test whether a certificate verifies with its own public key. Trust also requires a valid chain to an accepted root, purpose and name checks, policy, time, and often revocation or transparency evidence.',
+        },
+        {
+          question: 'Can I paste a complete PEM certificate chain?',
+          answer:
+            'Yes. The tool extracts and decodes up to ten CERTIFICATE blocks in input order. It does not reorder them or prove that each certificate signed the next one.',
+        },
+        {
+          question: 'Are private keys accepted?',
+          answer:
+            'No. The input accepts PEM CERTIFICATE blocks or Base64-encoded DER certificates. Private-key and certificate-request text is rejected; do not paste private keys into browser tools.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'Fields extracted from an X.509 certificate',
+          paragraphs: [
+            'The decoder reads ASN.1 DER carried directly as Base64 or inside RFC 7468 PEM boundaries. It reports distinguished subject and issuer names, serial number, not-before and not-after dates, signature and public-key algorithms, supported subject alternative names, extension OIDs, byte size, and a SHA-256 digest of the exact certificate bytes.',
+          ],
+        },
+        {
+          heading: 'Validity and self-signature are narrow checks',
+          bullets: [
+            'Currently valid means the browser clock is between notBefore and notAfter; it does not establish trust or intended usage.',
+            'Self-issued means subject and issuer names match, while cryptographically self-signed additionally requires the signature to verify with the certificate public key.',
+            'Unsupported browser cryptography can leave the self-signature result unknown even when the certificate structure decodes.',
+            'A SHA-256 fingerprint identifies exact DER bytes for comparison; it becomes a trust signal only when obtained from an independent trusted channel.',
+          ],
+        },
+        {
+          heading: 'Checks that still belong to a TLS or PKI validator',
+          paragraphs: [
+            'This page does not build a chain against operating-system or browser roots, retrieve intermediates, check key usage or policy for a specific purpose, match a hostname, query OCSP or CRLs, inspect Certificate Transparency logs, or connect to a server. Those decisions require the trust store, connection context, and validation policy of the real client.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste one PEM certificate, a PEM chain, or Base64-encoded DER.',
+        'Decode and review the validity badge, identity fields, algorithms, and SHA-256 fingerprint.',
+        'Inspect SAN entries and extension OIDs for the names and capabilities you expect.',
+        'Use a real TLS or PKI validator with the correct trust store before making a security decision.',
+      ],
+    },
   },
   text: {
     'regex-tester': {
@@ -1338,7 +1596,7 @@ const tools: Record<
         {
           question: 'Is raw HTML in Markdown safe to preview?',
           answer:
-            'Rendered output is sanitized with DOMPurify. Scripts, forms, iframes, style attributes, and other high-risk elements are removed, but remote images or links that remain in the document can still contact external sites when opened or displayed.',
+            'Rendered output is sanitized with DOMPurify. Scripts, forms, iframes, style attributes, and other high-risk elements are removed. Linked images are blocked by default; enabling them can contact their hosts, while following a link still contacts its destination.',
         },
       ],
       answerSections: [
@@ -1354,20 +1612,20 @@ const tools: Record<
             'DOMPurify removes scripts, forms, frames, embedded objects, style elements, style attributes, and other disallowed markup before preview or export.',
             'Sanitization is context-specific. Re-sanitise or safely render the output again if another application modifies it, combines it with templates, or places it in a non-HTML context.',
             'Syntax highlighting is not applied; fenced code language labels are preserved as markup hints only.',
-            'Relative links and assets resolve according to the page where exported HTML is opened, so validate them for the final publishing location.',
+            'Linked images are replaced with a visible placeholder unless you explicitly allow them. Relative links and other assets still resolve according to the page where exported HTML is opened.',
           ],
         },
         {
           heading: 'Privacy and external-resource note',
           paragraphs: [
-            'Markdown parsing and sanitization run locally and the text is not uploaded by this tool. A Markdown image that points to a remote URL can still trigger a request from the browser during preview, and following a link contacts its destination. Clipboard history, downloaded files, browser extensions, and the location where you publish the exported HTML are separate data paths.',
+            'Markdown parsing and sanitization run locally and the text is not uploaded by this tool. Linked images are blocked by default. If you enable them, the browser can contact image hosts and disclose connection metadata such as your IP address; the preview applies no-referrer and lazy-loading hints. Following a link, clipboard history, downloaded files, browser extensions, and the location where you publish exported HTML are separate data paths.',
           ],
         },
       ],
       howToUseSteps: [
         'Type Markdown or load the example document.',
         'Switch between Preview and HTML to inspect the rendered result.',
-        'Check links, remote images, tables, and code blocks for the destination where they will be published.',
+        'Keep linked images disabled for a network-isolated preview, or enable them only when you trust their hosts.',
         'Copy the sanitized HTML fragment or export the standalone HTML document.',
       ],
     },
@@ -1709,6 +1967,73 @@ const tools: Record<
           question: 'Does it support repeated keys?',
           answer: 'Yes. Repeated keys are preserved as arrays when parsing.',
         },
+      ],
+    },
+    'env-to-json': {
+      name: '.env to JSON Converter',
+      metadataTitle: '.env to JSON Converter Online - Private Dotenv Parser',
+      description:
+        'Convert dotenv KEY=VALUE files to JSON or JSON objects back to portable .env text locally, with quoted values, duplicate warnings, and optional primitive inference.',
+      longDescription:
+        'Free private .env to JSON converter and JSON to dotenv builder. Parse common dotenv syntax or serialize a JSON object without uploading configuration values.',
+      keywords: [
+        'env to json',
+        'dotenv to json',
+        'json to env',
+        'env file parser',
+        'convert env online',
+      ],
+      faqs: [
+        {
+          question: 'Are values in a .env file always strings?',
+          answer:
+            'Environment variables are strings at the process boundary. Optional inference is a convenience for JSON output and converts only clear booleans, JSON-style numbers, and null; leave it disabled when exact string preservation matters.',
+        },
+        {
+          question: 'What happens when a key is defined more than once?',
+          answer:
+            'The last definition wins, matching common dotenv behavior, and the converter displays a warning with both line numbers so the duplicate is not hidden.',
+        },
+        {
+          question: 'Does this tool expand variables such as ${HOST}?',
+          answer:
+            'No. It parses values but intentionally does not interpolate variables, execute shell expressions, read files, or contact a server. Expansion behavior differs between dotenv loaders and should be tested in the target runtime.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the .env and JSON converter supports',
+          paragraphs: [
+            'In .env to JSON mode, the parser accepts blank lines, comments, optional export prefixes, common environment variable names, unquoted values, and single-, double-, or backtick-quoted values. Double-quoted newline, carriage return, tab, quote, and backslash escapes are decoded. Quoted values can span lines, while inline comments outside quotes are removed.',
+          ],
+        },
+        {
+          heading: 'Type inference and duplicate handling',
+          bullets: [
+            'By default every parsed environment value remains a string, which reflects how operating systems expose process variables.',
+            'Optional inference converts true, false, null, and unambiguous JSON-style numbers; values such as 0012 remain strings to preserve leading zeros.',
+            'If a key appears multiple times, the final value is emitted and a warning identifies the duplicate definitions.',
+            'JSON output uses a prototype-safe dictionary so special names such as __proto__ remain ordinary data keys.',
+          ],
+        },
+        {
+          heading: 'How JSON is written as dotenv text',
+          paragraphs: [
+            'JSON to .env mode requires a top-level object whose keys are valid environment variable names. Strings are double-quoted and escaped, numbers and booleans are written as literals, null becomes an empty string with a warning, and arrays or nested objects become quoted JSON strings. Review structured values because the receiving application decides whether and how to parse them again.',
+          ],
+        },
+        {
+          heading: 'Privacy and dialect differences',
+          paragraphs: [
+            'Conversion runs in the browser and this tool does not upload field values. Dotenv syntax is a convention with implementation differences: interpolation, command substitution, export handling, and escape rules may vary between Node.js, Docker, shells, and framework-specific loaders. Validate the generated file with the exact runtime that will consume it, and prefer sanitized examples over production credentials.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose .env to JSON or JSON to .env and paste a sanitized configuration sample.',
+        'For .env input, decide whether JSON primitives should be inferred or all values should remain strings.',
+        'Convert and review duplicate-key or structured-value warnings.',
+        'Copy the result and validate it with the exact application or dotenv loader that will consume it.',
       ],
     },
   },
@@ -2380,6 +2705,130 @@ const tools: Record<
         'Keep sensitive-header redaction enabled when sharing or reviewing output.',
         'Copy the POSIX cURL command or JavaScript fetch snippet.',
         'Review shell, CORS, credential, redirect, and body semantics before running it.',
+      ],
+    },
+    'color-contrast-checker': {
+      name: 'Color Contrast Checker',
+      metadataTitle: 'WCAG Color Contrast Checker Online – AA & AAA',
+      description:
+        'Calculate WCAG 2.x contrast ratios for opaque sRGB hex colors, check normal text, large text, and UI thresholds, and preview the pair live.',
+      longDescription:
+        'Free local color contrast checker for accessibility reviews. Test foreground and background colors against WCAG AA and AAA thresholds and apply a higher-contrast black or white suggestion.',
+      keywords: [
+        'color contrast checker',
+        'wcag contrast checker',
+        'accessibility color checker',
+        'contrast ratio',
+        'wcag aa aaa',
+      ],
+      faqs: [
+        {
+          question: 'What contrast ratios does WCAG require for text?',
+          answer:
+            'For most text, AA requires at least 4.5:1 and AAA requires 7:1. Large text uses 3:1 for AA and 4.5:1 for AAA. Large text is at least 18 point regular or 14 point bold, commonly approximated as 24 CSS pixels or about 18.66 CSS pixels bold.',
+        },
+        {
+          question: 'What does the UI components result represent?',
+          answer:
+            'It applies the 3:1 threshold commonly used for visual information needed to identify user-interface components and graphical objects. Applicability depends on state, boundaries, adjacent colors, and whether the visual is required to understand or operate the interface.',
+        },
+        {
+          question: 'Does a passing ratio make the whole design accessible?',
+          answer:
+            'No. Contrast is one requirement. Font weight, size, spacing, hover and focus states, gradients, images, color-vision differences, zoom, forced colors, and conveying information without color all need separate testing.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How the contrast ratio is calculated',
+          paragraphs: [
+            'Each opaque sRGB channel is converted from its encoded value to linear light, combined with the WCAG relative-luminance coefficients, and compared as (lighter + 0.05) / (darker + 0.05). The ratio ranges from 1:1 for identical luminance to 21:1 for black and white. Swapping foreground and background does not change the numeric ratio.',
+          ],
+        },
+        {
+          heading: 'AA, AAA, and live preview',
+          bullets: [
+            'Normal-text AA passes at 4.5:1 and AAA at 7:1.',
+            'Large-text AA passes at 3:1 and AAA at 4.5:1.',
+            'The UI sample reports the 3:1 non-text threshold without assuming that every visible border must meet it.',
+            'The suggestion chooses whichever of opaque black or white has the higher ratio against the current background; it does not preserve brand intent.',
+            'The live preview helps spot obvious readability problems but is not a substitute for testing the rendered product at its real sizes and states.',
+          ],
+        },
+        {
+          heading: 'Color and rendering boundaries',
+          paragraphs: [
+            'The calculator accepts three- or six-digit opaque hexadecimal sRGB colors. Alpha transparency, gradients, images, blend modes, display calibration, anti-aliasing, wide-gamut colors, and text drawn over changing content require evaluating the final composited pixels. Processing is local and does not sample another webpage automatically.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Enter or pick an opaque foreground and background hex color.',
+        'Review the exact ratio and each normal-text, large-text, and UI threshold.',
+        'Use the live preview and optionally apply the higher-contrast black or white suggestion.',
+        'Test the complete interface at real font sizes, weights, component states, zoom levels, and color modes.',
+      ],
+    },
+    'openapi-validator': {
+      name: 'OpenAPI Validator & Endpoint Explorer',
+      metadataTitle: 'OpenAPI Validator & Endpoint Explorer Online',
+      description:
+        'Parse OpenAPI 3.0, 3.1, or 3.2 JSON and YAML locally, check core structure and references, and search an endpoint inventory by path, method, tag, or operation ID.',
+      longDescription:
+        'Free local OpenAPI validator and endpoint explorer. Inspect operations, responses, security inheritance, path parameters, duplicate operation IDs, and local references without fetching remote files.',
+      keywords: [
+        'openapi validator',
+        'swagger validator',
+        'openapi endpoint explorer',
+        'validate openapi yaml',
+        'openapi parser online',
+      ],
+      faqs: [
+        {
+          question: 'Which OpenAPI versions are supported?',
+          answer:
+            'The structural analyzer accepts version strings for OpenAPI 3.0, 3.1, and 3.2. Swagger 2.0 is reported as unsupported rather than being silently converted.',
+        },
+        {
+          question: 'Are external $ref documents downloaded?',
+          answer:
+            'No. Local fragment references beginning with # are resolved inside the pasted document. File and network references are listed as warnings but are never fetched, which keeps analysis local and avoids hidden network access.',
+        },
+        {
+          question: 'Does a valid result guarantee full OpenAPI conformance?',
+          answer:
+            'No. This is a focused structural analyzer, not the official schema plus every semantic rule. Use a version-specific validator and the target generator or gateway in CI before publishing an API contract.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the structural validator checks',
+          paragraphs: [
+            'The parser accepts JSON or bounded YAML input, requires an OpenAPI 3 version, info title and version, and a paths object, then inventories standard HTTP operations. It reports missing responses, duplicate operation IDs, unmatched or optional path-template parameters, unusual response keys, unresolved local references, unsupported root versions, and unknown Path Item fields.',
+          ],
+        },
+        {
+          heading: 'How the endpoint explorer summarizes the contract',
+          bullets: [
+            'Each row shows method, path, summary, operationId, response keys, deprecation, and effective security status.',
+            'Operation-level security overrides root security; an empty security array is shown as explicitly public.',
+            'Search covers path, summary, operationId, and tags, while the method selector narrows the visible operation list.',
+            'The normalized JSON view makes YAML parsing results and merged aliases visible for review.',
+            'External references are counted and reported without any browser request.',
+          ],
+        },
+        {
+          heading: 'Validation and security boundaries',
+          paragraphs: [
+            'A structurally valid document can still contain incompatible schemas, invalid examples, broken callbacks, incorrect media types, generator-specific extensions, unusable authentication flows, or business behavior that does not match the implementation. Local $ref resolution checks existence but does not fully dereference every semantic context. YAML depth, aliases, merge expansion, and total input size are bounded to protect browser responsiveness.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste an OpenAPI 3 JSON or YAML document, or load the synthetic sample.',
+        'Validate and review errors before warnings; correct unresolved local references and operation contract gaps.',
+        'Search or filter the endpoint table to inspect methods, responses, IDs, and inherited security.',
+        'Copy the normalized JSON when useful, then run the target ecosystem validator and generator in CI.',
       ],
     },
   },

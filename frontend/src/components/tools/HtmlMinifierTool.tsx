@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
-import CopyButton from '@/components/common/CopyButton';
 import { useLanguage } from '@/context/LanguageContext';
 
 function minifyHtml(html: string, options: { removeComments: boolean; collapseWhitespace: boolean }): string {
@@ -165,11 +164,6 @@ export default function HtmlMinifierTool() {
               language="html"
               minHeight="300px"
             />
-            {minified && (
-              <div className="absolute top-2 right-2">
-                <CopyButton text={minified} />
-              </div>
-            )}
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import type { Language } from './index';
 import { translations } from './index';
 import { toolCatalog } from '@/lib/api';
 import { CSP_FINDING_CODES } from '@/lib/contentSecurityPolicy';
+import { enhancedToolTranslations } from './enhancedTools';
 
 const BASE_LANGUAGE: Language = 'en';
 const COVERAGE_THRESHOLDS: Record<Language, number> = {
@@ -22,6 +23,13 @@ const REQUIRED_TOOL_UI_PREFIXES = [
   'tool.jsonpath.',
   'tool.csp.',
   'tool.curl.',
+  'tool.env.',
+  'tool.zod.',
+  'tool.bcrypt.',
+  'tool.jsonPatch.',
+  'tool.contrast.',
+  'tool.certificate.',
+  'tool.openapi.',
   'tool.sha256Hash.',
 ] as const;
 
@@ -90,6 +98,15 @@ describe('translations', () => {
 
     (Object.keys(translations) as Language[]).forEach((language) => {
       for (const key of localizedKeys) {
+        expect(translations[language][key]?.trim(), `${language}: ${key}`).toBeTruthy();
+      }
+    });
+  });
+
+  it('provides every enhanced tool string in every supported language', () => {
+    const enhancedKeys = Object.keys(enhancedToolTranslations.en);
+    (Object.keys(translations) as Language[]).forEach((language) => {
+      for (const key of enhancedKeys) {
         expect(translations[language][key]?.trim(), `${language}: ${key}`).toBeTruthy();
       }
     });

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useCallback, useDeferredValue, useMemo, useState } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import CopyButton from '@/components/common/CopyButton';
 import { useLanguage } from '@/context/LanguageContext';
@@ -78,8 +78,10 @@ export default function CaseConverterTool() {
   const { t } = useLanguage();
   const [input, setInput] = useState('');
   const [selectedCase, setSelectedCase] = useState<CaseType>('camel');
+  const deferredInput = useDeferredValue(input);
+  const isUpdating = input !== deferredInput;
 
-  const converted = input ? converters[selectedCase](input) : '';
+  const converted = deferredInput ? converters[selectedCase](deferredInput) : '';
 
   const convertAll = useCallback((str: string) => {
     const result: Partial<Record<CaseType, string>> = {};
@@ -90,7 +92,7 @@ export default function CaseConverterTool() {
     return result;
   }, []);
 
-  const allCases = convertAll(input);
+  const allCases = useMemo(() => convertAll(deferredInput), [convertAll, deferredInput]);
 
   const loadSample = useCallback(() => {
     setInput('Hello World! This is a test-string.for_case conversion.');
@@ -110,15 +112,27 @@ export default function CaseConverterTool() {
 
       {/* Input */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Input Text
-        </label>
+        <div className="mb-2 flex min-h-5 items-center justify-between gap-3">
+          <label
+            htmlFor="case-converter-input"
+            className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+          >
+            Input Text
+          </label>
+          {isUpdating ? (
+            <span role="status" className="text-xs text-gray-500 dark:text-gray-400">
+              {t('common.updating')}
+            </span>
+          ) : null}
+        </div>
         <CodeEditor
+          id="case-converter-input"
           value={input}
           onChange={setInput}
           placeholder="Enter text to convert..."
           language="text"
           minHeight="100px"
+          maxLength={250_000}
         />
       </div>
 
@@ -147,7 +161,7 @@ export default function CaseConverterTool() {
       </div>
 
       {/* All Cases */}
-      {input && (
+      {deferredInput ? (
         <div>
           <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
             All Case Conversions
@@ -169,7 +183,7 @@ export default function CaseConverterTool() {
             ))}
           </div>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

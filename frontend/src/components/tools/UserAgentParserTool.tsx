@@ -149,6 +149,7 @@ export default function UserAgentParserTool() {
             value={output}
             onChange={() => {}}
             readOnly
+            showCopy={false}
             language="json"
             placeholder="Parsed browser, OS, engine, device, CPU, and bot fields appear here..."
             minHeight="260px"

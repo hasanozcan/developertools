@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
-import CopyButton from '@/components/common/CopyButton';
 import { useLanguage } from '@/context/LanguageContext';
 
 function formatHtml(html: string, indentSize: number = 2): string {
@@ -213,11 +212,6 @@ export default function HtmlFormatterTool() {
               language="html"
               minHeight="300px"
             />
-            {formatted && (
-              <div className="absolute top-2 right-2">
-                <CopyButton text={formatted} />
-              </div>
-            )}
           </div>
         </div>
       </div>

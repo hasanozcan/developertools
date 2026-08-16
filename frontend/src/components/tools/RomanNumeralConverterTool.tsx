@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
-import CopyButton from '@/components/common/CopyButton';
 import { ArrowDownUp } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { numberToRoman, parseRomanNumberInput, romanToNumber } from '@/lib/romanNumerals';
@@ -166,11 +165,6 @@ export default function RomanNumeralConverterTool() {
               language="text"
               minHeight="100px"
             />
-            {output && (
-              <div className="absolute top-2 right-2">
-                <CopyButton text={output} />
-              </div>
-            )}
           </div>
         </div>
       </div>
