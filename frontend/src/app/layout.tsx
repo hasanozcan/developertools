@@ -221,7 +221,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {adSenseClientId && (
           <Script
             id="adsbygoogle-js"
-            strategy="lazyOnload"
+            strategy="afterInteractive"
             src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adSenseClientId}`}
             crossOrigin="anonymous"
           />

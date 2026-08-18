@@ -94,6 +94,7 @@ export function probeAdSenseRuntime(timeoutMs: number): Promise<ProbeResult> {
 /**
  * Detects content filtering with a DOM bait and the real AdSense runtime.
  * A same-origin probe distinguishes blocking from a general connection error.
+ * A simple timeout on the AdSense runtime is treated as clear to avoid false positives.
  */
 export async function detectContentBlocker(
   adClient: string,
@@ -121,7 +122,6 @@ export async function detectContentBlocker(
     if (isBaitBlocked(bait)) return 'blocked';
 
     const adProbe = await runtimeProbeImpl(networkTimeoutMs);
-
     if (adProbe === 'reachable') return 'clear';
     if (!fetchImpl) return 'unknown';
 
@@ -132,7 +132,28 @@ export async function detectContentBlocker(
       networkTimeoutMs,
       { method: 'GET', cache: 'no-store', credentials: 'same-origin' },
     );
-    return firstPartyProbe === 'reachable' ? 'blocked' : 'unknown';
+
+    if (firstPartyProbe !== 'reachable') {
+      return 'unknown';
+    }
+
+    if (adProbe === 'failed') {
+      return 'blocked';
+    }
+
+    // If adProbe was a timeout, check direct AdSense script reachability
+    const adScriptUrl = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${encodeURIComponent(adClient)}`;
+    const directProbe = await probeUrl(fetchImpl, adScriptUrl, networkTimeoutMs, {
+      method: 'GET',
+      mode: 'no-cors',
+      cache: 'no-store',
+    });
+
+    if (directProbe === 'failed') {
+      return 'blocked';
+    }
+
+    return 'clear';
   } finally {
     bait.remove();
   }

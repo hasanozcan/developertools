@@ -58,16 +58,30 @@ describe('detectContentBlocker', () => {
     expect(document.querySelector('.adsbox')).toBeNull();
   });
 
-  it('returns blocked when only the AdSense runtime is unavailable', async () => {
-    const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue({} as Response);
+  it('returns blocked when the AdSense script request explicitly fails and same-origin is reachable', async () => {
+    const fetchImpl = vi.fn<typeof fetch>().mockImplementation(async (input) => {
+      const url = String(input);
+      if (url.includes('pagead2.googlesyndication.com')) {
+        throw new TypeError('Failed to fetch');
+      }
+      return {} as Response;
+    });
     const runtimeProbeImpl = vi.fn().mockResolvedValue('timeout' as const);
 
     await expect(
       detectContentBlocker('ca-pub-123', { fetchImpl, runtimeProbeImpl, baitSettleMs: 0 }),
     ).resolves.toBe('blocked');
 
-    expect(fetchImpl).toHaveBeenCalledTimes(1);
-    expect(String(fetchImpl.mock.calls[0][0])).toContain('/favicon.svg?content_blocker_probe=');
+    expect(fetchImpl).toHaveBeenCalledTimes(2);
+  });
+
+  it('returns clear without blocking users when the AdSense runtime times out but direct script is reachable', async () => {
+    const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue({} as Response);
+    const runtimeProbeImpl = vi.fn().mockResolvedValue('timeout' as const);
+
+    await expect(
+      detectContentBlocker('ca-pub-123', { fetchImpl, runtimeProbeImpl, baitSettleMs: 0 }),
+    ).resolves.toBe('clear');
   });
 
   it('returns unknown when both ad and same-origin requests fail', async () => {
@@ -104,17 +118,6 @@ describe('detectContentBlocker', () => {
 
     expect(wasAborted).toBe(true);
     expect(document.querySelector('.adsbox')).toBeNull();
-  });
-
-  it('checks the first-party connection when the AdSense runtime times out', async () => {
-    const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue({} as Response);
-    const runtimeProbeImpl = vi.fn().mockResolvedValue('timeout' as const);
-
-    await expect(
-      detectContentBlocker('ca-pub-123', { fetchImpl, runtimeProbeImpl, baitSettleMs: 0 }),
-    ).resolves.toBe('blocked');
-
-    expect(fetchImpl).toHaveBeenCalledOnce();
   });
 });
 
