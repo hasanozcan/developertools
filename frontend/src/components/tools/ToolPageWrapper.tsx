@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import { useTheme } from '@/context/ThemeContext';
 import FavoriteButton from '@/components/common/FavoriteButton';
 import HistoryTracker from '@/components/common/HistoryTracker';
 import AdSense from '@/components/common/AdSense';
-import { Maximize2, Minimize2, Sparkles, X } from 'lucide-react';
+import { Maximize2, Minimize2, Sparkles, X, Sun, Moon } from 'lucide-react';
 import Link from 'next/link';
 
 interface ToolPageWrapperProps {
@@ -36,6 +37,7 @@ export default function ToolPageWrapper({
   children,
 }: ToolPageWrapperProps) {
   const { t } = useLanguage();
+  const { setTheme, resolvedTheme } = useTheme();
   const [isZenMode, setIsZenMode] = useState(false);
 
   // Lock body scroll and handle ESC key when in Zen Mode
@@ -177,19 +179,33 @@ export default function ToolPageWrapper({
               role="dialog"
               aria-modal="true"
               aria-label={`${toolName} - ${t('zenMode') || 'Zen Mode'}`}
-              className="fixed inset-0 z-[100] flex flex-col bg-slate-950/95 backdrop-blur-2xl p-3 sm:p-6 md:p-8 overflow-y-auto"
+              className="fixed inset-0 z-[100] flex flex-col bg-slate-100/95 p-3 sm:p-6 md:p-8 overflow-y-auto backdrop-blur-2xl dark:bg-slate-950/95 text-slate-900 dark:text-slate-100"
             >
               {/* Header Bar */}
-              <div className="sticky top-0 z-20 flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 shadow-xl backdrop-blur-xl mb-4 sm:mb-6">
+              <div className="sticky top-0 z-20 flex items-center justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white/95 px-4 py-3 shadow-xl backdrop-blur-xl mb-4 sm:mb-6 dark:border-white/10 dark:bg-slate-900/90">
                 <div className="flex items-center gap-3">
                   <span className="eyebrow py-0.5 px-2.5 text-[10px]">{translatedCategoryName}</span>
-                  <h2 className="text-base sm:text-lg font-bold text-white tracking-tight truncate">
+                  <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight truncate">
                     {toolName}
                   </h2>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="hidden md:inline-flex items-center text-xs text-slate-400">
-                    <kbd className="rounded border border-slate-700 bg-slate-800 px-1.5 py-0.5 text-[10px] font-mono text-slate-300 mr-1.5">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  {/* Theme Toggle Button */}
+                  <button
+                    onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+                    title={resolvedTheme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                    aria-label={resolvedTheme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                    className="inline-flex items-center justify-center h-8 w-8 rounded-xl border border-slate-200/80 bg-white text-slate-700 shadow-sm transition hover:bg-slate-50 hover:border-slate-300 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                  >
+                    {resolvedTheme === 'dark' ? (
+                      <Sun className="h-4 w-4 text-amber-400" />
+                    ) : (
+                      <Moon className="h-4 w-4 text-indigo-600" />
+                    )}
+                  </button>
+
+                  <span className="hidden md:inline-flex items-center text-xs text-slate-500 dark:text-slate-400">
+                    <kbd className="rounded border border-slate-200 bg-slate-100 px-1.5 py-0.5 text-[10px] font-mono text-slate-600 mr-1.5 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                       ESC
                     </kbd>
                     {t('exitZenMode') || 'to exit'}
@@ -206,8 +222,8 @@ export default function ToolPageWrapper({
                 </div>
               </div>
 
-              {/* Fullscreen Tool Content */}
-              <div className="flex-1 w-full max-w-7xl mx-auto rounded-3xl border border-white/10 bg-slate-900/80 p-4 sm:p-8 shadow-2xl backdrop-blur-xl">
+              {/* Fullscreen Tool Content Container */}
+              <div className="flex-1 w-full max-w-7xl mx-auto rounded-3xl border border-slate-200/80 bg-white p-4 sm:p-8 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900">
                 {children}
               </div>
             </div>
