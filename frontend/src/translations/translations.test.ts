@@ -42,12 +42,10 @@ describe('translations', () => {
     const baseKeys = Object.keys(translations[BASE_LANGUAGE]);
 
     (Object.keys(translations) as Language[]).forEach((language) => {
-      if (language === BASE_LANGUAGE) {
-        return;
-      }
+      if (language === BASE_LANGUAGE) return;
 
       const translated = translations[language];
-      const coveredKeyCount = baseKeys.filter((key) => key in translated).length;
+      const coveredKeyCount = baseKeys.filter((key) => key in translated && Boolean(translated[key]?.trim())).length;
       const coverage = coveredKeyCount / baseKeys.length;
 
       expect(
@@ -55,6 +53,12 @@ describe('translations', () => {
         `${language} translation coverage is ${(coverage * 100).toFixed(1)}%`,
       ).toBeGreaterThanOrEqual(COVERAGE_THRESHOLDS[language]);
     });
+  });
+
+  it('keeps Turkish at 100% parity with English base keys', () => {
+    const baseKeys = Object.keys(translations[BASE_LANGUAGE]);
+    const trMissing = baseKeys.filter((key) => !(key in translations.tr) || !translations.tr[key]?.trim());
+    expect(trMissing).toEqual([]);
   });
 
   it('keeps interpolation placeholders consistent with English source strings', () => {
