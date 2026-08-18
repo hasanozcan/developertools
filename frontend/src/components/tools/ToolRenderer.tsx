@@ -139,6 +139,19 @@ const toolComponents = {
     loading: Loading,
     ssr: false,
   }),
+  'svg-to-jsx': dynamic(() => import('./SvgToJsxTool'), { loading: Loading, ssr: false }),
+  'svg-minifier': dynamic(() => import('./SvgMinifierTool'), { loading: Loading, ssr: false }),
+  'css-clamp': dynamic(() => import('./CssClampTool'), { loading: Loading, ssr: false }),
+  'css-box-shadow': dynamic(() => import('./CssBoxShadowTool'), { loading: Loading, ssr: false }),
+  'docker-run-to-compose': dynamic(() => import('./DockerRunToComposeTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'cron-generator': dynamic(() => import('./CronGeneratorTool'), { loading: Loading, ssr: false }),
+  'json-to-sql': dynamic(() => import('./JsonToSqlTool'), { loading: Loading, ssr: false }),
+  'bip39-generator': dynamic(() => import('./Bip39GeneratorTool'), { loading: Loading, ssr: false }),
+  'dmarc-generator': dynamic(() => import('./DmarcGeneratorTool'), { loading: Loading, ssr: false }),
+  'json-to-models': dynamic(() => import('./JsonToModelsTool'), { loading: Loading, ssr: false }),
 } as const satisfies Record<ToolSlug, ComponentType>;
 
 export const toolComponentSlugs = Object.keys(toolComponents) as ToolSlug[];

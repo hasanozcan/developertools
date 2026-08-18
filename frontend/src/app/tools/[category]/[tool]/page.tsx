@@ -490,6 +490,44 @@ const tools: Record<
         'Apply the patch to the source and compare the separate result with the intended target.',
       ],
     },
+    'json-to-models': {
+      name: 'JSON to Multi-Language Models',
+      metadataTitle: 'JSON to Go Structs, Python Pydantic, Rust Serde & C# Online',
+      description:
+        'Convert JSON data into idiomatic Go structs, Python Pydantic v2 models, Rust Serde structs, C# records, and Kotlin data classes locally.',
+      longDescription:
+        'Free online JSON to Multi-Language Struct and Model Generator. Generate typed models for Go, Python, Rust, C#, and Kotlin with JSON tags, optional fields, and nested structures without uploading data.',
+      keywords: [
+        'json to go',
+        'json to pydantic',
+        'json to rust serde',
+        'json to csharp',
+        'json to model generator',
+      ],
+      faqs: [
+        {
+          question: 'Which programming languages are supported?',
+          answer:
+            'The generator currently supports Go (Golang structs with JSON tags), Python (Pydantic v2 BaseModels), Rust (Serde structs), C# (Records with JsonPropertyName), and Kotlin (Data classes).',
+        },
+        {
+          question: 'How are nested objects and arrays handled?',
+          answer:
+            'Nested JSON objects are extracted into separate, typed structs or classes with camel/pascal casing, and array item types are automatically inferred.',
+        },
+        {
+          question: 'Is my JSON data uploaded to any server?',
+          answer:
+            'No. The code generation runs 100% locally inside your browser using client-side JavaScript.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste a representative JSON payload or array of objects into the editor.',
+        'Select your target language (Go, Python, Rust, C#, or Kotlin).',
+        'Customize the Root Model Name if needed.',
+        'Copy the generated typed model definitions into your codebase.',
+      ],
+    },
   },
   encoding: {
     base64: {
@@ -1053,6 +1091,71 @@ const tools: Record<
         },
       ],
     },
+    'css-box-shadow': {
+      name: 'CSS Box Shadow Generator',
+      metadataTitle: 'CSS Box Shadow & Glassmorphism Generator Online',
+      description:
+        'Create layered CSS box-shadows and glassmorphism styling visually with live preview and multi-layer support.',
+      longDescription:
+        'Free visual CSS Box Shadow and Glassmorphism generator. Configure multi-layer shadows, inset shadows, blur, spread, colors, opacity, and backdrop blur with 1-click CSS export.',
+      keywords: [
+        'css box shadow generator',
+        'box shadow tool',
+        'glassmorphism generator',
+        'css shadow presets',
+        'layered box shadow',
+      ],
+      faqs: [
+        {
+          question: 'How do multiple box-shadow layers work?',
+          answer:
+            'CSS box-shadow accepts comma-separated shadow definitions. Layers declared earlier in the list are rendered on top of layers declared later.',
+        },
+        {
+          question: 'What is glassmorphism in CSS?',
+          answer:
+            'Glassmorphism combines semi-transparent background colors with backdrop-filter: blur() and subtle light borders to mimic frosted glass.',
+        },
+      ],
+      howToUseSteps: [
+        'Pick a starter preset (Soft SaaS, Floating, Neon, Glassmorphism) or start from scratch.',
+        'Adjust X/Y offsets, blur radius, spread, color, and opacity for each shadow layer.',
+        'Add or remove shadow layers to achieve realistic depth.',
+        'Copy the generated CSS or Tailwind arbitrary class.',
+      ],
+    },
+    'cron-generator': {
+      name: 'Visual Cron Expression Builder',
+      metadataTitle: 'Cron Expression Generator & Schedule Builder Online',
+      description:
+        'Build and visualize standard 5-part cron expressions with minutes, hours, days, weeks, and months options.',
+      longDescription:
+        'Free online Cron Expression Generator. Build crontab schedules visually with user-friendly selectors and clear English explanations without memorizing syntax.',
+      keywords: [
+        'cron generator',
+        'cron expression builder',
+        'crontab generator online',
+        'cron schedule maker',
+      ],
+      faqs: [
+        {
+          question: 'What are the 5 parts of a standard cron expression?',
+          answer:
+            'Standard cron expressions consist of 5 fields: Minute (0-59), Hour (0-23), Day of Month (1-31), Month (1-12), and Day of Week (0-6, where 0 is Sunday).',
+        },
+        {
+          question: 'What does */15 mean in cron?',
+          answer:
+            'The step value */15 in the minute position means "every 15 minutes" (e.g. at :00, :15, :30, and :45).',
+        },
+      ],
+      howToUseSteps: [
+        'Select your frequency tab (Minutes, Hourly, Daily, Weekly, or Monthly).',
+        'Pick the specific intervals, days of the week, or times of the day.',
+        'Review the generated 5-part cron expression and human-readable explanation.',
+        'Copy the cron expression to your crontab, GitHub Action, or cloud scheduler.',
+      ],
+    },
   },
   crypto: {
     'md5-hash': {
@@ -1417,6 +1520,39 @@ const tools: Record<
         'Decode and review the validity badge, identity fields, algorithms, and SHA-256 fingerprint.',
         'Inspect SAN entries and extension OIDs for the names and capabilities you expect.',
         'Use a real TLS or PKI validator with the correct trust store before making a security decision.',
+      ],
+    },
+    'bip39-generator': {
+      name: 'BIP-39 Mnemonic Generator',
+      metadataTitle: 'BIP-39 Mnemonic Seed Phrase Generator & Validator Online',
+      description:
+        'Generate cryptographically secure 12, 15, 18, 21, and 24-word BIP-39 mnemonic seed phrases locally in your browser.',
+      longDescription:
+        'Free client-side BIP-39 Mnemonic Generator and Seed Phrase Validator. Generate crypto seed phrases with secure Web Crypto entropy, calculate checksums, and verify wordlists with zero network transmission.',
+      keywords: [
+        'bip39 generator',
+        'mnemonic phrase generator',
+        'crypto seed generator',
+        'bip39 validator',
+        '24 word seed phrase',
+      ],
+      faqs: [
+        {
+          question: 'What is BIP-39?',
+          answer:
+            'BIP-39 (Bitcoin Improvement Proposal 39) describes the implementation of a mnemonic sentence—a group of easy-to-remember words—for the generation of deterministic crypto wallets.',
+        },
+        {
+          question: 'Is it safe to generate seed phrases here?',
+          answer:
+            'All generation and entropy calculation uses window.crypto.getRandomValues() and runs 100% locally inside your browser. No seed phrases are ever transmitted over the network.',
+        },
+      ],
+      howToUseSteps: [
+        'Choose the desired seed phrase length (12 words for 128-bit entropy or 24 words for 256-bit entropy).',
+        'Click Generate New to create a cryptographically secure mnemonic phrase.',
+        'Copy and securely write down the seed phrase on a physical medium.',
+        'Optionally paste existing seed phrases into the validator to check word validity.',
       ],
     },
   },
@@ -2036,6 +2172,134 @@ const tools: Record<
         'Copy the result and validate it with the exact application or dotenv loader that will consume it.',
       ],
     },
+    'svg-to-jsx': {
+      name: 'SVG to JSX / React Converter',
+      metadataTitle: 'SVG to React / JSX Converter Online – TSX & Component Generator',
+      description:
+        'Convert SVG markup into clean React JSX or TypeScript TSX components with style conversion and forwardRef support.',
+      longDescription:
+        'Free online SVG to JSX and React Component generator. Transform SVG elements into production-ready React components with camelCase attributes, inline style objects, and custom props spread.',
+      keywords: [
+        'svg to jsx',
+        'svg to react',
+        'svg to tsx',
+        'convert svg to react component',
+        'svgr online',
+      ],
+      faqs: [
+        {
+          question: 'How does this handle SVG attributes in React?',
+          answer:
+            'All hyphenated HTML/SVG attributes (like stroke-width, fill-rule, clip-path) are converted to valid React camelCase (strokeWidth, fillRule, clipPath), and class becomes className.',
+        },
+        {
+          question: 'Does it support TypeScript and forwardRef?',
+          answer:
+            'Yes! You can toggle TypeScript interfaces, forwardRef wrappers, and standard prop spreads with one click.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your raw SVG code or load the sample.',
+        'Choose your desired component name and options (TypeScript, forwardRef, named export).',
+        'Copy the generated React component code directly into your project.',
+      ],
+    },
+    'css-clamp': {
+      name: 'CSS clamp() Fluid Calculator',
+      metadataTitle: 'CSS clamp() Fluid Typography & Spacing Calculator Online',
+      description:
+        'Calculate responsive CSS clamp() formulas for fluid typography and spacing across any viewport range.',
+      longDescription:
+        'Free online CSS clamp() generator. Calculate mathematically perfect responsive typography and spacing curves with SCSS mixins and Tailwind class outputs.',
+      keywords: [
+        'css clamp calculator',
+        'fluid typography generator',
+        'css fluid font size',
+        'clamp generator',
+        'responsive text calculator',
+      ],
+      faqs: [
+        {
+          question: 'How does CSS clamp() work?',
+          answer:
+            'The clamp(min, preferred, max) function sets a preferred value based on viewport width (vw) that is constrained between minimum and maximum bounds.',
+        },
+        {
+          question: 'Why use fluid typography?',
+          answer:
+            'Fluid typography smoothly scales text across screen sizes without jumping abruptly between fixed media query breakpoints.',
+        },
+      ],
+      howToUseSteps: [
+        'Set your minimum and maximum viewport widths (e.g. 375px to 1440px).',
+        'Set your minimum and maximum target font sizes or spacing values.',
+        'Use the interactive viewport slider to simulate and preview resizing in real-time.',
+        'Copy the generated clamp() value or Tailwind arbitrary class.',
+      ],
+    },
+    'docker-run-to-compose': {
+      name: 'Docker Run to Compose Converter',
+      metadataTitle: 'Docker Run to Docker Compose Converter Online',
+      description:
+        'Convert complex docker run CLI commands into clean, modern docker-compose.yml services instantly.',
+      longDescription:
+        'Free online Docker Run to Docker Compose converter. Parse ports, volumes, environment variables, restart policies, and network configs into valid compose.yaml files.',
+      keywords: [
+        'docker run to compose',
+        'docker run to docker-compose',
+        'composerize online',
+        'convert docker run command',
+      ],
+      faqs: [
+        {
+          question: 'Which docker run flags are supported?',
+          answer:
+            'The converter parses flags including -p/--publish, -v/--volume, -e/--env, --name, --restart, --network, -w/--workdir, -u/--user, --privileged, and container command arguments.',
+        },
+        {
+          question: 'Is the output valid for modern Docker Compose?',
+          answer:
+            'Yes, the generated YAML follows the modern Docker Compose specification format.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste one or more docker run commands into the input box.',
+        'The tool parses the command and immediately generates formatted docker-compose.yml YAML.',
+        'Copy the YAML and save it as compose.yaml in your project directory.',
+      ],
+    },
+    'json-to-sql': {
+      name: 'JSON to SQL Converter',
+      metadataTitle: 'JSON to SQL Converter Online – INSERT Statements & DDL Generator',
+      description:
+        'Convert JSON data into standard SQL INSERT statements and CREATE TABLE DDL queries for PostgreSQL, MySQL, and SQLite.',
+      longDescription:
+        'Free online JSON to SQL converter. Infer SQL column types, create tables, and generate single or batch INSERT queries from JSON objects or arrays.',
+      keywords: [
+        'json to sql',
+        'convert json to sql insert',
+        'json to create table',
+        'json to postgresql',
+        'json to mysql',
+      ],
+      faqs: [
+        {
+          question: 'Which SQL dialects are supported?',
+          answer:
+            'The converter supports PostgreSQL, MySQL, SQLite, and Microsoft SQL Server dialect flavors.',
+        },
+        {
+          question: 'How are data types inferred?',
+          answer:
+            'Numbers, booleans, ISO date strings, objects, and text lengths are analyzed across all rows to determine appropriate column data types.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your JSON object or array of objects into the editor.',
+        'Select your target SQL dialect and choose options (CREATE TABLE, batch inserts, quoted identifiers).',
+        'Copy the generated SQL script and run it in your database client.',
+      ],
+    },
   },
   formatters: {
     'sql-formatter': {
@@ -2250,6 +2514,38 @@ const tools: Record<
         'Choose the indentation width.',
         'Review comments, CDATA, mixed content, and declarations in the formatted output.',
         'Run the result through the destination XML parser and schema validator before use.',
+      ],
+    },
+    'svg-minifier': {
+      name: 'SVG Optimizer & Minifier',
+      metadataTitle: 'SVG Optimizer & Minifier Online – Compress SVG Files Free',
+      description:
+        'Minify, optimize, and strip metadata from SVG graphics locally to reduce file size with real-time rendered preview.',
+      longDescription:
+        'Free online SVG Minifier and Optimizer. Remove editor namespaces, metadata, unneeded decimal precision, and whitespace from SVG files to speed up web page load times.',
+      keywords: [
+        'svg minifier',
+        'svg optimizer',
+        'compress svg',
+        'shrink svg online',
+        'clean svg markup',
+      ],
+      faqs: [
+        {
+          question: 'How much does SVG minification reduce file size?',
+          answer:
+            'Depending on how much editor metadata (Adobe Illustrator, Inkscape) and comment bloat exists, SVG file sizes are often reduced by 30% to 70%.',
+        },
+        {
+          question: 'Does minification affect visual quality?',
+          answer:
+            'No. The minifier preserves essential visual vectors and curves while rounding redundant multi-digit decimals to maintain pixel-perfect rendering.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste bloated or raw SVG markup into the original input area.',
+        'Inspect the file size savings percentage and live rendered preview.',
+        'Copy the minified SVG markup or click Download to save the optimized SVG file.',
       ],
     },
   },
@@ -2829,6 +3125,39 @@ const tools: Record<
         'Validate and review errors before warnings; correct unresolved local references and operation contract gaps.',
         'Search or filter the endpoint table to inspect methods, responses, IDs, and inherited security.',
         'Copy the normalized JSON when useful, then run the target ecosystem validator and generator in CI.',
+      ],
+    },
+    'dmarc-generator': {
+      name: 'DMARC & SPF Record Generator',
+      metadataTitle: 'SPF, DMARC & DKIM Record Generator Online – DNS Security Wizard',
+      description:
+        'Create valid SPF and DMARC DNS TXT records to prevent email spoofing, phishing, and improve inbox deliverability.',
+      longDescription:
+        'Free online SPF and DMARC DNS TXT record generator. Configure authorized IP ranges, Google Workspace, Microsoft 365, SendGrid, and DMARC enforcement policies with 1-click copy.',
+      keywords: [
+        'dmarc generator',
+        'spf record generator',
+        'email security dns',
+        'dkim generator',
+        'txt record generator',
+      ],
+      faqs: [
+        {
+          question: 'What is SPF and why is it needed?',
+          answer:
+            'SPF (Sender Policy Framework) is a DNS TXT record that lists authorized mail servers allowed to send emails on behalf of your domain name.',
+        },
+        {
+          question: 'What is DMARC?',
+          answer:
+            'DMARC (Domain-based Message Authentication, Reporting, and Conformance) uses SPF and DKIM to instruct receiving servers how to handle emails that fail authentication.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter your domain name (e.g. example.com).',
+        'Configure your SPF authorized servers (MX, Google Workspace, Microsoft 365, custom IPs).',
+        'Switch to the DMARC tab and select your enforcement policy (none, quarantine, or reject).',
+        'Copy the generated DNS TXT records and paste them into your domain registrar / DNS provider.',
       ],
     },
   },

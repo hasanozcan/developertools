@@ -86,10 +86,12 @@ export default function Header() {
             category: 'generators',
             name: t('toolName.password-generator'),
           },
+          { slug: 'bip39-generator', category: 'crypto', name: t('toolName.bip39-generator') },
           { slug: 'qr-code', category: 'generators', name: t('toolName.qr-code') },
           { slug: 'slug-generator', category: 'generators', name: t('toolName.slug-generator') },
           { slug: 'css-gradient', category: 'generators', name: t('toolName.css-gradient') },
           { slug: 'meta-tags', category: 'generators', name: t('toolName.meta-tags') },
+          { slug: 'json-to-models', category: 'generators', name: t('toolName.json-to-models') },
         ],
       },
       {
@@ -100,12 +102,17 @@ export default function Header() {
           { slug: 'sql-formatter', category: 'formatters', name: t('toolName.sql-formatter') },
           { slug: 'css-minifier', category: 'formatters', name: t('toolName.css-minifier') },
           { slug: 'js-minifier', category: 'formatters', name: t('toolName.js-minifier') },
+          { slug: 'svg-minifier', category: 'converters', name: t('toolName.svg-minifier') },
         ],
       },
       {
         name: t('nav.converters'),
         href: '/tools/converters',
         tools: [
+          { slug: 'svg-to-jsx', category: 'converters', name: t('toolName.svg-to-jsx') },
+          { slug: 'css-clamp', category: 'converters', name: t('toolName.css-clamp') },
+          { slug: 'css-box-shadow', category: 'converters', name: t('toolName.css-box-shadow') },
+          { slug: 'json-to-sql', category: 'converters', name: t('toolName.json-to-sql') },
           {
             slug: 'timestamp-converter',
             category: 'converters',
@@ -127,6 +134,9 @@ export default function Header() {
         name: t('nav.moreTools'),
         href: '/#categories',
         tools: [
+          { slug: 'docker-run-to-compose', category: 'utilities', name: t('toolName.docker-run-to-compose') },
+          { slug: 'cron-generator', category: 'utilities', name: t('toolName.cron-generator') },
+          { slug: 'dmarc-generator', category: 'utilities', name: t('toolName.dmarc-generator') },
           { slug: 'regex-tester', category: 'text', name: t('toolName.regex-tester') },
           { slug: 'regex-escape', category: 'text', name: t('toolName.regex-escape') },
           { slug: 'text-diff', category: 'text', name: t('toolName.text-diff') },

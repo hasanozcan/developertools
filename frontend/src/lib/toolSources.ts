@@ -201,6 +201,13 @@ const sources = {
     url: 'https://www.rfc-editor.org/rfc/rfc7468',
   },
   openapi: { name: 'OpenAPI Specification', url: 'https://spec.openapis.org/oas/' },
+  svg: { name: 'W3C Scalable Vector Graphics (SVG) 2', url: 'https://www.w3.org/TR/SVG2/' },
+  docker: { name: 'Docker Compose File Specification', url: 'https://docs.docker.com/compose/compose-file/' },
+  bip39: { name: 'BIP 0039: Mnemonic code for generating deterministic keys', url: 'https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki' },
+  spf: { name: 'RFC 7208: Sender Policy Framework (SPF)', url: 'https://www.rfc-editor.org/rfc/rfc7208' },
+  dmarc: { name: 'RFC 7489: Domain-based Message Authentication, Reporting, and Conformance (DMARC)', url: 'https://www.rfc-editor.org/rfc/rfc7489' },
+  cssClamp: { name: 'MDN: clamp() CSS function', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/clamp' },
+  boxShadow: { name: 'MDN: box-shadow CSS property', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow' },
 } satisfies Record<string, ToolSource>;
 
 const sourceByTool = {
@@ -269,6 +276,16 @@ const sourceByTool = {
   'color-contrast-checker': [sources.wcagContrast, sources.color],
   'certificate-decoder': [sources.x509, sources.pem, sources.webCrypto],
   'openapi-validator': [sources.openapi, sources.yaml, sources.jsonPointer],
+  'svg-to-jsx': sources.svg,
+  'svg-minifier': sources.svg,
+  'css-clamp': sources.cssClamp,
+  'css-box-shadow': sources.boxShadow,
+  'docker-run-to-compose': sources.docker,
+  'cron-generator': sources.cron,
+  'json-to-sql': [sources.sql, sources.json],
+  'bip39-generator': [sources.bip39, sources.webCrypto],
+  'dmarc-generator': [sources.dmarc, sources.spf],
+  'json-to-models': [sources.json, sources.typescript],
 } satisfies Record<ToolSlug, ToolSource | ToolSource[]>;
 
 export function getToolSources(toolSlug: string): ToolSource[] {

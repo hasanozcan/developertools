@@ -117,6 +117,16 @@ const toolIconMap: Record<string, LucideIcon> = {
   'http-status-codes': FileText,
   'user-agent-parser': Fingerprint,
   'cidr-calculator': Network,
+  'svg-to-jsx': FileCode,
+  'svg-minifier': Minimize2,
+  'css-clamp': Calculator,
+  'css-box-shadow': Paintbrush,
+  'docker-run-to-compose': Binary,
+  'cron-generator': Clock,
+  'json-to-sql': Database,
+  'bip39-generator': Key,
+  'dmarc-generator': ShieldCheck,
+  'json-to-models': Code2,
 };
 
 interface CommandPaletteProps {
