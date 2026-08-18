@@ -6,15 +6,6 @@ import { CSP_FINDING_CODES } from '@/lib/contentSecurityPolicy';
 import { enhancedToolTranslations } from './enhancedTools';
 
 const BASE_LANGUAGE: Language = 'en';
-const COVERAGE_THRESHOLDS: Record<Language, number> = {
-  en: 1,
-  tr: 0.99,
-  de: 0.96,
-  es: 0.93,
-  fr: 0.89,
-  ru: 0.85,
-  zh: 0.74,
-};
 const PLACEHOLDER_PATTERN = /\{([a-zA-Z0-9_]+)\}/g;
 const REQUIRED_TOOL_UI_PREFIXES = [
   'tool.pkce.',
@@ -38,27 +29,18 @@ function extractPlaceholders(value: string): string[] {
 }
 
 describe('translations', () => {
-  it('keeps language-specific key coverage floors', () => {
+  it('enforces 100% key parity for all supported languages against English base', () => {
     const baseKeys = Object.keys(translations[BASE_LANGUAGE]);
 
     (Object.keys(translations) as Language[]).forEach((language) => {
-      if (language === BASE_LANGUAGE) return;
-
       const translated = translations[language];
-      const coveredKeyCount = baseKeys.filter((key) => key in translated && Boolean(translated[key]?.trim())).length;
-      const coverage = coveredKeyCount / baseKeys.length;
+      const missingKeys = baseKeys.filter((key) => !(key in translated) || !translated[key]?.trim());
 
       expect(
-        coverage,
-        `${language} translation coverage is ${(coverage * 100).toFixed(1)}%`,
-      ).toBeGreaterThanOrEqual(COVERAGE_THRESHOLDS[language]);
+        missingKeys,
+        `${language} is missing ${missingKeys.length} translation keys: ${missingKeys.slice(0, 5).join(', ')}`,
+      ).toEqual([]);
     });
-  });
-
-  it('keeps Turkish at 100% parity with English base keys', () => {
-    const baseKeys = Object.keys(translations[BASE_LANGUAGE]);
-    const trMissing = baseKeys.filter((key) => !(key in translations.tr) || !translations.tr[key]?.trim());
-    expect(trMissing).toEqual([]);
   });
 
   it('keeps interpolation placeholders consistent with English source strings', () => {
