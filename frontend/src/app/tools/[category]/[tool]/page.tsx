@@ -1222,6 +1222,72 @@ const tools: Record<
         'Copy the HTML <link> tags and site.webmanifest config directly into your project.',
       ],
     },
+    'gitignore-generator': {
+      name: '.gitignore Generator',
+      metadataTitle: '.gitignore Generator Online – Node, Python, Java, Go & IDEs',
+      description:
+        'Create customized .gitignore files for Node.js, Python, Go, Rust, macOS, Windows, VSCode, and JetBrains in seconds.',
+      longDescription:
+        'Free online .gitignore Generator. Select and combine standard ignore templates across programming languages, web frameworks, operating systems, and code editors without manual copy-pasting.',
+      keywords: [
+        'gitignore generator',
+        'node gitignore',
+        'python gitignore',
+        'vscode gitignore',
+        'ds_store gitignore',
+      ],
+      faqs: [
+        {
+          question: 'What templates are included in this .gitignore generator?',
+          answer:
+            'The generator includes standard rules for Node.js/TypeScript, Python, Go, Rust, Java/Gradle/Maven, React/Next.js/Vite, Vue/Nuxt, macOS (.DS_Store), Windows, Linux, VSCode, and JetBrains IDEs.',
+        },
+        {
+          question: 'Can I add custom ignore patterns?',
+          answer:
+            'Yes, you can write custom rule lines in the editor which will be automatically combined with the selected platform templates.',
+        },
+      ],
+      howToUseSteps: [
+        'Search and toggle the technologies, operating systems, and IDEs used in your repository.',
+        'Add any project-specific secret paths or local file patterns in the custom rules box.',
+        'Review the merged, formatted .gitignore output.',
+        'Click Copy or Download .gitignore to place it directly in your project root.',
+      ],
+    },
+    'css-blob-generator': {
+      name: 'CSS & SVG Blob Generator',
+      metadataTitle: 'CSS & SVG Blob Generator Online – Organic Shapes & Border Radius',
+      description:
+        'Generate smooth, organic, fluid blob shapes using CSS border-radius and SVG vector paths for modern web design backgrounds.',
+      longDescription:
+        'Free online CSS & SVG Blob Shape Generator. Create beautiful organic fluid blobs for website headers, hero illustrations, and UI backgrounds with 1-click CSS and SVG code export.',
+      keywords: [
+        'css blob generator',
+        'svg blob generator',
+        'organic shape generator',
+        'fancy border radius',
+        'blob maker online',
+      ],
+      faqs: [
+        {
+          question: 'How do CSS blobs work without SVG?',
+          answer:
+            'CSS blobs use the 8-value border-radius property syntax (horizontal-radii / vertical-radii) to create asymmetric, curved organic shapes purely in CSS.',
+        },
+        {
+          question: 'Can I download the shape as a scalable vector graphic (SVG)?',
+          answer:
+            'Yes, you can copy the raw SVG vector markup or download the shape as a standalone .svg file.',
+        },
+      ],
+      howToUseSteps: [
+        'Click "Generate Random Shape" to shuffle organic geometric curves.',
+        'Pick your desired brand or accent background color.',
+        'Copy the CSS border-radius snippet for pure CSS implementation.',
+        'Or click "Download SVG Vector" to import the shape into Figma or your HTML codebase.',
+      ],
+    },
   },
   crypto: {
     'md5-hash': {
@@ -1652,6 +1718,72 @@ const tools: Record<
         'Choose your desired key length (e.g. 2048-bit or 4096-bit) or curve (e.g. P-256).',
         'Click Generate to create a new key pair instantly.',
         'Copy the PEM strings or download them as .pem files.',
+      ],
+    },
+    'htpasswd-generator': {
+      name: '.htpasswd Generator',
+      metadataTitle: '.htpasswd Generator Online – Bcrypt, Apache MD5 & SHA-1 Basic Auth',
+      description:
+        'Generate secure htpasswd entries for Apache and Nginx HTTP Basic Authentication with Bcrypt ($2y$), SHA-1, or MD5.',
+      longDescription:
+        'Free online .htpasswd Password Hash Generator. Create secure credentials for Nginx and Apache HTTP Basic Authentication using modern Bcrypt, SHA-1, and MD5 algorithms entirely in your browser.',
+      keywords: [
+        'htpasswd generator',
+        'htpasswd online',
+        'nginx basic auth generator',
+        'apache htpasswd bcrypt',
+        'htpasswd maker',
+      ],
+      faqs: [
+        {
+          question: 'Which algorithm is recommended for production .htpasswd?',
+          answer:
+            'Bcrypt ($2y$) is strongly recommended for production environments as it provides robust protection against brute-force and dictionary attacks.',
+        },
+        {
+          question: 'Is my plaintext password sent to any server?',
+          answer:
+            'No. Hashing is performed 100% locally in your browser using the Web Crypto API. Your passwords never touch a server.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter your desired username (e.g. admin).',
+        'Type or generate a strong password.',
+        'Choose your hashing algorithm (Bcrypt recommended, SHA-1 for Apache/Nginx compatibility).',
+        'Copy the generated .htpasswd line or download the .htpasswd file.',
+      ],
+    },
+    'totp-generator': {
+      name: '2FA / TOTP Authenticator Generator',
+      metadataTitle: '2FA & TOTP Generator Online – RFC 6238 Live Codes & Secret Key',
+      description:
+        'Generate RFC 6238 Time-based One-Time Passwords (TOTP), Base32 secret keys, and otpauth:// URIs for Google Authenticator.',
+      longDescription:
+        'Free online 2FA / TOTP Authenticator Code Generator. Test and generate 6-digit Time-Based One-Time Passwords (RFC 6238) with live 30-second countdowns and authenticator URI generation.',
+      keywords: [
+        'totp generator',
+        '2fa code generator online',
+        'authenticator code generator',
+        'totp secret key',
+        'rfc 6238 generator',
+      ],
+      faqs: [
+        {
+          question: 'How does Time-based One-Time Password (TOTP) work?',
+          answer:
+            'TOTP (RFC 6238) calculates a 6-digit verification code by computing an HMAC-SHA1 signature using a shared Base32 secret and the current 30-second Unix time epoch interval.',
+        },
+        {
+          question: 'Is this compatible with Google Authenticator, Authy, and 1Password?',
+          answer:
+            'Yes, the generated secret keys and otpauth:// URIs follow the open standard supported by Google Authenticator, Microsoft Authenticator, 1Password, and Bitwarden.',
+        },
+      ],
+      howToUseSteps: [
+        'Use the generated Base32 secret key or paste your existing 2FA secret.',
+        'Optionally customize your Issuer Name and Account Email.',
+        'Watch the live 6-digit authentication code update every 30 seconds.',
+        'Click the Copy button to quickly copy the current 6-digit security code.',
       ],
     },
   },
@@ -2494,6 +2626,38 @@ const tools: Record<
         'Paste your raw HTML containing <table>...</table> into the editor.',
         'Choose whether you want an array of objects or a 2D array.',
         'Copy the parsed JSON payload or download it as a .json file.',
+      ],
+    },
+    'sql-to-json': {
+      name: 'SQL to JSON Converter',
+      metadataTitle: 'SQL to JSON Converter Online – INSERT Statements & Dumps to JSON',
+      description:
+        'Convert SQL INSERT statements, table rows, and database dumps into structured JSON arrays and objects instantly.',
+      longDescription:
+        'Free online SQL to JSON Converter. Parse SQL INSERT INTO queries, table dumps, and exported database rows into structured JSON arrays and key-value objects directly in your browser.',
+      keywords: [
+        'sql to json',
+        'sql insert to json',
+        'convert sql to json online',
+        'sql dump to json',
+        'sql query to json object',
+      ],
+      faqs: [
+        {
+          question: 'Does this tool support multiple row INSERT statements?',
+          answer:
+            'Yes. The converter handles multi-row INSERT INTO table (col1, col2) VALUES (a, b), (c, d) statements seamlessly.',
+        },
+        {
+          question: 'Are data types (numbers, booleans, NULL) preserved?',
+          answer:
+            'Yes. Numbers, boolean literals (TRUE/FALSE), and NULL values are automatically parsed and cast into native JSON data types.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your SQL INSERT INTO statements or database query output into the editor.',
+        'Review the automatically generated, formatted JSON output.',
+        'Click Copy JSON or download it directly as a .json data file.',
       ],
     },
   },
@@ -3420,6 +3584,171 @@ const tools: Record<
         'Select your desired target programming language from the top toolbar.',
         'Review the automatically generated idiomatic code snippet.',
         'Click Copy Code to paste the code into your application.',
+      ],
+    },
+    'dockerfile-generator': {
+      name: 'Dockerfile Generator',
+      metadataTitle: 'Dockerfile Generator Online – Multi-Stage Node, Python, Go & Rust',
+      description:
+        'Generate optimized multi-stage production Dockerfiles for Node.js, Python, Go, Rust, and Nginx in seconds.',
+      longDescription:
+        'Free online Dockerfile Generator. Create lightweight, secure, and production-ready multi-stage Dockerfiles with non-root user security and cached dependency layers for modern cloud deployments.',
+      keywords: [
+        'dockerfile generator',
+        'dockerfile online',
+        'node dockerfile generator',
+        'python dockerfile generator',
+        'multi stage dockerfile',
+      ],
+      faqs: [
+        {
+          question: 'What is a multi-stage Docker build?',
+          answer:
+            'Multi-stage builds use separate intermediate containers for compilation and production runtime, drastically reducing final image sizes and eliminating build-time dependencies from production.',
+        },
+        {
+          question: 'Does the generated Dockerfile run as a non-root user?',
+          answer:
+            'Yes, where applicable, the generated Dockerfile configures a dedicated non-root user (e.g. USER node or appuser) for container security best practices.',
+        },
+      ],
+      howToUseSteps: [
+        'Select your application runtime (Node.js, Python, Go, Rust, Static Nginx, or PHP).',
+        'Specify the base image version, internal port, and package manager.',
+        'Review the generated multi-stage Dockerfile code.',
+        'Copy the Dockerfile or download it directly to place in your repository root.',
+      ],
+    },
+    'css-glassmorphism': {
+      name: 'CSS Glassmorphism Generator',
+      metadataTitle: 'CSS Glassmorphism Generator Online – Frosted Glass UI & Tailwind CSS',
+      description:
+        'Design beautiful frosted glassmorphism UI cards with real-time backdrop blur, transparency, borders, and Tailwind CSS code.',
+      longDescription:
+        'Free online CSS Glassmorphism Generator. Customize backdrop blur, background transparency, border opacity, and shadow depth in real-time with copy-pasteable CSS and Tailwind CSS classes.',
+      keywords: [
+        'glassmorphism generator',
+        'frosted glass css',
+        'css glass effect',
+        'tailwind glassmorphism',
+        'backdrop blur generator',
+      ],
+      faqs: [
+        {
+          question: 'What CSS properties create the glassmorphism effect?',
+          answer:
+            'Glassmorphism is achieved using backdrop-filter: blur(), semi-transparent background (rgba), subtle white borders (rgba), and elevation box-shadows.',
+        },
+        {
+          question: 'Is backdrop-filter supported in all modern browsers?',
+          answer:
+            'Yes, backdrop-filter is supported in all modern browsers (Chrome, Edge, Safari, Firefox). Vendor prefixes (-webkit-backdrop-filter) are included for maximum compatibility.',
+        },
+      ],
+      howToUseSteps: [
+        'Adjust the backdrop blur and background opacity sliders.',
+        'Fine-tune border opacity and rounded corners.',
+        'Preview the glass card over vibrant floating geometric backgrounds.',
+        'Copy the CSS or Tailwind CSS utility snippet to paste into your components.',
+      ],
+    },
+    'css-grid-generator': {
+      name: 'CSS Grid Layout Generator',
+      metadataTitle: 'CSS Grid Layout Generator Online – Interactive Visual Grid Builder',
+      description:
+        'Build custom CSS Grid layouts visually. Configure columns, rows, gaps, and export clean CSS grid-template and HTML code.',
+      longDescription:
+        'Free online CSS Grid Layout Generator. Visually configure dynamic CSS Grid columns, rows, and gaps with live responsive preview and copy-pasteable CSS and HTML markup.',
+      keywords: [
+        'css grid generator',
+        'grid builder online',
+        'css grid visualizer',
+        'grid template columns generator',
+        'css layout generator',
+      ],
+      faqs: [
+        {
+          question: 'What units can I use for columns and rows?',
+          answer:
+            'You can configure flexible fractional units (fr), exact pixel dimensions (px), or percentages (%) for maximum layout responsiveness.',
+        },
+        {
+          question: 'Can I copy both the CSS and HTML?',
+          answer:
+            'Yes, both the .parent container CSS with grid-template-columns and the matching HTML structure are generated simultaneously.',
+        },
+      ],
+      howToUseSteps: [
+        'Set the number of columns and rows with the slider controls.',
+        'Adjust column gap and row gap dimensions in pixels.',
+        'Inspect the interactive visual grid preview box.',
+        'Copy the generated CSS Grid stylesheet and HTML container markup.',
+      ],
+    },
+    'robots-txt-generator': {
+      name: 'robots.txt Generator & Tester',
+      metadataTitle: 'robots.txt Generator Online – Search Engine Crawler Rules & Sitemap',
+      description:
+        'Create SEO-friendly robots.txt files with custom user-agent rules (Googlebot, Bingbot), disallow directories, and sitemap directives.',
+      longDescription:
+        'Free online robots.txt Generator. Generate standardized robots.txt files to manage search engine web crawler access, protect private directories, and declare XML sitemaps.',
+      keywords: [
+        'robots txt generator',
+        'robots txt builder',
+        'googlebot disallow generator',
+        'seo robots txt online',
+        'create robots txt',
+      ],
+      faqs: [
+        {
+          question: 'What is the purpose of robots.txt?',
+          answer:
+            'A robots.txt file instructs search engine crawlers (Googlebot, Bingbot) which URLs and directories they can or cannot access on your website.',
+        },
+        {
+          question: 'Where should the robots.txt file be placed?',
+          answer:
+            'The robots.txt file must always be placed at the root level of your website domain (e.g. https://example.com/robots.txt).',
+        },
+      ],
+      howToUseSteps: [
+        'Configure crawler directives for all bots (*) and specific engines (Googlebot, Bingbot).',
+        'Add directory paths you want to disallow (e.g. /admin/, /private/, /api/).',
+        'Specify your XML sitemap URL.',
+        'Copy the generated text or download it directly as robots.txt for your web server root.',
+      ],
+    },
+    'sitemap-generator': {
+      name: 'XML Sitemap Generator',
+      metadataTitle: 'XML Sitemap Generator Online – Convert URL Lists to sitemap.xml',
+      description:
+        'Generate valid sitemap.xml files from a list of URLs with custom lastmod, changefreq, and priority tags for Google Search Console.',
+      longDescription:
+        'Free online XML Sitemap Generator. Convert raw URL lists into standardized sitemap.xml files compliant with the Sitemaps.org protocol for search engine indexation.',
+      keywords: [
+        'xml sitemap generator',
+        'sitemap xml online',
+        'url to sitemap generator',
+        'google sitemap creator',
+        'sitemap maker',
+      ],
+      faqs: [
+        {
+          question: 'What tags are included in the generated sitemap XML?',
+          answer:
+            'The generated XML conforms to the sitemaps.org 0.9 schema, including <url>, <loc>, <lastmod>, <changefreq>, and <priority> elements.',
+        },
+        {
+          question: 'How do I submit this to Google Search Console?',
+          answer:
+            'Download the generated sitemap.xml, upload it to your website root directory (https://example.com/sitemap.xml), and submit the URL in Google Search Console.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your list of website URLs (one URL per line).',
+        'Select the default change frequency (e.g. weekly, daily) and priority weight.',
+        'Review the formatted XML urlset output in the right editor.',
+        'Copy the XML markup or click Download to save sitemap.xml.',
       ],
     },
   },

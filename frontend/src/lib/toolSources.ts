@@ -209,6 +209,13 @@ const sources = {
   cssClamp: { name: 'MDN: clamp() CSS function', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/clamp' },
   boxShadow: { name: 'MDN: box-shadow CSS property', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow' },
   csv: { name: 'RFC 4180: Common Format and MIME Type for CSV Files', url: 'https://www.rfc-editor.org/rfc/rfc4180' },
+  git: { name: 'Git Documentation: gitignore', url: 'https://git-scm.com/docs/gitignore' },
+  apacheAuth: { name: 'Apache HTTP Server: Authentication and Authorization', url: 'https://httpd.apache.org/docs/2.4/howto/auth.html' },
+  dockerfile: { name: 'Docker Docs: Dockerfile reference', url: 'https://docs.docker.com/reference/dockerfile/' },
+  cssGrid: { name: 'MDN: CSS Grid Layout', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout' },
+  robots: { name: 'RFC 9309: Robots Exclusion Protocol', url: 'https://www.rfc-editor.org/rfc/rfc9309' },
+  sitemaps: { name: 'sitemaps.org: XML Sitemap Protocol', url: 'https://www.sitemaps.org/protocol.html' },
+  totp: { name: 'RFC 6238: TOTP: Time-Based One-Time Password Algorithm', url: 'https://www.rfc-editor.org/rfc/rfc6238' },
 } satisfies Record<string, ToolSource>;
 
 const sourceByTool = {
@@ -295,6 +302,16 @@ const sourceByTool = {
   'svg-optimizer': sources.svg,
   'html-table-to-json': [sources.html, sources.json],
   'favicon-generator': [sources.html, sources.svg],
+  'gitignore-generator': sources.git,
+  'htpasswd-generator': [sources.bcrypt, sources.apacheAuth],
+  'dockerfile-generator': sources.dockerfile,
+  'css-glassmorphism': [sources.css, sources.cssSyntax],
+  'css-grid-generator': [sources.cssGrid, sources.cssSyntax],
+  'css-blob-generator': [sources.css, sources.svg],
+  'robots-txt-generator': sources.robots,
+  'sitemap-generator': sources.sitemaps,
+  'sql-to-json': [sources.sql, sources.json],
+  'totp-generator': [sources.totp, sources.webCrypto],
 } satisfies Record<ToolSlug, ToolSource | ToolSource[]>;
 
 export function getToolSources(toolSlug: string): ToolSource[] {

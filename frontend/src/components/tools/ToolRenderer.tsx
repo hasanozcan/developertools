@@ -172,6 +172,46 @@ const toolComponents = {
     loading: Loading,
     ssr: false,
   }),
+  'gitignore-generator': dynamic(() => import('./GitignoreGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'htpasswd-generator': dynamic(() => import('./HtpasswdGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'dockerfile-generator': dynamic(() => import('./DockerfileGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-glassmorphism': dynamic(() => import('./CssGlassmorphismTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-grid-generator': dynamic(() => import('./CssGridGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-blob-generator': dynamic(() => import('./CssBlobGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'robots-txt-generator': dynamic(() => import('./RobotsTxtGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sitemap-generator': dynamic(() => import('./SitemapGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sql-to-json': dynamic(() => import('./SqlToJsonTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'totp-generator': dynamic(() => import('./TotpGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
 } as const satisfies Record<ToolSlug, ComponentType>;
 
 export const toolComponentSlugs = Object.keys(toolComponents) as ToolSlug[];

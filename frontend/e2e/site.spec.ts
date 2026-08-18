@@ -207,5 +207,33 @@ test('new developer tools render and function correctly', async ({ page }) => {
   await page.screenshot({
     path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/curl_to_code_live.png',
   });
+
+  // 5. Test gitignore-generator
+  await page.goto('/tools/generators/gitignore-generator');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.screenshot({
+    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/gitignore_live.png',
+  });
+
+  // 6. Test htpasswd-generator
+  await page.goto('/tools/crypto/htpasswd-generator');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.screenshot({
+    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/htpasswd_live.png',
+  });
+
+  // 7. Test css-glassmorphism
+  await page.goto('/tools/utilities/css-glassmorphism');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.screenshot({
+    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/glassmorphism_live.png',
+  });
+
+  // 8. Test totp-generator
+  await page.goto('/tools/crypto/totp-generator');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.screenshot({
+    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/totp_live.png',
+  });
 });
 
