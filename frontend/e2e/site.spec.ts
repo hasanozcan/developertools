@@ -136,3 +136,44 @@ test('homepage category filter and live search filter work correctly', async ({ 
   });
 });
 
+test('header navigation dropdown renders cleanly with opaque background over tool page', async ({ page }) => {
+  await page.goto('/tools/encoding/jwt-decoder');
+  await page.setViewportSize({ width: 1280, height: 800 });
+
+  // Hover directly over the Encoders link inside the group
+  const encodersLink = page.getByLabel('Primary navigation').getByRole('link', { name: 'Encoders' });
+  await encodersLink.hover();
+  await page.waitForTimeout(300);
+
+  // The dropdown items should be visible
+  await expect(page.getByRole('link', { name: /base64/i }).first()).toBeVisible();
+
+  // Capture screenshot of dropdown menu open over page
+  await page.screenshot({
+    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/nav_dropdown_live.png',
+  });
+});
+
+test('header navigation dropdown in Turkish renders with solid background', async ({ page }) => {
+  await page.goto('/tools/encoding/jwt-decoder');
+  await page.setViewportSize({ width: 1280, height: 800 });
+
+  // Switch to Turkish via localStorage
+  await page.evaluate(() => {
+    localStorage.setItem('language', 'tr');
+  });
+  await page.reload();
+  await page.waitForTimeout(300);
+
+  // Hover over Kodlayıcılar
+  const kodlayicilarLink = page.getByLabel('Primary navigation').getByRole('link', { name: /kodlayıcılar/i });
+  await kodlayicilarLink.hover();
+  await page.waitForTimeout(300);
+
+  await expect(page.getByRole('link', { name: /base64/i }).first()).toBeVisible();
+
+  await page.screenshot({
+    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/nav_dropdown_tr_live.png',
+  });
+});
+

@@ -312,7 +312,7 @@ export default function Header() {
   const favoriteTools = allTools.filter((t) => favorites.includes(t.slug));
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/70 bg-white/75 shadow-[0_8px_30px_-24px_rgba(15,23,42,0.6)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/75">
+    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_8px_30px_-24px_rgba(15,23,42,0.6)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/95">
       <nav
         aria-label="Primary navigation"
         className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-10 xl:px-12"
@@ -361,33 +361,33 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation - Logo'dan sonra */}
-          <div className="hidden lg:flex items-center gap-1 ml-8">
+          <div className="hidden lg:flex items-center gap-0.5 xl:gap-1 ml-4 xl:ml-8">
             {navigation.map((item) => (
               <div key={item.name} className="relative group">
                 <Link
                   href={item.href}
-                  className="flex items-center gap-1 rounded-full px-3 py-2 text-sm font-medium text-slate-600 transition-colors hover:bg-indigo-50 hover:text-indigo-700 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white"
+                  className="flex items-center gap-1 rounded-full px-2.5 xl:px-3 py-1.5 text-xs xl:text-sm font-medium text-slate-600 transition-colors hover:bg-indigo-50 hover:text-indigo-700 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white shrink-0 whitespace-nowrap"
                 >
                   {item.name}
-                  <ChevronDown className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
+                  <ChevronDown className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 transition-opacity" />
                 </Link>
                 {/* Dropdown Menu */}
                 <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50">
-                  <div className="surface-card min-w-[220px] rounded-2xl py-2 shadow-2xl">
+                  <div className="min-w-[240px] rounded-2xl border border-slate-200 bg-white py-2 shadow-2xl dark:border-slate-800 dark:bg-slate-900">
                     {item.tools.map((tool: any) => (
                       <Link
                         key={tool.slug}
                         href={buildToolPath(tool.category, tool.slug)}
-                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary-600 dark:hover:text-primary-400"
+                        className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-indigo-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
                       >
                         {tool.name}
                       </Link>
                     ))}
                     {item.href !== '/#categories' && (
-                      <div className="border-t border-gray-200 dark:border-gray-700 mt-2 pt-2">
+                      <div className="border-t border-slate-100 dark:border-slate-800 mt-1.5 pt-1.5">
                         <Link
                           href={item.href}
-                          className="block px-4 py-2 text-sm text-primary-600 dark:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-700 font-medium"
+                          className="block px-4 py-2 text-sm text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-slate-800 font-semibold"
                         >
                           {t('nav.viewAll')}
                         </Link>
@@ -399,22 +399,22 @@ export default function Header() {
             ))}
           </div>
 
-          {/* Spacer - Sağ tarafa itmek için */}
-          <div className="flex-1" />
+          {/* Spacer */}
+          <div className="flex-1 min-w-3" />
 
           {/* Right side controls - Sağ */}
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-1.5 lg:gap-2 shrink-0">
             {/* Search Trigger */}
             <button
               onClick={() => setCommandPaletteOpen(true)}
               aria-label={t('search')}
               aria-controls="tool-search-results"
               aria-haspopup="dialog"
-              className="flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-3.5 py-1.5 text-slate-700 transition hover:border-indigo-300 hover:text-indigo-600 hover:shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-indigo-500"
+              className="flex items-center gap-2 rounded-full border border-slate-200/80 bg-white px-3 py-1.5 text-slate-700 transition hover:border-indigo-300 hover:text-indigo-600 hover:shadow-sm dark:border-white/10 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-indigo-500 shrink-0"
             >
               <Search className="w-4 h-4 text-indigo-500" />
-              <span className="text-sm font-medium">{t('search')}...</span>
-              <kbd className="hidden lg:inline-flex items-center px-1.5 py-0.5 text-[11px] font-mono font-semibold text-slate-800 bg-slate-200/90 dark:bg-slate-700 dark:text-slate-100 rounded border border-slate-300 dark:border-slate-600">
+              <span className="text-xs lg:text-sm font-medium">{t('search')}...</span>
+              <kbd className="hidden xl:inline-flex items-center px-1.5 py-0.5 text-[11px] font-mono font-semibold text-slate-800 bg-slate-200/90 dark:bg-slate-700 dark:text-slate-100 rounded border border-slate-300 dark:border-slate-600">
                 ⌘K / Ctrl+K
               </kbd>
             </button>
@@ -441,10 +441,10 @@ export default function Header() {
               {showFavorites && (
                 <div
                   id="favorite-tools-menu"
-                  className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden z-[100]"
+                  className="absolute right-0 mt-2 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden z-[100]"
                 >
-                  <div className="px-4 py-2 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-800/80 border-b border-slate-100 dark:border-slate-800">
+                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
                       {t('favorites')}
                     </span>
                   </div>
@@ -453,13 +453,13 @@ export default function Header() {
                       <button
                         key={tool.slug}
                         onClick={() => handleSelectTool(tool, 'favorites')}
-                        className="w-full px-4 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white text-sm"
+                        className="w-full px-4 py-2.5 text-left hover:bg-indigo-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 text-sm font-medium transition-colors"
                       >
                         {tool.name}
                       </button>
                     ))
                   ) : (
-                    <div className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400 text-center">
+                    <div className="px-4 py-4 text-sm text-slate-500 dark:text-slate-400 text-center">
                       {t('favorites.empty')}
                     </div>
                   )}
@@ -474,7 +474,7 @@ export default function Header() {
                   setShowHistory(!showHistory);
                   setShowFavorites(false);
                 }}
-                className="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                className="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
                 title={t('recent')}
                 aria-label={t('recent')}
                 aria-expanded={showHistory}
@@ -485,10 +485,10 @@ export default function Header() {
               {showHistory && (
                 <div
                   id="recent-tools-menu"
-                  className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden z-[100]"
+                  className="absolute right-0 mt-2 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden z-[100]"
                 >
-                  <div className="px-4 py-2 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
-                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-800/80 border-b border-slate-100 dark:border-slate-800">
+                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
                       {t('recent')}
                     </span>
                   </div>
@@ -500,13 +500,13 @@ export default function Header() {
                           router.push(buildToolPath(item.category, item.slug));
                           setShowHistory(false);
                         }}
-                        className="w-full px-4 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white text-sm"
+                        className="w-full px-4 py-2.5 text-left hover:bg-indigo-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 text-sm font-medium transition-colors"
                       >
                         {item.name}
                       </button>
                     ))
                   ) : (
-                    <div className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400 text-center">
+                    <div className="px-4 py-4 text-sm text-slate-500 dark:text-slate-400 text-center">
                       {t('recent.empty')}
                     </div>
                   )}
