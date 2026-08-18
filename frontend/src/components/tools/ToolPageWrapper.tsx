@@ -183,10 +183,10 @@ export default function ToolPageWrapper({
               role="dialog"
               aria-modal="true"
               aria-label={`${toolName} - ${t('zenMode') || 'Full Screen'}`}
-              className="fixed inset-0 z-[100] flex flex-col bg-slate-100/95 p-3 sm:p-6 md:p-8 overflow-y-auto backdrop-blur-2xl dark:bg-slate-950/95 text-slate-900 dark:text-slate-100"
+              className="fixed inset-0 z-[100] flex flex-col bg-slate-100/95 p-2 sm:p-4 md:p-6 overflow-y-auto backdrop-blur-2xl dark:bg-slate-950/95 text-slate-900 dark:text-slate-100"
             >
               {/* Header Bar */}
-              <div className="sticky top-0 z-20 flex items-center justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white/95 px-4 py-3 shadow-xl backdrop-blur-xl mb-4 sm:mb-6 dark:border-white/10 dark:bg-slate-900/90">
+              <div className="sticky top-0 z-20 flex items-center justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white/95 px-4 py-3 shadow-xl backdrop-blur-xl mb-4 dark:border-white/10 dark:bg-slate-900/90 w-full">
                 <div className="flex items-center gap-3">
                   <span className="eyebrow py-0.5 px-2.5 text-[10px]">{translatedCategoryName}</span>
                   <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight truncate">
@@ -226,13 +226,34 @@ export default function ToolPageWrapper({
                 </div>
               </div>
 
-              {/* Fullscreen Tool Content Container */}
-              <div className="flex-1 w-full max-w-7xl mx-auto rounded-3xl border border-slate-200/80 bg-white p-4 sm:p-8 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900 mb-6">
-                {children}
+              {/* Fullscreen Body with Left Ad + Center Tool + Right Ad */}
+              <div className="flex-1 flex gap-4 items-start w-full mb-4">
+                {/* Left Skyscraper Ad (Large/Wide screens) */}
+                <aside className="hidden xl:block w-44 2xl:w-52 shrink-0 sticky top-20">
+                  <AdSense
+                    slot="1733348098"
+                    format="vertical"
+                    className="min-h-[600px] rounded-3xl overflow-hidden border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
+                  />
+                </aside>
+
+                {/* Center Tool Content (Fluid width) */}
+                <main className="flex-1 min-w-0 w-full rounded-3xl border border-slate-200/80 bg-white p-4 sm:p-6 md:p-8 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900">
+                  {children}
+                </main>
+
+                {/* Right Skyscraper Ad (Large/Wide screens) */}
+                <aside className="hidden xl:block w-44 2xl:w-52 shrink-0 sticky top-20">
+                  <AdSense
+                    slot="1733348098"
+                    format="vertical"
+                    className="min-h-[600px] rounded-3xl overflow-hidden border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
+                  />
+                </aside>
               </div>
 
-              {/* Fullscreen Ad Banner */}
-              <div className="w-full max-w-7xl mx-auto">
+              {/* Bottom Horizontal Ad Banner (Visible on mobile/tablet when sidebars are hidden) */}
+              <div className="w-full shrink-0 xl:hidden">
                 <AdSense
                   slot="1733348098"
                   format="horizontal"
