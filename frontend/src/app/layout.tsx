@@ -96,7 +96,15 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
+    google:
+      process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ||
+      process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION,
+    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION,
+    other: {
+      ...(process.env.NEXT_PUBLIC_BING_VERIFICATION
+        ? { 'msvalidate.01': process.env.NEXT_PUBLIC_BING_VERIFICATION }
+        : {}),
+    },
   },
   category: 'technology',
 };
@@ -133,7 +141,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-title" content="DevsTools" />
         <meta name="theme-color" content="#4f46e5" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-        {/* WebSite Structured Data */}
+        {/* WebSite Structured Data with Sitelinks SearchBox */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -146,6 +154,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               alternateName: 'Free Online Developer Tools | DevsTools',
               description: 'Free online tools for programmers and web developers',
               inLanguage: 'en',
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: {
+                  '@type': 'EntryPoint',
+                  urlTemplate: `${siteUrl}/?search={search_term_string}`,
+                },
+                'query-input': 'required name=search_term_string',
+              },
               publisher: {
                 '@type': 'Organization',
                 '@id': `${siteUrl}/#organization`,

@@ -11,7 +11,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: [
           '/api/',
           '/admin/',
-          '/search',
           '/*?utm_',
           '/*&utm_',
           '/*?gclid=',
@@ -21,6 +20,15 @@ export default function robots(): MetadataRoute.Robots {
           '/*?ref=',
           '/*&ref=',
         ],
+      },
+      {
+        userAgent: 'Googlebot',
+        allow: '/',
+        disallow: ['/api/'],
+      },
+      {
+        userAgent: 'Googlebot-Image',
+        allow: ['/og-image.png', '/icon.svg', '/apple-icon.png', '/favicon.ico'],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
