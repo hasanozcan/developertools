@@ -50,6 +50,7 @@ import {
   LucideIcon,
 } from 'lucide-react';
 import AdSense from '@/components/common/AdSense';
+import QuickAccessBar from '@/components/common/QuickAccessBar';
 import { toolCatalog } from '@/lib/api';
 import { useLanguage } from '@/context/LanguageContext';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
@@ -224,6 +225,9 @@ export default function Home() {
             <Search className="h-4 w-4" /> {t('home.popularTools')}
           </a>
         </section>
+
+        {/* Quick Access Bar (Recent & Privacy Badge) */}
+        <QuickAccessBar className="mb-12" />
 
         {/* Featured Tools */}
         <section className="mb-14 scroll-mt-24" id="tools">

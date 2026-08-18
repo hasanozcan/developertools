@@ -5,6 +5,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { useTheme } from '@/context/ThemeContext';
 import FavoriteButton from '@/components/common/FavoriteButton';
 import HistoryTracker from '@/components/common/HistoryTracker';
+import QuickAccessBar from '@/components/common/QuickAccessBar';
 import AdSense from '@/components/common/AdSense';
 import { Maximize2, Minimize2, Sparkles, X, Sun, Moon } from 'lucide-react';
 import Link from 'next/link';
@@ -111,6 +112,9 @@ export default function ToolPageWrapper({
     <>
       {/* Track history on client side */}
       <HistoryTracker slug={toolSlug} name={toolName} category={category} />
+
+      {/* Quick Access Bar (Recents & Privacy) */}
+      <QuickAccessBar currentSlug={toolSlug} className="mb-4" />
 
       {/* Breadcrumb */}
       <nav className="mb-6 overflow-x-auto rounded-full border border-white/80 bg-white/60 px-4 py-2.5 backdrop-blur dark:border-white/10 dark:bg-white/5">
