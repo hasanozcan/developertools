@@ -22,6 +22,7 @@ interface CodeEditorProps {
   showUpload?: boolean;
   showDownload?: boolean;
   downloadFilename?: string;
+  onRun?: () => void;
 }
 
 type EditorFeedback = 'cleared' | 'copied' | 'copy-error' | 'pasted' | 'paste-error' | 'limit' | null;
@@ -52,6 +53,7 @@ export default function CodeEditor({
   showUpload = true,
   showDownload = true,
   downloadFilename,
+  onRun,
 }: CodeEditorProps) {
   const { t } = useLanguage();
   const generatedId = useId();
@@ -394,6 +396,12 @@ export default function CodeEditor({
           id={editorId}
           value={value}
           onChange={(event) => handleChange(event.target.value)}
+          onKeyDown={(event) => {
+            if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+              event.preventDefault();
+              if (onRun) onRun();
+            }
+          }}
           placeholder={effectivePlaceholder}
           readOnly={readOnly}
           aria-label={id && !ariaLabel ? undefined : (ariaLabel ?? effectivePlaceholder)}
