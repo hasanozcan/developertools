@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { useRouter } from 'next/navigation';
 import {
   Search,
@@ -140,9 +141,14 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
   const { history } = useHistory();
   const router = useRouter();
 
+  const [mounted, setMounted] = useState(false);
   const [query, setQuery] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
@@ -305,18 +311,18 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
     }
   }, [selectedIndex]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
-  return (
+  return createPortal(
     <div
       role="dialog"
       aria-modal="true"
       aria-label={t('commandPalette.title') || 'Command Palette'}
-      className="fixed inset-0 z-[100] flex items-start justify-center p-4 sm:p-6 md:p-20 overflow-y-auto bg-slate-950/60 backdrop-blur-md transition-opacity"
+      className="fixed inset-0 z-[9999] flex items-start justify-center p-4 sm:p-6 pt-16 sm:pt-24 md:pt-28 overflow-y-auto bg-slate-950/70 backdrop-blur-md transition-opacity"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-white/80 bg-white/95 shadow-2xl shadow-indigo-500/10 backdrop-blur-2xl transition-all dark:border-white/10 dark:bg-slate-900/95 sm:my-8"
+        className="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-white/80 bg-white/95 shadow-2xl shadow-indigo-500/20 backdrop-blur-2xl transition-all dark:border-white/10 dark:bg-slate-900/95"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Header */}
@@ -521,6 +527,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
           </span>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

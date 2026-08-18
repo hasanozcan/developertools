@@ -56,13 +56,18 @@ test('tool search supports keyboard selection', async ({ page }) => {
 });
 
 test('tool search supports keyboard shortcut (/) and ESC closing', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/tools/json/json-validator');
   await page.keyboard.press('/');
 
   const search = page.getByRole('combobox', { name: /search/i });
   await expect(search).toBeVisible();
-  await search.fill('base64');
-  await expect(page.getByRole('option', { name: 'Base64 Encoder/Decoder' })).toBeVisible();
+  await search.fill('json');
+  await expect(page.getByRole('option', { name: /json validator/i })).toBeVisible();
+
+  // Capture live screenshot of the search modal open on the screen
+  await page.screenshot({
+    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/search_modal_live.png',
+  });
 
   await page.keyboard.press('Escape');
   await expect(search).not.toBeVisible();
