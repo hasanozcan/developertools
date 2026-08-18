@@ -105,3 +105,34 @@ test('contact conversion fires only after a successful submission', async ({ pag
   ]);
 });
 
+test('homepage category filter and live search filter work correctly', async ({ page }) => {
+  await page.goto('/');
+
+  // Search input on homepage
+  const filterInput = page.getByPlaceholder(/filter tools/i);
+  await expect(filterInput).toBeVisible();
+
+  // Type regex in filter input
+  await filterInput.fill('regex');
+  await expect(page.getByRole('heading', { name: /regex tester/i })).toBeVisible();
+
+  // Clear filter input
+  await filterInput.fill('');
+
+  // Click on a category tab (e.g. JSON Tools)
+  const jsonPill = page.getByRole('button', { name: /json/i }).first();
+  await jsonPill.click();
+
+  // Check JSON Formatter is shown
+  await expect(page.getByRole('heading', { name: /json formatter/i })).toBeVisible();
+
+  // Click on 'All' to show full toolbox
+  const allPill = page.getByRole('button', { name: /all/i }).first();
+  await allPill.click();
+
+  // Capture live screenshot of the updated homepage toolbox
+  await page.screenshot({
+    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/homepage_live.png',
+  });
+});
+
