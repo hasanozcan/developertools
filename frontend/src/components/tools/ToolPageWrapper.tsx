@@ -223,8 +223,17 @@ export default function ToolPageWrapper({
               </div>
 
               {/* Fullscreen Tool Content Container */}
-              <div className="flex-1 w-full max-w-7xl mx-auto rounded-3xl border border-slate-200/80 bg-white p-4 sm:p-8 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900">
+              <div className="flex-1 w-full max-w-7xl mx-auto rounded-3xl border border-slate-200/80 bg-white p-4 sm:p-8 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900 mb-6">
                 {children}
+              </div>
+
+              {/* Fullscreen Ad Banner */}
+              <div className="w-full max-w-7xl mx-auto">
+                <AdSense
+                  slot="1733348098"
+                  format="horizontal"
+                  className="h-24 max-h-24 rounded-2xl overflow-hidden border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50"
+                />
               </div>
             </div>
           )}
