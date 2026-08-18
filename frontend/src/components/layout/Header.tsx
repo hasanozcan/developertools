@@ -408,11 +408,13 @@ export default function Header() {
             <button
               onClick={() => setCommandPaletteOpen(true)}
               aria-label={t('search')}
-              className="flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-3.5 py-1.5 text-slate-500 transition hover:border-indigo-300 hover:text-indigo-600 hover:shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-slate-400 dark:hover:border-indigo-500"
+              aria-controls="tool-search-results"
+              aria-haspopup="dialog"
+              className="flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-3.5 py-1.5 text-slate-700 transition hover:border-indigo-300 hover:text-indigo-600 hover:shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-indigo-500"
             >
               <Search className="w-4 h-4 text-indigo-500" />
-              <span className="text-sm">{t('search')}...</span>
-              <kbd className="hidden lg:inline-flex items-center px-1.5 py-0.5 text-[11px] font-mono text-slate-500 bg-slate-100 dark:bg-slate-800 dark:text-slate-300 rounded border border-slate-200 dark:border-slate-700">
+              <span className="text-sm font-medium">{t('search')}...</span>
+              <kbd className="hidden lg:inline-flex items-center px-1.5 py-0.5 text-[11px] font-mono font-semibold text-slate-800 bg-slate-200/90 dark:bg-slate-700 dark:text-slate-100 rounded border border-slate-300 dark:border-slate-600">
                 ⌘K / Ctrl+K
               </kbd>
             </button>
@@ -534,7 +536,8 @@ export default function Header() {
           <div className="ml-auto flex items-center gap-1.5 md:hidden">
             <button
               onClick={() => setCommandPaletteOpen(true)}
-              aria-label={t('search')}
+              aria-label="Open search dialog"
+              aria-haspopup="dialog"
               className="rounded-xl border border-slate-200 bg-white/70 p-2 text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
             >
               <Search className="w-5 h-5" />

@@ -325,6 +325,11 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
           <input
             ref={inputRef}
             type="text"
+            role="combobox"
+            aria-expanded={true}
+            aria-controls="tool-search-results"
+            aria-autocomplete="list"
+            aria-label={t('commandPalette.placeholder') || 'Search tools or type a command...'}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -339,7 +344,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
               <X className="h-4 w-4" />
             </button>
           )}
-          <kbd className="ml-2 hidden sm:inline-flex items-center rounded-lg border border-slate-200 bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
+          <kbd className="ml-2 hidden sm:inline-flex items-center rounded-lg border border-slate-300 bg-slate-200/90 px-2 py-0.5 text-[11px] font-semibold text-slate-800 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100">
             ESC
           </kbd>
         </div>
@@ -420,7 +425,9 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
         {/* Results List */}
         <div
           ref={listRef}
+          id="tool-search-results"
           role="listbox"
+          aria-label={t('commandPalette.title') || 'Search Results'}
           className="max-h-80 sm:max-h-96 overflow-y-auto p-2 scroll-smooth"
         >
           {filteredTools.length > 0 ? (

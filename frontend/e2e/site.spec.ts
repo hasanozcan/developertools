@@ -55,6 +55,19 @@ test('tool search supports keyboard selection', async ({ page }) => {
   await expect(page).toHaveURL(/\/tools\/json\/json-formatter$/);
 });
 
+test('tool search supports keyboard shortcut (/) and ESC closing', async ({ page }) => {
+  await page.goto('/');
+  await page.keyboard.press('/');
+
+  const search = page.getByRole('combobox', { name: /search/i });
+  await expect(search).toBeVisible();
+  await search.fill('base64');
+  await expect(page.getByRole('option', { name: 'Base64 Encoder/Decoder' })).toBeVisible();
+
+  await page.keyboard.press('Escape');
+  await expect(search).not.toBeVisible();
+});
+
 test('contact conversion fires only after a successful submission', async ({ page }) => {
   await page.addInitScript(() => {
     const browserWindow = window as typeof window & { conversionCalls: unknown[][] };

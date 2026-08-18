@@ -209,7 +209,7 @@ export default function ToolPageWrapper({
                   </button>
 
                   <span className="hidden md:inline-flex items-center text-xs text-slate-500 dark:text-slate-400">
-                    <kbd className="rounded border border-slate-200 bg-slate-100 px-1.5 py-0.5 text-[10px] font-mono text-slate-600 mr-1.5 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                    <kbd className="rounded border border-slate-300 bg-slate-200/90 px-1.5 py-0.5 text-[10px] font-mono font-semibold text-slate-800 mr-1.5 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100">
                       ESC
                     </kbd>
                     {t('exitZenMode') || 'to exit'}
