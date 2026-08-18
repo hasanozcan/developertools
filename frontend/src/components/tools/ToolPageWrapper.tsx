@@ -276,10 +276,10 @@ export default function ToolPageWrapper({
           {/* Contextual internal links keep each tool connected to its topic cluster. */}
           <section className="mb-8" data-related-tools="true">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-              Related developer tools
+              {t('toolPage.relatedTools') || 'Related developer tools'}
             </h2>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Continue with{' '}
+              {t('toolPage.continueWith') || 'Continue with'}{' '}
               {relatedTools.map((relatedTool, index) => (
                 <span key={`reader-${relatedTool.href}`}>
                   {index > 0 ? ', ' : ''}
@@ -351,10 +351,10 @@ export default function ToolPageWrapper({
               id="sources-heading"
               className="text-xl font-bold text-gray-900 dark:text-white mb-4"
             >
-              Sources &amp; references
+              {t('toolPage.sourcesAndReferences') || 'Sources & references'}
             </h2>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Primary references:{' '}
+              {t('toolPage.primaryReferences') || 'Primary references:'}{' '}
               {sources.map((source, index) => (
                 <span key={source.url}>
                   {index > 0 ? '; ' : ''}
@@ -371,8 +371,8 @@ export default function ToolPageWrapper({
               .
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Review policy: references and behavior notes are checked whenever the tool
-              implementation changes.
+              {t('toolPage.reviewPolicy') ||
+                'Review policy: references and behavior notes are checked whenever the tool implementation changes.'}
             </p>
           </section>
         </div>

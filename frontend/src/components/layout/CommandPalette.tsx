@@ -519,11 +519,11 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
               <kbd className="rounded border border-slate-200 bg-white px-1 py-0.5 text-[10px] font-semibold dark:border-slate-700 dark:bg-slate-800">
                 ↵
               </kbd>
-              <span>Select</span>
+              <span>{t('commandPalette.select') || 'Select'}</span>
             </span>
           </div>
           <span>
-            {filteredTools.length} {filteredTools.length === 1 ? 'tool' : 'tools'}
+            {filteredTools.length} {filteredTools.length === 1 ? (t('common.tool') || 'tool') : (t('common.tools') || 'tools')}
           </span>
         </div>
       </div>

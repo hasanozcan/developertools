@@ -30,7 +30,7 @@ function FlagIcon({ lang }: { lang: Language }) {
 
 export default function LanguageSelector() {
   const [isOpen, setIsOpen] = useState(false);
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const listboxId = useId();
 
@@ -65,8 +65,8 @@ export default function LanguageSelector() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-1.5 p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
-        title="Select Language"
-        aria-label={`Select language. Current language: ${languageNames[language]}`}
+        title={t('common.selectLanguage') || 'Select Language'}
+        aria-label={`${t('common.selectLanguage') || 'Select language'}. Current: ${languageNames[language]}`}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-controls={listboxId}
@@ -79,7 +79,7 @@ export default function LanguageSelector() {
         <div
           id={listboxId}
           role="listbox"
-          aria-label="Select language"
+          aria-label={t('common.selectLanguage') || 'Select language'}
           className="absolute right-0 mt-2 w-44 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden z-[100]"
         >
           {languages.map((lang) => (

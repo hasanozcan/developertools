@@ -47,13 +47,13 @@ export default function DockerRunToComposeTool() {
         <div className="flex flex-col space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-              <Terminal className="h-3.5 w-3.5 text-indigo-500" /> Paste Docker Run Command
+              <Terminal className="h-3.5 w-3.5 text-indigo-500" /> {t('tool.docker.pasteCommand') || 'Paste Docker Run Command'}
             </span>
             <button
               onClick={() => setCommand(SAMPLE_DOCKER_RUN)}
               className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1"
             >
-              <RefreshCw className="h-3 w-3" /> Load Sample
+              <RefreshCw className="h-3 w-3" /> {t('tool.docker.loadSample') || 'Load Sample'}
             </button>
           </div>
           <textarea
@@ -69,7 +69,7 @@ export default function DockerRunToComposeTool() {
         <div className="flex flex-col space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-              <Layers className="h-3.5 w-3.5 text-indigo-500" /> Docker Compose (docker-compose.yml)
+              <Layers className="h-3.5 w-3.5 text-indigo-500" /> {t('tool.docker.composeOutput') || 'Docker Compose (docker-compose.yml)'}
             </span>
             {composeYaml && (
               <button
@@ -77,7 +77,7 @@ export default function DockerRunToComposeTool() {
                 className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
               >
                 {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-                {copied ? 'Copied' : 'Copy YAML'}
+                {copied ? (t('common.copied') || 'Copied') : (t('tool.docker.copyYaml') || 'Copy YAML')}
               </button>
             )}
           </div>
@@ -90,7 +90,7 @@ export default function DockerRunToComposeTool() {
             <textarea
               readOnly
               value={composeYaml}
-              placeholder="docker-compose.yml will appear here..."
+              placeholder={t('tool.docker.placeholder') || 'docker-compose.yml will appear here...'}
               rows={14}
               className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 p-4 font-mono text-xs text-slate-900 shadow-sm focus:outline-none dark:border-white/10 dark:bg-slate-900/80 dark:text-indigo-200 resize-y"
             />

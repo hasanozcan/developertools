@@ -94,13 +94,12 @@ export default function AboutPage() {
             {t('about.whatWeOfferDesc')}
           </p>
           <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-2">
-            <li>JSON formatting, validation, and conversion tools</li>
-            <li>Encoding and decoding tools (Base64, URL, JWT, HTML entities)</li>
-            <li>Hash generators (MD5, SHA256)</li>
-            <li>Random generators (UUID, passwords, Lorem Ipsum)</li>
-            <li>Code formatters and minifiers (SQL, CSS, JavaScript)</li>
-            <li>Text utilities (Regex tester, Markdown preview, Text diff)</li>
-            <li>Converters (Timestamp, Color, JSON to CSV)</li>
+            <li>{t('about.offer1') || 'JSON formatting, validation, and conversion tools'}</li>
+            <li>{t('about.offer2') || 'Encoding and decoding tools (Base64, URL, JWT, HTML entities)'}</li>
+            <li>{t('about.offer3') || 'Hash and cryptography tools (MD5, SHA256, SHA512, HMAC)'}</li>
+            <li>{t('about.offer4') || 'Random generators (UUID, passwords, Lorem Ipsum, QR Codes)'}</li>
+            <li>{t('about.offer5') || 'Text manipulation, diff comparison, and regex tools'}</li>
+            <li>{t('about.offer6') || 'And dozens more client-side developer utilities'}</li>
           </ul>
         </div>
 
