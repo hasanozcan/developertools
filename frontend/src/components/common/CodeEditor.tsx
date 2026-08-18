@@ -427,7 +427,7 @@ export default function CodeEditor({
           {feedback ? (
             <span className="font-semibold text-indigo-600 dark:text-indigo-400">{feedbackText}</span>
           ) : (
-            <span className="font-mono opacity-80">
+            <span className="font-mono text-slate-600 dark:text-slate-300">
               {linesCount} {t('common.lines') || 'lines'} · {charsCount.toLocaleString()} {t('common.characters') || 'chars'} · {byteSize}
             </span>
           )}

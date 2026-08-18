@@ -235,5 +235,40 @@ test('new developer tools render and function correctly', async ({ page }) => {
   await page.screenshot({
     path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/totp_live.png',
   });
+
+  // 9. Test markdown-table-generator
+  await page.goto('/tools/generators/markdown-table-generator');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.screenshot({
+    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/markdown_table_live.png',
+  });
+
+  // 10. Test key-code-info
+  await page.goto('/tools/utilities/key-code-info');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.screenshot({
+    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/key_code_live.png',
+  });
+
+  // 11. Test aspect-ratio-calculator
+  await page.goto('/tools/converters/aspect-ratio-calculator');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.screenshot({
+    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/aspect_ratio_live.png',
+  });
+
+  // 12. Test css-triangle-generator
+  await page.goto('/tools/utilities/css-triangle-generator');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.screenshot({
+    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/css_triangle_live.png',
+  });
+
+  // 13. Test svg-placeholder-generator
+  await page.goto('/tools/generators/svg-placeholder-generator');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.screenshot({
+    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/svg_placeholder_live.png',
+  });
 });
 

@@ -312,6 +312,13 @@ const sourceByTool = {
   'sitemap-generator': sources.sitemaps,
   'sql-to-json': [sources.sql, sources.json],
   'totp-generator': [sources.totp, sources.webCrypto],
+  'markdown-table-generator': sources.markdown,
+  'key-code-info': sources.javascript,
+  'aspect-ratio-calculator': [sources.css, sources.html],
+  'base64-to-image': [sources.base64, sources.dataUri],
+  'html-to-markdown': [sources.html, sources.markdown],
+  'css-triangle-generator': [sources.css, sources.cssSyntax],
+  'svg-placeholder-generator': [sources.svg, sources.dataUri],
 } satisfies Record<ToolSlug, ToolSource | ToolSource[]>;
 
 export function getToolSources(toolSlug: string): ToolSource[] {

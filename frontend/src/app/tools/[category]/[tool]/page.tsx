@@ -831,6 +831,39 @@ const tools: Record<
         },
       ],
     },
+    'base64-to-image': {
+      name: 'Base64 to Image Decoder',
+      metadataTitle: 'Base64 to Image Decoder Online – Preview & Download PNG/JPG/SVG',
+      description:
+        'Convert Base64 strings and Data URIs back into viewable PNG, JPG, GIF, WebP, and SVG images with instant download.',
+      longDescription:
+        'Free online Base64 to Image Decoder. Decode raw Base64 data strings or data:image/* URIs into full-resolution images with live browser preview and 1-click file download.',
+      keywords: [
+        'base64 to image',
+        'base64 image decoder',
+        'convert base64 to png',
+        'decode data uri to image',
+        'base64 to jpg online',
+      ],
+      faqs: [
+        {
+          question: 'Does this tool support raw Base64 and Data URI prefixes?',
+          answer:
+            'Yes. You can paste raw Base64 strings (starting with iVBORw0KGgo... or /9j/...) or full data:image/png;base64,... URIs.',
+        },
+        {
+          question: 'Are my images uploaded to any server?',
+          answer:
+            'No. Decoding and image rendering are performed 100% inside your browser using client-side data URLs and blobs.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your Base64 encoded string or Data URI into the editor.',
+        'View the instant live preview of the decoded image.',
+        'Click "Download Image" to save the file to your computer.',
+        'Or click "Copy Data URI" to copy the normalized image URI.',
+      ],
+    },
   },
   generators: {
     'uuid-generator': {
@@ -1286,6 +1319,72 @@ const tools: Record<
         'Pick your desired brand or accent background color.',
         'Copy the CSS border-radius snippet for pure CSS implementation.',
         'Or click "Download SVG Vector" to import the shape into Figma or your HTML codebase.',
+      ],
+    },
+    'markdown-table-generator': {
+      name: 'Markdown Table Generator',
+      metadataTitle: 'Markdown Table Generator Online – Interactive Spreadsheet Table Builder',
+      description:
+        'Create and format GitHub-flavored Markdown tables with an interactive spreadsheet editor, row/column controls, and text alignments.',
+      longDescription:
+        'Free online Markdown Table Generator. Visually create, edit, and format Markdown tables for GitHub, GitLab, and documentation with live text alignment and 1-click Markdown copy.',
+      keywords: [
+        'markdown table generator',
+        'markdown table maker',
+        'github markdown table builder',
+        'markdown spreadsheet',
+        'create markdown table online',
+      ],
+      faqs: [
+        {
+          question: 'Does this tool support column alignments (left, center, right)?',
+          answer:
+            'Yes. You can toggle text alignment for each column individually (:---, :---:, ---:) using the alignment buttons above each column.',
+        },
+        {
+          question: 'Can I add or remove rows and columns dynamically?',
+          answer:
+            'Yes, click the "+ Add Column" or "+ Add Row" buttons to expand the table, or use the trash icons to remove specific rows and columns.',
+        },
+      ],
+      howToUseSteps: [
+        'Edit table header titles and cell data directly in the spreadsheet grid.',
+        'Click the alignment icons on any column to toggle Left, Center, or Right text alignment.',
+        'Add or remove columns and rows as needed.',
+        'Click "Copy Markdown" to paste the formatted table directly into your GitHub README or documentation.',
+      ],
+    },
+    'svg-placeholder-generator': {
+      name: 'SVG Placeholder Generator',
+      metadataTitle: 'SVG Placeholder Generator Online – Custom Dimensions & Data URI',
+      description:
+        'Generate lightweight SVG and Data URI image placeholders with custom dimensions, background colors, and custom text labels.',
+      longDescription:
+        'Free online SVG Image Placeholder Generator. Create customized dummy image placeholders for website mockups, wireframes, and prototypes with custom dimensions and colors without external image hosting.',
+      keywords: [
+        'svg placeholder generator',
+        'dummy image generator',
+        'placeholder image svg',
+        'data uri placeholder',
+        'image placeholder maker',
+      ],
+      faqs: [
+        {
+          question: 'Why use SVG placeholders instead of external placeholder URLs?',
+          answer:
+            'SVG placeholders require zero HTTP network requests, load instantaneously offline, and are lightweight (~300 bytes) Data URIs directly embedded in HTML/CSS.',
+        },
+        {
+          question: 'Can I customize the label text inside the image?',
+          answer:
+            'Yes. You can specify any custom text (e.g. "Hero Banner", "Avatar 128x128") or leave it blank to automatically show dimensions.',
+        },
+      ],
+      howToUseSteps: [
+        'Set your desired width and height in pixels.',
+        'Choose background and text colors from the color pickers.',
+        'Type your custom label text.',
+        'Copy the inline SVG Data URI, copy raw SVG XML, or download the .svg file.',
       ],
     },
   },
@@ -2660,6 +2759,71 @@ const tools: Record<
         'Click Copy JSON or download it directly as a .json data file.',
       ],
     },
+    'aspect-ratio-calculator': {
+      name: 'Aspect Ratio Calculator',
+      metadataTitle: 'Aspect Ratio Calculator Online – 16:9, 4:3, 21:9 & Pixel Resizing',
+      description:
+        'Calculate image and video aspect ratios (16:9, 4:3, 1:1, 21:9), resize dimensions proportionally, and copy CSS aspect-ratio code.',
+      longDescription:
+        'Free online Aspect Ratio Calculator. Calculate simplified aspect ratios from pixel dimensions, calculate proportional resizing for images and videos, and get modern CSS aspect-ratio rules.',
+      keywords: [
+        'aspect ratio calculator',
+        'calculate aspect ratio',
+        '16:9 calculator',
+        'proportional resize calculator',
+        'css aspect ratio',
+      ],
+      faqs: [
+        {
+          question: 'How is the aspect ratio simplified?',
+          answer:
+            'The calculator determines the Greatest Common Divisor (GCD) between width and height to produce the simplest whole-number ratio (e.g. 1920x1080 simplifies to 16:9).',
+        },
+        {
+          question: 'How do I use the proportional resize tool?',
+          answer:
+            'Enter your original width and height, then type your new target width to automatically calculate the exact proportional target height.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter original width and height in pixels (or pick a standard preset like 16:9 or 4:3).',
+        'Inspect the automatically simplified ratio (W:H).',
+        'Enter a new target width to calculate the proportional height.',
+        'Copy the modern CSS aspect-ratio snippet.',
+      ],
+    },
+    'html-to-markdown': {
+      name: 'HTML to Markdown Converter',
+      metadataTitle: 'HTML to Markdown Converter Online – Rich HTML to Clean Markdown',
+      description:
+        'Convert HTML markup, headings, links, blockquotes, lists, and formatting into clean GitHub Markdown in your browser.',
+      longDescription:
+        'Free online HTML to Markdown Converter. Transform HTML source code or blog posts into clean, readable Markdown syntax without uploading any data.',
+      keywords: [
+        'html to markdown',
+        'convert html to markdown online',
+        'html to md converter',
+        'clean html to markdown',
+        'html parser to markdown',
+      ],
+      faqs: [
+        {
+          question: 'Which HTML elements are supported?',
+          answer:
+            'The converter supports <h1>-<h6> headings, <strong>/<b> bold, <em>/<i> italic, <a> links, <img> images, <blockquote> quotes, <ul>/<ol>/<li> lists, <code>/ <pre> blocks, and <hr> horizontal rules.',
+        },
+        {
+          question: 'Are HTML entities decoded?',
+          answer:
+            'Yes, common entities like &amp;, &lt;, &gt;, &quot;, and &#39; are converted to plain characters.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your HTML source code into the left editor (or click Load Sample).',
+        'Review the automatically generated clean Markdown text on the right.',
+        'Click "Copy Markdown" or download it as a .md file.',
+      ],
+    },
   },
   formatters: {
     'sql-formatter': {
@@ -3749,6 +3913,72 @@ const tools: Record<
         'Select the default change frequency (e.g. weekly, daily) and priority weight.',
         'Review the formatted XML urlset output in the right editor.',
         'Copy the XML markup or click Download to save sitemap.xml.',
+      ],
+    },
+    'key-code-info': {
+      name: 'JavaScript Keycode Info',
+      metadataTitle: 'JavaScript Keycode & Key Event Info Online – Live KeyPress Tool',
+      description:
+        'Inspect JavaScript keyboard event properties (event.key, code, which, keyCode) with a live interactive keypress listener and code generator.',
+      longDescription:
+        'Free online JavaScript Keycode Info Tool. Press any key on your keyboard to instantly see its numeric keyCode, modern event.key and event.code string identifiers, modifier states, and copy-pasteable JavaScript event listener snippets.',
+      keywords: [
+        'javascript keycode',
+        'key code info',
+        'event.key javascript',
+        'event.code checker',
+        'keyboard event listener generator',
+      ],
+      faqs: [
+        {
+          question: 'What is the difference between event.key and event.code?',
+          answer:
+            'event.key returns the value of the key pressed (taking Shift/Caps into account, like "A" or "a"), while event.code represents the physical key on the keyboard layout (like "KeyA").',
+        },
+        {
+          question: 'Why is keyCode deprecated in modern JavaScript?',
+          answer:
+            'event.keyCode was inconsistent across different operating systems and non-QWERTY layouts. Modern web development standardizes on event.key and event.code.',
+        },
+      ],
+      howToUseSteps: [
+        'Press any physical key on your keyboard.',
+        'Inspect the large numeric keyCode and modern event.key/code properties.',
+        'Check modifier key states (Ctrl, Shift, Alt, Meta).',
+        'Copy the generated JavaScript keydown event listener code block.',
+      ],
+    },
+    'css-triangle-generator': {
+      name: 'CSS Triangle Generator',
+      metadataTitle: 'CSS Triangle Generator Online – Pure CSS Border Arrow & Tooltip Maker',
+      description:
+        'Generate pure CSS border triangles and tooltip arrows pointing top, bottom, left, right, or diagonally with customizable dimensions and colors.',
+      longDescription:
+        'Free online CSS Triangle Generator. Create pure CSS triangles using transparent border hacks for tooltips, popovers, dropdown arrows, and UI accents with live preview and instant CSS code export.',
+      keywords: [
+        'css triangle generator',
+        'css arrow generator',
+        'css border triangle',
+        'pure css tooltip arrow',
+        'css shape generator',
+      ],
+      faqs: [
+        {
+          question: 'How do pure CSS triangles work?',
+          answer:
+            'CSS triangles work by setting an element with 0 width and 0 height, and applying thick borders where three sides are transparent and one side is colored.',
+        },
+        {
+          question: 'Can I generate diagonal corner triangles?',
+          answer:
+            'Yes! You can choose from 8 directions: Top, Bottom, Left, Right, Top-Left, Top-Right, Bottom-Left, and Bottom-Right.',
+        },
+      ],
+      howToUseSteps: [
+        'Choose the pointing direction (e.g. Top, Bottom, Diagonal).',
+        'Adjust the width and height sliders to resize your triangle.',
+        'Pick your desired triangle fill color.',
+        'Click Copy CSS to paste the lightweight CSS snippet into your project.',
       ],
     },
   },
