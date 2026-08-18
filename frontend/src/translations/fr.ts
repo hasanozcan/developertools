@@ -1190,8 +1190,8 @@ export const fr = {
     'Bcrypt utilise au maximum 72 octets UTF-8. Les entrées plus longues sont rejetées ici au lieu d’être tronquées silencieusement.',
   
   // Complete Parity Additions
-  'zenMode': "Mode Zen",
-  'exitZenMode': "Quitter le Mode Zen",
+  'zenMode': "Plein Écran",
+  'exitZenMode': "Quitter le Plein Écran",
   'commandPalette.title': "Palette de commandes",
   'commandPalette.placeholder': "Rechercher des outils ou taper une commande... (Échap pour fermer)",
   'commandPalette.noResults': "Aucun outil trouvé correspondant à",

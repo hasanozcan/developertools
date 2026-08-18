@@ -10,7 +10,7 @@ export const tr = {
   'recent.empty': 'Henüz kullanılan araç yok',
   lightMode: 'Açık Mod',
   darkMode: 'Koyu Mod',
-  zenMode: 'Tam Ekran Odaklanma Modu',
+  zenMode: 'Tam Ekran',
   exitZenMode: 'Tam Ekrandan Çık',
   'commandPalette.title': 'Komut Paleti',
   'commandPalette.placeholder': 'Araç arayın veya komut yazın... (Kapatmak için ESC)',

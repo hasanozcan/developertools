@@ -162,27 +162,27 @@ export default function ToolPageWrapper({
 
           {/* Tool Component */}
           <div className="surface-card mb-8 rounded-3xl p-4 sm:p-7 relative" data-tool-interface="true">
-            {/* Tool Toolbar (Zen Mode Toggle) */}
+            {/* Tool Toolbar (Full Screen Toggle) */}
             <div className="flex items-center justify-end mb-4 pb-2 border-b border-slate-100 dark:border-white/5">
               <button
                 onClick={() => setIsZenMode(true)}
-                title={t('zenMode') || 'Zen Mode (Fullscreen)'}
-                aria-label={t('zenMode') || 'Zen Mode (Fullscreen)'}
+                title={t('zenMode') || 'Full Screen'}
+                aria-label={t('zenMode') || 'Full Screen'}
                 className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-indigo-300 hover:text-indigo-600 hover:-translate-y-0.5 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-indigo-500"
               >
                 <Maximize2 className="h-3.5 w-3.5 text-indigo-500" />
-                <span>{t('zenMode') || 'Zen Mode'}</span>
+                <span>{t('zenMode') || 'Full Screen'}</span>
               </button>
             </div>
             {children}
           </div>
 
-          {/* Zen Mode (Fullscreen) Overlay */}
+          {/* Full Screen Overlay */}
           {isZenMode && (
             <div
               role="dialog"
               aria-modal="true"
-              aria-label={`${toolName} - ${t('zenMode') || 'Zen Mode'}`}
+              aria-label={`${toolName} - ${t('zenMode') || 'Full Screen'}`}
               className="fixed inset-0 z-[100] flex flex-col bg-slate-100/95 p-3 sm:p-6 md:p-8 overflow-y-auto backdrop-blur-2xl dark:bg-slate-950/95 text-slate-900 dark:text-slate-100"
             >
               {/* Header Bar */}
@@ -216,12 +216,12 @@ export default function ToolPageWrapper({
                   </span>
                   <button
                     onClick={() => setIsZenMode(false)}
-                    title={t('exitZenMode') || 'Exit Zen Mode'}
-                    aria-label={t('exitZenMode') || 'Exit Zen Mode'}
+                    title={t('exitZenMode') || 'Exit Full Screen'}
+                    aria-label={t('exitZenMode') || 'Exit Full Screen'}
                     className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-lg shadow-indigo-600/30 transition hover:bg-indigo-500 hover:-translate-y-0.5"
                   >
                     <Minimize2 className="h-4 w-4" />
-                    <span className="hidden sm:inline">{t('exitZenMode') || 'Exit Zen Mode'}</span>
+                    <span className="hidden sm:inline">{t('exitZenMode') || 'Exit Full Screen'}</span>
                   </button>
                 </div>
               </div>

@@ -1127,8 +1127,8 @@ export const ru = {
     'Bcrypt использует не более 72 байт UTF-8. Более длинный ввод отклоняется, а не обрезается незаметно.',
   
   // Complete Parity Additions
-  'zenMode': "Дзен-режим",
-  'exitZenMode': "Выйти из Дзен-режима",
+  'zenMode': "Полноэкранный режим",
+  'exitZenMode': "Выйти из полноэкранного режима",
   'commandPalette.title': "Палитра команд",
   'commandPalette.placeholder': "Поиск инструментов или ввод команды... (ESC для закрытия)",
   'commandPalette.noResults': "Не найдено инструментов по запросу",

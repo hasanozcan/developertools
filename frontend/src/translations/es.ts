@@ -1224,8 +1224,8 @@ export const es = {
     'Bcrypt usa como máximo 72 bytes UTF-8. Aquí se rechazan entradas más largas en vez de truncarlas silenciosamente.',
   
   // Complete Parity Additions
-  'zenMode': "Modo Zen",
-  'exitZenMode': "Salir del Modo Zen",
+  'zenMode': "Pantalla Completa",
+  'exitZenMode': "Salir de Pantalla Completa",
   'commandPalette.title': "Paleta de comandos",
   'commandPalette.placeholder': "Buscar herramientas o escribir un comando... (Presione ESC para cerrar)",
   'commandPalette.noResults': "No se encontraron herramientas que coincidan con",

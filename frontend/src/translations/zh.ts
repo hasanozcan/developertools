@@ -936,8 +936,8 @@ export const zh = {
   'tool.bcrypt.limitNote': 'Bcrypt 最多使用 72 个 UTF-8 字节。更长的输入会被拒绝，而不是静默截断。',
   
   // Complete Parity Additions
-  'zenMode': "禅模式",
-  'exitZenMode': "退出禅模式",
+  'zenMode': "全屏模式",
+  'exitZenMode': "退出全屏",
   'commandPalette.title': "命令面板",
   'commandPalette.placeholder': "搜索工具或输入命令... (按 ESC 关闭)",
   'commandPalette.noResults': "未找到匹配的工具",
