@@ -177,3 +177,35 @@ test('header navigation dropdown in Turkish renders with solid background', asyn
   });
 });
 
+test('new developer tools render and function correctly', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+
+  // 1. Test px-to-rem
+  await page.goto('/tools/converters/px-to-rem');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.screenshot({
+    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/px_to_rem_live.png',
+  });
+
+  // 2. Test mock-data-generator
+  await page.goto('/tools/generators/mock-data-generator');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.screenshot({
+    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/mock_data_live.png',
+  });
+
+  // 3. Test rsa-key-pair-generator
+  await page.goto('/tools/crypto/rsa-key-pair-generator');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.screenshot({
+    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/rsa_keygen_live.png',
+  });
+
+  // 4. Test curl-to-code
+  await page.goto('/tools/utilities/curl-to-code');
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await page.screenshot({
+    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/curl_to_code_live.png',
+  });
+});
+

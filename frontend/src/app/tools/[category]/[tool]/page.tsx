@@ -1156,6 +1156,72 @@ const tools: Record<
         'Copy the cron expression to your crontab, GitHub Action, or cloud scheduler.',
       ],
     },
+    'mock-data-generator': {
+      name: 'Mock Data JSON Generator',
+      metadataTitle: 'Mock Data & Fake JSON Generator Online – API Prototyping',
+      description:
+        'Generate realistic dummy JSON data for users, products, orders, companies, and blog posts with customizable record counts.',
+      longDescription:
+        'Free online Mock Data JSON Generator. Generate realistic dummy datasets for testing REST APIs, database seeding, and frontend prototyping without installing heavy dependencies.',
+      keywords: [
+        'mock data generator',
+        'fake json generator',
+        'dummy data online',
+        'api mock data',
+        'test json generator',
+      ],
+      faqs: [
+        {
+          question: 'What types of mock data can I generate?',
+          answer:
+            'You can generate realistic dummy records for Users (with names, emails, phones, roles), Products (with SKUs, prices, ratings), Orders (with currencies, statuses), Companies, and Blog Posts.',
+        },
+        {
+          question: 'Can I download the generated mock data?',
+          answer:
+            'Yes, you can copy the JSON directly to your clipboard or download it as a .json file with a single click.',
+        },
+      ],
+      howToUseSteps: [
+        'Choose a data schema (Users, Products, Orders, Companies, or Posts).',
+        'Select the number of rows or records to generate (1 to 100).',
+        'Click Regenerate if you want a fresh set of randomized mock records.',
+        'Copy the JSON payload or download it as a .json file for your project.',
+      ],
+    },
+    'favicon-generator': {
+      name: 'Favicon & App Icon Generator',
+      metadataTitle: 'Favicon & App Icon Generator Online – 16x16, 32x32, Apple Touch & Manifest',
+      description:
+        'Convert any image into standard favicon sizes (16x16, 32x32, 48x48), Apple Touch icons, Android PWA icons, and copy HTML header tags.',
+      longDescription:
+        'Free online Favicon & Web App Icon Generator. Resize and generate standard PNG favicons, iOS Apple Touch icons, Android web app icons, and webmanifest tags directly in your browser using HTML5 Canvas.',
+      keywords: [
+        'favicon generator',
+        'generate favicon from png',
+        'apple touch icon generator',
+        'favicon 16x16 32x32',
+        'pwa icon generator',
+      ],
+      faqs: [
+        {
+          question: 'What sizes are generated?',
+          answer:
+            'The tool generates 16x16 (standard tab), 32x32 (retina tab), 48x48 (desktop shortcut), 180x180 (iOS Apple Touch icon), 192x192 (Android app), and 512x512 (PWA splash) PNG icons.',
+        },
+        {
+          question: 'Are my uploaded images sent to any server?',
+          answer:
+            'No. All resizing and image rendering is performed client-side using browser HTML5 Canvas. Your images never leave your computer.',
+        },
+      ],
+      howToUseSteps: [
+        'Upload any square or high-resolution PNG, JPG, SVG, or WebP image.',
+        'Preview the generated icons across all standard device sizes.',
+        'Download individual PNG sizes as needed.',
+        'Copy the HTML <link> tags and site.webmanifest config directly into your project.',
+      ],
+    },
   },
   crypto: {
     'md5-hash': {
@@ -1553,6 +1619,39 @@ const tools: Record<
         'Click Generate New to create a cryptographically secure mnemonic phrase.',
         'Copy and securely write down the seed phrase on a physical medium.',
         'Optionally paste existing seed phrases into the validator to check word validity.',
+      ],
+    },
+    'rsa-key-pair-generator': {
+      name: 'RSA & ECDSA Key Pair Generator',
+      metadataTitle: 'RSA & ECDSA Key Pair Generator Online – PEM Public & Private Keys',
+      description:
+        'Generate cryptographically secure RSA (2048, 3072, 4096-bit) and ECDSA (P-256, P-384, P-521) public and private key pairs in PEM format.',
+      longDescription:
+        'Free online RSA & ECDSA Key Pair Generator. Generate PKCS#8 private keys and SPKI public keys in standard PEM format using the browser SubtleCrypto API. 100% private and client-side.',
+      keywords: [
+        'rsa key generator',
+        'rsa 2048 pem',
+        'ecdsa key generator',
+        'public private key pair',
+        'web crypto keygen',
+      ],
+      faqs: [
+        {
+          question: 'Are the private keys sent to your server?',
+          answer:
+            'No. The key pairs are generated using window.crypto.subtle directly on your device. The private keys never leave your browser.',
+        },
+        {
+          question: 'What format are the exported keys in?',
+          answer:
+            'Public keys are exported in SPKI PEM format (-----BEGIN PUBLIC KEY-----) and private keys are in PKCS#8 PEM format (-----BEGIN PRIVATE KEY-----).',
+        },
+      ],
+      howToUseSteps: [
+        'Select the cryptographic algorithm (RSA or ECDSA).',
+        'Choose your desired key length (e.g. 2048-bit or 4096-bit) or curve (e.g. P-256).',
+        'Click Generate to create a new key pair instantly.',
+        'Copy the PEM strings or download them as .pem files.',
       ],
     },
   },
@@ -2300,6 +2399,103 @@ const tools: Record<
         'Copy the generated SQL script and run it in your database client.',
       ],
     },
+    'px-to-rem': {
+      name: 'PX to REM & EM Converter',
+      metadataTitle: 'PX to REM & EM Converter Online – Responsive CSS Unit Calculator',
+      description:
+        'Convert pixels to REM, EM, VW, VH, PT, and percentage with configurable base root font size. Includes Tailwind & CSS scale tables.',
+      longDescription:
+        'Free online PX to REM and EM Converter. Convert pixel values into flexible, responsive CSS units (REM, EM, VW, VH, %) with custom base font size (16px default) and 1-click copying.',
+      keywords: [
+        'px to rem',
+        'rem to px',
+        'px to em',
+        'css unit converter',
+        'responsive font size converter',
+      ],
+      faqs: [
+        {
+          question: 'What is the standard base font size for REM calculation?',
+          answer:
+            'The standard browser default root font size is 16px (1rem = 16px). You can customize this base in the tool if your CSS sets html { font-size: 62.5%; } (10px base) or other scales.',
+        },
+        {
+          question: 'What is the difference between REM and EM?',
+          answer:
+            'REM (Root EM) is relative to the root <html> element font-size, whereas EM is relative to the font-size of its immediate parent container.',
+        },
+      ],
+      howToUseSteps: [
+        'Set your project root font size (default is 16px).',
+        'Type a pixel value (PX) or REM value into either box for instant bi-directional conversion.',
+        'Review the calculated EM, %, PT, VW, and VH values.',
+        'Click the Copy button next to any unit value to paste it into your CSS.',
+      ],
+    },
+    'csv-to-markdown': {
+      name: 'CSV to Markdown Table Converter',
+      metadataTitle: 'CSV to Markdown Table Converter Online – Bi-directional Table Formatter',
+      description:
+        'Convert CSV and TSV spreadsheets to clean GitHub-flavored Markdown tables with left, center, or right column alignment.',
+      longDescription:
+        'Free online CSV to Markdown Table Converter. Convert tabular data from Excel, Google Sheets, or CSV files into GitHub Flavored Markdown (GFM) tables, or sync Markdown tables back to CSV.',
+      keywords: [
+        'csv to markdown',
+        'markdown table generator',
+        'tsv to markdown',
+        'markdown to csv',
+        'table converter',
+      ],
+      faqs: [
+        {
+          question: 'Does this tool support TSV (tab-separated values)?',
+          answer:
+            'Yes. You can paste comma-separated or tab-separated data copied directly from spreadsheet applications like Excel or Google Sheets.',
+        },
+        {
+          question: 'Can I convert Markdown tables back into CSV?',
+          answer:
+            'Yes, click the "Sync MD ➔ CSV" button to parse the Markdown table back into standard comma-separated format.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your raw CSV or TSV data into the left editor.',
+        'Select your desired column alignment (Left, Center, or Right).',
+        'Review the formatted GitHub Markdown table in the right editor.',
+        'Click Copy Markdown to use the table in your README.md or documentation.',
+      ],
+    },
+    'html-table-to-json': {
+      name: 'HTML Table to JSON Converter',
+      metadataTitle: 'HTML Table to JSON Converter Online – Parse HTML Tables to JSON Arrays',
+      description:
+        'Parse and extract data from HTML <table> markup into clean JSON objects or 2D arrays with automatic header detection.',
+      longDescription:
+        'Free online HTML Table to JSON Converter. Extract tabular data from HTML table elements into structured JSON objects or arrays directly in your browser.',
+      keywords: [
+        'html table to json',
+        'table to json converter',
+        'parse html table',
+        'extract table data json',
+      ],
+      faqs: [
+        {
+          question: 'How are table headers detected?',
+          answer:
+            'The converter automatically uses the first row of <th> or <td> elements as keys for the resulting JSON objects.',
+        },
+        {
+          question: 'Can I output a raw 2D array instead of objects?',
+          answer:
+            'Yes, toggle the output format to "2D Array (Rows & Columns)" to get a plain matrix array without named keys.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your raw HTML containing <table>...</table> into the editor.',
+        'Choose whether you want an array of objects or a 2D array.',
+        'Copy the parsed JSON payload or download it as a .json file.',
+      ],
+    },
   },
   formatters: {
     'sql-formatter': {
@@ -2546,6 +2742,39 @@ const tools: Record<
         'Paste bloated or raw SVG markup into the original input area.',
         'Inspect the file size savings percentage and live rendered preview.',
         'Copy the minified SVG markup or click Download to save the optimized SVG file.',
+      ],
+    },
+    'svg-optimizer': {
+      name: 'SVG Optimizer & Cleaner',
+      metadataTitle: 'SVG Optimizer & Cleaner Online – Remove Metadata & Minify SVG',
+      description:
+        'Clean and optimize SVG vectors by removing editor namespaces (Figma, Illustrator), comments, and redundant precision.',
+      longDescription:
+        'Free online SVG Optimizer and Vector Cleaner. Strips unnecessary editor metadata, doctypes, and comments while formatting and calculating byte savings with live SVG visual preview.',
+      keywords: [
+        'svg optimizer',
+        'clean svg',
+        'minify svg',
+        'svgo online',
+        'compress svg',
+      ],
+      faqs: [
+        {
+          question: 'What metadata is stripped during optimization?',
+          answer:
+            'The optimizer removes XML declarations, DOCTYPE headers, HTML/XML comments, and editor-specific attributes from Adobe Illustrator, Figma, Inkscape, and Sketch.',
+        },
+        {
+          question: 'Can I preview the optimized SVG before downloading?',
+          answer:
+            'Yes, a live rendered SVG visual preview is displayed below the editor so you can verify rendering quality.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your raw SVG code into the editor or click Load Sample.',
+        'View the original size, optimized size, and total byte savings.',
+        'Check the live rendered preview box to ensure visual integrity.',
+        'Copy the optimized SVG markup or download it directly as an .svg file.',
       ],
     },
   },
@@ -3158,6 +3387,39 @@ const tools: Record<
         'Configure your SPF authorized servers (MX, Google Workspace, Microsoft 365, custom IPs).',
         'Switch to the DMARC tab and select your enforcement policy (none, quarantine, or reject).',
         'Copy the generated DNS TXT records and paste them into your domain registrar / DNS provider.',
+      ],
+    },
+    'curl-to-code': {
+      name: 'cURL to Multi-Language Code',
+      metadataTitle: 'cURL to Code Converter Online – Python, JS, Go, Rust & PHP',
+      description:
+        'Convert cURL commands to JavaScript Fetch, Axios, Python Requests, Go net/http, PHP cURL, and Rust reqwest code snippets.',
+      longDescription:
+        'Free online cURL to Code Converter. Translate complex cURL HTTP requests into idiomatic, copy-pasteable client code across JavaScript, Python, Go, PHP, and Rust directly in your browser.',
+      keywords: [
+        'curl to python',
+        'curl to fetch',
+        'curl to axios',
+        'curl to go',
+        'curl to code converter',
+      ],
+      faqs: [
+        {
+          question: 'Which programming languages and HTTP libraries are supported?',
+          answer:
+            'The tool generates code for JavaScript (Fetch API & Axios), Python (Requests library), Go (standard net/http), PHP (curl_init), and Rust (reqwest async).',
+        },
+        {
+          question: 'Does this execute or send my cURL request over the internet?',
+          answer:
+            'No. The command is parsed and tokenized 100% locally inside your browser to generate code. Nothing is ever sent or executed.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your cURL command into the left editor (or click Load Sample).',
+        'Select your desired target programming language from the top toolbar.',
+        'Review the automatically generated idiomatic code snippet.',
+        'Click Copy Code to paste the code into your application.',
       ],
     },
   },

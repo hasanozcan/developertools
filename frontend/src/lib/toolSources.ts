@@ -208,6 +208,7 @@ const sources = {
   dmarc: { name: 'RFC 7489: Domain-based Message Authentication, Reporting, and Conformance (DMARC)', url: 'https://www.rfc-editor.org/rfc/rfc7489' },
   cssClamp: { name: 'MDN: clamp() CSS function', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/clamp' },
   boxShadow: { name: 'MDN: box-shadow CSS property', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow' },
+  csv: { name: 'RFC 4180: Common Format and MIME Type for CSV Files', url: 'https://www.rfc-editor.org/rfc/rfc4180' },
 } satisfies Record<string, ToolSource>;
 
 const sourceByTool = {
@@ -286,6 +287,14 @@ const sourceByTool = {
   'bip39-generator': [sources.bip39, sources.webCrypto],
   'dmarc-generator': [sources.dmarc, sources.spf],
   'json-to-models': [sources.json, sources.typescript],
+  'px-to-rem': [sources.cssClamp, sources.html],
+  'mock-data-generator': [sources.json, sources.typescript],
+  'csv-to-markdown': [sources.csv, sources.markdown],
+  'curl-to-code': [sources.curl, sources.fetch, sources.http],
+  'rsa-key-pair-generator': [sources.webCrypto, sources.pem],
+  'svg-optimizer': sources.svg,
+  'html-table-to-json': [sources.html, sources.json],
+  'favicon-generator': [sources.html, sources.svg],
 } satisfies Record<ToolSlug, ToolSource | ToolSource[]>;
 
 export function getToolSources(toolSlug: string): ToolSource[] {

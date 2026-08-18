@@ -152,6 +152,26 @@ const toolComponents = {
   'bip39-generator': dynamic(() => import('./Bip39GeneratorTool'), { loading: Loading, ssr: false }),
   'dmarc-generator': dynamic(() => import('./DmarcGeneratorTool'), { loading: Loading, ssr: false }),
   'json-to-models': dynamic(() => import('./JsonToModelsTool'), { loading: Loading, ssr: false }),
+  'px-to-rem': dynamic(() => import('./PxToRemTool'), { loading: Loading, ssr: false }),
+  'mock-data-generator': dynamic(() => import('./MockDataGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'csv-to-markdown': dynamic(() => import('./CsvToMarkdownTool'), { loading: Loading, ssr: false }),
+  'curl-to-code': dynamic(() => import('./CurlToCodeTool'), { loading: Loading, ssr: false }),
+  'rsa-key-pair-generator': dynamic(() => import('./RsaKeyPairGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'svg-optimizer': dynamic(() => import('./SvgOptimizerTool'), { loading: Loading, ssr: false }),
+  'html-table-to-json': dynamic(() => import('./HtmlTableToJsonTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'favicon-generator': dynamic(() => import('./FaviconGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
 } as const satisfies Record<ToolSlug, ComponentType>;
 
 export const toolComponentSlugs = Object.keys(toolComponents) as ToolSlug[];
