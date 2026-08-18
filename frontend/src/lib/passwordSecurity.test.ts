@@ -15,8 +15,8 @@ describe('password security helpers', () => {
   });
 
   it('generates the requested number of EFF words', () => {
-    const passphrase = generateSecurePassphrase(DEFAULT_PASSPHRASE_WORDS, '-');
-    expect(passphrase.split('-')).toHaveLength(DEFAULT_PASSPHRASE_WORDS);
+    const passphrase = generateSecurePassphrase(DEFAULT_PASSPHRASE_WORDS, '---');
+    expect(passphrase.split('---')).toHaveLength(DEFAULT_PASSPHRASE_WORDS);
   });
 
   it('rejects unsafe passphrase sizes', () => {

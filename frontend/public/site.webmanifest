@@ -1,12 +1,14 @@
 {
   "name": "DevsTools - Free Online Developer Tools",
   "short_name": "DevsTools",
-  "description": "Free, private and client-side developer tools.",
+  "description": "Free, private and client-side developer tools for formatting, encoding, generation and debugging.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "orientation": "any",
+  "background_color": "#0f172a",
   "theme_color": "#4f46e5",
+  "categories": ["developer", "utilities", "productivity"],
   "icons": [
     {
       "src": "/favicon.png",
@@ -18,6 +20,36 @@
       "sizes": "1200x1200",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "JSON Formatter",
+      "short_name": "JSON",
+      "description": "Format and beautify JSON data",
+      "url": "/tools/json/json-formatter",
+      "icons": [{ "src": "/favicon.png", "sizes": "32x32" }]
+    },
+    {
+      "name": "Base64 Encoder/Decoder",
+      "short_name": "Base64",
+      "description": "Encode and decode Base64 strings and files",
+      "url": "/tools/encoding/base64",
+      "icons": [{ "src": "/favicon.png", "sizes": "32x32" }]
+    },
+    {
+      "name": "Text Diff Tool",
+      "short_name": "Diff",
+      "description": "Compare and highlight text differences",
+      "url": "/tools/text/text-diff",
+      "icons": [{ "src": "/favicon.png", "sizes": "32x32" }]
+    },
+    {
+      "name": "UUID Generator",
+      "short_name": "UUID",
+      "description": "Generate bulk UUIDs (v4)",
+      "url": "/tools/generators/uuid-generator",
+      "icons": [{ "src": "/favicon.png", "sizes": "32x32" }]
     }
   ]
 }

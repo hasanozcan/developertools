@@ -9,6 +9,7 @@ import { useFavorites } from '@/context/FavoritesContext';
 import { useHistory } from '@/context/HistoryContext';
 import { useLanguage } from '@/context/LanguageContext';
 import LanguageSelector from '@/components/common/LanguageSelector';
+import CommandPalette from '@/components/layout/CommandPalette';
 import { toolCatalog } from '@/lib/api';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
 import { trackToolEvent } from '@/lib/analytics';
@@ -35,6 +36,7 @@ type ToolItem = {
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<ToolItem[]>([]);
@@ -237,9 +239,9 @@ export default function Header() {
   // Handle keyboard shortcut (Ctrl+K or Cmd+K)
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
-      if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault();
-        setSearchOpen(true);
+        setCommandPaletteOpen((prev) => !prev);
       }
       if (event.key === 'Escape') {
         setSearchOpen(false);
@@ -247,8 +249,17 @@ export default function Header() {
         setSelectedIndex(-1);
       }
     }
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+
+    function handleOpenCommandPalette() {
+      setCommandPaletteOpen(true);
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('open-command-palette', handleOpenCommandPalette);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('open-command-palette', handleOpenCommandPalette);
+    };
   }, []);
 
   // Handle search keyboard navigation
@@ -383,88 +394,18 @@ export default function Header() {
 
           {/* Right side controls - Sağ */}
           <div className="hidden md:flex items-center gap-2">
-            {/* Search */}
-            <div ref={searchContainerRef}>
-              {!searchOpen ? (
-                <button
-                  onClick={() => setSearchOpen(true)}
-                  aria-label={t('search')}
-                  aria-expanded={searchOpen}
-                  aria-controls="tool-search-results"
-                  className="flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-3 py-2 text-slate-500 transition hover:border-indigo-200 hover:text-indigo-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-400"
-                >
-                  <Search className="w-4 h-4" />
-                  <span className="text-sm">{t('search')}...</span>
-                  <kbd className="hidden lg:inline-flex items-center px-1.5 py-0.5 text-xs text-gray-600 bg-white dark:bg-gray-700 dark:text-gray-200 rounded border border-gray-200 dark:border-gray-600">
-                    Ctrl+K
-                  </kbd>
-                </button>
-              ) : (
-                <div className="relative w-72">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                    <input
-                      ref={searchInputRef}
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      onKeyDown={handleSearchKeyDown}
-                      placeholder={t('search.placeholder')}
-                      role="combobox"
-                      aria-label={t('search')}
-                      aria-autocomplete="list"
-                      aria-expanded={searchResults.length > 0}
-                      aria-controls="tool-search-results"
-                      aria-activedescendant={
-                        selectedIndex >= 0 ? `tool-search-option-${selectedIndex}` : undefined
-                      }
-                      className="w-full rounded-full border border-indigo-300 bg-white py-2 pl-10 pr-4 text-sm text-gray-900 shadow-lg shadow-indigo-500/10 focus:outline-none focus:ring-4 focus:ring-indigo-500/15 dark:border-indigo-500/50 dark:bg-slate-900 dark:text-white"
-                    />
-                  </div>
-                  {searchResults.length > 0 && (
-                    <div
-                      id="tool-search-results"
-                      ref={resultsRef}
-                      role="listbox"
-                      aria-label={t('search')}
-                      className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg overflow-hidden z-[100] max-h-80 overflow-y-auto"
-                    >
-                      {searchResults.map((tool, index) => (
-                        <button
-                          id={`tool-search-option-${index}`}
-                          key={tool.slug}
-                          onClick={() => handleSelectTool(tool)}
-                          role="option"
-                          aria-selected={index === selectedIndex}
-                          className={`w-full px-4 py-3 text-left flex items-center justify-between border-b border-gray-100 dark:border-gray-700 last:border-0 transition-colors ${
-                            index === selectedIndex
-                              ? 'bg-primary-50 dark:bg-primary-900/20'
-                              : 'hover:bg-gray-50 dark:hover:bg-gray-700'
-                          }`}
-                        >
-                          <span
-                            className={`font-medium ${index === selectedIndex ? 'text-primary-600 dark:text-primary-400' : 'text-gray-900 dark:text-white'}`}
-                          >
-                            {tool.name}
-                          </span>
-                          <span className="text-xs text-gray-500 dark:text-gray-400 capitalize">
-                            {tool.category}
-                          </span>
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                  {searchQuery && searchResults.length === 0 && (
-                    <div
-                      role="status"
-                      className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-4 text-center text-gray-500 dark:text-gray-400 text-sm z-[100]"
-                    >
-                      {t('noResults')} &quot;{searchQuery}&quot;
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
+            {/* Search Trigger */}
+            <button
+              onClick={() => setCommandPaletteOpen(true)}
+              aria-label={t('search')}
+              className="flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-3.5 py-1.5 text-slate-500 transition hover:border-indigo-300 hover:text-indigo-600 hover:shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-slate-400 dark:hover:border-indigo-500"
+            >
+              <Search className="w-4 h-4 text-indigo-500" />
+              <span className="text-sm">{t('search')}...</span>
+              <kbd className="hidden lg:inline-flex items-center px-1.5 py-0.5 text-[11px] font-mono text-slate-500 bg-slate-100 dark:bg-slate-800 dark:text-slate-300 rounded border border-slate-200 dark:border-slate-700">
+                ⌘K / Ctrl+K
+              </kbd>
+            </button>
 
             {/* Favorites */}
             <div className="relative" ref={favoritesRef}>
@@ -579,16 +520,25 @@ export default function Header() {
             </button>
           </div>
 
-          {/* Mobile menu button */}
-          <button
-            className="ml-auto rounded-xl border border-slate-200 bg-white/70 p-2 text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 md:hidden"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={mobileMenuOpen ? 'Close navigation' : 'Open navigation'}
-            aria-expanded={mobileMenuOpen}
-            aria-controls="mobile-navigation"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Mobile controls */}
+          <div className="ml-auto flex items-center gap-1.5 md:hidden">
+            <button
+              onClick={() => setCommandPaletteOpen(true)}
+              aria-label={t('search')}
+              className="rounded-xl border border-slate-200 bg-white/70 p-2 text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
+            >
+              <Search className="w-5 h-5" />
+            </button>
+            <button
+              className="rounded-xl border border-slate-200 bg-white/70 p-2 text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? 'Close navigation' : 'Open navigation'}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-navigation"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -653,6 +603,12 @@ export default function Header() {
           </div>
         )}
       </nav>
+
+      {/* Global Command Palette Modal */}
+      <CommandPalette
+        isOpen={commandPaletteOpen}
+        onClose={() => setCommandPaletteOpen(false)}
+      />
     </header>
   );
 }

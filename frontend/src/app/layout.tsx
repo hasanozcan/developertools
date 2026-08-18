@@ -7,6 +7,7 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Providers } from '@/components/Providers';
+import ServiceWorkerRegister from '@/components/common/ServiceWorkerRegister';
 import { normalizeAdSenseClientId, normalizeAdSensePublisherId } from '@/lib/adsense';
 
 const inter = Inter({
@@ -127,6 +128,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" type="image/svg+xml" sizes="any" href="/icon.svg" />
         <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/apple-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="DevsTools" />
+        <meta name="theme-color" content="#4f46e5" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         {/* WebSite Structured Data */}
         <script
@@ -178,6 +183,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {setInitialTheme}
         </Script>
         <Providers>
+          <ServiceWorkerRegister />
           <div className="flex flex-col flex-1">
             <Header />
             <main className="flex-1">{children}</main>

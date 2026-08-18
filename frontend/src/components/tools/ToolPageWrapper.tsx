@@ -1,9 +1,11 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import FavoriteButton from '@/components/common/FavoriteButton';
 import HistoryTracker from '@/components/common/HistoryTracker';
 import AdSense from '@/components/common/AdSense';
+import { Maximize2, Minimize2, Sparkles, X } from 'lucide-react';
 import Link from 'next/link';
 
 interface ToolPageWrapperProps {
@@ -34,6 +36,27 @@ export default function ToolPageWrapper({
   children,
 }: ToolPageWrapperProps) {
   const { t } = useLanguage();
+  const [isZenMode, setIsZenMode] = useState(false);
+
+  // Lock body scroll and handle ESC key when in Zen Mode
+  useEffect(() => {
+    if (!isZenMode) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsZenMode(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isZenMode]);
 
   // Get translated tool name, fallback to default
   const toolName =
@@ -132,9 +155,63 @@ export default function ToolPageWrapper({
           {answerSections.slice(0, 1).map((section) => renderAnswerSection(section, true))}
 
           {/* Tool Component */}
-          <div className="surface-card mb-8 rounded-3xl p-4 sm:p-7" data-tool-interface="true">
+          <div className="surface-card mb-8 rounded-3xl p-4 sm:p-7 relative" data-tool-interface="true">
+            {/* Tool Toolbar (Zen Mode Toggle) */}
+            <div className="flex items-center justify-end mb-4 pb-2 border-b border-slate-100 dark:border-white/5">
+              <button
+                onClick={() => setIsZenMode(true)}
+                title={t('zenMode') || 'Zen Mode (Fullscreen)'}
+                aria-label={t('zenMode') || 'Zen Mode (Fullscreen)'}
+                className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-indigo-300 hover:text-indigo-600 hover:-translate-y-0.5 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-indigo-500"
+              >
+                <Maximize2 className="h-3.5 w-3.5 text-indigo-500" />
+                <span>{t('zenMode') || 'Zen Mode'}</span>
+              </button>
+            </div>
             {children}
           </div>
+
+          {/* Zen Mode (Fullscreen) Overlay */}
+          {isZenMode && (
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-label={`${toolName} - ${t('zenMode') || 'Zen Mode'}`}
+              className="fixed inset-0 z-[100] flex flex-col bg-slate-950/95 backdrop-blur-2xl p-3 sm:p-6 md:p-8 overflow-y-auto"
+            >
+              {/* Header Bar */}
+              <div className="sticky top-0 z-20 flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-slate-900/90 px-4 py-3 shadow-xl backdrop-blur-xl mb-4 sm:mb-6">
+                <div className="flex items-center gap-3">
+                  <span className="eyebrow py-0.5 px-2.5 text-[10px]">{translatedCategoryName}</span>
+                  <h2 className="text-base sm:text-lg font-bold text-white tracking-tight truncate">
+                    {toolName}
+                  </h2>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="hidden md:inline-flex items-center text-xs text-slate-400">
+                    <kbd className="rounded border border-slate-700 bg-slate-800 px-1.5 py-0.5 text-[10px] font-mono text-slate-300 mr-1.5">
+                      ESC
+                    </kbd>
+                    {t('exitZenMode') || 'to exit'}
+                  </span>
+                  <button
+                    onClick={() => setIsZenMode(false)}
+                    title={t('exitZenMode') || 'Exit Zen Mode'}
+                    aria-label={t('exitZenMode') || 'Exit Zen Mode'}
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-lg shadow-indigo-600/30 transition hover:bg-indigo-500 hover:-translate-y-0.5"
+                  >
+                    <Minimize2 className="h-4 w-4" />
+                    <span className="hidden sm:inline">{t('exitZenMode') || 'Exit Zen Mode'}</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Fullscreen Tool Content */}
+              <div className="flex-1 w-full max-w-7xl mx-auto rounded-3xl border border-white/10 bg-slate-900/80 p-4 sm:p-8 shadow-2xl backdrop-blur-xl">
+                {children}
+              </div>
+            </div>
+          )}
 
           {/* Ad Banner - After Tool */}
           <AdSense
