@@ -324,6 +324,126 @@ const toolComponents = {
     loading: Loading,
     ssr: false,
   }),
+  'html-to-jsx': dynamic(() => import('./HtmlToJsxTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-clip-path': dynamic(() => import('./CssClipPathTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-scrollbar-generator': dynamic(() => import('./CssScrollbarTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-pattern-generator': dynamic(() => import('./CssPatternTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'svg-path-visualizer': dynamic(() => import('./SvgPathVisualizerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'color-palette-generator': dynamic(() => import('./ColorPaletteTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'csv-to-sql-insert': dynamic(() => import('./CsvToSqlInsertTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sql-minifier': dynamic(() => import('./SqlMinifierTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-graphql': dynamic(() => import('./JsonToGraphqlTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'tsv-to-json': dynamic(() => import('./TsvToJsonTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ndjson-to-json': dynamic(() => import('./NdjsonToJsonTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-size-analyzer': dynamic(() => import('./JsonSizeAnalyzerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'hex-to-base64': dynamic(() => import('./HexToBase64Tool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'punycode-converter': dynamic(() => import('./PunycodeConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'morse-code-converter': dynamic(() => import('./MorseCodeTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'base32-encoder': dynamic(() => import('./Base32EncoderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'password-strength-analyzer': dynamic(() => import('./PasswordStrengthTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'semver-calculator': dynamic(() => import('./SemverCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ipv6-subnet-calculator': dynamic(() => import('./Ipv6SubnetTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'mac-address-generator': dynamic(() => import('./MacAddressTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'crontab-descriptor': dynamic(() => import('./CrontabDescriptorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'htaccess-to-nginx': dynamic(() => import('./HtaccessToNginxTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'dns-record-generator': dynamic(() => import('./DnsRecordTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'slug-to-title': dynamic(() => import('./SlugToTitleTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'text-obfuscator': dynamic(() => import('./TextObfuscatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'csv-column-extractor': dynamic(() => import('./CsvColumnExtractorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sql-to-typescript': dynamic(() => import('./SqlToTypescriptTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-env': dynamic(() => import('./JsonToEnvTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-minifier': dynamic(() => import('./JsonMinifierTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'markdown-table-to-csv': dynamic(() => import('./MarkdownTableToCsvTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
 } as const satisfies Record<ToolSlug, ComponentType>;
 
 export const toolComponentSlugs = Object.keys(toolComponents) as ToolSlug[];

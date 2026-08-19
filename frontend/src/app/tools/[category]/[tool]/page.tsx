@@ -528,6 +528,38 @@ const tools: Record<
         'Copy the generated typed model definitions into your codebase.',
       ],
     },
+    'json-size-analyzer': {
+      name: 'JSON Size & Memory Analyzer',
+      metadataTitle: 'JSON Size & Memory Footprint Analyzer Online – Depth & Key Breakdown',
+      description:
+        'Analyze JSON payload byte size, nesting depth, object distribution, array length, and minification savings in real-time.',
+      longDescription:
+        'Free online JSON Size and Memory Footprint Analyzer. Inspect large API responses, telemetry records, and config files to measure raw vs. minified payload size, maximum object depth, key count, and null field frequency.',
+      keywords: [
+        'json size analyzer',
+        'json memory footprint',
+        'json byte counter',
+        'json nesting depth',
+        'json payload size',
+      ],
+      faqs: [
+        {
+          question: 'How does this tool calculate JSON byte size?',
+          answer:
+            'It calculates the exact UTF-8 byte count of both formatted and minified JSON payloads using the browser TextEncoder API.',
+        },
+        {
+          question: 'What metrics are extracted?',
+          answer:
+            'Raw byte size, minified byte size, percentage reduction, total keys, nested object count, array count, max hierarchy depth, and null field counts.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your JSON payload into the input editor.',
+        'View instant metrics in the dashboard cards.',
+        'Inspect the depth and size breakdown to identify payload bloat.',
+      ],
+    },
   },
   encoding: {
     base64: {
@@ -862,6 +894,65 @@ const tools: Record<
         'View the instant live preview of the decoded image.',
         'Click "Download Image" to save the file to your computer.',
         'Or click "Copy Data URI" to copy the normalized image URI.',
+      ],
+    },
+    'hex-to-base64': {
+      name: 'Hex to Base64 Converter',
+      metadataTitle: 'Hex to Base64 & Base64 to Hex Converter Online – Byte Encoder',
+      description:
+        'Convert hexadecimal byte strings into Base64 encoding and decode Base64 back to hex in real-time.',
+      longDescription:
+        'Free online Hex to Base64 and Base64 to Hex byte converter. Easily convert cryptographic hashes, byte arrays, blockchain keys, and binary strings between Hex and Base64.',
+      keywords: [
+        'hex to base64',
+        'base64 to hex',
+        'hexadecimal to base64',
+        'byte array base64 converter',
+        'hex base64 online',
+      ],
+      faqs: [
+        {
+          question: 'What format should the hexadecimal input be in?',
+          answer:
+            'Any even-length hexadecimal string (e.g. 48656c6c6f) with or without spaces and prefixes.',
+        },
+        {
+          question: 'Is the conversion bidirectional?',
+          answer:
+            'Yes! You can convert Hex to Base64 and Base64 to Hex with zero data loss.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your hexadecimal string or Base64 payload.',
+        'Click the convert button to run the conversion.',
+        'Copy the result with 1 click.',
+      ],
+    },
+    'base32-encoder': {
+      name: 'Base32 Encoder & Decoder',
+      metadataTitle: 'Base32 Encoder & Decoder Online – RFC 4648 Compliant',
+      description:
+        'Encode and decode strings to RFC 4648 Base32 format with padding for 2FA TOTP secrets, tokens, and binary keys.',
+      longDescription:
+        'Free online Base32 Encoder and Decoder tool. Convert plain text into standard RFC 4648 Base32 and decode Base32 strings back to original ASCII/UTF-8 text for two-factor authentication secrets.',
+      keywords: [
+        'base32 encoder',
+        'base32 decoder',
+        'base32 online',
+        'rfc 4648 base32',
+        'totp secret base32',
+      ],
+      faqs: [
+        {
+          question: 'What is Base32 encoding used for?',
+          answer:
+            'Base32 uses a 32-character alphabet (A-Z, 2-7) which is case-insensitive and avoids visually ambiguous characters, commonly used in 2FA TOTP secret keys and human-entered verification codes.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste plain text or Base32 into the input box.',
+        'Click "Encode to Base32" or "Decode to Plain Text".',
+        'Copy the converted result.',
       ],
     },
   },
@@ -1452,6 +1543,60 @@ const tools: Record<
         'Click "Copy All" to paste the generated identifiers into your application.',
       ],
     },
+    'color-palette-generator': {
+      name: 'Tailwind Color Palette Generator',
+      metadataTitle: 'Tailwind & UI Color Palette Generator Online – 50 to 950 Shades',
+      description:
+        'Generate accessible 50-950 Tailwind CSS color shade scales and color harmony palettes from any hex color.',
+      longDescription:
+        'Free online Tailwind and UI Color Palette Generator. Pick any base brand color to compute an entire 11-step Tailwind-compatible shade scale (50 to 950) with instant copy and full JavaScript theme export.',
+      keywords: [
+        'tailwind palette generator',
+        'color palette generator',
+        'tailwind color shades',
+        'hex shade generator',
+        'ui color palette',
+      ],
+      faqs: [
+        {
+          question: 'How are the shade levels calculated?',
+          answer:
+            'The generator adjusts HSL lightness curves to match standard Tailwind CSS lightness distribution (50 at ~96% lightness to 950 at ~6% lightness).',
+        },
+      ],
+      howToUseSteps: [
+        'Pick a base brand color using the color picker or enter a hex code.',
+        'Click on any individual shade to copy its hex code.',
+        'Click "Copy Full JS Config" to export the entire color object into tailwind.config.js.',
+      ],
+    },
+    'mac-address-generator': {
+      name: 'MAC Address Generator & Formatter',
+      metadataTitle: 'MAC Address Generator Online – Unicast & Cisco Notation',
+      description:
+        'Generate random unicast or multicast MAC addresses formatted in Colon, Hyphen, or Cisco dot notation.',
+      longDescription:
+        'Free online MAC Address Generator. Create valid IEEE 802 MAC hardware addresses for network testing, router simulation, and virtual machines in bulk with custom delimiter formats.',
+      keywords: [
+        'mac address generator',
+        'random mac address',
+        'cisco mac address format',
+        'mac generator online',
+        'oui mac address',
+      ],
+      faqs: [
+        {
+          question: 'What notation styles are available?',
+          answer:
+            'Standard Colon (00:1A:2B:3C:4D:5E), Hyphen (00-1A-2B-3C-4D-5E), Cisco Dot (001a.2b3c.4d5e), and raw uninterrupted hex.',
+        },
+      ],
+      howToUseSteps: [
+        'Choose separator style and uppercase/lowercase format.',
+        'Select the batch quantity (up to 25 MAC addresses).',
+        'Click "Regenerate" and copy the generated list.',
+      ],
+    },
   },
   crypto: {
     'md5-hash': {
@@ -2016,6 +2161,38 @@ const tools: Record<
         'Copy the generated 3-part encoded and signed JWT token.',
       ],
     },
+    'password-strength-analyzer': {
+      name: 'Password Strength & Entropy Analyzer',
+      metadataTitle: 'Password Strength & Entropy Calculator Online – Crack Time Estimate',
+      description:
+        'Calculate password entropy bits, brute-force offline crack time estimates, and complexity scores in real-time.',
+      longDescription:
+        'Free online Password Strength and Information Entropy Calculator. Measure character pool entropy, dictionary strength score, and offline brute-force cracking resistance completely client-side.',
+      keywords: [
+        'password strength analyzer',
+        'password entropy calculator',
+        'password crack time estimator',
+        'password security test',
+        'password strength checker',
+      ],
+      faqs: [
+        {
+          question: 'What is password entropy?',
+          answer:
+            'Password entropy is a mathematical measure (in bits) of unpredictable information based on character set size and password length.',
+        },
+        {
+          question: 'Is my password safe to type here?',
+          answer:
+            'Yes. Analysis is computed 100% locally in your browser using pure JavaScript and never transmitted over the internet.',
+        },
+      ],
+      howToUseSteps: [
+        'Type any password or passphrase into the input field.',
+        'Review the real-time entropy bits and estimated crack time.',
+        'Use the checklist to verify uppercase, lowercase, numbers, and symbols.',
+      ],
+    },
   },
   text: {
     'regex-tester': {
@@ -2370,6 +2547,60 @@ const tools: Record<
         'Type or paste your text into the editor input area.',
         'View the live breakdown of UTF-8 Bytes, Characters, Words, and ASCII vs Multi-byte chars.',
         'Select a column size (e.g. VARCHAR(255)) to check whether your text fits within database limits.',
+      ],
+    },
+    'slug-to-title': {
+      name: 'Slug to Title & Case Converter',
+      metadataTitle: 'Slug to Title Case & PascalCase Converter Online',
+      description:
+        'Convert URL slugs, kebab-case, and snake_case strings into Title Case headlines, Sentence case, PascalCase, and camelCase.',
+      longDescription:
+        'Free online URL Slug to Title Case Converter. Transform kebab-case URLs, file slugs, and snake_case variable names into clean, readable article headlines and programming identifiers with 1-click copy.',
+      keywords: [
+        'slug to title',
+        'kebab case to title case',
+        'slug to pascalcase',
+        'slug to camelcase',
+        'url slug converter',
+      ],
+      faqs: [
+        {
+          question: 'Does Title Case handle minor English prepositions correctly?',
+          answer:
+            'Yes. Words like "to", "a", "an", "the", "in", "for", "and" are kept lowercase when appropriate according to Chicago Manual of Style guidelines.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your URL slug or snake_case string into the input box.',
+        'View the converted versions in Title Case, Sentence Case, PascalCase, and camelCase.',
+        'Click the copy icon on your desired case format.',
+      ],
+    },
+    'text-obfuscator': {
+      name: 'Invisible Character & Zero-Width Detector',
+      metadataTitle: 'Invisible Character & Zero-Width Space Detector Online – Text Cleaner',
+      description:
+        'Detect, highlight, and remove hidden zero-width spaces, Unicode joiners, and invisible formatting artifacts from text.',
+      longDescription:
+        'Free online Invisible Character and Zero-Width Space Cleaner. Find hidden zero-width spaces (\\u200B), non-joiners, RTL marks, and invisible Unicode tags that cause bugs in code, passwords, and databases.',
+      keywords: [
+        'invisible character detector',
+        'zero width space remover',
+        'clean invisible characters',
+        'remove zero width space',
+        'hidden unicode characters',
+      ],
+      faqs: [
+        {
+          question: 'What kind of invisible characters are detected?',
+          answer:
+            'Zero-width spaces (U+200B), zero-width joiners (U+200D), non-joiners (U+200C), byte order marks (U+FEFF), soft hyphens (U+00AD), and directional marks.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your suspect text into the input field.',
+        'Review the detected hidden character count in the breakdown badges.',
+        'Click "Copy Clean Text" to copy the sanitized string without hidden characters.',
       ],
     },
   },
@@ -3181,6 +3412,329 @@ const tools: Record<
         'Click "Download PDF" to save the decoded document directly to your device.',
       ],
     },
+    'html-to-jsx': {
+      name: 'HTML to JSX / React Converter',
+      metadataTitle: 'HTML to JSX Converter Online – Transform HTML to React Components',
+      description:
+        'Convert HTML markup into React JSX components with camelCase attributes, className, htmlFor, and inline style objects.',
+      longDescription:
+        'Free online HTML to JSX and React Component Converter. Effortlessly transform raw HTML templates and UI snippets into clean, modern React JSX syntax with self-closing tags and inline style translation.',
+      keywords: [
+        'html to jsx',
+        'html to react converter',
+        'html2jsx online',
+        'convert html to react',
+        'jsx generator',
+      ],
+      faqs: [
+        {
+          question: 'What HTML attributes are transformed?',
+          answer:
+            'Transforms `class` to `className`, `for` to `htmlFor`, inline styles to object syntax (`style={{ width: "100px" }}`), and converts SVG attributes like `stroke-width` to `strokeWidth`.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your HTML snippet into the editor.',
+        'Optionally enable "Wrap in React Function Component" and specify a component name.',
+        'Copy the generated JSX code with 1 click.',
+      ],
+    },
+    'csv-to-sql-insert': {
+      name: 'CSV to SQL INSERT Generator',
+      metadataTitle: 'CSV to SQL INSERT Statements Converter Online – Batch SQL Generator',
+      description:
+        'Convert CSV spreadsheets into batch SQL INSERT statements for PostgreSQL, MySQL, SQLite, and standard SQL.',
+      longDescription:
+        'Free online CSV to SQL INSERT Statement Generator. Convert spreadsheet records and tabular CSV files into optimized batch SQL INSERT queries with custom table naming and dialect escaping.',
+      keywords: [
+        'csv to sql insert',
+        'csv to sql generator',
+        'convert csv to sql insert statements',
+        'batch sql insert generator',
+        'csv to postgres insert',
+      ],
+      faqs: [
+        {
+          question: 'Which database dialects are supported?',
+          answer:
+            'PostgreSQL (with double-quoted identifiers), MySQL (with backtick identifiers), and generic standard SQL.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter target table name and choose your SQL dialect.',
+        'Paste your CSV data (including column headers).',
+        'Copy the generated batch SQL INSERT statements.',
+      ],
+    },
+    'json-to-graphql': {
+      name: 'JSON to GraphQL Schema Generator',
+      metadataTitle: 'JSON to GraphQL Schema Generator Online – Infer Types & Queries',
+      description:
+        'Automatically infer GraphQL type definitions, inputs, and object schemas from sample JSON data payloads.',
+      longDescription:
+        'Free online JSON to GraphQL Schema Generator. Analyze nested JSON responses to automatically generate typed GraphQL schemas with Int, Float, String, Boolean, and custom nested sub-types.',
+      keywords: [
+        'json to graphql',
+        'json to graphql schema',
+        'graphql schema generator',
+        'infer graphql types from json',
+        'json2graphql',
+      ],
+      faqs: [
+        {
+          question: 'How are nested objects handled in GraphQL?',
+          answer:
+            'Nested JSON objects are extracted into distinct GraphQL `type` definitions and referenced by field name automatically.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste a sample JSON payload into the editor.',
+        'Specify the Root Type Name.',
+        'Copy the generated GraphQL type definitions.',
+      ],
+    },
+    'tsv-to-json': {
+      name: 'TSV to JSON Converter',
+      metadataTitle: 'TSV to JSON & JSON to TSV Converter Online – Tab-Separated Values',
+      description:
+        'Convert tab-separated values (TSV) into structured JSON arrays and convert JSON back into TSV tables.',
+      longDescription:
+        'Free online TSV (Tab-Separated Values) to JSON Converter. Easily convert spreadsheet copies, database tab dumps, and log files between TSV and structured JSON format in your browser.',
+      keywords: [
+        'tsv to json',
+        'json to tsv',
+        'tab separated values to json',
+        'tsv converter online',
+        'convert tsv to json array',
+      ],
+      faqs: [
+        {
+          question: 'Does this tool automatically parse numbers and booleans in TSV?',
+          answer:
+            'Yes. Numeric values and boolean strings (true/false) are automatically converted into native JSON primitives.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your tab-separated text or JSON array.',
+        'Click "TSV → JSON" or "JSON → TSV".',
+        'Copy the converted output.',
+      ],
+    },
+    'ndjson-to-json': {
+      name: 'NDJSON / JSONL to JSON Converter',
+      metadataTitle: 'NDJSON & JSONL to JSON Array Converter Online – Log File Transformer',
+      description:
+        'Convert newline-delimited JSON (NDJSON/JSONL) streaming log files into standard JSON arrays and vice versa.',
+      longDescription:
+        'Free online NDJSON (Newline Delimited JSON) and JSONL to JSON Converter. Transform big data streaming log files, Elasticsearch dumps, and AI datasets into clean JSON arrays.',
+      keywords: [
+        'ndjson to json',
+        'jsonl to json',
+        'newline delimited json converter',
+        'jsonl to json array',
+        'convert json lines to json',
+      ],
+      faqs: [
+        {
+          question: 'What is the difference between NDJSON and JSON?',
+          answer:
+            'NDJSON contains one valid JSON object per line without surrounding array brackets, making it ideal for streaming large log records.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your NDJSON/JSONL log lines or standard JSON array.',
+        'Click the conversion direction button.',
+        'Copy or download the result.',
+      ],
+    },
+    'punycode-converter': {
+      name: 'Punycode & IDN Domain Converter',
+      metadataTitle: 'Punycode Converter Online – Internationalized Domain Names (IDN)',
+      description:
+        'Convert international domain names (IDN) with Unicode characters into ASCII Punycode (xn--) and decode back.',
+      longDescription:
+        'Free online Punycode and IDN (Internationalized Domain Names) Converter. Convert non-ASCII domain names into standard RFC 3492 Punycode for DNS server records and email configuration.',
+      keywords: [
+        'punycode converter',
+        'idn domain converter',
+        'unicode domain to punycode',
+        'xn-- domain decoder',
+        'punycode online',
+      ],
+      faqs: [
+        {
+          question: 'What is Punycode?',
+          answer:
+            'Punycode is an encoding syntax defined in RFC 3492 that translates Unicode characters into ASCII character sequences prefixed with "xn--", allowing non-English domains to work with legacy DNS systems.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter an international domain (e.g. münchen.de).',
+        'Click "Unicode → Punycode" to see the xn-- domain string.',
+        'Or paste a Punycode domain to decode back into Unicode.',
+      ],
+    },
+    'morse-code-converter': {
+      name: 'Morse Code Audio & Text Translator',
+      metadataTitle: 'Morse Code Translator Online – Text to Morse & Audio Sound Playback',
+      description:
+        'Translate plain text to Morse code with real-time Web Audio API sound playback and decode Morse code back to text.',
+      longDescription:
+        'Free online Morse Code Translator and Sound Generator. Encode text to International Morse Code dots and dashes, listen to the acoustic tone playback, and decode Morse code strings back into readable text.',
+      keywords: [
+        'morse code translator',
+        'text to morse code',
+        'morse code audio player',
+        'morse code decoder',
+        'morse sound generator',
+      ],
+      faqs: [
+        {
+          question: 'Does this play real Morse code audio tones?',
+          answer:
+            'Yes! Using the Web Audio API, the tool synthesizes standard 650Hz sine wave beeps with precise dot/dash timing directly in your browser.',
+        },
+      ],
+      howToUseSteps: [
+        'Type your message into the plain text box.',
+        'Click "Text → Morse" to generate dots and dashes.',
+        'Click "Play Audio" to listen to the Morse code beeps.',
+      ],
+    },
+    'htaccess-to-nginx': {
+      name: 'Apache .htaccess to Nginx Converter',
+      metadataTitle: 'Apache .htaccess to Nginx Rewrite Converter Online',
+      description:
+        'Convert Apache mod_rewrite rules, 301 redirects, security headers, and index directives into Nginx server blocks.',
+      longDescription:
+        'Free online .htaccess to Nginx Converter. Migrate Apache configurations, rewrite rules, and permanent redirects to high-performance Nginx server directives quickly and accurately.',
+      keywords: [
+        'htaccess to nginx',
+        'convert htaccess to nginx rewrite',
+        'apache rewrite to nginx',
+        'htaccess converter online',
+        'nginx rewrite generator',
+      ],
+      faqs: [
+        {
+          question: 'Which Apache directives are supported?',
+          answer:
+            'Supports RewriteRule (with R=301, L flags), Redirect 301, DirectoryIndex, and Header set directives.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your Apache .htaccess rules into the left editor.',
+        'Copy the generated Nginx configuration directives from the right editor.',
+      ],
+    },
+    'csv-column-extractor': {
+      name: 'CSV Column Extractor & Filter',
+      metadataTitle: 'CSV Column Extractor Online – Select, Filter & Reorder Columns',
+      description:
+        'Select, extract, filter, and reorder specific columns from large CSV and spreadsheet data files.',
+      longDescription:
+        'Free online CSV Column Extractor and Filter. Pick and choose exactly which columns you want from massive CSV datasets and export clean, stripped-down CSV tables in seconds.',
+      keywords: [
+        'csv column extractor',
+        'extract columns from csv',
+        'filter csv columns online',
+        'csv column selector',
+        'remove csv columns',
+      ],
+      faqs: [
+        {
+          question: 'How large can the CSV file be?',
+          answer:
+            'Because processing happens locally in your browser memory, it can handle thousands of rows with zero latency.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your CSV dataset into the editor.',
+        'Click on the column badges to select or deselect columns.',
+        'Copy the newly filtered CSV output.',
+      ],
+    },
+    'sql-to-typescript': {
+      name: 'SQL Table to TypeScript Interface',
+      metadataTitle: 'SQL CREATE TABLE to TypeScript Interface Converter Online',
+      description:
+        'Convert SQL CREATE TABLE schema definitions into type-safe TypeScript interfaces and types.',
+      longDescription:
+        'Free online SQL to TypeScript Interface Converter. Parse SQL database table schemas (PostgreSQL, MySQL, SQLite) and generate strongly typed TypeScript interfaces with optional nullable fields.',
+      keywords: [
+        'sql to typescript',
+        'create table to typescript interface',
+        'sql schema to ts',
+        'sql2ts online',
+        'convert sql to typescript types',
+      ],
+      faqs: [
+        {
+          question: 'How are SQL data types mapped to TypeScript?',
+          answer:
+            'INTEGER/FLOAT/DECIMAL map to number, VARCHAR/TEXT/UUID map to string, BOOLEAN maps to boolean, and TIMESTAMP/DATE map to Date | string.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your SQL `CREATE TABLE ...` statement.',
+        'Optionally set a custom interface name.',
+        'Copy the resulting TypeScript interface.',
+      ],
+    },
+    'json-to-env': {
+      name: 'JSON to .env Converter',
+      metadataTitle: 'JSON to .env & .env to JSON Converter Online – Environment Variables',
+      description:
+        'Flatten nested JSON objects into UPPERCASE .env environment variables and parse .env files back into JSON.',
+      longDescription:
+        'Free online JSON to .env and .env to JSON Converter. Transform configuration objects into deployment-ready environment variable files with automatic uppercase key flattening.',
+      keywords: [
+        'json to env',
+        'env to json',
+        'convert json to environment variables',
+        'dotenv converter',
+        'flatten json to env',
+      ],
+      faqs: [
+        {
+          question: 'How are nested objects flattened into .env keys?',
+          answer:
+            'Nested keys are joined with underscores in uppercase (e.g. `{ database: { host: "..." } }` becomes `DATABASE_HOST="..."`).',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your JSON configuration or .env file.',
+        'Click "JSON → .env" or ".env → JSON".',
+        'Copy the converted configuration format.',
+      ],
+    },
+    'markdown-table-to-csv': {
+      name: 'Markdown Table to CSV Converter',
+      metadataTitle: 'Markdown Table to CSV & Excel Converter Online – Table Transformer',
+      description:
+        'Convert GitHub Markdown tables into spreadsheet-ready CSV files and Excel downloads with 1-click export.',
+      longDescription:
+        'Free online Markdown Table to CSV Converter. Extract tabular data from Markdown README documentation, reports, and notes and convert into clean, standard CSV files.',
+      keywords: [
+        'markdown table to csv',
+        'convert markdown table to excel',
+        'markdown to spreadsheet',
+        'md table to csv online',
+        'markdown table exporter',
+      ],
+      faqs: [
+        {
+          question: 'Does it handle commas and quotes inside table cells?',
+          answer:
+            'Yes. Any cells containing commas or special characters are properly escaped with standard RFC 4180 double-quotes.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your GitHub Markdown table into the left editor.',
+        'View the generated CSV formatting in the right editor.',
+        'Click "Download .csv File" or copy to clipboard.',
+      ],
+    },
   },
   formatters: {
     'sql-formatter': {
@@ -3460,6 +4014,60 @@ const tools: Record<
         'View the original size, optimized size, and total byte savings.',
         'Check the live rendered preview box to ensure visual integrity.',
         'Copy the optimized SVG markup or download it directly as an .svg file.',
+      ],
+    },
+    'sql-minifier': {
+      name: 'SQL Query Minifier',
+      metadataTitle: 'SQL Query Minifier Online – Strip Comments & Compress Queries',
+      description:
+        'Strip comments (-- and /* */) and collapse whitespace to minify SQL queries into compact single-line statements.',
+      longDescription:
+        'Free online SQL Query Minifier. Strip single-line and multi-line comments, remove unnecessary whitespace, and format SQL into single-line queries for embedded code and network transmission.',
+      keywords: [
+        'sql minifier',
+        'minify sql query',
+        'sql compressor',
+        'strip sql comments',
+        'compress sql online',
+      ],
+      faqs: [
+        {
+          question: 'Does SQL minification alter query logic or results?',
+          answer:
+            'No. It only removes non-executable comments and collapses whitespace around operators and parentheses.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your SQL query into the left editor.',
+        'View the instant minification stats and byte savings.',
+        'Copy the single-line minified SQL string with 1 click.',
+      ],
+    },
+    'json-minifier': {
+      name: 'JSON Minifier & Stringifier',
+      metadataTitle: 'JSON Minifier & Compressor Online – Compact JSON Stringifier',
+      description:
+        'Minify JSON files and strings by stripping all whitespace and newlines to compress API payload bandwidth.',
+      longDescription:
+        'Free online JSON Minifier and Compressor. Remove all whitespace, indentation, and formatting from JSON objects to create compact, single-line payloads for network requests and storage.',
+      keywords: [
+        'json minifier',
+        'compress json online',
+        'compact json stringifier',
+        'json compressor',
+        'minify json string',
+      ],
+      faqs: [
+        {
+          question: 'Why minify JSON?',
+          answer:
+            'Minified JSON reduces byte transfer size by 20% to 50%, speeding up API responses and reducing storage costs.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your formatted JSON payload into the editor.',
+        'View the minified single-line string and byte reduction rate.',
+        'Copy the minified JSON to your clipboard.',
       ],
     },
   },
@@ -4664,6 +5272,224 @@ const tools: Record<
         'Add or modify color anchor points and drag the X/Y position sliders.',
         'Observe the live color blending in the preview banner.',
         'Click "Copy CSS" to copy the composite background styles to your stylesheet.',
+      ],
+    },
+    'css-clip-path': {
+      name: 'CSS Clip-Path & Polygon Generator',
+      metadataTitle: 'CSS Clip-Path & Polygon Shape Generator Online – Visual Mask Maker',
+      description:
+        'Design custom CSS clip-path polygon masks, geometric shapes, triangles, stars, and speech bubbles with visual controls.',
+      longDescription:
+        'Free online CSS Clip-Path Generator. Create modern geometric polygon shapes, angled section dividers, and masking layers using interactive coordinate sliders with pure CSS polygon() output.',
+      keywords: [
+        'css clip path generator',
+        'clip path polygon maker',
+        'css polygon generator',
+        'css mask shape generator',
+        'clip path online',
+      ],
+      faqs: [
+        {
+          question: 'What shapes are preconfigured?',
+          answer:
+            'Includes Triangles, Trapezoids, Parallelograms, Rhombuses, Pentagons, Hexagons, Stars, and Message Speech Bubbles.',
+        },
+      ],
+      howToUseSteps: [
+        'Select a preset shape or create a custom polygon.',
+        'Adjust the X% and Y% coordinates for each control point.',
+        'Preview the clipped element live.',
+        'Click "Copy CSS" to copy the `clip-path` property.',
+      ],
+    },
+    'css-scrollbar-generator': {
+      name: 'Custom CSS Scrollbar Generator',
+      metadataTitle: 'Custom CSS Scrollbar Generator Online – WebKit & Standard Scrollbar-Color',
+      description:
+        'Style custom scrollbars with modern CSS scrollbar-color/scrollbar-width and ::-webkit-scrollbar pseudo-elements.',
+      longDescription:
+        'Free online CSS Scrollbar Designer. Customize scrollbar thumb color, track color, width, border radius, and hover effects with instant scrollable live preview and cross-browser CSS code generation.',
+      keywords: [
+        'css scrollbar generator',
+        'custom scrollbar css',
+        'webkit scrollbar generator',
+        'scrollbar color css',
+        'scrollbar styling online',
+      ],
+      faqs: [
+        {
+          question: 'Does this support Firefox and modern Chromium browsers?',
+          answer:
+            'Yes. It generates both modern standards (`scrollbar-color` and `scrollbar-width`) and `::-webkit-scrollbar` vendor rules for full browser coverage.',
+        },
+      ],
+      howToUseSteps: [
+        'Customize thumb, track, and hover colors using the palette controls.',
+        'Adjust width and border radius.',
+        'Test scroll interactions in the preview container.',
+        'Copy the generated CSS styles.',
+      ],
+    },
+    'css-pattern-generator': {
+      name: 'CSS Background Pattern Generator',
+      metadataTitle: 'CSS Background Pattern Generator Online – Dots, Grids & Stripes',
+      description:
+        'Create pure CSS repeating background patterns including dot grids, blueprints, stripes, diagonals, and checkerboards.',
+      longDescription:
+        'Free online CSS Pattern Generator. Design repeatable lightweight background patterns using linear and radial CSS gradients without external image assets.',
+      keywords: [
+        'css pattern generator',
+        'css background pattern',
+        'dot grid pattern css',
+        'blueprint grid css',
+        'css texture generator',
+      ],
+      faqs: [
+        {
+          question: 'Are image files required to render these patterns?',
+          answer:
+            'No. All patterns are generated using pure CSS `radial-gradient` and `linear-gradient` functions.',
+        },
+      ],
+      howToUseSteps: [
+        'Select a pattern style (Dots, Grid, Stripes, Diagonal, Checkerboard).',
+        'Customize background color, pattern color, and grid size.',
+        'Copy the generated background CSS snippet.',
+      ],
+    },
+    'svg-path-visualizer': {
+      name: 'SVG Path Visualizer & Inspector',
+      metadataTitle: 'SVG Path Visualizer & Inspector Online – Vector Curve Analyzer',
+      description:
+        'Visualize, inspect, and analyze SVG path d-attribute commands, Bezier curves, arc segments, and coordinates.',
+      longDescription:
+        'Free online SVG Path Visualizer. Paste any SVG path d-string to render vectors on an interactive canvas, inspect node coordinates, and parse MoveTo, LineTo, CurveTo, and Arc segments.',
+      keywords: [
+        'svg path visualizer',
+        'svg path viewer online',
+        'inspect svg path d',
+        'svg bezier curve visualizer',
+        'svg path parser',
+      ],
+      faqs: [
+        {
+          question: 'Can I paste raw <path> HTML tags?',
+          answer:
+            'Yes. The tool automatically extracts the `d="..."` attribute from raw SVG tags.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your SVG path `d` attribute value.',
+        'Adjust stroke color, fill color, and stroke width.',
+        'Review the parsed coordinate table below the canvas.',
+      ],
+    },
+    'semver-calculator': {
+      name: 'Semver Range & Version Calculator',
+      metadataTitle: 'Semver Calculator Online – Test Range Satisfies & Version Bumps',
+      description:
+        'Evaluate semantic versioning ranges (^, ~, >=), check npm satisfies constraints, and calculate next release version bumps.',
+      longDescription:
+        'Free online SemVer Calculator. Validate semantic versioning strings, test npm semver ranges, and calculate Major, Minor, and Patch release numbers.',
+      keywords: [
+        'semver calculator',
+        'semver satisfies online',
+        'semantic versioning tester',
+        'npm semver checker',
+        'version bump calculator',
+      ],
+      faqs: [
+        {
+          question: 'What is the difference between ^ and ~ in npm?',
+          answer:
+            '`^1.2.3` allows updates that do not modify the left-most non-zero digit (< 2.0.0), while `~1.2.3` only allows patch-level changes (< 1.3.0).',
+        },
+      ],
+      howToUseSteps: [
+        'Enter your current version number and a target range to test.',
+        'Check whether the range satisfies the version.',
+        'View the next release version numbers for Major, Minor, and Patch bumps.',
+      ],
+    },
+    'ipv6-subnet-calculator': {
+      name: 'IPv6 Subnet & Prefix Calculator',
+      metadataTitle: 'IPv6 Subnet & Prefix Calculator Online – CIDR & Address Compressor',
+      description:
+        'Expand, compress, and calculate IPv6 prefix ranges, CIDR subnets, address types, and host count boundaries.',
+      longDescription:
+        'Free online IPv6 Subnet Calculator. Convert between compressed (RFC 5952) and expanded 128-bit full IPv6 notation, calculate /64 network boundaries, and identify link-local, loopback, and global unicast address ranges.',
+      keywords: [
+        'ipv6 subnet calculator',
+        'ipv6 cidr calculator',
+        'ipv6 expand compress',
+        'ipv6 prefix calculator',
+        'ipv6 address calculator',
+      ],
+      faqs: [
+        {
+          question: 'What is the standard subnet prefix for IPv6 local networks?',
+          answer:
+            'A /64 prefix is the standard subnet size for IPv6 local network segments according to RFC 4291.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter an IPv6 address (compressed or expanded).',
+        'Select the subnet prefix length (e.g. /64, /48).',
+        'Copy the breakdown or full JSON subnet details.',
+      ],
+    },
+    'crontab-descriptor': {
+      name: 'Crontab Expression Explainer',
+      metadataTitle: 'Crontab Guru & Expression Explainer Online – Human Readable Cron',
+      description:
+        'Translate standard 5-part cron schedule expressions into natural human-readable English descriptions.',
+      longDescription:
+        'Free online Crontab Explainer and Schedule Descriptor. Turn cryptic 5-part cron expressions (* * * * *) into plain English explanations with 1-click presets.',
+      keywords: [
+        'crontab explainer',
+        'cron expression to english',
+        'crontab guru online',
+        'cron schedule translator',
+        'describe cron expression',
+      ],
+      faqs: [
+        {
+          question: 'What fields make up a 5-part cron expression?',
+          answer:
+            'Minute (0-59), Hour (0-23), Day of Month (1-31), Month (1-12), and Day of Week (0-6, Sunday=0).',
+        },
+      ],
+      howToUseSteps: [
+        'Type your 5-part cron expression or pick a preset.',
+        'Read the human-readable explanation in the card.',
+        'Copy the description with 1 click.',
+      ],
+    },
+    'dns-record-generator': {
+      name: 'DNS Email Security Record Builder',
+      metadataTitle: 'DNS Record Generator Online – SPF, DKIM & Email Authentication Builder',
+      description:
+        'Generate SPF (v=spf1), DKIM public key TXT records, and email authentication configurations for your domain.',
+      longDescription:
+        'Free online DNS Email Security Record Builder. Generate valid Sender Policy Framework (SPF) TXT records with Google/SendGrid includes and format DKIM public key hostnames for domain DNS management.',
+      keywords: [
+        'dns record generator',
+        'spf record generator',
+        'dkim txt record generator',
+        'email authentication dns',
+        'spf builder online',
+      ],
+      faqs: [
+        {
+          question: 'Why is SPF important for domain emails?',
+          answer:
+            'SPF (Sender Policy Framework) prevents spammers from sending unauthorized emails that spoof your domain name, protecting your domain reputation and email deliverability.',
+        },
+      ],
+      howToUseSteps: [
+        'Choose SPF or DKIM tab.',
+        'Enter your domain, authorized servers, and policy.',
+        'Copy the generated DNS TXT hostname and record value.',
       ],
     },
   },
