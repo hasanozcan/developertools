@@ -268,6 +268,34 @@ const toolComponents = {
     loading: Loading,
     ssr: false,
   }),
+  'xml-to-json': dynamic(() => import('./XmlToJsonConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'list-to-sql-in': dynamic(() => import('./ListToSqlInTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'svg-to-png': dynamic(() => import('./SvgToPngConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ip-subnet-calculator': dynamic(() => import('./IpSubnetCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-filter-generator': dynamic(() => import('./CssFilterGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'bcrypt-verifier': dynamic(() => import('./BcryptVerifierTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-border-radius': dynamic(() => import('./CssBorderRadiusTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
 } as const satisfies Record<ToolSlug, ComponentType>;
 
 export const toolComponentSlugs = Object.keys(toolComponents) as ToolSlug[];

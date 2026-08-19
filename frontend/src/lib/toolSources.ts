@@ -326,6 +326,13 @@ const sourceByTool = {
   'markdown-to-html': [sources.markdown, sources.html],
   'css-text-shadow': [sources.css, sources.cssSyntax],
   'time-duration-calculator': [sources.timestamp, sources.javascript],
+  'xml-to-json': [sources.xml, sources.json],
+  'list-to-sql-in': sources.sql,
+  'svg-to-png': [sources.svg, sources.dataUri],
+  'ip-subnet-calculator': [sources.ipv4, sources.cidr],
+  'css-filter-generator': [sources.css, sources.cssSyntax],
+  'bcrypt-verifier': [sources.bcrypt, sources.password],
+  'css-border-radius': [sources.css, sources.cssSyntax],
 } satisfies Record<ToolSlug, ToolSource | ToolSource[]>;
 
 export function getToolSources(toolSlug: string): ToolSource[] {

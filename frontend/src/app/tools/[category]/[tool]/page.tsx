@@ -1918,6 +1918,39 @@ const tools: Record<
         'Click the Copy button to quickly copy the current 6-digit security code.',
       ],
     },
+    'bcrypt-verifier': {
+      name: 'Bcrypt Hash Verifier',
+      metadataTitle: 'Bcrypt Hash Verifier & Checker Online – Verify Password Matches',
+      description:
+        'Verify plain text passwords against Bcrypt hashes ($2a$, $2b$, $2y$) and inspect cost factors and salt components directly in your browser.',
+      longDescription:
+        'Free online Bcrypt Hash Verifier and Matcher. Check whether a plain text password matches a given Bcrypt hash string safely and securely in client-side WebAssembly without sending sensitive passwords over the network.',
+      keywords: [
+        'bcrypt verifier',
+        'verify bcrypt hash',
+        'bcrypt password checker',
+        'test bcrypt hash online',
+        'bcrypt compare',
+      ],
+      faqs: [
+        {
+          question: 'Is it safe to test passwords in this verifier?',
+          answer:
+            'Yes. All cryptographic verification runs 100% locally in your web browser. No plain text passwords or hashes are ever transmitted to any server.',
+        },
+        {
+          question: 'Which Bcrypt versions are supported?',
+          answer:
+            'Supports standard Modular Crypt Format Bcrypt strings including $2a$, $2b$, and $2y$ prefixes with any cost factor from 4 to 31.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter your plain text password in the top field.',
+        'Paste the target Bcrypt hash string ($2a$10$...) in the second field.',
+        'Click "Verify Password Against Hash".',
+        'View the match confirmation banner and inspect the hash anatomy (version, cost rounds).',
+      ],
+    },
   },
   text: {
     'regex-tester': {
@@ -2919,6 +2952,104 @@ const tools: Record<
         'Select the Start Date and End Date using the date-time pickers.',
         'View the exact human-readable elapsed duration and broken-down metrics.',
         'Use the Time Unit Conversion Matrix below to convert between time units.',
+      ],
+    },
+    'xml-to-json': {
+      name: 'XML to JSON & JSON to XML',
+      metadataTitle: 'XML to JSON & JSON to XML Converter Online – Bidirectional Converter',
+      description:
+        'Convert XML payloads into structured JSON objects and JSON data into formatted XML documents with attribute support.',
+      longDescription:
+        'Free online XML to JSON and JSON to XML Converter. Easily migrate between legacy XML/SOAP structures and modern JSON formats with accurate attribute (@attr) parsing, array detection, and instant file export.',
+      keywords: [
+        'xml to json',
+        'convert xml to json online',
+        'json to xml converter',
+        'xml json parser',
+        'soap to json converter',
+      ],
+      faqs: [
+        {
+          question: 'How are XML attributes converted to JSON?',
+          answer:
+            'Attributes are prefixed with "@" in the JSON object (e.g. @id="101") to preserve full fidelity when converting back to XML.',
+        },
+        {
+          question: 'Can I switch conversion direction from JSON to XML?',
+          answer:
+            'Yes, click "Switch to JSON ➔ XML" to convert any valid JSON object back into a formatted XML document.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your XML or JSON code into the left editor (or click Load Sample).',
+        'Click "Convert" to process the data.',
+        'Copy the formatted output to clipboard or download it as a .json / .xml file.',
+      ],
+    },
+    'list-to-sql-in': {
+      name: 'List to SQL IN Clause',
+      metadataTitle: 'List to SQL IN Clause Converter – Text Column to Quoted SQL Query',
+      description:
+        'Convert newline or comma-separated lists into SQL IN clauses with customizable quotes, separators, and duplicate removal.',
+      longDescription:
+        'Free online List to SQL IN Clause Converter. Turn spreadsheets, logs, or plain text lists of IDs and strings into clean SQL WHERE IN (\'a\', \'b\') clauses with automatic quote escaping and deduplication.',
+      keywords: [
+        'list to sql in',
+        'convert list to sql in clause',
+        'text list to comma separated sql',
+        'sql in clause generator',
+        'list to comma separated quotes',
+      ],
+      faqs: [
+        {
+          question: 'Does this tool escape internal single quotes?',
+          answer:
+            'Yes. Internal single quotes (e.g. O\'Connor) are automatically escaped as double single quotes (\'\' in standard SQL) to prevent syntax errors.',
+        },
+        {
+          question: 'Can I format lists of numbers without quotes?',
+          answer:
+            'Yes! Select "No Quotes (Numbers / IDs)" in the Quote Style dropdown for integer and numeric lists.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your raw list of items (one per line or comma-separated) into the left box.',
+        'Choose single, double, or no quotes, and customize prefix/suffix if needed.',
+        'Enable or disable "Remove Duplicates" and "Trim Whitespace".',
+        'Click "Copy SQL" to use the generated IN (...) clause in your query.',
+      ],
+    },
+    'svg-to-png': {
+      name: 'SVG to PNG / JPG / WebP Converter',
+      metadataTitle: 'SVG to PNG / JPG / WebP Converter Online – High Resolution Retina Rasterizer',
+      description:
+        'Convert vector SVG code or files into raster PNG, JPEG, or WebP images with 1x, 2x, and 4x resolution scaling directly in your browser.',
+      longDescription:
+        'Free online SVG to Raster Image Converter. Convert vector SVGs into crystal-clear PNG, JPG, or modern WebP formats at 1x, 2x Retina, or 4x Ultra HD resolutions without losing quality. 100% client-side via HTML5 Canvas.',
+      keywords: [
+        'svg to png converter',
+        'convert svg to png online',
+        'svg to jpg converter',
+        'svg to webp high resolution',
+        'rasterize svg canvas',
+      ],
+      faqs: [
+        {
+          question: 'Does this tool support transparent backgrounds?',
+          answer:
+            'Yes! PNG and WebP formats support full alpha transparency. You can also pick solid white or black backgrounds.',
+        },
+        {
+          question: 'How do resolution scales (2x, 4x) work?',
+          answer:
+            'The vector SVG is rendered directly onto a scaled HTML5 Canvas, ensuring crisp, pixel-perfect high-DPI output without pixelation.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste raw SVG markup or click "Upload .svg" to load an SVG file.',
+        'Select target format (PNG, JPEG, or WebP) and resolution scale (1x, 2x, or 4x).',
+        'Preview the rendered vector image in the visual sandbox.',
+        'Click "Convert & Download" to save the high-resolution image to your computer.',
       ],
     },
   },
@@ -4207,6 +4338,104 @@ const tools: Record<
         'Click a preset or customize individual shadow layer X/Y offsets, blur, and colors.',
         'Add additional shadow layers with "+ Add Layer" for complex 3D or glow effects.',
         'Click "Copy CSS" to paste the text-shadow property into your stylesheet.',
+      ],
+    },
+    'ip-subnet-calculator': {
+      name: 'IPv4 Subnet Calculator',
+      metadataTitle: 'IPv4 Subnet Calculator Online – Subnet Mask, Network & Usable Host Range',
+      description:
+        'Calculate network address, broadcast address, first and last usable host IP, total hosts, subnet mask, and binary representation.',
+      longDescription:
+        'Free online IPv4 Subnet Calculator. Determine CIDR notation, network address, broadcast address, usable host IP ranges, wildcard masks, and binary address breakdowns for network engineering and IP planning.',
+      keywords: [
+        'ip subnet calculator',
+        'subnet mask calculator',
+        'cidr calculator ipv4',
+        'usable host ip range',
+        'network broadcast address calculator',
+      ],
+      faqs: [
+        {
+          question: 'What information does the subnet calculator provide?',
+          answer:
+            'It calculates Network Address, Broadcast Address, Subnet Mask, Wildcard Mask, First/Last Usable Host IP, Total and Usable Host Count, IP Class, and 32-bit Binary representations.',
+        },
+        {
+          question: 'Does it support all CIDR prefixes (/0 to /32)?',
+          answer:
+            'Yes. All subnet prefixes from /0 through /32 are supported, including special /31 point-to-point links (RFC 3021) and single /32 host masks.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter an IPv4 address (e.g. 192.168.1.100).',
+        'Select the subnet mask prefix (/0 to /32) from the dropdown.',
+        'Inspect the automatically calculated network metrics and binary breakdown.',
+        'Click "Copy Summary" to copy the complete subnet details to your clipboard.',
+      ],
+    },
+    'css-filter-generator': {
+      name: 'CSS Filter Generator',
+      metadataTitle: 'CSS Filter & Effects Generator Online – Visual Sliders with Live Preview',
+      description:
+        'Create visual CSS image filter effects (blur, brightness, contrast, grayscale, hue-rotate, invert, saturate, sepia, opacity) with live preview.',
+      longDescription:
+        'Free online CSS Image Filter Generator. Adjust sliders for blur, contrast, brightness, sepia, invert, and hue-rotate on a live image preview and copy clean cross-browser CSS code with 1 click.',
+      keywords: [
+        'css filter generator',
+        'css image filters',
+        'css blur brightness contrast',
+        'css sepia grayscale generator',
+        'css backdrop filter',
+      ],
+      faqs: [
+        {
+          question: 'Which CSS filter functions are supported?',
+          answer:
+            'Supported functions include blur(), brightness(), contrast(), grayscale(), hue-rotate(), invert(), saturate(), sepia(), and opacity().',
+        },
+        {
+          question: 'Are vendor prefixes included in the generated CSS?',
+          answer:
+            'Yes. Both standard `filter` and `-webkit-filter` properties are output for maximum cross-browser compatibility.',
+        },
+      ],
+      howToUseSteps: [
+        'Drag any filter slider (blur, brightness, contrast, hue, sepia) to adjust image effects.',
+        'See immediate real-time changes rendered on the preview photo.',
+        'Click "Copy CSS" to copy the generated filter property into your stylesheet.',
+      ],
+    },
+    'css-border-radius': {
+      name: 'CSS 8-Point Border Radius',
+      metadataTitle: 'CSS 8-Point Border Radius & Squircle Generator – Fancy Organic UI Shapes',
+      description:
+        'Generate 8-point asymmetric border-radius values, organic blobs, and Apple-style squircles with interactive percentage and pixel sliders.',
+      longDescription:
+        'Free online CSS 8-Point Border Radius Generator. Design modern organic shapes, rounded squircles, egg contours, and leaf corners using the full 8-value CSS border-radius syntax with real-time visual feedback.',
+      keywords: [
+        'css border radius generator',
+        'fancy border radius',
+        '8 point border radius',
+        'squircle generator css',
+        'organic blob shape generator',
+      ],
+      faqs: [
+        {
+          question: 'How does 8-point border-radius syntax work in CSS?',
+          answer:
+            'The slash (/) separates horizontal radii from vertical radii: `border-radius: [TL-h] [TR-h] [BR-h] [BL-h] / [TL-v] [TR-v] [BR-v] [BL-v]`, creating smooth organic non-circular curves.',
+        },
+        {
+          question: 'Can I choose between percentage (%) and pixel (px) units?',
+          answer:
+            'Yes, toggle between % and px using the unit switcher in the controls panel.',
+        },
+      ],
+      howToUseSteps: [
+        'Select a ready-made preset (Organic Blob, Apple Squircle, Egg Shape, Leaf Corner).',
+        'Or adjust individual horizontal (X) and vertical (Y) radius sliders for each corner.',
+        'Observe the responsive shape change in the center preview card.',
+        'Click "Copy CSS" to copy the full `border-radius` snippet.',
       ],
     },
   },
