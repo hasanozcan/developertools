@@ -272,3 +272,222 @@ test('new developer tools render and function correctly', async ({ page }) => {
   });
 });
 
+test('all 151 tools render interactive interface with zero browser errors', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('console', (msg) => {
+    if (msg.type() === 'error') {
+      const text = msg.text();
+      if (!text.includes('google-analytics') && !text.includes('googletagmanager')) {
+        errors.push(text);
+      }
+    }
+  });
+  page.on('pageerror', (err) => errors.push(err.message));
+
+  for (const tool of toolCatalog) {
+    await page.goto(`/tools/${tool.categorySlug}/${tool.slug}`);
+
+    // Verify H1 header is visible
+    const heading = page.getByRole('heading', { level: 1 });
+    await expect(heading).toBeVisible();
+
+    // Verify interactive tool interface container
+    const toolInterface = page.locator('[data-tool-interface="true"]');
+    await expect(toolInterface).toBeVisible();
+
+    // Verify interactive controls (button, input, textarea, select, or canvas) exist inside the interface
+    const controls = toolInterface.locator('button, input, textarea, select, canvas, pre');
+    await expect(controls.first()).toBeVisible();
+  }
+
+  expect(errors).toEqual([]);
+});
+
+test('interactive functionality across all 30 new tools', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+
+  // 1. html-to-jsx
+  await page.goto('/tools/converters/html-to-jsx');
+  const htmlInput = page.locator('textarea').first();
+  await htmlInput.fill('<div class="hero"><label for="email">Test</label></div>');
+  await expect(page.locator('textarea, pre').last()).toContainText('className="hero"');
+  await expect(page.locator('textarea, pre').last()).toContainText('htmlFor="email"');
+
+  // 2. sql-minifier
+  await page.goto('/tools/formatters/sql-minifier');
+  const sqlInput = page.locator('textarea').first();
+  await sqlInput.fill('-- sample comment\nSELECT * FROM users \n WHERE id = 1;');
+  await expect(page.locator('textarea, pre').last()).toContainText('SELECT * FROM users WHERE id = 1;');
+
+  // 3. json-minifier
+  await page.goto('/tools/formatters/json-minifier');
+  const jsonMinInput = page.locator('textarea').first();
+  await jsonMinInput.fill('{\n  "name": "DevsTools",\n  "active": true\n}');
+  await expect(page.locator('textarea, pre').last()).toContainText('{"name":"DevsTools","active":true}');
+
+  // 4. slug-to-title
+  await page.goto('/tools/text/slug-to-title');
+  const slugInput = page.locator('textarea, input[type="text"]').first();
+  await slugInput.fill('my-super-awesome-blog-post');
+  await expect(page.locator('body')).toContainText('My Super Awesome Blog Post');
+  await expect(page.locator('body')).toContainText('MySuperAwesomeBlogPost');
+
+  // 5. hex-to-base64
+  await page.goto('/tools/encoding/hex-to-base64');
+  const hexInput = page.locator('textarea').first();
+  await hexInput.fill('48656c6c6f');
+  await page.getByRole('button', { name: /hex → base64/i }).click();
+  await expect(page.locator('textarea').last()).toContainText('SGVsbG8=');
+
+  // 6. tsv-to-json
+  await page.goto('/tools/converters/tsv-to-json');
+  const tsvInput = page.locator('textarea').first();
+  await tsvInput.fill('name\tage\nAlice\t30\nBob\t25');
+  await page.getByRole('button', { name: /tsv → json/i }).click();
+  await expect(page.locator('textarea, pre').last()).toContainText('"name": "Alice"');
+
+  // 7. crontab-descriptor
+  await page.goto('/tools/utilities/crontab-descriptor');
+  const cronInput = page.locator('input[type="text"]').first();
+  await cronInput.fill('0 0 * * 0');
+  await expect(page.locator('body')).toContainText('Runs every Sunday at midnight (00:00)');
+
+  // 8. base32-encoder
+  await page.goto('/tools/encoding/base32-encoder');
+  const b32Input = page.locator('textarea').first();
+  await b32Input.fill('Hello World');
+  await page.getByRole('button', { name: /encode to base32/i }).click();
+  await expect(page.locator('textarea, pre').last()).toContainText('JBSWY3DPEBLW64TMMQ======');
+
+  // 9. semver-calculator
+  await page.goto('/tools/utilities/semver-calculator');
+  const semverInput = page.locator('input[type="text"]').first();
+  await semverInput.fill('1.2.3');
+  await expect(page.locator('body')).toContainText('2.0.0');
+  await expect(page.locator('body')).toContainText('1.3.0');
+  await expect(page.locator('body')).toContainText('1.2.4');
+
+  // 10. mac-address-generator
+  await page.goto('/tools/generators/mac-address-generator');
+  await expect(page.locator('textarea, pre').first()).toBeVisible();
+  await page.getByRole('button', { name: /regenerate/i }).click();
+
+  // 11. color-palette-generator
+  await page.goto('/tools/generators/color-palette-generator');
+  await expect(page.locator('body')).toContainText('50');
+  await expect(page.locator('body')).toContainText('950');
+
+  // 12. css-clip-path
+  await page.goto('/tools/utilities/css-clip-path');
+  await expect(page.locator('body')).toContainText('clip-path: polygon(');
+
+  // 13. css-scrollbar-generator
+  await page.goto('/tools/utilities/css-scrollbar-generator');
+  await expect(page.locator('body')).toContainText('::-webkit-scrollbar');
+
+  // 14. css-pattern-generator
+  await page.goto('/tools/utilities/css-pattern-generator');
+  await expect(page.locator('body')).toContainText('background-image:');
+
+  // 15. svg-path-visualizer
+  await page.goto('/tools/utilities/svg-path-visualizer');
+  await expect(page.locator('canvas, svg').first()).toBeVisible();
+
+  // 16. csv-to-sql-insert
+  await page.goto('/tools/converters/csv-to-sql-insert');
+  const csvSqlInput = page.locator('textarea').first();
+  await csvSqlInput.fill('name,age\nAlice,30\nBob,25');
+  await expect(page.locator('textarea, pre').last()).toContainText('INSERT INTO');
+
+  // 17. json-to-graphql
+  await page.goto('/tools/converters/json-to-graphql');
+  const gqlInput = page.locator('textarea').first();
+  await gqlInput.fill('{"user": {"id": 1, "name": "Dev"}}');
+  await expect(page.locator('textarea, pre').last()).toContainText('type User {');
+  await expect(page.locator('textarea, pre').last()).toContainText('id: Int');
+
+  // 18. ndjson-to-json
+  await page.goto('/tools/converters/ndjson-to-json');
+  const ndInput = page.locator('textarea').first();
+  await ndInput.fill('{"id": 1}\n{"id": 2}');
+  await page.getByRole('button', { name: /ndjson → json/i }).click();
+  await expect(page.locator('textarea, pre').last()).toContainText('"id": 1');
+
+  // 19. json-size-analyzer
+  await page.goto('/tools/json/json-size-analyzer');
+  const jsonSizeInput = page.locator('textarea').first();
+  await jsonSizeInput.fill('{"name": "DevsTools", "tags": ["tool", "dev"]}');
+  await expect(page.locator('body')).toContainText('Bytes');
+
+  // 20. punycode-converter
+  await page.goto('/tools/converters/punycode-converter');
+  const punyInput = page.locator('textarea').first();
+  await punyInput.fill('münchen.de');
+  await page.getByRole('button', { name: /unicode → punycode/i }).click();
+  await expect(page.locator('textarea').last()).toContainText('xn--mnchen-3ya.de');
+
+  // 21. morse-code-converter
+  await page.goto('/tools/converters/morse-code-converter');
+  const morseInput = page.locator('textarea').first();
+  await morseInput.fill('SOS');
+  await page.getByRole('button', { name: /text → morse/i }).click();
+  await expect(page.locator('body')).toContainText('... --- ...');
+
+  // 22. password-strength-analyzer
+  await page.goto('/tools/crypto/password-strength-analyzer');
+  const pwdInput = page.locator('input[type="password"], input[type="text"]').first();
+  await pwdInput.fill('CorrectHorseBatteryStaple!99');
+  await expect(page.locator('body')).toContainText('bits');
+
+  // 23. ipv6-subnet-calculator
+  await page.goto('/tools/utilities/ipv6-subnet-calculator');
+  const ipv6Input = page.locator('input[type="text"]').first();
+  await ipv6Input.fill('2001:db8::1');
+  await expect(page.locator('body')).toContainText('2001:0db8:0000:0000:0000:0000:0000:0001');
+
+  // 24. htaccess-to-nginx
+  await page.goto('/tools/converters/htaccess-to-nginx');
+  const htInput = page.locator('textarea').first();
+  await htInput.fill('RewriteRule ^old-page$ /new-page [R=301,L]');
+  await expect(page.locator('textarea, pre').last()).toContainText('rewrite ^old-page$ /new-page permanent;');
+
+  // 25. dns-record-generator
+  await page.goto('/tools/utilities/dns-record-generator');
+  await expect(page.locator('body')).toContainText('v=spf1');
+
+  // 26. text-obfuscator
+  await page.goto('/tools/text/text-obfuscator');
+  const textObfInput = page.locator('textarea').first();
+  await textObfInput.fill('Clean Text With No Hidden Characters');
+  await expect(page.locator('body')).toContainText('Sanitized & Cleaned Text');
+  await expect(page.locator('body')).toContainText('Zero-Width Spaces');
+
+  // 27. csv-column-extractor
+  await page.goto('/tools/converters/csv-column-extractor');
+  const csvExtInput = page.locator('textarea').first();
+  await csvExtInput.fill('id,name,email,age\n1,Alice,alice@example.com,30\n2,Bob,bob@example.com,25');
+  await expect(page.locator('body')).toContainText('Select Columns to Extract');
+
+  // 28. sql-to-typescript
+  await page.goto('/tools/converters/sql-to-typescript');
+  const sqlTsInput = page.locator('textarea').first();
+  await sqlTsInput.fill('CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(255) NOT NULL);');
+  await expect(page.locator('textarea, pre').last()).toContainText('export interface User {');
+
+  // 29. json-to-env
+  await page.goto('/tools/converters/json-to-env');
+  const envInput = page.locator('textarea').first();
+  await envInput.fill('{"database": {"host": "localhost", "port": 5432}}');
+  await page.getByRole('button', { name: /json → \.env/i }).click();
+  await expect(page.locator('textarea, pre').last()).toContainText('DATABASE_HOST=localhost');
+  await expect(page.locator('textarea, pre').last()).toContainText('DATABASE_PORT=5432');
+
+  // 30. markdown-table-to-csv
+  await page.goto('/tools/converters/markdown-table-to-csv');
+  const mdTableInput = page.locator('textarea').first();
+  await mdTableInput.fill('| Header1 | Header2 |\n|---|---|\n| Val1 | Val2 |');
+  await expect(page.locator('textarea, pre').last()).toContainText('Header1,Header2');
+  await expect(page.locator('textarea, pre').last()).toContainText('Val1,Val2');
+});
+
+
