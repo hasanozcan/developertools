@@ -1420,6 +1420,38 @@ const tools: Record<
         'Or click the download button to save it as a .txt file.',
       ],
     },
+    'ulid-generator': {
+      name: 'ULID & UUID v7 Generator',
+      metadataTitle: 'ULID & UUID v7 Generator Online – Timestamp-Ordered Unique IDs',
+      description:
+        'Generate sortable, timestamp-ordered 128-bit ULIDs (Base32) and UUID v7 identifiers with millisecond timestamp decoding and bulk export.',
+      longDescription:
+        'Free online ULID and UUID v7 Generator. Create database-friendly, index-optimized unique identifiers that sort chronologically by creation time. Supports single and bulk generation with instant copy.',
+      keywords: [
+        'ulid generator',
+        'uuid v7 generator',
+        'timestamp ordered uuid',
+        'sortable unique id',
+        'ulid online',
+      ],
+      faqs: [
+        {
+          question: 'Why choose ULID or UUID v7 over UUID v4?',
+          answer:
+            'Unlike random UUID v4, ULID and UUID v7 begin with a millisecond timestamp prefix, preventing B-Tree index fragmentation and significantly accelerating database INSERT performance.',
+        },
+        {
+          question: 'Are generated ULIDs collision-safe?',
+          answer:
+            'Yes. Each ULID contains 80 bits of cryptographic randomness in addition to the 48-bit timestamp, offering effectively zero chance of collision.',
+        },
+      ],
+      howToUseSteps: [
+        'Choose your format: ULID (26-char Crockford Base32) or UUID v7 (36-char hex).',
+        'Select quantity (1 to 50 IDs) and click Regenerate if needed.',
+        'Click "Copy All" to paste the generated identifiers into your application.',
+      ],
+    },
   },
   crypto: {
     'md5-hash': {
@@ -1951,6 +1983,39 @@ const tools: Record<
         'View the match confirmation banner and inspect the hash anatomy (version, cost rounds).',
       ],
     },
+    'jwt-generator': {
+      name: 'JWT Token Generator',
+      metadataTitle: 'JWT Token Generator & Signer Online – Create Signed JSON Web Tokens',
+      description:
+        'Generate and sign custom JWT tokens with HMAC-SHA256, HMAC-SHA384, or HMAC-SHA512 algorithms, custom claims, and expiration timestamps.',
+      longDescription:
+        'Free online JWT Token Generator and Claim Signer. Build standard JSON Web Tokens for API mock testing and authentication. Customize headers, payload claims (sub, iat, exp), and sign with your secret key using Web Crypto API.',
+      keywords: [
+        'jwt generator',
+        'create jwt token online',
+        'sign jwt token',
+        'jwt builder hs256',
+        'json web token generator',
+      ],
+      faqs: [
+        {
+          question: 'Which HMAC signing algorithms are supported?',
+          answer:
+            'Supports HS256 (HMAC-SHA256), HS384 (HMAC-SHA384), and HS512 (HMAC-SHA512) via the native browser Web Cryptography API.',
+        },
+        {
+          question: 'Are my signing secrets kept secure?',
+          answer:
+            'Yes! All cryptographic signature generation executes 100% locally in your browser. Secrets and payload data are never sent to any server.',
+        },
+      ],
+      howToUseSteps: [
+        'Select the HMAC algorithm (HS256, HS384, HS512) and type your signing secret key.',
+        'Edit the Header and Payload JSON objects with your desired claims and payload data.',
+        'Click "+ Add exp" if you need a standard 1-hour expiration timestamp.',
+        'Copy the generated 3-part encoded and signed JWT token.',
+      ],
+    },
   },
   text: {
     'regex-tester': {
@@ -2273,6 +2338,38 @@ const tools: Record<
           answer:
             'By default, sorting is case-insensitive. You can enable case-sensitive sorting in the options.',
         },
+      ],
+    },
+    'string-byte-counter': {
+      name: 'String Byte & UTF-8 Counter',
+      metadataTitle: 'String Byte & UTF-8 Length Counter Online – Database Column Checker',
+      description:
+        'Count UTF-8 bytes, characters, UTF-16 code units, words, and check capacity limits for database VARCHAR/CHAR columns.',
+      longDescription:
+        'Free online String Byte and UTF-8 Character Counter. Calculate exact byte storage and memory size for plain text, emojis, and international Unicode strings. Includes instant VARCHAR(255) capacity validation for SQL databases.',
+      keywords: [
+        'string byte counter',
+        'utf8 byte length',
+        'character byte counter',
+        'varchar byte limit checker',
+        'string size in bytes',
+      ],
+      faqs: [
+        {
+          question: 'Why is the UTF-8 byte count different from character count?',
+          answer:
+            'Standard ASCII characters use 1 byte each, while accented letters (e.g. é, ç) take 2 bytes, and emojis (e.g. 🚀, 🎉) take 4 bytes in UTF-8 encoding.',
+        },
+        {
+          question: 'How does the database column limit checker work?',
+          answer:
+            'You can select column types like VARCHAR(64), VARCHAR(255), or TEXT to see how many bytes remain before exceeding database row constraints.',
+        },
+      ],
+      howToUseSteps: [
+        'Type or paste your text into the editor input area.',
+        'View the live breakdown of UTF-8 Bytes, Characters, Words, and ASCII vs Multi-byte chars.',
+        'Select a column size (e.g. VARCHAR(255)) to check whether your text fits within database limits.',
       ],
     },
   },
@@ -3050,6 +3147,38 @@ const tools: Record<
         'Select target format (PNG, JPEG, or WebP) and resolution scale (1x, 2x, or 4x).',
         'Preview the rendered vector image in the visual sandbox.',
         'Click "Convert & Download" to save the high-resolution image to your computer.',
+      ],
+    },
+    'base64-to-pdf': {
+      name: 'Base64 to PDF Converter',
+      metadataTitle: 'Base64 to PDF Converter Online – Decode & In-Browser PDF Viewer',
+      description:
+        'Decode Base64 strings and Data URIs directly into an embedded PDF document preview with 1-click PDF download.',
+      longDescription:
+        'Free online Base64 to PDF Converter and Viewer. Decode base64-encoded PDF documents from invoices, receipts, and REST API payloads without uploading files to external servers. Preview and download instantly.',
+      keywords: [
+        'base64 to pdf',
+        'base64 pdf viewer',
+        'decode base64 to pdf online',
+        'convert base64 string to pdf',
+        'data uri pdf preview',
+      ],
+      faqs: [
+        {
+          question: 'Are my PDF documents uploaded to any server?',
+          answer:
+            'No! The entire decoding and rendering process happens 100% locally in your browser using Blob URLs and HTML5 sandboxed iframes.',
+        },
+        {
+          question: 'Does it support data:application/pdf;base64 prefixes?',
+          answer:
+            'Yes. The converter automatically detects and strips Data URI prefixes and extra whitespace from your Base64 input.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your Base64 string or click "Upload Text File" to load encoded PDF data.',
+        'Click "Preview PDF" to render the document inside the interactive PDF viewer.',
+        'Click "Download PDF" to save the decoded document directly to your device.',
       ],
     },
   },
@@ -4436,6 +4565,105 @@ const tools: Record<
         'Or adjust individual horizontal (X) and vertical (Y) radius sliders for each corner.',
         'Observe the responsive shape change in the center preview card.',
         'Click "Copy CSS" to copy the full `border-radius` snippet.',
+      ],
+    },
+    'curl-builder': {
+      name: 'cURL Command Builder',
+      metadataTitle: 'cURL Command Builder & API Request Generator Online – Visual GUI',
+      description:
+        'Construct and export executable cURL commands with HTTP methods, query params, headers, authentication, and JSON/Form payloads.',
+      longDescription:
+        'Free online visual cURL Command Builder. Design HTTP requests (GET, POST, PUT, DELETE, PATCH), customize headers, bearer/basic auth, and request payloads with live command generation for your terminal or scripts.',
+      keywords: [
+        'curl builder online',
+        'generate curl command',
+        'curl request generator',
+        'curl api client',
+        'curl command line creator',
+      ],
+      faqs: [
+        {
+          question: 'Which authentication methods are supported?',
+          answer:
+            'Supports Bearer Tokens (`-H "Authorization: Bearer ..."`) and Basic Authentication (`-u "user:pass"`).',
+        },
+        {
+          question: 'Are special characters and single quotes escaped safely?',
+          answer:
+            'Yes. Body JSON and header strings are properly escaped to prevent shell syntax breakages in bash and zsh terminals.',
+        },
+      ],
+      howToUseSteps: [
+        'Select the HTTP Method (GET, POST, etc.) and enter the target API endpoint URL.',
+        'Choose Authentication (Bearer or Basic) and add custom HTTP headers if needed.',
+        'Select body type (JSON, Form, Raw) and input your request payload.',
+        'Click "Copy cURL" to paste the ready-to-run command directly into your terminal.',
+      ],
+    },
+    'css-neumorphism': {
+      name: 'CSS Neumorphism Generator',
+      metadataTitle: 'CSS Neumorphism & Soft UI Generator Online – Extruded, Inset & Concave Shadows',
+      description:
+        'Generate modern soft UI neumorphic cards and buttons with dual light/dark shadows, inset depth, and pure CSS export.',
+      longDescription:
+        'Free online CSS Neumorphism and Soft UI Generator. Design tactile extruded, pressed, concave, and convex card surfaces with real-time shadow distance, blur, intensity, and color adjustments.',
+      keywords: [
+        'css neumorphism generator',
+        'soft ui generator css',
+        'neumorphic shadow generator',
+        'inset box shadow generator',
+        'neumorphism button css',
+      ],
+      faqs: [
+        {
+          question: 'What surface shapes are available?',
+          answer:
+            'Supports Flat, Pressed (inset shadow), Concave (gradient curve), and Convex (reversed gradient curve) surfaces.',
+        },
+        {
+          question: 'How are dual shadows calculated?',
+          answer:
+            'The generator automatically computes the complementary light-source highlight and dark-side drop shadow based on your base color and intensity settings.',
+        },
+      ],
+      howToUseSteps: [
+        'Choose your desired surface shape (Flat, Pressed, Concave, or Convex).',
+        'Adjust the background color, element size, border radius, shadow distance, and blur sliders.',
+        'Preview the soft tactile element in the real-time canvas.',
+        'Click "Copy CSS" to copy the generated `box-shadow` and `background` rules.',
+      ],
+    },
+    'css-mesh-gradient': {
+      name: 'CSS Mesh Gradient Generator',
+      metadataTitle: 'CSS Mesh Gradient & Aura Background Generator Online – Multi-Point Color Blending',
+      description:
+        'Create modern multi-point mesh and aura radial gradients for web hero backgrounds with pure CSS export.',
+      longDescription:
+        'Free online CSS Mesh Gradient and Aura Background Generator. Position multi-colored radial gradient anchors with adjustable blur radius and background colors to build futuristic UI landing page aesthetics.',
+      keywords: [
+        'css mesh gradient generator',
+        'mesh gradient css',
+        'aura gradient generator',
+        'multi color radial gradient css',
+        'modern hero background css',
+      ],
+      faqs: [
+        {
+          question: 'How do CSS mesh gradients work without canvas or SVG?',
+          answer:
+            'Multiple layered `radial-gradient()` positions are blended together on a solid background with backdrop/filter blur effects for ultra-fast GPU rendering.',
+        },
+        {
+          question: 'Can I add or reposition multiple color nodes?',
+          answer:
+            'Yes! You can add up to 6 custom color nodes and independently position their X/Y coordinates from 0% to 100%.',
+        },
+      ],
+      howToUseSteps: [
+        'Pick the canvas base background color and adjust the aura blur radius.',
+        'Add or modify color anchor points and drag the X/Y position sliders.',
+        'Observe the live color blending in the preview banner.',
+        'Click "Copy CSS" to copy the composite background styles to your stylesheet.',
       ],
     },
   },

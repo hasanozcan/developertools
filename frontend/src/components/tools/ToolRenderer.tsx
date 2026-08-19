@@ -296,6 +296,34 @@ const toolComponents = {
     loading: Loading,
     ssr: false,
   }),
+  'jwt-generator': dynamic(() => import('./JwtGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ulid-generator': dynamic(() => import('./UlidGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'curl-builder': dynamic(() => import('./CurlBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'base64-to-pdf': dynamic(() => import('./Base64ToPdfTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-neumorphism': dynamic(() => import('./CssNeumorphismTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'string-byte-counter': dynamic(() => import('./StringByteCounterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-mesh-gradient': dynamic(() => import('./CssMeshGradientTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
 } as const satisfies Record<ToolSlug, ComponentType>;
 
 export const toolComponentSlugs = Object.keys(toolComponents) as ToolSlug[];

@@ -333,6 +333,13 @@ const sourceByTool = {
   'css-filter-generator': [sources.css, sources.cssSyntax],
   'bcrypt-verifier': [sources.bcrypt, sources.password],
   'css-border-radius': [sources.css, sources.cssSyntax],
+  'jwt-generator': [sources.jwt, sources.webCryptoHmac],
+  'ulid-generator': [sources.uuid, sources.javascript],
+  'curl-builder': sources.curl,
+  'base64-to-pdf': [sources.base64, sources.dataUri],
+  'css-neumorphism': [sources.css, sources.cssSyntax],
+  'string-byte-counter': [sources.unicode, sources.javascript],
+  'css-mesh-gradient': [sources.css, sources.cssSyntax],
 } satisfies Record<ToolSlug, ToolSource | ToolSource[]>;
 
 export function getToolSources(toolSlug: string): ToolSource[] {
