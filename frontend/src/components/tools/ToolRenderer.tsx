@@ -240,6 +240,34 @@ const toolComponents = {
     loading: Loading,
     ssr: false,
   }),
+  'css-flexbox-generator': dynamic(() => import('./CssFlexboxGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'open-graph-previewer': dynamic(() => import('./OpenGraphPreviewerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ascii-art-generator': dynamic(() => import('./AsciiArtGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-animation-generator': dynamic(() => import('./CssAnimationGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'markdown-to-html': dynamic(() => import('./MarkdownToHtmlTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-text-shadow': dynamic(() => import('./CssTextShadowTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'time-duration-calculator': dynamic(() => import('./TimeDurationCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
 } as const satisfies Record<ToolSlug, ComponentType>;
 
 export const toolComponentSlugs = Object.keys(toolComponents) as ToolSlug[];

@@ -1387,6 +1387,39 @@ const tools: Record<
         'Copy the inline SVG Data URI, copy raw SVG XML, or download the .svg file.',
       ],
     },
+    'ascii-art-generator': {
+      name: 'ASCII Art & Banner Generator',
+      metadataTitle: 'ASCII Art & Banner Generator Online – Big Text Maker for README & CLI',
+      description:
+        'Convert text into large ASCII font art banners for GitHub READMEs, terminal CLI intros, code comments, and discord headers.',
+      longDescription:
+        'Free online ASCII Art & Big Text Generator. Turn regular words and slogans into multi-line stylized ASCII character art banners with instant copy and text download.',
+      keywords: [
+        'ascii art generator',
+        'ascii text generator',
+        'ascii banner generator',
+        'big text generator',
+        'figlet online',
+      ],
+      faqs: [
+        {
+          question: 'Can I use generated ASCII banners in GitHub README files?',
+          answer:
+            'Yes. Wrap the output in a markdown code block (```) in your README.md to ensure monospaced alignment across all browsers.',
+        },
+        {
+          question: 'What font styles are supported?',
+          answer:
+            'Standard classic ASCII (slashes, pipes, underscores) and modern Unicode solid block characters (█) for crisp rendering.',
+        },
+      ],
+      howToUseSteps: [
+        'Type your word or slogan into the text input box.',
+        'Select your preferred font style (Standard ASCII or Solid Blocks).',
+        'Click "Copy ASCII" to copy the formatted banner to your clipboard.',
+        'Or click the download button to save it as a .txt file.',
+      ],
+    },
   },
   crypto: {
     'md5-hash': {
@@ -2824,6 +2857,70 @@ const tools: Record<
         'Click "Copy Markdown" or download it as a .md file.',
       ],
     },
+    'markdown-to-html': {
+      name: 'Markdown to HTML Converter',
+      metadataTitle: 'Markdown to HTML Converter Online – Markdown to Clean HTML Code',
+      description:
+        'Convert GitHub-flavored Markdown text, headings, code blocks, lists, and links into clean, formatted HTML markup.',
+      longDescription:
+        'Free online Markdown to HTML Converter. Instantly transform Markdown documents, README notes, or blog posts into clean, semantic HTML code with 1-click copy and file download.',
+      keywords: [
+        'markdown to html',
+        'convert markdown to html online',
+        'md to html converter',
+        'markdown html generator',
+        'github markdown to html',
+      ],
+      faqs: [
+        {
+          question: 'Does this converter preserve code syntax tags?',
+          answer:
+            'Yes. Code blocks (```javascript ... ```) are converted to <pre><code class="language-javascript"> with properly escaped characters.',
+        },
+        {
+          question: 'Can I download the generated HTML output?',
+          answer:
+            'Yes, click the download icon to save your converted document directly as a .html file.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your Markdown text into the left editor (or click Load Sample).',
+        'Review the automatically generated clean HTML markup on the right.',
+        'Click "Copy HTML" or download it as a .html file.',
+      ],
+    },
+    'time-duration-calculator': {
+      name: 'Time Duration & Date Diff',
+      metadataTitle: 'Time Duration & Date Difference Calculator – Exact Elapsed Time & Unit Converter',
+      description:
+        'Calculate exact elapsed time between two dates or timestamps in days, hours, minutes, and seconds with unit conversions.',
+      longDescription:
+        'Free online Time Duration and Date Difference Calculator. Calculate precise time intervals between two dates, measure project duration, and convert between milliseconds, seconds, minutes, hours, and days.',
+      keywords: [
+        'time duration calculator',
+        'date difference calculator',
+        'calculate time between two dates',
+        'days between dates',
+        'hours minutes seconds calculator',
+      ],
+      faqs: [
+        {
+          question: 'How accurate is the date difference calculation?',
+          answer:
+            'Calculations are millisecond-accurate based on the native JavaScript Date API and standard UTC timestamps.',
+        },
+        {
+          question: 'Can I convert between time units (e.g. hours to seconds)?',
+          answer:
+            'Yes. The interactive unit conversion section lets you convert any amount between milliseconds, seconds, minutes, hours, and days simultaneously.',
+        },
+      ],
+      howToUseSteps: [
+        'Select the Start Date and End Date using the date-time pickers.',
+        'View the exact human-readable elapsed duration and broken-down metrics.',
+        'Use the Time Unit Conversion Matrix below to convert between time units.',
+      ],
+    },
   },
   formatters: {
     'sql-formatter': {
@@ -3979,6 +4076,137 @@ const tools: Record<
         'Adjust the width and height sliders to resize your triangle.',
         'Pick your desired triangle fill color.',
         'Click Copy CSS to paste the lightweight CSS snippet into your project.',
+      ],
+    },
+    'css-flexbox-generator': {
+      name: 'CSS Flexbox Generator',
+      metadataTitle: 'CSS Flexbox Generator & Playground Online – Visual Flexbox Builder',
+      description:
+        'Visual interactive CSS Flexbox layout builder with direction, alignment, wrap, and gap controls with pure CSS and Tailwind export.',
+      longDescription:
+        'Free online CSS Flexbox Generator & Playground. Visually design modern flexible layouts, test alignment and justify properties on live preview items, and export pure CSS or Tailwind CSS utility classes.',
+      keywords: [
+        'css flexbox generator',
+        'flexbox playground',
+        'css flex generator',
+        'flexbox visual builder',
+        'tailwind flexbox generator',
+      ],
+      faqs: [
+        {
+          question: 'Does this generator provide both pure CSS and Tailwind classes?',
+          answer:
+            'Yes. Both standard CSS rules (display: flex, justify-content, align-items, gap) and Tailwind utility classes are generated in real-time.',
+        },
+        {
+          question: 'Can I add or remove test flex items in the sandbox?',
+          answer:
+            'Yes, use the + and - buttons to adjust the number of test cards inside the container to see how wrapping and spacing behaves.',
+        },
+      ],
+      howToUseSteps: [
+        'Adjust container properties: direction, justify-content, align-items, and flex-wrap.',
+        'Use the gap slider to set the spacing between flex items.',
+        'Preview how child items react in the live visual playground.',
+        'Copy either the pure CSS code or Tailwind CSS classes.',
+      ],
+    },
+    'open-graph-previewer': {
+      name: 'Open Graph & Social Previewer',
+      metadataTitle: 'Open Graph & Social Share Previewer – Twitter, Facebook, LinkedIn & SERP',
+      description:
+        'Simulate and preview social media share cards for Twitter/X, Facebook, LinkedIn, Discord, and Google Search SERP with meta tag export.',
+      longDescription:
+        'Free online Open Graph and Social Media Link Previewer. Test how your website or blog URL looks when shared on Twitter, Facebook, LinkedIn, and Google Search. Export complete Open Graph meta tags.',
+      keywords: [
+        'open graph previewer',
+        'social share card preview',
+        'twitter card preview',
+        'og meta tags generator',
+        'facebook link preview',
+      ],
+      faqs: [
+        {
+          question: 'Which social platforms are simulated in the previewer?',
+          answer:
+            'You can toggle between Twitter/X Large Image Card, Facebook Feed Post, LinkedIn Link Share, and Google Search SERP snippet views.',
+        },
+        {
+          question: 'What is the recommended Open Graph image resolution?',
+          answer:
+            'The standard recommended image size for Twitter Cards and Facebook Open Graph is 1200 × 630 pixels (1.91:1 aspect ratio).',
+        },
+      ],
+      howToUseSteps: [
+        'Enter your page title, description, canonical URL, and 1200x630 image URL.',
+        'Switch between Twitter, Facebook, LinkedIn, and Google SERP tabs to preview social cards.',
+        'Click "Copy Meta Tags" to paste the <meta> tags directly into your website <head>.',
+      ],
+    },
+    'css-animation-generator': {
+      name: 'CSS Animation Generator',
+      metadataTitle: 'CSS Animation Generator Online – Keyframes & CSS Animation Builder',
+      description:
+        'Generate CSS @keyframes animations (bounce, pulse, shake, spin, fade in, flip, wobble, zoom) with live interactive preview and timing controls.',
+      longDescription:
+        'Free online CSS Animation & Keyframes Generator. Create smooth CSS transitions and keyframe animations with custom duration, easing, delay, and iteration controls. Export pure CSS code.',
+      keywords: [
+        'css animation generator',
+        'css keyframes generator',
+        'css animation builder',
+        'bounce pulse spin animation css',
+        'css animation effects',
+      ],
+      faqs: [
+        {
+          question: 'What animation presets are available?',
+          answer:
+            'Presets include Bounce, Pulse, Spin, Shake, Fade In, 3D Flip, Wobble, and Zoom In.',
+        },
+        {
+          question: 'Can I customize the timing function (easing)?',
+          answer:
+            'Yes. You can select between ease, linear, ease-in, ease-out, and ease-in-out, as well as customize duration and delay in seconds.',
+        },
+      ],
+      howToUseSteps: [
+        'Select an animation preset (e.g. Bounce, Pulse, 3D Flip).',
+        'Adjust duration, delay, timing function, and iteration count sliders.',
+        'Watch the interactive animated box in the live sandbox.',
+        'Copy the generated CSS animation class and @keyframes snippet.',
+      ],
+    },
+    'css-text-shadow': {
+      name: 'CSS Text Shadow Generator',
+      metadataTitle: 'CSS Text Shadow Generator Online – Multi-Layer 3D, Neon & Glow Effects',
+      description:
+        'Create multi-layer CSS text-shadow effects with customizable offsets, blur radius, color pickers, and presets (neon, 3D, retro, soft drop).',
+      longDescription:
+        'Free online CSS Text Shadow Generator. Design beautiful typography shadow effects, 3D extruded text, neon glowing titles, and retro outlines with real-time preview and 1-click CSS export.',
+      keywords: [
+        'css text shadow generator',
+        'text shadow online',
+        '3d text css generator',
+        'neon glow text css',
+        'multi layer text shadow',
+      ],
+      faqs: [
+        {
+          question: 'Can I add multiple shadow layers to the text?',
+          answer:
+            'Yes. You can add as many stacked text-shadow layers as you need to achieve realistic 3D depth, multi-colored retro borders, or multi-stage neon glow.',
+        },
+        {
+          question: 'Are there ready-to-use style presets?',
+          answer:
+            'Yes! One-click presets include Soft Drop, Neon Glow, 3D Extruded, and Retro Outline.',
+        },
+      ],
+      howToUseSteps: [
+        'Type your custom preview text and adjust the font size slider.',
+        'Click a preset or customize individual shadow layer X/Y offsets, blur, and colors.',
+        'Add additional shadow layers with "+ Add Layer" for complex 3D or glow effects.',
+        'Click "Copy CSS" to paste the text-shadow property into your stylesheet.',
       ],
     },
   },

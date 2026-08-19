@@ -319,6 +319,13 @@ const sourceByTool = {
   'html-to-markdown': [sources.html, sources.markdown],
   'css-triangle-generator': [sources.css, sources.cssSyntax],
   'svg-placeholder-generator': [sources.svg, sources.dataUri],
+  'css-flexbox-generator': [sources.css, sources.cssSyntax],
+  'open-graph-previewer': [sources.meta, sources.html],
+  'ascii-art-generator': sources.unicode,
+  'css-animation-generator': [sources.css, sources.cssSyntax],
+  'markdown-to-html': [sources.markdown, sources.html],
+  'css-text-shadow': [sources.css, sources.cssSyntax],
+  'time-duration-calculator': [sources.timestamp, sources.javascript],
 } satisfies Record<ToolSlug, ToolSource | ToolSource[]>;
 
 export function getToolSources(toolSlug: string): ToolSource[] {
