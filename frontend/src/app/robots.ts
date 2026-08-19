@@ -11,20 +11,16 @@ export default function robots(): MetadataRoute.Robots {
         disallow: [
           '/api/',
           '/admin/',
-          '/*?utm_',
-          '/*&utm_',
-          '/*?gclid=',
-          '/*&gclid=',
-          '/*?fbclid=',
-          '/*&fbclid=',
-          '/*?ref=',
-          '/*&ref=',
+          '/*?*',
         ],
       },
       {
         userAgent: 'Googlebot',
         allow: '/',
-        disallow: ['/api/'],
+        disallow: [
+          '/api/',
+          '/*?*',
+        ],
       },
       {
         userAgent: 'Googlebot-Image',
