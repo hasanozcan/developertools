@@ -1,170 +1,104 @@
-# Developer Tools - SEO-Odaklı Geliştirici Araçları Sitesi
+# DevsTools – 251 Free, Privacy-First Developer Tools
 
-Yazılımcılar için ücretsiz online araçlar sunan, organik Google trafiği ve reklam geliri odaklı web sitesi.
+[![Next.js 16](https://img.shields.io/badge/Next.js-16.3-black?logo=next.js)](https://nextjs.org/)
+[![React 19](https://img.shields.io/badge/React-19.2-blue?logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v3-38bdf8?logo=tailwindcss)](https://tailwindcss.com/)
+[![Tests](https://img.shields.io/badge/Tests-818%20Passing-success?logo=vitest)](https://vitest.dev/)
+[![Playwright](https://img.shields.io/badge/Playwright-E2E%20Verified-45ba4b?logo=playwright)](https://playwright.dev/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Teknoloji Stack
+**DevsTools** (`https://devstools.app`) is an open-source, ultra-fast suite of **251 online developer tools** running **100% client-side** in your browser. No signups, no paywalls, zero server tracking.
 
-- **Backend**: .NET Core 9 + Entity Framework Core
-- **Frontend**: Next.js 16 + React 19 + Tailwind CSS
-- **Database**: PostgreSQL
-- **SEO**: Server-Side Rendering, Structured Data, Sitemap
+---
 
-## Proje Yapısı
+## 🌟 Key Features
 
-```
-DeveloperTools/
-├── backend/                    # .NET Core 9 API
-│   ├── src/
-│   │   ├── DeveloperTools.Api/
-│   │   ├── DeveloperTools.Core/
-│   │   ├── DeveloperTools.Application/
-│   │   └── DeveloperTools.Infrastructure/
-│   └── DeveloperTools.sln
-│
-└── frontend/                   # Next.js 16 Frontend
-    ├── src/
-    │   ├── app/
-    │   ├── components/
-    │   └── lib/
-    └── package.json
-```
+- 🔒 **100% Client-Side Privacy:** Your tokens, API keys, JSON payloads, and source code never leave your browser.
+- ⚡ **Instant Execution:** Built with Next.js 16 Static Site Generation (SSG) with zero backend round-trip latency.
+- 🔍 **Keyboard-First Navigation:** Press `/` anywhere to open the command palette fuzzy search.
+- 🌙 **Dark & Light Modes:** Sleek, accessible UI designed with Tailwind CSS and WCAG 2.1 AA compliance.
+- 🌍 **7 Languages Supported:** English, Türkçe, Deutsch, Español, Français, Русский, 简体中文.
+- 🧪 **Rock-Solid Reliability:** 818 Unit Tests and full Playwright E2E test suites with 100% passing coverage.
 
-## Öne Çıkan Araçlar
+---
 
-| Araç | Kategori | İşlem Tipi |
-|------|----------|------------|
-| JSON Formatter | JSON Tools | Client-side |
-| JSON Validator | JSON Tools | Client-side |
-| JSON Schema Validator | JSON Tools | Client-side |
-| JSON Pointer Evaluator | JSON Tools | Client-side |
-| JSONPath Tester | JSON Tools | Client-side |
-| JSON to CSV Converter | JSON Tools | Client-side |
-| JSON to TypeScript | JSON Tools | Client-side |
-| YAML ↔ JSON Converter | JSON Tools | Client-side |
-| Base64 Encoder/Decoder | Encoding | Client-side |
-| URL Encoder/Decoder | Encoding | Client-side |
-| JWT Decoder | Encoding | Client-side |
-| HTML Entity Encoder/Decoder | Encoding | Client-side |
-| Image to Base64 | Encoding | Client-side |
-| UUID Generator | Generators | Client-side |
-| Password Generator | Generators | Client-side |
-| Lorem Ipsum Generator | Generators | Client-side |
-| QR Code Generator | Generators | Client-side |
-| Slug Generator | Generators | Client-side |
-| CSS Gradient Generator | Generators | Client-side |
-| Meta Tags Generator | Generators | Client-side |
-| MD5 Hash Generator | Crypto | Client-side |
-| SHA256 Hash Generator | Crypto | Client-side |
-| SHA512 Hash Generator | Crypto | Client-side |
-| HMAC Generator & Verifier | Crypto | Client-side |
-| PKCE Generator & Verifier | Crypto | Client-side |
-| Regex Tester | Text Tools | Client-side |
-| Text Diff Tool | Text Tools | Client-side |
-| Markdown Preview | Text Tools | Client-side |
-| Timestamp Converter | Converters | Client-side |
-| Color Converter | Converters | Client-side |
-| SQL Formatter | Formatters | Client-side |
-| CSS Minifier | Formatters | Client-side |
-| JavaScript Minifier | Formatters | Client-side |
-| Cron Expression Parser | Utilities | Client-side |
-| IPv4 CIDR Calculator | Utilities | Client-side |
-| Chmod Calculator | Utilities | Client-side |
-| Cache-Control Parser & Builder | Utilities | Client-side |
-| CSP Header Builder & Analyzer | Utilities | Client-side |
-| cURL Builder & Fetch Converter | Utilities | Client-side |
+## 🛠️ Tool Catalog by Category (251 Tools)
 
-## Hızlı Başlangıç
+### 1. AI & LLM Engineering (10 Tools)
+- **LLM Token & Cost Calculator** (`/tools/utilities/llm-token-counter`): Estimate tokens and costs for GPT-4o, Claude 3.5, Gemini 1.5, Llama 3.
+- **OpenAI Function Calling Schema Generator** (`/tools/converters/openai-function-schema`): Turn JSON into OpenAI tool schemas.
+- **Prompt Template Compiler** (`/tools/utilities/prompt-template-formatter`): Jinja2/Mustache template variable interpolation.
+- **Embedding Vector Similarity** (`/tools/utilities/embedding-similarity`): Cosine similarity, Euclidean distance, Dot product.
+- **RAG Text Chunk Splitter** (`/tools/utilities/text-chunk-splitter`): Semantic window splitting for vector search pipelines.
+- **OpenAI JSONL Validator** (`/tools/utilities/jsonl-dataset-validator`): Validate dataset lines for fine-tuning.
+- **Prompt Format Converter** (`/tools/converters/prompt-format-converter`): ChatML ↔ Anthropic ↔ Llama 3 format converter.
+- **LLM Sampling Curve Visualizer** (`/tools/generators/sampling-curve-visualizer`): Temperature & Top-P token probability curves.
+- **AI System Prompt Builder** (`/tools/text/system-prompt-formatter`): Structured system prompt markdown builder.
+- **Prompt Diff Comparator** (`/tools/text/prompt-diff`): Word-level and line-level prompt revision comparison.
 
-### Backend
+### 2. Converters (63 Tools)
+- JSON ↔ CSV, YAML ↔ JSON, XML ↔ JSON, TOML ↔ JSON, TSV ↔ JSON, NDJSON ↔ JSON
+- JSON to TypeScript, Zod, Pydantic (Python), Rust Serde, Swift Codable, Kotlin Data Classes, C#, Java Lombok POJO
+- TypeScript to JSON Schema, YAML to TypeScript, GraphQL to TypeScript, Protobuf to JSON
+- SQL to MongoDB, JSON to SQL DDL, PostgreSQL to MySQL, Prisma to SQL, CSV to Parquet Schema
+- Docker Compose to Kubernetes (K8s), Caddy to Nginx, Markdown to HTML Slides, .env to .env.example
 
-```bash
-cd backend
+### 3. Developer Utilities (66 Tools)
+- CSS Specificity Calculator, Fluid Typography Clamp, Media Query Range Builder, Aspect Ratio Calculator
+- Postgres Connection URI Builder, Redis Command Generator, SQL Explainer, SQL Index Advisor
+- Kubernetes Kubeconfig Validator, Helm Values Evaluator, Dockerfile Linter, Systemd Unit Generator
+- WebSocket Client Tester, Server-Sent Events (SSE) Stream Tester, HAR File Viewer, DNS Records Simulator
+- BigNumber Arbitrary Precision Calculator, Multi-Radix Base Converter, Bandwidth Download Calculator
 
-# PostgreSQL veritabanını oluşturun
-# Connection string: user secrets veya ConnectionStrings__DefaultConnection
+### 4. Generators (42 Tools)
+- UUID v4 / UUID v7 (Time-Ordered), NanoID, ULID, API Key Generator, Password Generator, QR Code Generator
+- CSS Keyframe Animations, CSS Cubic-Bezier Curves, CSS Glassmorphism, CSS Neumorphism, CSS Mesh Gradients
+- Conventional Git Commit Builder, CHANGELOG.md Builder, .editorconfig Builder, Open Source License Generator
+- Android Manifest XML Builder, iOS Info.plist Builder, Flutter Material 3 Theme Generator, Electron Config Builder
 
-# NuGet paketlerini yükle
-dotnet restore --locked-mode
+### 5. Cryptography & Security (25 Tools)
+- JWT Decoder, Signer & Signature Validator, Certificate PEM / X.509 Inspector, CSR Generator
+- AES-256 Crypto Playground, BIP-39 Mnemonic Seed Deriver, Argon2 Password Hash Formatter
+- SSH Key Fingerprint Inspector, PGP/GPG Key Inspector, HMAC Webhook Verifier, Bcrypt Hash Generator & Verifier
 
-# Migration uygula
-dotnet ef database update --project src/DeveloperTools.Infrastructure --startup-project src/DeveloperTools.Api
+### 6. Code Formatters (15 Tools)
+- JSON Formatter & Minifier, SQL Formatter & Minifier, Nginx Formatter, Terraform HCL Formatter
+- GraphQL Query Formatter, Tailwind Class Sorter (Prettier order), Package.json Dependency Sorter
 
-# API'yi başlat
-cd src/DeveloperTools.Api
-dotnet run
-```
+### 7. Text Tools (14 Tools)
+- Regex Tester & Escape, Text Diff & Side-by-Side Diff, Case Converter, String Byte Counter, Text Obfuscator
 
-API: `http://localhost:5000`
-Swagger: `http://localhost:5000/swagger`
+### 8. Encoders & Decoders (14 Tools)
+- Base64, Base58 (Bitcoin/Solana/IPFS), Base32, Hex, URL, Binary, HTML Entities, Unicode Escape, Hex Dump Viewer
 
-### Frontend
+---
+
+## 💻 Local Development
 
 ```bash
-cd frontend
+# Clone the repository
+git clone https://github.com/hasanozcan/developertools.git
+cd developertools/frontend
 
-# Bağımlılıkları yükle
-npm ci
+# Install dependencies
+npm install
 
-# Geliştirme sunucusunu başlat
+# Start local development server
 npm run dev
+
+# Run unit tests (818 tests)
+npm test
+
+# Run Playwright E2E browser tests
+npm run test:e2e
+
+# Build production bundle
+npm run build
 ```
 
-Site: `http://localhost:3000`
+---
 
-## SEO Özellikleri
+## 📄 License
 
-- ✅ Server-Side Rendering (Next.js)
-- ✅ Dinamik Sitemap.xml
-- ✅ Robots.txt
-- ✅ JSON-LD Structured Data
-- ✅ Open Graph Meta Tags
-- ✅ Semantic HTML
-- ✅ Breadcrumb Navigation
-- ✅ FAQ Schema (Rich Snippets)
-
-## Reklam Entegrasyonu
-
-Google AdSense için hazır reklam alanları:
-
-- Header Leaderboard (728x90)
-- Sidebar Rectangle (300x250)
-- Below Tool Area (728x90)
-- In-Content Ads
-
-## Ortam Değişkenleri
-
-### Frontend (.env.local)
-
-```env
-NEXT_PUBLIC_SITE_URL=https://yoursite.com
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
-NEXT_PUBLIC_ADSENSE_ID=ca-pub-xxxxxxxxxxxxxxxx
-NEXT_PUBLIC_GOOGLE_VERIFICATION=your-verification-code
-```
-
-### Backend (environment variable / user secrets)
-
-```env
-ConnectionStrings__DefaultConnection=Host=localhost;Database=developertools;Username=developertools;Password=<strong-password>
-Cors__AllowedOrigins__0=http://localhost:3000
-```
-
-## Production Deployment
-
-### Backend
-- Azure App Service
-- Docker + Kubernetes
-- DigitalOcean App Platform
-
-### Frontend
-- Vercel (önerilen)
-- Self-hosted Node.js
-
-### Database
-- Azure Database for PostgreSQL
-- Supabase
-- Railway
-
-## Lisans
-
-MIT License
+Distributed under the MIT License.
