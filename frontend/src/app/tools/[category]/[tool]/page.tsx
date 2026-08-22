@@ -24,6 +24,36 @@ const tools: Record<
   >
 > = {
   json: {
+    'json-patch-generator': {
+      name: 'RFC 6902 JSON Patch Generator',
+      metadataTitle: 'RFC 6902 JSON Patch Generator Online Free',
+      description: 'Generate standard RFC 6902 JSON patch differential operations between two objects.',
+      longDescription: 'Generate standard RFC 6902 JSON patch differential operations between two objects.',
+      keywords: ['json-patch-generator', 'json', 'developer tool'],
+      faqs: [
+        { question: 'What is RFC 6902 JSON Patch Generator?', answer: 'Generate standard RFC 6902 JSON patch differential operations between two objects.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'json-flatten-unflatten': {
+      name: 'JSON Deep Object Flattener',
+      metadataTitle: 'JSON Deep Object Flattener Online Free',
+      description: 'Flatten deeply nested JSON objects into single-level dot notation keys.',
+      longDescription: 'Flatten deeply nested JSON objects into single-level dot notation keys.',
+      keywords: ['json-flatten-unflatten', 'json', 'developer tool'],
+      faqs: [
+        { question: 'What is JSON Deep Object Flattener?', answer: 'Flatten deeply nested JSON objects into single-level dot notation keys.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
     'json-formatter': {
       name: 'JSON Formatter',
       metadataTitle: 'JSON Formatter & Validator Online – Beautify, Minify, Sort',
@@ -562,6 +592,52 @@ const tools: Record<
     },
   },
   encoding: {
+    'quoted-printable-encoder': {
+      name: 'Quoted-Printable MIME Encoder & Decoder',
+      metadataTitle: 'Quoted-Printable MIME Encoder & Decoder Online Free',
+      description: 'Encode and decode MIME Quoted-Printable (RFC 2045) text strings for email data.',
+      longDescription: 'Free online Quoted-Printable encoder and decoder. Convert text to RFC 2045 format for email transport and decode QP strings safely in your browser.',
+      keywords: ['quoted-printable', 'mime encoder', 'rfc 2045', 'email encoding'],
+      faqs: [
+        { question: 'What is Quoted-Printable encoding?', answer: 'Quoted-Printable is an encoding using printable ASCII characters (RFC 2045) designed for email transport of non-ASCII characters.' },
+        { question: 'Is my data secure?', answer: 'Yes, all encoding and decoding runs 100% locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Paste your text or quoted-printable string in the input box.',
+        'Choose Encode or Decode mode to process the content instantly.',
+        'Copy the result with one click.'
+      ]
+    },
+    'morse-code-audio-converter': {
+      name: 'Morse Code Text Encoder',
+      metadataTitle: 'Morse Code Text Encoder Online Free',
+      description: 'Convert alphanumeric text into International Morse Code.',
+      longDescription: 'Convert alphanumeric text into International Morse Code.',
+      keywords: ['morse-code-audio-converter', 'encoding', 'developer tool'],
+      faqs: [
+        { question: 'What is Morse Code Text Encoder?', answer: 'Convert alphanumeric text into International Morse Code.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'base64url-encoder': {
+      name: 'Base64URL Encoder & Decoder',
+      metadataTitle: 'Base64URL Encoder & Decoder Online Free',
+      description: 'Encode and decode URL-safe Base64 without padding characters.',
+      longDescription: 'Encode and decode URL-safe Base64 without padding characters.',
+      keywords: ['base64url-encoder', 'encoding', 'developer tool'],
+      faqs: [
+        { question: 'What is Base64URL Encoder & Decoder?', answer: 'Encode and decode URL-safe Base64 without padding characters.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
     'base58-encoder': {
       name: 'Base58 Encoder & Decoder (Bitcoin / Solana / IPFS)',
       metadataTitle: 'Base58 Encoder & Decoder (Bitcoin / Solana / IPFS) – Free Online Developer Tool',
@@ -1001,6 +1077,171 @@ const tools: Record<
     },
   },
   generators: {
+    'mongodb-aggregate-builder': {
+      name: 'MongoDB Aggregation Pipeline Generator',
+      metadataTitle: 'MongoDB Aggregation Pipeline Generator Online Free',
+      description: 'Build multi-stage MongoDB aggregation pipelines ($match, $group, $sort).',
+      longDescription: 'Build multi-stage MongoDB aggregation pipelines ($match, $group, $sort).',
+      keywords: ['mongodb-aggregate-builder', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is MongoDB Aggregation Pipeline Generator?', answer: 'Build multi-stage MongoDB aggregation pipelines ($match, $group, $sort).' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'clickhouse-ddl-generator': {
+      name: 'ClickHouse MergeTree DDL Generator',
+      metadataTitle: 'ClickHouse MergeTree DDL Generator Online Free',
+      description: 'Generate optimized ClickHouse CREATE TABLE DDL with MergeTree engines.',
+      longDescription: 'Generate optimized ClickHouse CREATE TABLE DDL with MergeTree engines.',
+      keywords: ['clickhouse-ddl-generator', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is ClickHouse MergeTree DDL Generator?', answer: 'Generate optimized ClickHouse CREATE TABLE DDL with MergeTree engines.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'elasticsearch-query-builder': {
+      name: 'Elasticsearch Query DSL Generator',
+      metadataTitle: 'Elasticsearch Query DSL Generator Online Free',
+      description: 'Generate structured JSON Elasticsearch boolean search queries with filters.',
+      longDescription: 'Generate structured JSON Elasticsearch boolean search queries with filters.',
+      keywords: ['elasticsearch-query-builder', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is Elasticsearch Query DSL Generator?', answer: 'Generate structured JSON Elasticsearch boolean search queries with filters.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'react-hook-form-generator': {
+      name: 'React Hook Form Component Generator',
+      metadataTitle: 'React Hook Form Component Generator Online Free',
+      description: 'Generate ready-to-use React Hook Form components with validation rules.',
+      longDescription: 'Generate ready-to-use React Hook Form components with validation rules.',
+      keywords: ['react-hook-form-generator', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is React Hook Form Component Generator?', answer: 'Generate ready-to-use React Hook Form components with validation rules.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'gitlab-ci-generator': {
+      name: 'GitLab CI/CD Pipeline Generator',
+      metadataTitle: 'GitLab CI/CD Pipeline Generator Online Free',
+      description: 'Build multi-stage .gitlab-ci.yml pipeline configuration files.',
+      longDescription: 'Build multi-stage .gitlab-ci.yml pipeline configuration files.',
+      keywords: ['gitlab-ci-generator', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is GitLab CI/CD Pipeline Generator?', answer: 'Build multi-stage .gitlab-ci.yml pipeline configuration files.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'kubernetes-ingress-generator': {
+      name: 'Kubernetes Ingress & Cert-Manager Generator',
+      metadataTitle: 'Kubernetes Ingress & Cert-Manager Generator Online Free',
+      description: 'Generate Kubernetes Ingress manifests with TLS termination and Cert-Manager annotations.',
+      longDescription: 'Generate Kubernetes Ingress manifests with TLS termination and Cert-Manager annotations.',
+      keywords: ['kubernetes-ingress-generator', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is Kubernetes Ingress & Cert-Manager Generator?', answer: 'Generate Kubernetes Ingress manifests with TLS termination and Cert-Manager annotations.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'ollama-modelfile-generator': {
+      name: 'Ollama Modelfile Builder',
+      metadataTitle: 'Ollama Modelfile Builder Online Free',
+      description: 'Create custom Modelfile configurations with system prompts and parameters for Ollama.',
+      longDescription: 'Create custom Modelfile configurations with system prompts and parameters for Ollama.',
+      keywords: ['ollama-modelfile-generator', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is Ollama Modelfile Builder?', answer: 'Create custom Modelfile configurations with system prompts and parameters for Ollama.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'cloudflare-wrangler-builder': {
+      name: 'Cloudflare Wrangler Config Generator',
+      metadataTitle: 'Cloudflare Wrangler Config Generator Online Free',
+      description: 'Generate wrangler.json configuration files for Cloudflare Workers, KV, and D1.',
+      longDescription: 'Generate wrangler.json configuration files for Cloudflare Workers, KV, and D1.',
+      keywords: ['cloudflare-wrangler-builder', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is Cloudflare Wrangler Config Generator?', answer: 'Generate wrangler.json configuration files for Cloudflare Workers, KV, and D1.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'github-actions-matrix-builder': {
+      name: 'GitHub Actions Matrix CI Workflow Generator',
+      metadataTitle: 'GitHub Actions Matrix CI Workflow Generator Online Free',
+      description: 'Build multi-OS and multi-version matrix build workflows for GitHub Actions CI/CD.',
+      longDescription: 'Build multi-OS and multi-version matrix build workflows for GitHub Actions CI/CD.',
+      keywords: ['github-actions-matrix-builder', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is GitHub Actions Matrix CI Workflow Generator?', answer: 'Build multi-OS and multi-version matrix build workflows for GitHub Actions CI/CD.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'tailwind-v4-color-palette': {
+      name: 'Tailwind CSS v4 OKLCH Color Palette Generator',
+      metadataTitle: 'Tailwind CSS v4 OKLCH Color Palette Generator Online Free',
+      description: 'Generate modern OKLCH color scales from 50 to 950 for Tailwind CSS v4.',
+      longDescription: 'Generate modern OKLCH color scales from 50 to 950 for Tailwind CSS v4.',
+      keywords: ['tailwind-v4-color-palette', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is Tailwind CSS v4 OKLCH Color Palette Generator?', answer: 'Generate modern OKLCH color scales from 50 to 950 for Tailwind CSS v4.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'shadcn-theme-generator': {
+      name: 'Shadcn UI Theme & CSS Variables Generator',
+      metadataTitle: 'Shadcn UI Theme & CSS Variables Generator Online Free',
+      description: 'Create custom color palettes and CSS variables for Shadcn UI and Radix components.',
+      longDescription: 'Create custom color palettes and CSS variables for Shadcn UI and Radix components.',
+      keywords: ['shadcn-theme-generator', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is Shadcn UI Theme & CSS Variables Generator?', answer: 'Create custom color palettes and CSS variables for Shadcn UI and Radix components.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
     'sampling-curve-visualizer': {
       name: 'LLM Temperature & Top-P Sampling Curve Visualizer',
       metadataTitle: 'LLM Temperature & Top-P Sampling Curve Visualizer – Free Online Developer Tool',
@@ -2171,6 +2412,96 @@ const tools: Record<
     },
   },
   crypto: {
+    'totp-authenticator-simulator': {
+      name: 'RFC 6238 TOTP Authenticator Simulator',
+      metadataTitle: 'RFC 6238 TOTP Authenticator Simulator Online Free',
+      description: 'Generate 6-digit Time-Based One-Time Passwords (TOTP) with countdown timer.',
+      longDescription: 'Generate 6-digit Time-Based One-Time Passwords (TOTP) with countdown timer.',
+      keywords: ['totp-authenticator-simulator', 'crypto', 'developer tool'],
+      faqs: [
+        { question: 'What is RFC 6238 TOTP Authenticator Simulator?', answer: 'Generate 6-digit Time-Based One-Time Passwords (TOTP) with countdown timer.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'ed25519-key-generator': {
+      name: 'Ed25519 Keypair Generator',
+      metadataTitle: 'Ed25519 Keypair Generator Online Free',
+      description: 'Generate Ed25519 cryptographic public/private keypairs.',
+      longDescription: 'Generate Ed25519 cryptographic public/private keypairs.',
+      keywords: ['ed25519-key-generator', 'crypto', 'developer tool'],
+      faqs: [
+        { question: 'What is Ed25519 Keypair Generator?', answer: 'Generate Ed25519 cryptographic public/private keypairs.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'x509-csr-decoder': {
+      name: 'X.509 Certificate Signing Request (CSR) Decoder',
+      metadataTitle: 'X.509 Certificate Signing Request (CSR) Decoder Online Free',
+      description: 'Decode and inspect PEM-encoded Certificate Signing Requests (CSR).',
+      longDescription: 'Decode and inspect PEM-encoded Certificate Signing Requests (CSR).',
+      keywords: ['x509-csr-decoder', 'crypto', 'developer tool'],
+      faqs: [
+        { question: 'What is X.509 Certificate Signing Request (CSR) Decoder?', answer: 'Decode and inspect PEM-encoded Certificate Signing Requests (CSR).' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'abi-encoder-decoder': {
+      name: 'Solidity ABI Parameter Encoder',
+      metadataTitle: 'Solidity ABI Parameter Encoder Online Free',
+      description: 'Encode function parameters into 32-byte hexadecimal Solidity ABI payloads.',
+      longDescription: 'Encode function parameters into 32-byte hexadecimal Solidity ABI payloads.',
+      keywords: ['abi-encoder-decoder', 'crypto', 'developer tool'],
+      faqs: [
+        { question: 'What is Solidity ABI Parameter Encoder?', answer: 'Encode function parameters into 32-byte hexadecimal Solidity ABI payloads.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'ethereum-keccak256-hasher': {
+      name: 'Ethereum Keccak-256 & Selector Hasher',
+      metadataTitle: 'Ethereum Keccak-256 & Selector Hasher Online Free',
+      description: 'Compute Keccak-256 hashes and 4-byte smart contract function selectors.',
+      longDescription: 'Compute Keccak-256 hashes and 4-byte smart contract function selectors.',
+      keywords: ['ethereum-keccak256-hasher', 'crypto', 'developer tool'],
+      faqs: [
+        { question: 'What is Ethereum Keccak-256 & Selector Hasher?', answer: 'Compute Keccak-256 hashes and 4-byte smart contract function selectors.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'solana-address-validator': {
+      name: 'Solana Base58 Address Validator',
+      metadataTitle: 'Solana Base58 Address Validator Online Free',
+      description: 'Validate Solana public key addresses and Base58 character encoding.',
+      longDescription: 'Validate Solana public key addresses and Base58 character encoding.',
+      keywords: ['solana-address-validator', 'crypto', 'developer tool'],
+      faqs: [
+        { question: 'What is Solana Base58 Address Validator?', answer: 'Validate Solana public key addresses and Base58 character encoding.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
     'ssl-certificate-inspector': {
       name: 'SSL Certificate PEM & SANs Inspector',
       metadataTitle: 'SSL Certificate PEM & SANs Inspector – Free Online Developer Tool',
@@ -2987,6 +3318,51 @@ const tools: Record<
     },
   },
   text: {
+    'subtitle-srt-vtt-converter': {
+      name: 'SRT to WebVTT Subtitle Converter',
+      metadataTitle: 'SRT to WebVTT Subtitle Converter Online Free',
+      description: 'Convert SubRip (.srt) subtitles to HTML5 WebVTT (.vtt) format.',
+      longDescription: 'Convert SubRip (.srt) subtitles to HTML5 WebVTT (.vtt) format.',
+      keywords: ['subtitle-srt-vtt-converter', 'text', 'developer tool'],
+      faqs: [
+        { question: 'What is SRT to WebVTT Subtitle Converter?', answer: 'Convert SubRip (.srt) subtitles to HTML5 WebVTT (.vtt) format.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'sql-slugifier': {
+      name: 'SQL Database Identifier Slugifier',
+      metadataTitle: 'SQL Database Identifier Slugifier Online Free',
+      description: 'Convert text into valid snake_case SQL table and column identifiers.',
+      longDescription: 'Convert text into valid snake_case SQL table and column identifiers.',
+      keywords: ['sql-slugifier', 'text', 'developer tool'],
+      faqs: [
+        { question: 'What is SQL Database Identifier Slugifier?', answer: 'Convert text into valid snake_case SQL table and column identifiers.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'ai-agent-prompt-optimizer': {
+      name: 'AI Agent Prompt Optimizer',
+      metadataTitle: 'AI Agent Prompt Optimizer Online Free',
+      description: 'Structure autonomous AI agent persona, constraints, and goal instructions.',
+      longDescription: 'Structure autonomous AI agent persona, constraints, and goal instructions.',
+      keywords: ['ai-agent-prompt-optimizer', 'text', 'developer tool'],
+      faqs: [
+        { question: 'What is AI Agent Prompt Optimizer?', answer: 'Structure autonomous AI agent persona, constraints, and goal instructions.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
     'system-prompt-formatter': {
       name: 'AI System Prompt Builder & Markdown Formatter',
       metadataTitle: 'AI System Prompt Builder & Markdown Formatter – Free Online Developer Tool',
@@ -3463,6 +3839,156 @@ const tools: Record<
     },
   },
   converters: {
+    'svg-to-webp': {
+      name: 'SVG to WebP Data URI Converter',
+      metadataTitle: 'SVG to WebP Data URI Converter Online Free',
+      description: 'Encode SVG vector graphics into high-performance base64 data URIs.',
+      longDescription: 'Encode SVG vector graphics into high-performance base64 data URIs.',
+      keywords: ['svg-to-webp', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is SVG to WebP Data URI Converter?', answer: 'Encode SVG vector graphics into high-performance base64 data URIs.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'docker-to-compose': {
+      name: 'Docker Run to Docker Compose Converter',
+      metadataTitle: 'Docker Run to Docker Compose Converter Online Free',
+      description: 'Convert single docker run terminal commands into standard docker-compose.yml services.',
+      longDescription: 'Convert single docker run terminal commands into standard docker-compose.yml services.',
+      keywords: ['docker-to-compose', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is Docker Run to Docker Compose Converter?', answer: 'Convert single docker run terminal commands into standard docker-compose.yml services.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'har-to-k6': {
+      name: 'HAR to k6 Load Test Script Converter',
+      metadataTitle: 'HAR to k6 Load Test Script Converter Online Free',
+      description: 'Convert HTTP Archive (HAR) browser network logs into k6 performance test scripts.',
+      longDescription: 'Convert HTTP Archive (HAR) browser network logs into k6 performance test scripts.',
+      keywords: ['har-to-k6', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is HAR to k6 Load Test Script Converter?', answer: 'Convert HTTP Archive (HAR) browser network logs into k6 performance test scripts.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'json-to-graphql-query': {
+      name: 'JSON to GraphQL Query Generator',
+      metadataTitle: 'JSON to GraphQL Query Generator Online Free',
+      description: 'Generate structured GraphQL query strings and selection fields from JSON objects.',
+      longDescription: 'Generate structured GraphQL query strings and selection fields from JSON objects.',
+      keywords: ['json-to-graphql-query', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is JSON to GraphQL Query Generator?', answer: 'Generate structured GraphQL query strings and selection fields from JSON objects.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'avro-to-json-schema': {
+      name: 'Apache Avro to JSON Schema Converter',
+      metadataTitle: 'Apache Avro to JSON Schema Converter Online Free',
+      description: 'Convert Apache Avro record schema definitions into JSON Schema specifications.',
+      longDescription: 'Convert Apache Avro record schema definitions into JSON Schema specifications.',
+      keywords: ['avro-to-json-schema', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is Apache Avro to JSON Schema Converter?', answer: 'Convert Apache Avro record schema definitions into JSON Schema specifications.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'openapi-to-typescript-fetch': {
+      name: 'OpenAPI to TypeScript Fetch Client',
+      metadataTitle: 'OpenAPI to TypeScript Fetch Client Online Free',
+      description: 'Generate typed fetch API client functions from OpenAPI 3.0 and Swagger specs.',
+      longDescription: 'Generate typed fetch API client functions from OpenAPI 3.0 and Swagger specs.',
+      keywords: ['openapi-to-typescript-fetch', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is OpenAPI to TypeScript Fetch Client?', answer: 'Generate typed fetch API client functions from OpenAPI 3.0 and Swagger specs.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'postman-to-curl': {
+      name: 'Postman Collection to cURL Script',
+      metadataTitle: 'Postman Collection to cURL Script Online Free',
+      description: 'Convert exported Postman Collection JSON requests into executable terminal cURL commands.',
+      longDescription: 'Convert exported Postman Collection JSON requests into executable terminal cURL commands.',
+      keywords: ['postman-to-curl', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is Postman Collection to cURL Script?', answer: 'Convert exported Postman Collection JSON requests into executable terminal cURL commands.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'svg-to-react-native': {
+      name: 'SVG to React Native (SVGR) Converter',
+      metadataTitle: 'SVG to React Native (SVGR) Converter Online Free',
+      description: 'Transform raw SVG vector graphics into react-native-svg JSX components.',
+      longDescription: 'Transform raw SVG vector graphics into react-native-svg JSX components.',
+      keywords: ['svg-to-react-native', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is SVG to React Native (SVGR) Converter?', answer: 'Transform raw SVG vector graphics into react-native-svg JSX components.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'json-schema-to-zod': {
+      name: 'JSON Schema to Zod Converter',
+      metadataTitle: 'JSON Schema to Zod Converter Online Free',
+      description: 'Convert JSON Schema definitions into TypeScript Zod validation objects.',
+      longDescription: 'Convert JSON Schema definitions into TypeScript Zod validation objects.',
+      keywords: ['json-schema-to-zod', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is JSON Schema to Zod Converter?', answer: 'Convert JSON Schema definitions into TypeScript Zod validation objects.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'zod-to-json-schema': {
+      name: 'Zod to JSON Schema Converter',
+      metadataTitle: 'Zod to JSON Schema Converter Online Free',
+      description: 'Convert TypeScript Zod object schemas into standard JSON Schema draft-07 definitions.',
+      longDescription: 'Convert TypeScript Zod object schemas into standard JSON Schema draft-07 definitions.',
+      keywords: ['zod-to-json-schema', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is Zod to JSON Schema Converter?', answer: 'Convert TypeScript Zod object schemas into standard JSON Schema draft-07 definitions.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
     'openai-function-schema': {
       name: 'OpenAI Function Calling Schema Generator',
       metadataTitle: 'OpenAI Function Calling Schema Generator – Free Online Developer Tool',
@@ -5189,6 +5715,66 @@ const tools: Record<
     },
   },
   formatters: {
+    'apache-conf-formatter': {
+      name: 'Apache VirtualHost Config Formatter',
+      metadataTitle: 'Apache VirtualHost Config Formatter Online Free',
+      description: 'Format and indent Apache HTTP Server VirtualHost and Directory directives.',
+      longDescription: 'Format and indent Apache HTTP Server VirtualHost and Directory directives.',
+      keywords: ['apache-conf-formatter', 'formatters', 'developer tool'],
+      faqs: [
+        { question: 'What is Apache VirtualHost Config Formatter?', answer: 'Format and indent Apache HTTP Server VirtualHost and Directory directives.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'docker-compose-formatter': {
+      name: 'Docker Compose YAML Formatter',
+      metadataTitle: 'Docker Compose YAML Formatter Online Free',
+      description: 'Format and clean tab indentations in docker-compose.yml files.',
+      longDescription: 'Format and clean tab indentations in docker-compose.yml files.',
+      keywords: ['docker-compose-formatter', 'formatters', 'developer tool'],
+      faqs: [
+        { question: 'What is Docker Compose YAML Formatter?', answer: 'Format and clean tab indentations in docker-compose.yml files.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'toml-formatter': {
+      name: 'TOML Configuration File Formatter',
+      metadataTitle: 'TOML Configuration File Formatter Online Free',
+      description: 'Format and organize TOML configuration keys and table headers.',
+      longDescription: 'Format and organize TOML configuration keys and table headers.',
+      keywords: ['toml-formatter', 'formatters', 'developer tool'],
+      faqs: [
+        { question: 'What is TOML Configuration File Formatter?', answer: 'Format and organize TOML configuration keys and table headers.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'protobuf-formatter': {
+      name: 'Protocol Buffers (.proto) Formatter',
+      metadataTitle: 'Protocol Buffers (.proto) Formatter Online Free',
+      description: 'Format and indent Protobuf proto3 service and message definitions.',
+      longDescription: 'Format and indent Protobuf proto3 service and message definitions.',
+      keywords: ['protobuf-formatter', 'formatters', 'developer tool'],
+      faqs: [
+        { question: 'What is Protocol Buffers (.proto) Formatter?', answer: 'Format and indent Protobuf proto3 service and message definitions.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
     'tailwind-class-sorter': {
       name: 'Tailwind Class Sorter & Formatter',
       metadataTitle: 'Tailwind Class Sorter & Formatter – Free Online Developer Tool',
@@ -5634,6 +6220,156 @@ const tools: Record<
     },
   },
   utilities: {
+    'aspect-ratio-resizer': {
+      name: 'Aspect Ratio & Resolution Calculator',
+      metadataTitle: 'Aspect Ratio & Resolution Calculator Online Free',
+      description: 'Calculate standard aspect ratios (16:9, 4:3, 21:9) and scale resolution dimensions.',
+      longDescription: 'Calculate standard aspect ratios (16:9, 4:3, 21:9) and scale resolution dimensions.',
+      keywords: ['aspect-ratio-resizer', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is Aspect Ratio & Resolution Calculator?', answer: 'Calculate standard aspect ratios (16:9, 4:3, 21:9) and scale resolution dimensions.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'subresource-integrity-generator': {
+      name: 'Subresource Integrity (SRI) Hash Builder',
+      metadataTitle: 'Subresource Integrity (SRI) Hash Builder Online Free',
+      description: 'Generate secure sha384 and sha512 integrity hashes for CDN script and stylesheet tags.',
+      longDescription: 'Generate secure sha384 and sha512 integrity hashes for CDN script and stylesheet tags.',
+      keywords: ['subresource-integrity-generator', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is Subresource Integrity (SRI) Hash Builder?', answer: 'Generate secure sha384 and sha512 integrity hashes for CDN script and stylesheet tags.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'csp-evaluator': {
+      name: 'CSP (Content Security Policy) Evaluator',
+      metadataTitle: 'CSP (Content Security Policy) Evaluator Online Free',
+      description: 'Analyze Content Security Policy headers for missing directives and XSS vulnerabilities.',
+      longDescription: 'Analyze Content Security Policy headers for missing directives and XSS vulnerabilities.',
+      keywords: ['csp-evaluator', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is CSP (Content Security Policy) Evaluator?', answer: 'Analyze Content Security Policy headers for missing directives and XSS vulnerabilities.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'nginx-rate-limit-calculator': {
+      name: 'Nginx Rate Limit Directives Builder',
+      metadataTitle: 'Nginx Rate Limit Directives Builder Online Free',
+      description: 'Generate optimized limit_req_zone rate limiting directives for Nginx reverse proxies.',
+      longDescription: 'Generate optimized limit_req_zone rate limiting directives for Nginx reverse proxies.',
+      keywords: ['nginx-rate-limit-calculator', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is Nginx Rate Limit Directives Builder?', answer: 'Generate optimized limit_req_zone rate limiting directives for Nginx reverse proxies.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'cron-next-runs-visualizer': {
+      name: 'Cron Next 20 Runs Calculator',
+      metadataTitle: 'Cron Next 20 Runs Calculator Online Free',
+      description: 'Calculate and preview the exact next 20 execution timestamps for any cron schedule.',
+      longDescription: 'Calculate and preview the exact next 20 execution timestamps for any cron schedule.',
+      keywords: ['cron-next-runs-visualizer', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is Cron Next 20 Runs Calculator?', answer: 'Calculate and preview the exact next 20 execution timestamps for any cron schedule.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'rag-chunking-visualizer': {
+      name: 'RAG Semantic Chunking Visualizer',
+      metadataTitle: 'RAG Semantic Chunking Visualizer Online Free',
+      description: 'Visualize document text chunking with custom token sizes and overlapping sliding windows.',
+      longDescription: 'Visualize document text chunking with custom token sizes and overlapping sliding windows.',
+      keywords: ['rag-chunking-visualizer', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is RAG Semantic Chunking Visualizer?', answer: 'Visualize document text chunking with custom token sizes and overlapping sliding windows.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'mcp-inspector': {
+      name: 'Model Context Protocol (MCP) Inspector',
+      metadataTitle: 'Model Context Protocol (MCP) Inspector Online Free',
+      description: 'Validate and inspect MCP JSON-RPC 2.0 requests, responses, and notification payloads.',
+      longDescription: 'Validate and inspect MCP JSON-RPC 2.0 requests, responses, and notification payloads.',
+      keywords: ['mcp-inspector', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is Model Context Protocol (MCP) Inspector?', answer: 'Validate and inspect MCP JSON-RPC 2.0 requests, responses, and notification payloads.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'tiktoken-visualizer': {
+      name: 'Tiktoken BPE Tokenizer Visualizer',
+      metadataTitle: 'Tiktoken BPE Tokenizer Visualizer Online Free',
+      description: 'Visual token breakdown and colorized segmentation for OpenAI and Llama BPE models.',
+      longDescription: 'Visual token breakdown and colorized segmentation for OpenAI and Llama BPE models.',
+      keywords: ['tiktoken-visualizer', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is Tiktoken BPE Tokenizer Visualizer?', answer: 'Visual token breakdown and colorized segmentation for OpenAI and Llama BPE models.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'claude-token-counter': {
+      name: 'Claude Token & Cost Calculator',
+      metadataTitle: 'Claude Token & Cost Calculator Online Free',
+      description: 'Calculate token counts and pricing for Claude 3.5 Sonnet, Haiku, and Opus models.',
+      longDescription: 'Calculate token counts and pricing for Claude 3.5 Sonnet, Haiku, and Opus models.',
+      keywords: ['claude-token-counter', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is Claude Token & Cost Calculator?', answer: 'Calculate token counts and pricing for Claude 3.5 Sonnet, Haiku, and Opus models.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'deepseek-token-counter': {
+      name: 'DeepSeek Token & Cost Calculator',
+      metadataTitle: 'DeepSeek Token & Cost Calculator Online Free',
+      description: 'Calculate exact BPE token counts and API inference costs for DeepSeek V3 and DeepSeek R1 models.',
+      longDescription: 'Calculate exact BPE token counts and API inference costs for DeepSeek V3 and DeepSeek R1 models.',
+      keywords: ['deepseek-token-counter', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is DeepSeek Token & Cost Calculator?', answer: 'Calculate exact BPE token counts and API inference costs for DeepSeek V3 and DeepSeek R1 models.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
     'llm-token-counter': {
       name: 'LLM Token & Cost Calculator',
       metadataTitle: 'LLM Token & Cost Calculator – Free Online Developer Tool',

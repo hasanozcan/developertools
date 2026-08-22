@@ -19,6 +19,7 @@ export default defineConfig([
     'coverage/**',
     'node_modules/**',
     'out/**',
+    'output/**',
     'next-env.d.ts',
   ]),
 ]);

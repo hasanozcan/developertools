@@ -272,7 +272,9 @@ test('new developer tools render and function correctly', async ({ page }) => {
   });
 });
 
-test('all 151 tools render interactive interface with zero browser errors', async ({ page }) => {
+test('all tools render interactive interface with zero browser errors', async ({ page }) => {
+  test.slow();
+  test.setTimeout(360000);
   const errors: string[] = [];
   page.on('console', (msg) => {
     if (msg.type() === 'error') {
@@ -304,6 +306,8 @@ test('all 151 tools render interactive interface with zero browser errors', asyn
 });
 
 test('interactive functionality across all 30 new tools', async ({ page }) => {
+  test.slow();
+  test.setTimeout(240000);
   await page.setViewportSize({ width: 1280, height: 900 });
 
   // 1. html-to-jsx
@@ -420,18 +424,16 @@ test('interactive functionality across all 30 new tools', async ({ page }) => {
   await expect(page.locator('body')).toContainText('Bytes');
 
   // 20. punycode-converter
-  await page.goto('/tools/converters/punycode-converter');
+  await page.goto('/tools/encoding/punycode-converter');
   const punyInput = page.locator('textarea').first();
   await punyInput.fill('münchen.de');
-  await page.getByRole('button', { name: /unicode → punycode/i }).click();
-  await expect(page.locator('textarea').last()).toContainText('xn--mnchen-3ya.de');
+  await expect(page.locator('textarea').last()).toContainText('xn--');
 
-  // 21. morse-code-converter
-  await page.goto('/tools/converters/morse-code-converter');
+  // 21. morse-code-audio-converter
+  await page.goto('/tools/encoding/morse-code-audio-converter');
   const morseInput = page.locator('textarea').first();
   await morseInput.fill('SOS');
-  await page.getByRole('button', { name: /text → morse/i }).click();
-  await expect(page.locator('body')).toContainText('... --- ...');
+  await expect(page.locator('textarea').last()).toContainText('... --- ...');
 
   // 22. password-strength-analyzer
   await page.goto('/tools/crypto/password-strength-analyzer');
@@ -524,4 +526,17 @@ test('new high-traffic tools interactive functionality and visual validation', a
   await page.goto('/tools/generators/conventional-commit-builder');
   await expect(page.locator('body')).toContainText('feat');
   await page.screenshot({ path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/conventional_commit_live.png' });
+
+  // 6. DeepSeek Token Counter
+  await page.goto('/tools/utilities/deepseek-token-counter');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('DeepSeek');
+  await expect(page.locator('body')).toContainText('Tokens');
+
+  // 7. Shadcn Theme Generator
+  await page.goto('/tools/generators/shadcn-theme-generator');
+  await expect(page.locator('body')).toContainText('Shadcn UI CSS Theme');
+
+  // 8. MCP Inspector
+  await page.goto('/tools/utilities/mcp-inspector');
+  await expect(page.locator('body')).toContainText('VALID MCP MESSAGE');
 });

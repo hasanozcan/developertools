@@ -844,6 +844,202 @@ const toolComponents = {
     loading: Loading,
     ssr: false,
   }),
+  'deepseek-token-counter': dynamic(() => import('./DeepseekTokenCounterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'claude-token-counter': dynamic(() => import('./ClaudeTokenCounterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'tiktoken-visualizer': dynamic(() => import('./TiktokenVisualizerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'mcp-inspector': dynamic(() => import('./McpInspectorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'rag-chunking-visualizer': dynamic(() => import('./RagChunkingVisualizerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'cron-next-runs-visualizer': dynamic(() => import('./CronNextRunsVisualizerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'nginx-rate-limit-calculator': dynamic(() => import('./NginxRateLimitCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'csp-evaluator': dynamic(() => import('./CspEvaluatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'subresource-integrity-generator': dynamic(() => import('./SubresourceIntegrityGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'aspect-ratio-resizer': dynamic(() => import('./AspectRatioResizerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'zod-to-json-schema': dynamic(() => import('./ZodToJsonSchemaTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-schema-to-zod': dynamic(() => import('./JsonSchemaToZodTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'svg-to-react-native': dynamic(() => import('./SvgToReactNativeTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'postman-to-curl': dynamic(() => import('./PostmanToCurlTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'openapi-to-typescript-fetch': dynamic(() => import('./OpenapiToTypescriptFetchTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'avro-to-json-schema': dynamic(() => import('./AvroToJsonSchemaTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-graphql-query': dynamic(() => import('./JsonToGraphqlQueryTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'har-to-k6': dynamic(() => import('./HarToK6Tool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'docker-to-compose': dynamic(() => import('./DockerToComposeTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'svg-to-webp': dynamic(() => import('./SvgToWebpTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'shadcn-theme-generator': dynamic(() => import('./ShadcnThemeGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'tailwind-v4-color-palette': dynamic(() => import('./TailwindV4ColorPaletteTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'github-actions-matrix-builder': dynamic(() => import('./GithubActionsMatrixBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'cloudflare-wrangler-builder': dynamic(() => import('./CloudflareWranglerBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ollama-modelfile-generator': dynamic(() => import('./OllamaModelfileGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'kubernetes-ingress-generator': dynamic(() => import('./KubernetesIngressGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'gitlab-ci-generator': dynamic(() => import('./GitlabCiGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'react-hook-form-generator': dynamic(() => import('./ReactHookFormGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'elasticsearch-query-builder': dynamic(() => import('./ElasticsearchQueryBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'clickhouse-ddl-generator': dynamic(() => import('./ClickhouseDdlGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'mongodb-aggregate-builder': dynamic(() => import('./MongodbAggregateBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'solana-address-validator': dynamic(() => import('./SolanaAddressValidatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ethereum-keccak256-hasher': dynamic(() => import('./EthereumKeccak256HasherTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'abi-encoder-decoder': dynamic(() => import('./AbiEncoderDecoderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'x509-csr-decoder': dynamic(() => import('./X509CsrDecoderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ed25519-key-generator': dynamic(() => import('./Ed25519KeyGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'totp-authenticator-simulator': dynamic(() => import('./TotpAuthenticatorSimulatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'protobuf-formatter': dynamic(() => import('./ProtobufFormatterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'toml-formatter': dynamic(() => import('./TomlFormatterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'docker-compose-formatter': dynamic(() => import('./DockerComposeFormatterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'apache-conf-formatter': dynamic(() => import('./ApacheConfFormatterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ai-agent-prompt-optimizer': dynamic(() => import('./AiAgentPromptOptimizerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sql-slugifier': dynamic(() => import('./SqlSlugifierTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'subtitle-srt-vtt-converter': dynamic(() => import('./SubtitleSrtVttConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'base64url-encoder': dynamic(() => import('./Base64urlEncoderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'morse-code-audio-converter': dynamic(() => import('./MorseCodeAudioConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'quoted-printable-encoder': dynamic(() => import('./QuotedPrintableEncoderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-flatten-unflatten': dynamic(() => import('./JsonFlattenUnflattenTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-patch-generator': dynamic(() => import('./JsonPatchGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
 } as const satisfies Record<ToolSlug, ComponentType>;
 
 export const toolComponentSlugs = Object.keys(toolComponents) as ToolSlug[];
