@@ -444,6 +444,406 @@ const toolComponents = {
     loading: Loading,
     ssr: false,
   }),
+  'llm-token-counter': dynamic(() => import('./LlmTokenCounterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'openai-function-schema': dynamic(() => import('./OpenaiFunctionSchemaTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'prompt-template-formatter': dynamic(() => import('./PromptTemplateFormatterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'embedding-similarity': dynamic(() => import('./EmbeddingSimilarityTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'text-chunk-splitter': dynamic(() => import('./TextChunkSplitterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'jsonl-dataset-validator': dynamic(() => import('./JsonlDatasetValidatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'prompt-format-converter': dynamic(() => import('./PromptFormatConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sampling-curve-visualizer': dynamic(() => import('./SamplingCurveVisualizerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'system-prompt-formatter': dynamic(() => import('./SystemPromptFormatterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'prompt-diff': dynamic(() => import('./PromptDiffTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-to-tailwind': dynamic(() => import('./CssToTailwindTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'tailwind-to-css': dynamic(() => import('./TailwindToCssTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-specificity-calculator': dynamic(() => import('./CssSpecificityCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-keyframes-generator': dynamic(() => import('./CssKeyframesGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'tailwind-class-sorter': dynamic(() => import('./TailwindClassSorterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'fluid-typography': dynamic(() => import('./FluidTypographyTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-media-query-builder': dynamic(() => import('./CssMediaQueryBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-grid-area-builder': dynamic(() => import('./CssGridAreaBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-cubic-bezier': dynamic(() => import('./CssCubicBezierTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'color-harmony-generator': dynamic(() => import('./ColorHarmonyGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-pydantic': dynamic(() => import('./JsonToPydanticTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-rust-serde': dynamic(() => import('./JsonToRustSerdeTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-swift': dynamic(() => import('./JsonToSwiftTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-kotlin': dynamic(() => import('./JsonToKotlinTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-csharp': dynamic(() => import('./JsonToCsharpTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-java-pojo': dynamic(() => import('./JsonToJavaPojoTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'typescript-to-json-schema': dynamic(() => import('./TypescriptToJsonSchemaTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'yaml-to-typescript': dynamic(() => import('./YamlToTypescriptTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'graphql-to-typescript': dynamic(() => import('./GraphqlToTypescriptTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'protobuf-to-json': dynamic(() => import('./ProtobufToJsonTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sql-to-mongodb': dynamic(() => import('./SqlToMongodbTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-sql-ddl': dynamic(() => import('./JsonToSqlDdlTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sql-explainer': dynamic(() => import('./SqlExplainerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'postgres-connection-builder': dynamic(() => import('./PostgresConnectionBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'redis-command-generator': dynamic(() => import('./RedisCommandGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'csv-to-parquet-schema': dynamic(() => import('./CsvToParquetSchemaTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'mongodb-objectid-parser': dynamic(() => import('./MongodbObjectIdParserTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sql-index-advisor': dynamic(() => import('./SqlIndexAdvisorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'postgres-to-mysql': dynamic(() => import('./PostgresToMysqlTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'prisma-to-sql': dynamic(() => import('./PrismaToSqlTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'docker-compose-to-k8s': dynamic(() => import('./DockerComposeToK8sTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'nginx-formatter': dynamic(() => import('./NginxFormatterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'terraform-formatter': dynamic(() => import('./TerraformFormatterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'kubeconfig-validator': dynamic(() => import('./KubeconfigValidatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'helm-values-evaluator': dynamic(() => import('./HelmValuesEvaluatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'dockerfile-linter': dynamic(() => import('./DockerfileLinterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'systemd-unit-generator': dynamic(() => import('./SystemdUnitGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'caddy-to-nginx': dynamic(() => import('./CaddyToNginxTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'aws-iam-policy-builder': dynamic(() => import('./AwsIamPolicyBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'prometheus-alert-builder': dynamic(() => import('./PrometheusAlertBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'websocket-tester': dynamic(() => import('./WebsocketTesterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'curl-to-postman': dynamic(() => import('./CurlToPostmanTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ssl-certificate-inspector': dynamic(() => import('./SslCertificateInspectorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'csr-generator': dynamic(() => import('./CsrGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sse-stream-tester': dynamic(() => import('./SseStreamTesterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'graphql-query-formatter': dynamic(() => import('./GraphqlQueryFormatterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'har-viewer': dynamic(() => import('./HarViewerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'dns-lookup-simulator': dynamic(() => import('./DnsLookupSimulatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'http-wire-format': dynamic(() => import('./HttpWireFormatTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'webhook-signature-verifier': dynamic(() => import('./WebhookSignatureVerifierTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'uuid-v7-generator': dynamic(() => import('./UuidV7GeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'nanoid-generator': dynamic(() => import('./NanoidGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'base58-encoder': dynamic(() => import('./Base58EncoderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ssh-key-inspector': dynamic(() => import('./SshKeyInspectorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'pgp-key-inspector': dynamic(() => import('./PgpKeyInspectorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'api-key-generator': dynamic(() => import('./ApiKeyGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'jwt-signature-validator': dynamic(() => import('./JwtSignatureValidatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'aes-crypto-playground': dynamic(() => import('./AesCryptoPlaygroundTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'bip39-seed-deriver': dynamic(() => import('./Bip39SeedDeriverTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'argon2-hash-generator': dynamic(() => import('./Argon2HashGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'android-manifest-builder': dynamic(() => import('./AndroidManifestBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ios-plist-builder': dynamic(() => import('./IosPlistBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'app-icon-resizer': dynamic(() => import('./AppIconResizerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'universal-links-validator': dynamic(() => import('./UniversalLinksValidatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'flutter-theme-generator': dynamic(() => import('./FlutterThemeGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'xcode-asset-catalog': dynamic(() => import('./XcodeAssetCatalogTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'android-keystore-fingerprint': dynamic(() => import('./AndroidKeystoreFingerprintTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'electron-config-builder': dynamic(() => import('./ElectronConfigBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'react-native-icon-finder': dynamic(() => import('./ReactNativeIconFinderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'capacitor-config-builder': dynamic(() => import('./CapacitorConfigBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'code-side-by-side-diff': dynamic(() => import('./CodeSideBySideDiffTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'conventional-commit-builder': dynamic(() => import('./ConventionalCommitBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'git-command-builder': dynamic(() => import('./GitCommandBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'env-sanitizer': dynamic(() => import('./EnvSanitizerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'license-generator': dynamic(() => import('./LicenseGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'eslint-prettier-config': dynamic(() => import('./EslintPrettierConfigTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'markdown-to-slides': dynamic(() => import('./MarkdownToSlidesTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'package-json-formatter': dynamic(() => import('./PackageJsonFormatterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'changelog-generator': dynamic(() => import('./ChangelogGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'editorconfig-generator': dynamic(() => import('./EditorconfigGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ieee754-visualizer': dynamic(() => import('./Ieee754VisualizerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'bitwise-calculator': dynamic(() => import('./BitwiseCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'hex-dump-viewer': dynamic(() => import('./HexDumpViewerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'bignumber-calculator': dynamic(() => import('./BignumberCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'multi-radix-converter': dynamic(() => import('./MultiRadixConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'timezone-meeting-planner': dynamic(() => import('./TimezoneMeetingPlannerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'bandwidth-calculator': dynamic(() => import('./BandwidthCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'percentage-growth-calculator': dynamic(() => import('./PercentageGrowthCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'cron-timezone-converter': dynamic(() => import('./CronTimezoneConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'matrix-calculator': dynamic(() => import('./MatrixCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
 } as const satisfies Record<ToolSlug, ComponentType>;
 
 export const toolComponentSlugs = Object.keys(toolComponents) as ToolSlug[];

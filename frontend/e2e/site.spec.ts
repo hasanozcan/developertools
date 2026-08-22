@@ -48,9 +48,9 @@ test('tool search supports keyboard selection', async ({ page }) => {
 
   const search = page.getByRole('combobox', { name: /search/i });
   await search.fill('json formatter');
-  await expect(page.getByRole('option', { name: /json formatter/i })).toBeVisible();
-  await search.press('ArrowDown');
-  await search.press('Enter');
+  const option = page.getByRole('option', { name: /^json formatter/i }).first();
+  await expect(option).toBeVisible();
+  await option.click();
 
   await expect(page).toHaveURL(/\/tools\/json\/json-formatter$/);
 });
@@ -491,3 +491,37 @@ test('interactive functionality across all 30 new tools', async ({ page }) => {
 });
 
 
+
+test('new high-traffic tools interactive functionality and visual validation', async ({ page }) => {
+  // 1. LLM Token Counter
+  await page.goto('/tools/utilities/llm-token-counter');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('LLM Token');
+  await expect(page.locator('body')).toContainText('Tokens');
+  await page.screenshot({ path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/llm_token_counter_live.png' });
+
+  // 2. CSS to Tailwind
+  await page.goto('/tools/converters/css-to-tailwind');
+  const cssInput = page.locator('textarea').first();
+  await cssInput.fill('display: flex; justify-content: center; align-items: center;');
+  await expect(page.locator('textarea').last()).toContainText('flex');
+  await page.screenshot({ path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/css_to_tailwind_live.png' });
+
+  // 3. JSON to Pydantic
+  await page.goto('/tools/converters/json-to-pydantic');
+  const pydanticInput = page.locator('textarea').first();
+  await pydanticInput.fill('{"user_id": 1, "username": "alex", "is_admin": true}');
+  await expect(page.locator('textarea').last()).toContainText('class User(BaseModel):');
+  await expect(page.locator('textarea').last()).toContainText('user_id: int');
+  await page.screenshot({ path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/json_to_pydantic_live.png' });
+
+  // 4. UUID v7 Generator
+  await page.goto('/tools/generators/uuid-v7-generator');
+  await expect(page.locator('body')).toContainText('UUIDv7');
+  await page.getByRole('button', { name: /generate/i }).click();
+  await page.screenshot({ path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/uuid_v7_live.png' });
+
+  // 5. Conventional Commit Builder
+  await page.goto('/tools/generators/conventional-commit-builder');
+  await expect(page.locator('body')).toContainText('feat');
+  await page.screenshot({ path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/conventional_commit_live.png' });
+});

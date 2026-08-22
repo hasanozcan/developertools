@@ -562,6 +562,50 @@ const tools: Record<
     },
   },
   encoding: {
+    'base58-encoder': {
+      name: 'Base58 Encoder & Decoder (Bitcoin / Solana / IPFS)',
+      metadataTitle: 'Base58 Encoder & Decoder (Bitcoin / Solana / IPFS) – Free Online Developer Tool',
+      description: 'Encode and decode plain text and raw bytes to Base58 and Base58Check formats.',
+      longDescription: 'Free online Base58 Encoder & Decoder (Bitcoin / Solana / IPFS). Fast, accurate, client-side processing with instant export options.',
+      keywords: ['base58-encoder', 'base58 encoder & decoder (bitcoin / solana / ipfs)', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Base58 Encoder & Decoder (Bitcoin / Solana / IPFS)?',
+          answer: 'Encode and decode plain text and raw bytes to Base58 and Base58Check formats.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'hex-dump-viewer': {
+      name: 'Hex Dump Viewer & Binary Offset Inspector',
+      metadataTitle: 'Hex Dump Viewer & Binary Offset Inspector – Free Online Developer Tool',
+      description: 'Format text strings into classic 16-byte offset hex dump and ASCII sidebar views.',
+      longDescription: 'Free online Hex Dump Viewer & Binary Offset Inspector. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['hex-dump-viewer', 'hex dump viewer & binary offset inspector', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Hex Dump Viewer & Binary Offset Inspector?',
+          answer: 'Format text strings into classic 16-byte offset hex dump and ASCII sidebar views.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
     base64: {
       name: 'Base64 Encoder/Decoder',
       description: 'Encode or decode Base64 strings online. Free Base64 encoder and decoder tool.',
@@ -957,6 +1001,534 @@ const tools: Record<
     },
   },
   generators: {
+    'sampling-curve-visualizer': {
+      name: 'LLM Temperature & Top-P Sampling Curve Visualizer',
+      metadataTitle: 'LLM Temperature & Top-P Sampling Curve Visualizer – Free Online Developer Tool',
+      description: 'Simulate and visualize token probability distributions under temperature, Top-P, and Top-K sampling.',
+      longDescription: 'Free online LLM Temperature & Top-P Sampling Curve Visualizer. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['sampling-curve-visualizer', 'llm temperature & top-p sampling curve visualizer', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is LLM Temperature & Top-P Sampling Curve Visualizer?',
+          answer: 'Simulate and visualize token probability distributions under temperature, Top-P, and Top-K sampling.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'css-keyframes-generator': {
+      name: 'CSS Keyframe Animation Timeline Generator',
+      metadataTitle: 'CSS Keyframe Animation Timeline Generator – Free Online Developer Tool',
+      description: 'Generate multi-step CSS @keyframes animations and timing rules with real-time visual preview.',
+      longDescription: 'Free online CSS Keyframe Animation Timeline Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['css-keyframes-generator', 'css keyframe animation timeline generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSS Keyframe Animation Timeline Generator?',
+          answer: 'Generate multi-step CSS @keyframes animations and timing rules with real-time visual preview.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'css-grid-area-builder': {
+      name: 'CSS Grid Template Areas Builder',
+      metadataTitle: 'CSS Grid Template Areas Builder – Free Online Developer Tool',
+      description: 'Generate visual CSS grid-template-areas layout declarations and responsive area matrices.',
+      longDescription: 'Free online CSS Grid Template Areas Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['css-grid-area-builder', 'css grid template areas builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSS Grid Template Areas Builder?',
+          answer: 'Generate visual CSS grid-template-areas layout declarations and responsive area matrices.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'css-cubic-bezier': {
+      name: 'CSS Cubic-Bezier Curve Designer',
+      metadataTitle: 'CSS Cubic-Bezier Curve Designer – Free Online Developer Tool',
+      description: 'Design and preview custom cubic-bezier timing functions with spring and bounce presets.',
+      longDescription: 'Free online CSS Cubic-Bezier Curve Designer. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['css-cubic-bezier', 'css cubic-bezier curve designer', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSS Cubic-Bezier Curve Designer?',
+          answer: 'Design and preview custom cubic-bezier timing functions with spring and bounce presets.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'color-harmony-generator': {
+      name: 'Color Harmony & Palette Generator',
+      metadataTitle: 'Color Harmony & Palette Generator – Free Online Developer Tool',
+      description: 'Generate complementary, triadic, and analogous color harmonies with hex and HSL codes.',
+      longDescription: 'Free online Color Harmony & Palette Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['color-harmony-generator', 'color harmony & palette generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Color Harmony & Palette Generator?',
+          answer: 'Generate complementary, triadic, and analogous color harmonies with hex and HSL codes.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'redis-command-generator': {
+      name: 'Redis Command Builder & Key Helper',
+      metadataTitle: 'Redis Command Builder & Key Helper – Free Online Developer Tool',
+      description: 'Build Redis CLI commands for hashes, sets, sorted sets, lists, and expiration TTL.',
+      longDescription: 'Free online Redis Command Builder & Key Helper. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['redis-command-generator', 'redis command builder & key helper', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Redis Command Builder & Key Helper?',
+          answer: 'Build Redis CLI commands for hashes, sets, sorted sets, lists, and expiration TTL.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'systemd-unit-generator': {
+      name: 'Linux Systemd Service Unit Generator',
+      metadataTitle: 'Linux Systemd Service Unit Generator – Free Online Developer Tool',
+      description: 'Generate systemd .service unit configuration files for Node.js, Python, and Go daemons.',
+      longDescription: 'Free online Linux Systemd Service Unit Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['systemd-unit-generator', 'linux systemd service unit generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Linux Systemd Service Unit Generator?',
+          answer: 'Generate systemd .service unit configuration files for Node.js, Python, and Go daemons.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'aws-iam-policy-builder': {
+      name: 'AWS IAM Policy JSON Builder & Validator',
+      metadataTitle: 'AWS IAM Policy JSON Builder & Validator – Free Online Developer Tool',
+      description: 'Build and validate AWS IAM JSON policy statements with Effect, Action, and Resource fields.',
+      longDescription: 'Free online AWS IAM Policy JSON Builder & Validator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['aws-iam-policy-builder', 'aws iam policy json builder & validator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is AWS IAM Policy JSON Builder & Validator?',
+          answer: 'Build and validate AWS IAM JSON policy statements with Effect, Action, and Resource fields.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'prometheus-alert-builder': {
+      name: 'Prometheus Alert Rule & PromQL Builder',
+      metadataTitle: 'Prometheus Alert Rule & PromQL Builder – Free Online Developer Tool',
+      description: 'Generate Prometheus alerting rule YAML manifests with PromQL expressions and labels.',
+      longDescription: 'Free online Prometheus Alert Rule & PromQL Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['prometheus-alert-builder', 'prometheus alert rule & promql builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Prometheus Alert Rule & PromQL Builder?',
+          answer: 'Generate Prometheus alerting rule YAML manifests with PromQL expressions and labels.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'uuid-v7-generator': {
+      name: 'UUID v7 Generator (Time-Ordered)',
+      metadataTitle: 'UUID v7 Generator (Time-Ordered) – Free Online Developer Tool',
+      description: 'Generate modern Unix Epoch time-ordered UUIDv7 identifiers and extract timestamps.',
+      longDescription: 'Free online UUID v7 Generator (Time-Ordered). Fast, accurate, client-side processing with instant export options.',
+      keywords: ['uuid-v7-generator', 'uuid v7 generator (time-ordered)', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is UUID v7 Generator (Time-Ordered)?',
+          answer: 'Generate modern Unix Epoch time-ordered UUIDv7 identifiers and extract timestamps.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'nanoid-generator': {
+      name: 'NanoID Generator & Custom Alphabet Builder',
+      metadataTitle: 'NanoID Generator & Custom Alphabet Builder – Free Online Developer Tool',
+      description: 'Generate compact, URL-friendly, cryptographically secure NanoIDs with custom alphabets.',
+      longDescription: 'Free online NanoID Generator & Custom Alphabet Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['nanoid-generator', 'nanoid generator & custom alphabet builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is NanoID Generator & Custom Alphabet Builder?',
+          answer: 'Generate compact, URL-friendly, cryptographically secure NanoIDs with custom alphabets.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'api-key-generator': {
+      name: 'API Key & Token Generator (Prefix-Ready)',
+      metadataTitle: 'API Key & Token Generator (Prefix-Ready) – Free Online Developer Tool',
+      description: 'Generate cryptographically random API keys and session secrets with custom prefixes.',
+      longDescription: 'Free online API Key & Token Generator (Prefix-Ready). Fast, accurate, client-side processing with instant export options.',
+      keywords: ['api-key-generator', 'api key & token generator (prefix-ready)', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is API Key & Token Generator (Prefix-Ready)?',
+          answer: 'Generate cryptographically random API keys and session secrets with custom prefixes.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'android-manifest-builder': {
+      name: 'Android Manifest XML & Permissions Builder',
+      metadataTitle: 'Android Manifest XML & Permissions Builder – Free Online Developer Tool',
+      description: 'Generate AndroidManifest.xml files with permissions, activities, and launcher intent filters.',
+      longDescription: 'Free online Android Manifest XML & Permissions Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['android-manifest-builder', 'android manifest xml & permissions builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Android Manifest XML & Permissions Builder?',
+          answer: 'Generate AndroidManifest.xml files with permissions, activities, and launcher intent filters.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'ios-plist-builder': {
+      name: 'iOS Info.plist Permission Key Builder',
+      metadataTitle: 'iOS Info.plist Permission Key Builder – Free Online Developer Tool',
+      description: 'Build iOS Info.plist XML files with standard permission usage descriptions.',
+      longDescription: 'Free online iOS Info.plist Permission Key Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['ios-plist-builder', 'ios info.plist permission key builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is iOS Info.plist Permission Key Builder?',
+          answer: 'Build iOS Info.plist XML files with standard permission usage descriptions.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'app-icon-resizer': {
+      name: 'App Icon Resolution Package Reference',
+      metadataTitle: 'App Icon Resolution Package Reference – Free Online Developer Tool',
+      description: 'View standard iOS App Store and Android Play Store icon size specifications.',
+      longDescription: 'Free online App Icon Resolution Package Reference. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['app-icon-resizer', 'app icon resolution package reference', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is App Icon Resolution Package Reference?',
+          answer: 'View standard iOS App Store and Android Play Store icon size specifications.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'flutter-theme-generator': {
+      name: 'Flutter Material 3 ColorScheme Generator',
+      metadataTitle: 'Flutter Material 3 ColorScheme Generator – Free Online Developer Tool',
+      description: 'Convert hex color palettes into Flutter Material 3 ThemeData ColorScheme code.',
+      longDescription: 'Free online Flutter Material 3 ColorScheme Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['flutter-theme-generator', 'flutter material 3 colorscheme generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Flutter Material 3 ColorScheme Generator?',
+          answer: 'Convert hex color palettes into Flutter Material 3 ThemeData ColorScheme code.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'xcode-asset-catalog': {
+      name: 'Xcode Asset Catalog Contents.json Builder',
+      metadataTitle: 'Xcode Asset Catalog Contents.json Builder – Free Online Developer Tool',
+      description: 'Generate standard 1x, 2x, 3x image asset catalog Contents.json manifests for iOS apps.',
+      longDescription: 'Free online Xcode Asset Catalog Contents.json Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['xcode-asset-catalog', 'xcode asset catalog contents.json builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Xcode Asset Catalog Contents.json Builder?',
+          answer: 'Generate standard 1x, 2x, 3x image asset catalog Contents.json manifests for iOS apps.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'electron-config-builder': {
+      name: 'Electron main.js & App Window Builder',
+      metadataTitle: 'Electron main.js & App Window Builder – Free Online Developer Tool',
+      description: 'Generate Electron starter main.js files with BrowserWindow and security configurations.',
+      longDescription: 'Free online Electron main.js & App Window Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['electron-config-builder', 'electron main.js & app window builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Electron main.js & App Window Builder?',
+          answer: 'Generate Electron starter main.js files with BrowserWindow and security configurations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'capacitor-config-builder': {
+      name: 'Capacitor capacitor.config.json Builder',
+      metadataTitle: 'Capacitor capacitor.config.json Builder – Free Online Developer Tool',
+      description: 'Build capacitor.config.json configuration files for hybrid iOS and Android mobile apps.',
+      longDescription: 'Free online Capacitor capacitor.config.json Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['capacitor-config-builder', 'capacitor capacitor.config.json builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Capacitor capacitor.config.json Builder?',
+          answer: 'Build capacitor.config.json configuration files for hybrid iOS and Android mobile apps.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'conventional-commit-builder': {
+      name: 'Conventional Git Commit Message Builder',
+      metadataTitle: 'Conventional Git Commit Message Builder – Free Online Developer Tool',
+      description: 'Build standard Conventional Commits with feat, fix, scope, and breaking change footers.',
+      longDescription: 'Free online Conventional Git Commit Message Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['conventional-commit-builder', 'conventional git commit message builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Conventional Git Commit Message Builder?',
+          answer: 'Build standard Conventional Commits with feat, fix, scope, and breaking change footers.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'license-generator': {
+      name: 'Open Source License & SPDX Generator',
+      metadataTitle: 'Open Source License & SPDX Generator – Free Online Developer Tool',
+      description: 'Generate MIT, Apache 2.0, and GPL open source software license texts with copyright headers.',
+      longDescription: 'Free online Open Source License & SPDX Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['license-generator', 'open source license & spdx generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Open Source License & SPDX Generator?',
+          answer: 'Generate MIT, Apache 2.0, and GPL open source software license texts with copyright headers.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'eslint-prettier-config': {
+      name: 'Prettier & ESLint Configuration Builder',
+      metadataTitle: 'Prettier & ESLint Configuration Builder – Free Online Developer Tool',
+      description: 'Generate customized .prettierrc JSON configuration files with single quotes and tab width.',
+      longDescription: 'Free online Prettier & ESLint Configuration Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['eslint-prettier-config', 'prettier & eslint configuration builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Prettier & ESLint Configuration Builder?',
+          answer: 'Generate customized .prettierrc JSON configuration files with single quotes and tab width.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'changelog-generator': {
+      name: 'CHANGELOG.md Builder (Keep a Changelog)',
+      metadataTitle: 'CHANGELOG.md Builder (Keep a Changelog) – Free Online Developer Tool',
+      description: 'Generate versioned changelog markdown following Keep a Changelog guidelines.',
+      longDescription: 'Free online CHANGELOG.md Builder (Keep a Changelog). Fast, accurate, client-side processing with instant export options.',
+      keywords: ['changelog-generator', 'changelog.md builder (keep a changelog)', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CHANGELOG.md Builder (Keep a Changelog)?',
+          answer: 'Generate versioned changelog markdown following Keep a Changelog guidelines.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'editorconfig-generator': {
+      name: '.editorconfig File Generator',
+      metadataTitle: '.editorconfig File Generator – Free Online Developer Tool',
+      description: 'Generate .editorconfig files with cross-editor indentation, charset, and newline rules.',
+      longDescription: 'Free online .editorconfig File Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['editorconfig-generator', '.editorconfig file generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is .editorconfig File Generator?',
+          answer: 'Generate .editorconfig files with cross-editor indentation, charset, and newline rules.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
     'uuid-generator': {
       name: 'UUID Generator',
       metadataTitle: 'UUID v4 & v7 Generator Online – Bulk GUIDs',
@@ -1599,6 +2171,226 @@ const tools: Record<
     },
   },
   crypto: {
+    'ssl-certificate-inspector': {
+      name: 'SSL Certificate PEM & SANs Inspector',
+      metadataTitle: 'SSL Certificate PEM & SANs Inspector – Free Online Developer Tool',
+      description: 'Inspect x509 PEM SSL/TLS certificates for validity, issuer, Subject Alternative Names, and expiry.',
+      longDescription: 'Free online SSL Certificate PEM & SANs Inspector. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['ssl-certificate-inspector', 'ssl certificate pem & sans inspector', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is SSL Certificate PEM & SANs Inspector?',
+          answer: 'Inspect x509 PEM SSL/TLS certificates for validity, issuer, Subject Alternative Names, and expiry.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'csr-generator': {
+      name: 'CSR (Certificate Signing Request) Builder',
+      metadataTitle: 'CSR (Certificate Signing Request) Builder – Free Online Developer Tool',
+      description: 'Generate OpenSSL Certificate Signing Request commands with Common Name and SAN domains.',
+      longDescription: 'Free online CSR (Certificate Signing Request) Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['csr-generator', 'csr (certificate signing request) builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSR (Certificate Signing Request) Builder?',
+          answer: 'Generate OpenSSL Certificate Signing Request commands with Common Name and SAN domains.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'webhook-signature-verifier': {
+      name: 'HMAC Webhook Signature Verifier',
+      metadataTitle: 'HMAC Webhook Signature Verifier – Free Online Developer Tool',
+      description: 'Verify Stripe, GitHub, and Shopify HMAC SHA-256 webhook payload signatures.',
+      longDescription: 'Free online HMAC Webhook Signature Verifier. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['webhook-signature-verifier', 'hmac webhook signature verifier', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is HMAC Webhook Signature Verifier?',
+          answer: 'Verify Stripe, GitHub, and Shopify HMAC SHA-256 webhook payload signatures.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'ssh-key-inspector': {
+      name: 'SSH Public Key Fingerprint Inspector',
+      metadataTitle: 'SSH Public Key Fingerprint Inspector – Free Online Developer Tool',
+      description: 'Parse OpenSSH public keys to extract key algorithms, comments, and SHA-256 fingerprints.',
+      longDescription: 'Free online SSH Public Key Fingerprint Inspector. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['ssh-key-inspector', 'ssh public key fingerprint inspector', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is SSH Public Key Fingerprint Inspector?',
+          answer: 'Parse OpenSSH public keys to extract key algorithms, comments, and SHA-256 fingerprints.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'pgp-key-inspector': {
+      name: 'PGP & GPG Key Block Inspector',
+      metadataTitle: 'PGP & GPG Key Block Inspector – Free Online Developer Tool',
+      description: 'Validate and inspect ASCII-armored PGP public/private keys and encrypted message blocks.',
+      longDescription: 'Free online PGP & GPG Key Block Inspector. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['pgp-key-inspector', 'pgp & gpg key block inspector', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is PGP & GPG Key Block Inspector?',
+          answer: 'Validate and inspect ASCII-armored PGP public/private keys and encrypted message blocks.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'jwt-signature-validator': {
+      name: 'JWT Signature & Expiry Validator',
+      metadataTitle: 'JWT Signature & Expiry Validator – Free Online Developer Tool',
+      description: 'Inspect JWT headers, claims, and verify token structure and expiration timestamps.',
+      longDescription: 'Free online JWT Signature & Expiry Validator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['jwt-signature-validator', 'jwt signature & expiry validator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is JWT Signature & Expiry Validator?',
+          answer: 'Inspect JWT headers, claims, and verify token structure and expiration timestamps.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'aes-crypto-playground': {
+      name: 'AES-256 Encryption & Decryption Playground',
+      metadataTitle: 'AES-256 Encryption & Decryption Playground – Free Online Developer Tool',
+      description: 'Generate 256-bit AES cryptographic keys and test AES-GCM encryption parameters.',
+      longDescription: 'Free online AES-256 Encryption & Decryption Playground. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['aes-crypto-playground', 'aes-256 encryption & decryption playground', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is AES-256 Encryption & Decryption Playground?',
+          answer: 'Generate 256-bit AES cryptographic keys and test AES-GCM encryption parameters.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'bip39-seed-deriver': {
+      name: 'BIP-39 Mnemonic to Seed Deriver',
+      metadataTitle: 'BIP-39 Mnemonic to Seed Deriver – Free Online Developer Tool',
+      description: 'Derive 512-bit binary seed hex strings from 12 and 24-word BIP-39 mnemonic phrases.',
+      longDescription: 'Free online BIP-39 Mnemonic to Seed Deriver. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['bip39-seed-deriver', 'bip-39 mnemonic to seed deriver', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is BIP-39 Mnemonic to Seed Deriver?',
+          answer: 'Derive 512-bit binary seed hex strings from 12 and 24-word BIP-39 mnemonic phrases.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'argon2-hash-generator': {
+      name: 'Argon2 Password Hash Formatter',
+      metadataTitle: 'Argon2 Password Hash Formatter – Free Online Developer Tool',
+      description: 'Format Argon2id password hashes with custom memory cost, time iterations, and parallelism.',
+      longDescription: 'Free online Argon2 Password Hash Formatter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['argon2-hash-generator', 'argon2 password hash formatter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Argon2 Password Hash Formatter?',
+          answer: 'Format Argon2id password hashes with custom memory cost, time iterations, and parallelism.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'android-keystore-fingerprint': {
+      name: 'Android Keystore Fingerprint (SHA1/SHA256) Formatter',
+      metadataTitle: 'Android Keystore Fingerprint (SHA1/SHA256) Formatter – Free Online Developer Tool',
+      description: 'Format Keystore SHA-1 and SHA-256 certificate fingerprints for Firebase and Google OAuth.',
+      longDescription: 'Free online Android Keystore Fingerprint (SHA1/SHA256) Formatter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['android-keystore-fingerprint', 'android keystore fingerprint (sha1/sha256) formatter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Android Keystore Fingerprint (SHA1/SHA256) Formatter?',
+          answer: 'Format Keystore SHA-1 and SHA-256 certificate fingerprints for Firebase and Google OAuth.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
     'md5-hash': {
       name: 'MD5 Hash Generator',
       metadataTitle: 'MD5 Hash Generator Online – Text & File Checksums',
@@ -2195,6 +2987,72 @@ const tools: Record<
     },
   },
   text: {
+    'system-prompt-formatter': {
+      name: 'AI System Prompt Builder & Markdown Formatter',
+      metadataTitle: 'AI System Prompt Builder & Markdown Formatter – Free Online Developer Tool',
+      description: 'Format and structure AI system instructions with roles, guidelines, output formats, and examples.',
+      longDescription: 'Free online AI System Prompt Builder & Markdown Formatter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['system-prompt-formatter', 'ai system prompt builder & markdown formatter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is AI System Prompt Builder & Markdown Formatter?',
+          answer: 'Format and structure AI system instructions with roles, guidelines, output formats, and examples.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'prompt-diff': {
+      name: 'AI Prompt Version & Semantic Diff Comparator',
+      metadataTitle: 'AI Prompt Version & Semantic Diff Comparator – Free Online Developer Tool',
+      description: 'Compare two prompt revisions to highlight line changes, word additions, and token deltas.',
+      longDescription: 'Free online AI Prompt Version & Semantic Diff Comparator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['prompt-diff', 'ai prompt version & semantic diff comparator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is AI Prompt Version & Semantic Diff Comparator?',
+          answer: 'Compare two prompt revisions to highlight line changes, word additions, and token deltas.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'code-side-by-side-diff': {
+      name: 'Code Side-by-Side Diff Visualizer',
+      metadataTitle: 'Code Side-by-Side Diff Visualizer – Free Online Developer Tool',
+      description: 'Compare two code snippets side-by-side with line-by-line difference tracking.',
+      longDescription: 'Free online Code Side-by-Side Diff Visualizer. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['code-side-by-side-diff', 'code side-by-side diff visualizer', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Code Side-by-Side Diff Visualizer?',
+          answer: 'Compare two code snippets side-by-side with line-by-line difference tracking.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
     'regex-tester': {
       name: 'Regex Tester',
       metadataTitle: 'JavaScript Regex Tester Online – Matches, Groups & Flags',
@@ -2605,6 +3463,600 @@ const tools: Record<
     },
   },
   converters: {
+    'openai-function-schema': {
+      name: 'OpenAI Function Calling Schema Generator',
+      metadataTitle: 'OpenAI Function Calling Schema Generator – Free Online Developer Tool',
+      description: 'Convert JSON objects into structured OpenAI tool and function calling parameter schemas.',
+      longDescription: 'Free online OpenAI Function Calling Schema Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['openai-function-schema', 'openai function calling schema generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is OpenAI Function Calling Schema Generator?',
+          answer: 'Convert JSON objects into structured OpenAI tool and function calling parameter schemas.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'prompt-format-converter': {
+      name: 'ChatML, Anthropic & Llama 3 Prompt Converter',
+      metadataTitle: 'ChatML, Anthropic & Llama 3 Prompt Converter – Free Online Developer Tool',
+      description: 'Convert chat prompts between ChatML, Anthropic Human/Assistant, and Llama 3 template formats.',
+      longDescription: 'Free online ChatML, Anthropic & Llama 3 Prompt Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['prompt-format-converter', 'chatml, anthropic & llama 3 prompt converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is ChatML, Anthropic & Llama 3 Prompt Converter?',
+          answer: 'Convert chat prompts between ChatML, Anthropic Human/Assistant, and Llama 3 template formats.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'css-to-tailwind': {
+      name: 'CSS to Tailwind CSS Converter',
+      metadataTitle: 'CSS to Tailwind CSS Converter – Free Online Developer Tool',
+      description: 'Convert standard CSS rules and declaration blocks into Tailwind CSS utility classes.',
+      longDescription: 'Free online CSS to Tailwind CSS Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['css-to-tailwind', 'css to tailwind css converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSS to Tailwind CSS Converter?',
+          answer: 'Convert standard CSS rules and declaration blocks into Tailwind CSS utility classes.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'tailwind-to-css': {
+      name: 'Tailwind to Vanilla CSS Converter',
+      metadataTitle: 'Tailwind to Vanilla CSS Converter – Free Online Developer Tool',
+      description: 'Convert Tailwind CSS classes back into standard, reusable vanilla CSS stylesheets.',
+      longDescription: 'Free online Tailwind to Vanilla CSS Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['tailwind-to-css', 'tailwind to vanilla css converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Tailwind to Vanilla CSS Converter?',
+          answer: 'Convert Tailwind CSS classes back into standard, reusable vanilla CSS stylesheets.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'json-to-pydantic': {
+      name: 'JSON to Python Pydantic V2 Model',
+      metadataTitle: 'JSON to Python Pydantic V2 Model – Free Online Developer Tool',
+      description: 'Convert JSON payloads into type-safe Python Pydantic V2 BaseModel class definitions.',
+      longDescription: 'Free online JSON to Python Pydantic V2 Model. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['json-to-pydantic', 'json to python pydantic v2 model', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is JSON to Python Pydantic V2 Model?',
+          answer: 'Convert JSON payloads into type-safe Python Pydantic V2 BaseModel class definitions.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'json-to-rust-serde': {
+      name: 'JSON to Rust Serde Struct Converter',
+      metadataTitle: 'JSON to Rust Serde Struct Converter – Free Online Developer Tool',
+      description: 'Convert JSON objects into Rust struct definitions with serde derive attributes.',
+      longDescription: 'Free online JSON to Rust Serde Struct Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['json-to-rust-serde', 'json to rust serde struct converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is JSON to Rust Serde Struct Converter?',
+          answer: 'Convert JSON objects into Rust struct definitions with serde derive attributes.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'json-to-swift': {
+      name: 'JSON to Swift Codable Struct Converter',
+      metadataTitle: 'JSON to Swift Codable Struct Converter – Free Online Developer Tool',
+      description: 'Convert JSON API responses into Swift Codable and Identifiable data structs.',
+      longDescription: 'Free online JSON to Swift Codable Struct Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['json-to-swift', 'json to swift codable struct converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is JSON to Swift Codable Struct Converter?',
+          answer: 'Convert JSON API responses into Swift Codable and Identifiable data structs.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'json-to-kotlin': {
+      name: 'JSON to Kotlin Data Class Converter',
+      metadataTitle: 'JSON to Kotlin Data Class Converter – Free Online Developer Tool',
+      description: 'Convert JSON into Kotlin data classes with @Serializable and @SerialName annotations.',
+      longDescription: 'Free online JSON to Kotlin Data Class Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['json-to-kotlin', 'json to kotlin data class converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is JSON to Kotlin Data Class Converter?',
+          answer: 'Convert JSON into Kotlin data classes with @Serializable and @SerialName annotations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'json-to-csharp': {
+      name: 'JSON to C# Class Converter',
+      metadataTitle: 'JSON to C# Class Converter – Free Online Developer Tool',
+      description: 'Convert JSON into strongly-typed C# classes with System.Text.Json attributes.',
+      longDescription: 'Free online JSON to C# Class Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['json-to-csharp', 'json to c# class converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is JSON to C# Class Converter?',
+          answer: 'Convert JSON into strongly-typed C# classes with System.Text.Json attributes.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'json-to-java-pojo': {
+      name: 'JSON to Java Lombok POJO Converter',
+      metadataTitle: 'JSON to Java Lombok POJO Converter – Free Online Developer Tool',
+      description: 'Convert JSON objects into Java POJO classes with Lombok @Data and Jackson annotations.',
+      longDescription: 'Free online JSON to Java Lombok POJO Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['json-to-java-pojo', 'json to java lombok pojo converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is JSON to Java Lombok POJO Converter?',
+          answer: 'Convert JSON objects into Java POJO classes with Lombok @Data and Jackson annotations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'typescript-to-json-schema': {
+      name: 'TypeScript to JSON Schema Converter',
+      metadataTitle: 'TypeScript to JSON Schema Converter – Free Online Developer Tool',
+      description: 'Convert TypeScript interface definitions into standard JSON Schema Draft 7/2020-12.',
+      longDescription: 'Free online TypeScript to JSON Schema Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['typescript-to-json-schema', 'typescript to json schema converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is TypeScript to JSON Schema Converter?',
+          answer: 'Convert TypeScript interface definitions into standard JSON Schema Draft 7/2020-12.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'yaml-to-typescript': {
+      name: 'YAML to TypeScript Interface Converter',
+      metadataTitle: 'YAML to TypeScript Interface Converter – Free Online Developer Tool',
+      description: 'Convert YAML configuration documents directly into typed TypeScript interfaces.',
+      longDescription: 'Free online YAML to TypeScript Interface Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['yaml-to-typescript', 'yaml to typescript interface converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is YAML to TypeScript Interface Converter?',
+          answer: 'Convert YAML configuration documents directly into typed TypeScript interfaces.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'graphql-to-typescript': {
+      name: 'GraphQL SDL to TypeScript Types Converter',
+      metadataTitle: 'GraphQL SDL to TypeScript Types Converter – Free Online Developer Tool',
+      description: 'Convert GraphQL schema definition language (SDL) types into TypeScript interfaces.',
+      longDescription: 'Free online GraphQL SDL to TypeScript Types Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['graphql-to-typescript', 'graphql sdl to typescript types converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is GraphQL SDL to TypeScript Types Converter?',
+          answer: 'Convert GraphQL schema definition language (SDL) types into TypeScript interfaces.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'protobuf-to-json': {
+      name: 'Protobuf (proto3) to JSON Schema Converter',
+      metadataTitle: 'Protobuf (proto3) to JSON Schema Converter – Free Online Developer Tool',
+      description: 'Convert Protocol Buffer message schemas into standard JSON Schema definitions.',
+      longDescription: 'Free online Protobuf (proto3) to JSON Schema Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['protobuf-to-json', 'protobuf (proto3) to json schema converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Protobuf (proto3) to JSON Schema Converter?',
+          answer: 'Convert Protocol Buffer message schemas into standard JSON Schema definitions.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'sql-to-mongodb': {
+      name: 'SQL to MongoDB Query Converter',
+      metadataTitle: 'SQL to MongoDB Query Converter – Free Online Developer Tool',
+      description: 'Convert SQL SELECT and WHERE queries into MongoDB db.collection.find() syntax.',
+      longDescription: 'Free online SQL to MongoDB Query Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['sql-to-mongodb', 'sql to mongodb query converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is SQL to MongoDB Query Converter?',
+          answer: 'Convert SQL SELECT and WHERE queries into MongoDB db.collection.find() syntax.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'json-to-sql-ddl': {
+      name: 'JSON to SQL CREATE TABLE DDL Generator',
+      metadataTitle: 'JSON to SQL CREATE TABLE DDL Generator – Free Online Developer Tool',
+      description: 'Infer database column types from JSON data and generate SQL CREATE TABLE DDL schemas.',
+      longDescription: 'Free online JSON to SQL CREATE TABLE DDL Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['json-to-sql-ddl', 'json to sql create table ddl generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is JSON to SQL CREATE TABLE DDL Generator?',
+          answer: 'Infer database column types from JSON data and generate SQL CREATE TABLE DDL schemas.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'csv-to-parquet-schema': {
+      name: 'CSV to Apache Parquet Schema Converter',
+      metadataTitle: 'CSV to Apache Parquet Schema Converter – Free Online Developer Tool',
+      description: 'Inspect CSV headers and generate PyArrow Apache Parquet schema declarations.',
+      longDescription: 'Free online CSV to Apache Parquet Schema Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['csv-to-parquet-schema', 'csv to apache parquet schema converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSV to Apache Parquet Schema Converter?',
+          answer: 'Inspect CSV headers and generate PyArrow Apache Parquet schema declarations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'postgres-to-mysql': {
+      name: 'PostgreSQL to MySQL Dialect Converter',
+      metadataTitle: 'PostgreSQL to MySQL Dialect Converter – Free Online Developer Tool',
+      description: 'Convert PostgreSQL SQL dialect and data types into MySQL compatible schema syntax.',
+      longDescription: 'Free online PostgreSQL to MySQL Dialect Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['postgres-to-mysql', 'postgresql to mysql dialect converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is PostgreSQL to MySQL Dialect Converter?',
+          answer: 'Convert PostgreSQL SQL dialect and data types into MySQL compatible schema syntax.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'prisma-to-sql': {
+      name: 'Prisma Schema to SQL DDL Generator',
+      metadataTitle: 'Prisma Schema to SQL DDL Generator – Free Online Developer Tool',
+      description: 'Convert Prisma ORM schema models into raw SQL CREATE TABLE statements.',
+      longDescription: 'Free online Prisma Schema to SQL DDL Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['prisma-to-sql', 'prisma schema to sql ddl generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Prisma Schema to SQL DDL Generator?',
+          answer: 'Convert Prisma ORM schema models into raw SQL CREATE TABLE statements.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'docker-compose-to-k8s': {
+      name: 'Docker Compose to Kubernetes YAML Converter',
+      metadataTitle: 'Docker Compose to Kubernetes YAML Converter – Free Online Developer Tool',
+      description: 'Convert docker-compose.yml services into Kubernetes Deployment and Service manifests.',
+      longDescription: 'Free online Docker Compose to Kubernetes YAML Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['docker-compose-to-k8s', 'docker compose to kubernetes yaml converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Docker Compose to Kubernetes YAML Converter?',
+          answer: 'Convert docker-compose.yml services into Kubernetes Deployment and Service manifests.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'caddy-to-nginx': {
+      name: 'Caddyfile to Nginx Reverse Proxy Converter',
+      metadataTitle: 'Caddyfile to Nginx Reverse Proxy Converter – Free Online Developer Tool',
+      description: 'Convert Caddy reverse proxy blocks into production-ready Nginx server configurations.',
+      longDescription: 'Free online Caddyfile to Nginx Reverse Proxy Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['caddy-to-nginx', 'caddyfile to nginx reverse proxy converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Caddyfile to Nginx Reverse Proxy Converter?',
+          answer: 'Convert Caddy reverse proxy blocks into production-ready Nginx server configurations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'curl-to-postman': {
+      name: 'cURL to Postman Collection Converter',
+      metadataTitle: 'cURL to Postman Collection Converter – Free Online Developer Tool',
+      description: 'Convert cURL command strings into importable Postman v2.1 Collection JSON files.',
+      longDescription: 'Free online cURL to Postman Collection Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['curl-to-postman', 'curl to postman collection converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is cURL to Postman Collection Converter?',
+          answer: 'Convert cURL command strings into importable Postman v2.1 Collection JSON files.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'http-wire-format': {
+      name: 'HTTP Request to Raw Wire Format Converter',
+      metadataTitle: 'HTTP Request to Raw Wire Format Converter – Free Online Developer Tool',
+      description: 'Convert structured HTTP requests into raw HTTP/1.1 wire transmission text payloads.',
+      longDescription: 'Free online HTTP Request to Raw Wire Format Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['http-wire-format', 'http request to raw wire format converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is HTTP Request to Raw Wire Format Converter?',
+          answer: 'Convert structured HTTP requests into raw HTTP/1.1 wire transmission text payloads.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'env-sanitizer': {
+      name: '.env to .env.example Secret Sanitizer',
+      metadataTitle: '.env to .env.example Secret Sanitizer – Free Online Developer Tool',
+      description: 'Strip private API keys and database credentials from .env files to produce .env.example templates.',
+      longDescription: 'Free online .env to .env.example Secret Sanitizer. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['env-sanitizer', '.env to .env.example secret sanitizer', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is .env to .env.example Secret Sanitizer?',
+          answer: 'Strip private API keys and database credentials from .env files to produce .env.example templates.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'markdown-to-slides': {
+      name: 'Markdown to HTML Slide Deck Converter',
+      metadataTitle: 'Markdown to HTML Slide Deck Converter – Free Online Developer Tool',
+      description: 'Convert markdown files separated by horizontal rules into responsive HTML presentation slides.',
+      longDescription: 'Free online Markdown to HTML Slide Deck Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['markdown-to-slides', 'markdown to html slide deck converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Markdown to HTML Slide Deck Converter?',
+          answer: 'Convert markdown files separated by horizontal rules into responsive HTML presentation slides.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'multi-radix-converter': {
+      name: 'Multi-Radix Base Converter (Bin, Oct, Dec, Hex)',
+      metadataTitle: 'Multi-Radix Base Converter (Bin, Oct, Dec, Hex) – Free Online Developer Tool',
+      description: 'Simultaneously convert numbers across Binary, Octal, Decimal, and Hexadecimal representations.',
+      longDescription: 'Free online Multi-Radix Base Converter (Bin, Oct, Dec, Hex). Fast, accurate, client-side processing with instant export options.',
+      keywords: ['multi-radix-converter', 'multi-radix base converter (bin, oct, dec, hex)', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Multi-Radix Base Converter (Bin, Oct, Dec, Hex)?',
+          answer: 'Simultaneously convert numbers across Binary, Octal, Decimal, and Hexadecimal representations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'cron-timezone-converter': {
+      name: 'Cron Expression Timezone Converter (Local ↔ UTC)',
+      metadataTitle: 'Cron Expression Timezone Converter (Local ↔ UTC) – Free Online Developer Tool',
+      description: 'Shift cron expression hours between local timezones and server UTC schedules.',
+      longDescription: 'Free online Cron Expression Timezone Converter (Local ↔ UTC). Fast, accurate, client-side processing with instant export options.',
+      keywords: ['cron-timezone-converter', 'cron expression timezone converter (local ↔ utc)', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Cron Expression Timezone Converter (Local ↔ UTC)?',
+          answer: 'Shift cron expression hours between local timezones and server UTC schedules.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
     'timestamp-converter': {
       name: 'Timestamp Converter',
       metadataTitle: 'Unix Timestamp Converter - Seconds, Milliseconds, UTC & Local',
@@ -3737,6 +5189,116 @@ const tools: Record<
     },
   },
   formatters: {
+    'tailwind-class-sorter': {
+      name: 'Tailwind Class Sorter & Formatter',
+      metadataTitle: 'Tailwind Class Sorter & Formatter – Free Online Developer Tool',
+      description: 'Sort and deduplicate Tailwind CSS classes following the official Prettier ordering hierarchy.',
+      longDescription: 'Free online Tailwind Class Sorter & Formatter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['tailwind-class-sorter', 'tailwind class sorter & formatter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Tailwind Class Sorter & Formatter?',
+          answer: 'Sort and deduplicate Tailwind CSS classes following the official Prettier ordering hierarchy.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'nginx-formatter': {
+      name: 'Nginx Config Formatter & Validator',
+      metadataTitle: 'Nginx Config Formatter & Validator – Free Online Developer Tool',
+      description: 'Format and indent Nginx server blocks, location directives, and upstream configurations.',
+      longDescription: 'Free online Nginx Config Formatter & Validator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['nginx-formatter', 'nginx config formatter & validator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Nginx Config Formatter & Validator?',
+          answer: 'Format and indent Nginx server blocks, location directives, and upstream configurations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'terraform-formatter': {
+      name: 'Terraform HCL Formatter & Linter',
+      metadataTitle: 'Terraform HCL Formatter & Linter – Free Online Developer Tool',
+      description: 'Format HashiCorp Terraform (.tf) configuration files with standard 2-space indentation.',
+      longDescription: 'Free online Terraform HCL Formatter & Linter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['terraform-formatter', 'terraform hcl formatter & linter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Terraform HCL Formatter & Linter?',
+          answer: 'Format HashiCorp Terraform (.tf) configuration files with standard 2-space indentation.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'graphql-query-formatter': {
+      name: 'GraphQL Query Formatter & Minifier',
+      metadataTitle: 'GraphQL Query Formatter & Minifier – Free Online Developer Tool',
+      description: 'Prettify or minify GraphQL queries, mutations, subscriptions, and fragments.',
+      longDescription: 'Free online GraphQL Query Formatter & Minifier. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['graphql-query-formatter', 'graphql query formatter & minifier', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is GraphQL Query Formatter & Minifier?',
+          answer: 'Prettify or minify GraphQL queries, mutations, subscriptions, and fragments.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'package-json-formatter': {
+      name: 'Package.json Dependency Sorter & Prettifier',
+      metadataTitle: 'Package.json Dependency Sorter & Prettifier – Free Online Developer Tool',
+      description: 'Alphabetically sort dependencies and format package.json files cleanly.',
+      longDescription: 'Free online Package.json Dependency Sorter & Prettifier. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['package-json-formatter', 'package.json dependency sorter & prettifier', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Package.json Dependency Sorter & Prettifier?',
+          answer: 'Alphabetically sort dependencies and format package.json files cleanly.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
     'sql-formatter': {
       name: 'SQL Formatter',
       description: 'Format and beautify SQL queries online. Free SQL formatter and minifier.',
@@ -4072,6 +5634,644 @@ const tools: Record<
     },
   },
   utilities: {
+    'llm-token-counter': {
+      name: 'LLM Token & Cost Calculator',
+      metadataTitle: 'LLM Token & Cost Calculator – Free Online Developer Tool',
+      description: 'Estimate token counts and API inference costs for GPT-4o, Claude 3.5, Gemini, and Llama 3 models.',
+      longDescription: 'Free online LLM Token & Cost Calculator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['llm-token-counter', 'llm token & cost calculator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is LLM Token & Cost Calculator?',
+          answer: 'Estimate token counts and API inference costs for GPT-4o, Claude 3.5, Gemini, and Llama 3 models.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'prompt-template-formatter': {
+      name: 'Prompt Template Compiler & Interpolator',
+      metadataTitle: 'Prompt Template Compiler & Interpolator – Free Online Developer Tool',
+      description: 'Interpolate variables and validate placeholders in Jinja2 and Mustache AI prompt templates.',
+      longDescription: 'Free online Prompt Template Compiler & Interpolator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['prompt-template-formatter', 'prompt template compiler & interpolator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Prompt Template Compiler & Interpolator?',
+          answer: 'Interpolate variables and validate placeholders in Jinja2 and Mustache AI prompt templates.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'embedding-similarity': {
+      name: 'Embedding Vector Similarity Calculator',
+      metadataTitle: 'Embedding Vector Similarity Calculator – Free Online Developer Tool',
+      description: 'Calculate Cosine Similarity, Euclidean Distance, and Dot Product between embedding vectors.',
+      longDescription: 'Free online Embedding Vector Similarity Calculator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['embedding-similarity', 'embedding vector similarity calculator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Embedding Vector Similarity Calculator?',
+          answer: 'Calculate Cosine Similarity, Euclidean Distance, and Dot Product between embedding vectors.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'text-chunk-splitter': {
+      name: 'RAG Text Chunk Splitter & Token Window Simulator',
+      metadataTitle: 'RAG Text Chunk Splitter & Token Window Simulator – Free Online Developer Tool',
+      description: 'Split documents into overlapping token or character chunks for RAG vector search pipelines.',
+      longDescription: 'Free online RAG Text Chunk Splitter & Token Window Simulator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['text-chunk-splitter', 'rag text chunk splitter & token window simulator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is RAG Text Chunk Splitter & Token Window Simulator?',
+          answer: 'Split documents into overlapping token or character chunks for RAG vector search pipelines.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'jsonl-dataset-validator': {
+      name: 'OpenAI JSONL Fine-Tuning Validator',
+      metadataTitle: 'OpenAI JSONL Fine-Tuning Validator – Free Online Developer Tool',
+      description: 'Validate JSONL dataset files and message structures for OpenAI and Gemini model fine-tuning.',
+      longDescription: 'Free online OpenAI JSONL Fine-Tuning Validator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['jsonl-dataset-validator', 'openai jsonl fine-tuning validator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is OpenAI JSONL Fine-Tuning Validator?',
+          answer: 'Validate JSONL dataset files and message structures for OpenAI and Gemini model fine-tuning.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'css-specificity-calculator': {
+      name: 'CSS Specificity Calculator & Inspector',
+      metadataTitle: 'CSS Specificity Calculator & Inspector – Free Online Developer Tool',
+      description: 'Calculate selector specificity tuples (IDs, classes, elements) and compare cascade overrides.',
+      longDescription: 'Free online CSS Specificity Calculator & Inspector. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['css-specificity-calculator', 'css specificity calculator & inspector', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSS Specificity Calculator & Inspector?',
+          answer: 'Calculate selector specificity tuples (IDs, classes, elements) and compare cascade overrides.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'fluid-typography': {
+      name: 'CSS Fluid Typography & Clamp Calculator',
+      metadataTitle: 'CSS Fluid Typography & Clamp Calculator – Free Online Developer Tool',
+      description: 'Calculate responsive CSS clamp() formulas for fluid font sizes across viewport breakpoints.',
+      longDescription: 'Free online CSS Fluid Typography & Clamp Calculator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['fluid-typography', 'css fluid typography & clamp calculator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSS Fluid Typography & Clamp Calculator?',
+          answer: 'Calculate responsive CSS clamp() formulas for fluid font sizes across viewport breakpoints.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'css-media-query-builder': {
+      name: 'CSS Media Query Range Builder',
+      metadataTitle: 'CSS Media Query Range Builder – Free Online Developer Tool',
+      description: 'Build modern range-syntax CSS @media queries with dark mode and motion preference filters.',
+      longDescription: 'Free online CSS Media Query Range Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['css-media-query-builder', 'css media query range builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSS Media Query Range Builder?',
+          answer: 'Build modern range-syntax CSS @media queries with dark mode and motion preference filters.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'sql-explainer': {
+      name: 'SQL Query Visual Explainer',
+      metadataTitle: 'SQL Query Visual Explainer – Free Online Developer Tool',
+      description: 'Break down complex SQL SELECT joins, filters, and aggregations into plain English steps.',
+      longDescription: 'Free online SQL Query Visual Explainer. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['sql-explainer', 'sql query visual explainer', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is SQL Query Visual Explainer?',
+          answer: 'Break down complex SQL SELECT joins, filters, and aggregations into plain English steps.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'postgres-connection-builder': {
+      name: 'PostgreSQL Connection URI Builder & Parser',
+      metadataTitle: 'PostgreSQL Connection URI Builder & Parser – Free Online Developer Tool',
+      description: 'Build and parse PostgreSQL database connection strings and parameters.',
+      longDescription: 'Free online PostgreSQL Connection URI Builder & Parser. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['postgres-connection-builder', 'postgresql connection uri builder & parser', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is PostgreSQL Connection URI Builder & Parser?',
+          answer: 'Build and parse PostgreSQL database connection strings and parameters.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'mongodb-objectid-parser': {
+      name: 'MongoDB ObjectId Timestamp & Metadata Parser',
+      metadataTitle: 'MongoDB ObjectId Timestamp & Metadata Parser – Free Online Developer Tool',
+      description: 'Extract creation timestamps, machine identifiers, and process IDs from MongoDB ObjectIds.',
+      longDescription: 'Free online MongoDB ObjectId Timestamp & Metadata Parser. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['mongodb-objectid-parser', 'mongodb objectid timestamp & metadata parser', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is MongoDB ObjectId Timestamp & Metadata Parser?',
+          answer: 'Extract creation timestamps, machine identifiers, and process IDs from MongoDB ObjectIds.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'sql-index-advisor': {
+      name: 'SQL B-Tree Composite Index Advisor',
+      metadataTitle: 'SQL B-Tree Composite Index Advisor – Free Online Developer Tool',
+      description: 'Analyze SQL WHERE and JOIN clauses to recommend optimal B-Tree composite database indexes.',
+      longDescription: 'Free online SQL B-Tree Composite Index Advisor. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['sql-index-advisor', 'sql b-tree composite index advisor', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is SQL B-Tree Composite Index Advisor?',
+          answer: 'Analyze SQL WHERE and JOIN clauses to recommend optimal B-Tree composite database indexes.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'kubeconfig-validator': {
+      name: 'Kubernetes Kubeconfig Validator',
+      metadataTitle: 'Kubernetes Kubeconfig Validator – Free Online Developer Tool',
+      description: 'Validate Kubeconfig YAML files, cluster contexts, server endpoints, and user credentials.',
+      longDescription: 'Free online Kubernetes Kubeconfig Validator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['kubeconfig-validator', 'kubernetes kubeconfig validator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Kubernetes Kubeconfig Validator?',
+          answer: 'Validate Kubeconfig YAML files, cluster contexts, server endpoints, and user credentials.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'helm-values-evaluator': {
+      name: 'Helm Template & Values.yaml Evaluator',
+      metadataTitle: 'Helm Template & Values.yaml Evaluator – Free Online Developer Tool',
+      description: 'Simulate Helm template variable interpolation with custom values.yaml payloads.',
+      longDescription: 'Free online Helm Template & Values.yaml Evaluator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['helm-values-evaluator', 'helm template & values.yaml evaluator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Helm Template & Values.yaml Evaluator?',
+          answer: 'Simulate Helm template variable interpolation with custom values.yaml payloads.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'dockerfile-linter': {
+      name: 'Dockerfile Linter & Best-Practice Checker',
+      metadataTitle: 'Dockerfile Linter & Best-Practice Checker – Free Online Developer Tool',
+      description: 'Analyze Dockerfiles for caching issues, layer bloat, and container security best practices.',
+      longDescription: 'Free online Dockerfile Linter & Best-Practice Checker. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['dockerfile-linter', 'dockerfile linter & best-practice checker', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Dockerfile Linter & Best-Practice Checker?',
+          answer: 'Analyze Dockerfiles for caching issues, layer bloat, and container security best practices.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'websocket-tester': {
+      name: 'WebSocket Client & Latency Tester',
+      metadataTitle: 'WebSocket Client & Latency Tester – Free Online Developer Tool',
+      description: 'Connect to wss:// WebSocket endpoints, send JSON payloads, and monitor message logs.',
+      longDescription: 'Free online WebSocket Client & Latency Tester. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['websocket-tester', 'websocket client & latency tester', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is WebSocket Client & Latency Tester?',
+          answer: 'Connect to wss:// WebSocket endpoints, send JSON payloads, and monitor message logs.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'sse-stream-tester': {
+      name: 'Server-Sent Events (SSE) Stream Tester',
+      metadataTitle: 'Server-Sent Events (SSE) Stream Tester – Free Online Developer Tool',
+      description: 'Test real-time Server-Sent Events (SSE) streams and inspect incoming EventSource chunks.',
+      longDescription: 'Free online Server-Sent Events (SSE) Stream Tester. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['sse-stream-tester', 'server-sent events (sse) stream tester', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Server-Sent Events (SSE) Stream Tester?',
+          answer: 'Test real-time Server-Sent Events (SSE) streams and inspect incoming EventSource chunks.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'har-viewer': {
+      name: 'HAR (HTTP Archive) File Viewer & Analyzer',
+      metadataTitle: 'HAR (HTTP Archive) File Viewer & Analyzer – Free Online Developer Tool',
+      description: 'Parse HTTP Archive (.har) logs to inspect request timelines, headers, and status codes.',
+      longDescription: 'Free online HAR (HTTP Archive) File Viewer & Analyzer. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['har-viewer', 'har (http archive) file viewer & analyzer', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is HAR (HTTP Archive) File Viewer & Analyzer?',
+          answer: 'Parse HTTP Archive (.har) logs to inspect request timelines, headers, and status codes.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'dns-lookup-simulator': {
+      name: 'DNS Records & Propagation Simulator',
+      metadataTitle: 'DNS Records & Propagation Simulator – Free Online Developer Tool',
+      description: 'Simulate DNS lookups for A, AAAA, CNAME, MX, TXT, and NS records with TTL durations.',
+      longDescription: 'Free online DNS Records & Propagation Simulator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['dns-lookup-simulator', 'dns records & propagation simulator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is DNS Records & Propagation Simulator?',
+          answer: 'Simulate DNS lookups for A, AAAA, CNAME, MX, TXT, and NS records with TTL durations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'universal-links-validator': {
+      name: 'Apple Universal Links & Android App Links Generator',
+      metadataTitle: 'Apple Universal Links & Android App Links Generator – Free Online Developer Tool',
+      description: 'Generate apple-app-site-association and assetlinks.json deep link configuration files.',
+      longDescription: 'Free online Apple Universal Links & Android App Links Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['universal-links-validator', 'apple universal links & android app links generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Apple Universal Links & Android App Links Generator?',
+          answer: 'Generate apple-app-site-association and assetlinks.json deep link configuration files.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'react-native-icon-finder': {
+      name: 'React Native Vector Icons Finder & Code Generator',
+      metadataTitle: 'React Native Vector Icons Finder & Code Generator – Free Online Developer Tool',
+      description: 'Search and export icon names and JSX import tags for react-native-vector-icons.',
+      longDescription: 'Free online React Native Vector Icons Finder & Code Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['react-native-icon-finder', 'react native vector icons finder & code generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is React Native Vector Icons Finder & Code Generator?',
+          answer: 'Search and export icon names and JSX import tags for react-native-vector-icons.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'git-command-builder': {
+      name: 'Git Interactive Command Generator',
+      metadataTitle: 'Git Interactive Command Generator – Free Online Developer Tool',
+      description: 'Generate Git commands for interactive rebase, cherry-pick, hard reset, and stashing.',
+      longDescription: 'Free online Git Interactive Command Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['git-command-builder', 'git interactive command generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Git Interactive Command Generator?',
+          answer: 'Generate Git commands for interactive rebase, cherry-pick, hard reset, and stashing.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'ieee754-visualizer': {
+      name: 'IEEE 754 Floating Point 32-bit Visualizer',
+      metadataTitle: 'IEEE 754 Floating Point 32-bit Visualizer – Free Online Developer Tool',
+      description: 'Break down 32-bit float numbers into sign, exponent, and mantissa binary bits.',
+      longDescription: 'Free online IEEE 754 Floating Point 32-bit Visualizer. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['ieee754-visualizer', 'ieee 754 floating point 32-bit visualizer', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is IEEE 754 Floating Point 32-bit Visualizer?',
+          answer: 'Break down 32-bit float numbers into sign, exponent, and mantissa binary bits.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'bitwise-calculator': {
+      name: 'Bitwise Logic Calculator (AND, OR, XOR, Shift)',
+      metadataTitle: 'Bitwise Logic Calculator (AND, OR, XOR, Shift) – Free Online Developer Tool',
+      description: 'Perform 32-bit bitwise AND, OR, XOR, NOT, and bit shifts with binary and hex results.',
+      longDescription: 'Free online Bitwise Logic Calculator (AND, OR, XOR, Shift). Fast, accurate, client-side processing with instant export options.',
+      keywords: ['bitwise-calculator', 'bitwise logic calculator (and, or, xor, shift)', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Bitwise Logic Calculator (AND, OR, XOR, Shift)?',
+          answer: 'Perform 32-bit bitwise AND, OR, XOR, NOT, and bit shifts with binary and hex results.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'bignumber-calculator': {
+      name: 'Arbitrary Precision BigNumber Calculator',
+      metadataTitle: 'Arbitrary Precision BigNumber Calculator – Free Online Developer Tool',
+      description: 'Perform exact arbitrary precision integer math, powers, and modulo arithmetic.',
+      longDescription: 'Free online Arbitrary Precision BigNumber Calculator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['bignumber-calculator', 'arbitrary precision bignumber calculator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Arbitrary Precision BigNumber Calculator?',
+          answer: 'Perform exact arbitrary precision integer math, powers, and modulo arithmetic.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'timezone-meeting-planner': {
+      name: 'Timezone Meeting Planner & Overlap Matrix',
+      metadataTitle: 'Timezone Meeting Planner & Overlap Matrix – Free Online Developer Tool',
+      description: 'Coordinate global meeting hours across UTC, EST, PST, CET, TRT, and JST timezones.',
+      longDescription: 'Free online Timezone Meeting Planner & Overlap Matrix. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['timezone-meeting-planner', 'timezone meeting planner & overlap matrix', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Timezone Meeting Planner & Overlap Matrix?',
+          answer: 'Coordinate global meeting hours across UTC, EST, PST, CET, TRT, and JST timezones.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'bandwidth-calculator': {
+      name: 'Bandwidth & File Download Time Calculator',
+      metadataTitle: 'Bandwidth & File Download Time Calculator – Free Online Developer Tool',
+      description: 'Calculate file transfer durations for file sizes over Mbps and Gbps internet speeds.',
+      longDescription: 'Free online Bandwidth & File Download Time Calculator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['bandwidth-calculator', 'bandwidth & file download time calculator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Bandwidth & File Download Time Calculator?',
+          answer: 'Calculate file transfer durations for file sizes over Mbps and Gbps internet speeds.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'percentage-growth-calculator': {
+      name: 'Percentage Growth & Change Calculator',
+      metadataTitle: 'Percentage Growth & Change Calculator – Free Online Developer Tool',
+      description: 'Calculate percentage increases, decreases, and compound metrics for dashboards.',
+      longDescription: 'Free online Percentage Growth & Change Calculator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['percentage-growth-calculator', 'percentage growth & change calculator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Percentage Growth & Change Calculator?',
+          answer: 'Calculate percentage increases, decreases, and compound metrics for dashboards.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'matrix-calculator': {
+      name: 'Matrix Arithmetic & Transpose Calculator',
+      metadataTitle: 'Matrix Arithmetic & Transpose Calculator – Free Online Developer Tool',
+      description: 'Perform matrix multiplication, dimensions check, and matrix transposition calculations.',
+      longDescription: 'Free online Matrix Arithmetic & Transpose Calculator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['matrix-calculator', 'matrix arithmetic & transpose calculator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Matrix Arithmetic & Transpose Calculator?',
+          answer: 'Perform matrix multiplication, dimensions check, and matrix transposition calculations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
     'cron-parser': {
       name: 'Cron Expression Parser',
       description: 'Parse and explain cron expressions. See next execution times.',
