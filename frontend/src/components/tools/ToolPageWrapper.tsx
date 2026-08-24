@@ -7,6 +7,7 @@ import FavoriteButton from '@/components/common/FavoriteButton';
 import HistoryTracker from '@/components/common/HistoryTracker';
 import QuickAccessBar from '@/components/common/QuickAccessBar';
 import AdSense from '@/components/common/AdSense';
+import PostToolAdBanner from '@/components/common/PostToolAdBanner';
 import { Maximize2, Minimize2, Sparkles, X, Sun, Moon } from 'lucide-react';
 import Link from 'next/link';
 
@@ -263,12 +264,8 @@ export default function ToolPageWrapper({
             </div>
           )}
 
-          {/* Ad Banner - After Tool */}
-          <AdSense
-            slot="1733348098"
-            format="horizontal"
-            className="h-24 max-h-24 rounded-lg mb-8 overflow-hidden"
-          />
+          {/* High-Impact Post-Tool Result Banner */}
+          <PostToolAdBanner slot="1733348098" className="mb-8" />
 
           {/* Supporting server-readable answer content for search and AI retrieval. */}
           {answerSections.slice(1).map((section) => renderAnswerSection(section))}

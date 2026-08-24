@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import React, { useState, useMemo, Fragment } from 'react';
 import Link from 'next/link';
 import Script from 'next/script';
 import {
@@ -55,6 +55,7 @@ import {
   LucideIcon,
 } from 'lucide-react';
 import AdSense from '@/components/common/AdSense';
+import InFeedAdCard from '@/components/common/InFeedAdCard';
 import QuickAccessBar from '@/components/common/QuickAccessBar';
 import { toolCatalog } from '@/lib/api';
 import { useLanguage } from '@/context/LanguageContext';
@@ -453,7 +454,8 @@ export default function Home() {
           ) : viewMode === 'grid' ? (
             /* Grid View */
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3">
-              {filteredTools.map((tool) => {
+              {filteredTools.map((tool, index) => {
+                const showInFeed = (index + 1) % 12 === 0 && index < filteredTools.length - 1;
                 const ToolIcon = toolIconMap[tool.slug] || categoryIcons[tool.categorySlug] || Wand2;
                 const categoryLabel = tool.categorySlug
                   ? t(`cat.${tool.categorySlug}`) || tool.categorySlug
@@ -463,6 +465,7 @@ export default function Home() {
                 const isPopular = popularToolSlugs.has(tool.slug);
 
                 return (
+                  <React.Fragment key={`frag-${tool.slug}-${tool.categorySlug}`}>
                   <Link
                     key={`${tool.slug}-${tool.categorySlug}`}
                     href={buildToolPath(tool.categorySlug, tool.slug)}
@@ -498,6 +501,10 @@ export default function Home() {
                       </div>
                     </div>
                   </Link>
+                      {showInFeed && (
+                        <InFeedAdCard key={`infeed-search-${tool.slug}-${index}`} />
+                      )}
+                    </React.Fragment>
                 );
               })}
             </div>
@@ -530,13 +537,15 @@ export default function Home() {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3">
-                      {group.tools.map((tool) => {
+                      {group.tools.map((tool, index) => {
+                        const showInFeed = (index + 1) % 12 === 0 && index < group.tools.length - 1;
                         const ToolIcon = toolIconMap[tool.slug] || group.icon || Wand2;
                         const toolName = t(`toolName.${tool.slug}`) || tool.slug.replace(/-/g, ' ');
                         const toolDesc = t(`toolDesc.${tool.slug}`) || tool.shortDescription || '';
                         const isPopular = popularToolSlugs.has(tool.slug);
 
                         return (
+                          <React.Fragment key={`frag-${group.slug}-${tool.slug}`}>
                           <Link
                             key={`${tool.slug}-${tool.categorySlug}`}
                             href={buildToolPath(tool.categorySlug, tool.slug)}
@@ -567,6 +576,10 @@ export default function Home() {
                               </div>
                             </div>
                           </Link>
+                              {showInFeed && (
+                                <InFeedAdCard key={`infeed-${group.slug}-${index}`} />
+                              )}
+                            </React.Fragment>
                         );
                       })}
                     </div>

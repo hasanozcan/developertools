@@ -1,3 +1,4 @@
+import React, { Fragment } from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -48,6 +49,7 @@ import {
 } from 'lucide-react';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import AdSense from '@/components/common/AdSense';
+import InFeedAdCard from '@/components/common/InFeedAdCard';
 import EncodingWorkbench from '@/components/tools/EncodingWorkbench';
 import { buildToolPath } from '@/lib/toolRoutes';
 
@@ -865,7 +867,8 @@ export default async function CategoryPage({ params }: PageProps) {
           data-topic-interface="true"
           data-related-tools="true"
         >
-          {category.tools.map((tool) => {
+          {category.tools.map((tool, index) => {
+            const showInFeed = (index + 1) % 12 === 0 && index < category.tools.length - 1;
             const ToolIcon = toolIcons[tool.slug] || Wand2;
             return (
               <Link
