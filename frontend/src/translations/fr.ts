@@ -1311,5 +1311,10 @@ export const fr = {
   'tool.metaTags.schemaProduct': "Produit",
   'tool.metaTags.schemaLocalBusiness': "Entreprise locale",
   'tool.metaTags.copyAllTags': "Copier toutes les balises méta",
+    'common.copyFailed': 'Échec de la copie. Vérifiez les autorisations du navigateur.',
+  'tool.openapi.input': 'Spécification OpenAPI (YAML ou JSON)',
+  'tool.openapi.inputHelp': 'Collez une définition OpenAPI 3.0.x ou 3.1.x au format YAML ou JSON.',
+  'tool.openapi.analyze': 'Valider et explorer',
+  'tool.openapi.boundary': 'La validation s\'exécute entièrement dans votre navigateur.',
   ...enhancedToolTranslations.fr,
 };

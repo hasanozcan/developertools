@@ -1227,5 +1227,10 @@ export const zh = {
   'tool.numberBaseConverter.octal': "八进制 (8)",
   'tool.numberBaseConverter.enterNumber': "输入要转换的数字",
   'tool.numberBaseConverter.invalidInput': "所选进制的输入无效",
+    'common.copyFailed': '复制失败。请检查浏览器权限。',
+  'tool.openapi.input': 'OpenAPI 规范 (YAML 或 JSON)',
+  'tool.openapi.inputHelp': '粘贴 YAML 或 JSON 格式的 OpenAPI 3.0.x 或 3.1.x 定义。',
+  'tool.openapi.analyze': '验证并探索',
+  'tool.openapi.boundary': '验证完全在您的浏览器中运行。不会将任何 API 定义发送到外部服务器。',
   ...enhancedToolTranslations.zh,
 };

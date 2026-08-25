@@ -1292,5 +1292,10 @@ export const ru = {
   'tool.jsonToTs.extractNestedDesc': "Извлекать вложенные объекты в отдельные интерфейсы",
   'tool.jsonToTs.detectUnionsDesc': "Определять union-типы из массивов данных",
   'tool.jsonToTs.jsdocCommentsDesc': "Добавлять JSDoc комментарии к типам",
+    'common.copyFailed': 'Ошибка копирования. Проверьте разрешения браузера.',
+  'tool.openapi.input': 'Спецификация OpenAPI (YAML или JSON)',
+  'tool.openapi.inputHelp': 'Вставьте определение OpenAPI 3.0.x или 3.1.x в формате YAML или JSON.',
+  'tool.openapi.analyze': 'Проверить и исследовать',
+  'tool.openapi.boundary': 'Проверка выполняется полностью в вашем браузере.',
   ...enhancedToolTranslations.ru,
 };

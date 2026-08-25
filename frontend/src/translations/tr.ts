@@ -1299,5 +1299,10 @@ export const tr = {
     'Hashleme ve doğrulama, bcrypt modülü yüklendikten sonra yerel olarak çalışır. Gerçek kullanıcı bilgileri yerine sentetik veri kullanın.',
   'tool.bcrypt.limitNote':
     'Bcrypt en fazla 72 UTF-8 bayt kullanır. Daha uzun girişler burada sessizce kırpılmak yerine reddedilir.',
+    'common.copyFailed': 'Kopyalama başarısız. Tarayıcı izinlerini kontrol edin.',
+  'tool.openapi.input': 'OpenAPI Spesifikasyonu (YAML veya JSON)',
+  'tool.openapi.inputHelp': 'YAML veya JSON formatında bir OpenAPI 3.0.x veya 3.1.x tanımı yapıştırın.',
+  'tool.openapi.analyze': 'Doğrula ve keşfet',
+  'tool.openapi.boundary': 'Doğrulama tamamen tarayıcınızda çalışır. Harici sunuculara hiçbir API tanımı veya belirteç gönderilmez.',
   ...enhancedToolTranslations.tr,
 };

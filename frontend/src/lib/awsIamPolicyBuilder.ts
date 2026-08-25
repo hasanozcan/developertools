@@ -1,4 +1,5 @@
 export interface IamStatement {
+  sid?: string;
   effect: 'Allow' | 'Deny';
   actions: string[];
   resources: string[];
@@ -7,8 +8,8 @@ export interface IamStatement {
 export function buildAwsIamPolicy(statements: IamStatement[]): string {
   const policy = {
     Version: '2012-10-17',
-    Statement: statements.map((s, idx) => ({
-      Sid: `Statement${idx + 1}`,
+    Statement: statements.map(s => ({
+      Sid: s.sid || undefined,
       Effect: s.effect,
       Action: s.actions.length === 1 ? s.actions[0] : s.actions,
       Resource: s.resources.length === 1 ? s.resources[0] : s.resources,

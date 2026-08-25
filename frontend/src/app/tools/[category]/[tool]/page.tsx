@@ -1077,6 +1077,183 @@ const tools: Record<
     },
   },
   generators: {
+    'openai-structured-outputs': {
+      name: 'OpenAI Strict Structured Outputs Builder',
+      metadataTitle: 'OpenAI Strict Structured Outputs Builder Online Free',
+      description: 'Generate strict JSON Schema schemas for OpenAI function calling.',
+      longDescription: 'Generate strict JSON Schema schemas for OpenAI function calling. 100% free client-side tool with instant browser execution.',
+      keywords: ['openai-structured-outputs', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is OpenAI Strict Structured Outputs Builder?', answer: 'Generate strict JSON Schema schemas for OpenAI function calling.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'langgraph-state-generator': {
+      name: 'LangGraph State Schema Generator',
+      metadataTitle: 'LangGraph State Schema Generator Online Free',
+      description: 'Generate LangGraph State TypedDict and workflow definitions.',
+      longDescription: 'Generate LangGraph State TypedDict and workflow definitions. 100% free client-side tool with instant browser execution.',
+      keywords: ['langgraph-state-generator', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is LangGraph State Schema Generator?', answer: 'Generate LangGraph State TypedDict and workflow definitions.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'anthropic-tool-builder': {
+      name: 'Anthropic Claude Tool Builder',
+      metadataTitle: 'Anthropic Claude Tool Builder Online Free',
+      description: 'Build input_schema JSON definitions for Anthropic Claude tools.',
+      longDescription: 'Build input_schema JSON definitions for Anthropic Claude tools. 100% free client-side tool with instant browser execution.',
+      keywords: ['anthropic-tool-builder', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Anthropic Claude Tool Builder?', answer: 'Build input_schema JSON definitions for Anthropic Claude tools.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'nextjs-metadata-generator': {
+      name: 'Next.js App Router Metadata Generator',
+      metadataTitle: 'Next.js App Router Metadata Generator Online Free',
+      description: 'Generate Next.js 16 generateMetadata, OpenGraph, and Twitter card configs.',
+      longDescription: 'Generate Next.js 16 generateMetadata, OpenGraph, and Twitter card configs. 100% free client-side tool with instant browser execution.',
+      keywords: ['nextjs-metadata-generator', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Next.js App Router Metadata Generator?', answer: 'Generate Next.js 16 generateMetadata, OpenGraph, and Twitter card configs.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'svg-to-css': {
+      name: 'SVG to CSS Background Data URI',
+      metadataTitle: 'SVG to CSS Background Data URI Online Free',
+      description: 'Encode and optimize SVG into CSS background-image and mask-image data URIs.',
+      longDescription: 'Encode and optimize SVG into CSS background-image and mask-image data URIs. 100% free client-side tool with instant browser execution.',
+      keywords: ['svg-to-css', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is SVG to CSS Background Data URI?', answer: 'Encode and optimize SVG into CSS background-image and mask-image data URIs.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'systemd-timer-generator': {
+      name: 'Systemd Service & Timer Generator',
+      metadataTitle: 'Systemd Service & Timer Generator Online Free',
+      description: 'Generate paired systemd .service and .timer units for Linux automation.',
+      longDescription: 'Generate paired systemd .service and .timer units for Linux automation. 100% free client-side tool with instant browser execution.',
+      keywords: ['systemd-timer-generator', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Systemd Service & Timer Generator?', answer: 'Generate paired systemd .service and .timer units for Linux automation.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'jwt-builder': {
+      name: 'JWT Payload Builder & Simulator',
+      metadataTitle: 'JWT Payload Builder & Simulator Online Free',
+      description: 'Build custom header/payload JWT tokens with signature simulation.',
+      longDescription: 'Build custom header/payload JWT tokens with signature simulation. 100% free client-side tool with instant browser execution.',
+      keywords: ['jwt-builder', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is JWT Payload Builder & Simulator?', answer: 'Build custom header/payload JWT tokens with signature simulation.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'nanoid-custom-alphabet': {
+      name: 'NanoID Custom Alphabet Generator',
+      metadataTitle: 'NanoID Custom Alphabet Generator Online Free',
+      description: 'Generate collision-resistant NanoIDs using custom alphabets and lengths.',
+      longDescription: 'Generate collision-resistant NanoIDs using custom alphabets and lengths. 100% free client-side tool with instant browser execution.',
+      keywords: ['nanoid-custom-alphabet', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is NanoID Custom Alphabet Generator?', answer: 'Generate collision-resistant NanoIDs using custom alphabets and lengths.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'mock-credit-card-generator': {
+      name: 'Test Credit Card Generator (Luhn Valid)',
+      metadataTitle: 'Test Credit Card Generator (Luhn Valid) Online Free',
+      description: 'Generate Luhn-compliant test credit card numbers for Stripe and sandbox testing.',
+      longDescription: 'Generate Luhn-compliant test credit card numbers for Stripe and sandbox testing. 100% free client-side tool with instant browser execution.',
+      keywords: ['mock-credit-card-generator', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Test Credit Card Generator (Luhn Valid)?', answer: 'Generate Luhn-compliant test credit card numbers for Stripe and sandbox testing.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'tailwind-spacing-generator': {
+      name: 'Tailwind Spacing Scale Generator',
+      metadataTitle: 'Tailwind Spacing Scale Generator Online Free',
+      description: 'Generate custom fluid spacing and margin/padding scales for Tailwind CSS.',
+      longDescription: 'Generate custom fluid spacing and margin/padding scales for Tailwind CSS. 100% free client-side tool with instant browser execution.',
+      keywords: ['tailwind-spacing-generator', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Tailwind Spacing Scale Generator?', answer: 'Generate custom fluid spacing and margin/padding scales for Tailwind CSS.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'docker-compose-env-generator': {
+      name: 'Docker Compose .env Template Generator',
+      metadataTitle: 'Docker Compose .env Template Generator Online Free',
+      description: 'Extract all environment variables from docker-compose.yml into a clean .env template.',
+      longDescription: 'Extract all environment variables from docker-compose.yml into a clean .env template. 100% free client-side tool with instant browser execution.',
+      keywords: ['docker-compose-env-generator', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Docker Compose .env Template Generator?', answer: 'Extract all environment variables from docker-compose.yml into a clean .env template.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+
     'mongodb-aggregate-builder': {
       name: 'MongoDB Aggregation Pipeline Generator',
       metadataTitle: 'MongoDB Aggregation Pipeline Generator Online Free',
@@ -2412,6 +2589,87 @@ const tools: Record<
     },
   },
   crypto: {
+    'uuid-v5-generator': {
+      name: 'UUID v5 (SHA-1 Namespace) Generator',
+      metadataTitle: 'UUID v5 (SHA-1 Namespace) Generator Online Free',
+      description: 'Generate deterministic RFC 4122 UUID v5 hashes from namespaces.',
+      longDescription: 'Generate deterministic RFC 4122 UUID v5 hashes from namespaces. 100% free client-side tool with instant browser execution.',
+      keywords: ['uuid-v5-generator', 'crypto', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is UUID v5 (SHA-1 Namespace) Generator?', answer: 'Generate deterministic RFC 4122 UUID v5 hashes from namespaces.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'bip39-seed-phrase-generator': {
+      name: 'BIP-39 Mnemonic Seed Phrase Generator',
+      metadataTitle: 'BIP-39 Mnemonic Seed Phrase Generator Online Free',
+      description: 'Generate 12 and 24-word cryptographically secure BIP-39 seed phrases.',
+      longDescription: 'Generate 12 and 24-word cryptographically secure BIP-39 seed phrases. 100% free client-side tool with instant browser execution.',
+      keywords: ['bip39-seed-phrase-generator', 'crypto', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is BIP-39 Mnemonic Seed Phrase Generator?', answer: 'Generate 12 and 24-word cryptographically secure BIP-39 seed phrases.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'eip712-hasher': {
+      name: 'Ethereum EIP-712 Typed Data Hasher',
+      metadataTitle: 'Ethereum EIP-712 Typed Data Hasher Online Free',
+      description: 'Compute domain separator and struct hash for EIP-712 typed data signing.',
+      longDescription: 'Compute domain separator and struct hash for EIP-712 typed data signing. 100% free client-side tool with instant browser execution.',
+      keywords: ['eip712-hasher', 'crypto', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Ethereum EIP-712 Typed Data Hasher?', answer: 'Compute domain separator and struct hash for EIP-712 typed data signing.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'passphrase-wordlist-generator': {
+      name: 'Diceware Passphrase Generator',
+      metadataTitle: 'Diceware Passphrase Generator Online Free',
+      description: 'Generate strong, memorable Diceware passphrases with custom separators.',
+      longDescription: 'Generate strong, memorable Diceware passphrases with custom separators. 100% free client-side tool with instant browser execution.',
+      keywords: ['passphrase-wordlist-generator', 'crypto', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Diceware Passphrase Generator?', answer: 'Generate strong, memorable Diceware passphrases with custom separators.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'sha3-hash-generator': {
+      name: 'SHA-3 (Keccak) Hash Generator',
+      metadataTitle: 'SHA-3 (Keccak) Hash Generator Online Free',
+      description: 'Generate cryptographic SHA3-256 and SHA3-512 hashes.',
+      longDescription: 'Generate cryptographic SHA3-256 and SHA3-512 hashes. 100% free client-side tool with instant browser execution.',
+      keywords: ['sha3-hash-generator', 'crypto', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is SHA-3 (Keccak) Hash Generator?', answer: 'Generate cryptographic SHA3-256 and SHA3-512 hashes.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+
     'totp-authenticator-simulator': {
       name: 'RFC 6238 TOTP Authenticator Simulator',
       metadataTitle: 'RFC 6238 TOTP Authenticator Simulator Online Free',
@@ -3839,6 +4097,423 @@ const tools: Record<
     },
   },
   converters: {
+    'curl-to-python': {
+      name: 'cURL to Python Converter',
+      metadataTitle: 'cURL to Python Converter Online Free',
+      description: 'Convert cURL commands to Python requests or httpx code.',
+      longDescription: 'Convert cURL commands to Python requests or httpx code. 100% free client-side tool with instant browser execution.',
+      keywords: ['curl-to-python', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is cURL to Python Converter?', answer: 'Convert cURL commands to Python requests or httpx code.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'curl-to-javascript': {
+      name: 'cURL to JavaScript Fetch Converter',
+      metadataTitle: 'cURL to JavaScript Fetch Converter Online Free',
+      description: 'Convert cURL commands to modern Fetch API or Axios JavaScript code.',
+      longDescription: 'Convert cURL commands to modern Fetch API or Axios JavaScript code. 100% free client-side tool with instant browser execution.',
+      keywords: ['curl-to-javascript', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is cURL to JavaScript Fetch Converter?', answer: 'Convert cURL commands to modern Fetch API or Axios JavaScript code.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'curl-to-go': {
+      name: 'cURL to Go Converter',
+      metadataTitle: 'cURL to Go Converter Online Free',
+      description: 'Convert cURL commands to idiomatic Go net/http code.',
+      longDescription: 'Convert cURL commands to idiomatic Go net/http code. 100% free client-side tool with instant browser execution.',
+      keywords: ['curl-to-go', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is cURL to Go Converter?', answer: 'Convert cURL commands to idiomatic Go net/http code.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'curl-to-rust': {
+      name: 'cURL to Rust Converter',
+      metadataTitle: 'cURL to Rust Converter Online Free',
+      description: 'Convert cURL commands to Rust reqwest client code.',
+      longDescription: 'Convert cURL commands to Rust reqwest client code. 100% free client-side tool with instant browser execution.',
+      keywords: ['curl-to-rust', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is cURL to Rust Converter?', answer: 'Convert cURL commands to Rust reqwest client code.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'curl-to-php': {
+      name: 'cURL to PHP Converter',
+      metadataTitle: 'cURL to PHP Converter Online Free',
+      description: 'Convert cURL commands to PHP Guzzle or native curl code.',
+      longDescription: 'Convert cURL commands to PHP Guzzle or native curl code. 100% free client-side tool with instant browser execution.',
+      keywords: ['curl-to-php', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is cURL to PHP Converter?', answer: 'Convert cURL commands to PHP Guzzle or native curl code.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'curl-to-csharp': {
+      name: 'cURL to C# Converter',
+      metadataTitle: 'cURL to C# Converter Online Free',
+      description: 'Convert cURL commands to C# .NET HttpClient code.',
+      longDescription: 'Convert cURL commands to C# .NET HttpClient code. 100% free client-side tool with instant browser execution.',
+      keywords: ['curl-to-csharp', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is cURL to C# Converter?', answer: 'Convert cURL commands to C# .NET HttpClient code.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'curl-to-java': {
+      name: 'cURL to Java Converter',
+      metadataTitle: 'cURL to Java Converter Online Free',
+      description: 'Convert cURL commands to Java 11+ HttpClient code.',
+      longDescription: 'Convert cURL commands to Java 11+ HttpClient code. 100% free client-side tool with instant browser execution.',
+      keywords: ['curl-to-java', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is cURL to Java Converter?', answer: 'Convert cURL commands to Java 11+ HttpClient code.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'curl-to-ai-sdk': {
+      name: 'cURL to OpenAI & Claude SDK Converter',
+      metadataTitle: 'cURL to OpenAI & Claude SDK Converter Online Free',
+      description: 'Convert raw API cURL calls into official OpenAI and Anthropic SDK code.',
+      longDescription: 'Convert raw API cURL calls into official OpenAI and Anthropic SDK code. 100% free client-side tool with instant browser execution.',
+      keywords: ['curl-to-ai-sdk', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is cURL to OpenAI & Claude SDK Converter?', answer: 'Convert raw API cURL calls into official OpenAI and Anthropic SDK code.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'vercel-ai-core-message-converter': {
+      name: 'Vercel AI SDK Message Converter',
+      metadataTitle: 'Vercel AI SDK Message Converter Online Free',
+      description: 'Convert chat logs and OpenAI messages to Vercel AI SDK CoreMessage array.',
+      longDescription: 'Convert chat logs and OpenAI messages to Vercel AI SDK CoreMessage array. 100% free client-side tool with instant browser execution.',
+      keywords: ['vercel-ai-core-message-converter', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Vercel AI SDK Message Converter?', answer: 'Convert chat logs and OpenAI messages to Vercel AI SDK CoreMessage array.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'tailwind-v3-to-v4-migrator': {
+      name: 'Tailwind CSS v3 to v4 Migrator',
+      metadataTitle: 'Tailwind CSS v3 to v4 Migrator Online Free',
+      description: 'Migrate tailwind.config.js to Tailwind CSS v4 @theme CSS directives.',
+      longDescription: 'Migrate tailwind.config.js to Tailwind CSS v4 @theme CSS directives. 100% free client-side tool with instant browser execution.',
+      keywords: ['tailwind-v3-to-v4-migrator', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Tailwind CSS v3 to v4 Migrator?', answer: 'Migrate tailwind.config.js to Tailwind CSS v4 @theme CSS directives.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'css-box-shadow-to-tailwind': {
+      name: 'CSS Box-Shadow to Tailwind Converter',
+      metadataTitle: 'CSS Box-Shadow to Tailwind Converter Online Free',
+      description: 'Convert complex CSS box-shadow values into arbitrary Tailwind classes.',
+      longDescription: 'Convert complex CSS box-shadow values into arbitrary Tailwind classes. 100% free client-side tool with instant browser execution.',
+      keywords: ['css-box-shadow-to-tailwind', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is CSS Box-Shadow to Tailwind Converter?', answer: 'Convert complex CSS box-shadow values into arbitrary Tailwind classes.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'html-table-converter': {
+      name: 'HTML Table to Markdown & CSV Converter',
+      metadataTitle: 'HTML Table to Markdown & CSV Converter Online Free',
+      description: 'Convert HTML table markup to clean Markdown tables, CSV, or JSON array.',
+      longDescription: 'Convert HTML table markup to clean Markdown tables, CSV, or JSON array. 100% free client-side tool with instant browser execution.',
+      keywords: ['html-table-converter', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is HTML Table to Markdown & CSV Converter?', answer: 'Convert HTML table markup to clean Markdown tables, CSV, or JSON array.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'natural-language-to-cron': {
+      name: 'Natural Language to Cron Converter',
+      metadataTitle: 'Natural Language to Cron Converter Online Free',
+      description: 'Convert natural English descriptions into standard 5-part cron schedules.',
+      longDescription: 'Convert natural English descriptions into standard 5-part cron schedules. 100% free client-side tool with instant browser execution.',
+      keywords: ['natural-language-to-cron', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Natural Language to Cron Converter?', answer: 'Convert natural English descriptions into standard 5-part cron schedules.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'terraform-hcl-to-json': {
+      name: 'Terraform HCL to JSON Converter',
+      metadataTitle: 'Terraform HCL to JSON Converter Online Free',
+      description: 'Convert Terraform HCL resource definitions into terraform.tf.json syntax.',
+      longDescription: 'Convert Terraform HCL resource definitions into terraform.tf.json syntax. 100% free client-side tool with instant browser execution.',
+      keywords: ['terraform-hcl-to-json', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Terraform HCL to JSON Converter?', answer: 'Convert Terraform HCL resource definitions into terraform.tf.json syntax.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'sql-to-prisma': {
+      name: 'SQL DDL to Prisma Schema Converter',
+      metadataTitle: 'SQL DDL to Prisma Schema Converter Online Free',
+      description: 'Convert SQL CREATE TABLE statements into Prisma schema models.',
+      longDescription: 'Convert SQL CREATE TABLE statements into Prisma schema models. 100% free client-side tool with instant browser execution.',
+      keywords: ['sql-to-prisma', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is SQL DDL to Prisma Schema Converter?', answer: 'Convert SQL CREATE TABLE statements into Prisma schema models.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'sql-to-drizzle': {
+      name: 'SQL DDL to Drizzle ORM Schema Converter',
+      metadataTitle: 'SQL DDL to Drizzle ORM Schema Converter Online Free',
+      description: 'Convert SQL CREATE TABLE statements into Drizzle ORM TypeScript schemas.',
+      longDescription: 'Convert SQL CREATE TABLE statements into Drizzle ORM TypeScript schemas. 100% free client-side tool with instant browser execution.',
+      keywords: ['sql-to-drizzle', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is SQL DDL to Drizzle ORM Schema Converter?', answer: 'Convert SQL CREATE TABLE statements into Drizzle ORM TypeScript schemas.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'mongodb-to-sql': {
+      name: 'MongoDB Query to SQL Converter',
+      metadataTitle: 'MongoDB Query to SQL Converter Online Free',
+      description: 'Convert MongoDB find filters into SQL SELECT queries.',
+      longDescription: 'Convert MongoDB find filters into SQL SELECT queries. 100% free client-side tool with instant browser execution.',
+      keywords: ['mongodb-to-sql', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is MongoDB Query to SQL Converter?', answer: 'Convert MongoDB find filters into SQL SELECT queries.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'sql-to-django': {
+      name: 'SQL DDL to Django Model Converter',
+      metadataTitle: 'SQL DDL to Django Model Converter Online Free',
+      description: 'Convert SQL CREATE TABLE statements into Python Django ORM models.',
+      longDescription: 'Convert SQL CREATE TABLE statements into Python Django ORM models. 100% free client-side tool with instant browser execution.',
+      keywords: ['sql-to-django', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is SQL DDL to Django Model Converter?', answer: 'Convert SQL CREATE TABLE statements into Python Django ORM models.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'crypto-unit-converter': {
+      name: 'Crypto Multi-Unit Converter',
+      metadataTitle: 'Crypto Multi-Unit Converter Online Free',
+      description: 'Convert between Wei, Gwei, Ether, and Bitcoin Satoshis.',
+      longDescription: 'Convert between Wei, Gwei, Ether, and Bitcoin Satoshis. 100% free client-side tool with instant browser execution.',
+      keywords: ['crypto-unit-converter', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Crypto Multi-Unit Converter?', answer: 'Convert between Wei, Gwei, Ether, and Bitcoin Satoshis.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'json-to-python-dataclass': {
+      name: 'JSON to Python Dataclass Converter',
+      metadataTitle: 'JSON to Python Dataclass Converter Online Free',
+      description: 'Convert JSON objects into Python 3.10+ @dataclass classes.',
+      longDescription: 'Convert JSON objects into Python 3.10+ @dataclass classes. 100% free client-side tool with instant browser execution.',
+      keywords: ['json-to-python-dataclass', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is JSON to Python Dataclass Converter?', answer: 'Convert JSON objects into Python 3.10+ @dataclass classes.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'json-to-go-struct': {
+      name: 'JSON to Go Struct Converter',
+      metadataTitle: 'JSON to Go Struct Converter Online Free',
+      description: 'Convert JSON objects into Go structs with json tags.',
+      longDescription: 'Convert JSON objects into Go structs with json tags. 100% free client-side tool with instant browser execution.',
+      keywords: ['json-to-go-struct', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is JSON to Go Struct Converter?', answer: 'Convert JSON objects into Go structs with json tags.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'json-to-kotlin-class': {
+      name: 'JSON to Kotlin Data Class Converter',
+      metadataTitle: 'JSON to Kotlin Data Class Converter Online Free',
+      description: 'Convert JSON into Kotlin @Serializable data classes.',
+      longDescription: 'Convert JSON into Kotlin @Serializable data classes. 100% free client-side tool with instant browser execution.',
+      keywords: ['json-to-kotlin-class', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is JSON to Kotlin Data Class Converter?', answer: 'Convert JSON into Kotlin @Serializable data classes.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'json-to-swift-struct': {
+      name: 'JSON to Swift Struct (Codable) Converter',
+      metadataTitle: 'JSON to Swift Struct (Codable) Converter Online Free',
+      description: 'Convert JSON objects into Swift Codable structs.',
+      longDescription: 'Convert JSON objects into Swift Codable structs. 100% free client-side tool with instant browser execution.',
+      keywords: ['json-to-swift-struct', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is JSON to Swift Struct (Codable) Converter?', answer: 'Convert JSON objects into Swift Codable structs.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'json-to-csharp-class': {
+      name: 'JSON to C# Record & Class Converter',
+      metadataTitle: 'JSON to C# Record & Class Converter Online Free',
+      description: 'Convert JSON into C# records with JsonPropertyName annotations.',
+      longDescription: 'Convert JSON into C# records with JsonPropertyName annotations. 100% free client-side tool with instant browser execution.',
+      keywords: ['json-to-csharp-class', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is JSON to C# Record & Class Converter?', answer: 'Convert JSON into C# records with JsonPropertyName annotations.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'proto-to-typescript': {
+      name: 'Protobuf to TypeScript Interface Converter',
+      metadataTitle: 'Protobuf to TypeScript Interface Converter Online Free',
+      description: 'Convert Proto3 message definitions into TypeScript interfaces.',
+      longDescription: 'Convert Proto3 message definitions into TypeScript interfaces. 100% free client-side tool with instant browser execution.',
+      keywords: ['proto-to-typescript', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Protobuf to TypeScript Interface Converter?', answer: 'Convert Proto3 message definitions into TypeScript interfaces.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'http-headers-to-json': {
+      name: 'HTTP Headers to JSON Converter',
+      metadataTitle: 'HTTP Headers to JSON Converter Online Free',
+      description: 'Convert HTTP header text into JSON object and vice versa.',
+      longDescription: 'Convert HTTP header text into JSON object and vice versa. 100% free client-side tool with instant browser execution.',
+      keywords: ['http-headers-to-json', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is HTTP Headers to JSON Converter?', answer: 'Convert HTTP header text into JSON object and vice versa.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+
     'svg-to-webp': {
       name: 'SVG to WebP Data URI Converter',
       metadataTitle: 'SVG to WebP Data URI Converter Online Free',
@@ -5715,6 +6390,23 @@ const tools: Record<
     },
   },
   formatters: {
+    'sql-keyword-uppercaser': {
+      name: 'SQL Keyword Uppercaser & Formatter',
+      metadataTitle: 'SQL Keyword Uppercaser & Formatter Online Free',
+      description: 'Uppercase all SQL keywords while preserving column and table names.',
+      longDescription: 'Uppercase all SQL keywords while preserving column and table names. 100% free client-side tool with instant browser execution.',
+      keywords: ['sql-keyword-uppercaser', 'formatters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is SQL Keyword Uppercaser & Formatter?', answer: 'Uppercase all SQL keywords while preserving column and table names.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+
     'apache-conf-formatter': {
       name: 'Apache VirtualHost Config Formatter',
       metadataTitle: 'Apache VirtualHost Config Formatter Online Free',
@@ -6220,6 +6912,119 @@ const tools: Record<
     },
   },
   utilities: {
+    'embedding-cost-calculator': {
+      name: 'Vector Embedding Cost Calculator',
+      metadataTitle: 'Vector Embedding Cost Calculator Online Free',
+      description: 'Calculate costs, vector dimensions, and memory usage for embedding models.',
+      longDescription: 'Calculate costs, vector dimensions, and memory usage for embedding models. 100% free client-side tool with instant browser execution.',
+      keywords: ['embedding-cost-calculator', 'utilities', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Vector Embedding Cost Calculator?', answer: 'Calculate costs, vector dimensions, and memory usage for embedding models.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'gitignore-tester': {
+      name: '.gitignore Pattern Matcher & Tester',
+      metadataTitle: '.gitignore Pattern Matcher & Tester Online Free',
+      description: 'Test .gitignore and .dockerignore glob rules against file trees.',
+      longDescription: 'Test .gitignore and .dockerignore glob rules against file trees. 100% free client-side tool with instant browser execution.',
+      keywords: ['gitignore-tester', 'utilities', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is .gitignore Pattern Matcher & Tester?', answer: 'Test .gitignore and .dockerignore glob rules against file trees.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'k8s-resource-calculator': {
+      name: 'Kubernetes Pod Resource & QoS Calculator',
+      metadataTitle: 'Kubernetes Pod Resource & QoS Calculator Online Free',
+      description: 'Calculate CPU/Memory requests, limits, and QoS classes for Kubernetes pods.',
+      longDescription: 'Calculate CPU/Memory requests, limits, and QoS classes for Kubernetes pods. 100% free client-side tool with instant browser execution.',
+      keywords: ['k8s-resource-calculator', 'utilities', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Kubernetes Pod Resource & QoS Calculator?', answer: 'Calculate CPU/Memory requests, limits, and QoS classes for Kubernetes pods.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'postgres-explain-visualizer': {
+      name: 'PostgreSQL EXPLAIN Plan Analyzer',
+      metadataTitle: 'PostgreSQL EXPLAIN Plan Analyzer Online Free',
+      description: 'Analyze and visualize PostgreSQL query plans from EXPLAIN JSON output.',
+      longDescription: 'Analyze and visualize PostgreSQL query plans from EXPLAIN JSON output. 100% free client-side tool with instant browser execution.',
+      keywords: ['postgres-explain-visualizer', 'utilities', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is PostgreSQL EXPLAIN Plan Analyzer?', answer: 'Analyze and visualize PostgreSQL query plans from EXPLAIN JSON output.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'subnet-calculator': {
+      name: 'IPv4 Subnet Mask & CIDR Calculator',
+      metadataTitle: 'IPv4 Subnet Mask & CIDR Calculator Online Free',
+      description: 'Calculate subnet mask, broadcast, and usable host range from CIDR.',
+      longDescription: 'Calculate subnet mask, broadcast, and usable host range from CIDR. 100% free client-side tool with instant browser execution.',
+      keywords: ['subnet-calculator', 'utilities', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is IPv4 Subnet Mask & CIDR Calculator?', answer: 'Calculate subnet mask, broadcast, and usable host range from CIDR.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'dns-propagation-checker': {
+      name: 'DNS Record Propagation Checker',
+      metadataTitle: 'DNS Record Propagation Checker Online Free',
+      description: 'Check simulated global DNS propagation across multiple worldwide PoP locations.',
+      longDescription: 'Check simulated global DNS propagation across multiple worldwide PoP locations. 100% free client-side tool with instant browser execution.',
+      keywords: ['dns-propagation-checker', 'utilities', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is DNS Record Propagation Checker?', answer: 'Check simulated global DNS propagation across multiple worldwide PoP locations.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'url-utm-builder': {
+      name: 'Google Analytics UTM Campaign URL Builder',
+      metadataTitle: 'Google Analytics UTM Campaign URL Builder Online Free',
+      description: 'Build clean marketing campaign URLs with utm_source, utm_medium, and utm_campaign.',
+      longDescription: 'Build clean marketing campaign URLs with utm_source, utm_medium, and utm_campaign. 100% free client-side tool with instant browser execution.',
+      keywords: ['url-utm-builder', 'utilities', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Google Analytics UTM Campaign URL Builder?', answer: 'Build clean marketing campaign URLs with utm_source, utm_medium, and utm_campaign.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+
     'aspect-ratio-resizer': {
       name: 'Aspect Ratio & Resolution Calculator',
       metadataTitle: 'Aspect Ratio & Resolution Calculator Online Free',

@@ -1306,5 +1306,10 @@ export const de = {
   'tool.cronParser.dayOfMonthLabel': "Tag des Monats",
   'tool.cronParser.monthLabel': "Monat",
   'tool.cronParser.dayOfWeekLabel': "Wochentag",
+    'common.copyFailed': 'Kopieren fehlgeschlagen. Überprüfen Sie die Browserberechtigungen.',
+  'tool.openapi.input': 'OpenAPI-Spezifikation (YAML oder JSON)',
+  'tool.openapi.inputHelp': 'Fügen Sie eine OpenAPI 3.0.x- oder 3.1.x-Definition im YAML- oder JSON-Format ein.',
+  'tool.openapi.analyze': 'Validieren und untersuchen',
+  'tool.openapi.boundary': 'Die Validierung läuft vollständig in Ihrem Browser.',
   ...enhancedToolTranslations.de,
 };

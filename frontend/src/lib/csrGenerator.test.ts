@@ -1,10 +1,17 @@
-import { describe, it, expect } from 'vitest';
-import { generateOpenSslCsrCommand } from './csrGenerator';
+import { describe, expect, it } from 'vitest';
+import { generateOpenSslCsrConfig } from './csrGenerator';
 
 describe('csrGenerator', () => {
-  it('generates OpenSSL CSR generation commands', () => {
-    const res = generateOpenSslCsrCommand({ commonName: 'api.devstools.app', country: 'TR' });
-    expect(res.openSslCommand).toContain('CN=api.devstools.app');
-    expect(res.openSslCommand).toContain('C=TR');
+  it('generates OpenSSL config and command', () => {
+    const res = generateOpenSslCsrConfig({
+      domain: 'example.com',
+      country: 'US',
+      state: 'CA',
+      city: 'San Francisco',
+      organization: 'Example Inc',
+      sans: ['example.com', 'www.example.com']
+    });
+    expect(res.config).toContain('CN = example.com');
+    expect(res.command).toContain('openssl req -new');
   });
 });

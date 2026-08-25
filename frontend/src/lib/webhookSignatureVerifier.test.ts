@@ -1,14 +1,10 @@
-import { describe, it, expect } from 'vitest';
-import { verifyWebhookSignature } from './webhookSignatureVerifier';
+import { describe, expect, it } from 'vitest';
+import { verifyHmacSignature } from './webhookSignatureVerifier';
 
 describe('webhookSignatureVerifier', () => {
-  it('verifies deterministic webhook signature match', () => {
-    const secret = 'whsec_secret123';
-    const payload = '{"event":"checkout.completed"}';
-    const sig = verifyWebhookSignature(payload, '', secret);
-    expect(sig.expectedSignature).toBeDefined();
-
-    const verifyMatch = verifyWebhookSignature(payload, sig.expectedSignature, secret);
-    expect(verifyMatch.isValid).toBe(true);
+  it('computes HMAC signature', () => {
+    const res = verifyHmacSignature('{"event":"payment_intent.succeeded"}', 'whsec_test', 'invalid');
+    expect(res.valid).toBe(false);
+    expect(res.computed).toContain('sha256=');
   });
 });

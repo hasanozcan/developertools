@@ -1282,5 +1282,10 @@ export const en = {
     'Hashing and verification run locally after the bcrypt module loads. Use synthetic data, not real user credentials.',
   'tool.bcrypt.limitNote':
     'Bcrypt uses at most 72 UTF-8 bytes. Longer input is rejected here instead of being silently truncated.',
+    'common.copyFailed': 'Copy failed. Check browser permissions.',
+  'tool.openapi.input': 'OpenAPI Specification (YAML or JSON)',
+  'tool.openapi.inputHelp': 'Paste an OpenAPI 3.0.x or 3.1.x definition in YAML or JSON format.',
+  'tool.openapi.analyze': 'Validate and explore',
+  'tool.openapi.boundary': 'Validation runs entirely in your browser. No API definitions or tokens are sent to external servers.',
   ...enhancedToolTranslations.en,
 };

@@ -1,59 +1,123 @@
 'use client';
-
 import dynamic from 'next/dynamic';
 import type { ComponentType } from 'react';
 import { isToolSlug, type ToolSlug } from '@/lib/api';
 
 const Loading = () => (
-  <div className="flex items-center justify-center py-10 text-sm text-gray-500 dark:text-gray-400">
-    Loading tool...
+  <div className="flex items-center justify-center p-8">
+    <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary-600 border-t-transparent" />
   </div>
 );
 
-const toolComponents = {
-  'json-formatter': dynamic(() => import('./JsonFormatterTool'), { loading: Loading, ssr: false }),
-  'json-validator': dynamic(() => import('./JsonValidatorTool'), { loading: Loading, ssr: false }),
+const toolComponents: Record<ToolSlug, ComponentType> = {
+  'json-formatter': dynamic(() => import('./JsonFormatterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-validator': dynamic(() => import('./JsonValidatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
   'json-schema-validator': dynamic(() => import('./JsonSchemaValidatorTool'), {
     loading: Loading,
     ssr: false,
   }),
-  'json-csv': dynamic(() => import('./JsonCsvConverterTool'), { loading: Loading, ssr: false }),
+  'json-csv': dynamic(() => import('./JsonCsvConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
   'json-to-typescript': dynamic(() => import('./JsonToTypescriptTool'), {
     loading: Loading,
     ssr: false,
   }),
-  'json-to-zod': dynamic(() => import('./JsonToZodTool'), { loading: Loading, ssr: false }),
-  'json-diff-patch': dynamic(() => import('./JsonDiffPatchTool'), { loading: Loading, ssr: false }),
-  'yaml-json': dynamic(() => import('./YamlJsonConverterTool'), { loading: Loading, ssr: false }),
-  base64: dynamic(() => import('./Base64Tool'), { loading: Loading, ssr: false }),
-  'url-encoder': dynamic(() => import('./UrlEncoderTool'), { loading: Loading, ssr: false }),
-  'hex-encoder': dynamic(() => import('./HexEncoderTool'), { loading: Loading, ssr: false }),
-  'binary-encoder': dynamic(() => import('./BinaryEncoderTool'), { loading: Loading, ssr: false }),
-  'jwt-decoder': dynamic(() => import('./JwtDecoderTool'), { loading: Loading, ssr: false }),
-  'html-entity': dynamic(() => import('./HtmlEntityTool'), { loading: Loading, ssr: false }),
-  'unicode-escape': dynamic(() => import('./UnicodeEscapeTool'), { loading: Loading, ssr: false }),
+  'json-to-zod': dynamic(() => import('./JsonToZodTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-diff-patch': dynamic(() => import('./JsonDiffPatchTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'yaml-json': dynamic(() => import('./YamlJsonConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'url-encoder': dynamic(() => import('./UrlEncoderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'hex-encoder': dynamic(() => import('./HexEncoderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'binary-encoder': dynamic(() => import('./BinaryEncoderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'jwt-decoder': dynamic(() => import('./JwtDecoderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'html-entity': dynamic(() => import('./HtmlEntityTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'unicode-escape': dynamic(() => import('./UnicodeEscapeTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
   'json-string-escape': dynamic(() => import('./JsonStringEscapeTool'), {
     loading: Loading,
     ssr: false,
   }),
-  'image-to-base64': dynamic(() => import('./ImageToBase64Tool'), { loading: Loading, ssr: false }),
-  'uuid-generator': dynamic(() => import('./UuidGeneratorTool'), { loading: Loading, ssr: false }),
+  'image-to-base64': dynamic(() => import('./ImageToBase64Tool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'uuid-generator': dynamic(() => import('./UuidGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
   'password-generator': dynamic(() => import('./PasswordGeneratorTool'), {
     loading: Loading,
     ssr: false,
   }),
-  'lorem-ipsum': dynamic(() => import('./LoremIpsumTool'), { loading: Loading, ssr: false }),
-  'qr-code': dynamic(() => import('./QrCodeGeneratorTool'), { loading: Loading, ssr: false }),
-  'slug-generator': dynamic(() => import('./SlugGeneratorTool'), { loading: Loading, ssr: false }),
+  'lorem-ipsum': dynamic(() => import('./LoremIpsumTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'qr-code': dynamic(() => import('./QrCodeGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'slug-generator': dynamic(() => import('./SlugGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
   'css-gradient': dynamic(() => import('./CssGradientGeneratorTool'), {
     loading: Loading,
     ssr: false,
   }),
-  'meta-tags': dynamic(() => import('./MetaTagsGeneratorTool'), { loading: Loading, ssr: false }),
-  'md5-hash': dynamic(() => import('./Md5HashTool'), { loading: Loading, ssr: false }),
-  'sha256-hash': dynamic(() => import('./Sha256HashTool'), { loading: Loading, ssr: false }),
-  'sha512-hash': dynamic(() => import('./Sha512HashTool'), { loading: Loading, ssr: false }),
-  'hmac-generator': dynamic(() => import('./HmacGeneratorTool'), { loading: Loading, ssr: false }),
+  'meta-tags': dynamic(() => import('./MetaTagsGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'md5-hash': dynamic(() => import('./Md5HashTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sha256-hash': dynamic(() => import('./Sha256HashTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sha512-hash': dynamic(() => import('./Sha512HashTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'hmac-generator': dynamic(() => import('./HmacGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
   'bcrypt-generator': dynamic(() => import('./BcryptGeneratorTool'), {
     loading: Loading,
     ssr: false,
@@ -62,16 +126,34 @@ const toolComponents = {
     loading: Loading,
     ssr: false,
   }),
-  'pkce-generator': dynamic(() => import('./PkceGeneratorTool'), { loading: Loading, ssr: false }),
-  'regex-tester': dynamic(() => import('./RegexTesterTool'), { loading: Loading, ssr: false }),
-  'text-diff': dynamic(() => import('./TextDiffTool'), { loading: Loading, ssr: false }),
-  'case-converter': dynamic(() => import('./CaseConverterTool'), { loading: Loading, ssr: false }),
-  'word-counter': dynamic(() => import('./WordCounterTool'), { loading: Loading, ssr: false }),
+  'pkce-generator': dynamic(() => import('./PkceGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'regex-tester': dynamic(() => import('./RegexTesterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'text-diff': dynamic(() => import('./TextDiffTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'case-converter': dynamic(() => import('./CaseConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'word-counter': dynamic(() => import('./WordCounterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
   'remove-duplicates': dynamic(() => import('./RemoveDuplicatesTool'), {
     loading: Loading,
     ssr: false,
   }),
-  'sort-lines': dynamic(() => import('./SortLinesTool'), { loading: Loading, ssr: false }),
+  'sort-lines': dynamic(() => import('./SortLinesTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
   'markdown-preview': dynamic(() => import('./MarkdownPreviewTool'), {
     loading: Loading,
     ssr: false,
@@ -96,20 +178,50 @@ const toolComponents = {
     loading: Loading,
     ssr: false,
   }),
-  'url-parser': dynamic(() => import('./UrlParserTool'), { loading: Loading, ssr: false }),
+  'url-parser': dynamic(() => import('./UrlParserTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
   'query-string-parser': dynamic(() => import('./QueryStringParserTool'), {
     loading: Loading,
     ssr: false,
   }),
-  'env-to-json': dynamic(() => import('./EnvJsonConverterTool'), { loading: Loading, ssr: false }),
-  'sql-formatter': dynamic(() => import('./SqlFormatterTool'), { loading: Loading, ssr: false }),
-  'css-minifier': dynamic(() => import('./CssMinifierTool'), { loading: Loading, ssr: false }),
-  'js-minifier': dynamic(() => import('./JsMinifierTool'), { loading: Loading, ssr: false }),
-  'html-formatter': dynamic(() => import('./HtmlFormatterTool'), { loading: Loading, ssr: false }),
-  'html-minifier': dynamic(() => import('./HtmlMinifierTool'), { loading: Loading, ssr: false }),
-  'xml-formatter': dynamic(() => import('./XmlFormatterTool'), { loading: Loading, ssr: false }),
-  'regex-escape': dynamic(() => import('./RegexEscapeTool'), { loading: Loading, ssr: false }),
-  'cron-parser': dynamic(() => import('./CronParserTool'), { loading: Loading, ssr: false }),
+  'env-to-json': dynamic(() => import('./EnvJsonConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sql-formatter': dynamic(() => import('./SqlFormatterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-minifier': dynamic(() => import('./CssMinifierTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'js-minifier': dynamic(() => import('./JsMinifierTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'html-formatter': dynamic(() => import('./HtmlFormatterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'html-minifier': dynamic(() => import('./HtmlMinifierTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'xml-formatter': dynamic(() => import('./XmlFormatterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'regex-escape': dynamic(() => import('./RegexEscapeTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'cron-parser': dynamic(() => import('./CronParserTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
   'http-headers-parser': dynamic(() => import('./HttpHeadersParserTool'), {
     loading: Loading,
     ssr: false,
@@ -126,44 +238,98 @@ const toolComponents = {
     loading: Loading,
     ssr: false,
   }),
-  'json-pointer': dynamic(() => import('./JsonPointerTool'), { loading: Loading, ssr: false }),
+  'json-pointer': dynamic(() => import('./JsonPointerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
   'chmod-calculator': dynamic(() => import('./ChmodCalculatorTool'), {
     loading: Loading,
     ssr: false,
   }),
-  'cache-control': dynamic(() => import('./CacheControlTool'), { loading: Loading, ssr: false }),
-  'jsonpath-tester': dynamic(() => import('./JsonPathTool'), { loading: Loading, ssr: false }),
-  'csp-builder': dynamic(() => import('./CspBuilderTool'), { loading: Loading, ssr: false }),
-  'curl-to-fetch': dynamic(() => import('./CurlRequestTool'), { loading: Loading, ssr: false }),
+  'cache-control': dynamic(() => import('./CacheControlTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'jsonpath-tester': dynamic(() => import('./JsonPathTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'csp-builder': dynamic(() => import('./CspBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'curl-to-fetch': dynamic(() => import('./CurlRequestTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
   'openapi-validator': dynamic(() => import('./OpenApiValidatorTool'), {
     loading: Loading,
     ssr: false,
   }),
-  'svg-to-jsx': dynamic(() => import('./SvgToJsxTool'), { loading: Loading, ssr: false }),
-  'svg-minifier': dynamic(() => import('./SvgMinifierTool'), { loading: Loading, ssr: false }),
-  'css-clamp': dynamic(() => import('./CssClampTool'), { loading: Loading, ssr: false }),
-  'css-box-shadow': dynamic(() => import('./CssBoxShadowTool'), { loading: Loading, ssr: false }),
+  'svg-to-jsx': dynamic(() => import('./SvgToJsxTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'svg-minifier': dynamic(() => import('./SvgMinifierTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-clamp': dynamic(() => import('./CssClampTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-box-shadow': dynamic(() => import('./CssBoxShadowTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
   'docker-run-to-compose': dynamic(() => import('./DockerRunToComposeTool'), {
     loading: Loading,
     ssr: false,
   }),
-  'cron-generator': dynamic(() => import('./CronGeneratorTool'), { loading: Loading, ssr: false }),
-  'json-to-sql': dynamic(() => import('./JsonToSqlTool'), { loading: Loading, ssr: false }),
-  'bip39-generator': dynamic(() => import('./Bip39GeneratorTool'), { loading: Loading, ssr: false }),
-  'dmarc-generator': dynamic(() => import('./DmarcGeneratorTool'), { loading: Loading, ssr: false }),
-  'json-to-models': dynamic(() => import('./JsonToModelsTool'), { loading: Loading, ssr: false }),
-  'px-to-rem': dynamic(() => import('./PxToRemTool'), { loading: Loading, ssr: false }),
+  'cron-generator': dynamic(() => import('./CronGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-sql': dynamic(() => import('./JsonToSqlTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'bip39-generator': dynamic(() => import('./Bip39GeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'dmarc-generator': dynamic(() => import('./DmarcGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-models': dynamic(() => import('./JsonToModelsTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'px-to-rem': dynamic(() => import('./PxToRemTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
   'mock-data-generator': dynamic(() => import('./MockDataGeneratorTool'), {
     loading: Loading,
     ssr: false,
   }),
-  'csv-to-markdown': dynamic(() => import('./CsvToMarkdownTool'), { loading: Loading, ssr: false }),
-  'curl-to-code': dynamic(() => import('./CurlToCodeTool'), { loading: Loading, ssr: false }),
+  'csv-to-markdown': dynamic(() => import('./CsvToMarkdownTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'curl-to-code': dynamic(() => import('./CurlToCodeTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
   'rsa-key-pair-generator': dynamic(() => import('./RsaKeyPairGeneratorTool'), {
     loading: Loading,
     ssr: false,
   }),
-  'svg-optimizer': dynamic(() => import('./SvgOptimizerTool'), { loading: Loading, ssr: false }),
+  'svg-optimizer': dynamic(() => import('./SvgOptimizerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
   'html-table-to-json': dynamic(() => import('./HtmlTableToJsonTool'), {
     loading: Loading,
     ssr: false,
@@ -1037,6 +1203,210 @@ const toolComponents = {
     ssr: false,
   }),
   'json-patch-generator': dynamic(() => import('./JsonPatchGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'base64': dynamic(() => import('./Base64Tool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'curl-to-python': dynamic(() => import('./CurlToPythonTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'curl-to-javascript': dynamic(() => import('./CurlToJavascriptTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'curl-to-go': dynamic(() => import('./CurlToGoTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'curl-to-rust': dynamic(() => import('./CurlToRustTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'curl-to-php': dynamic(() => import('./CurlToPhpTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'curl-to-csharp': dynamic(() => import('./CurlToCsharpTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'curl-to-java': dynamic(() => import('./CurlToJavaTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'curl-to-ai-sdk': dynamic(() => import('./CurlToAiSdkTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'openai-structured-outputs': dynamic(() => import('./OpenaiStructuredOutputsTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'vercel-ai-core-message-converter': dynamic(() => import('./VercelAiCoreMessageConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'langgraph-state-generator': dynamic(() => import('./LanggraphStateGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'embedding-cost-calculator': dynamic(() => import('./EmbeddingCostCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'anthropic-tool-builder': dynamic(() => import('./AnthropicToolBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'tailwind-v3-to-v4-migrator': dynamic(() => import('./TailwindV3ToV4MigratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-box-shadow-to-tailwind': dynamic(() => import('./CssBoxShadowToTailwindTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'nextjs-metadata-generator': dynamic(() => import('./NextjsMetadataGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'svg-to-css': dynamic(() => import('./SvgToCssTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'html-table-converter': dynamic(() => import('./HtmlTableConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'natural-language-to-cron': dynamic(() => import('./NaturalLanguageToCronTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'gitignore-tester': dynamic(() => import('./GitignoreTesterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'k8s-resource-calculator': dynamic(() => import('./K8sResourceCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'terraform-hcl-to-json': dynamic(() => import('./TerraformHclToJsonTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'systemd-timer-generator': dynamic(() => import('./SystemdTimerGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sql-to-prisma': dynamic(() => import('./SqlToPrismaTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sql-to-drizzle': dynamic(() => import('./SqlToDrizzleTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'postgres-explain-visualizer': dynamic(() => import('./PostgresExplainVisualizerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'mongodb-to-sql': dynamic(() => import('./MongodbToSqlTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sql-to-django': dynamic(() => import('./SqlToDjangoTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sql-keyword-uppercaser': dynamic(() => import('./SqlKeywordUppercaserTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'subnet-calculator': dynamic(() => import('./SubnetCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'uuid-v5-generator': dynamic(() => import('./UuidV5GeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'bip39-seed-phrase-generator': dynamic(() => import('./Bip39SeedPhraseGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'eip712-hasher': dynamic(() => import('./Eip712HasherTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'crypto-unit-converter': dynamic(() => import('./CryptoUnitConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-python-dataclass': dynamic(() => import('./JsonToPythonDataclassTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-go-struct': dynamic(() => import('./JsonToGoStructTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-kotlin-class': dynamic(() => import('./JsonToKotlinClassTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-swift-struct': dynamic(() => import('./JsonToSwiftStructTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-csharp-class': dynamic(() => import('./JsonToCsharpClassTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'proto-to-typescript': dynamic(() => import('./ProtoToTypescriptTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'http-headers-to-json': dynamic(() => import('./HttpHeadersToJsonTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'jwt-builder': dynamic(() => import('./JwtBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'passphrase-wordlist-generator': dynamic(() => import('./PassphraseWordlistGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'nanoid-custom-alphabet': dynamic(() => import('./NanoidCustomAlphabetTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'mock-credit-card-generator': dynamic(() => import('./MockCreditCardGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'tailwind-spacing-generator': dynamic(() => import('./TailwindSpacingGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'docker-compose-env-generator': dynamic(() => import('./DockerComposeEnvGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'dns-propagation-checker': dynamic(() => import('./DnsPropagationCheckerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'url-utm-builder': dynamic(() => import('./UrlUtmBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sha3-hash-generator': dynamic(() => import('./Sha3HashGeneratorTool'), {
     loading: Loading,
     ssr: false,
   }),
