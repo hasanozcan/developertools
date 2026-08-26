@@ -83,10 +83,14 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const t = (key: string): string => {
     const translation = translations[language][key];
-    if (!translation) {
-      return translations.en[key] || key;
+    if (translation !== undefined && translation !== '') {
+      return translation;
     }
-    return translation;
+    const fallback = translations.en[key];
+    if (fallback !== undefined && fallback !== '') {
+      return fallback;
+    }
+    return '';
   };
 
   return (
