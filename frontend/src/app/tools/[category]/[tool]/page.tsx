@@ -1077,6 +1077,22 @@ const tools: Record<
     },
   },
   generators: {
+    'schema-org-generator': {
+      name: 'Schema.org JSON-LD Structured Data Builder',
+      metadataTitle: 'Schema.org JSON-LD Generator Online – Rich Snippets Maker',
+      description: 'Generate Google-compliant structured data markup for FAQPage, Article, Product, Organization, and LocalBusiness.',
+      longDescription: 'Free Schema.org JSON-LD Generator. Create valid, search-engine-ready structured data script tags to boost SEO rich snippet results on Google, Bing, and search engines.',
+      keywords: ['schema markup generator', 'json ld generator', 'faq schema generator', 'schema org builder'],
+      faqs: [
+        { question: 'What is JSON-LD structured data?', answer: 'JSON-LD is a standard format recommended by Google to provide explicit information about a page and classify the page content for rich search results.' },
+        { question: 'How do I add the generated schema to my website?', answer: 'Copy the generated <script type="application/ld+json"> tag and paste it into your HTML <head> or <body> section.' }
+      ],
+      howToUseSteps: [
+        'Select the schema type (FAQPage, Article, Product, Organization, etc.).',
+        'Fill in the visual form fields.',
+        'Copy the generated JSON-LD script tag.'
+      ]
+    },
     'openai-structured-outputs': {
       name: 'OpenAI Strict Structured Outputs Builder',
       metadataTitle: 'OpenAI Strict Structured Outputs Builder Online Free',
@@ -2589,6 +2605,38 @@ const tools: Record<
     },
   },
   crypto: {
+    'image-exif-stripper': {
+      name: 'Image EXIF Metadata Viewer & Stripper',
+      metadataTitle: 'Remove EXIF Data Online – Photo Metadata Viewer & Cleaner',
+      description: 'View camera model, GPS geolocation, and timestamps in photos. Strip EXIF metadata with 1 click before sharing.',
+      longDescription: 'Free online EXIF metadata cleaner. Protect your privacy by removing GPS coordinates, device info, and creation dates from JPEG, PNG, and WebP images client-side.',
+      keywords: ['remove exif data', 'view photo metadata', 'exif stripper online', 'clean photo gps'],
+      faqs: [
+        { question: 'Why should I remove EXIF data?', answer: 'Photos taken with smartphones often contain precise GPS coordinates and device identifiers that expose your privacy when shared publicly.' },
+        { question: 'Does stripping EXIF reduce image quality?', answer: 'No, only metadata tags are stripped while the image pixels remain intact.' }
+      ],
+      howToUseSteps: [
+        'Upload your image to inspect metadata.',
+        'Click "Strip All EXIF & Privacy Tags".',
+        'Download your clean image.'
+      ]
+    },
+    'file-checksum-comparator': {
+      name: 'Multi-Hash File Checksum & Comparator',
+      metadataTitle: 'File Checksum Calculator & Hash Comparator Online',
+      description: 'Calculate and verify MD5, SHA-1, SHA-256, SHA-512, and CRC32 checksums for any file or text string.',
+      longDescription: 'Free client-side multi-hash checksum calculator. Drop any file or paste text to compute MD5, SHA-1, SHA-256, and SHA-512 hashes simultaneously and verify integrity against an expected hash.',
+      keywords: ['file checksum calculator', 'compare file hash', 'sha256 file checksum', 'md5 file verifier'],
+      faqs: [
+        { question: 'How do I verify a downloaded file checksum?', answer: 'Drop your file into the tool and paste the author\'s expected hash into the comparator box.' },
+        { question: 'Is my file uploaded to a server?', answer: 'No, all cryptographic hashing runs 100% locally in your browser using the Web Crypto API.' }
+      ],
+      howToUseSteps: [
+        'Drop any file or enter text into the input field.',
+        'Optionally paste the expected checksum to compare.',
+        'Review computed hashes and copy with one click.'
+      ]
+    },
     'uuid-v5-generator': {
       name: 'UUID v5 (SHA-1 Namespace) Generator',
       metadataTitle: 'UUID v5 (SHA-1 Namespace) Generator Online Free',
@@ -4097,6 +4145,117 @@ const tools: Record<
     },
   },
   converters: {
+    'curl-to-axios': {
+      name: 'cURL to Axios Converter',
+      metadataTitle: 'cURL to Axios Converter Online – TypeScript & JavaScript',
+      description: 'Convert cURL commands to modern JavaScript and TypeScript Axios requests with async/await support.',
+      longDescription: 'Free online cURL to Axios converter. Transform cURL network commands into production-ready Axios requests with TypeScript types, headers, params, and async/await syntax.',
+      keywords: ['curl to axios', 'curl to axios js', 'curl axios converter', 'curl to typescript axios'],
+      faqs: [
+        { question: 'What does the cURL to Axios Converter do?', answer: 'It translates terminal cURL commands into clean JavaScript or TypeScript Axios code snippets.' },
+        { question: 'Is my data private?', answer: 'Yes, all conversion happens 100% locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Paste your cURL command into the input box.',
+        'Select TypeScript or JavaScript and toggle Async/Await.',
+        'Copy the generated Axios code.'
+      ]
+    },
+    'fetch-to-curl': {
+      name: 'Fetch to cURL Converter',
+      metadataTitle: 'JavaScript Fetch to cURL Converter Online Free',
+      description: 'Convert JavaScript fetch() code snippets and browser network requests into executable cURL terminal commands.',
+      longDescription: 'Free online Fetch to cURL generator. Convert browser fetch API calls into terminal-ready cURL commands for debugging and testing.',
+      keywords: ['fetch to curl', 'javascript fetch to curl', 'convert fetch to curl', 'curl generator from fetch'],
+      faqs: [
+        { question: 'How do I convert Fetch to cURL?', answer: 'Paste your fetch() code snippet and the tool will automatically output the formatted cURL command.' },
+        { question: 'Does it support headers and POST bodies?', answer: 'Yes, headers, HTTP methods, and JSON bodies are fully parsed and preserved.' }
+      ],
+      howToUseSteps: [
+        'Paste your fetch snippet into the editor.',
+        'Copy the generated cURL command for terminal use.'
+      ]
+    },
+    'json-to-xml': {
+      name: 'JSON to XML Converter',
+      metadataTitle: 'JSON to XML Converter & Formatter Online Free',
+      description: 'Convert JSON objects and arrays into structured, formatted XML documents with custom root tags.',
+      longDescription: 'Fast, secure online JSON to XML converter. Transform JSON data into clean, indented XML with customizable root tag, item tag, and attribute prefixes.',
+      keywords: ['json to xml', 'convert json to xml', 'json to xml online', 'json xml converter'],
+      faqs: [
+        { question: 'How does JSON to XML conversion work?', answer: 'It recursively converts JSON keys and values into valid XML elements and attributes.' },
+        { question: 'Can I customize the root XML tag?', answer: 'Yes, you can set any root tag and array item tag name.' }
+      ],
+      howToUseSteps: [
+        'Paste your JSON payload into the input editor.',
+        'Configure the root tag and XML declaration options.',
+        'Copy or download the generated XML.'
+      ]
+    },
+    'excel-to-json': {
+      name: 'Excel & CSV to JSON Converter',
+      metadataTitle: 'Excel (XLSX, CSV) to JSON Converter Online Free',
+      description: 'Convert Excel spreadsheets, CSV files, and TSV tables into clean, structured JSON arrays.',
+      longDescription: 'Free online Excel to JSON converter. Upload spreadsheet files or paste table cells directly to generate beautified JSON or JSON Lines with automatic number and boolean type parsing.',
+      keywords: ['excel to json', 'xlsx to json', 'csv to json converter', 'spreadsheet to json'],
+      faqs: [
+        { question: 'Can I paste directly from Excel or Google Sheets?', answer: 'Yes, copy any table cells and paste them directly into the editor.' },
+        { question: 'Are numbers and booleans parsed automatically?', answer: 'Yes, numeric values and true/false values are automatically parsed into native JSON types.' }
+      ],
+      howToUseSteps: [
+        'Paste spreadsheet cells or upload a CSV/TSV file.',
+        'Toggle number and boolean type parsing.',
+        'Copy or download the resulting JSON file.'
+      ]
+    },
+    'json-to-excel': {
+      name: 'JSON to Excel & CSV Converter',
+      metadataTitle: 'JSON to Excel (XLSX, CSV) Converter Online Free',
+      description: 'Convert JSON arrays and objects into downloadable Excel spreadsheets, CSV, and TSV files.',
+      longDescription: 'Convert complex JSON payloads into tabular Excel and CSV spreadsheets. Supports automatic object flattening and custom delimiters.',
+      keywords: ['json to excel', 'json to csv', 'export json to xlsx', 'json to spreadsheet'],
+      faqs: [
+        { question: 'Does it support nested JSON objects?', answer: 'Yes, nested objects are automatically flattened using dot notation keys.' },
+        { question: 'Can I export as CSV or TSV?', answer: 'Yes, choose between Comma, Tab, or Semicolon separated values.' }
+      ],
+      howToUseSteps: [
+        'Paste your JSON array of objects.',
+        'Select your preferred delimiter format.',
+        'Click Download to save your spreadsheet.'
+      ]
+    },
+    'image-converter': {
+      name: 'All-in-One Image Format Converter',
+      metadataTitle: 'Image Converter Online – Convert PNG, JPG, WebP, AVIF, ICO',
+      description: 'Convert image formats in your browser without uploading files to a server. Supports PNG, JPG, WebP, AVIF, BMP, and ICO.',
+      longDescription: 'High-speed client-side image converter. Easily convert between PNG, JPEG, WebP, AVIF, BMP, and Favicon ICO formats with zero server tracking and maximum privacy.',
+      keywords: ['image converter', 'png to webp', 'webp to png', 'jpg to webp', 'image format converter online'],
+      faqs: [
+        { question: 'Is it safe to convert private photos?', answer: 'Yes, 100% of the image processing runs locally in your browser with HTML5 Canvas. Your photos never leave your device.' },
+        { question: 'Which formats are supported?', answer: 'PNG, JPEG, WebP, AVIF, BMP, and ICO.' }
+      ],
+      howToUseSteps: [
+        'Drag and drop or select an image file.',
+        'Choose your desired target format and quality level.',
+        'Click Download to save the converted image.'
+      ]
+    },
+    'images-to-pdf': {
+      name: 'Images to PDF Converter',
+      metadataTitle: 'Images to PDF Converter Online – Combine JPG, PNG to PDF Free',
+      description: 'Convert and merge JPG, PNG, and WebP images into a single multi-page PDF document client-side.',
+      longDescription: 'Free online Images to PDF converter. Combine multiple photos into a customized PDF with A4/Letter sizing, auto-orientation, and custom margins.',
+      keywords: ['images to pdf', 'jpg to pdf', 'png to pdf', 'combine images to pdf', 'photos to pdf online'],
+      faqs: [
+        { question: 'Can I reorder the images before generating the PDF?', answer: 'Yes, use the arrow buttons on each thumbnail to arrange the page order.' },
+        { question: 'Are my images uploaded to a server?', answer: 'No, PDF document generation runs 100% client-side in your browser.' }
+      ],
+      howToUseSteps: [
+        'Select or drag & drop one or more images.',
+        'Reorder pages and configure page format and margins.',
+        'Click Create PDF and download your document.'
+      ]
+    },
     'curl-to-python': {
       name: 'cURL to Python Converter',
       metadataTitle: 'cURL to Python Converter Online Free',
@@ -6912,6 +7071,102 @@ const tools: Record<
     },
   },
   utilities: {
+    'image-compressor': {
+      name: 'Image Compressor & Optimizer',
+      metadataTitle: 'Compress Images Online – Free PNG, JPG, WebP Optimizer',
+      description: 'Compress PNG, JPEG, and WebP images client-side with visual quality control and side-by-side metrics.',
+      longDescription: 'Free online image compressor. Reduce file sizes by up to 80% with adjustable compression sliders, bicubic resampling, and instant download without quality loss.',
+      keywords: ['image compressor', 'compress image online', 'compress png', 'compress jpg', 'webp compressor'],
+      faqs: [
+        { question: 'How much can I reduce my image size?', answer: 'Depending on the image and format (such as WebP), you can typically achieve 50% to 80% file size savings.' },
+        { question: 'Is my data private?', answer: 'Yes! Everything is processed locally in your browser with zero server uploads.' }
+      ],
+      howToUseSteps: [
+        'Select or drag and drop an image.',
+        'Adjust the quality slider to find the sweet spot between size and quality.',
+        'Click Download to save the optimized image.'
+      ]
+    },
+    'image-color-extractor': {
+      name: 'Image Color Palette Extractor & Eyedropper',
+      metadataTitle: 'Image Color Palette Extractor Online – Dominant Colors & Eyedropper',
+      description: 'Extract dominant color palettes from any photo with HEX, RGB, HSL codes and interactive pixel eyedropper.',
+      longDescription: 'Extract harmonious color palettes from your photos and graphics. Inspect individual pixels with a built-in magnifying eyedropper and copy HEX codes with one click.',
+      keywords: ['extract colors from image', 'image to color palette', 'color palette generator from image', 'image eyedropper'],
+      faqs: [
+        { question: 'How does the color palette extraction work?', answer: 'It samples the image pixel data and groups colors into dominant clusters using fast color quantization.' },
+        { question: 'Can I inspect specific pixel colors?', answer: 'Yes, click anywhere on the image preview to pick exact pixel colors with the eyedropper.' }
+      ],
+      howToUseSteps: [
+        'Upload your graphic or photo.',
+        'Click any palette swatch to copy its HEX code.',
+        'Click on the image preview to sample specific pixel colors.'
+      ]
+    },
+    'pdf-merger': {
+      name: 'PDF Merger & Combiner',
+      metadataTitle: 'Merge PDF Files Online Free – 100% Client-Side PDF Combiner',
+      description: 'Combine multiple PDF documents into a single PDF file securely inside your browser.',
+      longDescription: 'Free online PDF merger. Drag and drop multiple PDF files, reorder pages, and merge them into a single high-quality PDF with complete privacy and zero server uploads.',
+      keywords: ['merge pdf online', 'combine pdf files', 'merge pdf free', 'pdf joiner'],
+      faqs: [
+        { question: 'Is it safe to merge sensitive PDF documents?', answer: 'Yes, DevsTools merges PDFs 100% locally in your browser using pdf-lib. Your documents are never uploaded to any server.' },
+        { question: 'Can I change the order of the merged PDFs?', answer: 'Yes, use the Up and Down arrow buttons to easily arrange files before merging.' }
+      ],
+      howToUseSteps: [
+        'Select or drag & drop multiple PDF files.',
+        'Arrange files in your desired order.',
+        'Click "Merge All PDFs" and download the merged document.'
+      ]
+    },
+    'pdf-splitter': {
+      name: 'PDF Splitter & Page Extractor',
+      metadataTitle: 'Split PDF Online Free – Extract Pages from PDF Document',
+      description: 'Extract specific pages or page ranges from PDF files with custom intervals and instant download.',
+      longDescription: 'Free online PDF splitter. Extract specific pages or custom ranges (e.g. 1-3, 5, 8-10) from any PDF document without uploading files to a third-party server.',
+      keywords: ['split pdf', 'extract pages from pdf', 'separate pdf pages', 'split pdf online free'],
+      faqs: [
+        { question: 'How do I specify page ranges to split?', answer: 'Enter page ranges such as "1-3, 5, 8-10" or use the quick preset buttons.' },
+        { question: 'Does splitting affect document quality?', answer: 'No, vector text, embedded images, and fonts are preserved at original quality.' }
+      ],
+      howToUseSteps: [
+        'Upload your PDF file.',
+        'Specify the page numbers or range to extract.',
+        'Click "Extract Selected Pages" to generate and download the new PDF.'
+      ]
+    },
+    'llm-pricing-calculator': {
+      name: 'All-in-One LLM Token & Pricing Calculator',
+      metadataTitle: 'LLM Pricing Calculator – OpenAI, Claude, Gemini & DeepSeek Cost Comparison',
+      description: 'Compare API pricing and token costs across OpenAI (GPT-4o, o1, o3-mini), Anthropic (Claude 3.5), Google Gemini, and DeepSeek.',
+      longDescription: 'Interactive LLM Pricing Calculator. Calculate and compare cost per request, cost per 1M tokens, prompt caching savings, batch discounts, and monthly API budgets across all major AI models.',
+      keywords: ['llm pricing calculator', 'token cost calculator', 'openai vs claude pricing', 'deepseek api pricing', 'ai model cost comparison'],
+      faqs: [
+        { question: 'Which models are included in the comparison?', answer: 'GPT-4o, GPT-4o-mini, o1, o3-mini, Claude 3.5 Sonnet/Haiku/Opus, Gemini 2.0 Flash, Gemini 1.5 Pro, DeepSeek V3/R1, and Llama 3.3.' },
+        { question: 'Does it calculate prompt caching discounts?', answer: 'Yes, adjust the prompt caching percentage slider to view discounted input token costs.' }
+      ],
+      howToUseSteps: [
+        'Enter your average prompt and completion tokens per request.',
+        'Set your daily request volume.',
+        'Compare per-request and monthly costs across all models in the table.'
+      ]
+    },
+    'code-playground': {
+      name: 'Live HTML/CSS/JS Sandbox & Playground',
+      metadataTitle: 'HTML CSS JS Code Playground Online – Instant Live Sandbox',
+      description: 'Interactive in-browser code editor with instant live preview, Tailwind CSS support, device viewports, and console logging.',
+      longDescription: 'Free online code playground. Write HTML, CSS, and JavaScript with instant live preview, responsive device toggles (Desktop, Tablet, Mobile), and one-click standalone HTML export.',
+      keywords: ['html css js online editor', 'code playground', 'javascript sandbox', 'live code editor online'],
+      faqs: [
+        { question: 'Does the sandbox support Tailwind CSS?', answer: 'Yes, choose the Tailwind preset to automatically include the Tailwind CDN.' },
+        { question: 'Can I export my sandbox project?', answer: 'Yes, click "Export HTML" to download a standalone single-file HTML document.' }
+      ],
+      howToUseSteps: [
+        'Choose a starter template or write code in HTML, CSS, and JS tabs.',
+        'View live rendered output and console logs.',
+        'Toggle mobile/tablet viewports or export to HTML.'
+      ]
+    },
     'embedding-cost-calculator': {
       name: 'Vector Embedding Cost Calculator',
       metadataTitle: 'Vector Embedding Cost Calculator Online Free',

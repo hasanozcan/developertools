@@ -17,10 +17,10 @@ export default function PostToolAdBanner({
       className={`w-full rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-gradient-to-r from-slate-50/70 via-white to-slate-50/70 p-3 sm:p-4 my-6 shadow-sm overflow-hidden text-center backdrop-blur-sm dark:border-white/10 dark:from-slate-900/50 dark:via-slate-900/30 dark:to-slate-900/50 ${className}`}
     >
       <div className="flex items-center justify-between mb-1.5 px-1">
-        <span className="inline-flex items-center rounded-md bg-slate-100 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-slate-500 dark:bg-slate-800 dark:text-slate-400 border border-slate-200/60 dark:border-slate-700/50">
+        <span className="inline-flex items-center rounded-md bg-slate-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/50">
           Sponsored
         </span>
-        <span className="text-[10px] text-slate-400 dark:text-slate-500">
+        <span className="text-[11px] text-slate-600 dark:text-slate-400">
           Support Free Developer Tools
         </span>
       </div>

@@ -75,8 +75,16 @@ test('tool search supports keyboard shortcut (/) and ESC closing', async ({ page
 
 test('contact conversion fires only after a successful submission', async ({ page }) => {
   await page.addInitScript(() => {
-    const browserWindow = window as typeof window & { conversionCalls: unknown[][] };
+    const browserWindow = window as typeof window & {
+      conversionCalls: unknown[][];
+      __NEXT_PUBLIC_GOOGLE_ADS_SEND_TO?: string;
+      __NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_VALUE?: string;
+      __NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_CURRENCY?: string;
+    };
     browserWindow.conversionCalls = [];
+    browserWindow.__NEXT_PUBLIC_GOOGLE_ADS_SEND_TO = 'AW-TEST/contact';
+    browserWindow.__NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_VALUE = '1';
+    browserWindow.__NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_CURRENCY = 'USD';
     window.gtag = (...args: unknown[]) => browserWindow.conversionCalls.push(args);
   });
   await page.route('**/api/contact', (route) =>
@@ -305,9 +313,7 @@ test('all tools render interactive interface with zero browser errors', async ({
   expect(errors).toEqual([]);
 });
 
-test('interactive functionality across all 30 new tools', async ({ page }) => {
-  test.slow();
-  test.setTimeout(240000);
+test('interactive functionality across batch 1 (tools 1-10)', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
 
   // 1. html-to-jsx
@@ -375,6 +381,10 @@ test('interactive functionality across all 30 new tools', async ({ page }) => {
   await page.goto('/tools/generators/mac-address-generator');
   await expect(page.locator('textarea, pre').first()).toBeVisible();
   await page.getByRole('button', { name: /regenerate/i }).click();
+});
+
+test('interactive functionality across batch 2 (tools 11-20)', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
 
   // 11. color-palette-generator
   await page.goto('/tools/generators/color-palette-generator');
@@ -424,10 +434,14 @@ test('interactive functionality across all 30 new tools', async ({ page }) => {
   await expect(page.locator('body')).toContainText('Bytes');
 
   // 20. punycode-converter
-  await page.goto('/tools/encoding/punycode-converter');
+  await page.goto('/tools/converters/punycode-converter');
   const punyInput = page.locator('textarea').first();
   await punyInput.fill('münchen.de');
   await expect(page.locator('textarea').last()).toContainText('xn--');
+});
+
+test('interactive functionality across batch 3 (tools 21-30)', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
 
   // 21. morse-code-audio-converter
   await page.goto('/tools/encoding/morse-code-audio-converter');
@@ -468,7 +482,7 @@ test('interactive functionality across all 30 new tools', async ({ page }) => {
   await page.goto('/tools/converters/csv-column-extractor');
   const csvExtInput = page.locator('textarea').first();
   await csvExtInput.fill('id,name,email,age\n1,Alice,alice@example.com,30\n2,Bob,bob@example.com,25');
-  await expect(page.locator('body')).toContainText('Select Columns to Extract');
+  await expect(page.locator('body')).toContainText('Extracted Columns Output');
 
   // 28. sql-to-typescript
   await page.goto('/tools/converters/sql-to-typescript');
@@ -539,4 +553,98 @@ test('new high-traffic tools interactive functionality and visual validation', a
   // 8. MCP Inspector
   await page.goto('/tools/utilities/mcp-inspector');
   await expect(page.locator('body')).toContainText('VALID MCP MESSAGE');
+});
+
+test('16 newly added high-traffic tools interactive and rendering validation', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+
+  // 1. cURL to Axios Converter
+  await page.goto('/tools/converters/curl-to-axios');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('cURL to Axios');
+  const curlInput = page.locator('textarea').first();
+  await curlInput.fill('curl -X POST https://api.example.com/data -H "Authorization: Bearer token123" -d \'{"name":"DevsTools"}\'');
+  await expect(page.locator('textarea, pre').last()).toContainText('axios({');
+
+  // 2. Fetch to cURL Converter
+  await page.goto('/tools/converters/fetch-to-curl');
+  await expect(page.locator('body')).toContainText('curl');
+  await expect(page.locator('body')).toContainText('-X POST');
+
+  // 3. JSON to XML Converter
+  await page.goto('/tools/converters/json-to-xml');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('JSON to XML');
+  const jsonXmlInput = page.locator('textarea').first();
+  await jsonXmlInput.fill('{"user": {"name": "Alice", "role": "admin"}}');
+  await expect(page.locator('textarea, pre').last()).toContainText('<root>');
+  await expect(page.locator('textarea, pre').last()).toContainText('<name>Alice</name>');
+
+  // 4. Excel & CSV to JSON Converter
+  await page.goto('/tools/converters/excel-to-json');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Excel');
+  await expect(page.locator('body')).toContainText('Excel / CSV / TSV Input');
+
+  // 5. JSON to Excel & CSV Converter
+  await page.goto('/tools/converters/json-to-excel');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('JSON to Excel');
+  await expect(page.locator('body')).toContainText('Spreadsheet Table Output');
+
+  // 6. Image Format Converter
+  await page.goto('/tools/converters/image-converter');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Image Format Converter');
+  await expect(page.locator('body')).toContainText('Select Image to Convert');
+
+  // 7. Images to PDF Converter
+  await page.goto('/tools/converters/images-to-pdf');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Images to PDF');
+  await expect(page.locator('body')).toContainText('Select or Drop Images');
+
+  // 8. Image Compressor & Optimizer
+  await page.goto('/tools/utilities/image-compressor');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Image Compressor');
+  await expect(page.locator('body')).toContainText('Drag & Drop Image');
+
+  // 9. Image Color Palette Extractor
+  await page.goto('/tools/utilities/image-color-extractor');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Image Color Palette');
+  await expect(page.locator('body')).toContainText('Upload an Image');
+
+  // 10. PDF Merger & Combiner
+  await page.goto('/tools/utilities/pdf-merger');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('PDF Merger');
+  await expect(page.locator('body')).toContainText('Drag & Drop PDF');
+
+  // 11. PDF Splitter & Page Extractor
+  await page.goto('/tools/utilities/pdf-splitter');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('PDF Splitter');
+  await expect(page.locator('body')).toContainText('Select PDF Document to Split');
+
+  // 12. All-in-One LLM Token & Pricing Calculator
+  await page.goto('/tools/utilities/llm-pricing-calculator');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('LLM');
+  await expect(page.locator('body')).toContainText('GPT-4o');
+  await expect(page.locator('body')).toContainText('Claude 3.5 Sonnet');
+  await expect(page.locator('body')).toContainText('DeepSeek V3');
+
+  // 13. Live HTML/CSS/JS Sandbox & Playground
+  await page.goto('/tools/utilities/code-playground');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Sandbox & Playground');
+  await expect(page.locator('body')).toContainText('HTML');
+  await expect(page.locator('body')).toContainText('CSS');
+  await expect(page.locator('body')).toContainText('JavaScript');
+
+  // 14. Schema.org JSON-LD Structured Data Builder
+  await page.goto('/tools/generators/schema-org-generator');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Schema.org JSON-LD');
+  await expect(page.locator('body')).toContainText('FAQPage');
+
+  // 15. Image EXIF Metadata Viewer & Stripper
+  await page.goto('/tools/crypto/image-exif-stripper');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Image EXIF');
+  await expect(page.locator('body')).toContainText('Select Photo to Inspect');
+
+  // 16. Multi-Hash File Checksum & Comparator
+  await page.goto('/tools/crypto/file-checksum-comparator');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Checksum');
+  await expect(page.locator('body')).toContainText('SHA-256');
+  await expect(page.locator('body')).toContainText('MD5');
 });

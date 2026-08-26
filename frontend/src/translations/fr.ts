@@ -42,6 +42,7 @@ export const fr = {
     'Traitement Côté Client: Vos données ne quittent jamais votre navigateur pour une confidentialité maximale',
   'home.feature3': 'Compatible Mobile: Fonctionne parfaitement sur tous les appareils',
   'home.feature4': 'Sans Bloqueurs de Publicités: Interface propre sans popups intrusifs',
+  'home.filterPlaceholder': 'Filtrer les outils...',
   // Categories
   'cat.json': 'Outils JSON',
   'cat.json.desc': 'Formater, valider et convertir des données JSON',

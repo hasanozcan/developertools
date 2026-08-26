@@ -1404,6 +1404,70 @@ export const toolSources: Record<string, ToolSource[]> = {
     { name: 'SHA-3 (Keccak) Hash Generator Reference', url: 'https://devstools.app/tools/crypto/sha3-hash-generator' },
     { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
+  'curl-to-axios': [
+    { name: 'cURL to Axios Converter Reference', url: 'https://devstools.app/tools/converters/curl-to-axios' },
+    { name: 'Axios Documentation', url: 'https://axios-http.com' },
+  ],
+  'fetch-to-curl': [
+    { name: 'Fetch to cURL Converter Reference', url: 'https://devstools.app/tools/converters/fetch-to-curl' },
+    { name: 'Fetch API MDN Docs', url: 'https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API' },
+  ],
+  'json-to-xml': [
+    { name: 'JSON to XML Converter Reference', url: 'https://devstools.app/tools/converters/json-to-xml' },
+    { name: 'XML Specification', url: 'https://www.w3.org/TR/xml/' },
+  ],
+  'excel-to-json': [
+    { name: 'Excel to JSON Converter Reference', url: 'https://devstools.app/tools/converters/excel-to-json' },
+    { name: 'SheetJS / XLSX Reference', url: 'https://docs.sheetjs.com' },
+  ],
+  'json-to-excel': [
+    { name: 'JSON to Excel Converter Reference', url: 'https://devstools.app/tools/converters/json-to-excel' },
+    { name: 'Spreadsheet Format Specification', url: 'https://developer.mozilla.org' },
+  ],
+  'image-converter': [
+    { name: 'Image Format Converter Reference', url: 'https://devstools.app/tools/converters/image-converter' },
+    { name: 'WebP Image Documentation', url: 'https://developers.google.com/speed/webp' },
+  ],
+  'images-to-pdf': [
+    { name: 'Images to PDF Converter Reference', url: 'https://devstools.app/tools/converters/images-to-pdf' },
+    { name: 'PDF-Lib Documentation', url: 'https://pdf-lib.js.org' },
+  ],
+  'image-compressor': [
+    { name: 'Image Compressor & Optimizer Reference', url: 'https://devstools.app/tools/utilities/image-compressor' },
+    { name: 'HTML5 Canvas API', url: 'https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API' },
+  ],
+  'image-color-extractor': [
+    { name: 'Image Color Palette Extractor Reference', url: 'https://devstools.app/tools/utilities/image-color-extractor' },
+    { name: 'Color Quantization Algorithms', url: 'https://developer.mozilla.org' },
+  ],
+  'pdf-merger': [
+    { name: 'PDF Merger & Combiner Reference', url: 'https://devstools.app/tools/utilities/pdf-merger' },
+    { name: 'PDF-Lib GitHub Documentation', url: 'https://github.com/Hopding/pdf-lib' },
+  ],
+  'pdf-splitter': [
+    { name: 'PDF Splitter Reference', url: 'https://devstools.app/tools/utilities/pdf-splitter' },
+    { name: 'PDF Specification ISO 32000', url: 'https://www.iso.org' },
+  ],
+  'llm-pricing-calculator': [
+    { name: 'LLM Pricing Calculator Reference', url: 'https://devstools.app/tools/utilities/llm-pricing-calculator' },
+    { name: 'OpenAI Pricing Table', url: 'https://openai.com/api/pricing/' },
+  ],
+  'code-playground': [
+    { name: 'Code Playground Reference', url: 'https://devstools.app/tools/utilities/code-playground' },
+    { name: 'Tailwind CSS CDN', url: 'https://tailwindcss.com' },
+  ],
+  'schema-org-generator': [
+    { name: 'Schema.org JSON-LD Generator Reference', url: 'https://devstools.app/tools/generators/schema-org-generator' },
+    { name: 'Google Search Central Structured Data', url: 'https://developers.google.com/search/docs/appearance/structured-data' },
+  ],
+  'image-exif-stripper': [
+    { name: 'Image EXIF Stripper Reference', url: 'https://devstools.app/tools/crypto/image-exif-stripper' },
+    { name: 'EXIF Standard Specification', url: 'https://www.cipa.jp/std/documents/e/DC-008-2012_E.pdf' },
+  ],
+  'file-checksum-comparator': [
+    { name: 'Multi-Hash Checksum Comparator Reference', url: 'https://devstools.app/tools/crypto/file-checksum-comparator' },
+    { name: 'Web Cryptography API', url: 'https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API' },
+  ],
 };
 
 export function getToolSources(toolSlug: string): ToolSource[] {

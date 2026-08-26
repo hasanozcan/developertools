@@ -40,7 +40,7 @@ export default defineConfig({
       NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_VALUE: '1',
       NEXT_PUBLIC_GOOGLE_ADS_SEND_TO: 'AW-TEST/contact',
     },
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     timeout: 120_000,
     url: baseURL,
   },

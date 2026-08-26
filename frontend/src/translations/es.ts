@@ -42,6 +42,7 @@ export const es = {
     'Procesamiento del Lado del Cliente: Sus datos nunca salen de su navegador para máxima privacidad',
   'home.feature3': 'Compatible con Móviles: Funciona perfectamente en todos los dispositivos',
   'home.feature4': 'Sin Bloqueadores de Anuncios: Interfaz limpia sin popups intrusivos',
+  'home.filterPlaceholder': 'Filtrar herramientas...',
   // Categories
   'cat.json': 'Herramientas JSON',
   'cat.json.desc': 'Formatear, validar y convertir datos JSON',

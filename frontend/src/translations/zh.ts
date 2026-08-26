@@ -40,6 +40,7 @@ export const zh = {
   'home.feature2': '客户端处理：您的数据永远不会离开浏览器，确保最大隐私',
   'home.feature3': '移动端友好：在所有设备上完美运行',
   'home.feature4': '清洁界面：无干扰性弹窗',
+  'home.filterPlaceholder': '筛选工具...',
   // Categories
   'cat.json': 'JSON 工具',
   'cat.json.desc': '格式化、验证和转换 JSON 数据',

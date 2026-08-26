@@ -52,6 +52,7 @@ export const en = {
     'Client-Side Processing: Your data never leaves your browser for maximum privacy',
   'home.feature3': 'Mobile Friendly: Works perfectly on all devices',
   'home.feature4': 'No Ads Blocking Tools: Clean interface without intrusive popups',
+  'home.filterPlaceholder': 'Filter tools...',
   // Categories
   'cat.json': 'JSON Tools',
   'cat.json.desc': 'Format, validate, and convert JSON data',

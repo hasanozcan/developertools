@@ -53,6 +53,7 @@ export const tr = {
     'İstemci Tarafı İşleme: Verileriniz maksimum gizlilik için tarayıcınızdan asla ayrılmaz',
   'home.feature3': 'Mobil Uyumlu: Tüm cihazlarda mükemmel çalışır',
   'home.feature4': "Reklam Engelleyici Yok: Rahatsız edici popup'lar olmadan temiz arayüz",
+  'home.filterPlaceholder': 'Araçları filtrele...',
   // Categories
   'cat.json': 'JSON Araçları',
   'cat.json.desc': 'JSON verilerini biçimlendirin, doğrulayın ve dönüştürün',

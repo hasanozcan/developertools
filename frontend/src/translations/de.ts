@@ -42,6 +42,7 @@ export const de = {
     'Client-seitige Verarbeitung: Ihre Daten verlassen nie Ihren Browser für maximale Privatsphäre',
   'home.feature3': 'Mobilfreundlich: Funktioniert perfekt auf allen Geräten',
   'home.feature4': 'Keine Werbeblocker-Tools: Saubere Oberfläche ohne aufdringliche Popups',
+  'home.filterPlaceholder': 'Tools filtern...',
   // Categories
   'cat.json': 'JSON-Tools',
   'cat.json.desc': 'JSON-Daten formatieren, validieren und konvertieren',

@@ -1410,6 +1410,70 @@ const toolComponents: Record<ToolSlug, ComponentType> = {
     loading: Loading,
     ssr: false,
   }),
+  'curl-to-axios': dynamic(() => import('./CurlToAxiosTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'fetch-to-curl': dynamic(() => import('./FetchToCurlTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-xml': dynamic(() => import('./JsonToXmlTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'excel-to-json': dynamic(() => import('./ExcelToJsonTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-excel': dynamic(() => import('./JsonToExcelTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'image-converter': dynamic(() => import('./ImageConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'images-to-pdf': dynamic(() => import('./ImagesToPdfTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'image-compressor': dynamic(() => import('./ImageCompressorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'image-color-extractor': dynamic(() => import('./ImageColorExtractorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'pdf-merger': dynamic(() => import('./PdfMergerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'pdf-splitter': dynamic(() => import('./PdfSplitterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'llm-pricing-calculator': dynamic(() => import('./LlmPricingCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'code-playground': dynamic(() => import('./CodePlaygroundTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'schema-org-generator': dynamic(() => import('./SchemaOrgGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'image-exif-stripper': dynamic(() => import('./ImageExifStripperTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'file-checksum-comparator': dynamic(() => import('./FileChecksumComparatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
 } as const satisfies Record<ToolSlug, ComponentType>;
 
 export const toolComponentSlugs = Object.keys(toolComponents) as ToolSlug[];
