@@ -125,12 +125,15 @@ describe('AdSense', () => {
     expect(window.adsbygoogle).toHaveLength(3);
   });
 
-  it('never replaces an unfilled Google slot with a site advertisement', () => {
+  it('never replaces an unfilled Google slot with a site advertisement', async () => {
     const { container } = render(<AdSense slot="123" />);
     const ad = container.querySelector('ins.adsbygoogle');
     expect(ad).not.toBeNull();
 
-    ad?.setAttribute('data-ad-status', 'unfilled');
+    await act(async () => {
+      ad?.setAttribute('data-ad-status', 'unfilled');
+      await Promise.resolve();
+    });
 
     expect(container.querySelector('ins.adsbygoogle')).not.toBeNull();
     expect(container.querySelector('[data-testid="ad-fallback"]')).toBeNull();

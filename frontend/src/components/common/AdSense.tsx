@@ -14,6 +14,7 @@ interface AdSenseProps {
   format?: 'auto' | 'fluid' | 'rectangle' | 'vertical' | 'horizontal';
   responsive?: boolean;
   className?: string;
+  immediate?: boolean;
 }
 
 export default function AdSense({
@@ -21,16 +22,22 @@ export default function AdSense({
   format = 'auto',
   responsive = true,
   className = '',
+  immediate = false,
 }: AdSenseProps) {
   const adClient = normalizeAdSenseClientId(process.env.NEXT_PUBLIC_ADSENSE_ID);
   const requestKey = `${adClient}:${slot}:${format}:${responsive}`;
   const containerRef = useRef<HTMLDivElement | null>(null);
   const adRef = useRef<HTMLElement | null>(null);
   const pushedRequestRef = useRef<string | null>(null);
-  const [shouldRequestAd, setShouldRequestAd] = useState(false);
+  const [shouldRequestAd, setShouldRequestAd] = useState(immediate);
   const [isUnfilled, setIsUnfilled] = useState(false);
 
   useEffect(() => {
+    if (immediate) {
+      setShouldRequestAd(true);
+      return;
+    }
+
     const container = containerRef.current;
     if (!adClient || !container) return;
 

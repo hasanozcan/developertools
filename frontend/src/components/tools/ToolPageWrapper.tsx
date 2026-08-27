@@ -230,10 +230,11 @@ export default function ToolPageWrapper({
               {/* Fullscreen Body with Left Ad + Center Tool + Right Ad */}
               <div className="flex-1 flex gap-4 items-start w-full mb-4">
                 {/* Left Skyscraper Ad (Large/Wide screens) */}
-                <aside className="hidden xl:block w-44 2xl:w-52 shrink-0 sticky top-20">
+                <aside className="hidden xl:block w-[160px] 2xl:w-[300px] shrink-0 sticky top-20">
                   <AdSense
                     slot={process.env.NEXT_PUBLIC_ADSENSE_LEFT_SLOT || '3460899670'}
                     format="vertical"
+                    immediate={true}
                     className="min-h-[600px] rounded-3xl overflow-hidden border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
                   />
                 </aside>
@@ -244,10 +245,11 @@ export default function ToolPageWrapper({
                 </main>
 
                 {/* Right Skyscraper Ad (Large/Wide screens) */}
-                <aside className="hidden xl:block w-44 2xl:w-52 shrink-0 sticky top-20">
+                <aside className="hidden xl:block w-[160px] 2xl:w-[300px] shrink-0 sticky top-20">
                   <AdSense
                     slot={process.env.NEXT_PUBLIC_ADSENSE_RIGHT_SLOT || '1351515156'}
                     format="vertical"
+                    immediate={true}
                     className="min-h-[600px] rounded-3xl overflow-hidden border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
                   />
                 </aside>
@@ -258,6 +260,7 @@ export default function ToolPageWrapper({
                 <AdSense
                   slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || '7781534087'}
                   format="horizontal"
+                  immediate={true}
                   className="h-24 max-h-24 rounded-2xl overflow-hidden border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50"
                 />
               </div>
