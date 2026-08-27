@@ -135,3 +135,13 @@ body {
 .dark .prose strong {
   color: #f1f5f9;
 }
+
+/* Auto-collapse unfilled Google AdSense units and their sidebar wrappers */
+ins.adsbygoogle[data-ad-status='unfilled'] {
+  display: none !important;
+}
+
+aside:has(ins.adsbygoogle[data-ad-status='unfilled']),
+[data-ad-banner]:has(ins.adsbygoogle[data-ad-status='unfilled']) {
+  display: none !important;
+}

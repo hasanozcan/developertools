@@ -10,10 +10,11 @@ interface PostToolAdBannerProps {
 
 export default function PostToolAdBanner({
   className = '',
-  slot = '1733348098',
+  slot = process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || '7781534087',
 }: PostToolAdBannerProps) {
   return (
     <div
+      data-ad-banner="true"
       className={`w-full rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-gradient-to-r from-slate-50/70 via-white to-slate-50/70 p-3 sm:p-4 my-6 shadow-sm overflow-hidden text-center backdrop-blur-sm dark:border-white/10 dark:from-slate-900/50 dark:via-slate-900/30 dark:to-slate-900/50 ${className}`}
     >
       <div className="flex items-center justify-between mb-1.5 px-1">

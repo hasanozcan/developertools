@@ -28,6 +28,7 @@ export default function AdSense({
   const adRef = useRef<HTMLElement | null>(null);
   const pushedRequestRef = useRef<string | null>(null);
   const [shouldRequestAd, setShouldRequestAd] = useState(false);
+  const [isUnfilled, setIsUnfilled] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -65,13 +66,27 @@ export default function AdSense({
     }
   }, [adClient, requestKey, shouldRequestAd]);
 
+  useEffect(() => {
+    const slotElement = adRef.current;
+    if (!slotElement || typeof MutationObserver === 'undefined') return;
+
+    const observer = new MutationObserver(() => {
+      if (slotElement.getAttribute('data-ad-status') === 'unfilled') {
+        setIsUnfilled(true);
+      }
+    });
+
+    observer.observe(slotElement, { attributes: true, attributeFilter: ['data-ad-status'] });
+    return () => observer.disconnect();
+  }, []);
+
   if (!adClient) return null;
 
   return (
     <div
       ref={containerRef}
       data-site-support-slot={shouldRequestAd ? 'true' : undefined}
-      className={className}
+      className={`${className} ${isUnfilled ? 'hidden' : ''}`.trim()}
     >
       <ins
         key={requestKey}
@@ -79,7 +94,7 @@ export default function AdSense({
           adRef.current = node;
         }}
         className="adsbygoogle"
-        style={{ display: 'block' }}
+        style={{ display: isUnfilled ? 'none' : 'block' }}
         data-ad-client={adClient}
         data-ad-slot={slot}
         data-ad-format={format}

@@ -232,7 +232,7 @@ export default function ToolPageWrapper({
                 {/* Left Skyscraper Ad (Large/Wide screens) */}
                 <aside className="hidden xl:block w-44 2xl:w-52 shrink-0 sticky top-20">
                   <AdSense
-                    slot="1733348098"
+                    slot={process.env.NEXT_PUBLIC_ADSENSE_LEFT_SLOT || '3460899670'}
                     format="vertical"
                     className="min-h-[600px] rounded-3xl overflow-hidden border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
                   />
@@ -246,7 +246,7 @@ export default function ToolPageWrapper({
                 {/* Right Skyscraper Ad (Large/Wide screens) */}
                 <aside className="hidden xl:block w-44 2xl:w-52 shrink-0 sticky top-20">
                   <AdSense
-                    slot="1733348098"
+                    slot={process.env.NEXT_PUBLIC_ADSENSE_RIGHT_SLOT || '1351515156'}
                     format="vertical"
                     className="min-h-[600px] rounded-3xl overflow-hidden border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
                   />
@@ -256,7 +256,7 @@ export default function ToolPageWrapper({
               {/* Bottom Horizontal Ad Banner (Visible on mobile/tablet when sidebars are hidden) */}
               <div className="w-full shrink-0 xl:hidden">
                 <AdSense
-                  slot="1733348098"
+                  slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || '7781534087'}
                   format="horizontal"
                   className="h-24 max-h-24 rounded-2xl overflow-hidden border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50"
                 />
@@ -265,7 +265,7 @@ export default function ToolPageWrapper({
           )}
 
           {/* High-Impact Post-Tool Result Banner */}
-          <PostToolAdBanner slot="1733348098" className="mb-8" />
+          <PostToolAdBanner slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || '7781534087'} className="mb-8" />
 
           {/* Supporting server-readable answer content for search and AI retrieval. */}
           {answerSections.slice(1).map((section) => renderAnswerSection(section))}
@@ -378,7 +378,7 @@ export default function ToolPageWrapper({
         <div className="lg:col-span-1">
           <div className="sticky top-24">
             <AdSense
-              slot="2449208552"
+              slot={process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT || '2449208552'}
               format="vertical"
               className="h-[300px] max-h-[600px] rounded-lg overflow-hidden"
             />
@@ -388,7 +388,7 @@ export default function ToolPageWrapper({
 
       {/* Ad Banner - Bottom */}
       <AdSense
-        slot="7781534087"
+        slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || '7781534087'}
         format="horizontal"
         className="h-24 max-h-24 rounded-lg mt-8 overflow-hidden"
       />
