@@ -260,7 +260,6 @@ export default function ToolPageWrapper({
                 <AdSense
                   slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || '7781534087'}
                   format="horizontal"
-                  immediate={true}
                   className="h-24 max-h-24 rounded-2xl overflow-hidden border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50"
                 />
               </div>
