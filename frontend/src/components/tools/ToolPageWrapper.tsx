@@ -382,6 +382,7 @@ export default function ToolPageWrapper({
             <AdSense
               slot={process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT || '2449208552'}
               format="vertical"
+              immediate={true}
               className="h-[300px] max-h-[600px] rounded-lg overflow-hidden"
             />
           </div>

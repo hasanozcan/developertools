@@ -190,6 +190,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }),
           }}
         />
+        {/* Preconnect & DNS-Prefetch for Google AdSense & DoubleClick CDNs */}
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://tpc.googlesyndication.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://adservice.google.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+        <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
+        <link rel="dns-prefetch" href="https://tpc.googlesyndication.com" />
+        <link rel="dns-prefetch" href="https://adservice.google.com" />
       </head>
       <body
         className={`${inter.className} antialiased text-gray-900 dark:text-gray-100`}
