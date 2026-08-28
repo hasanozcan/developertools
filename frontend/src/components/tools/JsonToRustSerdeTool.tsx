@@ -1,33 +1,54 @@
 'use client';
-import React, { useState, useMemo } from 'react';
-import { Copy, Check } from 'lucide-react';
-import { jsonToRustSerde } from '@/lib/jsonToRustSerde';
+
+import React, { useState } from 'react';
+import CopyButton from '@/components/common/CopyButton';
+import { convertJsonToRustSerde } from '@/lib/jsonToRustSerde';
+
+const SAMPLE = "{\n  \"id\": 1,\n  \"username\": \"ferris_the_crab\",\n  \"is_admin\": true,\n  \"tags\": [\"rust\", \"wasm\"]\n}";
 
 export default function JsonToRustSerdeTool() {
-  const [json, setJson] = useState('{\n  "id": 1,\n  "name": "Alice",\n  "active": true\n}');
-  const [copied, setCopied] = useState(false);
+  const [input, setInput] = useState(SAMPLE);
+  let output = '';
+  let error = '';
 
-  const output = useMemo(() => {
-    try {
-      return jsonToRustSerde(json, 'User');
-    } catch (err: unknown) {
-      return '// ' + (err instanceof Error ? err.message : String(err));
-    }
-  }, [json]);
+  try {
+    output = convertJsonToRustSerde(input);
+  } catch (e: any) {
+    error = e.message || 'Conversion error';
+  }
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="surface-card rounded-2xl p-5 space-y-3">
-          <h3 className="font-bold text-sm text-slate-900 dark:text-white">JSON Input</h3>
-          <textarea rows={12} value={json} onChange={(e) => setJson(e.target.value)} className="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 font-mono text-xs dark:border-white/10 dark:bg-slate-950 dark:text-slate-100" />
-        </div>
-        <div className="surface-card rounded-2xl p-5 flex flex-col space-y-3">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <h3 className="font-bold text-sm text-slate-900 dark:text-white">Rust Serde Struct</h3>
-            <button onClick={() => { navigator.clipboard.writeText(output); setCopied(true); setTimeout(() => setCopied(false), 2000); }} className="inline-flex items-center gap-1.5 text-xs text-indigo-600 font-semibold">{copied ? 'Copied' : 'Copy'}</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">JSON Input</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
           </div>
-          <textarea readOnly rows={12} value={output} className="w-full flex-1 rounded-xl border border-slate-200 bg-slate-900 p-3 font-mono text-xs text-emerald-400 dark:border-white/10 dark:bg-slate-950" />
+          <textarea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            rows={14}
+            className="w-full rounded-2xl border border-slate-200 bg-white p-3 font-mono text-xs shadow-inner dark:border-slate-700 dark:bg-slate-900"
+          />
+        </div>
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Rust Serde Structs</label>
+            <CopyButton text={output} />
+          </div>
+          {error ? (
+            <div className="rounded-2xl border border-red-200 bg-red-50 p-4 font-mono text-xs text-red-600 dark:border-red-900/50 dark:bg-red-950/50 dark:text-red-400">
+              {error}
+            </div>
+          ) : (
+            <textarea
+              value={output}
+              readOnly
+              rows={14}
+              className="w-full rounded-2xl border border-slate-200 bg-slate-50 p-3 font-mono text-xs shadow-inner dark:border-slate-700 dark:bg-slate-900/70"
+            />
+          )}
         </div>
       </div>
     </div>

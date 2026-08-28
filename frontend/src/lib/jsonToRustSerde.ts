@@ -1,60 +1,46 @@
-export function jsonToRustSerde(jsonString: string, rootStructName = 'Root'): string {
-  let parsed: unknown;
-  try {
-    parsed = JSON.parse(jsonString);
-  } catch (err: unknown) {
-    throw new Error('Invalid JSON: ' + (err instanceof Error ? err.message : String(err)));
-  }
+export function convertJsonToRustSerde(jsonStr: string, rootStruct = 'Root'): string {
+  const parsed = JSON.parse(jsonStr);
+  const structs: string[] = [];
 
-  const structs: Record<string, Record<string, string>> = {};
-
-  function toPascalCase(str: string): string {
-    return str
-      .replace(/[-_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ''))
-      .replace(/^(.)/, (c) => c.toUpperCase());
-  }
-
-  function inferRustType(val: unknown, keyName: string): string {
-    if (val === null) return 'Option<serde_json::Value>';
-    if (typeof val === 'boolean') return 'bool';
-    if (typeof val === 'number') return Number.isInteger(val) ? 'i64' : 'f64';
-    if (typeof val === 'string') return 'String';
-
-    if (Array.isArray(val)) {
-      if (val.length === 0) return 'Vec<serde_json::Value>';
-      const itemType = inferRustType(val[0], keyName + 'Item');
-      return `Vec<${itemType}>`;
-    }
-
-    if (typeof val === 'object') {
-      const nestedStructName = toPascalCase(keyName);
-      const props: Record<string, string> = {};
-      for (const [k, v] of Object.entries(val as Record<string, unknown>)) {
-        props[k] = inferRustType(v, k);
+  function generateStruct(name: string, obj: Record<string, any>): string {
+    const fields: string[] = [];
+    for (const [key, val] of Object.entries(obj)) {
+      const rustKey = key.replace(/[^a-zA-Z0-9_]/g, '_');
+      let typeStr = 'serde_json::Value';
+      if (val === null) typeStr = 'Option<serde_json::Value>';
+      else if (typeof val === 'string') typeStr = 'String';
+      else if (typeof val === 'number') typeStr = Number.isInteger(val) ? 'i64' : 'f64';
+      else if (typeof val === 'boolean') typeStr = 'bool';
+      else if (Array.isArray(val)) {
+        if (val.length > 0 && typeof val[0] === 'object' && val[0] !== null) {
+          const subName = name + key.charAt(0).toUpperCase() + key.slice(1);
+          generateStruct(subName, val[0]);
+          typeStr = "Vec<" + subName + ">";
+        } else if (val.length > 0) {
+          const inner = typeof val[0] === 'string' ? 'String' : typeof val[0] === 'number' ? (Number.isInteger(val[0]) ? 'i64' : 'f64') : 'bool';
+          typeStr = "Vec<" + inner + ">";
+        } else {
+          typeStr = 'Vec<serde_json::Value>';
+        }
+      } else if (typeof val === 'object') {
+        const subName = name + key.charAt(0).toUpperCase() + key.slice(1);
+        generateStruct(subName, val);
+        typeStr = subName;
       }
-      structs[nestedStructName] = props;
-      return nestedStructName;
+      fields.push('    #[serde(rename = "' + key + '")]\n    pub ' + rustKey + ': ' + typeStr + ',');
     }
-
-    return 'serde_json::Value';
+    const code = '#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]\n#[serde(rename_all = "camelCase")]\npub struct ' + name + ' {\n' + fields.join('\n') + '\n}';
+    structs.push(code);
+    return code;
   }
 
-  inferRustType(parsed, rootStructName);
-
-  const lines: string[] = [
-    'use serde::{Deserialize, Serialize};',
-    '',
-  ];
-
-  for (const [structName, props] of Object.entries(structs)) {
-    lines.push('#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]');
-    lines.push('#[serde(rename_all = "camelCase")]');
-    lines.push(`pub struct ${structName} {`);
-    for (const [k, v] of Object.entries(props)) {
-      lines.push(`    pub ${k}: ${v},`);
+  if (Array.isArray(parsed)) {
+    if (parsed.length > 0 && typeof parsed[0] === 'object') {
+      generateStruct(rootStruct + 'Item', parsed[0]);
+      return 'use serde::{Deserialize, Serialize};\n\npub type ' + rootStruct + ' = Vec<' + rootStruct + 'Item>;\n\n' + structs.join('\n\n');
     }
-    lines.push('}\n');
+    return 'use serde::{Deserialize, Serialize};\n\npub type ' + rootStruct + ' = Vec<serde_json::Value>;';
   }
-
-  return lines.join('\n').trim();
+  generateStruct(rootStruct, parsed);
+  return 'use serde::{Deserialize, Serialize};\n\n' + structs.join('\n\n');
 }

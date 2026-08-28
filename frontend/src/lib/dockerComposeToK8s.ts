@@ -1,42 +1,50 @@
-export function dockerComposeToK8s(composeYaml: string): string {
-  const serviceMatches = Array.from(composeYaml.matchAll(/^\s*([a-zA-Z0-9_-]+):\s*$/gm));
-  const imageMatches = Array.from(composeYaml.matchAll(/image:\s*([^\s\n]+)/g));
+export function convertDockerComposeToK8s(composeYaml: string): string {
+  try {
+    const serviceMatches = composeYaml.match(/^\s{2}([\w-]+):/gm);
+    if (!serviceMatches) return '# Error: Could not detect services in docker-compose.yml';
 
-  const serviceName = serviceMatches.length > 1 ? serviceMatches[1][1] : 'web-app';
-  const image = imageMatches.length > 0 ? imageMatches[0][1] : 'nginx:latest';
+    const manifests: string[] = [];
 
-  return `apiVersion: apps/v1
+    for (const sm of serviceMatches) {
+      const name = sm.trim().replace(':', '');
+      manifests.push(`apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ${serviceName}-deployment
+  name: ${name}-deployment
   labels:
-    app: ${serviceName}
+    app: ${name}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ${serviceName}
+      app: ${name}
   template:
     metadata:
       labels:
-        app: ${serviceName}
+        app: ${name}
     spec:
       containers:
-      - name: ${serviceName}
-        image: ${image}
-        ports:
-        - containerPort: 80
----
-apiVersion: v1
+        - name: ${name}
+          image: ${name}:latest
+          ports:
+            - containerPort: 80`);
+
+      manifests.push(`apiVersion: v1
 kind: Service
 metadata:
-  name: ${serviceName}-service
+  name: ${name}-service
 spec:
   selector:
-    app: ${serviceName}
+    app: ${name}
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 80
-  type: ClusterIP`;
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP`);
+    }
+
+    return manifests.join('\n---\n');
+  } catch (err: any) {
+    return `# Error: ${err.message}`;
+  }
 }

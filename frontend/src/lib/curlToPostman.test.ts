@@ -1,13 +1,13 @@
-import { describe, it, expect } from 'vitest';
-import { curlToPostmanCollection } from './curlToPostman';
+import { describe, expect, it } from 'vitest';
+import { convertCurlToPostman } from './curlToPostman';
 
-describe('curlToPostman', () => {
-  it('converts cURL command into Postman v2.1 collection format', () => {
-    const curl = 'curl -X POST https://api.example.com/login -H "Content-Type: application/json" --data "{\\"user\\":\\"test\\"}"';
-    const jsonStr = curlToPostmanCollection(curl);
-    const parsed = JSON.parse(jsonStr);
-    expect(parsed.info.name).toBe('Imported cURL');
-    expect(parsed.item[0].request.method).toBe('POST');
-    expect(parsed.item[0].request.url.raw).toBe('https://api.example.com/login');
+describe('convertCurlToPostman', () => {
+  it('converts basic curl command into Postman Collection format', () => {
+    const curl = 'curl -X GET "https://api.github.com/repos/octocat/Hello-World" -H "Accept: application/vnd.github.v3+json"';
+    const postman = convertCurlToPostman(curl, 'GitHub Test');
+    expect(postman.info.name).toBe('GitHub Test');
+    expect(postman.item).toHaveLength(1);
+    expect(postman.item[0].request.method).toBe('GET');
+    expect(postman.item[0].request.header[0].key).toBe('Accept');
   });
 });

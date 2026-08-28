@@ -1,54 +1,53 @@
 'use client';
-import React, { useState, useMemo } from 'react';
-import { Copy, Check } from 'lucide-react';
+
+import React, { useState } from 'react';
+import CopyButton from '@/components/common/CopyButton';
 import { convertPostmanToCurl } from '@/lib/postmanToCurl';
 
-export default function PostmanToCurlTool() {
-  const [input, setInput] = useState("{\\n  \"item\": [{\\n    \"name\": \"Health\",\\n    \"request\": { \"method\": \"GET\", \"url\": \"https://api.test.com\" }\\n  }]\\n}");
-  const [copied, setCopied] = useState(false);
-
-  const result = useMemo(() => {
-    try {
-      return typeof convertPostmanToCurl === 'function' ? String(convertPostmanToCurl(input)) : '';
-    } catch (e: any) {
-      return 'Error: ' + e.message;
+const SAMPLE_POSTMAN = JSON.stringify({
+  info: { name: "User Service API" },
+  item: [
+    {
+      name: "Create Account",
+      request: {
+        method: "POST",
+        header: [{ key: "Content-Type", value: "application/json" }],
+        url: { raw: "https://api.example.com/v1/accounts" },
+        body: { mode: "raw", raw: '{"email":"dev@example.com","plan":"pro"}' }
+      }
     }
-  }, [input]);
+  ]
+}, null, 2);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(result);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+export default function PostmanToCurlTool() {
+  const [input, setInput] = useState(SAMPLE_POSTMAN);
+  const output = convertPostmanToCurl(input);
 
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-muted-foreground">Input</label>
-        <textarea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          rows={6}
-          className="w-full rounded-xl border border-border bg-card p-4 font-mono text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-primary"
-        />
-      </div>
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-muted-foreground">Output</label>
-          <button
-            onClick={handleCopy}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-secondary hover:bg-secondary/80 transition-colors"
-          >
-            {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-            {copied ? 'Copied' : 'Copy'}
-          </button>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Postman Collection v2.1 JSON</label>
+            <button onClick={() => setInput(SAMPLE_POSTMAN)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+          </div>
+          <textarea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            rows={14}
+            className="w-full rounded-2xl border border-slate-200 bg-white p-3 font-mono text-xs shadow-inner dark:border-slate-700 dark:bg-slate-900"
+          />
         </div>
-        <textarea
-          readOnly
-          value={result}
-          rows={8}
-          className="w-full rounded-xl border border-border bg-muted/30 p-4 font-mono text-sm text-foreground shadow-sm"
-        />
+
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">cURL Terminal Commands</label>
+            <CopyButton text={output} />
+          </div>
+          <pre className="h-72 overflow-auto rounded-2xl border border-slate-200 bg-slate-900 p-3 font-mono text-xs text-cyan-400 dark:border-slate-700">
+            {output}
+          </pre>
+        </div>
       </div>
     </div>
   );

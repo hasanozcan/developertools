@@ -1,19 +1,21 @@
 import { describe, it, expect } from 'vitest';
-import { dockerComposeToK8s } from './dockerComposeToK8s';
+import { convertDockerComposeToK8s } from './dockerComposeToK8s';
 
 describe('dockerComposeToK8s', () => {
-  it('converts docker compose service to Kubernetes Deployment and Service YAML', () => {
-    const compose = `
-version: '3'
+  it('converts docker-compose services into Kubernetes Deployments and Services', () => {
+    const yaml = `version: '3.8'
 services:
-  api:
-    image: node:18-alpine
+  web:
+    image: nginx:alpine
     ports:
-      - "3000:3000"
+      - "80:80"
+  api:
+    image: node:alpine
 `;
-    const k8s = dockerComposeToK8s(compose);
+    const k8s = convertDockerComposeToK8s(yaml);
     expect(k8s).toContain('kind: Deployment');
+    expect(k8s).toContain('name: web-deployment');
+    expect(k8s).toContain('name: api-deployment');
     expect(k8s).toContain('kind: Service');
-    expect(k8s).toContain('image: node:18-alpine');
   });
 });

@@ -694,7 +694,7 @@ const toolComponents: Record<ToolSlug, ComponentType> = {
     loading: Loading,
     ssr: false,
   }),
-  'json-to-rust-serde': dynamic(() => import('./JsonToRustSerdeTool'), {
+  'json-to-rust-types': dynamic(() => import('./JsonToRustSerdeTool'), {
     loading: Loading,
     ssr: false,
   }),
@@ -1350,7 +1350,7 @@ const toolComponents: Record<ToolSlug, ComponentType> = {
     loading: Loading,
     ssr: false,
   }),
-  'json-to-go-struct': dynamic(() => import('./JsonToGoStructTool'), {
+  'json-to-golang-models': dynamic(() => import('./JsonToGoStructTool'), {
     loading: Loading,
     ssr: false,
   }),
@@ -1471,6 +1471,542 @@ const toolComponents: Record<ToolSlug, ComponentType> = {
     ssr: false,
   }),
   'file-checksum-comparator': dynamic(() => import('./FileChecksumComparatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'video-to-gif': dynamic(() => import('./VideoToGifTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'svg-to-png-hd': dynamic(() => import('./SvgToPngTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'pdf-to-image': dynamic(() => import('./PdfToImageTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'audio-converter': dynamic(() => import('./AudioConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'swagger-to-typescript': dynamic(() => import('./SwaggerToTypescriptTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'postman-collection-to-curl': dynamic(() => import('./PostmanToCurlTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'html-to-gfm-converter': dynamic(() => import('./HtmlToMarkdownTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-csv-grid-editor': dynamic(() => import('./JsonCsvGridEditorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'tailwind-to-inline-css': dynamic(() => import('./TailwindToInlineCssTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-glassmorphism-claymorphism': dynamic(() => import('./CssGlassmorphismClaymorphismTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-clamp-calculator': dynamic(() => import('./CssClampCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'llm-function-calling-builder': dynamic(() => import('./LlmFunctionCallingBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-json-schema': dynamic(() => import('./JsonToJsonSchemaTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'rag-chunking-calculator': dynamic(() => import('./RagChunkingCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sql-to-orm-schema': dynamic(() => import('./SqlToOrmSchemaTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'docker-compose-to-kubernetes': dynamic(() => import('./DockerComposeToK8sTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'curl-to-har': dynamic(() => import('./CurlToHarTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'api-mock-response-generator': dynamic(() => import('./ApiMockResponseGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'http-security-headers-analyzer': dynamic(() => import('./HttpSecurityHeadersAnalyzerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'graphql-schema-to-zod': dynamic(() => import('./GraphqlSchemaToZodTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-triangle-bubble-generator': dynamic(() => import('./CssTriangleBubbleGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'svg-to-css-data-uri': dynamic(() => import('./SvgToCssDataUriTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-3d-box-shadow-generator': dynamic(() => import('./Css3dBoxShadowGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'html-entities-converter': dynamic(() => import('./HtmlEntitiesConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'system-prompt-xml-builder': dynamic(() => import('./SystemPromptXmlBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'multi-llm-token-comparator': dynamic(() => import('./MultiLlmTokenComparatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-python-pydantic': dynamic(() => import('./JsonToPythonPydanticTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-sql-insert': dynamic(() => import('./JsonToSqlInsertTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'nginx-to-caddy-converter': dynamic(() => import('./NginxToCaddyConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'git-command-cheat-builder': dynamic(() => import('./GitCommandCheatBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'crontab-schedule-translator': dynamic(() => import('./CrontabScheduleTranslatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'bcrypt-hash-calculator': dynamic(() => import('./BcryptHashCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-rust-serde': dynamic(() => import('./JsonToRustSerdeTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-go-struct': dynamic(() => import('./JsonToGoStructTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sql-to-go-gorm': dynamic(() => import('./SqlToGoGormTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sql-to-python-sqlalchemy': dynamic(() => import('./SqlToPythonSqlalchemyTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'postman-to-openapi': dynamic(() => import('./PostmanToOpenapiTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'openapi-to-postman': dynamic(() => import('./OpenapiToPostmanTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'protobuf-to-json-schema': dynamic(() => import('./ProtobufToJsonSchemaTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-schema-to-protobuf': dynamic(() => import('./JsonSchemaToProtobufTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'yaml-to-terraform-hcl': dynamic(() => import('./YamlToTerraformHclTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'terraform-hcl-to-yaml': dynamic(() => import('./TerraformHclToYamlTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'csv-to-geojson': dynamic(() => import('./CsvToGeojsonTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'geojson-to-csv': dynamic(() => import('./GeojsonToCsvTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-to-typescript-type-guards': dynamic(() => import('./JsonToTypescriptTypeGuardsTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'typescript-interface-to-zod': dynamic(() => import('./TypescriptInterfaceToZodTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'zod-to-typescript-type': dynamic(() => import('./ZodToTypescriptTypeTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-to-scss': dynamic(() => import('./CssToScssTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'scss-to-css': dynamic(() => import('./ScssToCssTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'html-to-jsx-tailwind': dynamic(() => import('./HtmlToJsxTailwindTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'jsx-to-html': dynamic(() => import('./JsxToHtmlTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'markdown-to-bbcode': dynamic(() => import('./MarkdownToBbcodeTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'bbcode-to-markdown': dynamic(() => import('./BbcodeToMarkdownTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'curl-to-php-guzzle': dynamic(() => import('./CurlToPhpGuzzleTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'curl-to-ruby-faraday': dynamic(() => import('./CurlToRubyFaradayTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'curl-to-rust-reqwest': dynamic(() => import('./CurlToRustReqwestTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'curl-to-go-http': dynamic(() => import('./CurlToGoHttpTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'svg-to-android-vector': dynamic(() => import('./SvgToAndroidVectorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'svg-to-swiftui-shape': dynamic(() => import('./SvgToSwiftuiShapeTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-grid-to-tailwind': dynamic(() => import('./CssGridToTailwindTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'dockerfile-ai-optimized-generator': dynamic(() => import('./DockerfileAiGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'kubernetes-deployment-generator': dynamic(() => import('./KubernetesDeploymentGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'kubernetes-configmap-secret-builder': dynamic(() => import('./KubernetesConfigmapSecretBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'helm-chart-yaml-generator': dynamic(() => import('./HelmChartYamlGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'gitlab-ci-pipeline-builder': dynamic(() => import('./GitlabCiPipelineBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'github-issue-pr-template-generator': dynamic(() => import('./GithubIssuePrTemplateGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'opa-rego-policy-builder': dynamic(() => import('./OpaRegoPolicyBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'systemd-service-hardened-builder': dynamic(() => import('./SystemdServiceHardenedBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'nginx-security-conf-generator': dynamic(() => import('./NginxSecurityConfGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'caddyfile-production-generator': dynamic(() => import('./CaddyfileProductionGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'prometheus-recording-rules-generator': dynamic(() => import('./PrometheusRecordingRulesGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'tailwind-v4-mesh-gradient-generator': dynamic(() => import('./TailwindV4MeshGradientGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-isometric-grid-generator': dynamic(() => import('./CssIsometricGridGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-ribbon-banner-generator': dynamic(() => import('./CssRibbonBannerGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'svg-wavy-divider-generator': dynamic(() => import('./SvgWavyDividerGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'opengraph-banner-canvas-generator': dynamic(() => import('./OpengraphBannerCanvasGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'prisma-seed-generator': dynamic(() => import('./PrismaSeedGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'faker-js-mock-schema-generator': dynamic(() => import('./FakerJsMockSchemaGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'llm-few-shot-prompt-formatter': dynamic(() => import('./LlmFewShotPromptFormatterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'cot-chain-of-thought-prompt-builder': dynamic(() => import('./CotChainOfThoughtPromptBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'sql-stored-procedure-generator': dynamic(() => import('./SqlStoredProcedureGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'redis-lua-script-generator': dynamic(() => import('./RedisLuaScriptGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'crontab-randomized-generator': dynamic(() => import('./CrontabRandomizedGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ansible-playbook-scaffolder': dynamic(() => import('./AnsiblePlaybookScaffolderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'terraform-module-scaffolder': dynamic(() => import('./TerraformModuleScaffolderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'http-cache-control-tester': dynamic(() => import('./HttpCacheControlTesterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'dns-soa-dnssec-inspector': dynamic(() => import('./DnsSoaDnssecInspectorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ip-supernetting-calculator': dynamic(() => import('./IpSupernettingCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'opengraph-tag-inspector': dynamic(() => import('./OpengraphTagInspectorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'jwt-expiry-calculator': dynamic(() => import('./JwtExpiryCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'regex-benchmark-simulator': dynamic(() => import('./RegexBenchmarkSimulatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'llm-context-window-shrinker': dynamic(() => import('./LlmContextWindowShrinkerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'embedding-token-cost-estimator': dynamic(() => import('./EmbeddingTokenCostEstimatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'webhook-payload-simulator': dynamic(() => import('./WebhookPayloadSimulatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'network-port-reference': dynamic(() => import('./NetworkPortReferenceTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ssl-tls-handshake-simulator': dynamic(() => import('./SslTlsHandshakeSimulatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'http2-http3-frame-inspector': dynamic(() => import('./Http2Http3FrameInspectorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'dns-spf-record-flattener': dynamic(() => import('./DnsSpfRecordFlattenerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'mime-type-extension-lookup': dynamic(() => import('./MimeTypeExtensionLookupTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'color-blindness-simulator': dynamic(() => import('./ColorBlindnessSimulatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'contrast-ratio-apca-calculator': dynamic(() => import('./ContrastRatioApcaCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'viewport-size-tester': dynamic(() => import('./ViewportSizeTesterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'unicode-glyph-category-inspector': dynamic(() => import('./UnicodeGlyphCategoryInspectorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'seo-robots-noindex-simulator': dynamic(() => import('./SeoRobotsNoindexSimulatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'cors-preflight-inspector': dynamic(() => import('./CorsPreflightInspectorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'css-selector-speed-profiler': dynamic(() => import('./CssSelectorSpeedProfilerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'git-conflict-marker-cleaner': dynamic(() => import('./GitConflictMarkerCleanerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'semver-range-evaluator': dynamic(() => import('./SemverRangeEvaluatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'package-json-license-checker': dynamic(() => import('./PackageJsonLicenseCheckerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'api-rate-limit-cost-calculator': dynamic(() => import('./ApiRateLimitCostCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'blake3-hash-generator': dynamic(() => import('./Blake3HashGeneratorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'pbkdf2-key-derivation': dynamic(() => import('./Pbkdf2KeyDerivationTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'hmac-sha384-sha512-calculator': dynamic(() => import('./HmacSha384Sha512CalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ethereum-eip191-signature-verifier': dynamic(() => import('./EthereumEip191SignatureVerifierTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'bitcoin-bech32-address-encoder': dynamic(() => import('./BitcoinBech32AddressEncoderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'rsa-pkcs1-pkcs8-converter': dynamic(() => import('./RsaPkcs1Pkcs8ConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'x509-san-csr-builder': dynamic(() => import('./X509SanCsrBuilderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ed25519-sign-verify': dynamic(() => import('./Ed25519SignVerifyTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'argon2-parameter-tuner': dynamic(() => import('./Argon2ParameterTunerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'uuid-v7-timestamp-extractor': dynamic(() => import('./UuidV7TimestampExtractorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ethereum-abi-storage-slot-calculator': dynamic(() => import('./EthereumAbiStorageSlotCalculatorTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'base64-pem-certificate-parser': dynamic(() => import('./Base64PemCertificateParserTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'punycode-idn-converter': dynamic(() => import('./PunycodeIdnConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'crockford-base32-encoder': dynamic(() => import('./CrockfordBase32EncoderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'bcd-binary-coded-decimal-converter': dynamic(() => import('./BcdBinaryCodedDecimalConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'ieee754-hex-float-converter': dynamic(() => import('./Ieee754HexFloatConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'rot47-encoder-decoder': dynamic(() => import('./Rot47EncoderDecoderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'url-safe-base64-converter': dynamic(() => import('./UrlSafeBase64ConverterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-path-query-tester': dynamic(() => import('./JsonPathQueryTesterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-key-sorter': dynamic(() => import('./JsonKeySorterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'json-array-splitter-chunker': dynamic(() => import('./JsonArraySplitterChunkerTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'text-prefix-suffix-appender': dynamic(() => import('./TextPrefixSuffixAppenderTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'text-duplicate-line-counter': dynamic(() => import('./TextDuplicateLineCounterTool'), {
+    loading: Loading,
+    ssr: false,
+  }),
+  'text-column-tabular-splitter': dynamic(() => import('./TextColumnTabularSplitterTool'), {
     loading: Loading,
     ssr: false,
   }),

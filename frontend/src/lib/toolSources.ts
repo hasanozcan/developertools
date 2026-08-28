@@ -1406,75 +1406,606 @@ export const toolSources: Record<string, ToolSource[]> = {
   ],
   'curl-to-axios': [
     { name: 'cURL to Axios Converter Reference', url: 'https://devstools.app/tools/converters/curl-to-axios' },
-    { name: 'Axios Documentation', url: 'https://axios-http.com' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'fetch-to-curl': [
     { name: 'Fetch to cURL Converter Reference', url: 'https://devstools.app/tools/converters/fetch-to-curl' },
-    { name: 'Fetch API MDN Docs', url: 'https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'json-to-xml': [
     { name: 'JSON to XML Converter Reference', url: 'https://devstools.app/tools/converters/json-to-xml' },
-    { name: 'XML Specification', url: 'https://www.w3.org/TR/xml/' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'excel-to-json': [
-    { name: 'Excel to JSON Converter Reference', url: 'https://devstools.app/tools/converters/excel-to-json' },
-    { name: 'SheetJS / XLSX Reference', url: 'https://docs.sheetjs.com' },
+    { name: 'Excel & CSV to JSON Converter Reference', url: 'https://devstools.app/tools/converters/excel-to-json' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'json-to-excel': [
-    { name: 'JSON to Excel Converter Reference', url: 'https://devstools.app/tools/converters/json-to-excel' },
-    { name: 'Spreadsheet Format Specification', url: 'https://developer.mozilla.org' },
+    { name: 'JSON to Excel & CSV Converter Reference', url: 'https://devstools.app/tools/converters/json-to-excel' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'image-converter': [
     { name: 'Image Format Converter Reference', url: 'https://devstools.app/tools/converters/image-converter' },
-    { name: 'WebP Image Documentation', url: 'https://developers.google.com/speed/webp' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'images-to-pdf': [
     { name: 'Images to PDF Converter Reference', url: 'https://devstools.app/tools/converters/images-to-pdf' },
-    { name: 'PDF-Lib Documentation', url: 'https://pdf-lib.js.org' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'image-compressor': [
     { name: 'Image Compressor & Optimizer Reference', url: 'https://devstools.app/tools/utilities/image-compressor' },
-    { name: 'HTML5 Canvas API', url: 'https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'image-color-extractor': [
     { name: 'Image Color Palette Extractor Reference', url: 'https://devstools.app/tools/utilities/image-color-extractor' },
-    { name: 'Color Quantization Algorithms', url: 'https://developer.mozilla.org' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'pdf-merger': [
     { name: 'PDF Merger & Combiner Reference', url: 'https://devstools.app/tools/utilities/pdf-merger' },
-    { name: 'PDF-Lib GitHub Documentation', url: 'https://github.com/Hopding/pdf-lib' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'pdf-splitter': [
-    { name: 'PDF Splitter Reference', url: 'https://devstools.app/tools/utilities/pdf-splitter' },
-    { name: 'PDF Specification ISO 32000', url: 'https://www.iso.org' },
+    { name: 'PDF Splitter & Page Extractor Reference', url: 'https://devstools.app/tools/utilities/pdf-splitter' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'llm-pricing-calculator': [
-    { name: 'LLM Pricing Calculator Reference', url: 'https://devstools.app/tools/utilities/llm-pricing-calculator' },
-    { name: 'OpenAI Pricing Table', url: 'https://openai.com/api/pricing/' },
+    { name: 'All-in-One LLM Token & Pricing Calculator Reference', url: 'https://devstools.app/tools/utilities/llm-pricing-calculator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'code-playground': [
-    { name: 'Code Playground Reference', url: 'https://devstools.app/tools/utilities/code-playground' },
-    { name: 'Tailwind CSS CDN', url: 'https://tailwindcss.com' },
+    { name: 'Live HTML/CSS/JS Sandbox & Playground Reference', url: 'https://devstools.app/tools/utilities/code-playground' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'schema-org-generator': [
     { name: 'Schema.org JSON-LD Generator Reference', url: 'https://devstools.app/tools/generators/schema-org-generator' },
-    { name: 'Google Search Central Structured Data', url: 'https://developers.google.com/search/docs/appearance/structured-data' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'image-exif-stripper': [
-    { name: 'Image EXIF Stripper Reference', url: 'https://devstools.app/tools/crypto/image-exif-stripper' },
-    { name: 'EXIF Standard Specification', url: 'https://www.cipa.jp/std/documents/e/DC-008-2012_E.pdf' },
+    { name: 'Image EXIF Metadata Viewer & Stripper Reference', url: 'https://devstools.app/tools/crypto/image-exif-stripper' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'file-checksum-comparator': [
-    { name: 'Multi-Hash Checksum Comparator Reference', url: 'https://devstools.app/tools/crypto/file-checksum-comparator' },
-    { name: 'Web Cryptography API', url: 'https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API' },
+    { name: 'Multi-Hash File Checksum & Comparator Reference', url: 'https://devstools.app/tools/crypto/file-checksum-comparator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'video-to-gif': [
+    { name: 'Video to GIF Maker & Converter Reference', url: 'https://devstools.app/tools/converters/video-to-gif' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'svg-to-png-hd': [
+    { name: 'SVG to PNG & JPG High-Res Converter Reference', url: 'https://devstools.app/tools/converters/svg-to-png-hd' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'pdf-to-image': [
+    { name: 'PDF to PNG & JPG Image Converter Reference', url: 'https://devstools.app/tools/converters/pdf-to-image' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'audio-converter': [
+    { name: 'Audio Format Converter & Trimmer Reference', url: 'https://devstools.app/tools/converters/audio-converter' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'swagger-to-typescript': [
+    { name: 'Swagger & OpenAPI to TypeScript Client Generator Reference', url: 'https://devstools.app/tools/converters/swagger-to-typescript' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'postman-collection-to-curl': [
+    { name: 'Postman Collection to cURL & Fetch Converter Reference', url: 'https://devstools.app/tools/converters/postman-collection-to-curl' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'html-to-gfm-converter': [
+    { name: 'HTML to Markdown & Markdown to HTML Converter Reference', url: 'https://devstools.app/tools/converters/html-to-gfm-converter' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'json-csv-grid-editor': [
+    { name: 'JSON to CSV & CSV to JSON Interactive Grid Editor Reference', url: 'https://devstools.app/tools/utilities/json-csv-grid-editor' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'tailwind-to-inline-css': [
+    { name: 'Tailwind CSS to Inline Style Converter Reference', url: 'https://devstools.app/tools/converters/tailwind-to-inline-css' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'css-glassmorphism-claymorphism': [
+    { name: 'CSS Glassmorphism & Claymorphism 3D Generator Reference', url: 'https://devstools.app/tools/generators/css-glassmorphism-claymorphism' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'css-clamp-calculator': [
+    { name: 'CSS Fluid Clamp & Responsive Typography Calculator Reference', url: 'https://devstools.app/tools/generators/css-clamp-calculator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'llm-function-calling-builder': [
+    { name: 'LLM Function Calling & Tool Definition Builder Reference', url: 'https://devstools.app/tools/generators/llm-function-calling-builder' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'json-to-json-schema': [
+    { name: 'JSON to JSON Schema (Draft-07 & 2020-12) Generator Reference', url: 'https://devstools.app/tools/generators/json-to-json-schema' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'rag-chunking-calculator': [
+    { name: 'RAG Text Chunking Visualizer & Cost Estimator Reference', url: 'https://devstools.app/tools/utilities/rag-chunking-calculator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'sql-to-orm-schema': [
+    { name: 'SQL DDL to Prisma & Drizzle ORM Schema Converter Reference', url: 'https://devstools.app/tools/converters/sql-to-orm-schema' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'docker-compose-to-kubernetes': [
+    { name: 'Docker Compose to Kubernetes YAML Converter Reference', url: 'https://devstools.app/tools/converters/docker-compose-to-kubernetes' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'curl-to-har': [
+    { name: 'cURL to HTTP Archive HAR 1.2 Converter Reference', url: 'https://devstools.app/tools/converters/curl-to-har' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'api-mock-response-generator': [
+    { name: 'REST API Mock JSON & Fake Data Generator Reference', url: 'https://devstools.app/tools/generators/api-mock-response-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'http-security-headers-analyzer': [
+    { name: 'HTTP Security Headers & CORS Analyzer Reference', url: 'https://devstools.app/tools/utilities/http-security-headers-analyzer' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'graphql-schema-to-zod': [
+    { name: 'GraphQL SDL to Zod Schema Validator Generator Reference', url: 'https://devstools.app/tools/converters/graphql-schema-to-zod' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'css-triangle-bubble-generator': [
+    { name: 'CSS Triangle & Speech Bubble Polygon Generator Reference', url: 'https://devstools.app/tools/generators/css-triangle-bubble-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'svg-to-css-data-uri': [
+    { name: 'SVG to CSS Data URI & Background Mask Inliner Reference', url: 'https://devstools.app/tools/converters/svg-to-css-data-uri' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'css-3d-box-shadow-generator': [
+    { name: 'CSS Multi-Layer 3D Box Shadow Generator Reference', url: 'https://devstools.app/tools/generators/css-3d-box-shadow-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'html-entities-converter': [
+    { name: 'HTML Entities to Unicode & Character Encoder Reference', url: 'https://devstools.app/tools/encoding/html-entities-converter' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'system-prompt-xml-builder': [
+    { name: 'Claude & OpenAI XML Structured System Prompt Builder Reference', url: 'https://devstools.app/tools/generators/system-prompt-xml-builder' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'multi-llm-token-comparator': [
+    { name: 'Multi-Model LLM Token Counter & Cost Comparator Reference', url: 'https://devstools.app/tools/utilities/multi-llm-token-comparator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'json-to-python-pydantic': [
+    { name: 'JSON to Python Pydantic V2 & TypedDict Generator Reference', url: 'https://devstools.app/tools/converters/json-to-python-pydantic' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'json-to-sql-insert': [
+    { name: 'JSON & CSV to SQL INSERT & UPDATE Generator Reference', url: 'https://devstools.app/tools/converters/json-to-sql-insert' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'nginx-to-caddy-converter': [
+    { name: 'Nginx to Caddyfile & Apache Reverse Proxy Converter Reference', url: 'https://devstools.app/tools/converters/nginx-to-caddy-converter' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'git-command-cheat-builder': [
+    { name: 'Git Advanced Command & Workflow Builder Reference', url: 'https://devstools.app/tools/generators/git-command-cheat-builder' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'crontab-schedule-translator': [
+    { name: 'Crontab Schedule & Human Language Translator Reference', url: 'https://devstools.app/tools/utilities/crontab-schedule-translator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'bcrypt-hash-calculator': [
+    { name: 'Bcrypt & Argon2 Password Hash Generator & Verifier Reference', url: 'https://devstools.app/tools/crypto/bcrypt-hash-calculator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'json-to-rust-types': [
+    { name: 'JSON to Rust Serde Structs Reference', url: 'https://devstools.app/tools/converters/json-to-rust-types' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'json-to-golang-models': [
+    { name: 'JSON to Golang Struct Generator Reference', url: 'https://devstools.app/tools/converters/json-to-golang-models' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'sql-to-go-gorm': [
+    { name: 'SQL DDL to Go GORM Models Reference', url: 'https://devstools.app/tools/converters/sql-to-go-gorm' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'sql-to-python-sqlalchemy': [
+    { name: 'SQL DDL to SQLAlchemy 2.0 Models Reference', url: 'https://devstools.app/tools/converters/sql-to-python-sqlalchemy' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'postman-to-openapi': [
+    { name: 'Postman Collection to OpenAPI 3.1 Converter Reference', url: 'https://devstools.app/tools/converters/postman-to-openapi' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'openapi-to-postman': [
+    { name: 'OpenAPI to Postman Collection Generator Reference', url: 'https://devstools.app/tools/converters/openapi-to-postman' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'protobuf-to-json-schema': [
+    { name: 'Protobuf 3 to JSON Schema Converter Reference', url: 'https://devstools.app/tools/converters/protobuf-to-json-schema' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'json-schema-to-protobuf': [
+    { name: 'JSON Schema to Protobuf 3 Generator Reference', url: 'https://devstools.app/tools/converters/json-schema-to-protobuf' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'yaml-to-terraform-hcl': [
+    { name: 'YAML to Terraform HCL Converter Reference', url: 'https://devstools.app/tools/converters/yaml-to-terraform-hcl' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'terraform-hcl-to-yaml': [
+    { name: 'Terraform HCL to YAML Converter Reference', url: 'https://devstools.app/tools/converters/terraform-hcl-to-yaml' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'csv-to-geojson': [
+    { name: 'CSV to GeoJSON Point Converter Reference', url: 'https://devstools.app/tools/converters/csv-to-geojson' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'geojson-to-csv': [
+    { name: 'GeoJSON to CSV Coordinate Converter Reference', url: 'https://devstools.app/tools/converters/geojson-to-csv' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'json-to-typescript-type-guards': [
+    { name: 'JSON to TypeScript Type Guards Generator Reference', url: 'https://devstools.app/tools/converters/json-to-typescript-type-guards' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'typescript-interface-to-zod': [
+    { name: 'TypeScript Interface to Zod Schema Reference', url: 'https://devstools.app/tools/converters/typescript-interface-to-zod' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'zod-to-typescript-type': [
+    { name: 'Zod Schema to TypeScript Type Inferer Reference', url: 'https://devstools.app/tools/converters/zod-to-typescript-type' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'css-to-scss': [
+    { name: 'CSS to Nested SCSS & SASS Converter Reference', url: 'https://devstools.app/tools/converters/css-to-scss' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'scss-to-css': [
+    { name: 'SCSS & SASS to Vanilla CSS Converter Reference', url: 'https://devstools.app/tools/converters/scss-to-css' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'html-to-jsx-tailwind': [
+    { name: 'HTML to JSX & Tailwind CSS Converter Reference', url: 'https://devstools.app/tools/converters/html-to-jsx-tailwind' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'jsx-to-html': [
+    { name: 'React JSX to Standard HTML Converter Reference', url: 'https://devstools.app/tools/converters/jsx-to-html' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'markdown-to-bbcode': [
+    { name: 'Markdown to Forum BBCode Converter Reference', url: 'https://devstools.app/tools/converters/markdown-to-bbcode' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'bbcode-to-markdown': [
+    { name: 'BBCode to GitHub Markdown Converter Reference', url: 'https://devstools.app/tools/converters/bbcode-to-markdown' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'curl-to-php-guzzle': [
+    { name: 'cURL to PHP Guzzle Client Converter Reference', url: 'https://devstools.app/tools/converters/curl-to-php-guzzle' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'curl-to-ruby-faraday': [
+    { name: 'cURL to Ruby Faraday Client Converter Reference', url: 'https://devstools.app/tools/converters/curl-to-ruby-faraday' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'curl-to-rust-reqwest': [
+    { name: 'cURL to Rust reqwest Async Client Reference', url: 'https://devstools.app/tools/converters/curl-to-rust-reqwest' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'curl-to-go-http': [
+    { name: 'cURL to Go net/http Client Converter Reference', url: 'https://devstools.app/tools/converters/curl-to-go-http' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'svg-to-android-vector': [
+    { name: 'SVG to Android Vector Drawable XML Reference', url: 'https://devstools.app/tools/converters/svg-to-android-vector' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'svg-to-swiftui-shape': [
+    { name: 'SVG to SwiftUI Shape & Path Generator Reference', url: 'https://devstools.app/tools/converters/svg-to-swiftui-shape' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'css-grid-to-tailwind': [
+    { name: 'CSS Grid to Tailwind CSS Classes Reference', url: 'https://devstools.app/tools/converters/css-grid-to-tailwind' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'dockerfile-ai-optimized-generator': [
+    { name: 'Multi-Stage Dockerfile Generator Reference', url: 'https://devstools.app/tools/generators/dockerfile-ai-optimized-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'kubernetes-deployment-generator': [
+    { name: 'Kubernetes Deployment YAML Generator Reference', url: 'https://devstools.app/tools/generators/kubernetes-deployment-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'kubernetes-configmap-secret-builder': [
+    { name: 'K8s ConfigMap & Secret Manifest Builder Reference', url: 'https://devstools.app/tools/generators/kubernetes-configmap-secret-builder' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'helm-chart-yaml-generator': [
+    { name: 'Helm Chart & Values Scaffold Generator Reference', url: 'https://devstools.app/tools/generators/helm-chart-yaml-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'gitlab-ci-pipeline-builder': [
+    { name: 'GitLab CI/CD Pipeline YAML Builder Reference', url: 'https://devstools.app/tools/generators/gitlab-ci-pipeline-builder' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'github-issue-pr-template-generator': [
+    { name: 'GitHub Issue & PR Template Builder Reference', url: 'https://devstools.app/tools/generators/github-issue-pr-template-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'opa-rego-policy-builder': [
+    { name: 'Open Policy Agent (OPA) Rego Builder Reference', url: 'https://devstools.app/tools/generators/opa-rego-policy-builder' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'systemd-service-hardened-builder': [
+    { name: 'Linux systemd Hardened Service Builder Reference', url: 'https://devstools.app/tools/generators/systemd-service-hardened-builder' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'nginx-security-conf-generator': [
+    { name: 'Hardened Nginx Server Configuration Builder Reference', url: 'https://devstools.app/tools/generators/nginx-security-conf-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'caddyfile-production-generator': [
+    { name: 'Production Caddyfile Configuration Builder Reference', url: 'https://devstools.app/tools/generators/caddyfile-production-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'prometheus-recording-rules-generator': [
+    { name: 'Prometheus Alerting & Recording Rules Builder Reference', url: 'https://devstools.app/tools/generators/prometheus-recording-rules-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'tailwind-v4-mesh-gradient-generator': [
+    { name: 'Tailwind CSS Mesh Radial Gradient Generator Reference', url: 'https://devstools.app/tools/generators/tailwind-v4-mesh-gradient-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'css-isometric-grid-generator': [
+    { name: 'CSS Isometric 3D Grid & Transform Generator Reference', url: 'https://devstools.app/tools/generators/css-isometric-grid-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'css-ribbon-banner-generator': [
+    { name: 'CSS Corner Ribbon & Badge Generator Reference', url: 'https://devstools.app/tools/generators/css-ribbon-banner-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'svg-wavy-divider-generator': [
+    { name: 'SVG Wavy Page Section Divider Generator Reference', url: 'https://devstools.app/tools/generators/svg-wavy-divider-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'opengraph-banner-canvas-generator': [
+    { name: 'OpenGraph & Twitter Card Meta Tags Builder Reference', url: 'https://devstools.app/tools/generators/opengraph-banner-canvas-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'prisma-seed-generator': [
+    { name: 'Prisma Client Seeding Script Generator Reference', url: 'https://devstools.app/tools/generators/prisma-seed-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'faker-js-mock-schema-generator': [
+    { name: 'Faker.js Synthetic Dataset Generator Reference', url: 'https://devstools.app/tools/generators/faker-js-mock-schema-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'llm-few-shot-prompt-formatter': [
+    { name: 'LLM Few-Shot Structured Prompt Builder Reference', url: 'https://devstools.app/tools/generators/llm-few-shot-prompt-formatter' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'cot-chain-of-thought-prompt-builder': [
+    { name: 'Chain-of-Thought (CoT) Prompt Builder Reference', url: 'https://devstools.app/tools/generators/cot-chain-of-thought-prompt-builder' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'sql-stored-procedure-generator': [
+    { name: 'SQL Stored Procedure & Trigger Generator Reference', url: 'https://devstools.app/tools/generators/sql-stored-procedure-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'redis-lua-script-generator': [
+    { name: 'Atomic Redis Lua Script Generator Reference', url: 'https://devstools.app/tools/generators/redis-lua-script-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'crontab-randomized-generator': [
+    { name: 'Crontab Jitter & Randomized Offset Generator Reference', url: 'https://devstools.app/tools/generators/crontab-randomized-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'ansible-playbook-scaffolder': [
+    { name: 'Ansible Automation Playbook Scaffolder Reference', url: 'https://devstools.app/tools/generators/ansible-playbook-scaffolder' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'terraform-module-scaffolder': [
+    { name: 'Modular Terraform Module Scaffolder Reference', url: 'https://devstools.app/tools/generators/terraform-module-scaffolder' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'http-cache-control-tester': [
+    { name: 'HTTP Cache-Control Header Tester Reference', url: 'https://devstools.app/tools/utilities/http-cache-control-tester' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'dns-soa-dnssec-inspector': [
+    { name: 'DNS SOA Serial & DNSSEC Record Inspector Reference', url: 'https://devstools.app/tools/utilities/dns-soa-dnssec-inspector' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'ip-supernetting-calculator': [
+    { name: 'IP Supernetting & CIDR Aggregator Reference', url: 'https://devstools.app/tools/utilities/ip-supernetting-calculator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'opengraph-tag-inspector': [
+    { name: 'OpenGraph & Social Meta Tag Inspector Reference', url: 'https://devstools.app/tools/utilities/opengraph-tag-inspector' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'jwt-expiry-calculator': [
+    { name: 'JWT Token Expiry & Lifetime Calculator Reference', url: 'https://devstools.app/tools/utilities/jwt-expiry-calculator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'regex-benchmark-simulator': [
+    { name: 'Regex ReDoS & Backtracking Risk Analyzer Reference', url: 'https://devstools.app/tools/utilities/regex-benchmark-simulator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'llm-context-window-shrinker': [
+    { name: 'LLM Prompt Context Window Optimizer Reference', url: 'https://devstools.app/tools/utilities/llm-context-window-shrinker' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'embedding-token-cost-estimator': [
+    { name: 'Text Embedding Token & API Cost Estimator Reference', url: 'https://devstools.app/tools/utilities/embedding-token-cost-estimator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'webhook-payload-simulator': [
+    { name: 'Webhook Mock Event Payload Simulator Reference', url: 'https://devstools.app/tools/utilities/webhook-payload-simulator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'network-port-reference': [
+    { name: 'TCP/UDP Port Number Reference & Directory Reference', url: 'https://devstools.app/tools/utilities/network-port-reference' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'ssl-tls-handshake-simulator': [
+    { name: 'TLS 1.2 & TLS 1.3 Cryptographic Handshake Simulator Reference', url: 'https://devstools.app/tools/utilities/ssl-tls-handshake-simulator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'http2-http3-frame-inspector': [
+    { name: 'HTTP/2 & HTTP/3 QUIC Frame Inspector Reference', url: 'https://devstools.app/tools/utilities/http2-http3-frame-inspector' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'dns-spf-record-flattener': [
+    { name: 'DNS SPF Lookup Counter & Record Flattener Reference', url: 'https://devstools.app/tools/utilities/dns-spf-record-flattener' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'mime-type-extension-lookup': [
+    { name: 'File Extension to MIME Content-Type Lookup Reference', url: 'https://devstools.app/tools/utilities/mime-type-extension-lookup' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'color-blindness-simulator': [
+    { name: 'Color Blindness Accessibility Simulator Reference', url: 'https://devstools.app/tools/utilities/color-blindness-simulator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'contrast-ratio-apca-calculator': [
+    { name: 'WCAG & APCA Text Contrast Ratio Calculator Reference', url: 'https://devstools.app/tools/utilities/contrast-ratio-apca-calculator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'viewport-size-tester': [
+    { name: 'Responsive Viewport & Breakpoint Inspector Reference', url: 'https://devstools.app/tools/utilities/viewport-size-tester' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'unicode-glyph-category-inspector': [
+    { name: 'Unicode Glyph & Code Point Inspector Reference', url: 'https://devstools.app/tools/utilities/unicode-glyph-category-inspector' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'seo-robots-noindex-simulator': [
+    { name: 'Robots.txt & X-Robots-Tag Indexing Simulator Reference', url: 'https://devstools.app/tools/utilities/seo-robots-noindex-simulator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'cors-preflight-inspector': [
+    { name: 'CORS Preflight OPTIONS Request Inspector Reference', url: 'https://devstools.app/tools/utilities/cors-preflight-inspector' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'css-selector-speed-profiler': [
+    { name: 'CSS Selector Specificity & Speed Profiler Reference', url: 'https://devstools.app/tools/utilities/css-selector-speed-profiler' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'git-conflict-marker-cleaner': [
+    { name: 'Git Merge Conflict Marker Stripper Reference', url: 'https://devstools.app/tools/utilities/git-conflict-marker-cleaner' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'semver-range-evaluator': [
+    { name: 'Semantic Versioning (SemVer) Range Evaluator Reference', url: 'https://devstools.app/tools/utilities/semver-range-evaluator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'package-json-license-checker': [
+    { name: 'package.json Open Source License Checker Reference', url: 'https://devstools.app/tools/utilities/package-json-license-checker' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'api-rate-limit-cost-calculator': [
+    { name: 'Token Bucket API Rate Limit Calculator Reference', url: 'https://devstools.app/tools/utilities/api-rate-limit-cost-calculator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'blake3-hash-generator': [
+    { name: 'BLAKE3 Cryptographic Hash Generator Reference', url: 'https://devstools.app/tools/crypto/blake3-hash-generator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'pbkdf2-key-derivation': [
+    { name: 'PBKDF2 Key Derivation Function Calculator Reference', url: 'https://devstools.app/tools/crypto/pbkdf2-key-derivation' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'hmac-sha384-sha512-calculator': [
+    { name: 'HMAC-SHA384 & HMAC-SHA512 Signature Generator Reference', url: 'https://devstools.app/tools/crypto/hmac-sha384-sha512-calculator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'ethereum-eip191-signature-verifier': [
+    { name: 'Ethereum EIP-191 Personal Sign Validator Reference', url: 'https://devstools.app/tools/crypto/ethereum-eip191-signature-verifier' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'bitcoin-bech32-address-encoder': [
+    { name: 'Bitcoin Bech32 & SegWit Address Validator Reference', url: 'https://devstools.app/tools/crypto/bitcoin-bech32-address-encoder' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'rsa-pkcs1-pkcs8-converter': [
+    { name: 'RSA PKCS#1 to PKCS#8 Key Format Inspector Reference', url: 'https://devstools.app/tools/crypto/rsa-pkcs1-pkcs8-converter' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'x509-san-csr-builder': [
+    { name: 'X.509 CSR with Subject Alternative Name (SAN) Builder Reference', url: 'https://devstools.app/tools/crypto/x509-san-csr-builder' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'ed25519-sign-verify': [
+    { name: 'Ed25519 Signature & Key Pair Inspector Reference', url: 'https://devstools.app/tools/crypto/ed25519-sign-verify' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'argon2-parameter-tuner': [
+    { name: 'Argon2id Memory & Cost Parameter Tuner Reference', url: 'https://devstools.app/tools/crypto/argon2-parameter-tuner' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'uuid-v7-timestamp-extractor': [
+    { name: 'UUIDv7 Timestamp & Date Extractor Reference', url: 'https://devstools.app/tools/crypto/uuid-v7-timestamp-extractor' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'ethereum-abi-storage-slot-calculator': [
+    { name: 'Solidity EVM State Variable Storage Slot Calculator Reference', url: 'https://devstools.app/tools/crypto/ethereum-abi-storage-slot-calculator' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'base64-pem-certificate-parser': [
+    { name: 'X.509 TLS/SSL Certificate SAN & Info Parser Reference', url: 'https://devstools.app/tools/crypto/base64-pem-certificate-parser' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'punycode-idn-converter': [
+    { name: 'Punycode IDN Domain Converter Reference', url: 'https://devstools.app/tools/encoding/punycode-idn-converter' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'crockford-base32-encoder': [
+    { name: 'Crockford Base32 Encoder & Decoder Reference', url: 'https://devstools.app/tools/encoding/crockford-base32-encoder' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'bcd-binary-coded-decimal-converter': [
+    { name: 'Binary Coded Decimal (BCD 8421) Converter Reference', url: 'https://devstools.app/tools/encoding/bcd-binary-coded-decimal-converter' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'ieee754-hex-float-converter': [
+    { name: 'IEEE-754 Floating Point to Hex Converter Reference', url: 'https://devstools.app/tools/encoding/ieee754-hex-float-converter' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'rot47-encoder-decoder': [
+    { name: 'ROT47 Cipher Text Encoder & Decoder Reference', url: 'https://devstools.app/tools/encoding/rot47-encoder-decoder' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'url-safe-base64-converter': [
+    { name: 'URL-Safe Base64 (Base64url) Converter Reference', url: 'https://devstools.app/tools/encoding/url-safe-base64-converter' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'json-path-query-tester': [
+    { name: 'JSONPath Query Evaluator & Filter Reference', url: 'https://devstools.app/tools/json/json-path-query-tester' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'json-key-sorter': [
+    { name: 'JSON Alphabetical Key Sorter Reference', url: 'https://devstools.app/tools/json/json-key-sorter' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'json-array-splitter-chunker': [
+    { name: 'JSON Large Array Batch Splitter Reference', url: 'https://devstools.app/tools/json/json-array-splitter-chunker' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'text-prefix-suffix-appender': [
+    { name: 'Multi-Line Text Prefix & Suffix Appender Reference', url: 'https://devstools.app/tools/text/text-prefix-suffix-appender' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'text-duplicate-line-counter': [
+    { name: 'Duplicate Line Frequency Counter Reference', url: 'https://devstools.app/tools/text/text-duplicate-line-counter' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+  ],
+  'text-column-tabular-splitter': [
+    { name: 'Text Delimited Column Tabular Splitter Reference', url: 'https://devstools.app/tools/text/text-column-tabular-splitter' },
+    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
 };
 
-export function getToolSources(toolSlug: string): ToolSource[] {
-  return (
-    toolSources[toolSlug] || [
-      { name: 'Developer Tools Reference', url: 'https://devstools.app' },
-      { name: 'MDN Web Docs', url: 'https://developer.mozilla.org' },
-    ]
-  );
+export function getToolSources(slug: string): ToolSource[] {
+  return toolSources[slug] || [];
 }

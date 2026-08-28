@@ -1,34 +1,55 @@
 'use client';
+
 import React, { useState } from 'react';
-import { jsonToGoStruct } from '@/lib/jsonToGoStruct';
-import { Copy, Check } from 'lucide-react';
+import CopyButton from '@/components/common/CopyButton';
+import { convertJsonToGoStruct } from '@/lib/jsonToGoStruct';
+
+const SAMPLE = "{\n  \"user_id\": 101,\n  \"display_name\": \"Gopher\",\n  \"is_active\": true\n}";
 
 export default function JsonToGoStructTool() {
-  const [json, setJson] = useState('{"title":"Release v2","views":4200,"published":true}');
-  const [copied, setCopied] = useState(false);
-  const go = jsonToGoStruct(json, 'Release');
+  const [input, setInput] = useState(SAMPLE);
+  let output = '';
+  let error = '';
+
+  try {
+    output = convertJsonToGoStruct(input);
+  } catch (e: any) {
+    error = e.message || 'Conversion error';
+  }
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-end">
-        <button
-          onClick={() => { navigator.clipboard.writeText(go); setCopied(true); setTimeout(() => setCopied(false), 2000); }}
-          className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md transition hover:bg-indigo-500"
-        >
-          {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          <span>{copied ? 'Copied' : 'Copy Go Struct'}</span>
-        </button>
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <textarea
-          value={json}
-          onChange={(e) => setJson(e.target.value)}
-          rows={10}
-          className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 p-4 font-mono text-xs text-slate-800 focus:border-indigo-500 focus:outline-none dark:border-white/10 dark:bg-slate-950 dark:text-slate-200"
-        />
-        <pre className="h-[200px] overflow-auto rounded-2xl border border-slate-200 bg-slate-900 p-4 font-mono text-xs text-cyan-400 dark:border-white/10">
-          {go}
-        </pre>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">JSON Input</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+          </div>
+          <textarea
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            rows={14}
+            className="w-full rounded-2xl border border-slate-200 bg-white p-3 font-mono text-xs shadow-inner dark:border-slate-700 dark:bg-slate-900"
+          />
+        </div>
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Golang Struct Definitions</label>
+            <CopyButton text={output} />
+          </div>
+          {error ? (
+            <div className="rounded-2xl border border-red-200 bg-red-50 p-4 font-mono text-xs text-red-600 dark:border-red-900/50 dark:bg-red-950/50 dark:text-red-400">
+              {error}
+            </div>
+          ) : (
+            <textarea
+              value={output}
+              readOnly
+              rows={14}
+              className="w-full rounded-2xl border border-slate-200 bg-slate-50 p-3 font-mono text-xs shadow-inner dark:border-slate-700 dark:bg-slate-900/70"
+            />
+          )}
+        </div>
       </div>
     </div>
   );

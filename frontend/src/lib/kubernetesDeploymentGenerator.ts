@@ -1,0 +1,3 @@
+export function generateK8sDeployment(appName = 'web-app', image = 'nginx:latest', replicas = 3, port = 80): string {
+  return 'apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: ' + appName + '\n  labels:\n    app: ' + appName + '\nspec:\n  replicas: ' + replicas + '\n  selector:\n    matchLabels:\n      app: ' + appName + '\n  template:\n    metadata:\n      labels:\n        app: ' + appName + '\n    spec:\n      containers:\n      - name: ' + appName + '\n        image: ' + image + '\n        ports:\n        - containerPort: ' + port + '\n        resources:\n          limits:\n            cpu: "500m"\n            memory: "512Mi"\n          requests:\n            cpu: "100m"\n            memory: "128Mi"\n';
+}

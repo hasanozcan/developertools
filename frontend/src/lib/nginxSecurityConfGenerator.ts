@@ -1,0 +1,3 @@
+export function generateNginxSecurityConf(domain = 'example.com', upstreamPort = 3000): string {
+  return 'server {\n    listen 443 ssl http2;\n    server_name ' + domain + ';\n\n    # SSL Hardening\n    ssl_protocols TLSv1.2 TLSv1.3;\n    ssl_prefer_server_ciphers on;\n\n    # Security Headers\n    add_header X-Frame-Options "SAMEORIGIN" always;\n    add_header X-Content-Type-Options "nosniff" always;\n    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;\n\n    location / {\n        proxy_pass http://127.0.0.1:' + upstreamPort + ';\n        proxy_set_header Host $host;\n        proxy_set_header X-Real-IP $remote_addr;\n    }\n}\n';
+}

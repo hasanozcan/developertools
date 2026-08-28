@@ -1,32 +1,50 @@
-export function convertPostmanToCurl(postmanJson: string): string[] {
+export function convertPostmanToCurl(jsonContent: string): string {
   try {
-    const data = JSON.parse(postmanJson);
-    const items = data.item || [];
-    const commands: string[] = [];
+    const collection = JSON.parse(jsonContent);
+    const requests = extractRequests(collection.item || []);
+    if (requests.length === 0) return '# No requests found in collection.';
 
-    for (const item of items) {
-      const request = item.request || {};
-      const method = request.method || 'GET';
-      const url = typeof request.url === 'string' ? request.url : request.url?.raw || 'https://api.example.com';
-      let cmd = `curl -X ${method} "${url}"`;
-
-      if (request.header && Array.isArray(request.header)) {
-        for (const h of request.header) {
-          if (!h.disabled && h.key) {
-            cmd += ` -H "${h.key}: ${h.value}"`;
+    return requests.map((req, i) => {
+      const parts: string[] = [`# Request ${i + 1}: ${req.name}`];
+      parts.push(`curl -X ${req.method || 'GET'} "${req.url}"`);
+      if (req.headers && req.headers.length > 0) {
+        for (const h of req.headers) {
+          if (h.key && !h.disabled) {
+            parts.push(`  -H "${h.key}: ${h.value}"`);
           }
         }
       }
-
-      if (request.body?.raw) {
-        cmd += ` -d '${request.body.raw.replace(/'/g, "\\'")}'`;
+      if (req.body) {
+        parts.push(`  -d '${req.body.replace(/'/g, "'\\''")}'`);
       }
-
-      commands.push(cmd);
-    }
-
-    return commands.length ? commands : ['# No requests found in Postman collection'];
-  } catch (e: any) {
-    return ['# Error parsing Postman collection: ' + e.message];
+      return parts.join(' \\\n');
+    }).join('\n\n');
+  } catch (err: any) {
+    return `# Error parsing Postman collection: ${err.message}`;
   }
+}
+
+function extractRequests(items: any[]): any[] {
+  const list: any[] = [];
+  for (const item of items) {
+    if (item.request) {
+      const r = item.request;
+      const url = typeof r.url === 'string' ? r.url : r.url?.raw || '';
+      const headers = r.header || [];
+      let body = '';
+      if (r.body?.mode === 'raw' && r.body.raw) {
+        body = r.body.raw;
+      }
+      list.push({
+        name: item.name || 'Untitled Request',
+        method: (r.method || 'GET').toUpperCase(),
+        url,
+        headers,
+        body,
+      });
+    } else if (item.item && Array.isArray(item.item)) {
+      list.push(...extractRequests(item.item));
+    }
+  }
+  return list;
 }

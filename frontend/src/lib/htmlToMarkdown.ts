@@ -1,57 +1,56 @@
-export function htmlToMarkdown(html: string): string {
+export function convertHtmlToMarkdown(html: string): string {
   if (!html.trim()) return '';
 
   let md = html;
+  // Convert headers
+  md = md.replace(/<h1[^>]*>(.*?)<\/h1>/gi, '# $1\n\n');
+  md = md.replace(/<h2[^>]*>(.*?)<\/h2>/gi, '## $1\n\n');
+  md = md.replace(/<h3[^>]*>(.*?)<\/h3>/gi, '### $1\n\n');
+  md = md.replace(/<h4[^>]*>(.*?)<\/h4>/gi, '#### $1\n\n');
 
-  // Replace headings
-  md = md.replace(/<h1[^>]*>([\s\S]*?)<\/h1>/gi, '\n# $1\n');
-  md = md.replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, '\n## $1\n');
-  md = md.replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, '\n### $1\n');
-  md = md.replace(/<h4[^>]*>([\s\S]*?)<\/h4>/gi, '\n#### $1\n');
-  md = md.replace(/<h5[^>]*>([\s\S]*?)<\/h5>/gi, '\n##### $1\n');
-  md = md.replace(/<h6[^>]*>([\s\S]*?)<\/h6>/gi, '\n###### $1\n');
+  // Convert bold / italic
+  md = md.replace(/<(strong|b)[^>]*>(.*?)<\/(strong|b)>/gi, '**$2**');
+  md = md.replace(/<(em|i)[^>]*>(.*?)<\/(em|i)>/gi, '*$2*');
+
+  // Convert links
+  md = md.replace(/<a\s+[^>]*href=["']([^"']+)["'][^>]*>(.*?)<\/a>/gi, '[$2]($1)');
+
+  // Convert code blocks and inline code
+  md = md.replace(/<pre[^>]*><code[^>]*>([\s\S]*?)<\/code><\/pre>/gi, '\`\`\`\n$1\n\`\`\`\n\n');
+  md = md.replace(/<code[^>]*>(.*?)<\/code>/gi, '\`$1\`');
+
+  // Convert list items
+  md = md.replace(/<li[^>]*>(.*?)<\/li>/gi, '- $1\n');
+  md = md.replace(/<\/?(ul|ol)[^>]*>/gi, '\n');
+
+  // Convert paragraphs and line breaks
+  md = md.replace(/<p[^>]*>(.*?)<\/p>/gi, '$1\n\n');
+  md = md.replace(/<br\s*\/?>/gi, '\n');
+
+  // Strip remaining tags
+  md = md.replace(/<[^>]+>/g, '');
+
+  return md.trim();
+}
+
+export function convertMarkdownToHtml(md: string): string {
+  if (!md.trim()) return '';
+
+  let html = md;
+  // Headers
+  html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+  html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
+  html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
 
   // Bold & Italic
-  md = md.replace(/<(strong|b)[^>]*>([\s\S]*?)<\/\1>/gi, '**$2**');
-  md = md.replace(/<(em|i)[^>]*>([\s\S]*?)<\/\1>/gi, '*$2*');
+  html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
+  html = html.replace(/\*(.*?)\*/gim, '<em>$1</em>');
 
-  // Code blocks & inline code
-  md = md.replace(/<pre[^>]*><code[^>]*>([\s\S]*?)<\/code><\/pre>/gi, '\n```\n$1\n```\n');
-  md = md.replace(/<code[^>]*>([\s\S]*?)<\/code>/gi, '`$1`');
+  // Links
+  html = html.replace(/\[([^\]]+)\]\(([^\)]+)\)/gim, '<a href="$2">$1</a>');
 
-  // Links & Images
-  md = md.replace(/<a\s+(?:[^>]*?\s+)?href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi, '[$2]($1)');
-  md = md.replace(/<img\s+(?:[^>]*?\s+)?src="([^"]*)"(?:\s+alt="([^"]*)")?[^>]*>/gi, '![$2]($1)');
+  // Inline code
+  html = html.replace(/\`([^\`]+)\`/gim, '<code>$1</code>');
 
-  // Blockquotes
-  md = md.replace(/<blockquote[^>]*>([\s\S]*?)<\/blockquote>/gi, (_, content) => {
-    return `\n> ${content.trim().split('\n').join('\n> ')}\n`;
-  });
-
-  // Unordered list items
-  md = md.replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, '- $1\n');
-  md = md.replace(/<\/?ul[^>]*>/gi, '\n');
-  md = md.replace(/<\/?ol[^>]*>/gi, '\n');
-
-  // Paragraphs & Line breaks
-  md = md.replace(/<p[^>]*>([\s\S]*?)<\/p>/gi, '\n$1\n');
-  md = md.replace(/<br\s*\/?>/gi, '\n');
-  md = md.replace(/<hr\s*\/?>/gi, '\n---\n');
-
-  // Strip remaining HTML tags
-  md = md.replace(/<\/?[a-zA-Z0-9_-]+(?:\s+[^>]*)?>/g, '');
-
-  // Decode common HTML entities
-  md = md
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&nbsp;/g, ' ');
-
-  // Clean excessive newlines
-  md = md.replace(/\n{3,}/g, '\n\n').trim();
-
-  return md;
+  return html.trim();
 }
