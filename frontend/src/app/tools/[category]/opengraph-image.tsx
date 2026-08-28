@@ -1,13 +1,13 @@
 import { ImageResponse } from 'next/og';
-import { findCatalogTool } from '@/lib/api';
+import { categoryCatalog, toolCatalog } from '@/lib/api';
 
 export const runtime = 'nodejs';
-export const alt = 'DevsTools developer tool preview';
+export const alt = 'DevsTools category tools preview';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
 interface ImageProps {
-  params: Promise<{ category: string; tool: string }>;
+  params: Promise<{ category: string }>;
 }
 
 interface CategoryTheme {
@@ -105,15 +105,23 @@ const DEFAULT_THEME: CategoryTheme = {
   iconSymbol: '</>',
 };
 
-export default async function ToolOpenGraphImage({ params }: ImageProps) {
-  const { category, tool: toolSlug } = await params;
-  const tool = findCatalogTool(toolSlug);
-  const toolName = tool?.name || toolSlug.replace(/-/g, ' ');
-  const categoryName = tool?.categoryName || category.replace(/-/g, ' ');
-  const description =
-    tool?.shortDescription || 'Free online browser-based developer utility with instant execution.';
+export default async function CategoryOpenGraphImage({ params }: ImageProps) {
+  const { category: categorySlug } = await params;
+  const categoryInfo = categoryCatalog.find(
+    (c) => c.slug.toLowerCase() === categorySlug.toLowerCase(),
+  );
 
-  const theme = CATEGORY_THEMES[category.toLowerCase()] || DEFAULT_THEME;
+  const categoryName = categoryInfo?.name || categorySlug.replace(/-/g, ' ');
+  const description =
+    categoryInfo?.description || 'Browse all free developer tools in this category.';
+
+  const categoryTools = toolCatalog.filter(
+    (t) => t.categorySlug.toLowerCase() === categorySlug.toLowerCase(),
+  );
+  const toolCount = categoryTools.length > 0 ? categoryTools.length : (categoryInfo?.toolCount || 10);
+  const previewTools = categoryTools.slice(0, 5).map((t) => t.name);
+
+  const theme = CATEGORY_THEMES[categorySlug.toLowerCase()] || DEFAULT_THEME;
 
   return new ImageResponse(
     (
@@ -134,33 +142,32 @@ export default async function ToolOpenGraphImage({ params }: ImageProps) {
           overflow: 'hidden',
         }}
       >
-        {/* Category Ambient Glow 1 */}
+        {/* Category Ambient Glow */}
         <div
           style={{
             position: 'absolute',
-            width: 580,
-            height: 580,
-            right: -120,
-            top: -140,
+            width: 600,
+            height: 600,
+            right: -100,
+            top: -120,
             borderRadius: '50%',
             background: `radial-gradient(circle, ${theme.glow} 0%, transparent 70%)`,
           }}
         />
 
-        {/* Category Ambient Glow 2 */}
         <div
           style={{
             position: 'absolute',
-            width: 460,
-            height: 460,
-            left: -120,
-            bottom: -160,
+            width: 480,
+            height: 480,
+            left: -140,
+            bottom: -150,
             borderRadius: '50%',
             background: `radial-gradient(circle, ${theme.glow} 0%, transparent 70%)`,
           }}
         />
 
-        {/* Decorative Grid Mesh */}
+        {/* Grid Mesh */}
         <div
           style={{
             position: 'absolute',
@@ -221,34 +228,33 @@ export default async function ToolOpenGraphImage({ params }: ImageProps) {
             </div>
           </div>
 
-          {/* Category Badge Pill */}
+          {/* Tool Count Badge */}
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: 8,
-              padding: '10px 20px',
+              padding: '10px 22px',
               borderRadius: 999,
               backgroundColor: theme.tagBg,
               border: `1.5px solid ${theme.tagBorder}`,
               color: theme.tagText,
               fontSize: 16,
               fontWeight: 700,
-              letterSpacing: '1px',
-              textTransform: 'uppercase',
+              letterSpacing: '0.5px',
             }}
           >
-            <span>{categoryName}</span>
+            <span>{toolCount}+ Free Tools</span>
           </div>
         </div>
 
-        {/* Center Card Content */}
+        {/* Main Content Card */}
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
             gap: 16,
-            padding: '32px 36px',
+            padding: '36px 40px',
             borderRadius: 24,
             backgroundColor: 'rgba(15, 23, 42, 0.75)',
             border: '1.5px solid rgba(255, 255, 255, 0.1)',
@@ -258,19 +264,19 @@ export default async function ToolOpenGraphImage({ params }: ImageProps) {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-            {/* Tool Icon Box */}
+            {/* Category Icon */}
             <div
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: 72,
-                height: 72,
-                minWidth: 72,
-                borderRadius: 20,
+                width: 76,
+                height: 76,
+                minWidth: 76,
+                borderRadius: 22,
                 background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})`,
                 color: '#ffffff',
-                fontSize: 32,
+                fontSize: 34,
                 fontWeight: 900,
                 boxShadow: `0 8px 24px ${theme.glow}`,
               }}
@@ -278,37 +284,79 @@ export default async function ToolOpenGraphImage({ params }: ImageProps) {
               {theme.iconSymbol}
             </div>
 
-            {/* Tool Title */}
-            <div
-              style={{
-                display: 'flex',
-                fontSize: toolName.length > 35 ? 46 : 56,
-                lineHeight: 1.15,
-                fontWeight: 800,
-                color: '#ffffff',
-                letterSpacing: '-1px',
-              }}
-            >
-              {toolName}
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  fontSize: 54,
+                  lineHeight: 1.15,
+                  fontWeight: 800,
+                  color: '#ffffff',
+                  letterSpacing: '-1px',
+                }}
+              >
+                {categoryName}
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  fontSize: 22,
+                  color: '#94a3b8',
+                  marginTop: 6,
+                }}
+              >
+                {description}
+              </div>
             </div>
           </div>
 
-          {/* Description */}
-          <div
-            style={{
-              display: 'flex',
-              fontSize: 22,
-              lineHeight: 1.4,
-              color: '#94a3b8',
-              marginTop: 4,
-              paddingLeft: 92,
-            }}
-          >
-            {description}
-          </div>
+          {/* Sample Tool Pills */}
+          {previewTools.length > 0 && (
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: 10,
+                marginTop: 10,
+                paddingLeft: 96,
+              }}
+            >
+              {previewTools.map((name) => (
+                <div
+                  key={name}
+                  style={{
+                    display: 'flex',
+                    padding: '6px 14px',
+                    borderRadius: 8,
+                    backgroundColor: 'rgba(255, 255, 255, 0.07)',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    color: '#e2e8f0',
+                    fontSize: 14,
+                    fontWeight: 500,
+                  }}
+                >
+                  {name}
+                </div>
+              ))}
+              <div
+                style={{
+                  display: 'flex',
+                  padding: '6px 14px',
+                  borderRadius: 8,
+                  backgroundColor: theme.tagBg,
+                  border: `1px solid ${theme.tagBorder}`,
+                  color: theme.tagText,
+                  fontSize: 14,
+                  fontWeight: 600,
+                }}
+              >
+                +{toolCount - previewTools.length} more
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* Bottom Bar: Value Props & Trust Badges */}
+        {/* Bottom Bar */}
         <div
           style={{
             display: 'flex',
@@ -319,7 +367,6 @@ export default async function ToolOpenGraphImage({ params }: ImageProps) {
 
           }}
         >
-          {/* Trust Badges */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
             <div
               style={{
@@ -351,7 +398,7 @@ export default async function ToolOpenGraphImage({ params }: ImageProps) {
                 fontWeight: 600,
               }}
             >
-              <span>🔒</span> Zero Server Storage
+              <span>🔒</span> Private & Secure
             </div>
             <div
               style={{
@@ -367,11 +414,10 @@ export default async function ToolOpenGraphImage({ params }: ImageProps) {
                 fontWeight: 600,
               }}
             >
-              <span>🚀</span> Instant & Free
+              <span>🚀</span> No Registration
             </div>
           </div>
 
-          {/* Action indicator */}
           <div
             style={{
               display: 'flex',
@@ -382,7 +428,7 @@ export default async function ToolOpenGraphImage({ params }: ImageProps) {
               color: theme.tagText,
             }}
           >
-            <span>Open in DevsTools</span>
+            <span>Explore Category</span>
             <span>→</span>
           </div>
         </div>

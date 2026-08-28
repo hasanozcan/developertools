@@ -1,26 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" fill="none">
   <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19"/>
+      <stop offset="100%" stop-color="#181e2e"/>
+    </linearGradient>
     <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0EA5E9"/>
-      <stop offset="50%" style="stop-color:#8B5CF6"/>
-      <stop offset="100%" style="stop-color:#EC4899"/>
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="50%" stop-color="#818CF8"/>
+      <stop offset="100%" stop-color="#C084FC"/>
     </linearGradient>
     <linearGradient id="grad2" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#10B981"/>
-      <stop offset="100%" style="stop-color:#06B6D4"/>
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="100%" stop-color="#38BDF8"/>
     </linearGradient>
   </defs>
-  <!-- Hexagon background -->
-  <path d="M90 10L165 50V130L90 170L15 130V50L90 10Z" fill="url(#grad1)"/>
-  <!-- Inner glow -->
-  <path d="M90 25L150 58V122L90 155L30 122V58L90 25Z" fill="rgba(255,255,255,0.1)"/>
+  <!-- Squircle App Background -->
+  <rect width="180" height="180" rx="42" fill="url(#bgGrad)" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+  <!-- Ambient Inner Glow -->
+  <circle cx="90" cy="90" r="55" fill="#818CF8" opacity="0.18"/>
+  <!-- Hexagon Badge -->
+  <path d="M90 32L140 61V119L90 148L40 119V61L90 32Z" fill="url(#grad1)"/>
+  <!-- Inner Highlight -->
+  <path d="M90 44L128 66V114L90 136L52 114V66L90 44Z" fill="rgba(15,23,42,0.7)"/>
   <!-- Code brackets -->
-  <path d="M55 70L30 90L55 110" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M125 70L150 90L125 110" stroke="white" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- Center dot/cursor -->
-  <circle cx="90" cy="90" r="14" fill="url(#grad2)"/>
-  <!-- Sparkle accents -->
-  <circle cx="65" cy="40" r="5" fill="white" opacity="0.6"/>
-  <circle cx="140" cy="60" r="4" fill="white" opacity="0.4"/>
-  <circle cx="45" cy="130" r="3" fill="white" opacity="0.3"/>
+  <path d="M68 70L50 90L68 110" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M112 70L130 90L112 110" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Center dot / cursor -->
+  <circle cx="90" cy="90" r="10" fill="url(#grad2)"/>
 </svg>

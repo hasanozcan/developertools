@@ -531,6 +531,11 @@ const categories: Record<string, CategoryConfig> = {
         description: 'Generate QR codes from text or URLs',
       },
       {
+        name: 'QR Code Generator',
+        slug: 'qr-code',
+        description: 'Generate QR codes from text or URLs',
+      },
+      {
         name: 'Markdown Preview',
         slug: 'markdown-preview',
         description: 'Preview and convert Markdown to HTML',
@@ -553,7 +558,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
   const categoryUrl = `${siteUrl}/tools/${categorySlug}`;
-  const ogImageUrl = `${siteUrl}/og-image.png`;
+  const ogImageUrl = `${categoryUrl}/opengraph-image`;
   const pageTitle = category.metadataTitle || `${category.name} - Free Online Developer Tools`;
 
   // Category-specific keywords
