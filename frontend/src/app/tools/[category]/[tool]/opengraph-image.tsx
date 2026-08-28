@@ -105,6 +105,32 @@ const DEFAULT_THEME: CategoryTheme = {
   iconSymbol: '</>',
 };
 
+function getToolIcon(slug: string, fallback: string): string {
+  const s = slug.toLowerCase();
+  if (s.includes('jwt')) return '🔑';
+  if (s.includes('qr-code') || s.includes('qrcode')) return '📱';
+  if (s.includes('bcrypt') || s.includes('argon2') || s.includes('password')) return '🔐';
+  if (s.includes('sha') || s.includes('md5') || s.includes('checksum') || s.includes('keccak')) return '🛡️';
+  if (s.includes('hmac') || s.includes('totp') || s.includes('bip39') || s.includes('pkce')) return '🔏';
+  if (s.includes('color') || s.includes('palette') || s.includes('gradient')) return '🎨';
+  if (s.includes('css') || s.includes('tailwind') || s.includes('flexbox') || s.includes('bezier')) return '🎨';
+  if (s.includes('regex') || s.includes('inspect') || s.includes('analyzer')) return '🔍';
+  if (s.includes('cron')) return '⏰';
+  if (s.includes('sql') || s.includes('database') || s.includes('mongo') || s.includes('postgres')) return '🗄️';
+  if (s.includes('markdown') || s.includes('diff') || s.includes('word-count') || s.includes('text')) return '📝';
+  if (s.includes('uuid') || s.includes('nanoid') || s.includes('slug')) return '🏷️';
+  if (s.includes('docker') || s.includes('kubernetes') || s.includes('kube') || s.includes('helm') || s.includes('caddy') || s.includes('nginx')) return '🐳';
+  if (s.includes('curl') || s.includes('http') || s.includes('cors') || s.includes('dns') || s.includes('utm')) return '🌐';
+  if (s.includes('cert') || s.includes('x509') || s.includes('ssl') || s.includes('tls') || s.includes('csr') || s.includes('ssh')) return '📜';
+  if (s.includes('subnet') || s.includes('cidr') || s.includes('ipv6') || s.includes('port') || s.includes('bandwidth')) return '🖧';
+  if (s.includes('json')) return '{ }';
+  if (s.includes('yaml')) return '📄';
+  if (s.includes('base64') || s.includes('binary') || s.includes('hex') || s.includes('unicode') || s.includes('escape')) return '01';
+  if (s.includes('html') || s.includes('xml') || s.includes('jsx') || s.includes('format')) return '</>';
+  if (s.includes('svg') || s.includes('image') || s.includes('exif') || s.includes('pdf')) return '🖼️';
+  return fallback;
+}
+
 export default async function ToolOpenGraphImage({ params }: ImageProps) {
   const { category, tool: toolSlug } = await params;
   const tool = findCatalogTool(toolSlug);
@@ -114,6 +140,7 @@ export default async function ToolOpenGraphImage({ params }: ImageProps) {
     tool?.shortDescription || 'Free online browser-based developer utility with instant execution.';
 
   const theme = CATEGORY_THEMES[category.toLowerCase()] || DEFAULT_THEME;
+  const iconSymbol = getToolIcon(toolSlug, theme.iconSymbol);
 
   return new ImageResponse(
     (
@@ -275,7 +302,7 @@ export default async function ToolOpenGraphImage({ params }: ImageProps) {
                 boxShadow: `0 8px 24px ${theme.glow}`,
               }}
             >
-              {theme.iconSymbol}
+              {iconSymbol}
             </div>
 
             {/* Tool Title */}

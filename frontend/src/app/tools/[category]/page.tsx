@@ -724,6 +724,7 @@ export default async function CategoryPage({ params }: PageProps) {
     name: category.metadataTitle || `${category.name} - Free Online Developer Tools`,
     description: category.description,
     url: `${siteUrl}/tools/${categorySlug}`,
+    image: `${siteUrl}/tools/${categorySlug}/opengraph-image`,
     ...(categorySlug === 'encoding' ? { dateModified: '2026-07-11' } : {}),
     about: {
       '@type': 'Thing',
