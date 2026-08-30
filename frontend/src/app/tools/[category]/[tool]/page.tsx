@@ -944,9 +944,11 @@ const tools: Record<
     },
     'binary-encoder': {
       name: 'Binary Encoder/Decoder',
-      description: 'Encode or decode text to/from binary. Free online binary encoder and decoder.',
+      metadataTitle: 'Binary Encoder & Decoder – Text to Binary Online',
+      description:
+        'Convert UTF-8 text to 8-bit binary byte groups or decode binary back to text locally in your browser.',
       longDescription:
-        'Free online binary encoder and decoder. Convert text to binary encoding (0s and 1s) or decode binary strings back to plain text instantly.',
+        'Free online text-to-binary encoder and binary-to-text decoder. The tool converts UTF-8 bytes into 8-bit groups of 0s and 1s, validates complete binary bytes during decoding, and runs locally in your browser.',
       keywords: [
         'binary encoder',
         'binary decoder',
@@ -961,8 +963,42 @@ const tools: Record<
         },
         {
           question: 'How many bits per character?',
-          answer: 'Each character is represented by 8 bits (1 byte) in this tool.',
+          answer:
+            'Each UTF-8 byte is represented by 8 bits. ASCII characters use one byte, while characters such as accented letters and emoji can use multiple bytes.',
         },
+        {
+          question: 'Can I convert binary back to text?',
+          answer:
+            'Yes. Decode mode accepts complete 8-bit binary bytes, with optional whitespace between groups, and converts valid UTF-8 bytes back to text.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What does this binary encoder and decoder do?',
+          paragraphs: [
+            'This tool converts text into the binary representation of its UTF-8 bytes and decodes binary bytes back into text. Each output group contains eight bits. Spaces between byte groups make the result readable and can be removed or retained when decoding. The conversion runs in browser code, so the text does not need to be uploaded for processing.',
+          ],
+        },
+        {
+          heading: 'Text-to-binary examples',
+          paragraphs: [
+            'The letter A is UTF-8 byte 65, so it becomes 01000001. The character é uses the two UTF-8 bytes C3 and A9, so its binary form is 11000011 10101001. This distinction matters: the tool represents encoded bytes, not one fixed 8-bit value for every visible character.',
+            'Binary text encoding is different from converting a decimal number into base 2. Entering the text 10 encodes the characters 1 and 0 as two UTF-8 bytes. Use the Number Base Converter when the goal is numeric base conversion.',
+          ],
+        },
+        {
+          heading: 'Binary-to-text validation',
+          paragraphs: [
+            'Decode mode ignores whitespace between groups but requires only 0 and 1 digits and a complete number of 8-bit bytes. Incomplete bytes, other characters, or byte sequences that are not valid UTF-8 produce an error instead of a misleading partial result.',
+            'Binary encoding is a representation, not encryption or compression. Anyone with the binary bytes can decode them, and the bit string can be longer than the original visible text.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose Encode to convert text to binary, or Decode to convert binary bytes to text.',
+        'Enter the source text or a binary value made of complete 8-bit groups.',
+        'Review the live result and any validation message.',
+        'Copy or download the converted output when it is correct.',
       ],
     },
     'image-to-base64': {
@@ -986,9 +1022,11 @@ const tools: Record<
     },
     'unicode-escape': {
       name: 'Unicode Escape Encoder/Decoder',
-      description: 'Encode plain text into Unicode escape sequences and decode escaped text back.',
+      metadataTitle: 'Unicode Escape Encoder & Decoder Online',
+      description:
+        'Encode text as Unicode escape sequences or decode \\uXXXX, \\u{XXXXX}, and \\xFF values locally in your browser.',
       longDescription:
-        'Free online Unicode escape converter. Encode text to \\uXXXX format or decode escaped values back to readable text. Supports \\uXXXX and \\u{XXXXX} forms.',
+        'Free online Unicode escape encoder and decoder. Convert text into hexadecimal Unicode escape sequences or decode supported \\uXXXX, \\u{XXXXX}, and \\xFF values back to readable characters without a server upload.',
       keywords: [
         'unicode escape',
         'unicode encoder',
@@ -1003,10 +1041,43 @@ const tools: Record<
             'Unicode escaping represents characters using hexadecimal code points, such as \\u0041 for "A".',
         },
         {
-          question: 'When should I use this tool?',
+          question: 'Can I decode Unicode escape sequences online?',
           answer:
-            'Use it when working with JSON, logs, source code, or APIs that contain escaped Unicode text.',
+            'Yes. Paste text containing supported \\uXXXX, \\u{XXXXX}, or \\xFF sequences, choose Decode, and the tool replaces those sequences with their characters locally in your browser.',
         },
+        {
+          question: 'Is this the same as JSON string unescaping?',
+          answer:
+            'No. This tool targets hexadecimal Unicode and byte-style escapes. Use the JSON String Escape tool when you also need JSON escapes such as \\n, \\t, escaped quotes, or backslashes handled as a complete JSON string fragment.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What does this Unicode escape decoder do?',
+          paragraphs: [
+            'The decoder turns recognized hexadecimal escape sequences into readable characters. It supports four-digit JavaScript-style values such as \\u0041, braced code points such as \\u{1F600}, and two-digit byte-style values such as \\x41. Other text remains unchanged, which makes the result easy to inspect before copying.',
+          ],
+        },
+        {
+          heading: 'Unicode escape encoding examples',
+          paragraphs: [
+            'With ASCII escaping enabled, A becomes \\u0041. Characters above the basic multilingual plane use braced code-point notation; for example, 😀 becomes \\u{1F600}. When ASCII escaping is disabled, ordinary ASCII text remains readable while non-ASCII characters are escaped.',
+            'Unicode escaping changes how characters are written, not what they mean. It is useful when inspecting logs, source code, API payloads, or copied text that exposes escape notation instead of rendered characters.',
+          ],
+        },
+        {
+          heading: 'Unicode escapes, JSON, and safety',
+          paragraphs: [
+            'This converter is not a full programming-language parser. It replaces the supported hexadecimal patterns but does not interpret every escape rule from JSON, JavaScript, regular expressions, or shell syntax. Use a format-specific parser when exact document validation is required.',
+            'Encoding is not encryption: an escaped value can be decoded by anyone. Processing occurs in browser code, but you should still avoid placing secrets into online utilities unless the execution environment is appropriate for the data.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose Encode to create Unicode escapes, or Decode to turn supported escapes into text.',
+        'Enter or paste the source value and select whether ASCII characters should also be escaped.',
+        'Check the converted output, especially when the source comes from a larger JSON or code document.',
+        'Copy or download the result.',
       ],
     },
     'json-string-escape': {
@@ -3707,6 +3778,11 @@ const tools: Record<
           answer:
             'MD5 is no longer considered secure for cryptographic purposes but is still useful for checksums and non-security-critical applications.',
         },
+        {
+          question: 'Can an MD5 hash be converted back to text?',
+          answer:
+            'No. MD5 is a one-way hash, not reversible encryption. Services described as MD5 decoders usually guess likely inputs and compare their hashes; this tool generates hashes and does not perform reverse lookups.',
+        },
       ],
       answerSections: [
         {
@@ -3755,6 +3831,11 @@ const tools: Record<
           question: 'How do I verify a file checksum?',
           answer:
             'Select the file and enter a 64-character SHA-256 value from a trusted independent source in the expected-checksum field. The tool reports whether the generated and expected digests match.',
+        },
+        {
+          question: 'Can a SHA-256 hash be decoded back to text?',
+          answer:
+            'No. SHA-256 hashing is not reversible encryption, so a digest cannot be decoded to recover its original input. This tool generates and compares SHA-256 values; it does not perform password cracking or reverse-hash lookups.',
         },
       ],
       answerSections: [
@@ -6350,10 +6431,11 @@ const tools: Record<
     },
     'roman-numeral-converter': {
       name: 'Roman Numeral Converter',
+      metadataTitle: 'Roman Numeral Converter – Number to Roman Online',
       description:
-        'Convert numbers to Roman numerals and vice versa. Free online Roman numeral converter.',
+        'Convert whole numbers from 1 to 3999 into standard Roman numerals, or validate and decode Roman numerals back to numbers.',
       longDescription:
-        'Free online Roman numeral converter. Convert any number from 1 to 3999 to Roman numerals, or decode Roman numerals back to regular numbers.',
+        'Free online Roman numeral converter for both directions. Convert whole numbers from 1 through 3999 into canonical Roman notation, or validate and decode standard Roman numerals into decimal numbers locally in your browser.',
       keywords: ['roman numeral converter', 'number to roman', 'roman to number', 'roman numerals'],
       faqs: [
         {
@@ -6366,6 +6448,39 @@ const tools: Record<
           answer:
             'Roman numerals use additive notation (VI = 6) and subtractive notation (IV = 4) using letters I, V, X, L, C, D, M.',
         },
+        {
+          question: 'Does the converter accept forms such as IIII or IC?',
+          answer:
+            'No. The decoder accepts canonical Roman numeral spelling, so 4 must be IV and 99 must be XCIX. Non-standard or malformed forms produce a validation error.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How does the Roman numeral converter work?',
+          paragraphs: [
+            'Number-to-Roman mode maps a whole decimal number to standard Roman symbols using the conventional subtractive pairs IV, IX, XL, XC, CD, and CM. Roman-to-number mode reads the symbols, calculates their value, and verifies that the input is the canonical spelling of that value before returning a result.',
+          ],
+        },
+        {
+          heading: 'Roman numeral conversion examples',
+          paragraphs: [
+            'The number 4 becomes IV, 49 becomes XLIX, 1994 becomes MCMXCIV, and 2026 becomes MMXXVI. In reverse mode, the same Roman values convert back to 4, 49, 1994, and 2026.',
+            'Subtractive notation places a smaller symbol before a larger one in the permitted pairs. For example, IX means 9 and CM means 900. Other values are formed additively, so VIII means 5 + 1 + 1 + 1, or 8.',
+          ],
+        },
+        {
+          heading: 'Range and validation rules',
+          paragraphs: [
+            'This converter supports whole numbers from 1 through 3999, the common range represented without overlines or extended notation. Zero, negative values, decimals, and numbers above 3999 are rejected rather than assigned a non-standard result.',
+            'Roman input is case-insensitive but must use a standard canonical form. The converter rejects invalid repetitions and non-standard shortcuts such as IIII or IC. That strict validation helps distinguish a recognized Roman numeral from a string that merely contains Roman numeral letters.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose Number to Roman or Roman to Number.',
+        'Enter a whole number from 1 to 3999, or a standard Roman numeral.',
+        'Review the converted value or correct any validation message.',
+        'Copy the result for use in your document or application.',
       ],
     },
     'number-base-converter': {
@@ -11464,7 +11579,7 @@ export default async function ToolPage({ params }: PageProps) {
   }
 
   const canonicalUrl = `${siteUrl}/tools/${canonicalCategory}/${toolSlug}`;
-  const sources = getToolSources(toolSlug);
+  const sources = getToolSources(toolSlug).filter((source) => source.url !== canonicalUrl);
   const toolDetail = await getToolBySlug(toolSlug);
   const relatedTools = (toolDetail?.relatedTools || []).map((relatedTool) => ({
     name: relatedTool.name,

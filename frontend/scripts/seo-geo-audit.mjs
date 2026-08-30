@@ -225,7 +225,9 @@ while (queue.length > 0 && pages.length < maxPages) {
           }
           const citations = Array.isArray(node.citation) ? node.citation : [node.citation];
           page.schemaCitations.push(
-            ...citations.filter((citation) => typeof citation === 'string'),
+            ...citations
+              .filter((citation) => typeof citation === 'string')
+              .map((citation) => new URL(citation, localUrl(path)).toString()),
           );
         }
       } catch (error) {
@@ -407,6 +409,7 @@ const priorityTargets = [
   { query: 'user agent parser online', path: '/tools/utilities/user-agent-parser', kind: 'tool' },
   { query: 'sha256 generator', path: '/tools/crypto/sha256-hash', kind: 'tool' },
   { query: 'md5 hash generator', path: '/tools/crypto/md5-hash', kind: 'tool' },
+  { query: 'unicode escape decoder', path: '/tools/encoding/unicode-escape', kind: 'tool' },
   { query: 'encoder online', path: '/tools/encoding', kind: 'category' },
 ];
 const priorityQueryChecks = priorityTargets.map(({ query, path, kind }) => {
