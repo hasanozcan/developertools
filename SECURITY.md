@@ -6,7 +6,7 @@ Security fixes are applied to the current `main` branch and the production deplo
 
 ## Reporting a vulnerability
 
-Please report suspected vulnerabilities privately to `support@devstools.app`. Do not include
+Please report suspected vulnerabilities privately to `devstoolsapp@gmail.com`. Do not include
 credentials, personal data, or working exploits in a public issue.
 
 Include the affected route or component, reproduction steps, impact, and any suggested mitigation.

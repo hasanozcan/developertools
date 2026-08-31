@@ -63,7 +63,7 @@ export async function POST(request: Request) {
 
     const { name, email, subject, message } = validation.value;
 
-    const targetEmail = (process.env.CONTACT_TO_EMAIL || 'support@devstools.app')
+    const targetEmail = (process.env.CONTACT_TO_EMAIL || 'devstoolsapp@gmail.com')
       .split(',')
       .map((emailAddress) => emailAddress.trim())
       .filter(Boolean);
@@ -75,7 +75,7 @@ export async function POST(request: Request) {
     const smtpPass = process.env.SMTP_PASS;
     const smtpFrom =
       process.env.SMTP_FROM ||
-      (smtpUser ? `DevsTools <${smtpUser}>` : 'DevsTools <support@devstools.app>');
+      (smtpUser ? `DevsTools <${smtpUser}>` : 'DevsTools <devstoolsapp@gmail.com>');
 
     const smtpPort = smtpPortRaw ? Number(smtpPortRaw) : 465;
     const smtpSecure = parseBooleanEnv(smtpSecureRaw);
