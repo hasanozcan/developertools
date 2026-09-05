@@ -9,7 +9,7 @@ import QuickAccessBar from '@/components/common/QuickAccessBar';
 import AdSense from '@/components/common/AdSense';
 import PostToolAdBanner from '@/components/common/PostToolAdBanner';
 import { Maximize2, Minimize2, Sparkles, X, Sun, Moon } from 'lucide-react';
-import Link from 'next/link';
+import Link from '@/components/common/LocalizedLink';
 
 interface ToolPageWrapperProps {
   toolSlug: string;

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Metadata } from 'next';
-import Link from 'next/link';
+import Link from '@/components/common/LocalizedLink';
 import { notFound } from 'next/navigation';
 import {
   Braces,
@@ -52,6 +52,7 @@ import AdSense from '@/components/common/AdSense';
 import InFeedAdCard from '@/components/common/InFeedAdCard';
 import EncodingWorkbench from '@/components/tools/EncodingWorkbench';
 import { buildToolPath } from '@/lib/toolRoutes';
+import { getHreflangAlternates } from '@/lib/i18nRouting';
 
 // Tool icon mapping
 const toolIcons: Record<string, LucideIcon> = {
@@ -674,6 +675,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ],
     alternates: {
       canonical: categoryUrl,
+      languages: getHreflangAlternates(`/tools/${categorySlug}`, siteUrl),
     },
     openGraph: {
       title: pageTitle,

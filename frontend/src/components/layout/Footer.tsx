@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/common/LocalizedLink';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function Footer() {

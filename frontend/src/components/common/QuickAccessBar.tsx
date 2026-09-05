@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
+import Link from '@/components/common/LocalizedLink';
 import { History, Star, ShieldCheck, Sparkles, Command } from 'lucide-react';
 import { useHistory } from '@/context/HistoryContext';
 import { useFavorites } from '@/context/FavoritesContext';

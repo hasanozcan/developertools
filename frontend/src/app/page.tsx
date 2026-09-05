@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo, useEffect, Fragment } from 'react';
-import Link from 'next/link';
+import Link from '@/components/common/LocalizedLink';
 import Script from 'next/script';
 import {
   Braces,
@@ -213,6 +213,12 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'grouped'>('grid');
   const [visibleCount, setVisibleCount] = useState(INITIAL_PAGE_SIZE);
+
+  useEffect(() => {
+    const hash = new URLSearchParams(window.location.hash.slice(1));
+    const query = new URLSearchParams(window.location.search);
+    setSearchQuery(hash.get('search') ?? query.get('search') ?? '');
+  }, []);
 
   const normalizedPopular = useMemo(() => {
     return toolCatalog.map((tool, index) => ({

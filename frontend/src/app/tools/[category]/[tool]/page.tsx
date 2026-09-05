@@ -5,6 +5,7 @@ import ToolRenderer from '@/components/tools/ToolRenderer';
 import { categoryCatalog, findCatalogTool, getToolBySlug, toolCatalog } from '@/lib/api';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
 import { getToolSources } from '@/lib/toolSources';
+import { getHreflangAlternates } from '@/lib/i18nRouting';
 
 // Tool configurations
 const tools: Record<
@@ -11526,6 +11527,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     keywords: tool.keywords,
     alternates: {
       canonical: canonicalUrl,
+      languages: getHreflangAlternates(`/tools/${canonicalCategory}/${toolSlug}`, siteUrl),
     },
     openGraph: {
       title: metaTitle,

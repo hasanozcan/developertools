@@ -1,6 +1,7 @@
 'use client';
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, useEffect } from 'react';
+import { readToolInput } from '@/lib/toolInput';
 import CopyButton from '@/components/common/CopyButton';
 import { useLanguage } from '@/context/LanguageContext';
 import {
@@ -82,6 +83,11 @@ export default function JwtDecoderTool() {
     },
     [t],
   );
+
+  useEffect(() => {
+    const extensionInput = readToolInput(window.location.hash);
+    if (extensionInput !== null) updateToken(extensionInput.slice(0, MAX_TOKEN_LENGTH));
+  }, [updateToken]);
 
   const loadSample = useCallback(() => {
     setSecret(SAMPLE_SECRET);

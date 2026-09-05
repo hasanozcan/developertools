@@ -6,10 +6,12 @@ on:
   push:
     paths:
       - "frontend/**"
+      - "extension/**"
       - ".github/workflows/frontend-quality.yml"
   pull_request:
     paths:
       - "frontend/**"
+      - "extension/**"
       - ".github/workflows/frontend-quality.yml"
 
 permissions:
@@ -44,6 +46,9 @@ jobs:
 
       - name: Run quality checks
         run: npm run check
+
+      - name: Package browser extensions
+        run: npm run build:extension
 
       - name: Verify production build
         env:

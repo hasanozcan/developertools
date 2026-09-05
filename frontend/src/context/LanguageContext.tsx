@@ -1,7 +1,15 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useEffect, ReactNode, useCallback } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { translations, type Language } from '@/translations';
+import {
+  isValidLocale,
+  stripLocaleFromPath,
+  getLocalizedPath,
+  DEFAULT_LOCALE,
+} from '@/lib/i18nRouting';
+
 export type { Language };
 
 interface LanguageContextType {
@@ -12,12 +20,12 @@ interface LanguageContextType {
 
 export const languageNames: Record<Language, string> = {
   en: 'English',
-  tr: 'Turkce',
+  tr: 'Türkçe',
   de: 'Deutsch',
-  es: 'Espanol',
-  fr: 'Francais',
-  ru: 'Russkiy',
-  zh: 'Zhongwen',
+  es: 'Español',
+  fr: 'Français',
+  ru: 'Русский',
+  zh: '中文',
 };
 
 // Use text codes for consistent rendering across browsers
@@ -44,54 +52,66 @@ export const languageFlagUrls: Record<Language, string> = {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('en');
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const queryLanguage = params.get('lang') as Language | null;
-    if (queryLanguage && translations[queryLanguage]) {
-      setLanguageState(queryLanguage);
-      localStorage.setItem('language', queryLanguage);
-      return;
-    }
+export function LanguageProvider({
+  children,
+  initialLocale,
+}: {
+  children: ReactNode;
+  initialLocale?: Language;
+}) {
+  const pathname = usePathname();
+  const router = useRouter();
 
-    const savedLanguage = localStorage.getItem('language') as Language;
-    if (savedLanguage && translations[savedLanguage]) {
-      setLanguageState(savedLanguage);
-    }
-  }, []);
+  const language = initialLocale ?? stripLocaleFromPath(pathname || '/').locale;
+
+  // Keep previously shared language links working without losing tool input.
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const legacyLocale = url.searchParams.get('lang');
+    if (!legacyLocale || !isValidLocale(legacyLocale)) return;
+    url.searchParams.delete('lang');
+    router.replace(`${getLocalizedPath(url.pathname, legacyLocale)}${url.search}${url.hash}`);
+  }, [pathname, router]);
 
   useEffect(() => {
     document.documentElement.lang = language;
+    try {
+      localStorage.setItem('language', language);
+    } catch {
+      // Navigation also works when browser storage is unavailable.
+    }
   }, [language]);
 
-  const setLanguage = (lang: Language) => {
-    setLanguageState(lang);
-    localStorage.setItem('language', lang);
-    try {
-      const url = new URL(window.location.href);
-      if (lang === 'en') {
-        url.searchParams.delete('lang');
-      } else {
-        url.searchParams.set('lang', lang);
+  const setLanguage = useCallback(
+    (lang: Language) => {
+      try {
+        localStorage.setItem('language', lang);
+      } catch {
+        // ignore
       }
-      window.history.replaceState({}, '', url.toString());
-    } catch {
-      // ignore
-    }
-  };
 
-  const t = (key: string): string => {
-    const translation = translations[language][key];
-    if (translation !== undefined && translation !== '') {
-      return translation;
-    }
-    const fallback = translations.en[key];
-    if (fallback !== undefined && fallback !== '') {
-      return fallback;
-    }
-    return '';
-  };
+      const url = new URL(window.location.href);
+      url.searchParams.delete('lang');
+      const target = `${getLocalizedPath(pathname || url.pathname, lang)}${url.search}${url.hash}`;
+      if (target !== `${url.pathname}${url.search}${url.hash}`) router.push(target);
+    },
+    [pathname, router],
+  );
+
+  const t = useCallback(
+    (key: string): string => {
+      const translation = translations[language]?.[key];
+      if (translation !== undefined && translation !== '') {
+        return translation;
+      }
+      const fallback = translations[DEFAULT_LOCALE]?.[key];
+      if (fallback !== undefined && fallback !== '') {
+        return fallback;
+      }
+      return '';
+    },
+    [language],
+  );
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>

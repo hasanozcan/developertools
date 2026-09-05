@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import Link from '@/components/common/LocalizedLink';
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { Menu, X, Search, Star, Clock, Sun, Moon, ChevronDown } from 'lucide-react';
@@ -12,6 +12,7 @@ import LanguageSelector from '@/components/common/LanguageSelector';
 import CommandPalette from '@/components/layout/CommandPalette';
 import { toolCatalog } from '@/lib/api';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
+import { getLocalizedPath } from '@/lib/i18nRouting';
 import { trackToolEvent } from '@/lib/analytics';
 
 // Derive search coverage from the same catalog that powers the home page and API.
@@ -54,7 +55,7 @@ export default function Header() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const { favorites, isFavorite } = useFavorites();
   const { history } = useHistory();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   // Dynamic navigation with translations
   const navigation = useMemo(
@@ -191,14 +192,14 @@ export default function Header() {
           result_count: searchResults.length,
         });
       }
-      router.push(buildToolPath(tool.category, tool.slug));
+      router.push(getLocalizedPath(buildToolPath(tool.category, tool.slug), language));
       setSearchOpen(false);
       setSearchQuery('');
       setSelectedIndex(-1);
       setShowFavorites(false);
       setShowHistory(false);
     },
-    [router, searchQuery, searchResults.length],
+    [router, language, searchQuery, searchResults.length],
   );
 
   // Handle search
@@ -497,7 +498,7 @@ export default function Header() {
                       <button
                         key={item.slug}
                         onClick={() => {
-                          router.push(buildToolPath(item.category, item.slug));
+                          router.push(getLocalizedPath(buildToolPath(item.category, item.slug), language));
                           setShowHistory(false);
                         }}
                         className="w-full px-4 py-2.5 text-left hover:bg-indigo-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 text-sm font-medium transition-colors"

@@ -10,9 +10,8 @@ describe('CronParserTool localization', () => {
   });
 
   it('renders the schedule description in the selected locale', async () => {
-    localStorage.setItem('language', 'tr');
     render(
-      <LanguageProvider>
+      <LanguageProvider initialLocale="tr">
         <CronParserTool />
       </LanguageProvider>,
     );

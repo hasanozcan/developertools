@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { readToolInput } from '@/lib/toolInput';
 import CodeEditor from '@/components/common/CodeEditor';
 import { ArrowDownUp, Check, Layers } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
@@ -20,6 +21,14 @@ export default function Base64Tool() {
   const [batchMode, setBatchMode] = useState(false);
   const [batchResults, setBatchResults] = useState<BatchResult[]>([]);
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    const extensionInput = readToolInput(window.location.hash);
+    if (extensionInput !== null) {
+      setInput(extensionInput);
+      setMode('decode');
+    }
+  }, []);
 
   const handleConvert = useCallback(() => {
     if (!input.trim()) {

@@ -1,0 +1,4002 @@
+[
+  {
+    "id": 1,
+    "slug": "quoted-printable-encoder",
+    "name": "Quoted-Printable MIME Encoder & Decoder",
+    "shortDescription": "Encode and decode MIME Quoted-Printable (RFC 2045) text strings for email data",
+    "categorySlug": "encoding",
+    "categoryName": "Encoder Online"
+  },
+  {
+    "id": 2,
+    "slug": "json-patch-generator",
+    "name": "RFC 6902 JSON Patch Generator",
+    "shortDescription": "Generate standard RFC 6902 JSON patch differential operations between two objects.",
+    "categorySlug": "json",
+    "categoryName": "JSON Online"
+  },
+  {
+    "id": 3,
+    "slug": "json-flatten-unflatten",
+    "name": "JSON Deep Object Flattener",
+    "shortDescription": "Flatten deeply nested JSON objects into single-level dot notation keys.",
+    "categorySlug": "json",
+    "categoryName": "JSON Online"
+  },
+  {
+    "id": 4,
+    "slug": "morse-code-audio-converter",
+    "name": "Morse Code Text Encoder",
+    "shortDescription": "Convert alphanumeric text into International Morse Code.",
+    "categorySlug": "encoding",
+    "categoryName": "Encoder Online"
+  },
+  {
+    "id": 5,
+    "slug": "base64url-encoder",
+    "name": "Base64URL Encoder & Decoder",
+    "shortDescription": "Encode and decode URL-safe Base64 without padding characters.",
+    "categorySlug": "encoding",
+    "categoryName": "Encoder Online"
+  },
+  {
+    "id": 6,
+    "slug": "subtitle-srt-vtt-converter",
+    "name": "SRT to WebVTT Subtitle Converter",
+    "shortDescription": "Convert SubRip (.srt) subtitles to HTML5 WebVTT (.vtt) format.",
+    "categorySlug": "text",
+    "categoryName": "Text Online"
+  },
+  {
+    "id": 7,
+    "slug": "sql-slugifier",
+    "name": "SQL Database Identifier Slugifier",
+    "shortDescription": "Convert text into valid snake_case SQL table and column identifiers.",
+    "categorySlug": "text",
+    "categoryName": "Text Online"
+  },
+  {
+    "id": 8,
+    "slug": "ai-agent-prompt-optimizer",
+    "name": "AI Agent Prompt Optimizer",
+    "shortDescription": "Structure autonomous AI agent persona, constraints, and goal instructions.",
+    "categorySlug": "text",
+    "categoryName": "Text Online"
+  },
+  {
+    "id": 9,
+    "slug": "apache-conf-formatter",
+    "name": "Apache VirtualHost Config Formatter",
+    "shortDescription": "Format and indent Apache HTTP Server VirtualHost and Directory directives.",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 10,
+    "slug": "docker-compose-formatter",
+    "name": "Docker Compose YAML Formatter",
+    "shortDescription": "Format and clean tab indentations in docker-compose.yml files.",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 11,
+    "slug": "toml-formatter",
+    "name": "TOML Configuration File Formatter",
+    "shortDescription": "Format and organize TOML configuration keys and table headers.",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 12,
+    "slug": "protobuf-formatter",
+    "name": "Protocol Buffers (.proto) Formatter",
+    "shortDescription": "Format and indent Protobuf proto3 service and message definitions.",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 13,
+    "slug": "totp-authenticator-simulator",
+    "name": "RFC 6238 TOTP Authenticator Simulator",
+    "shortDescription": "Generate 6-digit Time-Based One-Time Passwords (TOTP) with countdown timer.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 14,
+    "slug": "ed25519-key-generator",
+    "name": "Ed25519 Keypair Generator",
+    "shortDescription": "Generate Ed25519 cryptographic public/private keypairs.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 15,
+    "slug": "x509-csr-decoder",
+    "name": "X.509 Certificate Signing Request (CSR) Decoder",
+    "shortDescription": "Decode and inspect PEM-encoded Certificate Signing Requests (CSR).",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 16,
+    "slug": "abi-encoder-decoder",
+    "name": "Solidity ABI Parameter Encoder",
+    "shortDescription": "Encode function parameters into 32-byte hexadecimal Solidity ABI payloads.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 17,
+    "slug": "ethereum-keccak256-hasher",
+    "name": "Ethereum Keccak-256 & Selector Hasher",
+    "shortDescription": "Compute Keccak-256 hashes and 4-byte smart contract function selectors.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 18,
+    "slug": "solana-address-validator",
+    "name": "Solana Base58 Address Validator",
+    "shortDescription": "Validate Solana public key addresses and Base58 character encoding.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 19,
+    "slug": "mongodb-aggregate-builder",
+    "name": "MongoDB Aggregation Pipeline Generator",
+    "shortDescription": "Build multi-stage MongoDB aggregation pipelines ($match, $group, $sort).",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 20,
+    "slug": "clickhouse-ddl-generator",
+    "name": "ClickHouse MergeTree DDL Generator",
+    "shortDescription": "Generate optimized ClickHouse CREATE TABLE DDL with MergeTree engines.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 21,
+    "slug": "elasticsearch-query-builder",
+    "name": "Elasticsearch Query DSL Generator",
+    "shortDescription": "Generate structured JSON Elasticsearch boolean search queries with filters.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 22,
+    "slug": "react-hook-form-generator",
+    "name": "React Hook Form Component Generator",
+    "shortDescription": "Generate ready-to-use React Hook Form components with validation rules.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 23,
+    "slug": "gitlab-ci-generator",
+    "name": "GitLab CI/CD Pipeline Generator",
+    "shortDescription": "Build multi-stage .gitlab-ci.yml pipeline configuration files.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 24,
+    "slug": "kubernetes-ingress-generator",
+    "name": "Kubernetes Ingress & Cert-Manager Generator",
+    "shortDescription": "Generate Kubernetes Ingress manifests with TLS termination and Cert-Manager annotations.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 25,
+    "slug": "ollama-modelfile-generator",
+    "name": "Ollama Modelfile Builder",
+    "shortDescription": "Create custom Modelfile configurations with system prompts and parameters for Ollama.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 26,
+    "slug": "cloudflare-wrangler-builder",
+    "name": "Cloudflare Wrangler Config Generator",
+    "shortDescription": "Generate wrangler.json configuration files for Cloudflare Workers, KV, and D1.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 27,
+    "slug": "github-actions-matrix-builder",
+    "name": "GitHub Actions Matrix CI Workflow Generator",
+    "shortDescription": "Build multi-OS and multi-version matrix build workflows for GitHub Actions CI/CD.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 28,
+    "slug": "tailwind-v4-color-palette",
+    "name": "Tailwind CSS v4 OKLCH Color Palette Generator",
+    "shortDescription": "Generate modern OKLCH color scales from 50 to 950 for Tailwind CSS v4.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 29,
+    "slug": "shadcn-theme-generator",
+    "name": "Shadcn UI Theme & CSS Variables Generator",
+    "shortDescription": "Create custom color palettes and CSS variables for Shadcn UI and Radix components.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 30,
+    "slug": "svg-to-webp",
+    "name": "SVG to WebP Data URI Converter",
+    "shortDescription": "Encode SVG vector graphics into high-performance base64 data URIs.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 31,
+    "slug": "docker-to-compose",
+    "name": "Docker Run to Docker Compose Converter",
+    "shortDescription": "Convert single docker run terminal commands into standard docker-compose.yml services.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 32,
+    "slug": "har-to-k6",
+    "name": "HAR to k6 Load Test Script Converter",
+    "shortDescription": "Convert HTTP Archive (HAR) browser network logs into k6 performance test scripts.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 33,
+    "slug": "json-to-graphql-query",
+    "name": "JSON to GraphQL Query Generator",
+    "shortDescription": "Generate structured GraphQL query strings and selection fields from JSON objects.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 34,
+    "slug": "avro-to-json-schema",
+    "name": "Apache Avro to JSON Schema Converter",
+    "shortDescription": "Convert Apache Avro record schema definitions into JSON Schema specifications.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 35,
+    "slug": "openapi-to-typescript-fetch",
+    "name": "OpenAPI to TypeScript Fetch Client",
+    "shortDescription": "Generate typed fetch API client functions from OpenAPI 3.0 and Swagger specs.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 36,
+    "slug": "postman-to-curl",
+    "name": "Postman Collection to cURL Script",
+    "shortDescription": "Convert exported Postman Collection JSON requests into executable terminal cURL commands.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 37,
+    "slug": "svg-to-react-native",
+    "name": "SVG to React Native (SVGR) Converter",
+    "shortDescription": "Transform raw SVG vector graphics into react-native-svg JSX components.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 38,
+    "slug": "json-schema-to-zod",
+    "name": "JSON Schema to Zod Converter",
+    "shortDescription": "Convert JSON Schema definitions into TypeScript Zod validation objects.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 39,
+    "slug": "zod-to-json-schema",
+    "name": "Zod to JSON Schema Converter",
+    "shortDescription": "Convert TypeScript Zod object schemas into standard JSON Schema draft-07 definitions.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 40,
+    "slug": "aspect-ratio-resizer",
+    "name": "Aspect Ratio & Resolution Calculator",
+    "shortDescription": "Calculate standard aspect ratios (16:9, 4:3, 21:9) and scale resolution dimensions.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 41,
+    "slug": "subresource-integrity-generator",
+    "name": "Subresource Integrity (SRI) Hash Builder",
+    "shortDescription": "Generate secure sha384 and sha512 integrity hashes for CDN script and stylesheet tags.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 42,
+    "slug": "csp-evaluator",
+    "name": "CSP (Content Security Policy) Evaluator",
+    "shortDescription": "Analyze Content Security Policy headers for missing directives and XSS vulnerabilities.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 43,
+    "slug": "nginx-rate-limit-calculator",
+    "name": "Nginx Rate Limit Directives Builder",
+    "shortDescription": "Generate optimized limit_req_zone rate limiting directives for Nginx reverse proxies.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 44,
+    "slug": "cron-next-runs-visualizer",
+    "name": "Cron Next 20 Runs Calculator",
+    "shortDescription": "Calculate and preview the exact next 20 execution timestamps for any cron schedule.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 45,
+    "slug": "rag-chunking-visualizer",
+    "name": "RAG Semantic Chunking Visualizer",
+    "shortDescription": "Visualize document text chunking with custom token sizes and overlapping sliding windows.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 46,
+    "slug": "mcp-inspector",
+    "name": "Model Context Protocol (MCP) Inspector",
+    "shortDescription": "Validate and inspect MCP JSON-RPC 2.0 requests, responses, and notification payloads.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 47,
+    "slug": "tiktoken-visualizer",
+    "name": "Tiktoken BPE Tokenizer Visualizer",
+    "shortDescription": "Visual token breakdown and colorized segmentation for OpenAI and Llama BPE models.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 48,
+    "slug": "claude-token-counter",
+    "name": "Claude Token & Cost Calculator",
+    "shortDescription": "Calculate token counts and pricing for Claude 3.5 Sonnet, Haiku, and Opus models.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 49,
+    "slug": "deepseek-token-counter",
+    "name": "DeepSeek Token & Cost Calculator",
+    "shortDescription": "Calculate exact BPE token counts and API inference costs for DeepSeek V3 and DeepSeek R1 models.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 50,
+    "slug": "json-formatter",
+    "name": "JSON Formatter",
+    "shortDescription": "Format and beautify JSON data",
+    "categorySlug": "json",
+    "categoryName": "JSON Online"
+  },
+  {
+    "id": 51,
+    "slug": "json-validator",
+    "name": "JSON Validator",
+    "shortDescription": "Validate JSON syntax and structure",
+    "categorySlug": "json",
+    "categoryName": "JSON Online"
+  },
+  {
+    "id": 52,
+    "slug": "json-csv",
+    "name": "JSON to CSV",
+    "shortDescription": "Convert JSON arrays to CSV and back",
+    "categorySlug": "json",
+    "categoryName": "JSON Online"
+  },
+  {
+    "id": 53,
+    "slug": "json-to-typescript",
+    "name": "JSON to TypeScript",
+    "shortDescription": "Generate TypeScript interfaces from JSON",
+    "categorySlug": "json",
+    "categoryName": "JSON Online"
+  },
+  {
+    "id": 54,
+    "slug": "base64",
+    "name": "Base64 Encoder/Decoder",
+    "shortDescription": "Encode or decode Base64 strings",
+    "categorySlug": "encoding",
+    "categoryName": "Encoder Online"
+  },
+  {
+    "id": 55,
+    "slug": "url-encoder",
+    "name": "URL Encoder/Decoder",
+    "shortDescription": "Encode or decode URL strings",
+    "categorySlug": "encoding",
+    "categoryName": "Encoder Online"
+  },
+  {
+    "id": 56,
+    "slug": "jwt-decoder",
+    "name": "JWT Decoder, Signer & Verifier",
+    "shortDescription": "Decode JWTs and sign or verify HS256, HS384, and HS512 tokens locally",
+    "categorySlug": "encoding",
+    "categoryName": "Encoder Online"
+  },
+  {
+    "id": 57,
+    "slug": "html-entity",
+    "name": "HTML Entity Encoder/Decoder",
+    "shortDescription": "Encode or decode HTML entities",
+    "categorySlug": "encoding",
+    "categoryName": "Encoder Online"
+  },
+  {
+    "id": 58,
+    "slug": "uuid-generator",
+    "name": "UUID v4 & v7 Generator",
+    "shortDescription": "Generate random v4 or timestamp-based v7 UUIDs",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 59,
+    "slug": "password-generator",
+    "name": "Password Generator",
+    "shortDescription": "Create strong random passwords",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 60,
+    "slug": "qr-code",
+    "name": "QR Code Generator",
+    "shortDescription": "Create QR codes from text or URLs",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 61,
+    "slug": "slug-generator",
+    "name": "Slug Generator",
+    "shortDescription": "Generate clean URL slugs",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 62,
+    "slug": "css-gradient",
+    "name": "CSS Gradient",
+    "shortDescription": "Design and export CSS gradients",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 63,
+    "slug": "meta-tags",
+    "name": "Meta Tags Generator",
+    "shortDescription": "Generate SEO meta tags",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 64,
+    "slug": "md5-hash",
+    "name": "MD5 Hash",
+    "shortDescription": "Generate MD5 hashes",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 65,
+    "slug": "sha256-hash",
+    "name": "SHA256 Hash",
+    "shortDescription": "Generate SHA256 hashes",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 66,
+    "slug": "regex-tester",
+    "name": "Regex Tester",
+    "shortDescription": "Test and debug regex patterns",
+    "categorySlug": "text",
+    "categoryName": "Text Online"
+  },
+  {
+    "id": 67,
+    "slug": "text-diff",
+    "name": "Text Diff",
+    "shortDescription": "Compare texts and highlight differences",
+    "categorySlug": "text",
+    "categoryName": "Text Online"
+  },
+  {
+    "id": 68,
+    "slug": "markdown-preview",
+    "name": "Markdown Preview",
+    "shortDescription": "Preview and convert Markdown to HTML",
+    "categorySlug": "text",
+    "categoryName": "Text Online"
+  },
+  {
+    "id": 69,
+    "slug": "lorem-ipsum",
+    "name": "Lorem Ipsum",
+    "shortDescription": "Generate placeholder text",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 70,
+    "slug": "timestamp-converter",
+    "name": "Timestamp Converter",
+    "shortDescription": "Convert timestamps to readable dates",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 71,
+    "slug": "color-converter",
+    "name": "Color Converter",
+    "shortDescription": "Convert between HEX, RGB, and HSL",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 72,
+    "slug": "image-to-base64",
+    "name": "Image to Base64",
+    "shortDescription": "Convert images to Base64",
+    "categorySlug": "encoding",
+    "categoryName": "Encoder Online"
+  },
+  {
+    "id": 73,
+    "slug": "yaml-json",
+    "name": "YAML to JSON",
+    "shortDescription": "Convert YAML to JSON and back",
+    "categorySlug": "json",
+    "categoryName": "JSON Online"
+  },
+  {
+    "id": 74,
+    "slug": "sql-formatter",
+    "name": "SQL Formatter",
+    "shortDescription": "Format SQL queries",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 75,
+    "slug": "css-minifier",
+    "name": "CSS Minifier",
+    "shortDescription": "Minify CSS for production",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 76,
+    "slug": "js-minifier",
+    "name": "JS Minifier",
+    "shortDescription": "Minify JavaScript for production",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 77,
+    "slug": "cron-parser",
+    "name": "Cron Parser",
+    "shortDescription": "Parse and explain cron expressions",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 78,
+    "slug": "case-converter",
+    "name": "Case Converter",
+    "shortDescription": "Convert text between different cases",
+    "categorySlug": "text",
+    "categoryName": "Text Online"
+  },
+  {
+    "id": 79,
+    "slug": "word-counter",
+    "name": "Word Counter",
+    "shortDescription": "Count words, characters, lines, and sentences",
+    "categorySlug": "text",
+    "categoryName": "Text Online"
+  },
+  {
+    "id": 80,
+    "slug": "remove-duplicates",
+    "name": "Remove Duplicate Lines",
+    "shortDescription": "Remove duplicate lines from text",
+    "categorySlug": "text",
+    "categoryName": "Text Online"
+  },
+  {
+    "id": 81,
+    "slug": "sort-lines",
+    "name": "Sort Lines",
+    "shortDescription": "Sort lines alphabetically",
+    "categorySlug": "text",
+    "categoryName": "Text Online"
+  },
+  {
+    "id": 82,
+    "slug": "hex-encoder",
+    "name": "HEX Encoder/Decoder",
+    "shortDescription": "Encode or decode text to or from hexadecimal",
+    "categorySlug": "encoding",
+    "categoryName": "Encoder Online"
+  },
+  {
+    "id": 83,
+    "slug": "binary-encoder",
+    "name": "Binary Encoder/Decoder",
+    "shortDescription": "Encode or decode text to or from binary",
+    "categorySlug": "encoding",
+    "categoryName": "Encoder Online"
+  },
+  {
+    "id": 84,
+    "slug": "html-formatter",
+    "name": "HTML Formatter",
+    "shortDescription": "Format and beautify HTML code",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 85,
+    "slug": "html-minifier",
+    "name": "HTML Minifier",
+    "shortDescription": "Minify HTML code for production",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 86,
+    "slug": "xml-formatter",
+    "name": "XML Formatter",
+    "shortDescription": "Format and beautify XML code",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 87,
+    "slug": "sha512-hash",
+    "name": "SHA512 Hash Generator",
+    "shortDescription": "Generate SHA512 hashes from text",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 88,
+    "slug": "roman-numeral-converter",
+    "name": "Roman Numeral Converter",
+    "shortDescription": "Convert numbers to and from Roman numerals",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 89,
+    "slug": "number-base-converter",
+    "name": "Number Base Converter",
+    "shortDescription": "Convert between decimal, hexadecimal, octal, and binary",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 90,
+    "slug": "unicode-escape",
+    "name": "Unicode Escape Encoder/Decoder",
+    "shortDescription": "Convert text to and from Unicode escape sequences",
+    "categorySlug": "encoding",
+    "categoryName": "Encoder Online"
+  },
+  {
+    "id": 91,
+    "slug": "json-string-escape",
+    "name": "JSON String Escape",
+    "shortDescription": "Escape and unescape JSON string content",
+    "categorySlug": "encoding",
+    "categoryName": "Encoder Online"
+  },
+  {
+    "id": 92,
+    "slug": "regex-escape",
+    "name": "Regex Escape",
+    "shortDescription": "Escape text for safe use in regular expressions",
+    "categorySlug": "text",
+    "categoryName": "Text Online"
+  },
+  {
+    "id": 93,
+    "slug": "url-parser",
+    "name": "URL Parser",
+    "shortDescription": "Parse URLs into protocol, host, path, and query parameters",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 94,
+    "slug": "query-string-parser",
+    "name": "Query String Parser",
+    "shortDescription": "Parse and build URL query strings",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 95,
+    "slug": "http-headers-parser",
+    "name": "HTTP Headers Parser",
+    "shortDescription": "Convert raw HTTP headers to JSON and back",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 96,
+    "slug": "http-status-codes",
+    "name": "HTTP Status Codes",
+    "shortDescription": "Search and reference common HTTP status codes",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 97,
+    "slug": "user-agent-parser",
+    "name": "User Agent Parser Online",
+    "shortDescription": "Parse browser, OS, engine, device, CPU, and bot fields from one or many User-Agent strings",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 98,
+    "slug": "json-schema-validator",
+    "name": "JSON Schema Validator",
+    "shortDescription": "Validate JSON documents against JSON Schema rules",
+    "categorySlug": "json",
+    "categoryName": "JSON Online"
+  },
+  {
+    "id": 99,
+    "slug": "hmac-generator",
+    "name": "HMAC Generator & Verifier",
+    "shortDescription": "Generate and verify keyed SHA message authentication codes",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 100,
+    "slug": "pkce-generator",
+    "name": "PKCE Generator & Verifier",
+    "shortDescription": "Generate and verify OAuth PKCE S256 verifier and challenge pairs",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 101,
+    "slug": "cidr-calculator",
+    "name": "IPv4 CIDR Calculator",
+    "shortDescription": "Calculate IPv4 network ranges, masks, broadcasts, and usable hosts",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 102,
+    "slug": "json-pointer",
+    "name": "JSON Pointer Evaluator",
+    "shortDescription": "Resolve RFC 6901 JSON Pointer paths against JSON documents",
+    "categorySlug": "json",
+    "categoryName": "JSON Online"
+  },
+  {
+    "id": 103,
+    "slug": "chmod-calculator",
+    "name": "Chmod Calculator",
+    "shortDescription": "Convert Unix file permissions between octal and symbolic modes",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 104,
+    "slug": "cache-control",
+    "name": "Cache-Control Parser & Builder",
+    "shortDescription": "Parse, normalize, and check HTTP Cache-Control directives",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 105,
+    "slug": "jsonpath-tester",
+    "name": "JSONPath Tester",
+    "shortDescription": "Query JSON with RFC 9535-style paths, wildcards, slices, and recursive descent",
+    "categorySlug": "json",
+    "categoryName": "JSON Online"
+  },
+  {
+    "id": 106,
+    "slug": "csp-builder",
+    "name": "CSP Header Builder & Analyzer",
+    "shortDescription": "Build, normalize, and inspect Content Security Policy headers",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 107,
+    "slug": "curl-to-fetch",
+    "name": "cURL Builder & Fetch Converter",
+    "shortDescription": "Build cURL requests or convert safe cURL input to JavaScript fetch",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 108,
+    "slug": "env-to-json",
+    "name": ".env to JSON Converter",
+    "shortDescription": "Convert dotenv variables to JSON and back without uploading secrets",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 109,
+    "slug": "json-to-zod",
+    "name": "JSON to Zod Schema",
+    "shortDescription": "Generate Zod schemas and inferred TypeScript types from JSON samples",
+    "categorySlug": "json",
+    "categoryName": "JSON Online"
+  },
+  {
+    "id": 110,
+    "slug": "bcrypt-generator",
+    "name": "Bcrypt Generator & Verifier",
+    "shortDescription": "Generate salted bcrypt hashes and verify test passwords locally",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 111,
+    "slug": "json-diff-patch",
+    "name": "JSON Diff & Patch Generator",
+    "shortDescription": "Generate and apply RFC 6902 JSON Patch operations locally",
+    "categorySlug": "json",
+    "categoryName": "JSON Online"
+  },
+  {
+    "id": 112,
+    "slug": "color-contrast-checker",
+    "name": "Color Contrast Checker",
+    "shortDescription": "Check WCAG text and UI contrast ratios with a live preview",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 113,
+    "slug": "certificate-decoder",
+    "name": "PEM / X.509 Certificate Decoder",
+    "shortDescription": "Inspect certificate identities, validity, SANs, algorithms, and fingerprints locally",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 114,
+    "slug": "openapi-validator",
+    "name": "OpenAPI Validator & Endpoint Explorer",
+    "shortDescription": "Validate OpenAPI 3 documents and explore endpoint operations locally",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 115,
+    "slug": "svg-to-jsx",
+    "name": "SVG to JSX / React Converter",
+    "shortDescription": "Convert SVG markup to React JSX/TSX components with custom options",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 116,
+    "slug": "svg-minifier",
+    "name": "SVG Optimizer & Minifier",
+    "shortDescription": "Optimize and shrink SVG file sizes with live rendered preview",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 117,
+    "slug": "css-clamp",
+    "name": "CSS clamp() Fluid Calculator",
+    "shortDescription": "Calculate fluid responsive typography and spacing CSS clamp() values",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 118,
+    "slug": "css-box-shadow",
+    "name": "CSS Box Shadow Generator",
+    "shortDescription": "Create multi-layer box shadows and glassmorphism styling visually",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 119,
+    "slug": "docker-run-to-compose",
+    "name": "Docker Run to Compose Converter",
+    "shortDescription": "Convert docker run commands into docker-compose.yml services",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 120,
+    "slug": "cron-generator",
+    "name": "Visual Cron Expression Builder",
+    "shortDescription": "Build standard cron expressions visually with schedule preview",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 121,
+    "slug": "json-to-sql",
+    "name": "JSON to SQL Converter",
+    "shortDescription": "Generate SQL INSERT queries and CREATE TABLE DDL from JSON data",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 122,
+    "slug": "bip39-generator",
+    "name": "BIP-39 Mnemonic Generator",
+    "shortDescription": "Generate and validate 12/24-word cryptocurrency mnemonic seed phrases",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 123,
+    "slug": "dmarc-generator",
+    "name": "DMARC & SPF Record Generator",
+    "shortDescription": "Generate SPF, DMARC, and DKIM DNS TXT records for domain email security",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 124,
+    "slug": "json-to-models",
+    "name": "JSON to Multi-Language Models",
+    "shortDescription": "Generate Go structs, Python Pydantic, Rust Serde, and C# from JSON",
+    "categorySlug": "json",
+    "categoryName": "JSON Online"
+  },
+  {
+    "id": 125,
+    "slug": "px-to-rem",
+    "name": "PX to REM & EM Converter",
+    "shortDescription": "Convert pixel dimensions to REM, EM, VW, VH, and CSS units",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 126,
+    "slug": "mock-data-generator",
+    "name": "Mock Data JSON Generator",
+    "shortDescription": "Generate realistic mock JSON datasets for users, products, and orders",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 127,
+    "slug": "csv-to-markdown",
+    "name": "CSV to Markdown Table Converter",
+    "shortDescription": "Convert CSV and TSV spreadsheets to GitHub-flavored Markdown tables",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 128,
+    "slug": "curl-to-code",
+    "name": "cURL to Multi-Language Code",
+    "shortDescription": "Convert cURL commands to JavaScript Fetch, Axios, Python, Go, PHP, and Rust",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 129,
+    "slug": "rsa-key-pair-generator",
+    "name": "RSA & ECDSA Key Pair Generator",
+    "shortDescription": "Generate RSA and ECDSA public/private key pairs in PEM format securely in browser",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 130,
+    "slug": "svg-optimizer",
+    "name": "SVG Optimizer & Cleaner",
+    "shortDescription": "Minify SVG code, remove editor metadata, clean paths, and inspect byte savings",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 131,
+    "slug": "html-table-to-json",
+    "name": "HTML Table to JSON Converter",
+    "shortDescription": "Extract and parse HTML table markup into structured JSON objects or arrays",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 132,
+    "slug": "favicon-generator",
+    "name": "Favicon & App Icon Generator",
+    "shortDescription": "Generate 16x16, 32x32, Apple Touch icons, web manifest, and HTML link tags",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 133,
+    "slug": "gitignore-generator",
+    "name": ".gitignore Generator",
+    "shortDescription": "Generate customized .gitignore files for Node, Python, Java, Go, Rust, macOS, and IDEs",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 134,
+    "slug": "htpasswd-generator",
+    "name": ".htpasswd Generator",
+    "shortDescription": "Generate Bcrypt, MD5, and SHA-1 password hashes for Apache and Nginx HTTP Basic Auth",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 135,
+    "slug": "dockerfile-generator",
+    "name": "Dockerfile Generator",
+    "shortDescription": "Generate production-ready multi-stage Dockerfiles for Node, Python, Go, Rust, and Nginx",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 136,
+    "slug": "css-glassmorphism",
+    "name": "CSS Glassmorphism Generator",
+    "shortDescription": "Design modern frosted glass UI cards with real-time blur, opacity, and Tailwind CSS",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 137,
+    "slug": "css-grid-generator",
+    "name": "CSS Grid Layout Generator",
+    "shortDescription": "Create custom CSS Grid layouts with column/row spans, gaps, and interactive preview",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 138,
+    "slug": "css-blob-generator",
+    "name": "CSS & SVG Blob Generator",
+    "shortDescription": "Generate smooth organic blob shapes using fancy CSS border-radius and SVG paths",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 139,
+    "slug": "robots-txt-generator",
+    "name": "robots.txt Generator & Tester",
+    "shortDescription": "Create SEO-optimized robots.txt files with custom user-agents, disallow rules, and sitemaps",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 140,
+    "slug": "sitemap-generator",
+    "name": "XML Sitemap Generator",
+    "shortDescription": "Generate valid sitemap.xml files with lastmod, changefreq, and priority tags from URL lists",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 141,
+    "slug": "sql-to-json",
+    "name": "SQL to JSON Converter",
+    "shortDescription": "Convert SQL INSERT statements and table dumps into structured JSON arrays and objects",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 142,
+    "slug": "totp-generator",
+    "name": "2FA / TOTP Authenticator Generator",
+    "shortDescription": "Generate RFC 6238 TOTP security codes, base32 secrets, and otpauth:// QR URIs",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 143,
+    "slug": "markdown-table-generator",
+    "name": "Markdown Table Generator",
+    "shortDescription": "Create, edit, and format GitHub Markdown tables with an interactive spreadsheet editor",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 144,
+    "slug": "key-code-info",
+    "name": "JavaScript Keycode Info",
+    "shortDescription": "Inspect keyboard event.key, code, which, and keyCode values with live keypress listener",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 145,
+    "slug": "aspect-ratio-calculator",
+    "name": "Aspect Ratio Calculator",
+    "shortDescription": "Calculate 16:9, 4:3, 21:9 image and video aspect ratios with proportional resizing",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 146,
+    "slug": "base64-to-image",
+    "name": "Base64 to Image Decoder",
+    "shortDescription": "Decode Base64 strings and Data URIs back into PNG, JPG, WebP, and SVG image files",
+    "categorySlug": "encoding",
+    "categoryName": "Encoder Online"
+  },
+  {
+    "id": 147,
+    "slug": "html-to-markdown",
+    "name": "HTML to Markdown Converter",
+    "shortDescription": "Convert HTML markup, headings, links, blockquotes, and lists into clean Markdown",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 148,
+    "slug": "css-triangle-generator",
+    "name": "CSS Triangle Generator",
+    "shortDescription": "Generate pure CSS border triangles and tooltips pointing in any direction",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 149,
+    "slug": "svg-placeholder-generator",
+    "name": "SVG Placeholder Generator",
+    "shortDescription": "Generate custom SVG and Data URI image placeholders with dimensions and custom text",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 150,
+    "slug": "css-flexbox-generator",
+    "name": "CSS Flexbox Generator",
+    "shortDescription": "Visual interactive CSS flexbox container and items playground with code export",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 151,
+    "slug": "open-graph-previewer",
+    "name": "Open Graph & Social Previewer",
+    "shortDescription": "Preview Twitter, Facebook, LinkedIn, Discord, and Google SERP social share cards",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 152,
+    "slug": "ascii-art-generator",
+    "name": "ASCII Art & Banner Generator",
+    "shortDescription": "Generate large ASCII font art banners for code comments, READMEs, and terminals",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 153,
+    "slug": "css-animation-generator",
+    "name": "CSS Animation Generator",
+    "shortDescription": "Generate CSS keyframe animations (bounce, pulse, shake, spin, flip) with live preview",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 154,
+    "slug": "markdown-to-html",
+    "name": "Markdown to HTML Converter",
+    "shortDescription": "Convert Markdown syntax to formatted and minified raw HTML markup",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 155,
+    "slug": "css-text-shadow",
+    "name": "CSS Text Shadow Generator",
+    "shortDescription": "Generate multi-layer text shadows, 3D typography, and neon glow CSS effects",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 156,
+    "slug": "time-duration-calculator",
+    "name": "Time Duration & Date Diff",
+    "shortDescription": "Calculate exact elapsed time between two dates and convert between time units",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 157,
+    "slug": "xml-to-json",
+    "name": "XML to JSON & JSON to XML",
+    "shortDescription": "Convert XML data to structured JSON and JSON objects to valid XML markup",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 158,
+    "slug": "list-to-sql-in",
+    "name": "List to SQL IN Clause",
+    "shortDescription": "Convert text lists, column IDs, and spreadsheets to formatted SQL IN clauses",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 159,
+    "slug": "svg-to-png",
+    "name": "SVG to PNG / JPG / WebP Converter",
+    "shortDescription": "Convert vector SVG graphics into high-resolution raster images (PNG, JPEG, WebP)",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 160,
+    "slug": "ip-subnet-calculator",
+    "name": "IPv4 Subnet Calculator",
+    "shortDescription": "Calculate network address, broadcast, usable host IP range, subnet mask, and CIDR",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 161,
+    "slug": "css-filter-generator",
+    "name": "CSS Filter Generator",
+    "shortDescription": "Generate CSS image filters (blur, brightness, contrast, grayscale, hue, sepia)",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 162,
+    "slug": "bcrypt-verifier",
+    "name": "Bcrypt Hash Verifier",
+    "shortDescription": "Verify plain text passwords against Bcrypt hashes and inspect cost and salt rounds",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 163,
+    "slug": "css-border-radius",
+    "name": "CSS 8-Point Border Radius",
+    "shortDescription": "Generate advanced 8-point asymmetric border-radius, organic blobs, and squircles",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 164,
+    "slug": "jwt-generator",
+    "name": "JWT Token Generator",
+    "shortDescription": "Create and sign custom JWT tokens with HMAC-SHA256, expiration, and payload claims",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 165,
+    "slug": "ulid-generator",
+    "name": "ULID & UUID v7 Generator",
+    "shortDescription": "Generate timestamp-ordered sortable 128-bit ULIDs and UUID v7 identifiers",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 166,
+    "slug": "curl-builder",
+    "name": "cURL Command Builder",
+    "shortDescription": "Visual API request client to construct and export executable terminal cURL commands",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 167,
+    "slug": "base64-to-pdf",
+    "name": "Base64 to PDF Converter",
+    "shortDescription": "Decode Base64 strings directly into an in-browser PDF document viewer with download",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 168,
+    "slug": "css-neumorphism",
+    "name": "CSS Neumorphism Generator",
+    "shortDescription": "Generate soft UI neumorphic shadows, inset depth, and convex shapes with pure CSS",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 169,
+    "slug": "string-byte-counter",
+    "name": "String Byte & UTF-8 Counter",
+    "shortDescription": "Calculate UTF-8 byte length, character count, and database VARCHAR column limits",
+    "categorySlug": "text",
+    "categoryName": "Text Online"
+  },
+  {
+    "id": 170,
+    "slug": "css-mesh-gradient",
+    "name": "CSS Mesh Gradient Generator",
+    "shortDescription": "Generate modern multi-point mesh and aura radial gradients for UI hero backgrounds",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 171,
+    "slug": "html-to-jsx",
+    "name": "HTML to JSX / React Converter",
+    "shortDescription": "Convert HTML markup into React JSX components with camelCase attributes and inline styles",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 172,
+    "slug": "css-clip-path",
+    "name": "CSS Clip-Path & Polygon Generator",
+    "shortDescription": "Design visual clip-path polygons, geometric shapes, and custom masks with pure CSS",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 173,
+    "slug": "css-scrollbar-generator",
+    "name": "Custom CSS Scrollbar Generator",
+    "shortDescription": "Generate custom scrollbar styles with WebKit pseudo-elements and standard scrollbar-color",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 174,
+    "slug": "css-pattern-generator",
+    "name": "CSS Background Pattern Generator",
+    "shortDescription": "Create pure CSS repeating background patterns including dot grids, stripes, and blueprints",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 175,
+    "slug": "svg-path-visualizer",
+    "name": "SVG Path Visualizer & Inspector",
+    "shortDescription": "Visualize, inspect, and analyze SVG path d-attribute commands and coordinates",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 176,
+    "slug": "color-palette-generator",
+    "name": "Tailwind Color Palette Generator",
+    "shortDescription": "Generate accessible 50-950 color shade scales and harmony palettes from any hex color",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 177,
+    "slug": "csv-to-sql-insert",
+    "name": "CSV to SQL INSERT Generator",
+    "shortDescription": "Convert CSV spreadsheets into batch SQL INSERT statements for PostgreSQL, MySQL, and SQLite",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 178,
+    "slug": "sql-minifier",
+    "name": "SQL Query Minifier",
+    "shortDescription": "Strip comments and whitespace to compress SQL queries into compact single-line statements",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 179,
+    "slug": "json-to-graphql",
+    "name": "JSON to GraphQL Schema Generator",
+    "shortDescription": "Infer GraphQL types, inputs, and schemas automatically from sample JSON payloads",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 180,
+    "slug": "tsv-to-json",
+    "name": "TSV to JSON Converter",
+    "shortDescription": "Convert tab-separated values (TSV) into structured JSON arrays and back",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 181,
+    "slug": "ndjson-to-json",
+    "name": "NDJSON / JSONL to JSON Converter",
+    "shortDescription": "Convert newline-delimited JSON log streams into standard JSON arrays and back",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 182,
+    "slug": "json-size-analyzer",
+    "name": "JSON Size & Memory Analyzer",
+    "shortDescription": "Analyze JSON byte size, nesting depth, object distribution, and minification savings",
+    "categorySlug": "json",
+    "categoryName": "JSON Online"
+  },
+  {
+    "id": 183,
+    "slug": "hex-to-base64",
+    "name": "Hex to Base64 Converter",
+    "shortDescription": "Convert raw hexadecimal byte strings into Base64 encoding and vice versa",
+    "categorySlug": "encoding",
+    "categoryName": "Encoder Online"
+  },
+  {
+    "id": 184,
+    "slug": "punycode-converter",
+    "name": "Punycode & IDN Domain Converter",
+    "shortDescription": "Convert international domain names (IDNs) between Unicode and ASCII Punycode (xn--)",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 185,
+    "slug": "morse-code-converter",
+    "name": "Morse Code Audio & Text Translator",
+    "shortDescription": "Translate plain text to Morse code with real-time audio playback and decode back",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 186,
+    "slug": "base32-encoder",
+    "name": "Base32 Encoder & Decoder",
+    "shortDescription": "Encode and decode strings to RFC 4648 Base32 format for 2FA seeds and tokens",
+    "categorySlug": "encoding",
+    "categoryName": "Encoder Online"
+  },
+  {
+    "id": 187,
+    "slug": "password-strength-analyzer",
+    "name": "Password Strength & Entropy Analyzer",
+    "shortDescription": "Calculate password entropy bits, brute-force crack time estimates, and complexity scores",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 188,
+    "slug": "semver-calculator",
+    "name": "Semver Range & Version Calculator",
+    "shortDescription": "Evaluate semantic versioning ranges, check npm satisfies constraints, and bump releases",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 189,
+    "slug": "ipv6-subnet-calculator",
+    "name": "IPv6 Subnet & Prefix Calculator",
+    "shortDescription": "Expand, compress, and calculate IPv6 prefix ranges, CIDR subnets, and address types",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 190,
+    "slug": "mac-address-generator",
+    "name": "MAC Address Generator & Formatter",
+    "shortDescription": "Generate random unicast/multicast MAC addresses with colon, hyphen, or Cisco notation",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 191,
+    "slug": "crontab-descriptor",
+    "name": "Crontab Expression Explainer",
+    "shortDescription": "Translate cron schedule expressions into natural human-readable English descriptions",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 192,
+    "slug": "htaccess-to-nginx",
+    "name": "Apache .htaccess to Nginx Converter",
+    "shortDescription": "Convert Apache mod_rewrite rules, redirects, and headers into Nginx server blocks",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 193,
+    "slug": "dns-record-generator",
+    "name": "DNS Email Security Record Builder",
+    "shortDescription": "Generate SPF, DKIM, and DMARC TXT records for email domain authentication",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 194,
+    "slug": "slug-to-title",
+    "name": "Slug to Title & Case Converter",
+    "shortDescription": "Convert URL slugs into Title Case headlines, Sentence case, PascalCase, and camelCase",
+    "categorySlug": "text",
+    "categoryName": "Text Online"
+  },
+  {
+    "id": 195,
+    "slug": "text-obfuscator",
+    "name": "Invisible Character & Zero-Width Detector",
+    "shortDescription": "Detect and remove hidden zero-width spaces, Unicode marks, and invisible formatting",
+    "categorySlug": "text",
+    "categoryName": "Text Online"
+  },
+  {
+    "id": 196,
+    "slug": "csv-column-extractor",
+    "name": "CSV Column Extractor & Filter",
+    "shortDescription": "Select, extract, and reorder specific columns from large CSV data files",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 197,
+    "slug": "sql-to-typescript",
+    "name": "SQL Table to TypeScript Interface",
+    "shortDescription": "Convert SQL CREATE TABLE schema definitions into type-safe TypeScript interfaces",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 198,
+    "slug": "json-to-env",
+    "name": "JSON to .env Converter",
+    "shortDescription": "Flatten nested JSON objects into key-value environment variables and vice versa",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 199,
+    "slug": "json-minifier",
+    "name": "JSON Minifier & Stringifier",
+    "shortDescription": "Minify JSON files by stripping whitespace to reduce API payload bandwidth",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 200,
+    "slug": "markdown-table-to-csv",
+    "name": "Markdown Table to CSV Converter",
+    "shortDescription": "Convert GitHub markdown tables into spreadsheet-ready CSV files and Excel downloads",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 201,
+    "slug": "llm-token-counter",
+    "name": "LLM Token & Cost Calculator",
+    "shortDescription": "Estimate token counts and API inference costs for GPT-4o, Claude 3.5, Gemini, and Llama 3 models.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 202,
+    "slug": "openai-function-schema",
+    "name": "OpenAI Function Calling Schema Generator",
+    "shortDescription": "Convert JSON objects into structured OpenAI tool and function calling parameter schemas.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 203,
+    "slug": "prompt-template-formatter",
+    "name": "Prompt Template Compiler & Interpolator",
+    "shortDescription": "Interpolate variables and validate placeholders in Jinja2 and Mustache AI prompt templates.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 204,
+    "slug": "embedding-similarity",
+    "name": "Embedding Vector Similarity Calculator",
+    "shortDescription": "Calculate Cosine Similarity, Euclidean Distance, and Dot Product between embedding vectors.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 205,
+    "slug": "text-chunk-splitter",
+    "name": "RAG Text Chunk Splitter & Token Window Simulator",
+    "shortDescription": "Split documents into overlapping token or character chunks for RAG vector search pipelines.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 206,
+    "slug": "jsonl-dataset-validator",
+    "name": "OpenAI JSONL Fine-Tuning Validator",
+    "shortDescription": "Validate JSONL dataset files and message structures for OpenAI and Gemini model fine-tuning.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 207,
+    "slug": "prompt-format-converter",
+    "name": "ChatML, Anthropic & Llama 3 Prompt Converter",
+    "shortDescription": "Convert chat prompts between ChatML, Anthropic Human/Assistant, and Llama 3 template formats.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 208,
+    "slug": "sampling-curve-visualizer",
+    "name": "LLM Temperature & Top-P Sampling Curve Visualizer",
+    "shortDescription": "Simulate and visualize token probability distributions under temperature, Top-P, and Top-K sampling.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 209,
+    "slug": "system-prompt-formatter",
+    "name": "AI System Prompt Builder & Markdown Formatter",
+    "shortDescription": "Format and structure AI system instructions with roles, guidelines, output formats, and examples.",
+    "categorySlug": "text",
+    "categoryName": "Text Online"
+  },
+  {
+    "id": 210,
+    "slug": "prompt-diff",
+    "name": "AI Prompt Version & Semantic Diff Comparator",
+    "shortDescription": "Compare two prompt revisions to highlight line changes, word additions, and token deltas.",
+    "categorySlug": "text",
+    "categoryName": "Text Online"
+  },
+  {
+    "id": 211,
+    "slug": "css-to-tailwind",
+    "name": "CSS to Tailwind CSS Converter",
+    "shortDescription": "Convert standard CSS rules and declaration blocks into Tailwind CSS utility classes.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 212,
+    "slug": "tailwind-to-css",
+    "name": "Tailwind to Vanilla CSS Converter",
+    "shortDescription": "Convert Tailwind CSS classes back into standard, reusable vanilla CSS stylesheets.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 213,
+    "slug": "css-specificity-calculator",
+    "name": "CSS Specificity Calculator & Inspector",
+    "shortDescription": "Calculate selector specificity tuples (IDs, classes, elements) and compare cascade overrides.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 214,
+    "slug": "css-keyframes-generator",
+    "name": "CSS Keyframe Animation Timeline Generator",
+    "shortDescription": "Generate multi-step CSS @keyframes animations and timing rules with real-time visual preview.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 215,
+    "slug": "tailwind-class-sorter",
+    "name": "Tailwind Class Sorter & Formatter",
+    "shortDescription": "Sort and deduplicate Tailwind CSS classes following the official Prettier ordering hierarchy.",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 216,
+    "slug": "fluid-typography",
+    "name": "CSS Fluid Typography & Clamp Calculator",
+    "shortDescription": "Calculate responsive CSS clamp() formulas for fluid font sizes across viewport breakpoints.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 217,
+    "slug": "css-media-query-builder",
+    "name": "CSS Media Query Range Builder",
+    "shortDescription": "Build modern range-syntax CSS @media queries with dark mode and motion preference filters.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 218,
+    "slug": "css-grid-area-builder",
+    "name": "CSS Grid Template Areas Builder",
+    "shortDescription": "Generate visual CSS grid-template-areas layout declarations and responsive area matrices.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 219,
+    "slug": "css-cubic-bezier",
+    "name": "CSS Cubic-Bezier Curve Designer",
+    "shortDescription": "Design and preview custom cubic-bezier timing functions with spring and bounce presets.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 220,
+    "slug": "color-harmony-generator",
+    "name": "Color Harmony & Palette Generator",
+    "shortDescription": "Generate complementary, triadic, and analogous color harmonies with hex and HSL codes.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 221,
+    "slug": "json-to-pydantic",
+    "name": "JSON to Python Pydantic V2 Model",
+    "shortDescription": "Convert JSON payloads into type-safe Python Pydantic V2 BaseModel class definitions.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 222,
+    "slug": "json-to-rust-serde",
+    "name": "JSON to Rust Serde Struct Converter",
+    "shortDescription": "Convert JSON objects into Rust struct definitions with serde derive attributes.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 223,
+    "slug": "json-to-swift",
+    "name": "JSON to Swift Codable Struct Converter",
+    "shortDescription": "Convert JSON API responses into Swift Codable and Identifiable data structs.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 224,
+    "slug": "json-to-kotlin",
+    "name": "JSON to Kotlin Data Class Converter",
+    "shortDescription": "Convert JSON into Kotlin data classes with @Serializable and @SerialName annotations.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 225,
+    "slug": "json-to-csharp",
+    "name": "JSON to C# Class Converter",
+    "shortDescription": "Convert JSON into strongly-typed C# classes with System.Text.Json attributes.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 226,
+    "slug": "json-to-java-pojo",
+    "name": "JSON to Java Lombok POJO Converter",
+    "shortDescription": "Convert JSON objects into Java POJO classes with Lombok @Data and Jackson annotations.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 227,
+    "slug": "typescript-to-json-schema",
+    "name": "TypeScript to JSON Schema Converter",
+    "shortDescription": "Convert TypeScript interface definitions into standard JSON Schema Draft 7/2020-12.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 228,
+    "slug": "yaml-to-typescript",
+    "name": "YAML to TypeScript Interface Converter",
+    "shortDescription": "Convert YAML configuration documents directly into typed TypeScript interfaces.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 229,
+    "slug": "graphql-to-typescript",
+    "name": "GraphQL SDL to TypeScript Types Converter",
+    "shortDescription": "Convert GraphQL schema definition language (SDL) types into TypeScript interfaces.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 230,
+    "slug": "protobuf-to-json",
+    "name": "Protobuf (proto3) to JSON Schema Converter",
+    "shortDescription": "Convert Protocol Buffer message schemas into standard JSON Schema definitions.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 231,
+    "slug": "sql-to-mongodb",
+    "name": "SQL to MongoDB Query Converter",
+    "shortDescription": "Convert SQL SELECT and WHERE queries into MongoDB db.collection.find() syntax.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 232,
+    "slug": "json-to-sql-ddl",
+    "name": "JSON to SQL CREATE TABLE DDL Generator",
+    "shortDescription": "Infer database column types from JSON data and generate SQL CREATE TABLE DDL schemas.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 233,
+    "slug": "sql-explainer",
+    "name": "SQL Query Visual Explainer",
+    "shortDescription": "Break down complex SQL SELECT joins, filters, and aggregations into plain English steps.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 234,
+    "slug": "postgres-connection-builder",
+    "name": "PostgreSQL Connection URI Builder & Parser",
+    "shortDescription": "Build and parse PostgreSQL database connection strings and parameters.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 235,
+    "slug": "redis-command-generator",
+    "name": "Redis Command Builder & Key Helper",
+    "shortDescription": "Build Redis CLI commands for hashes, sets, sorted sets, lists, and expiration TTL.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 236,
+    "slug": "csv-to-parquet-schema",
+    "name": "CSV to Apache Parquet Schema Converter",
+    "shortDescription": "Inspect CSV headers and generate PyArrow Apache Parquet schema declarations.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 237,
+    "slug": "mongodb-objectid-parser",
+    "name": "MongoDB ObjectId Timestamp & Metadata Parser",
+    "shortDescription": "Extract creation timestamps, machine identifiers, and process IDs from MongoDB ObjectIds.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 238,
+    "slug": "sql-index-advisor",
+    "name": "SQL B-Tree Composite Index Advisor",
+    "shortDescription": "Analyze SQL WHERE and JOIN clauses to recommend optimal B-Tree composite database indexes.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 239,
+    "slug": "postgres-to-mysql",
+    "name": "PostgreSQL to MySQL Dialect Converter",
+    "shortDescription": "Convert PostgreSQL SQL dialect and data types into MySQL compatible schema syntax.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 240,
+    "slug": "prisma-to-sql",
+    "name": "Prisma Schema to SQL DDL Generator",
+    "shortDescription": "Convert Prisma ORM schema models into raw SQL CREATE TABLE statements.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 241,
+    "slug": "docker-compose-to-k8s",
+    "name": "Docker Compose to Kubernetes YAML Converter",
+    "shortDescription": "Convert docker-compose.yml services into Kubernetes Deployment and Service manifests.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 242,
+    "slug": "nginx-formatter",
+    "name": "Nginx Config Formatter & Validator",
+    "shortDescription": "Format and indent Nginx server blocks, location directives, and upstream configurations.",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 243,
+    "slug": "terraform-formatter",
+    "name": "Terraform HCL Formatter & Linter",
+    "shortDescription": "Format HashiCorp Terraform (.tf) configuration files with standard 2-space indentation.",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 244,
+    "slug": "kubeconfig-validator",
+    "name": "Kubernetes Kubeconfig Validator",
+    "shortDescription": "Validate Kubeconfig YAML files, cluster contexts, server endpoints, and user credentials.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 245,
+    "slug": "helm-values-evaluator",
+    "name": "Helm Template & Values.yaml Evaluator",
+    "shortDescription": "Simulate Helm template variable interpolation with custom values.yaml payloads.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 246,
+    "slug": "dockerfile-linter",
+    "name": "Dockerfile Linter & Best-Practice Checker",
+    "shortDescription": "Analyze Dockerfiles for caching issues, layer bloat, and container security best practices.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 247,
+    "slug": "systemd-unit-generator",
+    "name": "Linux Systemd Service Unit Generator",
+    "shortDescription": "Generate systemd .service unit configuration files for Node.js, Python, and Go daemons.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 248,
+    "slug": "caddy-to-nginx",
+    "name": "Caddyfile to Nginx Reverse Proxy Converter",
+    "shortDescription": "Convert Caddy reverse proxy blocks into production-ready Nginx server configurations.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 249,
+    "slug": "aws-iam-policy-builder",
+    "name": "AWS IAM Policy JSON Builder & Validator",
+    "shortDescription": "Build and validate AWS IAM JSON policy statements with Effect, Action, and Resource fields.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 250,
+    "slug": "prometheus-alert-builder",
+    "name": "Prometheus Alert Rule & PromQL Builder",
+    "shortDescription": "Generate Prometheus alerting rule YAML manifests with PromQL expressions and labels.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 251,
+    "slug": "websocket-tester",
+    "name": "WebSocket Client & Latency Tester",
+    "shortDescription": "Connect to wss:// WebSocket endpoints, send JSON payloads, and monitor message logs.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 252,
+    "slug": "curl-to-postman",
+    "name": "cURL to Postman Collection Converter",
+    "shortDescription": "Convert cURL command strings into importable Postman v2.1 Collection JSON files.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 253,
+    "slug": "ssl-certificate-inspector",
+    "name": "SSL Certificate PEM & SANs Inspector",
+    "shortDescription": "Inspect x509 PEM SSL/TLS certificates for validity, issuer, Subject Alternative Names, and expiry.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 254,
+    "slug": "csr-generator",
+    "name": "CSR (Certificate Signing Request) Builder",
+    "shortDescription": "Generate OpenSSL Certificate Signing Request commands with Common Name and SAN domains.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 255,
+    "slug": "sse-stream-tester",
+    "name": "Server-Sent Events (SSE) Stream Tester",
+    "shortDescription": "Test real-time Server-Sent Events (SSE) streams and inspect incoming EventSource chunks.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 256,
+    "slug": "graphql-query-formatter",
+    "name": "GraphQL Query Formatter & Minifier",
+    "shortDescription": "Prettify or minify GraphQL queries, mutations, subscriptions, and fragments.",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 257,
+    "slug": "har-viewer",
+    "name": "HAR (HTTP Archive) File Viewer & Analyzer",
+    "shortDescription": "Parse HTTP Archive (.har) logs to inspect request timelines, headers, and status codes.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 258,
+    "slug": "dns-lookup-simulator",
+    "name": "DNS Records & Propagation Simulator",
+    "shortDescription": "Simulate DNS lookups for A, AAAA, CNAME, MX, TXT, and NS records with TTL durations.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 259,
+    "slug": "http-wire-format",
+    "name": "HTTP Request to Raw Wire Format Converter",
+    "shortDescription": "Convert structured HTTP requests into raw HTTP/1.1 wire transmission text payloads.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 260,
+    "slug": "webhook-signature-verifier",
+    "name": "HMAC Webhook Signature Verifier",
+    "shortDescription": "Verify Stripe, GitHub, and Shopify HMAC SHA-256 webhook payload signatures.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 261,
+    "slug": "uuid-v7-generator",
+    "name": "UUID v7 Generator (Time-Ordered)",
+    "shortDescription": "Generate modern Unix Epoch time-ordered UUIDv7 identifiers and extract timestamps.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 262,
+    "slug": "nanoid-generator",
+    "name": "NanoID Generator & Custom Alphabet Builder",
+    "shortDescription": "Generate compact, URL-friendly, cryptographically secure NanoIDs with custom alphabets.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 263,
+    "slug": "base58-encoder",
+    "name": "Base58 Encoder & Decoder (Bitcoin / Solana / IPFS)",
+    "shortDescription": "Encode and decode plain text and raw bytes to Base58 and Base58Check formats.",
+    "categorySlug": "encoding",
+    "categoryName": "Encoder Online"
+  },
+  {
+    "id": 264,
+    "slug": "ssh-key-inspector",
+    "name": "SSH Public Key Fingerprint Inspector",
+    "shortDescription": "Parse OpenSSH public keys to extract key algorithms, comments, and SHA-256 fingerprints.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 265,
+    "slug": "pgp-key-inspector",
+    "name": "PGP & GPG Key Block Inspector",
+    "shortDescription": "Validate and inspect ASCII-armored PGP public/private keys and encrypted message blocks.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 266,
+    "slug": "api-key-generator",
+    "name": "API Key & Token Generator (Prefix-Ready)",
+    "shortDescription": "Generate cryptographically random API keys and session secrets with custom prefixes.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 267,
+    "slug": "jwt-signature-validator",
+    "name": "JWT Signature & Expiry Validator",
+    "shortDescription": "Inspect JWT headers, claims, and verify token structure and expiration timestamps.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 268,
+    "slug": "aes-crypto-playground",
+    "name": "AES-256 Encryption & Decryption Playground",
+    "shortDescription": "Generate 256-bit AES cryptographic keys and test AES-GCM encryption parameters.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 269,
+    "slug": "bip39-seed-deriver",
+    "name": "BIP-39 Mnemonic to Seed Deriver",
+    "shortDescription": "Derive 512-bit binary seed hex strings from 12 and 24-word BIP-39 mnemonic phrases.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 270,
+    "slug": "argon2-hash-generator",
+    "name": "Argon2 Password Hash Formatter",
+    "shortDescription": "Format Argon2id password hashes with custom memory cost, time iterations, and parallelism.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 271,
+    "slug": "android-manifest-builder",
+    "name": "Android Manifest XML & Permissions Builder",
+    "shortDescription": "Generate AndroidManifest.xml files with permissions, activities, and launcher intent filters.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 272,
+    "slug": "ios-plist-builder",
+    "name": "iOS Info.plist Permission Key Builder",
+    "shortDescription": "Build iOS Info.plist XML files with standard permission usage descriptions.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 273,
+    "slug": "app-icon-resizer",
+    "name": "App Icon Resolution Package Reference",
+    "shortDescription": "View standard iOS App Store and Android Play Store icon size specifications.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 274,
+    "slug": "universal-links-validator",
+    "name": "Apple Universal Links & Android App Links Generator",
+    "shortDescription": "Generate apple-app-site-association and assetlinks.json deep link configuration files.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 275,
+    "slug": "flutter-theme-generator",
+    "name": "Flutter Material 3 ColorScheme Generator",
+    "shortDescription": "Convert hex color palettes into Flutter Material 3 ThemeData ColorScheme code.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 276,
+    "slug": "xcode-asset-catalog",
+    "name": "Xcode Asset Catalog Contents.json Builder",
+    "shortDescription": "Generate standard 1x, 2x, 3x image asset catalog Contents.json manifests for iOS apps.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 277,
+    "slug": "android-keystore-fingerprint",
+    "name": "Android Keystore Fingerprint (SHA1/SHA256) Formatter",
+    "shortDescription": "Format Keystore SHA-1 and SHA-256 certificate fingerprints for Firebase and Google OAuth.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 278,
+    "slug": "electron-config-builder",
+    "name": "Electron main.js & App Window Builder",
+    "shortDescription": "Generate Electron starter main.js files with BrowserWindow and security configurations.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 279,
+    "slug": "react-native-icon-finder",
+    "name": "React Native Vector Icons Finder & Code Generator",
+    "shortDescription": "Search and export icon names and JSX import tags for react-native-vector-icons.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 280,
+    "slug": "capacitor-config-builder",
+    "name": "Capacitor capacitor.config.json Builder",
+    "shortDescription": "Build capacitor.config.json configuration files for hybrid iOS and Android mobile apps.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 281,
+    "slug": "code-side-by-side-diff",
+    "name": "Code Side-by-Side Diff Visualizer",
+    "shortDescription": "Compare two code snippets side-by-side with line-by-line difference tracking.",
+    "categorySlug": "text",
+    "categoryName": "Text Online"
+  },
+  {
+    "id": 282,
+    "slug": "conventional-commit-builder",
+    "name": "Conventional Git Commit Message Builder",
+    "shortDescription": "Build standard Conventional Commits with feat, fix, scope, and breaking change footers.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 283,
+    "slug": "git-command-builder",
+    "name": "Git Interactive Command Generator",
+    "shortDescription": "Generate Git commands for interactive rebase, cherry-pick, hard reset, and stashing.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 284,
+    "slug": "env-sanitizer",
+    "name": ".env to .env.example Secret Sanitizer",
+    "shortDescription": "Strip private API keys and database credentials from .env files to produce .env.example templates.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 285,
+    "slug": "license-generator",
+    "name": "Open Source License & SPDX Generator",
+    "shortDescription": "Generate MIT, Apache 2.0, and GPL open source software license texts with copyright headers.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 286,
+    "slug": "eslint-prettier-config",
+    "name": "Prettier & ESLint Configuration Builder",
+    "shortDescription": "Generate customized .prettierrc JSON configuration files with single quotes and tab width.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 287,
+    "slug": "markdown-to-slides",
+    "name": "Markdown to HTML Slide Deck Converter",
+    "shortDescription": "Convert markdown files separated by horizontal rules into responsive HTML presentation slides.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 288,
+    "slug": "package-json-formatter",
+    "name": "Package.json Dependency Sorter & Prettifier",
+    "shortDescription": "Alphabetically sort dependencies and format package.json files cleanly.",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 289,
+    "slug": "changelog-generator",
+    "name": "CHANGELOG.md Builder (Keep a Changelog)",
+    "shortDescription": "Generate versioned changelog markdown following Keep a Changelog guidelines.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 290,
+    "slug": "editorconfig-generator",
+    "name": ".editorconfig File Generator",
+    "shortDescription": "Generate .editorconfig files with cross-editor indentation, charset, and newline rules.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 291,
+    "slug": "ieee754-visualizer",
+    "name": "IEEE 754 Floating Point 32-bit Visualizer",
+    "shortDescription": "Break down 32-bit float numbers into sign, exponent, and mantissa binary bits.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 292,
+    "slug": "bitwise-calculator",
+    "name": "Bitwise Logic Calculator (AND, OR, XOR, Shift)",
+    "shortDescription": "Perform 32-bit bitwise AND, OR, XOR, NOT, and bit shifts with binary and hex results.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 293,
+    "slug": "hex-dump-viewer",
+    "name": "Hex Dump Viewer & Binary Offset Inspector",
+    "shortDescription": "Format text strings into classic 16-byte offset hex dump and ASCII sidebar views.",
+    "categorySlug": "encoding",
+    "categoryName": "Encoder Online"
+  },
+  {
+    "id": 294,
+    "slug": "bignumber-calculator",
+    "name": "Arbitrary Precision BigNumber Calculator",
+    "shortDescription": "Perform exact arbitrary precision integer math, powers, and modulo arithmetic.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 295,
+    "slug": "multi-radix-converter",
+    "name": "Multi-Radix Base Converter (Bin, Oct, Dec, Hex)",
+    "shortDescription": "Simultaneously convert numbers across Binary, Octal, Decimal, and Hexadecimal representations.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 296,
+    "slug": "timezone-meeting-planner",
+    "name": "Timezone Meeting Planner & Overlap Matrix",
+    "shortDescription": "Coordinate global meeting hours across UTC, EST, PST, CET, TRT, and JST timezones.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 297,
+    "slug": "bandwidth-calculator",
+    "name": "Bandwidth & File Download Time Calculator",
+    "shortDescription": "Calculate file transfer durations for file sizes over Mbps and Gbps internet speeds.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 298,
+    "slug": "percentage-growth-calculator",
+    "name": "Percentage Growth & Change Calculator",
+    "shortDescription": "Calculate percentage increases, decreases, and compound metrics for dashboards.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 299,
+    "slug": "cron-timezone-converter",
+    "name": "Cron Expression Timezone Converter (Local ↔ UTC)",
+    "shortDescription": "Shift cron expression hours between local timezones and server UTC schedules.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 300,
+    "slug": "matrix-calculator",
+    "name": "Matrix Arithmetic & Transpose Calculator",
+    "shortDescription": "Perform matrix multiplication, dimensions check, and matrix transposition calculations.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 301,
+    "slug": "curl-to-python",
+    "name": "cURL to Python Converter",
+    "shortDescription": "Convert cURL commands to Python requests or httpx code.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 302,
+    "slug": "curl-to-javascript",
+    "name": "cURL to JavaScript Fetch Converter",
+    "shortDescription": "Convert cURL commands to modern Fetch API or Axios JavaScript code.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 303,
+    "slug": "curl-to-go",
+    "name": "cURL to Go Converter",
+    "shortDescription": "Convert cURL commands to idiomatic Go net/http code.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 304,
+    "slug": "curl-to-rust",
+    "name": "cURL to Rust Converter",
+    "shortDescription": "Convert cURL commands to Rust reqwest client code.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 305,
+    "slug": "curl-to-php",
+    "name": "cURL to PHP Converter",
+    "shortDescription": "Convert cURL commands to PHP Guzzle or native curl code.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 306,
+    "slug": "curl-to-csharp",
+    "name": "cURL to C# Converter",
+    "shortDescription": "Convert cURL commands to C# .NET HttpClient code.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 307,
+    "slug": "curl-to-java",
+    "name": "cURL to Java Converter",
+    "shortDescription": "Convert cURL commands to Java 11+ HttpClient code.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 308,
+    "slug": "curl-to-ai-sdk",
+    "name": "cURL to OpenAI & Claude SDK Converter",
+    "shortDescription": "Convert raw API cURL calls into official OpenAI and Anthropic SDK code.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 309,
+    "slug": "openai-structured-outputs",
+    "name": "OpenAI Strict Structured Outputs Builder",
+    "shortDescription": "Generate strict JSON Schema schemas for OpenAI function calling.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 310,
+    "slug": "vercel-ai-core-message-converter",
+    "name": "Vercel AI SDK Message Converter",
+    "shortDescription": "Convert chat logs and OpenAI messages to Vercel AI SDK CoreMessage array.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 311,
+    "slug": "langgraph-state-generator",
+    "name": "LangGraph State Schema Generator",
+    "shortDescription": "Generate LangGraph State TypedDict and workflow definitions.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 312,
+    "slug": "embedding-cost-calculator",
+    "name": "Vector Embedding Cost Calculator",
+    "shortDescription": "Calculate costs, vector dimensions, and memory usage for embedding models.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 313,
+    "slug": "anthropic-tool-builder",
+    "name": "Anthropic Claude Tool Builder",
+    "shortDescription": "Build input_schema JSON definitions for Anthropic Claude tools.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 314,
+    "slug": "tailwind-v3-to-v4-migrator",
+    "name": "Tailwind CSS v3 to v4 Migrator",
+    "shortDescription": "Migrate tailwind.config.js to Tailwind CSS v4 @theme CSS directives.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 315,
+    "slug": "css-box-shadow-to-tailwind",
+    "name": "CSS Box-Shadow to Tailwind Converter",
+    "shortDescription": "Convert complex CSS box-shadow values into arbitrary Tailwind classes.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 316,
+    "slug": "nextjs-metadata-generator",
+    "name": "Next.js App Router Metadata Generator",
+    "shortDescription": "Generate Next.js 16 generateMetadata, OpenGraph, and Twitter card configs.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 317,
+    "slug": "svg-to-css",
+    "name": "SVG to CSS Background Data URI",
+    "shortDescription": "Encode and optimize SVG into CSS background-image and mask-image data URIs.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 318,
+    "slug": "html-table-converter",
+    "name": "HTML Table to Markdown & CSV Converter",
+    "shortDescription": "Convert HTML table markup to clean Markdown tables, CSV, or JSON array.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 319,
+    "slug": "natural-language-to-cron",
+    "name": "Natural Language to Cron Converter",
+    "shortDescription": "Convert natural English descriptions into standard 5-part cron schedules.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 320,
+    "slug": "gitignore-tester",
+    "name": ".gitignore Pattern Matcher & Tester",
+    "shortDescription": "Test .gitignore and .dockerignore glob rules against file trees.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 321,
+    "slug": "k8s-resource-calculator",
+    "name": "Kubernetes Pod Resource & QoS Calculator",
+    "shortDescription": "Calculate CPU/Memory requests, limits, and QoS classes for Kubernetes pods.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 322,
+    "slug": "terraform-hcl-to-json",
+    "name": "Terraform HCL to JSON Converter",
+    "shortDescription": "Convert Terraform HCL resource definitions into terraform.tf.json syntax.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 323,
+    "slug": "systemd-timer-generator",
+    "name": "Systemd Service & Timer Generator",
+    "shortDescription": "Generate paired systemd .service and .timer units for Linux automation.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 324,
+    "slug": "sql-to-prisma",
+    "name": "SQL DDL to Prisma Schema Converter",
+    "shortDescription": "Convert SQL CREATE TABLE statements into Prisma schema models.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 325,
+    "slug": "sql-to-drizzle",
+    "name": "SQL DDL to Drizzle ORM Schema Converter",
+    "shortDescription": "Convert SQL CREATE TABLE statements into Drizzle ORM TypeScript schemas.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 326,
+    "slug": "postgres-explain-visualizer",
+    "name": "PostgreSQL EXPLAIN Plan Analyzer",
+    "shortDescription": "Analyze and visualize PostgreSQL query plans from EXPLAIN JSON output.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 327,
+    "slug": "mongodb-to-sql",
+    "name": "MongoDB Query to SQL Converter",
+    "shortDescription": "Convert MongoDB find filters into SQL SELECT queries.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 328,
+    "slug": "sql-to-django",
+    "name": "SQL DDL to Django Model Converter",
+    "shortDescription": "Convert SQL CREATE TABLE statements into Python Django ORM models.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 329,
+    "slug": "sql-keyword-uppercaser",
+    "name": "SQL Keyword Uppercaser & Formatter",
+    "shortDescription": "Uppercase all SQL keywords while preserving column and table names.",
+    "categorySlug": "formatters",
+    "categoryName": "Formatter Online"
+  },
+  {
+    "id": 330,
+    "slug": "subnet-calculator",
+    "name": "IPv4 Subnet Mask & CIDR Calculator",
+    "shortDescription": "Calculate subnet mask, broadcast, and usable host range from CIDR.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 331,
+    "slug": "uuid-v5-generator",
+    "name": "UUID v5 (SHA-1 Namespace) Generator",
+    "shortDescription": "Generate deterministic RFC 4122 UUID v5 hashes from namespaces.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 332,
+    "slug": "bip39-seed-phrase-generator",
+    "name": "BIP-39 Mnemonic Seed Phrase Generator",
+    "shortDescription": "Generate 12 and 24-word cryptographically secure BIP-39 seed phrases.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 333,
+    "slug": "eip712-hasher",
+    "name": "Ethereum EIP-712 Typed Data Hasher",
+    "shortDescription": "Compute domain separator and struct hash for EIP-712 typed data signing.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 334,
+    "slug": "crypto-unit-converter",
+    "name": "Crypto Multi-Unit Converter",
+    "shortDescription": "Convert between Wei, Gwei, Ether, and Bitcoin Satoshis.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 335,
+    "slug": "json-to-python-dataclass",
+    "name": "JSON to Python Dataclass Converter",
+    "shortDescription": "Convert JSON objects into Python 3.10+ @dataclass classes.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 336,
+    "slug": "json-to-go-struct",
+    "name": "JSON to Go Struct Converter",
+    "shortDescription": "Convert JSON objects into Go structs with json tags.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 337,
+    "slug": "json-to-kotlin-class",
+    "name": "JSON to Kotlin Data Class Converter",
+    "shortDescription": "Convert JSON into Kotlin @Serializable data classes.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 338,
+    "slug": "json-to-swift-struct",
+    "name": "JSON to Swift Struct (Codable) Converter",
+    "shortDescription": "Convert JSON objects into Swift Codable structs.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 339,
+    "slug": "json-to-csharp-class",
+    "name": "JSON to C# Record & Class Converter",
+    "shortDescription": "Convert JSON into C# records with JsonPropertyName annotations.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 340,
+    "slug": "proto-to-typescript",
+    "name": "Protobuf to TypeScript Interface Converter",
+    "shortDescription": "Convert Proto3 message definitions into TypeScript interfaces.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 341,
+    "slug": "http-headers-to-json",
+    "name": "HTTP Headers to JSON Converter",
+    "shortDescription": "Convert HTTP header text into JSON object and vice versa.",
+    "categorySlug": "converters",
+    "categoryName": "Converter Online"
+  },
+  {
+    "id": 342,
+    "slug": "jwt-builder",
+    "name": "JWT Payload Builder & Simulator",
+    "shortDescription": "Build custom header/payload JWT tokens with signature simulation.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 343,
+    "slug": "passphrase-wordlist-generator",
+    "name": "Diceware Passphrase Generator",
+    "shortDescription": "Generate strong, memorable Diceware passphrases with custom separators.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 344,
+    "slug": "nanoid-custom-alphabet",
+    "name": "NanoID Custom Alphabet Generator",
+    "shortDescription": "Generate collision-resistant NanoIDs using custom alphabets and lengths.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 345,
+    "slug": "mock-credit-card-generator",
+    "name": "Test Credit Card Generator (Luhn Valid)",
+    "shortDescription": "Generate Luhn-compliant test credit card numbers for Stripe and sandbox testing.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 346,
+    "slug": "tailwind-spacing-generator",
+    "name": "Tailwind Spacing Scale Generator",
+    "shortDescription": "Generate custom fluid spacing and margin/padding scales for Tailwind CSS.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 347,
+    "slug": "docker-compose-env-generator",
+    "name": "Docker Compose .env Template Generator",
+    "shortDescription": "Extract all environment variables from docker-compose.yml into a clean .env template.",
+    "categorySlug": "generators",
+    "categoryName": "Generator Online"
+  },
+  {
+    "id": 348,
+    "slug": "dns-propagation-checker",
+    "name": "DNS Record Propagation Checker",
+    "shortDescription": "Check simulated global DNS propagation across multiple worldwide PoP locations.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 349,
+    "slug": "url-utm-builder",
+    "name": "Google Analytics UTM Campaign URL Builder",
+    "shortDescription": "Build clean marketing campaign URLs with utm_source, utm_medium, and utm_campaign.",
+    "categorySlug": "utilities",
+    "categoryName": "Utility Online"
+  },
+  {
+    "id": 350,
+    "slug": "sha3-hash-generator",
+    "name": "SHA-3 (Keccak) Hash Generator",
+    "shortDescription": "Generate cryptographic SHA3-256 and SHA3-512 hashes.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto Online"
+  },
+  {
+    "id": 351,
+    "slug": "curl-to-axios",
+    "name": "cURL to Axios Converter",
+    "shortDescription": "Convert cURL commands to modern JavaScript and TypeScript Axios requests.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 352,
+    "slug": "fetch-to-curl",
+    "name": "Fetch to cURL Converter",
+    "shortDescription": "Transform JavaScript fetch() snippets into executable cURL terminal commands.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 353,
+    "slug": "json-to-xml",
+    "name": "JSON to XML Converter",
+    "shortDescription": "Convert JSON objects and arrays into structured, formatted XML.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 354,
+    "slug": "excel-to-json",
+    "name": "Excel & CSV to JSON Converter",
+    "shortDescription": "Parse Excel sheets, CSV, and TSV spreadsheets into structured JSON.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 355,
+    "slug": "json-to-excel",
+    "name": "JSON to Excel & CSV Converter",
+    "shortDescription": "Export JSON arrays and nested data into Excel spreadsheets and CSV files.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 356,
+    "slug": "image-converter",
+    "name": "Image Format Converter",
+    "shortDescription": "Convert images between PNG, JPG, WebP, AVIF, BMP, and ICO formats.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 357,
+    "slug": "images-to-pdf",
+    "name": "Images to PDF Converter",
+    "shortDescription": "Combine JPG, PNG, and WebP images into a single multi-page PDF document.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 358,
+    "slug": "image-compressor",
+    "name": "Image Compressor & Optimizer",
+    "shortDescription": "Compress and resize PNG, JPG, and WebP images client-side with zero quality loss.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 359,
+    "slug": "image-color-extractor",
+    "name": "Image Color Palette Extractor",
+    "shortDescription": "Extract dominant color palettes with HEX, RGB, HSL codes and pixel eyedropper.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 360,
+    "slug": "pdf-merger",
+    "name": "PDF Merger & Combiner",
+    "shortDescription": "Combine multiple PDF files into one in your browser with 100% privacy.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 361,
+    "slug": "pdf-splitter",
+    "name": "PDF Splitter & Page Extractor",
+    "shortDescription": "Extract specific pages or page ranges from PDF files client-side.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 362,
+    "slug": "llm-pricing-calculator",
+    "name": "All-in-One LLM Token & Pricing Calculator",
+    "shortDescription": "Compare OpenAI, Claude, Gemini, DeepSeek, and Llama token costs and monthly budget.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 363,
+    "slug": "code-playground",
+    "name": "Live HTML/CSS/JS Sandbox & Playground",
+    "shortDescription": "Interactive code editor with live preview, Tailwind support, and console inspector.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 364,
+    "slug": "schema-org-generator",
+    "name": "Schema.org JSON-LD Generator",
+    "shortDescription": "Generate Google-compliant structured data for FAQ, Article, Product, and Organization.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 365,
+    "slug": "image-exif-stripper",
+    "name": "Image EXIF Metadata Viewer & Stripper",
+    "shortDescription": "Inspect camera and GPS metadata and strip EXIF privacy tags from photos.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto & Security"
+  },
+  {
+    "id": 366,
+    "slug": "file-checksum-comparator",
+    "name": "Multi-Hash File Checksum & Comparator",
+    "shortDescription": "Calculate and verify MD5, SHA-1, SHA-256, SHA-512, and CRC32 file checksums.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto & Security"
+  },
+  {
+    "id": 367,
+    "slug": "video-to-gif",
+    "name": "Video to GIF Maker & Converter",
+    "shortDescription": "Convert MP4, WebM, and MOV video clips to animated GIF with FPS, dimension, and trim controls.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 368,
+    "slug": "svg-to-png-hd",
+    "name": "SVG to PNG & JPG High-Res Converter",
+    "shortDescription": "Convert SVG vector graphics into crisp PNG, JPG, and WebP raster images up to 8x resolution.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 369,
+    "slug": "pdf-to-image",
+    "name": "PDF to PNG & JPG Image Converter",
+    "shortDescription": "Convert PDF document pages into high-resolution PNG and JPEG images client-side with ZIP download.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 370,
+    "slug": "audio-converter",
+    "name": "Audio Format Converter & Trimmer",
+    "shortDescription": "Convert audio files between WAV, MP3, and OGG formats with waveform preview and trimming.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 371,
+    "slug": "swagger-to-typescript",
+    "name": "Swagger & OpenAPI to TypeScript Client Generator",
+    "shortDescription": "Generate fully-typed TypeScript API clients, interfaces, and fetch/axios requests from OpenAPI v2/v3 schemas.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 372,
+    "slug": "postman-collection-to-curl",
+    "name": "Postman Collection to cURL & Fetch Converter",
+    "shortDescription": "Convert Postman Collection v2/v2.1 JSON files into executable cURL commands, Fetch, and Axios snippets.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 373,
+    "slug": "html-to-gfm-converter",
+    "name": "HTML to Markdown & Markdown to HTML Converter",
+    "shortDescription": "Bi-directional live converter between rich HTML markup and GitHub Flavored Markdown (GFM).",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 374,
+    "slug": "json-csv-grid-editor",
+    "name": "JSON to CSV & CSV to JSON Interactive Grid Editor",
+    "shortDescription": "Live spreadsheet table editor with bi-directional JSON/CSV sync, cell editing, and format export.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 375,
+    "slug": "tailwind-to-inline-css",
+    "name": "Tailwind CSS to Inline Style Converter",
+    "shortDescription": "Convert HTML with Tailwind CSS utility classes into standalone HTML with inline style attributes for emails.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 376,
+    "slug": "css-glassmorphism-claymorphism",
+    "name": "CSS Glassmorphism & Claymorphism 3D Generator",
+    "shortDescription": "Design modern backdrop blur glassmorphism and claymorphism 3D neumorphic UI cards with CSS.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 377,
+    "slug": "css-clamp-calculator",
+    "name": "CSS Fluid Clamp & Responsive Typography Calculator",
+    "shortDescription": "Calculate responsive CSS clamp() viewport formulas for fluid font sizes, margins, and layouts.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 378,
+    "slug": "llm-function-calling-builder",
+    "name": "LLM Function Calling & Tool Definition Builder",
+    "shortDescription": "Build OpenAI, Claude, and Gemini function calling schemas and tool parameter definitions visually.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 379,
+    "slug": "json-to-json-schema",
+    "name": "JSON to JSON Schema (Draft-07 & 2020-12) Generator",
+    "shortDescription": "Infer Draft-07 and 2020-12 JSON Schema validation rules, required fields, and types from JSON.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 380,
+    "slug": "rag-chunking-calculator",
+    "name": "RAG Text Chunking Visualizer & Cost Estimator",
+    "shortDescription": "Visualize recursive and sliding-window text chunking, overlap boundaries, and token embedding costs.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 381,
+    "slug": "sql-to-orm-schema",
+    "name": "SQL DDL to Prisma & Drizzle ORM Schema Converter",
+    "shortDescription": "Convert SQL CREATE TABLE DDL queries into Prisma schema models and Drizzle ORM TypeScript definitions.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 382,
+    "slug": "docker-compose-to-kubernetes",
+    "name": "Docker Compose to Kubernetes YAML Converter",
+    "shortDescription": "Convert docker-compose.yml services into Kubernetes Deployment, Service, ConfigMap, and Ingress manifests.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 383,
+    "slug": "curl-to-har",
+    "name": "cURL to HTTP Archive HAR 1.2 Converter",
+    "shortDescription": "Convert cURL commands with headers and request payloads into standardized HTTP Archive (HAR 1.2) JSON files.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 384,
+    "slug": "api-mock-response-generator",
+    "name": "REST API Mock JSON & Fake Data Generator",
+    "shortDescription": "Generate mock JSON API endpoint response datasets with pagination envelopes for frontend prototyping.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 385,
+    "slug": "http-security-headers-analyzer",
+    "name": "HTTP Security Headers & CORS Analyzer",
+    "shortDescription": "Audit web server HTTP response headers for HSTS, CSP, X-Frame-Options, and security best practices.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 386,
+    "slug": "graphql-schema-to-zod",
+    "name": "GraphQL SDL to Zod Schema Validator Generator",
+    "shortDescription": "Convert GraphQL schema definition language (SDL) types and enums into TypeScript Zod validation schemas.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 387,
+    "slug": "css-triangle-bubble-generator",
+    "name": "CSS Triangle & Speech Bubble Polygon Generator",
+    "shortDescription": "Generate pure CSS triangle arrows, tooltips, and speech bubble popovers with pointing tails.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 388,
+    "slug": "svg-to-css-data-uri",
+    "name": "SVG to CSS Data URI & Background Mask Inliner",
+    "shortDescription": "Convert SVG markup into clean UTF-8 URL-encoded or Base64 CSS background-image and mask-image rules.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 389,
+    "slug": "css-3d-box-shadow-generator",
+    "name": "CSS Multi-Layer 3D Box Shadow Generator",
+    "shortDescription": "Create multi-layer layered elevation box-shadow styles with customizable depth, ambient lighting, and opacity.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 390,
+    "slug": "html-entities-converter",
+    "name": "HTML Entities to Unicode & Character Encoder",
+    "shortDescription": "Encode special characters into named HTML entities or decimal/hex NCRs and decode back to UTF-8 text.",
+    "categorySlug": "encoding",
+    "categoryName": "Encoders & Decoders"
+  },
+  {
+    "id": 391,
+    "slug": "system-prompt-xml-builder",
+    "name": "Claude & OpenAI XML Structured System Prompt Builder",
+    "shortDescription": "Build structured system prompts for Claude and OpenAI using production XML tag hierarchies and constraints.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 392,
+    "slug": "multi-llm-token-comparator",
+    "name": "Multi-Model LLM Token Counter & Cost Comparator",
+    "shortDescription": "Compare prompt token counts and API pricing across GPT-4o, Claude 3.5, Gemini 1.5, and DeepSeek in real-time.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 393,
+    "slug": "json-to-python-pydantic",
+    "name": "JSON to Python Pydantic V2 & TypedDict Generator",
+    "shortDescription": "Convert JSON payloads into typed Python Pydantic V2 BaseModel classes, nested schemas, and TypedDicts.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 394,
+    "slug": "json-to-sql-insert",
+    "name": "JSON & CSV to SQL INSERT & UPDATE Generator",
+    "shortDescription": "Convert structured JSON arrays and CSV tables into PostgreSQL, MySQL, SQLite, and SQL Server INSERT/UPDATE scripts.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 395,
+    "slug": "nginx-to-caddy-converter",
+    "name": "Nginx to Caddyfile & Apache Reverse Proxy Converter",
+    "shortDescription": "Convert Nginx server blocks and proxy_pass locations into modern Caddyfile and Apache VirtualHost configurations.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 396,
+    "slug": "git-command-cheat-builder",
+    "name": "Git Advanced Command & Workflow Builder",
+    "shortDescription": "Visually generate terminal commands for interactive rebase, cherry-pick, soft undo, and bisect debugging.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 397,
+    "slug": "crontab-schedule-translator",
+    "name": "Crontab Schedule & Human Language Translator",
+    "shortDescription": "Translate standard 5-field cron schedules into plain English and Turkish with next execution timestamps.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 398,
+    "slug": "bcrypt-hash-calculator",
+    "name": "Bcrypt & Argon2 Password Hash Generator & Verifier",
+    "shortDescription": "Generate secure $2a$ Bcrypt password hashes with configurable cost factors and validate existing hash strings.",
+    "categorySlug": "crypto",
+    "categoryName": "Crypto & Security"
+  },
+  {
+    "id": 399,
+    "slug": "json-to-rust-types",
+    "name": "JSON to Rust Serde Structs",
+    "shortDescription": "Convert JSON payloads into strongly typed Rust Serde structs with derive macro annotations.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 400,
+    "slug": "json-to-golang-models",
+    "name": "JSON to Golang Struct Generator",
+    "shortDescription": "Generate Go struct definitions with json and yaml struct tags from JSON sample data.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 401,
+    "slug": "sql-to-go-gorm",
+    "name": "SQL DDL to Go GORM Models",
+    "shortDescription": "Convert SQL CREATE TABLE schema definitions into Go GORM model structs with primary keys.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 402,
+    "slug": "sql-to-python-sqlalchemy",
+    "name": "SQL DDL to SQLAlchemy 2.0 Models",
+    "shortDescription": "Convert SQL CREATE TABLE statements into Python SQLAlchemy 2.0 Declarative Base model classes.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 403,
+    "slug": "postman-to-openapi",
+    "name": "Postman Collection to OpenAPI 3.1 Converter",
+    "shortDescription": "Convert exported Postman Collection v2.1 JSON files into OpenAPI 3.1 YAML/JSON specifications.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 404,
+    "slug": "openapi-to-postman",
+    "name": "OpenAPI to Postman Collection Generator",
+    "shortDescription": "Convert OpenAPI 3.0 and Swagger API specifications into importable Postman Collection v2.1 JSON.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 405,
+    "slug": "protobuf-to-json-schema",
+    "name": "Protobuf 3 to JSON Schema Converter",
+    "shortDescription": "Convert Protocol Buffers (proto3) message definitions into JSON Schema Draft-07 schemas.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 406,
+    "slug": "json-schema-to-protobuf",
+    "name": "JSON Schema to Protobuf 3 Generator",
+    "shortDescription": "Convert JSON Schema definitions into clean Protocol Buffer proto3 message contracts.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 407,
+    "slug": "yaml-to-terraform-hcl",
+    "name": "YAML to Terraform HCL Converter",
+    "shortDescription": "Convert YAML configuration maps into Terraform HCL locals and variable blocks.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 408,
+    "slug": "terraform-hcl-to-yaml",
+    "name": "Terraform HCL to YAML Converter",
+    "shortDescription": "Convert Terraform HCL attributes and locals into clean, structured YAML mappings.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 409,
+    "slug": "csv-to-geojson",
+    "name": "CSV to GeoJSON Point Converter",
+    "shortDescription": "Convert CSV coordinate datasets with latitude and longitude into GeoJSON FeatureCollections.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 410,
+    "slug": "geojson-to-csv",
+    "name": "GeoJSON to CSV Coordinate Converter",
+    "shortDescription": "Convert GeoJSON point geometry features and properties into CSV tabular coordinates.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 411,
+    "slug": "json-to-typescript-type-guards",
+    "name": "JSON to TypeScript Type Guards Generator",
+    "shortDescription": "Generate runtime boolean TypeScript type guard functions (isType) from JSON structures.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 412,
+    "slug": "typescript-interface-to-zod",
+    "name": "TypeScript Interface to Zod Schema",
+    "shortDescription": "Convert TypeScript interfaces and types into runtime Zod validation schemas.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 413,
+    "slug": "zod-to-typescript-type",
+    "name": "Zod Schema to TypeScript Type Inferer",
+    "shortDescription": "Extract and infer static TypeScript type declarations from runtime Zod validation schemas.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 414,
+    "slug": "css-to-scss",
+    "name": "CSS to Nested SCSS & SASS Converter",
+    "shortDescription": "Convert flat CSS stylesheet selectors into nested, clean SCSS/SASS hierarchy blocks.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 415,
+    "slug": "scss-to-css",
+    "name": "SCSS & SASS to Vanilla CSS Converter",
+    "shortDescription": "Convert SCSS variables, mixins, and nested blocks into standard cross-browser vanilla CSS.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 416,
+    "slug": "html-to-jsx-tailwind",
+    "name": "HTML to JSX & Tailwind CSS Converter",
+    "shortDescription": "Convert HTML markup with class attributes into React JSX with className and self-closing tags.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 417,
+    "slug": "jsx-to-html",
+    "name": "React JSX to Standard HTML Converter",
+    "shortDescription": "Convert React JSX snippets with className and JSX comments into pure HTML markup.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 418,
+    "slug": "markdown-to-bbcode",
+    "name": "Markdown to Forum BBCode Converter",
+    "shortDescription": "Convert Markdown headings, bold, images, and links into standard forum BBCode tags.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 419,
+    "slug": "bbcode-to-markdown",
+    "name": "BBCode to GitHub Markdown Converter",
+    "shortDescription": "Convert forum BBCode tags into standard GitHub-flavored Markdown text formatting.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 420,
+    "slug": "curl-to-php-guzzle",
+    "name": "cURL to PHP Guzzle Client Converter",
+    "shortDescription": "Convert terminal cURL commands with headers and body into executable PHP Guzzle client code.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 421,
+    "slug": "curl-to-ruby-faraday",
+    "name": "cURL to Ruby Faraday Client Converter",
+    "shortDescription": "Convert cURL requests into Ruby Faraday and Net::HTTP client requests with headers.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 422,
+    "slug": "curl-to-rust-reqwest",
+    "name": "cURL to Rust reqwest Async Client",
+    "shortDescription": "Convert cURL commands into asynchronous Rust reqwest client request code blocks.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 423,
+    "slug": "curl-to-go-http",
+    "name": "cURL to Go net/http Client Converter",
+    "shortDescription": "Convert cURL commands into standard library Golang net/http client requests.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 424,
+    "slug": "svg-to-android-vector",
+    "name": "SVG to Android Vector Drawable XML",
+    "shortDescription": "Convert SVG vector graphics into Android Vector Drawable XML format for native Android apps.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 425,
+    "slug": "svg-to-swiftui-shape",
+    "name": "SVG to SwiftUI Shape & Path Generator",
+    "shortDescription": "Convert SVG vector path commands into native SwiftUI Path and Shape structs for iOS/macOS.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 426,
+    "slug": "css-grid-to-tailwind",
+    "name": "CSS Grid to Tailwind CSS Classes",
+    "shortDescription": "Convert CSS grid-template-columns and gap styles into Tailwind CSS grid utility classes.",
+    "categorySlug": "converters",
+    "categoryName": "Converters"
+  },
+  {
+    "id": 427,
+    "slug": "dockerfile-ai-optimized-generator",
+    "name": "Multi-Stage Dockerfile Generator",
+    "shortDescription": "Generate production multi-stage Dockerfiles for Node, Python, Go, and Rust with security.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 428,
+    "slug": "kubernetes-deployment-generator",
+    "name": "Kubernetes Deployment YAML Generator",
+    "shortDescription": "Generate production Kubernetes Deployment, Service, and resource limit YAML manifests.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 429,
+    "slug": "kubernetes-configmap-secret-builder",
+    "name": "K8s ConfigMap & Secret Manifest Builder",
+    "shortDescription": "Generate Kubernetes ConfigMap and Base64-encoded Secret YAML manifests effortlessly.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 430,
+    "slug": "helm-chart-yaml-generator",
+    "name": "Helm Chart & Values Scaffold Generator",
+    "shortDescription": "Generate Helm Chart.yaml and values.yaml starter templates for cloud-native Kubernetes apps.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 431,
+    "slug": "gitlab-ci-pipeline-builder",
+    "name": "GitLab CI/CD Pipeline YAML Builder",
+    "shortDescription": "Generate multi-stage .gitlab-ci.yml pipeline configuration with build, test, and caching.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 432,
+    "slug": "github-issue-pr-template-generator",
+    "name": "GitHub Issue & PR Template Builder",
+    "shortDescription": "Generate standard GitHub markdown issue templates and pull request checklist templates.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 433,
+    "slug": "opa-rego-policy-builder",
+    "name": "Open Policy Agent (OPA) Rego Builder",
+    "shortDescription": "Generate OPA Rego authorization policies for RBAC, ABAC, and API security enforcement.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 434,
+    "slug": "systemd-service-hardened-builder",
+    "name": "Linux systemd Hardened Service Builder",
+    "shortDescription": "Generate Linux systemd service unit files with security sandboxing and NoNewPrivileges.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 435,
+    "slug": "nginx-security-conf-generator",
+    "name": "Hardened Nginx Server Configuration Builder",
+    "shortDescription": "Generate hardened Nginx server blocks with SSL TLS 1.3, HSTS, and rate limiting.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 436,
+    "slug": "caddyfile-production-generator",
+    "name": "Production Caddyfile Configuration Builder",
+    "shortDescription": "Generate modern Caddyfile configs with automatic HTTPS, reverse proxy, and compression.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 437,
+    "slug": "prometheus-recording-rules-generator",
+    "name": "Prometheus Alerting & Recording Rules Builder",
+    "shortDescription": "Generate Prometheus alert rules and recording rules YAML for SLO monitoring and latency.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 438,
+    "slug": "tailwind-v4-mesh-gradient-generator",
+    "name": "Tailwind CSS Mesh Radial Gradient Generator",
+    "shortDescription": "Create modern colorful radial mesh background gradients for CSS and Tailwind CSS.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 439,
+    "slug": "css-isometric-grid-generator",
+    "name": "CSS Isometric 3D Grid & Transform Generator",
+    "shortDescription": "Generate 2.5D isometric 3D CSS transform grids and tile coordinate matrix styles.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 440,
+    "slug": "css-ribbon-banner-generator",
+    "name": "CSS Corner Ribbon & Badge Generator",
+    "shortDescription": "Create responsive corner ribbons, sale badges, and promotional labels with pure CSS.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 441,
+    "slug": "svg-wavy-divider-generator",
+    "name": "SVG Wavy Page Section Divider Generator",
+    "shortDescription": "Generate smooth SVG wave curve dividers and section transitions for landing pages.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 442,
+    "slug": "opengraph-banner-canvas-generator",
+    "name": "OpenGraph & Twitter Card Meta Tags Builder",
+    "shortDescription": "Generate dynamic OpenGraph and Twitter social preview card meta tags and banner markup.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 443,
+    "slug": "prisma-seed-generator",
+    "name": "Prisma Client Seeding Script Generator",
+    "shortDescription": "Generate TypeScript Prisma database seed scripts (prisma/seed.ts) with batch inserts.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 444,
+    "slug": "faker-js-mock-schema-generator",
+    "name": "Faker.js Synthetic Dataset Generator",
+    "shortDescription": "Generate mock dataset schemas using Faker.js for names, emails, avatars, and dates.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 445,
+    "slug": "llm-few-shot-prompt-formatter",
+    "name": "LLM Few-Shot Structured Prompt Builder",
+    "shortDescription": "Build high-accuracy Few-Shot prompt templates with delimiter-separated demonstration pairs.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 446,
+    "slug": "cot-chain-of-thought-prompt-builder",
+    "name": "Chain-of-Thought (CoT) Prompt Builder",
+    "shortDescription": "Generate structured Chain-of-Thought reasoning scaffolds for complex AI reasoning tasks.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 447,
+    "slug": "sql-stored-procedure-generator",
+    "name": "SQL Stored Procedure & Trigger Generator",
+    "shortDescription": "Generate PostgreSQL and MySQL stored procedure, function, and audit trigger templates.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 448,
+    "slug": "redis-lua-script-generator",
+    "name": "Atomic Redis Lua Script Generator",
+    "shortDescription": "Generate atomic Redis Lua scripts for token bucket rate limiters, mutex locks, and queues.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 449,
+    "slug": "crontab-randomized-generator",
+    "name": "Crontab Jitter & Randomized Offset Generator",
+    "shortDescription": "Generate cron schedule commands with randomized sleep offsets to prevent thundering herds.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 450,
+    "slug": "ansible-playbook-scaffolder",
+    "name": "Ansible Automation Playbook Scaffolder",
+    "shortDescription": "Generate production Ansible YAML playbooks with tasks, handlers, and package managers.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 451,
+    "slug": "terraform-module-scaffolder",
+    "name": "Modular Terraform Module Scaffolder",
+    "shortDescription": "Generate structured Terraform main.tf, variables.tf, and outputs.tf module architectures.",
+    "categorySlug": "generators",
+    "categoryName": "Generators"
+  },
+  {
+    "id": 452,
+    "slug": "http-cache-control-tester",
+    "name": "HTTP Cache-Control Header Tester",
+    "shortDescription": "Analyze HTTP Cache-Control, max-age, must-revalidate, and immutable caching directives.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 453,
+    "slug": "dns-soa-dnssec-inspector",
+    "name": "DNS SOA Serial & DNSSEC Record Inspector",
+    "shortDescription": "Inspect DNS SOA serial numbers, date formats, zone revisions, and DNSSEC records.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 454,
+    "slug": "ip-supernetting-calculator",
+    "name": "IP Supernetting & CIDR Aggregator",
+    "shortDescription": "Calculate aggregated supernets and summarize multiple IP CIDR network prefixes.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 455,
+    "slug": "opengraph-tag-inspector",
+    "name": "OpenGraph & Social Meta Tag Inspector",
+    "shortDescription": "Extract and inspect OpenGraph, Twitter Card, and LinkedIn preview metadata tags.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 456,
+    "slug": "jwt-expiry-calculator",
+    "name": "JWT Token Expiry & Lifetime Calculator",
+    "shortDescription": "Calculate remaining seconds, expiration timestamp, and validity from JWT payloads.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 457,
+    "slug": "regex-benchmark-simulator",
+    "name": "Regex ReDoS & Backtracking Risk Analyzer",
+    "shortDescription": "Detect catastrophic exponential backtracking risks and evaluate regex complexity.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 458,
+    "slug": "llm-context-window-shrinker",
+    "name": "LLM Prompt Context Window Optimizer",
+    "shortDescription": "Shrink prompt token consumption by stripping comments, docstrings, and extra whitespace.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 459,
+    "slug": "embedding-token-cost-estimator",
+    "name": "Text Embedding Token & API Cost Estimator",
+    "shortDescription": "Calculate vector embedding token costs across OpenAI text-embedding-3 and Voyage AI models.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 460,
+    "slug": "webhook-payload-simulator",
+    "name": "Webhook Mock Event Payload Simulator",
+    "shortDescription": "Generate synthetic webhook JSON event payloads for Stripe, GitHub, Slack, and Shopify.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 461,
+    "slug": "network-port-reference",
+    "name": "TCP/UDP Port Number Reference & Directory",
+    "shortDescription": "Look up standard TCP and UDP port numbers, service assignments, and security notes.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 462,
+    "slug": "ssl-tls-handshake-simulator",
+    "name": "TLS 1.2 & TLS 1.3 Cryptographic Handshake Simulator",
+    "shortDescription": "Simulate and compare TLS 1.2 (2-RTT) and TLS 1.3 (1-RTT) cryptographic handshake flows.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 463,
+    "slug": "http2-http3-frame-inspector",
+    "name": "HTTP/2 & HTTP/3 QUIC Frame Inspector",
+    "shortDescription": "Inspect binary frame types, flags, and payload functions for HTTP/2 and HTTP/3 QUIC streams.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 464,
+    "slug": "dns-spf-record-flattener",
+    "name": "DNS SPF Lookup Counter & Record Flattener",
+    "shortDescription": "Count DNS lookups in SPF TXT records and verify RFC compliance (< 10 lookup limit).",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 465,
+    "slug": "mime-type-extension-lookup",
+    "name": "File Extension to MIME Content-Type Lookup",
+    "shortDescription": "Look up standard IANA MIME content-types and headers by file extension.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 466,
+    "slug": "color-blindness-simulator",
+    "name": "Color Blindness Accessibility Simulator",
+    "shortDescription": "Simulate color accessibility for Protanopia, Deuteranopia, and Tritanopia vision.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 467,
+    "slug": "contrast-ratio-apca-calculator",
+    "name": "WCAG & APCA Text Contrast Ratio Calculator",
+    "shortDescription": "Calculate text and background color contrast ratios according to WCAG 2.1 AAA guidelines.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 468,
+    "slug": "viewport-size-tester",
+    "name": "Responsive Viewport & Breakpoint Inspector",
+    "shortDescription": "Inspect Tailwind CSS breakpoints (xs, sm, md, lg, xl, 2xl) and standard screen sizes.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 469,
+    "slug": "unicode-glyph-category-inspector",
+    "name": "Unicode Glyph & Code Point Inspector",
+    "shortDescription": "Inspect Unicode character code points, hexadecimal encodings, and Unicode category blocks.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 470,
+    "slug": "seo-robots-noindex-simulator",
+    "name": "Robots.txt & X-Robots-Tag Indexing Simulator",
+    "shortDescription": "Evaluate search engine indexation rules, noindex, nofollow, and crawl permissions.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 471,
+    "slug": "cors-preflight-inspector",
+    "name": "CORS Preflight OPTIONS Request Inspector",
+    "shortDescription": "Inspect Cross-Origin Resource Sharing preflight headers, origins, and credentials.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 472,
+    "slug": "css-selector-speed-profiler",
+    "name": "CSS Selector Specificity & Speed Profiler",
+    "shortDescription": "Calculate CSS selector specificity triplets [ID, Class, Tag] and rendering efficiency.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 473,
+    "slug": "git-conflict-marker-cleaner",
+    "name": "Git Merge Conflict Marker Stripper",
+    "shortDescription": "Strip and resolve merge conflict markers (HEAD, ===, >>>) from source code files.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 474,
+    "slug": "semver-range-evaluator",
+    "name": "Semantic Versioning (SemVer) Range Evaluator",
+    "shortDescription": "Evaluate npm semver ranges (^, ~, >=) and determine version compatibility.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 475,
+    "slug": "package-json-license-checker",
+    "name": "package.json Open Source License Checker",
+    "shortDescription": "Scan package.json dependencies for open-source commercial license compatibility.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 476,
+    "slug": "api-rate-limit-cost-calculator",
+    "name": "Token Bucket API Rate Limit Calculator",
+    "shortDescription": "Calculate Token Bucket and Leaky Bucket capacity, refill rates, and burst limits.",
+    "categorySlug": "utilities",
+    "categoryName": "Utilities"
+  },
+  {
+    "id": 477,
+    "slug": "blake3-hash-generator",
+    "name": "BLAKE3 Cryptographic Hash Generator",
+    "shortDescription": "Generate ultra-fast 256-bit BLAKE3 cryptographic hashes and tree digests client-side.",
+    "categorySlug": "crypto",
+    "categoryName": "Cryptography"
+  },
+  {
+    "id": 478,
+    "slug": "pbkdf2-key-derivation",
+    "name": "PBKDF2 Key Derivation Function Calculator",
+    "shortDescription": "Derive secure cryptographic keys using PBKDF2 with HMAC-SHA256 and configurable iterations.",
+    "categorySlug": "crypto",
+    "categoryName": "Cryptography"
+  },
+  {
+    "id": 479,
+    "slug": "hmac-sha384-sha512-calculator",
+    "name": "HMAC-SHA384 & HMAC-SHA512 Signature Generator",
+    "shortDescription": "Calculate keyed hash message authentication codes (HMAC) with SHA-384 and SHA-512 digests.",
+    "categorySlug": "crypto",
+    "categoryName": "Cryptography"
+  },
+  {
+    "id": 480,
+    "slug": "ethereum-eip191-signature-verifier",
+    "name": "Ethereum EIP-191 Personal Sign Validator",
+    "shortDescription": "Format and validate Ethereum EIP-191 personal_sign prefixed messages for Web3 wallets.",
+    "categorySlug": "crypto",
+    "categoryName": "Cryptography"
+  },
+  {
+    "id": 481,
+    "slug": "bitcoin-bech32-address-encoder",
+    "name": "Bitcoin Bech32 & SegWit Address Validator",
+    "shortDescription": "Validate and decode Native SegWit (P2WPKH) and Taproot Bech32/Bech32m Bitcoin addresses.",
+    "categorySlug": "crypto",
+    "categoryName": "Cryptography"
+  },
+  {
+    "id": 482,
+    "slug": "rsa-pkcs1-pkcs8-converter",
+    "name": "RSA PKCS#1 to PKCS#8 Key Format Inspector",
+    "shortDescription": "Detect and convert RSA private/public keys between PKCS#1 and PKCS#8 PEM formats.",
+    "categorySlug": "crypto",
+    "categoryName": "Cryptography"
+  },
+  {
+    "id": 483,
+    "slug": "x509-san-csr-builder",
+    "name": "X.509 CSR with Subject Alternative Name (SAN) Builder",
+    "shortDescription": "Generate OpenSSL Certificate Signing Request (CSR) configurations with multiple SAN domains.",
+    "categorySlug": "crypto",
+    "categoryName": "Cryptography"
+  },
+  {
+    "id": 484,
+    "slug": "ed25519-sign-verify",
+    "name": "Ed25519 Signature & Key Pair Inspector",
+    "shortDescription": "Sanitize and inspect Ed25519 256-bit elliptic curve public/private cryptographic keys.",
+    "categorySlug": "crypto",
+    "categoryName": "Cryptography"
+  },
+  {
+    "id": 485,
+    "slug": "argon2-parameter-tuner",
+    "name": "Argon2id Memory & Cost Parameter Tuner",
+    "shortDescription": "Calculate recommended RFC-9106 Argon2id memory, iteration, and parallelism parameters.",
+    "categorySlug": "crypto",
+    "categoryName": "Cryptography"
+  },
+  {
+    "id": 486,
+    "slug": "uuid-v7-timestamp-extractor",
+    "name": "UUIDv7 Timestamp & Date Extractor",
+    "shortDescription": "Extract Unix millisecond timestamps, UTC dates, and sequences from UUIDv7 strings.",
+    "categorySlug": "crypto",
+    "categoryName": "Cryptography"
+  },
+  {
+    "id": 487,
+    "slug": "ethereum-abi-storage-slot-calculator",
+    "name": "Solidity EVM State Variable Storage Slot Calculator",
+    "shortDescription": "Calculate 32-byte EVM storage slots for Solidity state variables and smart contracts.",
+    "categorySlug": "crypto",
+    "categoryName": "Cryptography"
+  },
+  {
+    "id": 488,
+    "slug": "base64-pem-certificate-parser",
+    "name": "X.509 TLS/SSL Certificate SAN & Info Parser",
+    "shortDescription": "Parse X.509 PEM certificates to extract Subject Alternative Names, issuers, and validity.",
+    "categorySlug": "crypto",
+    "categoryName": "Cryptography"
+  },
+  {
+    "id": 489,
+    "slug": "punycode-idn-converter",
+    "name": "Punycode IDN Domain Converter",
+    "shortDescription": "Convert internationalized Unicode domain names into ASCII-compatible Punycode (xn--).",
+    "categorySlug": "encoding",
+    "categoryName": "Encoding"
+  },
+  {
+    "id": 490,
+    "slug": "crockford-base32-encoder",
+    "name": "Crockford Base32 Encoder & Decoder",
+    "shortDescription": "Encode numbers into human-friendly Crockford Base32 strings that exclude confusing letters.",
+    "categorySlug": "encoding",
+    "categoryName": "Encoding"
+  },
+  {
+    "id": 491,
+    "slug": "bcd-binary-coded-decimal-converter",
+    "name": "Binary Coded Decimal (BCD 8421) Converter",
+    "shortDescription": "Convert decimal numbers into 4-bit Binary Coded Decimal (BCD 8421) nibbles and back.",
+    "categorySlug": "encoding",
+    "categoryName": "Encoding"
+  },
+  {
+    "id": 492,
+    "slug": "ieee754-hex-float-converter",
+    "name": "IEEE-754 Floating Point to Hex Converter",
+    "shortDescription": "Convert 32-bit single precision floats into IEEE-754 hexadecimal representations.",
+    "categorySlug": "encoding",
+    "categoryName": "Encoding"
+  },
+  {
+    "id": 493,
+    "slug": "rot47-encoder-decoder",
+    "name": "ROT47 Cipher Text Encoder & Decoder",
+    "shortDescription": "Rotate full printable ASCII characters (33-126) using the 47-character Caesar cipher.",
+    "categorySlug": "encoding",
+    "categoryName": "Encoding"
+  },
+  {
+    "id": 494,
+    "slug": "url-safe-base64-converter",
+    "name": "URL-Safe Base64 (Base64url) Converter",
+    "shortDescription": "Convert standard Base64 (+, /, =) to URL-safe Base64url (-, _) with padding stripping.",
+    "categorySlug": "encoding",
+    "categoryName": "Encoding"
+  },
+  {
+    "id": 495,
+    "slug": "json-path-query-tester",
+    "name": "JSONPath Query Evaluator & Filter",
+    "shortDescription": "Query, filter, and extract nested properties from JSON document trees using JSONPath.",
+    "categorySlug": "json",
+    "categoryName": "JSON Tools"
+  },
+  {
+    "id": 496,
+    "slug": "json-key-sorter",
+    "name": "JSON Alphabetical Key Sorter",
+    "shortDescription": "Recursively sort all JSON object keys alphabetically for clean diffs and determinism.",
+    "categorySlug": "json",
+    "categoryName": "JSON Tools"
+  },
+  {
+    "id": 497,
+    "slug": "json-array-splitter-chunker",
+    "name": "JSON Large Array Batch Splitter",
+    "shortDescription": "Split large JSON datasets and arrays into smaller batch chunks for API limits.",
+    "categorySlug": "json",
+    "categoryName": "JSON Tools"
+  },
+  {
+    "id": 498,
+    "slug": "text-prefix-suffix-appender",
+    "name": "Multi-Line Text Prefix & Suffix Appender",
+    "shortDescription": "Add custom prefixes, suffixes, quotes, or line numbers to every line of text.",
+    "categorySlug": "text",
+    "categoryName": "Text Tools"
+  },
+  {
+    "id": 499,
+    "slug": "text-duplicate-line-counter",
+    "name": "Duplicate Line Frequency Counter",
+    "shortDescription": "Count duplicate lines in text lists and rank items by frequency occurrence.",
+    "categorySlug": "text",
+    "categoryName": "Text Tools"
+  },
+  {
+    "id": 500,
+    "slug": "text-column-tabular-splitter",
+    "name": "Text Delimited Column Tabular Splitter",
+    "shortDescription": "Split CSV/TSV delimited text into structured fixed-width columns and matrix rows.",
+    "categorySlug": "text",
+    "categoryName": "Text Tools"
+  }
+]

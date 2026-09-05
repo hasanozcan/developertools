@@ -74,7 +74,18 @@ const nextConfig = {
         destination: '/tools/text/markdown-preview',
         permanent: true,
       },
-    ];
+    ].flatMap((rule) =>
+      rule.source.startsWith('/tools/')
+        ? [
+            rule,
+            {
+              ...rule,
+              source: `/:locale(tr|de|es|fr|ru|zh)${rule.source}`,
+              destination: `/:locale${rule.destination}`,
+            },
+          ]
+        : [rule],
+    );
   },
   images: {
     unoptimized: true,

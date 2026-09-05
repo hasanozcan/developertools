@@ -10,6 +10,7 @@ vi.mock('@/lib/contentBlockerDetection', () => ({
 
 vi.mock('next/navigation', () => ({
   usePathname: () => '/tools/json/json-formatter',
+  useRouter: () => ({ push: vi.fn(), replace: vi.fn() }),
 }));
 
 const detector = vi.mocked(detectContentBlocker);

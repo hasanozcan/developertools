@@ -2,6 +2,7 @@
 
 import { Code2, Shield, Zap, Heart } from 'lucide-react';
 import Breadcrumb from '@/components/common/Breadcrumb';
+import Link from '@/components/common/LocalizedLink';
 import { useLanguage } from '@/context/LanguageContext';
 import Script from 'next/script';
 
@@ -109,12 +110,12 @@ export default function AboutPage() {
           <p className="text-gray-600 dark:text-gray-300 mb-4">
             {t('about.haveFeedbackDesc')}
           </p>
-          <a
+          <Link
             href="/contact"
             className="inline-block px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
           >
             {t('about.contactUs')}
-          </a>
+          </Link>
         </div>
       </div>
     </div>

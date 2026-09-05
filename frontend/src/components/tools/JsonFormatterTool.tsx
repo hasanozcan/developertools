@@ -7,6 +7,7 @@ import ShareLinkButton, { decodeShareData } from '@/components/common/ShareLinkB
 import { CheckCircle, AlertTriangle, Play, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { parseJsonSyntaxError, type ParsedJsonError } from '@/lib/jsonErrorParser';
+import { readToolInput } from '@/lib/toolInput';
 
 function sortJsonKeys(value: unknown): unknown {
   if (Array.isArray(value)) {
@@ -41,6 +42,9 @@ export default function JsonFormatterTool() {
         setInput(shared.input);
         if (shared.indent) setIndentSize(shared.indent);
         if (shared.sort !== undefined) setSortKeys(shared.sort);
+      } else {
+        const extensionInput = readToolInput(window.location.hash);
+        if (extensionInput !== null) setInput(extensionInput);
       }
     }
   }, []);

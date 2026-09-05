@@ -2,6 +2,7 @@
 
 import { useLanguage } from '@/context/LanguageContext';
 import Breadcrumb from '@/components/common/Breadcrumb';
+import Link from '@/components/common/LocalizedLink';
 import Script from 'next/script';
 
 export default function TermsPage() {
@@ -84,9 +85,9 @@ export default function TermsPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">{t('contact.title')}</h2>
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              <a href="/contact" className="text-primary-600 dark:text-primary-400 hover:underline">
+              <Link href="/contact" className="text-primary-600 dark:text-primary-400 hover:underline">
                 {t('about.contactUs')}
-              </a>
+              </Link>
             </p>
           </section>
         </div>

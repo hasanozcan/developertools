@@ -52,6 +52,7 @@ import { useFavorites } from '@/context/FavoritesContext';
 import { useHistory } from '@/context/HistoryContext';
 import { toolCatalog } from '@/lib/api';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
+import { getLocalizedPath } from '@/lib/i18nRouting';
 import { trackToolEvent } from '@/lib/analytics';
 
 const categoryIcons: Record<string, LucideIcon> = {
@@ -136,7 +137,7 @@ interface CommandPaletteProps {
 }
 
 export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { favorites } = useFavorites();
   const { history } = useHistory();
   const router = useRouter();
@@ -276,10 +277,10 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
         query_length: query.trim().length,
         result_count: filteredTools.length,
       });
-      router.push(buildToolPath(tool.category, tool.slug));
+      router.push(getLocalizedPath(buildToolPath(tool.category, tool.slug), language));
       onClose();
     },
-    [router, onClose, query, filteredTools.length],
+    [router, language, onClose, query, filteredTools.length],
   );
 
   // Keyboard navigation within list

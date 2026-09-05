@@ -21,6 +21,7 @@
     "submit:indexnow": "node scripts/submit-indexnow.mjs",
     "analyze": "cross-env ANALYZE=true next build --webpack",
     "audit:security": "npm audit --audit-level=high && npm audit --omit=dev --audit-level=moderate",
+    "build:extension": "node scripts/generate-extension-catalog.mjs && node scripts/package-extension.mjs",
     "check": "npm run lint && npm run type-check && npm run test",
     "check:all": "npm run check && npm run test:e2e"
   },

@@ -103,11 +103,10 @@ describe('PkceGeneratorTool async operations', () => {
   });
 
   it('uses the selected locale for controls and validation feedback', async () => {
-    localStorage.setItem('language', 'tr');
     validateCodeVerifierMock.mockImplementation(() => {
       throw new Error('invalid verifier');
     });
-    renderTool();
+    render(<LanguageProvider initialLocale="tr"><PkceGeneratorTool /></LanguageProvider>);
 
     const verifier = await screen.findByLabelText('Kod doğrulayıcı');
     fireEvent.change(verifier, { target: { value: 'çok-kısa' } });

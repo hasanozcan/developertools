@@ -69,7 +69,7 @@ test('tool search supports keyboard shortcut (/) and ESC closing', async ({ page
 
   // Capture live screenshot of the search modal open on the screen
   await page.screenshot({
-    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/search_modal_live.png',
+    path: test.info().outputPath('search_modal_live.png'),
   });
 
   await page.keyboard.press('Escape');
@@ -143,7 +143,7 @@ test('homepage category filter and live search filter work correctly', async ({ 
 
   // Capture live screenshot of the updated homepage toolbox
   await page.screenshot({
-    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/homepage_live.png',
+    path: test.info().outputPath('homepage_live.png'),
   });
 });
 
@@ -161,20 +161,13 @@ test('header navigation dropdown renders cleanly with opaque background over too
 
   // Capture screenshot of dropdown menu open over page
   await page.screenshot({
-    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/nav_dropdown_live.png',
+    path: test.info().outputPath('nav_dropdown_live.png'),
   });
 });
 
 test('header navigation dropdown in Turkish renders with solid background', async ({ page }) => {
-  await page.goto('/tools/encoding/jwt-decoder');
+  await page.goto('/tr/tools/encoding/jwt-decoder');
   await page.setViewportSize({ width: 1280, height: 800 });
-
-  // Switch to Turkish via localStorage
-  await page.evaluate(() => {
-    localStorage.setItem('language', 'tr');
-  });
-  await page.reload();
-  await page.waitForTimeout(300);
 
   // Hover over Kodlayıcılar
   const kodlayicilarLink = page.getByLabel('Primary navigation').getByRole('link', { name: /kodlayıcılar/i });
@@ -184,7 +177,7 @@ test('header navigation dropdown in Turkish renders with solid background', asyn
   await expect(page.getByRole('link', { name: /base64/i }).first()).toBeVisible();
 
   await page.screenshot({
-    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/nav_dropdown_tr_live.png',
+    path: test.info().outputPath('nav_dropdown_tr_live.png'),
   });
 });
 
@@ -195,91 +188,91 @@ test('new developer tools render and function correctly', async ({ page }) => {
   await page.goto('/tools/converters/px-to-rem');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.screenshot({
-    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/px_to_rem_live.png',
+    path: test.info().outputPath('px_to_rem_live.png'),
   });
 
   // 2. Test mock-data-generator
   await page.goto('/tools/generators/mock-data-generator');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.screenshot({
-    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/mock_data_live.png',
+    path: test.info().outputPath('mock_data_live.png'),
   });
 
   // 3. Test rsa-key-pair-generator
   await page.goto('/tools/crypto/rsa-key-pair-generator');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.screenshot({
-    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/rsa_keygen_live.png',
+    path: test.info().outputPath('rsa_keygen_live.png'),
   });
 
   // 4. Test curl-to-code
   await page.goto('/tools/utilities/curl-to-code');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.screenshot({
-    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/curl_to_code_live.png',
+    path: test.info().outputPath('curl_to_code_live.png'),
   });
 
   // 5. Test gitignore-generator
   await page.goto('/tools/generators/gitignore-generator');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.screenshot({
-    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/gitignore_live.png',
+    path: test.info().outputPath('gitignore_live.png'),
   });
 
   // 6. Test htpasswd-generator
   await page.goto('/tools/crypto/htpasswd-generator');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.screenshot({
-    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/htpasswd_live.png',
+    path: test.info().outputPath('htpasswd_live.png'),
   });
 
   // 7. Test css-glassmorphism
   await page.goto('/tools/utilities/css-glassmorphism');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.screenshot({
-    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/glassmorphism_live.png',
+    path: test.info().outputPath('glassmorphism_live.png'),
   });
 
   // 8. Test totp-generator
   await page.goto('/tools/crypto/totp-generator');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.screenshot({
-    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/totp_live.png',
+    path: test.info().outputPath('totp_live.png'),
   });
 
   // 9. Test markdown-table-generator
   await page.goto('/tools/generators/markdown-table-generator');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.screenshot({
-    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/markdown_table_live.png',
+    path: test.info().outputPath('markdown_table_live.png'),
   });
 
   // 10. Test key-code-info
   await page.goto('/tools/utilities/key-code-info');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.screenshot({
-    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/key_code_live.png',
+    path: test.info().outputPath('key_code_live.png'),
   });
 
   // 11. Test aspect-ratio-calculator
   await page.goto('/tools/converters/aspect-ratio-calculator');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.screenshot({
-    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/aspect_ratio_live.png',
+    path: test.info().outputPath('aspect_ratio_live.png'),
   });
 
   // 12. Test css-triangle-generator
   await page.goto('/tools/utilities/css-triangle-generator');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.screenshot({
-    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/css_triangle_live.png',
+    path: test.info().outputPath('css_triangle_live.png'),
   });
 
   // 13. Test svg-placeholder-generator
   await page.goto('/tools/generators/svg-placeholder-generator');
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   await page.screenshot({
-    path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/svg_placeholder_live.png',
+    path: test.info().outputPath('svg_placeholder_live.png'),
   });
 });
 
@@ -522,14 +515,14 @@ test('new high-traffic tools interactive functionality and visual validation', a
   await page.goto('/tools/utilities/llm-token-counter');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('LLM Token');
   await expect(page.locator('body')).toContainText('Tokens');
-  await page.screenshot({ path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/llm_token_counter_live.png' });
+  await page.screenshot({ path: test.info().outputPath('llm_token_counter_live.png') });
 
   // 2. CSS to Tailwind
   await page.goto('/tools/converters/css-to-tailwind');
   const cssInput = page.locator('textarea').first();
   await cssInput.fill('display: flex; justify-content: center; align-items: center;');
   await expect(page.locator('textarea').last()).toContainText('flex');
-  await page.screenshot({ path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/css_to_tailwind_live.png' });
+  await page.screenshot({ path: test.info().outputPath('css_to_tailwind_live.png') });
 
   // 3. JSON to Pydantic
   await page.goto('/tools/converters/json-to-pydantic');
@@ -537,18 +530,18 @@ test('new high-traffic tools interactive functionality and visual validation', a
   await pydanticInput.fill('{"user_id": 1, "username": "alex", "is_admin": true}');
   await expect(page.locator('textarea').last()).toContainText('class User(BaseModel):');
   await expect(page.locator('textarea').last()).toContainText('user_id: int');
-  await page.screenshot({ path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/json_to_pydantic_live.png' });
+  await page.screenshot({ path: test.info().outputPath('json_to_pydantic_live.png') });
 
   // 4. UUID v7 Generator
   await page.goto('/tools/generators/uuid-v7-generator');
   await expect(page.locator('body')).toContainText('UUIDv7');
   await page.getByRole('button', { name: /generate/i }).click();
-  await page.screenshot({ path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/uuid_v7_live.png' });
+  await page.screenshot({ path: test.info().outputPath('uuid_v7_live.png') });
 
   // 5. Conventional Commit Builder
   await page.goto('/tools/generators/conventional-commit-builder');
   await expect(page.locator('body')).toContainText('feat');
-  await page.screenshot({ path: 'C:/Users/PC/.gemini/antigravity/brain/70f40b8d-043e-47d1-b030-10209f073a81/conventional_commit_live.png' });
+  await page.screenshot({ path: test.info().outputPath('conventional_commit_live.png') });
 
   // 6. DeepSeek Token Counter
   await page.goto('/tools/utilities/deepseek-token-counter');

@@ -14,9 +14,8 @@ describe('CidrCalculatorTool localization', () => {
   });
 
   it('uses the selected locale for controls, results, and validation feedback', async () => {
-    localStorage.setItem('language', 'tr');
     render(
-      <LanguageProvider>
+      <LanguageProvider initialLocale="tr">
         <CidrCalculatorTool />
       </LanguageProvider>,
     );
