@@ -142,6 +142,7 @@ ins.adsbygoogle[data-ad-status='unfilled'] {
 }
 
 aside:has(ins.adsbygoogle[data-ad-status='unfilled']),
+[data-ad-container]:has(> ins.adsbygoogle[data-ad-status='unfilled']),
 [data-ad-banner]:has(ins.adsbygoogle[data-ad-status='unfilled']) {
   display: none !important;
 }

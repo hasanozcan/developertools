@@ -235,7 +235,7 @@ export default function ToolPageWrapper({
                     slot={process.env.NEXT_PUBLIC_ADSENSE_LEFT_SLOT || '3460899670'}
                     format="vertical"
                     immediate={true}
-                    className="min-h-[600px] rounded-3xl overflow-hidden border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
+                    className="min-h-[600px] rounded-3xl border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
                   />
                 </aside>
 
@@ -250,7 +250,7 @@ export default function ToolPageWrapper({
                     slot={process.env.NEXT_PUBLIC_ADSENSE_RIGHT_SLOT || '1351515156'}
                     format="vertical"
                     immediate={true}
-                    className="min-h-[600px] rounded-3xl overflow-hidden border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
+                    className="min-h-[600px] rounded-3xl border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
                   />
                 </aside>
               </div>
@@ -260,7 +260,7 @@ export default function ToolPageWrapper({
                 <AdSense
                   slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || '7781534087'}
                   format="horizontal"
-                  className="h-24 max-h-24 rounded-2xl overflow-hidden border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50"
+                  className="min-h-[90px] rounded-2xl border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50"
                 />
               </div>
             </div>
@@ -383,7 +383,7 @@ export default function ToolPageWrapper({
               slot={process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT || '2449208552'}
               format="vertical"
               immediate={true}
-              className="h-[300px] max-h-[600px] rounded-lg overflow-hidden"
+              className="min-h-[300px] rounded-lg"
             />
           </div>
         </div>
@@ -393,7 +393,7 @@ export default function ToolPageWrapper({
       <AdSense
         slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || '7781534087'}
         format="horizontal"
-        className="h-24 max-h-24 rounded-lg mt-8 overflow-hidden"
+        className="min-h-[90px] rounded-lg mt-8"
       />
     </>
   );

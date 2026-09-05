@@ -25,83 +25,101 @@ export default function AdSense({
   immediate = false,
 }: AdSenseProps) {
   const adClient = normalizeAdSenseClientId(process.env.NEXT_PUBLIC_ADSENSE_ID);
-  const requestKey = `${adClient}:${slot}:${format}:${responsive}`;
+  if (!adClient) return null;
+
+  return (
+    <AdSenseSlot
+      key={`${adClient}:${slot}:${format}:${responsive}`}
+      adClient={adClient}
+      slot={slot}
+      format={format}
+      responsive={responsive}
+      className={className}
+      immediate={immediate}
+    />
+  );
+}
+
+function AdSenseSlot({
+  adClient,
+  slot,
+  format,
+  responsive,
+  className,
+  immediate,
+}: Required<AdSenseProps> & { adClient: string }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const adRef = useRef<HTMLElement | null>(null);
-  const pushedRequestRef = useRef<string | null>(null);
-  const [shouldRequestAd, setShouldRequestAd] = useState(immediate);
-  const [isUnfilled, setIsUnfilled] = useState(false);
+  const pushedRequestRef = useRef(false);
+  const [hasRequestedAd, setHasRequestedAd] = useState(false);
 
   useEffect(() => {
-    if (immediate) {
-      setShouldRequestAd(true);
-      return;
-    }
-
     const container = containerRef.current;
-    if (!adClient || !container) return;
-
-    if (!('IntersectionObserver' in window)) {
-      setShouldRequestAd(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return;
-        setShouldRequestAd(true);
-        observer.disconnect();
-      },
-      { rootMargin: '400px 0px' },
-    );
-
-    observer.observe(container);
-    return () => observer.disconnect();
-  }, [adClient]);
-
-  useEffect(() => {
     const slotElement = adRef.current;
-    if (!adClient || !slotElement || !shouldRequestAd) return;
+    if (!container || !slotElement || pushedRequestRef.current) return;
 
-    try {
-      if (pushedRequestRef.current !== requestKey) {
+    let isNearViewport = immediate || typeof IntersectionObserver === 'undefined';
+    let intersectionObserver: IntersectionObserver | undefined;
+    let resizeObserver: ResizeObserver | undefined;
+
+    const disconnect = () => {
+      intersectionObserver?.disconnect();
+      resizeObserver?.disconnect();
+      window.removeEventListener('resize', requestAd);
+    };
+
+    function requestAd() {
+      if (pushedRequestRef.current || !isNearViewport || !slotElement?.isConnected) return;
+      // Responsive parents can be display:none even for an immediate placement.
+      if (slotElement.getBoundingClientRect().width <= 0) return;
+
+      pushedRequestRef.current = true;
+      // The Google queue scans all adsbygoogle elements. Keep hidden/lazy slots
+      // out of that shared queue until their own placement is ready.
+      slotElement.classList.add('adsbygoogle');
+      setHasRequestedAd(true);
+      disconnect();
+      try {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
-        pushedRequestRef.current = requestKey;
+      } catch (error) {
+        console.error('AdSense error:', error);
       }
-    } catch (error) {
-      console.error('AdSense error:', error);
     }
-  }, [adClient, requestKey, shouldRequestAd]);
 
-  useEffect(() => {
-    const slotElement = adRef.current;
-    if (!slotElement || typeof MutationObserver === 'undefined') return;
+    if (!immediate && typeof IntersectionObserver !== 'undefined') {
+      intersectionObserver = new IntersectionObserver(
+        (entries) => {
+          isNearViewport = entries.some((entry) => entry.isIntersecting);
+          requestAd();
+        },
+        { rootMargin: '400px 0px' },
+      );
+      intersectionObserver.observe(container);
+    }
 
-    const observer = new MutationObserver(() => {
-      if (slotElement.getAttribute('data-ad-status') === 'unfilled') {
-        setIsUnfilled(true);
-      }
-    });
+    if (typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(requestAd);
+      resizeObserver.observe(container);
+    } else {
+      window.addEventListener('resize', requestAd);
+    }
 
-    observer.observe(slotElement, { attributes: true, attributeFilter: ['data-ad-status'] });
-    return () => observer.disconnect();
-  }, []);
-
-  if (!adClient) return null;
+    requestAd();
+    return disconnect;
+  }, [immediate]);
 
   return (
     <div
       ref={containerRef}
-      data-site-support-slot={shouldRequestAd ? 'true' : undefined}
-      className={`${className} ${isUnfilled ? 'hidden' : ''}`.trim()}
+      data-ad-container="true"
+      data-site-support-slot={hasRequestedAd ? 'true' : undefined}
+      className={className}
     >
       <ins
-        key={requestKey}
         ref={(node) => {
           adRef.current = node;
         }}
-        className="adsbygoogle"
-        style={{ display: isUnfilled ? 'none' : 'block' }}
+        style={{ display: 'block' }}
         data-ad-client={adClient}
         data-ad-slot={slot}
         data-ad-format={format}

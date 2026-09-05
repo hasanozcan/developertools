@@ -841,7 +841,7 @@ export default function Home() {
         <AdSense
           slot="1733348098"
           format="horizontal"
-          className="h-24 rounded-lg mb-12 overflow-hidden"
+          className="min-h-[90px] rounded-lg mb-12"
         />
 
         {/* Categories */}
@@ -883,7 +883,7 @@ export default function Home() {
         <AdSense
           slot="7781534087"
           format="horizontal"
-          className="h-24 rounded-lg mb-12 overflow-hidden"
+          className="min-h-[90px] rounded-lg mb-12"
         />
 
         {/* SEO Content */}

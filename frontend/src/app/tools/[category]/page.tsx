@@ -864,7 +864,7 @@ export default async function CategoryPage({ params }: PageProps) {
         <AdSense
           slot="1733348098"
           format="horizontal"
-          className="h-24 rounded-lg mb-8 overflow-hidden"
+          className="min-h-[90px] rounded-lg mb-8"
         />
 
         {/* Tools Grid */}
