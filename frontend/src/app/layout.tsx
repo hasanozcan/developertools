@@ -8,6 +8,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Providers } from '@/components/Providers';
 import ServiceWorkerRegister from '@/components/common/ServiceWorkerRegister';
+import AdSenseScriptLoader from '@/components/common/AdSenseScriptLoader';
 import { normalizeAdSenseClientId, normalizeAdSensePublisherId } from '@/lib/adsense';
 
 const inter = Inter({
@@ -228,12 +229,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </>
         )}
         {adSenseClientId && (
-          <Script
-            id="adsbygoogle-js"
-            strategy="afterInteractive"
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adSenseClientId}`}
-            crossOrigin="anonymous"
-          />
+          <AdSenseScriptLoader clientId={adSenseClientId} />
         )}
         {googleAdsId && (
           <>

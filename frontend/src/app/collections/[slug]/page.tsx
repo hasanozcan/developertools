@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import AdSense from '@/components/common/AdSense';
 import { DEFAULT_ADSENSE_COLLECTION_BOTTOM_SLOT, DEFAULT_ADSENSE_COLLECTION_TOP_SLOT, resolveAdSenseSlot } from '@/lib/adsenseSlots';
 import { getCollectionTools, getToolCollection, toolCollections } from '@/lib/toolCollections';
+import { getHreflangAlternates } from '@/lib/i18nRouting';
 
 export function generateStaticParams() {
   return toolCollections.map((collection) => ({ slug: collection.slug }));
@@ -17,10 +18,14 @@ export async function generateMetadata({
   const { slug } = await params;
   const collection = getToolCollection(slug);
   if (!collection) return {};
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
   return {
     title: collection.title,
     description: collection.description,
-    alternates: { canonical: `/collections/${collection.slug}` },
+    alternates: {
+      canonical: `${siteUrl}/collections/${collection.slug}`,
+      languages: getHreflangAlternates(`/collections/${collection.slug}`, siteUrl),
+    },
     openGraph: {
       title: collection.title,
       description: collection.description,

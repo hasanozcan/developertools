@@ -188,6 +188,65 @@ test('curated collection pages expose workflow-focused tool groups', async ({ pa
   await expect(page.getByText('curl to postman', { exact: true })).toBeVisible();
 });
 
+test('localized collections keep localized metadata and tool links', async ({ page }) => {
+  await page.goto('/tr/collections/api-debugging');
+
+  await expect(page.getByRole('heading', { level: 1, name: /API Hata Ayıklama/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /cURL to Postman/i })).toHaveAttribute(
+    'href',
+    '/tr/tools/converters/curl-to-postman',
+  );
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    'href',
+    'https://devstools.app/tr/collections/api-debugging',
+  );
+});
+
+test('developer role landing pages expose focused tools and topic collections', async ({ page }) => {
+  await page.goto('/for/api-developers');
+
+  await expect(page.getByRole('heading', { level: 1, name: /Free Tools for API Developers/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /cURL Command Builder/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /API Debugging/i })).toBeVisible();
+
+  await page.goto('/de/for/devops-engineers');
+  await expect(page.getByRole('heading', { level: 1, name: /DevOps-Ingenieure/i })).toBeVisible();
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    'href',
+    'https://devstools.app/de/for/devops-engineers',
+  );
+});
+
+test('tool pages expose generated example content, topic links, and HowTo schema', async ({ page }) => {
+  await page.goto('/tools/json/json-formatter');
+
+  await expect(page.getByRole('heading', { name: /Example workflow with JSON Formatter/i })).toBeVisible();
+  await expect(page.locator('[data-topic-collections="true"]')).toContainText('JSON Development');
+  const structuredDataTypes = await page.locator('script[type="application/ld+json"]').evaluateAll((scripts) =>
+    scripts.flatMap((script) => {
+      try {
+        const value = JSON.parse(script.textContent || '{}') as { '@type'?: string };
+        return value['@type'] ? [value['@type']] : [];
+      } catch {
+        return [];
+      }
+    }),
+  );
+  expect(structuredDataTypes).toContain('HowTo');
+});
+
+test('Search Console opportunity analyzer ranks pasted CSV locally', async ({ page }) => {
+  await page.goto('/seo-opportunities');
+
+  await page.getByPlaceholder('Or paste CSV here…').fill(
+    'Query,Clicks,Impressions,CTR,Position\njson formatter,12,1000,1.2%,8.4\nbase64,2,200,1%,13',
+  );
+
+  await expect(page.getByText('2 opportunities')).toBeVisible();
+  await expect(page.getByRole('cell', { name: 'json formatter' })).toBeVisible();
+  await expect(page.getByRole('cell', { name: 'base64' })).toBeVisible();
+});
+
 test('API conversion workflow transfers cURL output through Postman and HAR targets', async ({ page }) => {
   await page.goto('/tools/converters/curl-to-postman');
   await page.getByRole('button', { name: /Convert to Collection/i }).click();

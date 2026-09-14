@@ -69,6 +69,10 @@ export function getLocalizedPath(href: string, targetLocale: Language = DEFAULT_
   if (
     cleanPath !== '/' &&
     !cleanPath.startsWith('/tools/') &&
+    cleanPath !== '/collections' &&
+    !cleanPath.startsWith('/collections/') &&
+    cleanPath !== '/for' &&
+    !cleanPath.startsWith('/for/') &&
     !LOCALIZED_PAGES.some((page) => cleanPath === `/${page}`)
   )
     return href;

@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { categoryCatalog, toolCatalog } from '@/lib/api';
 import { toolCollections } from '@/lib/toolCollections';
+import { developerAudiences } from '@/lib/developerAudiences';
 import {
   LOCALIZED_PAGES,
   NON_DEFAULT_LOCALES,
@@ -41,9 +42,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const collectionUrls = [
-    { url: `${BASE_URL}/collections` },
+    {
+      url: `${BASE_URL}/collections`,
+      alternates: { languages: getHreflangAlternates('/collections', BASE_URL) },
+    },
     ...toolCollections.map((collection) => ({
       url: `${BASE_URL}/collections/${collection.slug}`,
+      alternates: {
+        languages: getHreflangAlternates(`/collections/${collection.slug}`, BASE_URL),
+      },
+    })),
+  ];
+
+  const audienceUrls = [
+    {
+      url: `${BASE_URL}/for`,
+      alternates: { languages: getHreflangAlternates('/for', BASE_URL) },
+    },
+    ...developerAudiences.map((audience) => ({
+      url: `${BASE_URL}/for/${audience.slug}`,
+      alternates: {
+        languages: getHreflangAlternates(`/for/${audience.slug}`, BASE_URL),
+      },
     })),
   ];
 
@@ -74,7 +94,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${BASE_URL}/${locale}/${page}`,
       alternates: { languages: getHreflangAlternates(`/${page}`, BASE_URL) },
     }));
-    return [home, ...categories, ...tools, ...pages];
+    const collections = [
+      {
+        url: `${BASE_URL}/${locale}/collections`,
+        alternates: { languages: getHreflangAlternates('/collections', BASE_URL) },
+      },
+      ...toolCollections.map((collection) => ({
+        url: `${BASE_URL}/${locale}/collections/${collection.slug}`,
+        alternates: { languages: getHreflangAlternates(`/collections/${collection.slug}`, BASE_URL) },
+      })),
+    ];
+    const audiences = [
+      {
+        url: `${BASE_URL}/${locale}/for`,
+        alternates: { languages: getHreflangAlternates('/for', BASE_URL) },
+      },
+      ...developerAudiences.map((audience) => ({
+        url: `${BASE_URL}/${locale}/for/${audience.slug}`,
+        alternates: { languages: getHreflangAlternates(`/for/${audience.slug}`, BASE_URL) },
+      })),
+    ];
+    return [home, ...categories, ...tools, ...pages, ...collections, ...audiences];
   });
 
   return [
@@ -82,6 +122,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...englishCategories,
     ...englishTools,
     ...collectionUrls,
+    ...audienceUrls,
     ...staticUrls,
     ...localizedEntries,
   ];

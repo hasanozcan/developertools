@@ -156,9 +156,28 @@ describe('AdSense', () => {
       placement: 'tool-sidebar',
       format: 'auto',
       slot: '123',
+      attempt: 1,
       page_type: 'tool',
       category: 'json',
       tool: 'json-formatter',
+      collection: undefined,
+    });
+  });
+
+  it('classifies localized collection index ads as collection traffic', () => {
+    window.history.replaceState({}, '', '/tr/collections');
+    render(<AdSense slot="123" placement="collections-index-top" />);
+
+    revealObservedAds();
+
+    expect(trackProductEventMock).toHaveBeenCalledWith('ad_slot_requested', {
+      placement: 'collections-index-top',
+      format: 'auto',
+      slot: '123',
+      attempt: 1,
+      page_type: 'collection',
+      category: undefined,
+      tool: undefined,
       collection: undefined,
     });
   });
@@ -175,6 +194,44 @@ describe('AdSense', () => {
     revealObservedAds();
     expect(container.querySelector('ins.adsbygoogle')).toHaveAttribute('data-ad-slot', '123');
     expect(window.adsbygoogle).toHaveLength(3);
+  });
+
+  it('retries a transient adsbygoogle push failure without losing the slot', async () => {
+    vi.useFakeTimers();
+    const queue: unknown[] = [];
+    const push = vi
+      .spyOn(queue, 'push')
+      .mockImplementationOnce(() => {
+        throw new Error('temporary init failure');
+      })
+      .mockImplementationOnce(Array.prototype.push.bind(queue));
+    window.adsbygoogle = queue;
+
+    const { container } = render(<AdSense slot="123" immediate placement="tool-retry" />);
+
+    expect(push).toHaveBeenCalledTimes(1);
+    expect(container.querySelector('ins.adsbygoogle')).toBeNull();
+    expect(container.firstChild).not.toHaveAttribute('data-site-support-slot');
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(500);
+    });
+
+    expect(push).toHaveBeenCalledTimes(2);
+    expect(container.querySelector('ins.adsbygoogle')).not.toBeNull();
+    expect(container.firstChild).toHaveAttribute('data-site-support-slot', 'true');
+    expect(trackProductEventMock).toHaveBeenCalledWith('ad_slot_request_failed', {
+      placement: 'tool-retry',
+      format: 'auto',
+      slot: '123',
+      attempt: 1,
+      error: 'Error',
+    });
+    expect(trackProductEventMock).toHaveBeenCalledWith(
+      'ad_slot_requested',
+      expect.objectContaining({ placement: 'tool-retry', attempt: 2 }),
+    );
+    vi.useRealTimers();
   });
 
   it('never replaces an unfilled Google slot with a site advertisement', async () => {

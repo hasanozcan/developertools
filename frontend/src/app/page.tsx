@@ -60,9 +60,11 @@ import {
 import AdSense from '@/components/common/AdSense';
 import InFeedAdCard from '@/components/common/InFeedAdCard';
 import QuickAccessBar from '@/components/common/QuickAccessBar';
+import TrendingTools from '@/components/seo/TrendingTools';
 import { toolCatalog } from '@/lib/api';
 import { getToolManifest } from '@/lib/toolManifest';
-import { toolCollections } from '@/lib/toolCollections';
+import { getLocalizedCollection, toolCollections } from '@/lib/toolCollections';
+import { developerAudiences, getLocalizedAudience } from '@/lib/developerAudiences';
 import { useLanguage } from '@/context/LanguageContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
@@ -208,7 +210,7 @@ const INITIAL_PAGE_SIZE = 48;
 const LOAD_MORE_STEP = 48;
 
 export default function Home() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { favorites, toggleFavorite, isFavorite } = useFavorites();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
@@ -445,6 +447,8 @@ export default function Home() {
         {/* Quick Access Bar (Recent & Privacy Badge) */}
         <QuickAccessBar className="mb-10" />
 
+        <TrendingTools />
+
         <section className="mb-10" aria-labelledby="workflow-collections-heading">
           <div className="mb-4 flex items-end justify-between gap-4">
             <div>
@@ -458,19 +462,50 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {toolCollections.map((collection) => (
-              <Link
-                key={collection.slug}
-                href={`/collections/${collection.slug}`}
-                className="interactive-card rounded-2xl p-4"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <h3 className="font-bold text-slate-900 dark:text-white">{collection.shortTitle}</h3>
-                  <ChevronRight className="h-4 w-4 text-indigo-500" />
-                </div>
-                <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-600 dark:text-slate-400">{collection.description}</p>
-              </Link>
-            ))}
+            {toolCollections.slice(0, 9).map((collection) => {
+              const localizedCollection = getLocalizedCollection(collection, language);
+              return (
+                <Link
+                  key={collection.slug}
+                  href={`/collections/${collection.slug}`}
+                  className="interactive-card rounded-2xl p-4"
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="font-bold text-slate-900 dark:text-white">{localizedCollection.shortTitle}</h3>
+                    <ChevronRight className="h-4 w-4 text-indigo-500" />
+                  </div>
+                  <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-600 dark:text-slate-400">{localizedCollection.description}</p>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className="mb-10" aria-labelledby="role-toolboxes-heading">
+          <div className="mb-4 flex items-end justify-between gap-4">
+            <div>
+              <span className="eyebrow mb-2">By role</span>
+              <h2 id="role-toolboxes-heading" className="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
+                Toolboxes for the way you work
+              </h2>
+            </div>
+            <Link href="/for" className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 sm:inline">
+              View all roles →
+            </Link>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {developerAudiences.slice(0, 6).map((audience) => {
+              const localizedAudience = getLocalizedAudience(audience, language);
+              return (
+                <Link key={audience.slug} href={`/for/${audience.slug}`} className="interactive-card rounded-2xl p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="font-bold text-slate-900 dark:text-white">{localizedAudience.shortTitle}</h3>
+                    <ChevronRight className="h-4 w-4 text-indigo-500" />
+                  </div>
+                  <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-600 dark:text-slate-400">{localizedAudience.description}</p>
+                </Link>
+              );
+            })}
           </div>
         </section>
 

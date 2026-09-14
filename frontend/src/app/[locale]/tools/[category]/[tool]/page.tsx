@@ -92,6 +92,7 @@ export default async function LocalizedToolPageRoute({ params }: LocalizedToolPa
 
   return (
     <ToolPage
+      locale={resolvedParams.locale as Language}
       params={Promise.resolve({
         category: resolvedParams.category,
         tool: resolvedParams.tool,

@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { useHistory } from '@/context/HistoryContext';
 import { trackToolEvent } from '@/lib/analytics';
+import { recordLocalToolOpen } from '@/lib/toolPopularity';
 
 interface HistoryTrackerProps {
   slug: string;
@@ -23,6 +24,7 @@ export default function HistoryTracker({ slug, name, category }: HistoryTrackerP
       
       // Track only catalog identifiers; never send tool input, referrer, or a session identifier.
       trackToolEvent('tool_opened', slug, category);
+      recordLocalToolOpen(slug);
     }
   }, [slug, name, category, addToHistory]);
 

@@ -54,6 +54,9 @@ describe('i18nRouting', () => {
     expect(getLocalizedPath('/', 'tr')).toBe('/tr');
     expect(getLocalizedPath('/tr', 'en')).toBe('/');
     expect(getLocalizedPath('/tr/contact', 'de')).toBe('/de/contact');
+    expect(getLocalizedPath('/collections', 'tr')).toBe('/tr/collections');
+    expect(getLocalizedPath('/collections/api-debugging', 'de')).toBe('/de/collections/api-debugging');
+    expect(getLocalizedPath('/for/api-developers', 'es')).toBe('/es/for/api-developers');
     expect(getLocalizedPath('/#categories', 'tr')).toBe('/tr#categories');
     expect(getLocalizedPath('/tools/json/json-formatter?q=a%2Bb#input=c%23d', 'tr')).toBe(
       '/tr/tools/json/json-formatter?q=a%2Bb#input=c%23d',

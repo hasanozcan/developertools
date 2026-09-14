@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getCollectionTools, getToolCollection, toolCollections } from './toolCollections';
+import { getCollectionTools, getLocalizedCollection, getToolCollection, toolCollections } from './toolCollections';
 
 describe('tool collections', () => {
   it('has unique slugs and resolves every collection', () => {
@@ -22,5 +22,13 @@ describe('tool collections', () => {
     for (const collection of toolCollections) {
       expect(collection.searchIntents.length, collection.slug).toBeGreaterThanOrEqual(3);
     }
+  });
+
+  it('localizes collection copy without changing slugs or tools', () => {
+    const collection = toolCollections[0];
+    const localized = getLocalizedCollection(collection, 'tr');
+    expect(localized.slug).toBe(collection.slug);
+    expect(localized.toolSlugs).toEqual(collection.toolSlugs);
+    expect(localized.title).not.toBe(collection.title);
   });
 });

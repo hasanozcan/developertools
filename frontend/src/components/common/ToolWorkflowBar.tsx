@@ -6,6 +6,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { buildToolPath } from '@/lib/toolRoutes';
 import { getLocalizedPath } from '@/lib/i18nRouting';
 import { getToolManifest, getWorkflowTargets } from '@/lib/toolManifest';
+import { trackToolEvent } from '@/lib/analytics';
 import {
   encodeTransferredInput,
   TOOL_OUTPUT_EVENT,
@@ -57,6 +58,12 @@ export default function ToolWorkflowBar({ toolSlug }: { toolSlug: string }) {
           <a
             key={target.slug}
             href={buildHref(target.slug, target.categorySlug)}
+            onClick={() =>
+              trackToolEvent('workflow_step_selected', toolSlug, manifest.categorySlug, {
+                target: target.slug,
+                has_output: Boolean(output),
+              })
+            }
             className="inline-flex items-center gap-1 rounded-xl border border-indigo-200 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-700 transition hover:border-indigo-400 hover:text-indigo-700 dark:border-indigo-900 dark:bg-slate-900 dark:text-slate-200"
           >
             {target.name}

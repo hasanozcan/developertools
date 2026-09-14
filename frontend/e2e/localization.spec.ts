@@ -13,7 +13,7 @@ test('locale survives category, tool, search and footer navigation', async ({ pa
   await expect(page.locator('html')).toHaveAttribute('lang', 'tr');
 
   await page.locator('button[aria-controls="tool-search-results"]').click();
-  await page.getByRole('combobox').fill('json formatter');
+  await page.locator('input[role="combobox"][aria-controls="tool-search-results"]').fill('json formatter');
   await page
     .getByRole('option', { name: /json formatter/i })
     .first()

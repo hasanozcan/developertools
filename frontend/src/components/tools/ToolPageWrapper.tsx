@@ -23,6 +23,7 @@ interface ToolPageWrapperProps {
   sources: { name: string; url: string }[];
   answerSections: { heading: string; paragraphs?: string[]; bullets?: string[] }[];
   relatedTools: { name: string; description: string; href: string }[];
+  topicCollections: { name: string; description: string; href: string }[];
   howToUseSteps?: string[];
   children: React.ReactNode;
 }
@@ -37,6 +38,7 @@ export default function ToolPageWrapper({
   sources,
   answerSections,
   relatedTools,
+  topicCollections,
   howToUseSteps: customHowToUseSteps,
   children,
 }: ToolPageWrapperProps) {
@@ -318,6 +320,30 @@ export default function ToolPageWrapper({
               ))}
             </div>
           </section>
+
+          {topicCollections.length > 0 && (
+            <section className="mb-8" data-topic-collections="true">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                Topic collections
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {topicCollections.map((collection) => (
+                  <Link
+                    key={collection.href}
+                    href={collection.href}
+                    className="interactive-card block rounded-2xl p-4"
+                  >
+                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                      {collection.name}
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      {collection.description}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* How to Use Section */}
           <section className="mb-8">

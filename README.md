@@ -16,9 +16,12 @@
 
 - 🔒 **Client-Side Processing:** Tool inputs, generated output, tokens, source code, images, and PDFs stay in the browser.
 - 🔗 **Tool Workflows:** Send output directly into compatible tools without a server round-trip.
-- 🧭 **Curated Collections:** Browse API debugging, JWT/auth, JSON, Docker/Kubernetes, AI/LLM, and database tools by real developer workflows.
+- 🧭 **20 Curated Collections:** Browse localized workflow clusters for API, JSON, security, frontend, DevOps, databases, AI/LLM, testing, media, networking, and more.
+- 👥 **Role Toolboxes:** Programmatic landing pages for API, frontend, backend, DevOps, security, data, AI, mobile, database, and QA engineers.
 - 🗂️ **Local Workspaces:** Group tools into named browser-local workspaces and export/import them as JSON.
-- 📈 **Ad Placement Telemetry:** Track ad-request opportunities by placement and page context while AdSense remains responsible for impression and revenue reporting.
+- 📈 **Ad Placement Telemetry:** Track requested, filled, and unfilled AdSense placements plus workflow-step engagement by page context.
+- 🔎 **SEO Opportunity Analyzer:** Import a Search Console CSV locally to rank queries/pages in positions 4–20 by estimated click upside.
+- 🔥 **Personal Trending Tools:** Rank frequently and recently opened tools using only browser-local tool counters.
 - ⌨️ **CLI:** Run common JSON, Base64, SHA-256, UUID, and timestamp utilities from the terminal.
 - ⚡ **Instant Execution:** Built with Next.js 16 Static Site Generation (SSG) with zero backend round-trip latency.
 - 🔍 **Keyboard-First Navigation:** Press `/` anywhere to open the command palette fuzzy search.

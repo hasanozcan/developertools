@@ -6,6 +6,14 @@ import { categoryCatalog, findCatalogTool, getToolBySlug, toolCatalog } from '@/
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
 import { getToolSources } from '@/lib/toolSources';
 import { getHreflangAlternates } from '@/lib/i18nRouting';
+import { getLocalizedToolMeta, type Language } from '@/lib/i18nRouting';
+import { getWorkflowTargets } from '@/lib/toolManifest';
+import { getCollectionsForTool, getLocalizedCollection } from '@/lib/toolCollections';
+import {
+  buildSupplementalToolFaqs,
+  buildSupplementalToolSections,
+  mergeToolFaqs,
+} from '@/lib/toolSeoContent';
 
 // Tool configurations
 const tools: Record<
@@ -11564,7 +11572,7 @@ const categoryNames = Object.fromEntries(
   categoryCatalog.map((category) => [category.slug, category.name]),
 ) as Record<string, string>;
 
-export default async function ToolPage({ params }: PageProps) {
+export default async function ToolPage({ params, locale = 'en' }: PageProps & { locale?: Language }) {
   const { category, tool: toolSlug } = await params;
   const categoryTools = tools[category];
   const tool = categoryTools?.[toolSlug];
@@ -11580,20 +11588,58 @@ export default async function ToolPage({ params }: PageProps) {
     permanentRedirect(`/tools/${canonicalCategory}/${toolSlug}`);
   }
 
-  const canonicalUrl = `${siteUrl}/tools/${canonicalCategory}/${toolSlug}`;
+  const localePrefix = locale === 'en' ? '' : `/${locale}`;
+  const canonicalUrl = `${siteUrl}${localePrefix}/tools/${canonicalCategory}/${toolSlug}`;
   const sources = getToolSources(toolSlug).filter((source) => source.url !== canonicalUrl);
   const toolDetail = await getToolBySlug(toolSlug);
-  const relatedTools = (toolDetail?.relatedTools || []).map((relatedTool) => ({
-    name: relatedTool.name,
-    description: relatedTool.shortDescription || `Open the ${relatedTool.name} tool.`,
-    href: buildToolPath(relatedTool.categorySlug, relatedTool.slug),
-  }));
+  const localizedTool = getLocalizedToolMeta(toolSlug, locale, tool.name, tool.description);
+  const relatedCandidates = [
+    ...getWorkflowTargets(toolSlug),
+    ...(toolDetail?.relatedTools || []),
+  ];
+  const relatedBySlug = new Map<string, (typeof relatedCandidates)[number]>();
+  for (const relatedTool of relatedCandidates) {
+    if (relatedTool.slug !== toolSlug && !relatedBySlug.has(relatedTool.slug)) {
+      relatedBySlug.set(relatedTool.slug, relatedTool);
+    }
+  }
+  const relatedTools = [...relatedBySlug.values()].slice(0, 6).map((relatedTool) => {
+    const localizedRelated = getLocalizedToolMeta(
+      relatedTool.slug,
+      locale,
+      relatedTool.name,
+      relatedTool.shortDescription || relatedTool.name,
+    );
+    return {
+      name: localizedRelated.name,
+      description: localizedRelated.description,
+      href: buildToolPath(relatedTool.categorySlug, relatedTool.slug),
+    };
+  });
+  const topicCollections = getCollectionsForTool(toolSlug).slice(0, 3).map((collection) => {
+    const localizedCollection = getLocalizedCollection(collection, locale);
+    return {
+      name: localizedCollection.shortTitle,
+      description: localizedCollection.description,
+      href: `/collections/${collection.slug}`,
+    };
+  });
+  const effectiveFaqs = mergeToolFaqs(tool.faqs, buildSupplementalToolFaqs(localizedTool.name));
+  const effectiveAnswerSections = [
+    ...(tool.answerSections || []),
+    ...buildSupplementalToolSections(toolSlug, localizedTool.name, localizedTool.description),
+  ];
+  const effectiveHowToUseSteps = tool.howToUseSteps || [
+    'Enter or paste representative input into the tool.',
+    'Adjust the available options for the result you need.',
+    'Run the tool, review the output, and copy or continue to a related workflow step.',
+  ];
 
   // FAQ structured data for SEO
   const faqStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: tool.faqs.map((faq) => ({
+    mainEntity: effectiveFaqs.map((faq) => ({
       '@type': 'Question',
       name: faq.question,
       acceptedAnswer: {
@@ -11623,7 +11669,7 @@ export default async function ToolPage({ params }: PageProps) {
       {
         '@type': 'ListItem',
         position: 3,
-        name: tool.name,
+        name: localizedTool.name,
       },
     ],
   };
@@ -11634,8 +11680,8 @@ export default async function ToolPage({ params }: PageProps) {
     '@type': 'WebApplication',
     '@id': `${canonicalUrl}#application`,
     url: canonicalUrl,
-    name: tool.name,
-    description: tool.description,
+    name: localizedTool.name,
+    description: localizedTool.description,
     image: `${canonicalUrl}/opengraph-image`,
     screenshot: `${canonicalUrl}/opengraph-image`,
     applicationCategory: 'DeveloperApplication',
@@ -11659,12 +11705,25 @@ export default async function ToolPage({ params }: PageProps) {
   const relatedToolsStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: `Tools related to ${tool.name}`,
+    name: `Tools related to ${localizedTool.name}`,
     itemListElement: relatedTools.map((relatedTool, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       name: relatedTool.name,
       url: `${siteUrl}${relatedTool.href}`,
+    })),
+  };
+
+  const howToStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: `How to use ${localizedTool.name}`,
+    description: localizedTool.description,
+    step: effectiveHowToUseSteps.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: `Step ${index + 1}`,
+      text: step.replace(/^\d+\.\s*/, ''),
     })),
   };
 
@@ -11687,18 +11746,23 @@ export default async function ToolPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(relatedToolsStructuredData) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToStructuredData) }}
+      />
 
       <ToolPageWrapper
         toolSlug={toolSlug}
         category={category}
         categoryName={categoryNames[category] || category}
-        defaultName={tool.name}
-        defaultDescription={tool.longDescription}
-        faqs={tool.faqs}
+        defaultName={localizedTool.name}
+        defaultDescription={localizedTool.description || tool.longDescription}
+        faqs={effectiveFaqs}
         sources={sources}
-        answerSections={tool.answerSections || []}
+        answerSections={effectiveAnswerSections}
         relatedTools={relatedTools}
-        howToUseSteps={tool.howToUseSteps}
+        topicCollections={topicCollections}
+        howToUseSteps={effectiveHowToUseSteps}
       >
         <ToolRenderer toolSlug={toolSlug} />
       </ToolPageWrapper>

@@ -1,13 +1,19 @@
 import { track } from '@vercel/analytics';
 
 export type ProductAnalyticsEvent =
+  | 'adsense_script_loaded'
+  | 'adsense_script_load_failed'
+  | 'ad_slot_request_failed'
   | 'ad_slot_requested'
+  | 'ad_slot_filled'
+  | 'ad_slot_unfilled'
   | 'contact_submitted'
   | 'tool_copied'
   | 'tool_favorite_added'
   | 'tool_favorite_removed'
   | 'tool_opened'
-  | 'tool_search_selected';
+  | 'tool_search_selected'
+  | 'workflow_step_selected';
 
 type AnalyticsValue = boolean | number | string | null;
 type AnalyticsProperties = Record<string, AnalyticsValue | undefined>;
@@ -40,7 +46,7 @@ export function getToolAnalyticsContext(pathname?: string): {
   tool: string;
 } | null {
   const currentPathname = pathname ?? (typeof window === 'undefined' ? '' : window.location.pathname);
-  const match = /^\/tools\/([^/?#]+)\/([^/?#]+)\/?$/.exec(currentPathname);
+  const match = /^\/(?:[a-z]{2}\/)?tools\/([^/?#]+)\/([^/?#]+)\/?$/.exec(currentPathname);
 
   if (!match) {
     return null;

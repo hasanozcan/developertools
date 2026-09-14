@@ -3,12 +3,18 @@ import Link from 'next/link';
 import AdSense from '@/components/common/AdSense';
 import { DEFAULT_ADSENSE_COLLECTION_INDEX_SLOT, resolveAdSenseSlot } from '@/lib/adsenseSlots';
 import { getCollectionTools, toolCollections } from '@/lib/toolCollections';
+import { getHreflangAlternates } from '@/lib/i18nRouting';
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
 
 export const metadata: Metadata = {
   title: 'Developer Tool Collections',
   description:
     'Browse curated developer tool collections for API debugging, JSON, authentication, Docker and Kubernetes, AI and LLM development, and databases.',
-  alternates: { canonical: '/collections' },
+  alternates: {
+    canonical: `${siteUrl}/collections`,
+    languages: getHreflangAlternates('/collections', siteUrl),
+  },
 };
 
 export default function CollectionsPage() {
