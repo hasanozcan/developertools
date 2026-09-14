@@ -1,9 +1,8 @@
-// DevsTools Service Worker for Offline & Fast Caching
-const CACHE_NAME = 'devstools-cache-v1';
-const OFFLINE_FALLBACK_URL = '/';
+// DevsTools Service Worker for static asset performance caching.
+// HTML/tool navigations stay network-only so monetized page views always load online.
+const CACHE_NAME = 'devstools-cache-v3';
 
 const PRECACHE_ASSETS = [
-  '/',
   '/favicon.ico',
   '/favicon.png',
   '/icon.svg',
@@ -85,25 +84,9 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // HTML Pages / Navigation -> Network First with Cache Fallback
+  // HTML pages and navigations stay network-only. This preserves live ads,
+  // analytics consent behavior, and current content on every monetized page view.
   if (request.mode === 'navigate' || request.headers.get('accept')?.includes('text/html')) {
-    event.respondWith(
-      fetch(request)
-        .then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200) {
-            const responseClone = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(request, responseClone);
-            });
-          }
-          return networkResponse;
-        })
-        .catch(async () => {
-          const cachedResponse = await caches.match(request);
-          if (cachedResponse) return cachedResponse;
-          return caches.match(OFFLINE_FALLBACK_URL);
-        }),
-    );
     return;
   }
 });

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { normalizeAdSenseClientId } from '@/lib/adsense';
+import { trackProductEvent } from '@/lib/analytics';
 
 declare global {
   interface Window {
@@ -15,6 +16,7 @@ interface AdSenseProps {
   responsive?: boolean;
   className?: string;
   immediate?: boolean;
+  placement?: string;
 }
 
 export default function AdSense({
@@ -23,19 +25,21 @@ export default function AdSense({
   responsive = true,
   className = '',
   immediate = false,
+  placement,
 }: AdSenseProps) {
   const adClient = normalizeAdSenseClientId(process.env.NEXT_PUBLIC_ADSENSE_ID);
   if (!adClient) return null;
 
   return (
     <AdSenseSlot
-      key={`${adClient}:${slot}:${format}:${responsive}`}
+      key={`${adClient}:${slot}:${format}:${responsive}:${placement || ''}`}
       adClient={adClient}
       slot={slot}
       format={format}
       responsive={responsive}
       className={className}
       immediate={immediate}
+      placement={placement || `slot-${slot}`}
     />
   );
 }
@@ -47,6 +51,7 @@ function AdSenseSlot({
   responsive,
   className,
   immediate,
+  placement,
 }: Required<AdSenseProps> & { adClient: string }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const adRef = useRef<HTMLElement | null>(null);
@@ -79,6 +84,18 @@ function AdSenseSlot({
       slotElement.classList.add('adsbygoogle');
       setHasRequestedAd(true);
       disconnect();
+      const pathname = window.location.pathname;
+      const toolMatch = /^\/(?:[a-z]{2}\/)?tools\/([^/]+)\/([^/]+)/.exec(pathname);
+      const collectionMatch = /^\/collections\/([^/]+)/.exec(pathname);
+      trackProductEvent('ad_slot_requested', {
+        placement,
+        format,
+        slot,
+        page_type: toolMatch ? 'tool' : collectionMatch ? 'collection' : pathname === '/' ? 'home' : 'other',
+        category: toolMatch?.[1],
+        tool: toolMatch?.[2],
+        collection: collectionMatch?.[1],
+      });
       try {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       } catch (error) {
@@ -106,7 +123,7 @@ function AdSenseSlot({
 
     requestAd();
     return disconnect;
-  }, [immediate]);
+  }, [format, immediate, placement, slot]);
 
   return (
     <div

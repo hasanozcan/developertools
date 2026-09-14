@@ -5167,7 +5167,7 @@ const tools: Record<
       name: 'All-in-One Image Format Converter',
       metadataTitle: 'Image Converter Online – Convert PNG, JPG, WebP, AVIF, ICO',
       description: 'Convert image formats in your browser without uploading files to a server. Supports PNG, JPG, WebP, AVIF, BMP, and ICO.',
-      longDescription: 'High-speed client-side image converter. Easily convert between PNG, JPEG, WebP, AVIF, BMP, and Favicon ICO formats with zero server tracking and maximum privacy.',
+      longDescription: 'High-speed client-side image converter. Easily convert between PNG, JPEG, WebP, AVIF, BMP, and Favicon ICO formats without uploading the image for conversion.',
       keywords: ['image converter', 'png to webp', 'webp to png', 'jpg to webp', 'image format converter online'],
       faqs: [
         { question: 'Is it safe to convert private photos?', answer: 'Yes, 100% of the image processing runs locally in your browser with HTML5 Canvas. Your photos never leave your device.' },

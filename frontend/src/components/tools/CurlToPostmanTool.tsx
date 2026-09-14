@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { convertCurlToPostman } from '@/lib/curlToPostman';
 import { Copy, Check, Download, ArrowRightLeft } from 'lucide-react';
+import { publishToolOutput, readTransferredInput } from '@/lib/toolWorkflow';
 
 const DEFAULT_CURL = `curl -X POST "https://api.example.com/v1/auth/login" \\
   -H "Content-Type: application/json" \\
@@ -15,11 +16,18 @@ export default function CurlToPostmanTool() {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    const transferred = readTransferredInput(window.location.hash);
+    if (transferred) setCurlInput(transferred.value);
+  }, []);
+
   const handleConvert = () => {
     try {
       setError(null);
       const res = convertCurlToPostman(curlInput, collectionName);
-      setPostmanJson(JSON.stringify(res, null, 2));
+      const output = JSON.stringify(res, null, 2);
+      setPostmanJson(output);
+      publishToolOutput({ toolSlug: 'curl-to-postman', value: output, dataType: 'postman' });
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Invalid cURL input');
     }

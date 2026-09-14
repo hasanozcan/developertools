@@ -1,13 +1,20 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { convertPostmanToOpenapi } from '@/lib/postmanToOpenapi';
+import { readTransferredInput } from '@/lib/toolWorkflow';
 
 const SAMPLE = "{\n  \"info\": { \"name\": \"Payment Gateway API\" },\n  \"item\": [\n    {\n      \"name\": \"Charge Credit Card\",\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"https://api.gateway.com/v1/charges\"\n      }\n    }\n  ]\n}";
 
 export default function PostmanToOpenapiTool() {
   const [input, setInput] = useState(SAMPLE);
+
+  useEffect(() => {
+    const transferred = readTransferredInput(window.location.hash);
+    if (transferred) setInput(transferred.value);
+  }, []);
+
   let output = '';
   let error = '';
 

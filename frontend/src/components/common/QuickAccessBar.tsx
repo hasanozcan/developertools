@@ -60,7 +60,7 @@ export default function QuickAccessBar({ currentSlug, className = '' }: QuickAcc
       <div className="flex items-center gap-3 shrink-0 ml-auto">
         <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-emerald-50 border border-emerald-200/60 text-emerald-700 font-medium dark:bg-emerald-950/30 dark:border-emerald-800/40 dark:text-emerald-300 text-[11px]">
           <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-emerald-500" />
-          <span>{t('common.clientSideBadge') || '100% Client-Side • Private'}</span>
+          <span>Client-side processing</span>
         </div>
       </div>
     </div>

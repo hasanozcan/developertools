@@ -6,6 +6,8 @@ import { useTheme } from '@/context/ThemeContext';
 import FavoriteButton from '@/components/common/FavoriteButton';
 import HistoryTracker from '@/components/common/HistoryTracker';
 import QuickAccessBar from '@/components/common/QuickAccessBar';
+import ToolWorkflowBar from '@/components/common/ToolWorkflowBar';
+import WorkspaceControls from '@/components/common/WorkspaceControls';
 import AdSense from '@/components/common/AdSense';
 import PostToolAdBanner from '@/components/common/PostToolAdBanner';
 import { Maximize2, Minimize2, Sparkles, X, Sun, Moon } from 'lucide-react';
@@ -164,18 +166,22 @@ export default function ToolPageWrapper({
           {/* Tool Component */}
           <div className="surface-card mb-8 rounded-3xl p-4 sm:p-7 relative" data-tool-interface="true">
             {/* Tool Toolbar (Full Screen Toggle) */}
-            <div className="flex items-center justify-end mb-4 pb-2 border-b border-slate-100 dark:border-white/5">
-              <button
-                onClick={() => setIsZenMode(true)}
-                title={t('zenMode') || 'Full Screen'}
-                aria-label={t('zenMode') || 'Full Screen'}
-                className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-indigo-300 hover:text-indigo-600 hover:-translate-y-0.5 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-indigo-500"
-              >
-                <Maximize2 className="h-3.5 w-3.5 text-indigo-500" />
-                <span>{t('zenMode') || 'Full Screen'}</span>
-              </button>
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-4 pb-2 border-b border-slate-100 dark:border-white/5">
+              <WorkspaceControls toolSlug={toolSlug} />
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setIsZenMode(true)}
+                  title={t('zenMode') || 'Full Screen'}
+                  aria-label={t('zenMode') || 'Full Screen'}
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-indigo-300 hover:text-indigo-600 hover:-translate-y-0.5 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-indigo-500"
+                >
+                  <Maximize2 className="h-3.5 w-3.5 text-indigo-500" />
+                  <span>{t('zenMode') || 'Full Screen'}</span>
+                </button>
+              </div>
             </div>
             {children}
+            <ToolWorkflowBar toolSlug={toolSlug} />
           </div>
 
           {/* Full Screen Overlay */}
@@ -235,6 +241,7 @@ export default function ToolPageWrapper({
                     slot={process.env.NEXT_PUBLIC_ADSENSE_LEFT_SLOT || '3460899670'}
                     format="vertical"
                     immediate={true}
+                    placement="tool-zen-left"
                     className="min-h-[600px] rounded-3xl border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
                   />
                 </aside>
@@ -250,6 +257,7 @@ export default function ToolPageWrapper({
                     slot={process.env.NEXT_PUBLIC_ADSENSE_RIGHT_SLOT || '1351515156'}
                     format="vertical"
                     immediate={true}
+                    placement="tool-zen-right"
                     className="min-h-[600px] rounded-3xl border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
                   />
                 </aside>
@@ -260,6 +268,7 @@ export default function ToolPageWrapper({
                 <AdSense
                   slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || '7781534087'}
                   format="horizontal"
+                  placement="tool-zen-bottom"
                   className="min-h-[90px] rounded-2xl border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50"
                 />
               </div>
@@ -383,6 +392,7 @@ export default function ToolPageWrapper({
               slot={process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT || '2449208552'}
               format="vertical"
               immediate={true}
+              placement="tool-sidebar"
               className="min-h-[300px] rounded-lg"
             />
           </div>
@@ -393,6 +403,7 @@ export default function ToolPageWrapper({
       <AdSense
         slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || '7781534087'}
         format="horizontal"
+        placement="tool-bottom"
         className="min-h-[90px] rounded-lg mt-8"
       />
     </>

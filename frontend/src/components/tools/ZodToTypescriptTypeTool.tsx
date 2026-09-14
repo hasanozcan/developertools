@@ -1,13 +1,20 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { convertZodToTsType } from '@/lib/zodToTypescriptType';
+import { readTransferredInput } from '@/lib/toolWorkflow';
 
 const SAMPLE = "export const UserSchema = z.object({\n  id: z.number(),\n  name: z.string()\n});";
 
 export default function ZodToTypescriptTypeTool() {
   const [input, setInput] = useState(SAMPLE);
+
+  useEffect(() => {
+    const transferred = readTransferredInput(window.location.hash);
+    if (transferred) setInput(transferred.value);
+  }, []);
+
   let output = '';
   let error = '';
 

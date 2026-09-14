@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { generateJsonSchema } from '@/lib/jsonToJsonSchema';
+import { publishToolOutput, readTransferredInput } from '@/lib/toolWorkflow';
 
 const SAMPLE_DATA = JSON.stringify({
   productId: 1045,
@@ -16,6 +17,21 @@ const SAMPLE_DATA = JSON.stringify({
 export default function JsonToJsonSchemaTool() {
   const [jsonInput, setJsonInput] = useState(SAMPLE_DATA);
   const schemaOutput = generateJsonSchema(jsonInput, '2020-12');
+
+  useEffect(() => {
+    const transferred = readTransferredInput(window.location.hash);
+    if (transferred) setJsonInput(transferred.value);
+  }, []);
+
+  useEffect(() => {
+    if (schemaOutput && !schemaOutput.startsWith('Error')) {
+      publishToolOutput({
+        toolSlug: 'json-to-json-schema',
+        value: schemaOutput,
+        dataType: 'json-schema',
+      });
+    }
+  }, [schemaOutput]);
 
   return (
     <div className="space-y-6">

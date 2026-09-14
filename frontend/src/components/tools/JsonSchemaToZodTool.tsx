@@ -1,11 +1,17 @@
 'use client';
-import React, { useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Copy, Check } from 'lucide-react';
 import { convertJsonSchemaToZod } from '@/lib/jsonSchemaToZod';
+import { publishToolOutput, readTransferredInput } from '@/lib/toolWorkflow';
 
 export default function JsonSchemaToZodTool() {
   const [input, setInput] = useState("{\\n  \"type\": \"object\",\\n  \"properties\": {\\n    \"email\": { \"type\": \"string\" }\\n  }\\n}");
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    const transferred = readTransferredInput(window.location.hash);
+    if (transferred) setInput(transferred.value);
+  }, []);
 
   const result = useMemo(() => {
     try {
@@ -14,6 +20,12 @@ export default function JsonSchemaToZodTool() {
       return 'Error: ' + e.message;
     }
   }, [input]);
+
+  useEffect(() => {
+    if (result && !result.startsWith('Error:')) {
+      publishToolOutput({ toolSlug: 'json-schema-to-zod', value: result, dataType: 'zod' });
+    }
+  }, [result]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(result);

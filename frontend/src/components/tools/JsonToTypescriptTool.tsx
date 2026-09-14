@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Copy, Check, FileCode, Trash2 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { publishToolOutput, readTransferredInput } from '@/lib/toolWorkflow';
 
 export interface TypeOptions {
   rootName: string;
@@ -386,6 +387,11 @@ export default function JsonToTypescriptTool() {
     addJSDoc: false,
   });
 
+  useEffect(() => {
+    const transferred = readTransferredInput(window.location.hash);
+    if (transferred) setInput(transferred.value);
+  }, []);
+
   const convert = useCallback(() => {
     if (!input.trim()) {
       setOutput('');
@@ -397,6 +403,7 @@ export default function JsonToTypescriptTool() {
       const json = JSON.parse(input);
       const result = jsonToTypeScript(json, toPascalCase(options.rootName), options, 0);
       setOutput(result);
+      publishToolOutput({ toolSlug: 'json-to-typescript', value: result, dataType: 'typescript' });
       setError(null);
     } catch (e) {
       setError(t('tool.jsonToTs.invalidJson'));

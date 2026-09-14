@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 import { AlertTriangle, CheckCircle2, FileJson2, Play, Trash2, XCircle } from 'lucide-react';
 import {
   JSON_SCHEMA_INPUT_LIMITS,
@@ -8,6 +8,7 @@ import {
   type JsonSchemaValidationErrorSource,
   type JsonSchemaValidationResult,
 } from '@/lib/jsonSchemaValidator';
+import { readTransferredInput } from '@/lib/toolWorkflow';
 
 const sampleDocument = `{
   "name": "Ada Lovelace",
@@ -42,6 +43,17 @@ export default function JsonSchemaValidatorTool() {
   const [documentSource, setDocumentSource] = useState('');
   const [schemaSource, setSchemaSource] = useState('');
   const [result, setResult] = useState<JsonSchemaValidationResult | null>(null);
+
+  useEffect(() => {
+    const transferred = readTransferredInput(window.location.hash);
+    if (!transferred) return;
+
+    if (transferred.dataType === 'json-schema') {
+      setSchemaSource(transferred.value);
+    } else {
+      setDocumentSource(transferred.value);
+    }
+  }, []);
 
   const updateDocument = (value: string) => {
     setDocumentSource(value);

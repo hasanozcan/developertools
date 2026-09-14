@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { categoryCatalog, toolCatalog } from '@/lib/api';
+import { toolCollections } from '@/lib/toolCollections';
 import {
   LOCALIZED_PAGES,
   NON_DEFAULT_LOCALES,
@@ -39,6 +40,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     alternates: { languages: getHreflangAlternates(`/${page}`, BASE_URL) },
   }));
 
+  const collectionUrls = [
+    { url: `${BASE_URL}/collections` },
+    ...toolCollections.map((collection) => ({
+      url: `${BASE_URL}/collections/${collection.slug}`,
+    })),
+  ];
+
   // Localized entries for non-default locales
   const localizedEntries: MetadataRoute.Sitemap = NON_DEFAULT_LOCALES.flatMap((locale) => {
     const home = {
@@ -73,6 +81,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     englishHome,
     ...englishCategories,
     ...englishTools,
+    ...collectionUrls,
     ...staticUrls,
     ...localizedEntries,
   ];

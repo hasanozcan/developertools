@@ -54,6 +54,7 @@ import { toolCatalog } from '@/lib/api';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
 import { getLocalizedPath } from '@/lib/i18nRouting';
 import { trackToolEvent } from '@/lib/analytics';
+import { getToolManifest } from '@/lib/toolManifest';
 
 const categoryIcons: Record<string, LucideIcon> = {
   json: Braces,
@@ -158,6 +159,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
   const allTools = useMemo(() => {
     return toolCatalog.map((tool) => {
       const canonicalCategory = getCanonicalToolCategory(tool.slug, tool.categorySlug);
+      const manifest = getToolManifest(tool.slug);
       const name = t(`toolName.${tool.slug}`) !== `toolName.${tool.slug}` ? t(`toolName.${tool.slug}`) : tool.name;
       const desc = t(`toolDesc.${tool.slug}`) !== `toolDesc.${tool.slug}` ? t(`toolDesc.${tool.slug}`) : (tool.shortDescription || '');
       const categoryName = t(`cat.${canonicalCategory}`) || canonicalCategory;
@@ -176,6 +178,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
           canonicalCategory,
           categoryName.toLowerCase(),
           ...tool.slug.split('-'),
+          ...(manifest?.searchAliases || []).map((alias) => alias.toLowerCase()),
         ],
       };
     });

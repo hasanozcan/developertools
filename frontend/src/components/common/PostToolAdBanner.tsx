@@ -6,11 +6,13 @@ import AdSense from './AdSense';
 interface PostToolAdBannerProps {
   className?: string;
   slot?: string;
+  placement?: string;
 }
 
 export default function PostToolAdBanner({
   className = '',
   slot = process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || '7781534087',
+  placement = 'tool-post-result',
 }: PostToolAdBannerProps) {
   return (
     <div
@@ -27,6 +29,7 @@ export default function PostToolAdBanner({
           slot={slot}
           format="horizontal"
           responsive={true}
+          placement={placement}
           className="w-full max-w-4xl min-h-[90px]"
         />
       </div>

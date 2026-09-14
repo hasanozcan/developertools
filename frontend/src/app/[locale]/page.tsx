@@ -9,13 +9,13 @@ import {
 import type { Language } from '@/translations';
 
 const titles: Record<Language, string> = {
-  en: 'DevsTools – 366 Free, Privacy-First Developer Tools',
-  tr: 'DevsTools – 366 Ücretsiz, Gizlilik Odaklı Geliştirici Araçları',
-  de: 'DevsTools – 366 kostenlose, datenschutzfreundliche Entwickler-Tools',
-  es: 'DevsTools – 366 herramientas gratuitas y privadas para desarrolladores',
-  fr: 'DevsTools – 366 outils gratuits et respectueux de la vie privée pour développeurs',
-  ru: 'DevsTools – 366 бесплатных инструментов для разработчиков',
-  zh: 'DevsTools – 366 款免费且注重隐私的在线开发者工具',
+  en: 'DevsTools – 500 Free, Privacy-First Developer Tools',
+  tr: 'DevsTools – 500 Ücretsiz, Gizlilik Odaklı Geliştirici Araçları',
+  de: 'DevsTools – 500 kostenlose, datenschutzfreundliche Entwickler-Tools',
+  es: 'DevsTools – 500 herramientas gratuitas y privadas para desarrolladores',
+  fr: 'DevsTools – 500 outils gratuits et respectueux de la vie privée pour développeurs',
+  ru: 'DevsTools – 500 бесплатных инструментов для разработчиков',
+  zh: 'DevsTools – 500 款免费且注重隐私的在线开发者工具',
 };
 
 const descriptions: Record<Language, string> = {
@@ -25,7 +25,7 @@ const descriptions: Record<Language, string> = {
   es: 'Herramientas de desarrollo rápidas, gratuitas y privadas que se ejecutan 100% en el navegador. Formateadores JSON, codificadores, convertidores y más.',
   fr: 'Outils en ligne rapides, gratuits et privés pour développeurs s’exécutant à 100 % côté client. Formateurs JSON, convertisseurs, encodeurs et plus.',
   ru: 'Быстрые, бесплатные и конфиденциальные онлайн-инструменты для разработчиков, работающие на 100% в браузере. JSON-форматеры, конвертеры и многое другое.',
-  zh: '在浏览器本地 100% 运行的快速、免费、注重隐私的在线开发者工具套件。包含 JSON 格式化、编码转换、代码生成等 366 款实用工具。',
+  zh: '在浏览器本地运行的快速、免费、注重隐私的在线开发者工具套件。包含 JSON 格式化、编码转换、代码生成等 500 款实用工具。',
 };
 
 interface PageProps {

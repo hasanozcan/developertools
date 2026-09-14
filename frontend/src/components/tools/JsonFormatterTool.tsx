@@ -8,6 +8,7 @@ import { CheckCircle, AlertTriangle, Play, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { parseJsonSyntaxError, type ParsedJsonError } from '@/lib/jsonErrorParser';
 import { readToolInput } from '@/lib/toolInput';
+import { publishToolOutput } from '@/lib/toolWorkflow';
 
 function sortJsonKeys(value: unknown): unknown {
   if (Array.isArray(value)) {
@@ -61,6 +62,7 @@ export default function JsonFormatterTool() {
       const normalized = sortKeys ? sortJsonKeys(parsed) : parsed;
       const formatted = JSON.stringify(normalized, null, indentSize);
       setOutput(formatted);
+      publishToolOutput({ toolSlug: 'json-formatter', value: formatted, dataType: 'json' });
       setParsedError(null);
     } catch (e) {
       setParsedError(parseJsonSyntaxError(e as Error, input));
@@ -80,6 +82,7 @@ export default function JsonFormatterTool() {
       const normalized = sortKeys ? sortJsonKeys(parsed) : parsed;
       const minified = JSON.stringify(normalized);
       setOutput(minified);
+      publishToolOutput({ toolSlug: 'json-formatter', value: minified, dataType: 'json' });
       setParsedError(null);
     } catch (e) {
       setParsedError(parseJsonSyntaxError(e as Error, input));

@@ -6,9 +6,14 @@ import AdSense from './AdSense';
 interface InFeedAdCardProps {
   className?: string;
   slot?: string;
+  placement?: string;
 }
 
-export default function InFeedAdCard({ className = '', slot = '1733348098' }: InFeedAdCardProps) {
+export default function InFeedAdCard({
+  className = '',
+  slot = '1733348098',
+  placement = 'home-infeed',
+}: InFeedAdCardProps) {
   return (
     <div
       data-ad-banner="true"
@@ -21,7 +26,13 @@ export default function InFeedAdCard({ className = '', slot = '1733348098' }: In
       </div>
 
       <div className="flex-1 flex items-center justify-center w-full">
-        <AdSense slot={slot} format="auto" responsive={true} className="w-full min-h-[90px]" />
+        <AdSense
+          slot={slot}
+          format="auto"
+          responsive={true}
+          placement={placement}
+          className="w-full min-h-[90px]"
+        />
       </div>
     </div>
   );

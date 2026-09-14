@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { convertCurlToHar } from '@/lib/curlToHar';
 import { Copy, Check, Download, Play } from 'lucide-react';
+import { publishToolOutput, readTransferredInput } from '@/lib/toolWorkflow';
 
 const DEFAULT_CURL = `curl -X POST "https://api.example.com/v1/users?ref=dashboard" \\
   -H "Authorization: Bearer sec_tok_9981" \\
@@ -15,11 +16,18 @@ export default function CurlToHarTool() {
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    const transferred = readTransferredInput(window.location.hash);
+    if (transferred) setCurlInput(transferred.value);
+  }, []);
+
   const handleConvert = () => {
     try {
       setError(null);
       const res = convertCurlToHar(curlInput);
-      setHarOutput(JSON.stringify(res, null, 2));
+      const output = JSON.stringify(res, null, 2);
+      setHarOutput(output);
+      publishToolOutput({ toolSlug: 'curl-to-har', value: output, dataType: 'har' });
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Invalid cURL command');
     }

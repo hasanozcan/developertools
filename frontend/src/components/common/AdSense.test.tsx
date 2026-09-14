@@ -3,6 +3,14 @@ import { act, render } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import AdSense from './AdSense';
 
+const { trackProductEventMock } = vi.hoisted(() => ({
+  trackProductEventMock: vi.fn(),
+}));
+
+vi.mock('@/lib/analytics', () => ({
+  trackProductEvent: trackProductEventMock,
+}));
+
 interface ObservedAd {
   callback: IntersectionObserverCallback;
   target?: Element;
@@ -33,6 +41,8 @@ function revealObservedAds() {
 
 describe('AdSense', () => {
   beforeEach(() => {
+    trackProductEventMock.mockReset();
+    window.history.replaceState({}, '', '/tools/json/json-formatter');
     vi.stubEnv('NEXT_PUBLIC_ADSENSE_ID', 'ca-pub-123');
     Reflect.deleteProperty(window, 'adsbygoogle');
     observedAds = [];
@@ -134,6 +144,23 @@ describe('AdSense', () => {
     expect(container.querySelectorAll('ins')).toHaveLength(2);
     revealObservedAds();
     expect(window.adsbygoogle).toHaveLength(2);
+  });
+
+  it('records a placement-level ad request without changing the AdSense request', () => {
+    render(<AdSense slot="123" placement="tool-sidebar" />);
+
+    revealObservedAds();
+
+    expect(window.adsbygoogle).toHaveLength(1);
+    expect(trackProductEventMock).toHaveBeenCalledWith('ad_slot_requested', {
+      placement: 'tool-sidebar',
+      format: 'auto',
+      slot: '123',
+      page_type: 'tool',
+      category: 'json',
+      tool: 'json-formatter',
+      collection: undefined,
+    });
   });
 
   it('queues a fresh request whenever a reused component changes slots', () => {

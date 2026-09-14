@@ -1,12 +1,25 @@
 'use client';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { jsonToCsharp } from '@/lib/jsonToCsharp';
+import { publishToolOutput, readTransferredInput } from '@/lib/toolWorkflow';
 
 export default function JsonToCsharpTool() {
   const [json, setJson] = useState('{\n  "userId": 1,\n  "title": "Task 1",\n  "isComplete": false\n}');
+
+  useEffect(() => {
+    const transferred = readTransferredInput(window.location.hash);
+    if (transferred) setJson(transferred.value);
+  }, []);
+
   const output = useMemo(() => {
     try { return jsonToCsharp(json, 'TodoItem'); } catch (e: any) { return '// ' + e.message; }
   }, [json]);
+
+  useEffect(() => {
+    if (output && !output.startsWith('// ')) {
+      publishToolOutput({ toolSlug: 'json-to-csharp', value: output, dataType: 'csharp' });
+    }
+  }, [output]);
 
   return (
     <div className="space-y-6">

@@ -147,6 +147,87 @@ test('homepage category filter and live search filter work correctly', async ({ 
   });
 });
 
+test('workspace, intent search, and tool workflow work together', async ({ page }) => {
+  await page.goto('/');
+
+  const filterInput = page.getByPlaceholder(/filter tools/i);
+  await filterInput.fill('json dan c# class');
+  await expect(page.getByRole('heading', { name: /json to c#/i })).toBeVisible();
+
+  await page.goto('/tools/json/json-formatter');
+
+  const addToWorkspace = page.getByRole('button', { name: 'Add to workspace' });
+  await addToWorkspace.click();
+  await expect(page.getByRole('button', { name: 'Saved' })).toBeVisible();
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        JSON.parse(localStorage.getItem('devstools-workspaces-v1') || '{}')?.workspaces?.[0]?.toolSlugs,
+      ),
+    )
+    .toContain('json-formatter');
+
+  const input = page.locator('textarea').first();
+  await input.fill('{"id":1,"name":"workflow"}');
+  await page.getByRole('button', { name: /Format JSON/i }).click();
+
+  const nextTool = page.getByRole('link', { name: /^JSON to TypeScript$/i }).first();
+  await expect(nextTool).toHaveAttribute('href', /#input=/);
+  await nextTool.click();
+
+  await expect(page).toHaveURL(/\/tools\/json\/json-to-typescript#input=/);
+  await expect(page.locator('textarea').first()).toHaveValue(/"workflow"/);
+});
+
+test('curated collection pages expose workflow-focused tool groups', async ({ page }) => {
+  await page.goto('/collections/api-debugging');
+
+  await expect(page.getByRole('heading', { level: 1, name: /API Debugging/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /cURL to Postman/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /HAR to k6/i })).toBeVisible();
+  await expect(page.getByText('curl to postman', { exact: true })).toBeVisible();
+});
+
+test('API conversion workflow transfers cURL output through Postman and HAR targets', async ({ page }) => {
+  await page.goto('/tools/converters/curl-to-postman');
+  await page.getByRole('button', { name: /Convert to Collection/i }).click();
+
+  const postmanNext = page
+    .getByRole('link', { name: /^Postman Collection to OpenAPI 3\.1 Converter$/i })
+    .first();
+  await expect(postmanNext).toHaveAttribute('href', /#input=/);
+  await postmanNext.click();
+  await expect(page).toHaveURL(/\/tools\/converters\/postman-to-openapi#input=/);
+  await expect(page.locator('textarea').first()).toHaveValue(/"info"/);
+
+  await page.goto('/tools/converters/curl-to-har');
+  await page.getByRole('button', { name: /Convert to HAR/i }).click();
+  const harNext = page.getByRole('link', { name: /^HAR to k6 Load Test Script Converter$/i }).first();
+  await expect(harNext).toHaveAttribute('href', /#input=/);
+  await harNext.click();
+  await expect(page).toHaveURL(/\/tools\/converters\/har-to-k6#input=/);
+  await expect(page.locator('textarea').first()).toHaveValue(/"log"/);
+});
+
+test('JSON schema workflow transfers schema to Zod and then TypeScript', async ({ page }) => {
+  await page.goto('/tools/generators/json-to-json-schema');
+  await page.locator('textarea').first().fill('{"name":"Ada","active":true}');
+
+  const zodNext = page.getByRole('link', { name: /^JSON Schema to Zod Converter$/i }).first();
+  await expect(zodNext).toHaveAttribute('href', /#input=/);
+  await zodNext.click();
+  await expect(page).toHaveURL(/\/tools\/converters\/json-schema-to-zod#input=/);
+  await expect(page.locator('textarea').first()).toHaveValue(/properties/);
+
+  const typeNext = page
+    .getByRole('link', { name: /^Zod Schema to TypeScript Type Inferer$/i })
+    .first();
+  await expect(typeNext).toHaveAttribute('href', /#input=/);
+  await typeNext.click();
+  await expect(page).toHaveURL(/\/tools\/converters\/zod-to-typescript-type#input=/);
+  await expect(page.locator('textarea').first()).toHaveValue(/z\.object/);
+});
+
 test('header navigation dropdown renders cleanly with opaque background over tool page', async ({ page }) => {
   await page.goto('/tools/encoding/jwt-decoder');
   await page.setViewportSize({ width: 1280, height: 800 });

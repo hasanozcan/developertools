@@ -14,6 +14,7 @@ import { toolCatalog } from '@/lib/api';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
 import { getLocalizedPath } from '@/lib/i18nRouting';
 import { trackToolEvent } from '@/lib/analytics';
+import { getToolManifest } from '@/lib/toolManifest';
 
 // Derive search coverage from the same catalog that powers the home page and API.
 const toolSlugs = toolCatalog.map((tool) => ({
@@ -24,6 +25,7 @@ const toolSlugs = toolCatalog.map((tool) => ({
     tool.name.toLowerCase(),
     tool.shortDescription?.toLowerCase() || '',
     ...tool.slug.split('-'),
+    ...(getToolManifest(tool.slug)?.searchAliases || []).map((alias) => alias.toLowerCase()),
   ],
 }));
 

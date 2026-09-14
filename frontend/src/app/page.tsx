@@ -61,6 +61,8 @@ import AdSense from '@/components/common/AdSense';
 import InFeedAdCard from '@/components/common/InFeedAdCard';
 import QuickAccessBar from '@/components/common/QuickAccessBar';
 import { toolCatalog } from '@/lib/api';
+import { getToolManifest } from '@/lib/toolManifest';
+import { toolCollections } from '@/lib/toolCollections';
 import { useLanguage } from '@/context/LanguageContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
@@ -267,11 +269,13 @@ export default function Home() {
       list = list.filter((tool) => {
         const name = (t(`toolName.${tool.slug}`) || tool.slug.replace(/-/g, ' ')).toLowerCase();
         const desc = (t(`toolDesc.${tool.slug}`) || tool.shortDescription || '').toLowerCase();
+        const aliases = getToolManifest(tool.slug)?.searchAliases ?? [];
         return (
           name.includes(q) ||
           desc.includes(q) ||
           tool.slug.toLowerCase().includes(q) ||
-          tool.categorySlug.toLowerCase().includes(q)
+          tool.categorySlug.toLowerCase().includes(q) ||
+          aliases.some((alias) => alias.toLowerCase().includes(q))
         );
       });
     }
@@ -440,6 +444,35 @@ export default function Home() {
 
         {/* Quick Access Bar (Recent & Privacy Badge) */}
         <QuickAccessBar className="mb-10" />
+
+        <section className="mb-10" aria-labelledby="workflow-collections-heading">
+          <div className="mb-4 flex items-end justify-between gap-4">
+            <div>
+              <span className="eyebrow mb-2">Workflows</span>
+              <h2 id="workflow-collections-heading" className="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
+                Start with what you are trying to build
+              </h2>
+            </div>
+            <Link href="/collections" className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 sm:inline">
+              View all collections →
+            </Link>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {toolCollections.map((collection) => (
+              <Link
+                key={collection.slug}
+                href={`/collections/${collection.slug}`}
+                className="interactive-card rounded-2xl p-4"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="font-bold text-slate-900 dark:text-white">{collection.shortTitle}</h3>
+                  <ChevronRight className="h-4 w-4 text-indigo-500" />
+                </div>
+                <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-600 dark:text-slate-400">{collection.description}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
 
         {/* Interactive Toolbox Section */}
         <section className="mb-14 scroll-mt-24" id="tools">
@@ -710,7 +743,7 @@ export default function Home() {
                         </div>
                       </Link>
                       {showInFeed && (
-                        <InFeedAdCard key={`infeed-search-${tool.slug}-${index}`} />
+                        <InFeedAdCard key={`infeed-search-${tool.slug}-${index}`} placement="home-search-infeed" />
                       )}
                     </React.Fragment>
                   );
@@ -830,7 +863,7 @@ export default function Home() {
                               </div>
                             </Link>
                             {showInFeed && (
-                              <InFeedAdCard key={`infeed-${group.slug}-${index}`} />
+                              <InFeedAdCard key={`infeed-${group.slug}-${index}`} placement={`home-${group.slug}-infeed`} />
                             )}
                           </React.Fragment>
                         );
@@ -847,6 +880,7 @@ export default function Home() {
         <AdSense
           slot="1733348098"
           format="horizontal"
+          placement="home-after-tools"
           className="min-h-[90px] rounded-lg mb-12"
         />
 
@@ -889,6 +923,7 @@ export default function Home() {
         <AdSense
           slot="7781534087"
           format="horizontal"
+          placement="home-before-seo"
           className="min-h-[90px] rounded-lg mb-12"
         />
 

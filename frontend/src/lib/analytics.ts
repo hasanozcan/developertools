@@ -1,6 +1,7 @@
 import { track } from '@vercel/analytics';
 
 export type ProductAnalyticsEvent =
+  | 'ad_slot_requested'
   | 'contact_submitted'
   | 'tool_copied'
   | 'tool_favorite_added'

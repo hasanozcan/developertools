@@ -1,11 +1,17 @@
 'use client';
-import React, { useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Copy, Check } from 'lucide-react';
 import { convertHarToK6Script } from '@/lib/harToK6';
+import { readTransferredInput } from '@/lib/toolWorkflow';
 
 export default function HarToK6Tool() {
   const [input, setInput] = useState("{\\n  \"log\": { \"entries\": [{ \"request\": { \"method\": \"GET\", \"url\": \"https://api.test.com\" } }] }\\n}");
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    const transferred = readTransferredInput(window.location.hash);
+    if (transferred) setInput(transferred.value);
+  }, []);
 
   const result = useMemo(() => {
     try {

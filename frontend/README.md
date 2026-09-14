@@ -66,8 +66,19 @@ frontend/
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
 NEXT_PUBLIC_ADSENSE_ID=ca-pub-xxxxxxxxxxxxxxxx
+NEXT_PUBLIC_ADSENSE_COLLECTION_INDEX_SLOT=6442607030
+NEXT_PUBLIC_ADSENSE_COLLECTION_TOP_SLOT=6416143146
+NEXT_PUBLIC_ADSENSE_COLLECTION_BOTTOM_SLOT=2103906771
 NEXT_PUBLIC_GOOGLE_VERIFICATION=xxxxxxxxxxxxxxxx
 ```
+
+Collection sayfalarının gelirini AdSense panelinde ayrı ölçmek için AdSense'te üç ayrı display ad unit oluşturun ve her unit'in yalnızca sayısal slot kimliğini şu değişkenlere yazın:
+
+- `NEXT_PUBLIC_ADSENSE_COLLECTION_INDEX_SLOT`: `/collections` sayfasındaki üst reklam.
+- `NEXT_PUBLIC_ADSENSE_COLLECTION_TOP_SLOT`: collection detay sayfalarının üst reklamı.
+- `NEXT_PUBLIC_ADSENSE_COLLECTION_BOTTOM_SLOT`: collection detay sayfalarının alt reklamı.
+
+Collection reklamları için üç gerçek AdSense unit tanımlıdır ve birbirinden farklı slot kimlikleri kullanır. Ortam değişkenleri bu varsayılanları gerektiğinde override edebilir; boş veya geçersiz değerlerde uygulama Collection için tanımlı gerçek varsayılan slotu kullanmaya devam eder.
 
 ## SEO Özellikleri
 
