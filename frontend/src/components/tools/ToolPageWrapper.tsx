@@ -45,13 +45,22 @@ export default function ToolPageWrapper({
   const { t } = useLanguage();
   const { setTheme, resolvedTheme } = useTheme();
   const [isZenMode, setIsZenMode] = useState(false);
+  const [zenAdSession, setZenAdSession] = useState(0);
+  const [zenAdsReady, setZenAdsReady] = useState(false);
 
   // Lock body scroll and handle ESC key when in Zen Mode
   useEffect(() => {
-    if (!isZenMode) return;
+    if (!isZenMode) {
+      setZenAdsReady(false);
+      return;
+    }
 
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    let secondFrame = 0;
+    const firstFrame = window.requestAnimationFrame(() => {
+      secondFrame = window.requestAnimationFrame(() => setZenAdsReady(true));
+    });
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -61,6 +70,8 @@ export default function ToolPageWrapper({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => {
+      window.cancelAnimationFrame(firstFrame);
+      if (secondFrame) window.cancelAnimationFrame(secondFrame);
       document.body.style.overflow = originalOverflow;
       window.removeEventListener('keydown', handleKeyDown);
     };
@@ -172,7 +183,10 @@ export default function ToolPageWrapper({
               <WorkspaceControls toolSlug={toolSlug} />
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => setIsZenMode(true)}
+                  onClick={() => {
+                    setZenAdSession((session) => session + 1);
+                    setIsZenMode(true);
+                  }}
                   title={t('zenMode') || 'Full Screen'}
                   aria-label={t('zenMode') || 'Full Screen'}
                   className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-indigo-300 hover:text-indigo-600 hover:-translate-y-0.5 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-indigo-500"
@@ -239,13 +253,17 @@ export default function ToolPageWrapper({
               <div className="flex-1 flex gap-4 items-start w-full mb-4">
                 {/* Left Skyscraper Ad (Large/Wide screens) */}
                 <aside className="hidden xl:block w-[160px] 2xl:w-[300px] shrink-0 sticky top-20">
-                  <AdSense
-                    slot={process.env.NEXT_PUBLIC_ADSENSE_LEFT_SLOT || '3460899670'}
-                    format="vertical"
-                    immediate={true}
-                    placement="tool-zen-left"
-                    className="min-h-[600px] rounded-3xl border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
-                  />
+                  {zenAdsReady && (
+                    <AdSense
+                      key={`zen-left-${zenAdSession}`}
+                      slot={process.env.NEXT_PUBLIC_ADSENSE_LEFT_SLOT || '3460899670'}
+                      format="auto"
+                      responsive={true}
+                      immediate={true}
+                      placement="tool-zen-left"
+                      className="min-h-[600px] rounded-3xl border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
+                    />
+                  )}
                 </aside>
 
                 {/* Center Tool Content (Fluid width) */}
@@ -255,24 +273,33 @@ export default function ToolPageWrapper({
 
                 {/* Right Skyscraper Ad (Large/Wide screens) */}
                 <aside className="hidden xl:block w-[160px] 2xl:w-[300px] shrink-0 sticky top-20">
-                  <AdSense
-                    slot={process.env.NEXT_PUBLIC_ADSENSE_RIGHT_SLOT || '1351515156'}
-                    format="vertical"
-                    immediate={true}
-                    placement="tool-zen-right"
-                    className="min-h-[600px] rounded-3xl border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
-                  />
+                  {zenAdsReady && (
+                    <AdSense
+                      key={`zen-right-${zenAdSession}`}
+                      slot={process.env.NEXT_PUBLIC_ADSENSE_RIGHT_SLOT || '1351515156'}
+                      format="auto"
+                      responsive={true}
+                      immediate={true}
+                      placement="tool-zen-right"
+                      className="min-h-[600px] rounded-3xl border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
+                    />
+                  )}
                 </aside>
               </div>
 
               {/* Bottom Horizontal Ad Banner (Visible on mobile/tablet when sidebars are hidden) */}
               <div className="w-full shrink-0 xl:hidden">
-                <AdSense
-                  slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || '7781534087'}
-                  format="horizontal"
-                  placement="tool-zen-bottom"
-                  className="min-h-[90px] rounded-2xl border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50"
-                />
+                {zenAdsReady && (
+                  <AdSense
+                    key={`zen-bottom-${zenAdSession}`}
+                    slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || '7781534087'}
+                    format="auto"
+                    responsive={true}
+                    immediate={true}
+                    placement="tool-zen-bottom"
+                    className="min-h-[90px] rounded-2xl border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50"
+                  />
+                )}
               </div>
             </div>
           )}
