@@ -120,6 +120,12 @@ export const tr = {
   'contact.messagePlaceholder': 'Mesajınız...',
   'contact.sending': 'Gönderiliyor...',
   'contact.sendMessage': 'Mesaj Gönder',
+  'proInterest.eyebrow': 'Ürün araştırması',
+  'proInterest.title': 'DevsTools Pro fikrini şekillendirin',
+  'proInterest.description': 'Kayıtlı iş akışları, büyük dosyalar veya reklamsız çalışma alanı için ödeme yapar mıydınız? İhtiyacınızı anlatın. Henüz ücretli bir plan yok.',
+  'proInterest.cta': 'Görüşünüzü paylaşın',
+  'proInterest.contactPrompt': 'Hangi Pro özellikleri işinize yarar ve bunlar için ödeme yapar mıydınız? Bu bir araştırmadır; henüz ücretli plan yok.',
+  'proInterest.subject': 'Pro araştırma görüşü',
   // Footer
   'footer.about': 'Hakkında',
   'footer.privacy': 'Gizlilik Politikası',

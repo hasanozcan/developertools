@@ -99,6 +99,12 @@ export const zh = {
   'contact.messagePlaceholder': '您的消息...',
   'contact.sending': '发送中...',
   'contact.sendMessage': '发送消息',
+  'proInterest.eyebrow': '产品调研',
+  'proInterest.title': '帮助规划 DevsTools Pro',
+  'proInterest.description': '您愿意为保存工作流程、处理更大的文件或无广告工作区付费吗？请告诉我们您的需求。目前尚无付费方案。',
+  'proInterest.cta': '分享您的想法',
+  'proInterest.contactPrompt': '哪些 Pro 功能对您有用？您愿意为此付费吗？这只是调研，目前尚无付费方案。',
+  'proInterest.subject': 'Pro 调研反馈',
   // Footer
   'footer.about': '关于',
   'footer.privacy': '隐私政策',

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Mail, MessageSquare, Send, CheckCircle } from 'lucide-react';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import { useLanguage } from '@/context/LanguageContext';
@@ -46,6 +46,13 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isProInterest, setIsProInterest] = useState(false);
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('topic') !== 'pro') return;
+    setIsProInterest(true);
+    setFormData((current) => ({ ...current, subject: 'Pro interest' }));
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,6 +70,7 @@ export default function ContactPage() {
       }
 
       trackProductEvent('contact_submitted');
+      if (isProInterest) trackProductEvent('pro_interest_submitted');
       trackGoogleAdsConversion();
       setIsSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
@@ -105,6 +113,9 @@ export default function ContactPage() {
           <p className="text-xl text-gray-600 dark:text-gray-300">
             {t('contact.subtitle')}
           </p>
+          {isProInterest && (
+            <p className="mt-4 text-sm text-indigo-700 dark:text-indigo-300">{t('proInterest.contactPrompt')}</p>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -204,6 +215,7 @@ export default function ContactPage() {
                       <option value="feedback">{t('contact.subjectFeedback')}</option>
                       <option value="bug">{t('contact.subjectBug')}</option>
                       <option value="feature">{t('contact.subjectFeature')}</option>
+                      <option value="Pro interest">{t('proInterest.subject')}</option>
                       <option value="question">{t('contact.subjectQuestion')}</option>
                       <option value="other">{t('contact.subjectOther')}</option>
                     </select>

@@ -12,6 +12,7 @@ import AdSense from '@/components/common/AdSense';
 import PostToolAdBanner from '@/components/common/PostToolAdBanner';
 import { Maximize2, Minimize2, Sparkles, X, Sun, Moon } from 'lucide-react';
 import Link from '@/components/common/LocalizedLink';
+import ProInterestCard from '@/components/common/ProInterestCard';
 
 interface ToolPageWrapperProps {
   toolSlug: string;
@@ -371,6 +372,8 @@ export default function ToolPageWrapper({
               </div>
             </section>
           )}
+
+          <ProInterestCard placement="tool" />
 
           {/* How to Use Section */}
           <section className="mb-8">

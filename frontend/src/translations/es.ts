@@ -109,6 +109,12 @@ export const es = {
   'contact.messagePlaceholder': 'Su mensaje...',
   'contact.sending': 'Enviando...',
   'contact.sendMessage': 'Enviar Mensaje',
+  'proInterest.eyebrow': 'Investigación de producto',
+  'proInterest.title': 'Ayuda a diseñar DevsTools Pro',
+  'proInterest.description': '¿Pagarías por flujos guardados, archivos más grandes o un espacio sin anuncios? Cuéntanos qué necesitas. Aún no hay un plan de pago.',
+  'proInterest.cta': 'Comparte tu opinión',
+  'proInterest.contactPrompt': '¿Qué funciones Pro te ayudarían y pagarías por ellas? Esto es una investigación; aún no hay un plan de pago.',
+  'proInterest.subject': 'Opinión sobre Pro',
   // Footer
   'footer.about': 'Acerca de',
   'footer.privacy': 'Política de Privacidad',

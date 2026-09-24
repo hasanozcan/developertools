@@ -9,6 +9,7 @@ export interface ToolCollection {
   intro: string;
   searchIntents: readonly string[];
   toolSlugs: readonly ToolSlug[];
+  workflowSteps?: readonly { toolSlug: ToolSlug; title: string; description: string }[];
 }
 
 export const toolCollections = [
@@ -60,6 +61,23 @@ export const toolCollections = [
       'json-schema-to-zod',
       'zod-to-typescript-type',
       'json-to-sql',
+    ],
+    workflowSteps: [
+      {
+        toolSlug: 'json-formatter',
+        title: 'Validate the source payload',
+        description: 'Paste a representative JSON response and fix syntax errors before generating types. Keep the original payload so you can compare later output.',
+      },
+      {
+        toolSlug: 'json-to-typescript',
+        title: 'Generate a starting TypeScript type',
+        description: 'Convert the valid sample into an interface, then review optional fields and value ranges against the real API contract.',
+      },
+      {
+        toolSlug: 'json-to-json-schema',
+        title: 'Create a validation draft',
+        description: 'Derive a JSON Schema from the sample and add business rules manually; one example cannot reveal every valid input.',
+      },
     ],
   },
   {
@@ -151,7 +169,25 @@ export const toolCollections = [
       'hex-encoder',
       'binary-encoder',
       'unicode-escape',
+      'json-string-escape',
       'punycode-converter',
+    ],
+    workflowSteps: [
+      {
+        toolSlug: 'base64url-encoder',
+        title: 'Identify the transport encoding',
+        description: 'Use Base64URL for URL-safe values such as token segments; ordinary Base64 and Base64URL have different alphabets and padding conventions.',
+      },
+      {
+        toolSlug: 'unicode-escape',
+        title: 'Inspect hexadecimal escapes',
+        description: 'Decode values such as \\u0041 or \\u{1F600} to inspect characters in logs or source text.',
+      },
+      {
+        toolSlug: 'json-string-escape',
+        title: 'Handle complete JSON string fragments',
+        description: 'Use the JSON-specific tool when the input also contains escaped quotes, newlines, or backslashes; Unicode replacement alone is not a JSON parser.',
+      },
     ],
   },
   {
@@ -162,8 +198,10 @@ export const toolCollections = [
       'Inspect certificates, generate and verify hashes, evaluate browser security headers, and work with keys and signatures.',
     intro:
       'Use this collection for application-security checks, certificate troubleshooting, password hashing, signature verification, and CSP work.',
-    searchIntents: ['security developer tools', 'certificate inspector', 'bcrypt generator', 'csp builder'],
+    searchIntents: ['sha256 file checksum', 'md5 checksum', 'certificate inspector', 'hmac generator'],
     toolSlugs: [
+      'sha256-hash',
+      'md5-hash',
       'password-strength-analyzer',
       'bcrypt-generator',
       'hmac-generator',
@@ -172,6 +210,23 @@ export const toolCollections = [
       'ssl-certificate-inspector',
       'csp-builder',
       'http-security-headers-analyzer',
+    ],
+    workflowSteps: [
+      {
+        toolSlug: 'sha256-hash',
+        title: 'Verify a downloaded file',
+        description: 'Hash the exact file bytes and compare the SHA-256 digest with a checksum obtained from a trusted, independent source.',
+      },
+      {
+        toolSlug: 'md5-hash',
+        title: 'Check a legacy MD5 value',
+        description: 'Use MD5 only for accidental-error checks in older workflows. A matching MD5 digest does not prove a file was not deliberately replaced.',
+      },
+      {
+        toolSlug: 'hmac-generator',
+        title: 'Authenticate a message when needed',
+        description: 'When the sender and message must be authenticated, use a keyed HMAC with a securely shared secret instead of an unkeyed checksum.',
+      },
     ],
   },
   {

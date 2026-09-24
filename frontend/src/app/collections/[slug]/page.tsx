@@ -115,6 +115,30 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
         ))}
       </section>
 
+      {collection.workflowSteps && (
+        <section className="mt-10" aria-labelledby="collection-workflow-heading">
+          <h2 id="collection-workflow-heading" className="mb-4 text-2xl font-bold text-slate-950 dark:text-white">
+            A practical workflow
+          </h2>
+          <ol className="grid gap-4 md:grid-cols-3">
+            {collection.workflowSteps.map((step, index) => {
+              const tool = tools.find((item) => item.slug === step.toolSlug);
+              if (!tool) return null;
+              return (
+                <li key={step.toolSlug} className="rounded-3xl border border-slate-200 bg-white/80 p-5 dark:border-white/10 dark:bg-slate-900/70">
+                  <span className="text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-400">Step {index + 1}</span>
+                  <h3 className="mt-2 text-lg font-bold text-slate-950 dark:text-white">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{step.description}</p>
+                  <Link href={`/tools/${tool.categorySlug}/${tool.slug}`} className="mt-4 inline-block text-sm font-semibold text-indigo-600 hover:underline dark:text-indigo-400">
+                    Open {tool.name} →
+                  </Link>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      )}
+
       <AdSense
         slot={collectionBottomSlot}
         format="auto"

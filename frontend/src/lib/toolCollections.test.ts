@@ -24,6 +24,19 @@ describe('tool collections', () => {
     }
   });
 
+  it('links curated workflow steps to tools in their collection', () => {
+    for (const collection of toolCollections) {
+      if (!('workflowSteps' in collection)) continue;
+      for (const step of collection.workflowSteps) {
+        expect(collection.toolSlugs, collection.slug).toContain(step.toolSlug);
+        expect(step.title.trim()).not.toBe('');
+        expect(step.description.trim()).not.toBe('');
+      }
+    }
+    expect(getToolCollection('security-crypto')?.toolSlugs).toContain('sha256-hash');
+    expect(getToolCollection('security-crypto')?.toolSlugs).toContain('md5-hash');
+  });
+
   it('localizes collection copy without changing slugs or tools', () => {
     const collection = toolCollections[0];
     const localized = getLocalizedCollection(collection, 'tr');
