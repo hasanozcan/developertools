@@ -8,6 +8,8 @@ export type ProductAnalyticsEvent =
   | 'ad_slot_filled'
   | 'ad_slot_unfilled'
   | 'contact_submitted'
+  | 'pro_interest_clicked'
+  | 'pro_interest_submitted'
   | 'tool_copied'
   | 'tool_favorite_added'
   | 'tool_favorite_removed'

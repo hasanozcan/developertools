@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect, Fragment } from 'react';
 import Link from '@/components/common/LocalizedLink';
+import ProInterestCard from '@/components/common/ProInterestCard';
 import Script from 'next/script';
 import {
   Braces,
@@ -480,6 +481,8 @@ export default function Home() {
             })}
           </div>
         </section>
+
+        <ProInterestCard placement="home" />
 
         <section className="mb-10" aria-labelledby="role-toolboxes-heading">
           <div className="mb-4 flex items-end justify-between gap-4">

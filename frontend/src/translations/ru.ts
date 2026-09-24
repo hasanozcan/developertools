@@ -103,6 +103,12 @@ export const ru = {
   'contact.messagePlaceholder': 'Ваше сообщение...',
   'contact.sending': 'Отправка...',
   'contact.sendMessage': 'Отправить сообщение',
+  'proInterest.eyebrow': 'Исследование продукта',
+  'proInterest.title': 'Помогите создать DevsTools Pro',
+  'proInterest.description': 'Вы бы платили за сохранённые рабочие процессы, большие файлы или рабочее пространство без рекламы? Расскажите, что вам нужно. Платного тарифа пока нет.',
+  'proInterest.cta': 'Поделиться мнением',
+  'proInterest.contactPrompt': 'Какие функции Pro вам нужны и готовы ли вы за них платить? Это исследование; платного тарифа пока нет.',
+  'proInterest.subject': 'Отзыв о Pro',
   // Footer
   'footer.about': 'О нас',
   'footer.privacy': 'Политика конфиденциальности',

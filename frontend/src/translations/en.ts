@@ -118,6 +118,12 @@ export const en = {
   'contact.messagePlaceholder': 'Your message...',
   'contact.sending': 'Sending...',
   'contact.sendMessage': 'Send Message',
+  'proInterest.eyebrow': 'Product research',
+  'proInterest.title': 'Help shape DevsTools Pro',
+  'proInterest.description': 'Would saved workflows, larger files, or an ad-free workspace be worth paying for? Tell us what you need. No paid plan is available yet.',
+  'proInterest.cta': 'Share what you would pay for',
+  'proInterest.contactPrompt': 'Which Pro features would help you, and would you pay for them? This is research; no paid plan is available yet.',
+  'proInterest.subject': 'Pro research feedback',
   // Footer
   'footer.about': 'About',
   'footer.privacy': 'Privacy Policy',

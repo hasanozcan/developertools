@@ -108,6 +108,12 @@ export const fr = {
   'contact.messagePlaceholder': 'Votre message...',
   'contact.sending': 'Envoi en cours...',
   'contact.sendMessage': 'Envoyer le message',
+  'proInterest.eyebrow': 'Étude produit',
+  'proInterest.title': 'Aidez à imaginer DevsTools Pro',
+  'proInterest.description': 'Paieriez-vous pour des workflows enregistrés, des fichiers plus volumineux ou un espace sans publicité ? Dites-nous ce dont vous avez besoin. Aucune offre payante n’existe encore.',
+  'proInterest.cta': 'Donner votre avis',
+  'proInterest.contactPrompt': 'Quelles fonctions Pro vous aideraient et paieriez-vous pour elles ? Ceci est une étude ; aucune offre payante n’existe encore.',
+  'proInterest.subject': 'Avis sur Pro',
   // Footer
   'footer.about': 'À propos',
   'footer.privacy': 'Politique de confidentialité',
