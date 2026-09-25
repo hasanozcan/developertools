@@ -4792,21 +4792,44 @@ const tools: Record<
     },
     'text-diff': {
       name: 'Text Diff Tool',
-      description: 'Compare two texts and find differences. Free online text comparison tool.',
+      metadataTitle: 'Text Diff Online - Compare Text and Code Side by Side',
+      description:
+        'Compare two texts or code snippets online. See line and character changes side by side, ignore case or whitespace, and copy the displayed diff.',
       longDescription:
-        'Free online text diff tool. Compare two texts side-by-side and visualize additions, deletions, and changes. Perfect for code review and document comparison.',
-      keywords: ['text diff', 'compare text', 'diff checker', 'text comparison tool'],
+        'Compare text or code in split and unified views. Highlight added, removed, and changed lines; inspect character changes; and copy the displayed diff when you need to share the result.',
+      keywords: ['text diff', 'compare text online', 'string diff', 'diff checker', 'text comparison tool'],
       faqs: [
         {
           question: 'How does text diff work?',
           answer:
-            'The tool compares two texts line by line and highlights additions (green), deletions (red), and unchanged lines to show the differences.',
+            'It compares the two inputs line by line, marks additions, deletions, and changed lines, then highlights smaller changes within modified lines.',
         },
         {
           question: 'Can I compare code with this tool?',
           answer:
-            'Yes! This tool is perfect for comparing code snippets, configuration files, or any text content.',
+            'Yes. Paste code, configuration, or prose into the two editors. Use Ignore whitespace or Ignore case when those differences are irrelevant.',
         },
+      ],
+      answerSections: [
+        {
+          heading: 'Compare two strings or longer documents',
+          paragraphs: [
+            'Paste the original text on the left and the revised text on the right. Split view keeps corresponding lines side by side; unified view presents one continuous diff. The comparison updates as you edit either input.',
+          ],
+        },
+        {
+          heading: 'Review and share the differences',
+          bullets: [
+            'Ignore case or whitespace to focus on substantive changes, or show only changed lines to reduce noise.',
+            'Enable character-level highlighting for a closer look at modified lines.',
+            'Copy the displayed diff after checking that it represents the changes you expect.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste the original and revised text into their respective editors.',
+        'Choose split or unified view and adjust case, whitespace, and highlighting options.',
+        'Review the changes, then copy the displayed diff if needed.',
       ],
     },
     'markdown-preview': {
@@ -8341,21 +8364,44 @@ const tools: Record<
     },
     'css-minifier': {
       name: 'CSS Minifier',
-      description: 'Minify CSS code for production. Free online CSS minifier and beautifier.',
+      metadataTitle: 'CSS Minifier Online - Minify CSS in Your Browser',
+      description:
+        'Paste CSS to minify it online with optional comment removal. Compare the original and compact output, copy the result, or use the beautify view.',
       longDescription:
-        'Free online CSS minifier. Reduce CSS file size by removing comments, whitespace, and optimizing values. Also includes beautify option for development.',
+        'Minify a stylesheet in your browser with CSSO, optionally retaining comments. Review the reported character reduction and copy the compact result; the separate beautify action helps inspect CSS during development.',
       keywords: ['css minifier', 'minify css', 'css compressor', 'css optimizer', 'css beautifier'],
       faqs: [
         {
           question: 'How much can CSS be reduced?',
           answer:
-            'Minification typically reduces CSS file size by 20-40% depending on the original formatting and comment density.',
+            'It depends on your stylesheet. Remove comments and extra whitespace, then compare the original and output counts shown by the tool. Already compact CSS may change very little.',
         },
         {
           question: 'Is the minified CSS valid?',
           answer:
-            'Yes! The minifier only removes unnecessary characters while preserving the functionality of your CSS.',
+            'Minification uses a CSS parser and disables rule restructuring, but you should still check the output in your own pages before deploying it.',
         },
+      ],
+      answerSections: [
+        {
+          heading: 'Minify CSS without changing your build setup',
+          paragraphs: [
+            'Paste a stylesheet, decide whether comments should be removed, and select Minify. The parser compacts the CSS without restructuring rules. The displayed reduction compares character counts, so it is an estimate of text saved rather than a compressed network transfer size.',
+          ],
+        },
+        {
+          heading: 'Use the output safely',
+          bullets: [
+            'Copy the minified CSS into a test build and check the affected pages at relevant screen sizes.',
+            'Keep required license comments by turning off Remove comments before minifying.',
+            'Use Beautify as a reading aid; review complex CSS after formatting because it is separate from parser-based minification.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste CSS into the input editor and choose whether to remove comments.',
+        'Select Minify and compare the original and output character counts.',
+        'Copy the compact CSS and test it in your site before deployment.',
       ],
     },
     'js-minifier': {
