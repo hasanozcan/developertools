@@ -4794,7 +4794,7 @@ const tools: Record<
       name: 'Text Diff Tool',
       metadataTitle: 'Text Diff Online - Compare Text and Code Side by Side',
       description:
-        'Compare two texts or code snippets online. See line and character changes side by side, ignore case or whitespace, and copy the displayed diff.',
+        'Compare text and code side by side online, highlight line and character changes, ignore case or whitespace, and copy the displayed diff.',
       longDescription:
         'Compare text or code in split and unified views. Highlight added, removed, and changed lines; inspect character changes; and copy the displayed diff when you need to share the result.',
       keywords: ['text diff', 'compare text online', 'string diff', 'diff checker', 'text comparison tool'],
@@ -8366,7 +8366,7 @@ const tools: Record<
       name: 'CSS Minifier',
       metadataTitle: 'CSS Minifier Online - Minify CSS in Your Browser',
       description:
-        'Paste CSS to minify it online with optional comment removal. Compare the original and compact output, copy the result, or use the beautify view.',
+        'Compact pasted CSS in your browser with optional comment removal, compare the original and output, and copy the result.',
       longDescription:
         'Minify a stylesheet in your browser with CSSO, optionally retaining comments. Review the reported character reduction and copy the compact result; the separate beautify action helps inspect CSS during development.',
       keywords: ['css minifier', 'minify css', 'css compressor', 'css optimizer', 'css beautifier'],
