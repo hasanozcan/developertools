@@ -118,6 +118,7 @@ export const en = {
   'contact.messagePlaceholder': 'Your message...',
   'contact.sending': 'Sending...',
   'contact.sendMessage': 'Send Message',
+  'contact.submitError': 'Your message could not be sent. Please try again or email us directly:',
   'proInterest.eyebrow': 'Product research',
   'proInterest.title': 'Help shape DevsTools Pro',
   'proInterest.description': 'Would saved workflows, larger files, or an ad-free workspace be worth paying for? Tell us what you need. No paid plan is available yet.',

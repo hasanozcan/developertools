@@ -108,6 +108,7 @@ export const de = {
   'contact.messagePlaceholder': 'Ihre Nachricht...',
   'contact.sending': 'Wird gesendet...',
   'contact.sendMessage': 'Nachricht senden',
+  'contact.submitError': 'Ihre Nachricht konnte nicht gesendet werden. Versuchen Sie es erneut oder schreiben Sie direkt an:',
   'proInterest.eyebrow': 'Produktrecherche',
   'proInterest.title': 'Gestalten Sie DevsTools Pro mit',
   'proInterest.description': 'Wären gespeicherte Workflows, größere Dateien oder ein werbefreier Arbeitsbereich einen Preis wert? Sagen Sie uns, was Sie brauchen. Es gibt noch keinen kostenpflichtigen Tarif.',

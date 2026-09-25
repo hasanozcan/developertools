@@ -120,6 +120,7 @@ export const tr = {
   'contact.messagePlaceholder': 'Mesajınız...',
   'contact.sending': 'Gönderiliyor...',
   'contact.sendMessage': 'Mesaj Gönder',
+  'contact.submitError': 'Mesajınız gönderilemedi. Lütfen tekrar deneyin veya doğrudan e-posta gönderin:',
   'proInterest.eyebrow': 'Ürün araştırması',
   'proInterest.title': 'DevsTools Pro fikrini şekillendirin',
   'proInterest.description': 'Kayıtlı iş akışları, büyük dosyalar veya reklamsız çalışma alanı için ödeme yapar mıydınız? İhtiyacınızı anlatın. Henüz ücretli bir plan yok.',

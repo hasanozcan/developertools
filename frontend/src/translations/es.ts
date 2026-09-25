@@ -109,6 +109,7 @@ export const es = {
   'contact.messagePlaceholder': 'Su mensaje...',
   'contact.sending': 'Enviando...',
   'contact.sendMessage': 'Enviar Mensaje',
+  'contact.submitError': 'No se pudo enviar su mensaje. Inténtelo de nuevo o escríbanos directamente a:',
   'proInterest.eyebrow': 'Investigación de producto',
   'proInterest.title': 'Ayuda a diseñar DevsTools Pro',
   'proInterest.description': '¿Pagarías por flujos guardados, archivos más grandes o un espacio sin anuncios? Cuéntanos qué necesitas. Aún no hay un plan de pago.',

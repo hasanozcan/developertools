@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import ContactPage from './page';
 
@@ -14,6 +14,7 @@ vi.mock('@/context/LanguageContext', () => ({
     'contact.subject': 'Subject',
     'contact.message': 'Message',
     'contact.sendMessage': 'Send Message',
+    'contact.submitError': 'Message could not be sent. Email us directly:',
     'proInterest.contactPrompt': 'Which Pro features would help you?',
   })[key] || key }),
 }));
@@ -46,5 +47,23 @@ describe('Pro interest contact flow', () => {
 
     await waitFor(() => expect(trackProductEventMock).toHaveBeenCalledWith('pro_interest_submitted'));
     expect(fetch).toHaveBeenCalledWith('/api/contact', expect.objectContaining({ method: 'POST' }));
+  });
+
+  it('shows a direct-email fallback and keeps the message when delivery fails', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 502 }));
+    render(<ContactPage />);
+
+    await waitFor(() => expect(screen.getByLabelText('Subject')).toHaveValue('Pro interest'));
+    fireEvent.change(screen.getByLabelText('Name'), { target: { value: 'Tester' } });
+    fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'tester@example.com' } });
+    fireEvent.change(screen.getByLabelText('Message'), { target: { value: 'Saved workflows' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Send Message' }));
+
+    const alert = await screen.findByRole('alert');
+    expect(alert).toHaveTextContent('Message could not be sent');
+    expect(within(alert).getByRole('link', { name: 'devstoolsapp@gmail.com' })).toHaveAttribute('href', 'mailto:devstoolsapp@gmail.com');
+    expect(screen.getByLabelText('Message')).toHaveValue('Saved workflows');
+    expect(trackProductEventMock).toHaveBeenCalledWith('contact_submit_failed', { status: 502 });
+    expect(trackProductEventMock).not.toHaveBeenCalledWith('pro_interest_submitted');
   });
 });
