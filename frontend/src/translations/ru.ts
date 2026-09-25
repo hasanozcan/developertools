@@ -103,6 +103,7 @@ export const ru = {
   'contact.messagePlaceholder': 'Ваше сообщение...',
   'contact.sending': 'Отправка...',
   'contact.sendMessage': 'Отправить сообщение',
+  'contact.submitError': 'Не удалось отправить сообщение. Попробуйте ещё раз или напишите нам напрямую:',
   'proInterest.eyebrow': 'Исследование продукта',
   'proInterest.title': 'Помогите создать DevsTools Pro',
   'proInterest.description': 'Вы бы платили за сохранённые рабочие процессы, большие файлы или рабочее пространство без рекламы? Расскажите, что вам нужно. Платного тарифа пока нет.',

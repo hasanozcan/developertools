@@ -99,6 +99,7 @@ export const zh = {
   'contact.messagePlaceholder': '您的消息...',
   'contact.sending': '发送中...',
   'contact.sendMessage': '发送消息',
+  'contact.submitError': '消息发送失败。请重试，或直接发送邮件至：',
   'proInterest.eyebrow': '产品调研',
   'proInterest.title': '帮助规划 DevsTools Pro',
   'proInterest.description': '您愿意为保存工作流程、处理更大的文件或无广告工作区付费吗？请告诉我们您的需求。目前尚无付费方案。',

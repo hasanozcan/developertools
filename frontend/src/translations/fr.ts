@@ -108,6 +108,7 @@ export const fr = {
   'contact.messagePlaceholder': 'Votre message...',
   'contact.sending': 'Envoi en cours...',
   'contact.sendMessage': 'Envoyer le message',
+  'contact.submitError': 'Votre message n’a pas pu être envoyé. Réessayez ou écrivez-nous directement à :',
   'proInterest.eyebrow': 'Étude produit',
   'proInterest.title': 'Aidez à imaginer DevsTools Pro',
   'proInterest.description': 'Paieriez-vous pour des workflows enregistrés, des fichiers plus volumineux ou un espace sans publicité ? Dites-nous ce dont vous avez besoin. Aucune offre payante n’existe encore.',

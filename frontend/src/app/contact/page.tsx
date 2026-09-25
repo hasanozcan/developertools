@@ -46,6 +46,7 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
   const [isProInterest, setIsProInterest] = useState(false);
 
   useEffect(() => {
@@ -57,6 +58,8 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(false);
+    let responseStatus = 0;
 
     try {
       const response = await fetch('/api/contact', {
@@ -64,6 +67,7 @@ export default function ContactPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+      responseStatus = response.status;
 
       if (!response.ok) {
         throw new Error('Failed to submit form');
@@ -75,6 +79,8 @@ export default function ContactPage() {
       setIsSubmitted(true);
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {
+      trackProductEvent('contact_submit_failed', { status: responseStatus });
+      setSubmitError(true);
       console.error('Form submission error:', error);
     } finally {
       setIsSubmitting(false);
@@ -236,6 +242,13 @@ export default function ContactPage() {
                       placeholder={t('contact.messagePlaceholder')}
                     />
                   </div>
+
+                  {submitError && (
+                    <p role="alert" className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-red-950/40 dark:text-red-200">
+                      {t('contact.submitError')}{' '}
+                      <a href="mailto:devstoolsapp@gmail.com" className="font-semibold underline">devstoolsapp@gmail.com</a>
+                    </p>
+                  )}
 
                   <button
                     type="submit"

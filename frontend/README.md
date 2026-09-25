@@ -80,6 +80,10 @@ Collection sayfalarının gelirini AdSense panelinde ayrı ölçmek için AdSens
 
 Collection reklamları için üç gerçek AdSense unit tanımlıdır ve birbirinden farklı slot kimlikleri kullanır. Ortam değişkenleri bu varsayılanları gerektiğinde override edebilir; boş veya geçersiz değerlerde uygulama Collection için tanımlı gerçek varsayılan slotu kullanmaya devam eder.
 
+### İletişim formu
+
+`/api/contact` için sunucuda `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER` ve `SMTP_PASS` tanımlanmalıdır. `CONTACT_TO_EMAIL` isteğe bağlıdır; tanımlanmazsa `devstoolsapp@gmail.com` kullanılır. Üretimdeki alıcı, `/contact` sayfasında gösterilen adresle aynı olmalı veya yönlendirmesi doğrulanmalıdır. Vercel ortam değişkeni değişiklikleri yeni bir dağıtımdan sonra etkili olur. Gönderim başarısızsa form kullanıcıya hata ve doğrudan e-posta bağlantısı gösterir.
+
 ## SEO Özellikleri
 
 - 20 konu koleksiyonu: `/collections` ve 6 ek dilde localized karşılıkları
