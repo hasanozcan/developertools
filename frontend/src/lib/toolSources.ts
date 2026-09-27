@@ -1349,7 +1349,7 @@ export const toolSources: Record<string, ToolSource[]> = {
     { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'json-to-kotlin-class': [
-    { name: 'JSON to Kotlin Data Class Converter Reference', url: 'https://devstools.app/tools/converters/json-to-kotlin-class' },
+    { name: 'JSON to Kotlin Class Converter Reference', url: 'https://devstools.app/tools/converters/json-to-kotlin-class' },
     { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'json-to-swift-struct': [
@@ -1425,7 +1425,7 @@ export const toolSources: Record<string, ToolSource[]> = {
     { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'image-converter': [
-    { name: 'Image Format Converter Reference', url: 'https://devstools.app/tools/converters/image-converter' },
+    { name: 'All-in-One Image Format Converter Reference', url: 'https://devstools.app/tools/converters/image-converter' },
     { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'images-to-pdf': [

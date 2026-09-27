@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getHreflangAlternates } from '@/lib/i18nRouting';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
 const pageUrl = `${siteUrl}/terms`;
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
   keywords: ['terms of service', 'terms and conditions', 'legal', 'user agreement', 'developer tools terms'],
     alternates: {
       canonical: pageUrl,
+      languages: getHreflangAlternates('/terms', siteUrl),
     },
   openGraph: {
     title: 'Terms of Service',

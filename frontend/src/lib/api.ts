@@ -3131,7 +3131,7 @@ export const toolCatalog = [
   {
     id: 337,
     slug: 'json-to-kotlin-class',
-    name: 'JSON to Kotlin Data Class Converter',
+    name: 'JSON to Kotlin Class Converter',
     shortDescription: 'Convert JSON into Kotlin @Serializable data classes.',
     categorySlug: 'converters',
     categoryName: 'Converter Online',
@@ -3302,7 +3302,7 @@ export const toolCatalog = [
   {
     id: 356,
     slug: 'image-converter',
-    name: 'Image Format Converter',
+    name: 'All-in-One Image Format Converter',
     shortDescription: 'Convert images between PNG, JPG, WebP, AVIF, BMP, and ICO formats.',
     categorySlug: 'converters',
     categoryName: 'Converters',

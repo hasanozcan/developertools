@@ -49,6 +49,14 @@ describe('Pro interest contact flow', () => {
     expect(fetch).toHaveBeenCalledWith('/api/contact', expect.objectContaining({ method: 'POST' }));
   });
 
+  it('prefills the Pro subject from the hash-based topic link', async () => {
+    window.history.replaceState({}, '', '/contact#topic=pro');
+    render(<ContactPage />);
+
+    await waitFor(() => expect(screen.getByLabelText('Subject')).toHaveValue('Pro interest'));
+    expect(screen.getByText('Which Pro features would help you?')).toBeInTheDocument();
+  });
+
   it('shows a direct-email fallback and keeps the message when delivery fails', async () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 502 }));
     render(<ContactPage />);

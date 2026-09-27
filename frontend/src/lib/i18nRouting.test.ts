@@ -7,6 +7,8 @@ import {
   getLocalizedPath,
   getHreflangAlternates,
   getLocalizedToolMeta,
+  getOpenGraphAlternateLocales,
+  getOpenGraphLocale,
 } from './i18nRouting';
 
 describe('i18nRouting', () => {
@@ -92,5 +94,20 @@ describe('i18nRouting', () => {
     const metaTr = getLocalizedToolMeta('json-formatter', 'tr', 'JSON Formatter', 'Default desc');
     expect(metaTr.name).toBeTruthy();
     expect(metaTr.description).toBeTruthy();
+  });
+
+  it('maps every supported locale to an Open Graph locale tag', () => {
+    expect(getOpenGraphLocale('en')).toBe('en_US');
+    expect(getOpenGraphLocale('tr')).toBe('tr_TR');
+    expect(getOpenGraphLocale('de')).toBe('de_DE');
+    expect(getOpenGraphLocale('es')).toBe('es_ES');
+    expect(getOpenGraphLocale('fr')).toBe('fr_FR');
+    expect(getOpenGraphLocale('ru')).toBe('ru_RU');
+    expect(getOpenGraphLocale('zh')).toBe('zh_CN');
+
+    const alternates = getOpenGraphAlternateLocales('tr');
+    expect(alternates).toHaveLength(SUPPORTED_LOCALES.length - 1);
+    expect(alternates).not.toContain('tr_TR');
+    expect(alternates).toContain('en_US');
   });
 });

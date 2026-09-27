@@ -13,7 +13,7 @@ export default function ProInterestCard({ placement }: { placement: 'home' | 'to
       <h2 id={`pro-interest-${placement}`} className="mt-2 text-xl font-bold text-slate-950 dark:text-white">{t('proInterest.title')}</h2>
       <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-700 dark:text-slate-300">{t('proInterest.description')}</p>
       <Link
-        href="/contact?topic=pro"
+        href="/contact#topic=pro"
         onClick={() => trackProductEvent('pro_interest_clicked', { placement })}
         className="mt-4 inline-flex rounded-xl bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500"
       >

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getHreflangAlternates } from '@/lib/i18nRouting';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
 const pageUrl = `${siteUrl}/contact`;
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
   keywords: ['contact devstools', 'feedback', 'bug report', 'feature request', 'support', 'developer tools'],
     alternates: {
       canonical: pageUrl,
+      languages: getHreflangAlternates('/contact', siteUrl),
     },
   openGraph: {
     title: 'Contact DevsTools',

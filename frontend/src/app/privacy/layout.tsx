@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { getHreflangAlternates } from '@/lib/i18nRouting';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
 const pageUrl = `${siteUrl}/privacy`;
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
   keywords: ['privacy policy', 'data privacy', 'client-side processing', 'gdpr', 'user data', 'developer tools privacy'],
     alternates: {
       canonical: pageUrl,
+      languages: getHreflangAlternates('/privacy', siteUrl),
     },
   openGraph: {
     title: 'Privacy Policy',

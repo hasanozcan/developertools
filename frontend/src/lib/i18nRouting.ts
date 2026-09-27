@@ -23,6 +23,31 @@ export const NON_DEFAULT_LOCALES: readonly Language[] = [
 ] as const;
 export const LOCALIZED_PAGES = ['about', 'privacy', 'terms', 'contact'] as const;
 
+/**
+ * BCP 47 / Open Graph locale tags per supported language.
+ * e.g. getOpenGraphLocale('tr') -> 'tr_TR'
+ */
+export const OPEN_GRAPH_LOCALES: Record<Language, string> = {
+  en: 'en_US',
+  tr: 'tr_TR',
+  de: 'de_DE',
+  es: 'es_ES',
+  fr: 'fr_FR',
+  ru: 'ru_RU',
+  zh: 'zh_CN',
+} as const;
+
+export function getOpenGraphLocale(locale: Language): string {
+  return OPEN_GRAPH_LOCALES[locale] ?? OPEN_GRAPH_LOCALES.en;
+}
+
+export function getOpenGraphAlternateLocales(locale: Language): string[] {
+  const current = getOpenGraphLocale(locale);
+  return (Object.values(OPEN_GRAPH_LOCALES) as string[]).filter(
+    (candidate) => candidate !== current,
+  );
+}
+
 export function isValidLocale(locale: string): locale is Language {
   return (SUPPORTED_LOCALES as readonly string[]).includes(locale);
 }

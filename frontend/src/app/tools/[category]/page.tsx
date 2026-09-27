@@ -52,6 +52,7 @@ import AdSense from '@/components/common/AdSense';
 import InFeedAdCard from '@/components/common/InFeedAdCard';
 import EncodingWorkbench from '@/components/tools/EncodingWorkbench';
 import { buildToolPath } from '@/lib/toolRoutes';
+import { toolCatalog } from '@/lib/api';
 import { getHreflangAlternates } from '@/lib/i18nRouting';
 
 // Tool icon mapping
@@ -719,6 +720,26 @@ export default async function CategoryPage({ params }: PageProps) {
   const faqs = category.faqs || [];
   const sources = category.sources || [];
 
+  // Merge curated entries with the full catalog so every tool in this category
+  // is reachable from its category hub (internal linking + crawl discovery).
+  const curatedSlugs = new Set(category.tools.map((tool) => tool.slug));
+  const allCategoryTools = [
+    ...category.tools,
+    ...toolCatalog
+      .filter(
+        (catalogTool) =>
+          catalogTool.categorySlug === categorySlug && !curatedSlugs.has(catalogTool.slug),
+      )
+      .map((catalogTool) => {
+        const shortDescription: string | undefined = catalogTool.shortDescription;
+        return {
+          name: catalogTool.name,
+          slug: catalogTool.slug,
+          description: shortDescription || catalogTool.name,
+        };
+      }),
+  ];
+
   // CollectionPage structured data for category pages
   const collectionPageStructuredData = {
     '@context': 'https://schema.org',
@@ -737,7 +758,7 @@ export default async function CategoryPage({ params }: PageProps) {
     mainEntity: {
       '@type': 'ItemList',
       name: `${category.name} tools`,
-      itemListElement: category.tools.map((tool, index) => ({
+      itemListElement: allCategoryTools.map((tool, index) => ({
         '@type': 'ListItem',
         position: index + 1,
         name: tool.name,
@@ -834,6 +855,9 @@ export default async function CategoryPage({ params }: PageProps) {
               {category.name}
             </h1>
             <p className="text-gray-600 dark:text-gray-300">{category.description}</p>
+            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              Showing all {allCategoryTools.length} free tools in this category.
+            </p>
           </div>
         </div>
 
@@ -875,8 +899,8 @@ export default async function CategoryPage({ params }: PageProps) {
           data-topic-interface="true"
           data-related-tools="true"
         >
-          {category.tools.map((tool, index) => {
-            const showInFeed = (index + 1) % 12 === 0 && index < category.tools.length - 1;
+          {allCategoryTools.map((tool, index) => {
+            const showInFeed = (index + 1) % 12 === 0 && index < allCategoryTools.length - 1;
             const ToolIcon = toolIcons[tool.slug] || Wand2;
             return (
               <Link

@@ -5563,13 +5563,13 @@ const tools: Record<
       ],
     },
     'json-to-kotlin-class': {
-      name: 'JSON to Kotlin Data Class Converter',
-      metadataTitle: 'JSON to Kotlin Data Class Converter Online Free',
+      name: 'JSON to Kotlin Class Converter',
+      metadataTitle: 'JSON to Kotlin Class Converter Online Free',
       description: 'Convert JSON into Kotlin @Serializable data classes.',
       longDescription: 'Convert JSON into Kotlin @Serializable data classes. 100% free client-side tool with instant browser execution.',
       keywords: ['json-to-kotlin-class', 'converters', 'developer tool', 'online tool'],
       faqs: [
-        { question: 'What is JSON to Kotlin Data Class Converter?', answer: 'Convert JSON into Kotlin @Serializable data classes.' },
+        { question: 'What is JSON to Kotlin Class Converter?', answer: 'Convert JSON into Kotlin @Serializable data classes.' },
         { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
       ],
       howToUseSteps: [
@@ -11739,7 +11739,7 @@ export default async function ToolPage({ params, locale = 'en' }: PageProps & { 
       '@id': `${siteUrl}/#organization`,
       name: 'DevsTools',
       url: siteUrl,
-      logo: `${siteUrl}/icon.svg`,
+      logo: `${siteUrl}/icon-1200.png`,
     },
     offers: {
       '@type': 'Offer',

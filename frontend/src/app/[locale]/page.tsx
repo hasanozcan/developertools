@@ -5,6 +5,8 @@ import {
   NON_DEFAULT_LOCALES,
   isNonDefaultLocale,
   getHreflangAlternates,
+  getOpenGraphAlternateLocales,
+  getOpenGraphLocale,
 } from '@/lib/i18nRouting';
 import type { Language } from '@/translations';
 
@@ -48,7 +50,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description = descriptions[locale as Language] || descriptions.en;
 
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: {
       canonical: canonicalUrl,
@@ -58,6 +60,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title,
       description,
       type: 'website',
+      locale: getOpenGraphLocale(locale as Language),
+      alternateLocale: getOpenGraphAlternateLocales(locale as Language),
       url: canonicalUrl,
       siteName: 'DevsTools',
       images: [

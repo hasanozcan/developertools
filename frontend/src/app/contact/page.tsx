@@ -50,7 +50,9 @@ export default function ContactPage() {
   const [isProInterest, setIsProInterest] = useState(false);
 
   useEffect(() => {
-    if (new URLSearchParams(window.location.search).get('topic') !== 'pro') return;
+    const queryTopic = new URLSearchParams(window.location.search).get('topic');
+    const hashTopic = new URLSearchParams(window.location.hash.replace(/^#/, '')).get('topic');
+    if (queryTopic !== 'pro' && hashTopic !== 'pro') return;
     setIsProInterest(true);
     setFormData((current) => ({ ...current, subject: 'Pro interest' }));
   }, []);

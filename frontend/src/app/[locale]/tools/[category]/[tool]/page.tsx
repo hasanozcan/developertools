@@ -8,6 +8,8 @@ import {
   isNonDefaultLocale,
   getHreflangAlternates,
   getLocalizedToolMeta,
+  getOpenGraphAlternateLocales,
+  getOpenGraphLocale,
   type Language,
 } from '@/lib/i18nRouting';
 
@@ -50,7 +52,7 @@ export async function generateMetadata({ params }: LocalizedToolPageProps): Prom
   const ogImageUrl = `${siteUrl}/tools/${canonicalCategory}/${toolSlug}/opengraph-image`;
 
   return {
-    title: metaTitle,
+    title: { absolute: metaTitle },
     description: localizedMeta.description,
     alternates: {
       canonical: canonicalUrl,
@@ -60,6 +62,8 @@ export async function generateMetadata({ params }: LocalizedToolPageProps): Prom
       title: metaTitle,
       description: localizedMeta.description,
       type: 'website',
+      locale: getOpenGraphLocale(locale as Language),
+      alternateLocale: getOpenGraphAlternateLocales(locale as Language),
       url: canonicalUrl,
       siteName: 'DevsTools',
       images: [

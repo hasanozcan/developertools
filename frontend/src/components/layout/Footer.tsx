@@ -26,10 +26,14 @@ export default function Footer() {
       { key: 'toolName.regex-tester', fallback: 'Regex Tester', href: '/tools/text/regex-tester' },
     ],
     categories: [
-      { name: t('nav.encoders'), href: '/tools/encoding' },
-      { name: t('nav.generators'), href: '/tools/generators' },
-      { name: t('nav.formatters'), href: '/tools/formatters' },
-      { name: t('nav.converters'), href: '/tools/converters' },
+      { key: 'cat.json', fallback: 'JSON Tools', href: '/tools/json' },
+      { key: 'cat.encoding', fallback: 'Encoding & Decoding', href: '/tools/encoding' },
+      { key: 'cat.generators', fallback: 'Generators', href: '/tools/generators' },
+      { key: 'cat.crypto', fallback: 'Cryptography', href: '/tools/crypto' },
+      { key: 'cat.text', fallback: 'Text Tools', href: '/tools/text' },
+      { key: 'cat.converters', fallback: 'Converters', href: '/tools/converters' },
+      { key: 'cat.formatters', fallback: 'Code Formatters', href: '/tools/formatters' },
+      { key: 'cat.utilities', fallback: 'Developer Utilities', href: '/tools/utilities' },
     ],
     company: [
       { name: t('footer.about'), href: '/about' },
@@ -86,6 +90,17 @@ export default function Footer() {
             <p className="mb-4 max-w-xs text-sm leading-6 text-slate-500 dark:text-slate-400">
               {t('footer.description')}
             </p>
+            <p className="max-w-xs text-sm leading-6 text-slate-500 dark:text-slate-400">
+              <Link href="/collections" className="hover:text-primary-600 dark:hover:text-primary-400">
+                Collections
+              </Link>
+              <span className="px-2" aria-hidden="true">
+                ·
+              </span>
+              <Link href="/for" className="hover:text-primary-600 dark:hover:text-primary-400">
+                Tools by role
+              </Link>
+            </p>
           </div>
 
           {/* Popular Tools */}
@@ -116,16 +131,19 @@ export default function Footer() {
               {t('footer.categories')}
             </h3>
             <ul className="space-y-2">
-              {footerLinks.categories.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
+              {footerLinks.categories.map((link) => {
+                const label = t(link.key) !== link.key ? t(link.key) : link.fallback;
+                return (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm"
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 

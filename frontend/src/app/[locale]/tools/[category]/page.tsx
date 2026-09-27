@@ -6,6 +6,8 @@ import {
   NON_DEFAULT_LOCALES,
   isNonDefaultLocale,
   getHreflangAlternates,
+  getOpenGraphAlternateLocales,
+  getOpenGraphLocale,
   type Language,
 } from '@/lib/i18nRouting';
 import { translations } from '@/translations';
@@ -42,7 +44,7 @@ export async function generateMetadata({ params }: LocalizedCategoryPageProps): 
   const ogImageUrl = `${siteUrl}/tools/${categorySlug}/opengraph-image`;
 
   return {
-    title: pageTitle,
+    title: { absolute: pageTitle },
     description,
     alternates: {
       canonical: canonicalUrl,
@@ -52,6 +54,8 @@ export async function generateMetadata({ params }: LocalizedCategoryPageProps): 
       title: pageTitle,
       description,
       type: 'website',
+      locale: getOpenGraphLocale(locale as Language),
+      alternateLocale: getOpenGraphAlternateLocales(locale as Language),
       url: canonicalUrl,
       siteName: 'DevsTools',
       images: [

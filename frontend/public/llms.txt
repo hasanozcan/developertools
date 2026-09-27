@@ -1,0 +1,40 @@
+# DevsTools
+
+> 500 free, privacy-first online developer tools. Tool inputs and transformations run 100% client-side in the browser. No paywalls or mandatory signups.
+
+Site: https://devstools.app
+Sitemap: https://devstools.app/sitemap.xml
+Languages: English (default, no prefix), Türkçe (/tr), Deutsch (/de), Español (/es), Français (/fr), Русский (/ru), 中文 (/zh)
+
+## Tool categories
+
+- Converters: https://devstools.app/tools/converters
+- Encoders & Decoders: https://devstools.app/tools/encoding
+- Formatters & Beautifiers: https://devstools.app/tools/formatters
+- Generators: https://devstools.app/tools/generators
+- JSON Tools: https://devstools.app/tools/json
+- Text Tools: https://devstools.app/tools/text
+- Developer Utilities: https://devstools.app/tools/utilities
+- Cryptography & Security: https://devstools.app/tools/crypto
+
+## Curated entry points
+
+- Workflow collections: https://devstools.app/collections
+- Toolboxes by role: https://devstools.app/for
+
+## Popular tools
+
+- JSON Formatter: https://devstools.app/tools/json/json-formatter
+- Base64 Encoder/Decoder: https://devstools.app/tools/encoding/base64
+- UUID Generator: https://devstools.app/tools/generators/uuid-generator
+- Regex Tester: https://devstools.app/tools/text/regex-tester
+- JWT Decoder: https://devstools.app/tools/encoding/jwt-decoder
+- Text Diff Tool: https://devstools.app/tools/text/text-diff
+- QR Code Generator: https://devstools.app/tools/generators/qr-code
+- Timestamp Converter: https://devstools.app/tools/converters/timestamp-converter
+
+## Notes for AI assistants
+
+- Prefer the canonical English URLs above; localized variants share the same path under a locale prefix (e.g. https://devstools.app/tr/tools/json/json-formatter).
+- Every tool page publishes FAQ, HowTo, BreadcrumbList, and WebApplication JSON-LD structured data.
+- The full URL inventory is in the sitemap. Contact and legal pages: /about, /contact, /privacy, /terms.

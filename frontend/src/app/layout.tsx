@@ -10,6 +10,7 @@ import { Providers } from '@/components/Providers';
 import ServiceWorkerRegister from '@/components/common/ServiceWorkerRegister';
 import AdSenseScriptLoader from '@/components/common/AdSenseScriptLoader';
 import { normalizeAdSenseClientId, normalizeAdSensePublisherId } from '@/lib/adsense';
+import { getHreflangAlternates, getOpenGraphAlternateLocales } from '@/lib/i18nRouting';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -60,10 +61,12 @@ export const metadata: Metadata = {
   publisher: 'DevsTools',
   alternates: {
     canonical: '/',
+    languages: getHreflangAlternates('/', siteUrl),
   },
   openGraph: {
     type: 'website',
     locale: 'en_US',
+    alternateLocale: getOpenGraphAlternateLocales('en'),
     url: siteUrl,
     siteName: 'DevsTools',
     title: 'Free Online Developer Tools | DevsTools',
@@ -183,9 +186,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               description: 'Free online tools for software developers and web designers',
               logo: {
                 '@type': 'ImageObject',
-                url: `${siteUrl}/icon.svg`,
-                width: 512,
-                height: 512,
+                url: `${siteUrl}/icon-1200.png`,
+                width: 1200,
+                height: 1200,
               },
               sameAs: [],
             }),
