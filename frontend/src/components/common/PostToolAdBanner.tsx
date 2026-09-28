@@ -5,13 +5,18 @@ import AdSense from './AdSense';
 
 interface PostToolAdBannerProps {
   className?: string;
-  slot?: string;
+  /**
+   * Required on purpose. This banner used to default to the shared footer slot,
+   * which put two placements with one slot id on every tool page. Callers must
+   * resolve a slot that no other placement on the page is already using.
+   */
+  slot: string;
   placement?: string;
 }
 
 export default function PostToolAdBanner({
   className = '',
-  slot = process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || '7781534087',
+  slot,
   placement = 'tool-post-result',
 }: PostToolAdBannerProps) {
   return (

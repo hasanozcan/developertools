@@ -451,8 +451,34 @@ const priorityQueryChecks = priorityTargets.map(({ query, path, kind }) => {
   return { query, path, kind, answerReady: reasons.length === 0, reasons };
 });
 
-const issues = [];
-const addIssue = (severity, code, count, details) => {
+// Readiness coverage across every canonical tool page, not just the priority
+// queries. Reported as metrics so content-coverage gaps stay visible without
+// turning the audit red while the copy catch-up is still in progress.
+const toolPageCoverage = {
+  total: toolPages.length,
+  answerFirst: toolPages.filter((page) => page.answerFirst).length,
+  thinServerReadableCopy: toolPages.filter((page) => (page.wordCount || 0) < 300).length,
+  sufficientContextualInternalLinks: toolPages.filter(
+    (page) => page.relatedInternalLinks.length >= 3,
+  ).length,
+  strongContextualInbound: toolPages.filter(
+    (page) => (contextualInboundSources.get(page.path)?.size || 0) >= 2,
+  ).length,
+  sufficientFaqAnswers: toolPages.filter((page) => (page.faqQuestions.length || 0) >= 2).length,
+  faqAnswersFullyVisible: toolPages.filter((page) => page.hiddenFaqQuestions.length === 0).length,
+  withVisibleSource: toolPages.filter((page) => (page.externalSources.length || 0) >= 1).length,
+  citationSchemaParity: toolPages.filter((page) => {
+    const visible = new Set(page.externalSources);
+    const schema = new Set(page.schemaCitations);
+    return (
+      visible.size > 0 &&
+      visible.size === schema.size &&
+      [...visible].every((url) => schema.has(url))
+    );
+  }).length,
+};
+
+const issues = [];const addIssue = (severity, code, count, details) => {
   if (count > 0) issues.push({ severity, code, count, details });
 };
 
@@ -701,6 +727,7 @@ const report = {
   aliasChecks,
   sitemapChecks,
   priorityQueryChecks,
+  toolPageCoverage,
   pages: pages.map(({ internalLinks, ...page }) => ({
     ...page,
     internalLinkCount: internalLinks.length,

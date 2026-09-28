@@ -533,11 +533,6 @@ const categories: Record<string, CategoryConfig> = {
         description: 'Generate QR codes from text or URLs',
       },
       {
-        name: 'QR Code Generator',
-        slug: 'qr-code',
-        description: 'Generate QR codes from text or URLs',
-      },
-      {
         name: 'Markdown Preview',
         slug: 'markdown-preview',
         description: 'Preview and convert Markdown to HTML',
@@ -722,7 +717,9 @@ export default async function CategoryPage({ params }: PageProps) {
 
   // Merge curated entries with the full catalog so every tool in this category
   // is reachable from its category hub (internal linking + crawl discovery).
+  // Curated lists can list a tool more than once, so dedupe by slug on merge.
   const curatedSlugs = new Set(category.tools.map((tool) => tool.slug));
+  const seenToolSlugs = new Set<string>();
   const allCategoryTools = [
     ...category.tools,
     ...toolCatalog
@@ -738,7 +735,13 @@ export default async function CategoryPage({ params }: PageProps) {
           description: shortDescription || catalogTool.name,
         };
       }),
-  ];
+  ].filter((tool) => {
+    if (seenToolSlugs.has(tool.slug)) {
+      return false;
+    }
+    seenToolSlugs.add(tool.slug);
+    return true;
+  });
 
   // CollectionPage structured data for category pages
   const collectionPageStructuredData = {

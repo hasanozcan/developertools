@@ -13,6 +13,13 @@ import PostToolAdBanner from '@/components/common/PostToolAdBanner';
 import { Maximize2, Minimize2, Sparkles, X, Sun, Moon } from 'lucide-react';
 import Link from '@/components/common/LocalizedLink';
 import ProInterestCard from '@/components/common/ProInterestCard';
+import {
+  DEFAULT_ADSENSE_TOOL_SIDEBAR_SLOT,
+  DEFAULT_ADSENSE_TOOL_ZEN_LEFT_SLOT,
+  DEFAULT_ADSENSE_TOOL_ZEN_RIGHT_SLOT,
+  resolveAdSenseSlot,
+  resolveDistinctAdSenseSlot,
+} from '@/lib/adsenseSlots';
 
 interface ToolPageWrapperProps {
   toolSlug: string;
@@ -48,6 +55,31 @@ export default function ToolPageWrapper({
   const [isZenMode, setIsZenMode] = useState(false);
   const [zenAdSession, setZenAdSession] = useState(0);
   const [zenAdsReady, setZenAdsReady] = useState(false);
+
+  // Dedicated slots keep placement reports separate. Skip unconfigured or
+  // conflicting bottom placements instead of sharing another placement's ID.
+  const sidebarSlot = resolveAdSenseSlot(
+    process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT,
+    DEFAULT_ADSENSE_TOOL_SIDEBAR_SLOT,
+  );
+  const postResultSlot = resolveAdSenseSlot(process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT);
+  const zenLeftSlot = resolveAdSenseSlot(
+    process.env.NEXT_PUBLIC_ADSENSE_LEFT_SLOT,
+    DEFAULT_ADSENSE_TOOL_ZEN_LEFT_SLOT,
+  );
+  const zenRightSlot = resolveAdSenseSlot(
+    process.env.NEXT_PUBLIC_ADSENSE_RIGHT_SLOT,
+    DEFAULT_ADSENSE_TOOL_ZEN_RIGHT_SLOT,
+  );
+  const usedSlots = [postResultSlot, sidebarSlot, zenLeftSlot, zenRightSlot];
+  const bottomSlot = resolveDistinctAdSenseSlot(
+    process.env.NEXT_PUBLIC_ADSENSE_TOOL_BOTTOM_SLOT,
+    usedSlots,
+  );
+  const zenBottomSlot = resolveDistinctAdSenseSlot(
+    process.env.NEXT_PUBLIC_ADSENSE_TOOL_ZEN_BOTTOM_SLOT,
+    [...usedSlots, bottomSlot],
+  );
 
   // Lock body scroll and handle ESC key when in Zen Mode
   useEffect(() => {
@@ -257,7 +289,7 @@ export default function ToolPageWrapper({
                   {zenAdsReady && (
                     <AdSense
                       key={`zen-left-${zenAdSession}`}
-                      slot={process.env.NEXT_PUBLIC_ADSENSE_LEFT_SLOT || '3460899670'}
+                      slot={zenLeftSlot}
                       format="auto"
                       responsive={true}
                       immediate={true}
@@ -277,7 +309,7 @@ export default function ToolPageWrapper({
                   {zenAdsReady && (
                     <AdSense
                       key={`zen-right-${zenAdSession}`}
-                      slot={process.env.NEXT_PUBLIC_ADSENSE_RIGHT_SLOT || '1351515156'}
+                      slot={zenRightSlot}
                       format="auto"
                       responsive={true}
                       immediate={true}
@@ -290,10 +322,10 @@ export default function ToolPageWrapper({
 
               {/* Bottom Horizontal Ad Banner (Visible on mobile/tablet when sidebars are hidden) */}
               <div className="w-full shrink-0 xl:hidden">
-                {zenAdsReady && (
+                {zenAdsReady && zenBottomSlot && (
                   <AdSense
                     key={`zen-bottom-${zenAdSession}`}
-                    slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || '7781534087'}
+                    slot={zenBottomSlot}
                     format="auto"
                     responsive={true}
                     immediate={true}
@@ -306,7 +338,7 @@ export default function ToolPageWrapper({
           )}
 
           {/* High-Impact Post-Tool Result Banner */}
-          <PostToolAdBanner slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || '7781534087'} className="mb-8" />
+          <PostToolAdBanner slot={postResultSlot} className="mb-8" />
 
           {/* Supporting server-readable answer content for search and AI retrieval. */}
           {answerSections.slice(1).map((section) => renderAnswerSection(section))}
@@ -445,7 +477,7 @@ export default function ToolPageWrapper({
         <div className="lg:col-span-1">
           <div className="sticky top-24">
             <AdSense
-              slot={process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT || '2449208552'}
+              slot={sidebarSlot}
               format="vertical"
               immediate={true}
               placement="tool-sidebar"
@@ -455,13 +487,15 @@ export default function ToolPageWrapper({
         </div>
       </div>
 
-      {/* Ad Banner - Bottom */}
-      <AdSense
-        slot={process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT || '7781534087'}
-        format="horizontal"
-        placement="tool-bottom"
-        className="min-h-[90px] rounded-lg mt-8"
-      />
+      {/* Ad Banner - Bottom. Requires its own configured slot for reporting. */}
+      {bottomSlot && (
+        <AdSense
+          slot={bottomSlot}
+          format="horizontal"
+          placement="tool-bottom"
+          className="min-h-[90px] rounded-lg mt-8"
+        />
+      )}
     </>
   );
 }

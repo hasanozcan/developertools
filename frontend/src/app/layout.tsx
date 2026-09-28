@@ -31,6 +31,13 @@ const adSensePublisherId = normalizeAdSensePublisherId(process.env.NEXT_PUBLIC_A
 const enableVercelObservability =
   process.env.VERCEL === '1' || process.env.NEXT_PUBLIC_ENABLE_VERCEL_ANALYTICS === 'true';
 
+// Comma-separated absolute https profile URLs used for Organization.sameAs.
+// Emitted only when present, so the schema never advertises an empty array.
+const socialProfiles = (process.env.NEXT_PUBLIC_SOCIAL_PROFILES || '')
+  .split(',')
+  .map((value) => value.trim())
+  .filter((value) => /^https:\/\//i.test(value));
+
 const signalGoogleFundingChoices = `(function() {
   function signalGooglefcPresent() {
     if (!window.frames['googlefcPresent']) {
@@ -190,7 +197,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 width: 1200,
                 height: 1200,
               },
-              sameAs: [],
+              ...(socialProfiles.length > 0 ? { sameAs: socialProfiles } : {}),
             }),
           }}
         />

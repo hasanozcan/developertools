@@ -1,6 +1,7 @@
 import { enhancedToolTranslations } from './enhancedTools';
 
 export const ru = {
+  'meta.freeOnlineTool': 'Бесплатный онлайн-инструмент',
   // Header
   search: 'Поиск',
   'search.placeholder': 'Поиск инструментов...',

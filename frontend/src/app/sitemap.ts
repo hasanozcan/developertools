@@ -10,6 +10,10 @@ import {
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
 
+// Note: lastModified/changeFrequency/priority are intentionally omitted. The
+// catalog carries no per-entry modification date, so any value here would be
+// fabricated, and Google ignores freshness hints that are not trustworthy.
+
 // Static pages
 const staticPages = LOCALIZED_PAGES;
 

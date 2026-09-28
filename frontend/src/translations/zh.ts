@@ -1,6 +1,7 @@
 import { enhancedToolTranslations } from './enhancedTools';
 
 export const zh = {
+  'meta.freeOnlineTool': '免费在线工具',
   // Header
   search: '搜索',
   'search.placeholder': '搜索工具...',

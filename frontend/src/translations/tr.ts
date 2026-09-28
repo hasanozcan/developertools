@@ -1,6 +1,7 @@
 import { enhancedToolTranslations } from './enhancedTools';
 
 export const tr = {
+  'meta.freeOnlineTool': 'Ücretsiz Online Araç',
   // Header
   search: 'Ara',
   'search.placeholder': 'Araç ara...',

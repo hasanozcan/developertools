@@ -12,6 +12,7 @@ import {
   getOpenGraphLocale,
   type Language,
 } from '@/lib/i18nRouting';
+import { translations } from '@/translations';
 
 interface LocalizedToolPageProps {
   params: Promise<{ locale: string; category: string; tool: string }>;
@@ -48,7 +49,7 @@ export async function generateMetadata({ params }: LocalizedToolPageProps): Prom
     catalogTool.shortDescription || catalogTool.name,
   );
 
-  const metaTitle = `${localizedMeta.name} – DevsTools`;
+  const metaTitle = `${localizedMeta.name} – ${translations[locale as Language]['meta.freeOnlineTool'] || 'Free Online Tool'}`;
   const ogImageUrl = `${siteUrl}/tools/${canonicalCategory}/${toolSlug}/opengraph-image`;
 
   return {
