@@ -19,4 +19,11 @@ describe('jsonToPydantic', () => {
     expect(pydanticCode).toContain('is_active: bool');
     expect(pydanticCode).toContain('tags: List[str]');
   });
+
+  it('models the first element of a top-level array using the requested root name', () => {
+    const code = jsonToPydantic('[{"id": 1, "owner": {"name": "Ada"}}]', 'Repo');
+    expect(code).toContain('class Repo(BaseModel):');
+    expect(code).toContain('class Owner(BaseModel):');
+    expect(code).toContain('owner: Owner');
+  });
 });

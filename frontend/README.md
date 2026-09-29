@@ -86,7 +86,7 @@ Collection reklamları için üç gerçek AdSense unit tanımlıdır ve birbirin
 
 ## SEO Özellikleri
 
-- 20 konu koleksiyonu: `/collections` ve 6 ek dilde localized karşılıkları
+- 48 konu koleksiyonu: `/collections` ve 6 ek dilde localized karşılıkları
 - 10 geliştirici rolü landing page'i: `/for/[audience]` ve localized karşılıkları
 - Tool sayfalarında FAQ, HowTo, WebApplication, Breadcrumb ve related-tool structured data
 - Tool sayfalarında otomatik örnek kullanım içeriği, workflow bağlantıları ve topic collection iç linkleri

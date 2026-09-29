@@ -9,6 +9,28 @@ vi.mock('next/navigation', () => {
   };
 });
 
+// In the app the server layout supplies the active locale's dictionary through a per-locale
+// client module. Tests render <LanguageProvider> on its own, so give it the full dictionary
+// of the locale it resolves (initialLocale, else the mocked pathname).
+vi.mock('@/context/LanguageContext', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/context/LanguageContext')>();
+  const { createElement } = await import('react');
+  const { usePathname } = await import('next/navigation');
+  const { translations } = await import('@/translations');
+  const { stripLocaleFromPath } = await import('@/lib/localeRouting');
+
+  function LanguageProvider(props: React.ComponentProps<typeof actual.LanguageProvider>) {
+    const pathname = usePathname();
+    const locale = props.initialLocale ?? stripLocaleFromPath(pathname || '/').locale;
+    return createElement(actual.DictionaryProvider, {
+      dictionary: translations[locale],
+      children: createElement(actual.LanguageProvider, props),
+    });
+  }
+
+  return { ...actual, LanguageProvider };
+});
+
 function createMemoryStorage(): Storage {
   const values = new Map<string, string>();
   return {

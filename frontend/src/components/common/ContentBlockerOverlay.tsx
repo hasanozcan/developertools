@@ -12,6 +12,13 @@ interface ContentBlockerOverlayProps {
 
 const reloadCurrentPage = () => window.location.reload();
 
+const SUPPORT_SLOT_SELECTOR = '[data-site-support-slot="true"]';
+
+const containsSupportSlot = (node: Node) =>
+  node.nodeType === Node.ELEMENT_NODE &&
+  ((node as Element).matches(SUPPORT_SLOT_SELECTOR) ||
+    (node as Element).querySelector(SUPPORT_SLOT_SELECTOR) !== null);
+
 export default function ContentBlockerOverlay({
   reloadPage = reloadCurrentPage,
 }: ContentBlockerOverlayProps) {
@@ -49,8 +56,14 @@ export default function ContentBlockerOverlay({
   }, [adClient, hasMonetizedContent, pathname]);
 
   useEffect(() => {
-    const updateSlotPresence = () => {
-      const hasSlot = document.querySelector('[data-site-support-slot="true"]') !== null;
+    // The slot currently backing `hasMonetizedContent`, so mutations while a
+    // slot is mounted can be handled with an O(1) `isConnected` check instead
+    // of a document-wide query on every DOM change (e.g. each tool keystroke).
+    let trackedSlot: Element | null = null;
+
+    const applySlotPresence = (slot: Element | null) => {
+      trackedSlot = slot;
+      const hasSlot = slot !== null;
       const slotAppeared = hasSlot && !hasMonetizedContentRef.current;
       hasMonetizedContentRef.current = hasSlot;
       setHasMonetizedContent(hasSlot);
@@ -63,8 +76,27 @@ export default function ContentBlockerOverlay({
       }
     };
 
-    updateSlotPresence();
-    const observer = new MutationObserver(updateSlotPresence);
+    const findSlot = () => document.querySelector(SUPPORT_SLOT_SELECTOR);
+    const mayContainSlot = (record: MutationRecord) =>
+      record.type === 'attributes' || Array.from(record.addedNodes).some(containsSupportSlot);
+
+    const onMutations = (records: MutationRecord[]) => {
+      if (trackedSlot) {
+        if (trackedSlot.isConnected && trackedSlot.matches(SUPPORT_SLOT_SELECTOR)) return;
+        const replacement = findSlot();
+        // Another slot still marks the page as monetized: nothing changes.
+        if (replacement) trackedSlot = replacement;
+        else applySlotPresence(null);
+        return;
+      }
+      // No slot yet: only added elements or marker attribute changes can add one.
+      if (!records.some(mayContainSlot)) return;
+      const slot = findSlot();
+      if (slot) applySlotPresence(slot);
+    };
+
+    applySlotPresence(findSlot());
+    const observer = new MutationObserver(onMutations);
     observer.observe(document.body, {
       attributes: true,
       attributeFilter: ['data-site-support-slot'],

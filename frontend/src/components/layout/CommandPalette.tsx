@@ -52,7 +52,8 @@ import { useFavorites } from '@/context/FavoritesContext';
 import { useHistory } from '@/context/HistoryContext';
 import { toolCatalog } from '@/lib/api';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
-import { getLocalizedPath } from '@/lib/i18nRouting';
+import { getLocalizedPath } from '@/lib/localeRouting';
+import { useToolIndex } from '@/lib/toolIndexClient';
 import { trackToolEvent } from '@/lib/analytics';
 import { getToolManifest } from '@/lib/toolManifest';
 
@@ -155,13 +156,18 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
 
+  // Localized tool names/descriptions are not in the client dictionary; the compact
+  // current-locale index is fetched when the palette first opens (catalog text meanwhile).
+  const toolIndex = useToolIndex(language, isOpen);
+
   // Normalize tools
   const allTools = useMemo(() => {
     return toolCatalog.map((tool) => {
       const canonicalCategory = getCanonicalToolCategory(tool.slug, tool.categorySlug);
       const manifest = getToolManifest(tool.slug);
-      const name = t(`toolName.${tool.slug}`) !== `toolName.${tool.slug}` ? t(`toolName.${tool.slug}`) : tool.name;
-      const desc = t(`toolDesc.${tool.slug}`) !== `toolDesc.${tool.slug}` ? t(`toolDesc.${tool.slug}`) : (tool.shortDescription || '');
+      const localized = toolIndex?.get(tool.slug);
+      const name = localized?.name || tool.name;
+      const desc = localized ? localized.description : tool.shortDescription || '';
       const categoryName = t(`cat.${canonicalCategory}`) || canonicalCategory;
 
       return {
@@ -182,7 +188,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
         ],
       };
     });
-  }, [t]);
+  }, [t, toolIndex]);
 
   // Categories list
   const categories = useMemo(() => {

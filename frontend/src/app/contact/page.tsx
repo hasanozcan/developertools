@@ -4,21 +4,24 @@ import { useEffect, useState } from 'react';
 import { Mail, MessageSquare, Send, CheckCircle } from 'lucide-react';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import { useLanguage } from '@/context/LanguageContext';
-import Script from 'next/script';
+import { getLocalizedPath } from '@/lib/localeRouting';
+import { serializeJsonForHtmlScript } from '@/lib/scriptSafeJson';
 import { trackProductEvent } from '@/lib/analytics';
 import { trackGoogleAdsConversion } from '@/lib/googleAds';
 
 export default function ContactPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
+  const pageUrl = `${siteUrl}${getLocalizedPath('/contact', language)}`;
 
   // ContactPage structured data
   const contactPageStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
-    '@id': `${siteUrl}/contact#contactpage`,
-    url: `${siteUrl}/contact`,
-    name: 'Contact DevsTools - Get in Touch',
+    '@id': `${pageUrl}#contactpage`,
+    url: pageUrl,
+    inLanguage: language,
+    name: language === 'en' ? 'Contact DevsTools - Get in Touch' : `${t('contact.title')} – DevsTools`,
     description: 'Contact DevsTools for feedback, bug reports, feature requests, or questions. We value your input and strive to improve our developer tools.',
     isPartOf: {
       '@type': 'WebSite',
@@ -33,7 +36,7 @@ export default function ContactPage() {
         '@type': 'ContactPoint',
         contactType: 'customer service',
         email: 'devstoolsapp@gmail.com',
-        url: `${siteUrl}/contact`,
+        url: pageUrl,
         availableLanguage: ['English', 'Turkish', 'German', 'Spanish', 'French', 'Russian', 'Chinese'],
       },
     },
@@ -98,10 +101,9 @@ export default function ContactPage() {
 
   return (
     <>
-      <Script
-        id="contact-contactpage-structured-data"
+      <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageStructuredData) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonForHtmlScript(contactPageStructuredData) }}
       />
       <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-8">
       <Breadcrumb

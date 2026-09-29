@@ -6,6 +6,11 @@ export function jsonToPydantic(jsonString: string, rootClassName = 'RootModel'):
     throw new Error('Invalid JSON: ' + (err instanceof Error ? err.message : String(err)));
   }
 
+  // A top-level array of objects is modelled by its first element.
+  if (Array.isArray(parsed) && parsed.length > 0 && typeof parsed[0] === 'object' && parsed[0] !== null) {
+    parsed = parsed[0];
+  }
+
   const models: Record<string, Record<string, string>> = {};
 
   function toPascalCase(str: string): string {

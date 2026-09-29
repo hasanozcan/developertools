@@ -18,13 +18,22 @@ export default function WorkspaceControls({ toolSlug }: { toolSlug: string }) {
   } = useWorkspace();
   const importRef = useRef<HTMLInputElement>(null);
 
-  if (!ready) return null;
-  const saved = isToolInActiveWorkspace(toolSlug);
+  // Before the stored workspaces load, render the same controls (with the
+  // default workspace state) as an inert placeholder so the toolbar keeps its
+  // final size and the tool below does not shift when they become interactive.
+  const pending = !ready;
+  const saved = !pending && isToolInActiveWorkspace(toolSlug);
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div
+      className="flex flex-wrap items-center gap-2"
+      data-workspace-controls={pending ? 'pending' : 'ready'}
+      aria-hidden={pending || undefined}
+      inert={pending}
+    >
       <select
         aria-label="Active workspace"
+        disabled={pending}
         value={activeWorkspace.id}
         onChange={(event) => setActiveWorkspaceId(event.target.value)}
         className="max-w-40 rounded-xl border border-slate-200 bg-white px-2 py-1.5 text-xs font-medium text-slate-700 dark:border-white/10 dark:bg-slate-900 dark:text-slate-200"
@@ -38,6 +47,7 @@ export default function WorkspaceControls({ toolSlug }: { toolSlug: string }) {
       <button
         type="button"
         onClick={() => toggleTool(toolSlug)}
+        disabled={pending}
         className={`inline-flex items-center gap-1.5 rounded-xl border px-2.5 py-1.5 text-xs font-semibold transition ${
           saved
             ? 'border-indigo-300 bg-indigo-50 text-indigo-700 dark:border-indigo-800 dark:bg-indigo-950/40 dark:text-indigo-300'
@@ -50,6 +60,7 @@ export default function WorkspaceControls({ toolSlug }: { toolSlug: string }) {
       <button
         type="button"
         onClick={createWorkspace}
+        disabled={pending}
         title="Create workspace"
         aria-label="Create workspace"
         className="rounded-xl border border-slate-200 bg-white p-1.5 text-slate-500 hover:text-indigo-600 dark:border-white/10 dark:bg-slate-900 dark:text-slate-300"
@@ -59,6 +70,7 @@ export default function WorkspaceControls({ toolSlug }: { toolSlug: string }) {
       <button
         type="button"
         onClick={exportActiveWorkspace}
+        disabled={pending}
         title="Export workspace"
         aria-label="Export workspace"
         className="rounded-xl border border-slate-200 bg-white p-1.5 text-slate-500 hover:text-indigo-600 dark:border-white/10 dark:bg-slate-900 dark:text-slate-300"
@@ -79,6 +91,7 @@ export default function WorkspaceControls({ toolSlug }: { toolSlug: string }) {
       <button
         type="button"
         onClick={() => importRef.current?.click()}
+        disabled={pending}
         title="Import workspace"
         aria-label="Import workspace"
         className="rounded-xl border border-slate-200 bg-white p-1.5 text-slate-500 hover:text-indigo-600 dark:border-white/10 dark:bg-slate-900 dark:text-slate-300"

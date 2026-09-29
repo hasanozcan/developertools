@@ -1348,18 +1348,6 @@ export const toolSources: Record<string, ToolSource[]> = {
     { name: 'JSON to Go Struct Converter Reference', url: 'https://devstools.app/tools/converters/json-to-go-struct' },
     { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
-  'json-to-kotlin-class': [
-    { name: 'JSON to Kotlin Class Converter Reference', url: 'https://devstools.app/tools/converters/json-to-kotlin-class' },
-    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
-  ],
-  'json-to-swift-struct': [
-    { name: 'JSON to Swift Struct (Codable) Converter Reference', url: 'https://devstools.app/tools/converters/json-to-swift-struct' },
-    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
-  ],
-  'json-to-csharp-class': [
-    { name: 'JSON to C# Record & Class Converter Reference', url: 'https://devstools.app/tools/converters/json-to-csharp-class' },
-    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
-  ],
   'proto-to-typescript': [
     { name: 'Protobuf to TypeScript Interface Converter Reference', url: 'https://devstools.app/tools/converters/proto-to-typescript' },
     { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
@@ -1528,10 +1516,6 @@ export const toolSources: Record<string, ToolSource[]> = {
     { name: 'SQL DDL to Prisma & Drizzle ORM Schema Converter Reference', url: 'https://devstools.app/tools/converters/sql-to-orm-schema' },
     { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
-  'docker-compose-to-kubernetes': [
-    { name: 'Docker Compose to Kubernetes YAML Converter Reference', url: 'https://devstools.app/tools/converters/docker-compose-to-kubernetes' },
-    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
-  ],
   'curl-to-har': [
     { name: 'cURL to HTTP Archive HAR 1.2 Converter Reference', url: 'https://devstools.app/tools/converters/curl-to-har' },
     { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
@@ -1560,20 +1544,12 @@ export const toolSources: Record<string, ToolSource[]> = {
     { name: 'CSS Multi-Layer 3D Box Shadow Generator Reference', url: 'https://devstools.app/tools/generators/css-3d-box-shadow-generator' },
     { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
-  'html-entities-converter': [
-    { name: 'HTML Entities to Unicode & Character Encoder Reference', url: 'https://devstools.app/tools/encoding/html-entities-converter' },
-    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
-  ],
   'system-prompt-xml-builder': [
     { name: 'Claude & OpenAI XML Structured System Prompt Builder Reference', url: 'https://devstools.app/tools/generators/system-prompt-xml-builder' },
     { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'multi-llm-token-comparator': [
     { name: 'Multi-Model LLM Token Counter & Cost Comparator Reference', url: 'https://devstools.app/tools/utilities/multi-llm-token-comparator' },
-    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
-  ],
-  'json-to-python-pydantic': [
-    { name: 'JSON to Python Pydantic V2 & TypedDict Generator Reference', url: 'https://devstools.app/tools/converters/json-to-python-pydantic' },
     { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'json-to-sql-insert': [
@@ -1594,14 +1570,6 @@ export const toolSources: Record<string, ToolSource[]> = {
   ],
   'bcrypt-hash-calculator': [
     { name: 'Bcrypt & Argon2 Password Hash Generator & Verifier Reference', url: 'https://devstools.app/tools/crypto/bcrypt-hash-calculator' },
-    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
-  ],
-  'json-to-rust-types': [
-    { name: 'JSON to Rust Serde Structs Reference', url: 'https://devstools.app/tools/converters/json-to-rust-types' },
-    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
-  ],
-  'json-to-golang-models': [
-    { name: 'JSON to Golang Struct Generator Reference', url: 'https://devstools.app/tools/converters/json-to-golang-models' },
     { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'sql-to-go-gorm': [
@@ -1974,14 +1942,6 @@ export const toolSources: Record<string, ToolSource[]> = {
   ],
   'rot47-encoder-decoder': [
     { name: 'ROT47 Cipher Text Encoder & Decoder Reference', url: 'https://devstools.app/tools/encoding/rot47-encoder-decoder' },
-    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
-  ],
-  'url-safe-base64-converter': [
-    { name: 'URL-Safe Base64 (Base64url) Converter Reference', url: 'https://devstools.app/tools/encoding/url-safe-base64-converter' },
-    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
-  ],
-  'json-path-query-tester': [
-    { name: 'JSONPath Query Evaluator & Filter Reference', url: 'https://devstools.app/tools/json/json-path-query-tester' },
     { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'json-key-sorter': [

@@ -1,4 +1,4 @@
-# DevsTools – 500 Free, Privacy-First Developer Tools
+# DevsTools – 490 Free, Privacy-First Developer Tools
 
 [![Next.js 16](https://img.shields.io/badge/Next.js-16.3-black?logo=next.js)](https://nextjs.org/)
 [![React 19](https://img.shields.io/badge/React-19.2-blue?logo=react)](https://react.dev/)
@@ -8,7 +8,7 @@
 [![Playwright](https://img.shields.io/badge/Playwright-E2E%20Verified-45ba4b?logo=playwright)](https://playwright.dev/)
 [![Privacy: 100% Client-Side](https://img.shields.io/badge/Privacy-100%25%20Client--Side-brightgreen)](https://devstools.app)
 
-**DevsTools** ([devstools.app](https://devstools.app)) is an ultra-fast suite of **500 online developer tools** whose tool inputs and transformations run client-side in your browser. No paywalls or mandatory signups.
+**DevsTools** ([devstools.app](https://devstools.app)) is an ultra-fast suite of **490 online developer tools** whose tool inputs and transformations run client-side in your browser. No paywalls or mandatory signups.
 
 ---
 
@@ -16,7 +16,7 @@
 
 - 🔒 **Client-Side Processing:** Tool inputs, generated output, tokens, source code, images, and PDFs stay in the browser.
 - 🔗 **Tool Workflows:** Send output directly into compatible tools without a server round-trip.
-- 🧭 **20 Curated Collections:** Browse localized workflow clusters for API, JSON, security, frontend, DevOps, databases, AI/LLM, testing, media, networking, and more.
+- 🧭 **48 Curated Collections:** Browse localized workflow clusters for API, JSON, security, frontend, DevOps, databases, AI/LLM, testing, media, networking, and more.
 - 👥 **Role Toolboxes:** Programmatic landing pages for API, frontend, backend, DevOps, security, data, AI, mobile, database, and QA engineers.
 - 🗂️ **Local Workspaces:** Group tools into named browser-local workspaces and export/import them as JSON.
 - 📈 **Ad Placement Telemetry:** Track requested, filled, and unfilled AdSense placements plus workflow-step engagement by page context.
@@ -31,9 +31,9 @@
 
 ---
 
-## 🛠️ Tool Catalog by Category (500 Tools)
+## 🛠️ Tool Catalog by Category (490 Tools)
 
-### 1. Converters (149 Tools)
+### 1. Converters (142 Tools)
 - **cURL & API Converters**: Transform cURL commands into modern TypeScript/JavaScript Axios requests, Fetch to cURL terminal commands, Python Requests/HTTPX, Go, Rust, and C#.
 - **Document & Spreadsheet Converters**: Excel (XLSX, CSV, TSV) to JSON, JSON to Excel/CSV with nested flattener, JSON to XML, and Images (JPG/PNG/WebP) to Multi-Page PDF.
 - **Media Converters**: All-in-One Image Format Converter (PNG ↔ JPG ↔ WebP ↔ AVIF ↔ BMP ↔ ICO).
@@ -67,12 +67,12 @@
 - **SQL Identifier Slugifier**: Convert text into valid snake_case SQL table and column identifiers.
 - Plus additional text tools (Word Counter, Text Diff, Sort Lines, Remove Duplicates, Text Obfuscator, etc.).
 
-### 7. Encoders & Decoders (24 Tools)
+### 7. Encoders & Decoders (22 Tools)
 - **Crypto & Unit Converters**: Ethereum Wei/Gwei/Ether & Bitcoin Satoshi unit converter.
 - **Base Encoders**: Base64URL, Base64, Base32, Base58, Hex, Binary, URL, Unicode Escape, and HTML Entities.
 - Plus additional encoding tools (Quoted-Printable MIME, Morse Code Audio Player, etc.).
 
-### 8. JSON Tools (17 Tools)
+### 8. JSON Tools (16 Tools)
 - **JSON Deep Flattener**: Flatten deeply nested JSON objects into single-level dot notation keys.
 - **RFC 6902 JSON Patch Builder**: Generate standard JSON patch differential operations between two objects.
 - Plus additional JSON tools (JSON Formatter, Validator, JSON to CSV, Diff & Patch, JSON Pointer, Size Analyzer, etc.).

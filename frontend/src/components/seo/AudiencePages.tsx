@@ -12,7 +12,7 @@ import {
   getLocalizedAudience,
   type DeveloperAudience,
 } from '@/lib/developerAudiences';
-import { getLocalizedToolMeta, type Language } from '@/lib/i18nRouting';
+import { getLocalizedToolMeta, isToolLocaleIndexable, type Language } from '@/lib/i18nRouting';
 import { getLocalizedCollection } from '@/lib/toolCollections';
 
 const pageCopy: Record<Language, { eyebrow: string; title: string; description: string; explore: string; featured: string; collections: string }> = {
@@ -67,6 +67,7 @@ export function AudienceDetailContent({ locale, audience }: { locale: Language; 
   const collections = getAudienceCollections(audience);
   const ui = pageCopy[locale];
   const prefix = localePrefix(locale);
+  const paragraphs = localized.introParagraphs && localized.introParagraphs.length > 0 ? localized.introParagraphs : [localized.intro];
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
   const topSlot = resolveAdSenseSlot(process.env.NEXT_PUBLIC_ADSENSE_COLLECTION_TOP_SLOT, DEFAULT_ADSENSE_COLLECTION_TOP_SLOT);
   const bottomSlot = resolveAdSenseSlot(process.env.NEXT_PUBLIC_ADSENSE_COLLECTION_BOTTOM_SLOT, DEFAULT_ADSENSE_COLLECTION_BOTTOM_SLOT);
@@ -75,12 +76,15 @@ export function AudienceDetailContent({ locale, audience }: { locale: Language; 
     '@type': 'ItemList',
     name: localized.title,
     description: localized.description,
-    itemListElement: tools.map((tool, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: getLocalizedToolMeta(tool.slug, locale, tool.name, tool.shortDescription || tool.name).name,
-      url: `${siteUrl}${prefix}/tools/${tool.categorySlug}/${tool.slug}`,
-    })),
+    // Only tool pages that are indexable in this locale belong in structured data.
+    itemListElement: tools
+      .filter((tool) => isToolLocaleIndexable(tool.slug, locale))
+      .map((tool, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: getLocalizedToolMeta(tool.slug, locale, tool.name, tool.shortDescription || tool.name).name,
+        url: `${siteUrl}${prefix}/tools/${tool.categorySlug}/${tool.slug}`,
+      })),
   };
 
   return (
@@ -95,7 +99,11 @@ export function AudienceDetailContent({ locale, audience }: { locale: Language; 
       <section className="mb-8 rounded-[2rem] border border-white/80 bg-white/70 p-7 shadow-sm backdrop-blur dark:border-white/10 dark:bg-slate-900/70 sm:p-10">
         <span className="eyebrow mb-3">{ui.eyebrow}</span>
         <h1 className="text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-4xl">{localized.title}</h1>
-        <p className="mt-4 max-w-3xl leading-7 text-slate-600 dark:text-slate-300">{localized.intro}</p>
+        <div data-audience-intro="true" className="mt-4 max-w-3xl space-y-4 leading-7 text-slate-600 dark:text-slate-300">
+          {paragraphs.map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))}
+        </div>
       </section>
 
       <AdSense slot={topSlot} format="auto" placement={`audience-${audience.slug}-${locale}-top`} className="mb-8 min-h-[90px]" />

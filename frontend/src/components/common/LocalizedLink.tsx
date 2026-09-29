@@ -3,7 +3,7 @@
 import NextLink from 'next/link';
 import type { ComponentProps } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import { getLocalizedPath } from '@/lib/i18nRouting';
+import { getLocalizedPath } from '@/lib/localeRouting';
 
 export default function LocalizedLink({ href, ...props }: ComponentProps<typeof NextLink>) {
   const { language } = useLanguage();

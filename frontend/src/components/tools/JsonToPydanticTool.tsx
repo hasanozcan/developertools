@@ -5,15 +5,16 @@ import { jsonToPydantic } from '@/lib/jsonToPydantic';
 
 export default function JsonToPydanticTool() {
   const [json, setJson] = useState('{\n  "user_id": 123,\n  "username": "johndoe",\n  "is_active": true,\n  "score": 98.5,\n  "tags": ["admin", "developer"]\n}');
+  const [rootModel, setRootModel] = useState('User');
   const [copied, setCopied] = useState(false);
 
   const output = useMemo(() => {
     try {
-      return jsonToPydantic(json, 'User');
+      return jsonToPydantic(json, rootModel.trim() || 'User');
     } catch (err: unknown) {
       return '# ' + (err instanceof Error ? err.message : String(err));
     }
-  }, [json]);
+  }, [json, rootModel]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(output);
@@ -23,6 +24,16 @@ export default function JsonToPydanticTool() {
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center gap-2">
+        <label htmlFor="pydantic-root-model" className="text-xs font-medium text-slate-600 dark:text-slate-300">Root model name</label>
+        <input
+          id="pydantic-root-model"
+          type="text"
+          value={rootModel}
+          onChange={(e) => setRootModel(e.target.value)}
+          className="w-40 rounded-lg border border-slate-200 bg-white px-2 py-1 text-sm font-medium dark:border-white/10 dark:bg-slate-950 dark:text-slate-100"
+        />
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="surface-card rounded-2xl p-5 space-y-3">
           <h3 className="font-bold text-sm text-slate-900 dark:text-white">JSON Input</h3>

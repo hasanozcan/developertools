@@ -1,18 +1,20 @@
 import { Metadata } from 'next';
 import { notFound, permanentRedirect } from 'next/navigation';
-import ToolPage from '@/app/tools/[category]/[tool]/page';
+import ToolPage from '@/app/(default)/tools/[category]/[tool]/page';
 import { toolCatalog, findCatalogTool } from '@/lib/api';
 import { getCanonicalToolCategory } from '@/lib/toolRoutes';
 import {
   NON_DEFAULT_LOCALES,
   isNonDefaultLocale,
-  getHreflangAlternates,
   getLocalizedToolMeta,
+  getToolHreflangAlternates,
+  isToolLocaleIndexable,
   getOpenGraphAlternateLocales,
   getOpenGraphLocale,
   type Language,
 } from '@/lib/i18nRouting';
 import { translations } from '@/translations';
+import { buildLocalizedToolTitle } from '@/lib/toolTitle';
 
 interface LocalizedToolPageProps {
   params: Promise<{ locale: string; category: string; tool: string }>;
@@ -41,7 +43,14 @@ export async function generateMetadata({ params }: LocalizedToolPageProps): Prom
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
   const canonicalCategory = getCanonicalToolCategory(toolSlug, category);
-  const canonicalUrl = `${siteUrl}/${locale}/tools/${canonicalCategory}/${toolSlug}`;
+  const englishUrl = `${siteUrl}/tools/${canonicalCategory}/${toolSlug}`;
+  // Locale pages without a real translation would be near-duplicates of the
+  // English page: keep them reachable, but noindex them and point the canonical
+  // at the English URL. They also drop out of hreflang and the sitemap.
+  const indexable = isToolLocaleIndexable(toolSlug, locale as Language);
+  const canonicalUrl = indexable
+    ? `${siteUrl}/${locale}/tools/${canonicalCategory}/${toolSlug}`
+    : englishUrl;
   const localizedMeta = getLocalizedToolMeta(
     toolSlug,
     locale as Language,
@@ -49,16 +58,31 @@ export async function generateMetadata({ params }: LocalizedToolPageProps): Prom
     catalogTool.shortDescription || catalogTool.name,
   );
 
-  const metaTitle = `${localizedMeta.name} – ${translations[locale as Language]['meta.freeOnlineTool'] || 'Free Online Tool'}`;
+  // Absolute title, always <= 60 chars (see src/lib/toolTitle.ts).
+  const metaTitle = buildLocalizedToolTitle(
+    localizedMeta.name,
+    translations[locale as Language]['meta.freeOnlineTool'] || 'Free Online Tool',
+  );
   const ogImageUrl = `${siteUrl}/tools/${canonicalCategory}/${toolSlug}/opengraph-image`;
 
   return {
     title: { absolute: metaTitle },
     description: localizedMeta.description,
-    alternates: {
-      canonical: canonicalUrl,
-      languages: getHreflangAlternates(`/tools/${canonicalCategory}/${toolSlug}`, siteUrl),
-    },
+    alternates: indexable
+      ? {
+          canonical: canonicalUrl,
+          languages: getToolHreflangAlternates(toolSlug, canonicalCategory, siteUrl),
+        }
+      : { canonical: canonicalUrl },
+    ...(indexable
+      ? {}
+      : {
+          robots: {
+            index: false,
+            follow: true,
+            googleBot: { index: false, follow: true },
+          },
+        }),
     openGraph: {
       title: metaTitle,
       description: localizedMeta.description,

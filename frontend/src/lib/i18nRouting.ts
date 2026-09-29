@@ -1,142 +1,106 @@
-import { translations, type Language } from '@/translations';
+import 'server-only';
+import { translations } from '@/translations';
 import { enhancedTools } from '@/translations/enhancedTools';
+import { findCatalogTool } from '@/lib/api';
+import { DEFAULT_LOCALE, NON_DEFAULT_LOCALES, type Language } from '@/lib/localeRouting';
 
-export type { Language };
+// Server-only: resolves localized tool text from the full translation catalog and
+// enhancedTools (~1 MB). Never import this module from a client component; use
+// `@/lib/localeRouting` for path helpers and the lazy tool index for tool names.
+// Everything from the client-safe module is re-exported so server code keeps a
+// single import path.
+export * from '@/lib/localeRouting';
 
-export const SUPPORTED_LOCALES: readonly Language[] = [
-  'en',
-  'tr',
-  'de',
-  'es',
-  'fr',
-  'ru',
-  'zh',
-] as const;
-export const DEFAULT_LOCALE: Language = 'en';
-export const NON_DEFAULT_LOCALES: readonly Language[] = [
-  'tr',
-  'de',
-  'es',
-  'fr',
-  'ru',
-  'zh',
-] as const;
-export const LOCALIZED_PAGES = ['about', 'privacy', 'terms', 'contact'] as const;
+function normalizeToolText(value: string | undefined): string {
+  return (value ?? '').trim().toLowerCase();
+}
+
+type EnglishToolReference = { names: Set<string>; descriptions: Set<string> };
+
+const englishToolReferenceCache = new Map<string, EnglishToolReference>();
 
 /**
- * BCP 47 / Open Graph locale tags per supported language.
- * e.g. getOpenGraphLocale('tr') -> 'tr_TR'
+ * Every English value a tool's name/description can take (catalog, EN
+ * translations, enhancedTools EN column), normalized. A localized value that
+ * matches any of these is an untranslated English placeholder.
  */
-export const OPEN_GRAPH_LOCALES: Record<Language, string> = {
-  en: 'en_US',
-  tr: 'tr_TR',
-  de: 'de_DE',
-  es: 'es_ES',
-  fr: 'fr_FR',
-  ru: 'ru_RU',
-  zh: 'zh_CN',
-} as const;
+function getEnglishToolReference(toolSlug: string): EnglishToolReference {
+  const cached = englishToolReferenceCache.get(toolSlug);
+  if (cached) return cached;
 
-export function getOpenGraphLocale(locale: Language): string {
-  return OPEN_GRAPH_LOCALES[locale] ?? OPEN_GRAPH_LOCALES.en;
+  const catalogTool = findCatalogTool(toolSlug);
+  const enhanced = enhancedTools[toolSlug];
+  const names = new Set<string>();
+  const descriptions = new Set<string>();
+  const add = (target: Set<string>, value: string | undefined) => {
+    const normalized = normalizeToolText(value);
+    if (normalized) target.add(normalized);
+  };
+
+  add(names, catalogTool?.name);
+  add(names, enhanced?.name?.en);
+  add(names, translations[DEFAULT_LOCALE]?.[`toolName.${toolSlug}`]);
+
+  add(descriptions, catalogTool?.shortDescription);
+  // The localized page falls back to the name when no short description exists.
+  add(descriptions, catalogTool?.name);
+  add(descriptions, enhanced?.description?.en);
+  add(descriptions, translations[DEFAULT_LOCALE]?.[`toolDesc.${toolSlug}`]);
+
+  const reference = { names, descriptions };
+  englishToolReferenceCache.set(toolSlug, reference);
+  return reference;
 }
 
-export function getOpenGraphAlternateLocales(locale: Language): string[] {
-  const current = getOpenGraphLocale(locale);
-  return (Object.values(OPEN_GRAPH_LOCALES) as string[]).filter(
-    (candidate) => candidate !== current,
-  );
-}
-
-export function isValidLocale(locale: string): locale is Language {
-  return (SUPPORTED_LOCALES as readonly string[]).includes(locale);
-}
-
-export function isNonDefaultLocale(locale: string): locale is (typeof NON_DEFAULT_LOCALES)[number] {
-  return (NON_DEFAULT_LOCALES as readonly string[]).includes(locale);
-}
-
-/**
- * Strips any supported locale prefix from a pathname.
- * e.g. "/tr/tools/json/json-formatter" -> "/tools/json/json-formatter"
- * e.g. "/tr" -> "/"
- * e.g. "/tools/json/json-formatter" -> "/tools/json/json-formatter"
- */
-export function stripLocaleFromPath(pathname: string): { cleanPath: string; locale: Language } {
-  const segments = pathname.split('/').filter(Boolean);
-  if (segments.length > 0 && isValidLocale(segments[0])) {
-    const locale = segments[0];
-    const remaining = '/' + segments.slice(1).join('/');
-    return {
-      cleanPath: remaining === '' ? '/' : remaining,
-      locale,
-    };
+/** First candidate that is non-empty and not an English duplicate. */
+function pickTranslated(
+  candidates: readonly (string | undefined)[],
+  english: Set<string>,
+): string | undefined {
+  for (const candidate of candidates) {
+    const normalized = normalizeToolText(candidate);
+    if (normalized && !english.has(normalized)) return candidate;
   }
+  return undefined;
+}
+
+function resolveTranslatedToolText(
+  toolSlug: string,
+  locale: Language,
+  extraEnglish: { name?: string; description?: string } = {},
+): { name?: string; description?: string } {
+  const reference = getEnglishToolReference(toolSlug);
+  let englishNames = reference.names;
+  let englishDescriptions = reference.descriptions;
+  const extraName = normalizeToolText(extraEnglish.name);
+  const extraDesc = normalizeToolText(extraEnglish.description);
+  if (extraName && !englishNames.has(extraName)) {
+    englishNames = new Set(englishNames).add(extraName);
+  }
+  if (extraDesc && !englishDescriptions.has(extraDesc)) {
+    englishDescriptions = new Set(englishDescriptions).add(extraDesc);
+  }
+
+  const enhanced = enhancedTools[toolSlug];
+  const localeTranslations = translations[locale];
   return {
-    cleanPath: pathname.startsWith('/') ? pathname : `/${pathname}`,
-    locale: DEFAULT_LOCALE,
+    name: pickTranslated(
+      [enhanced?.name?.[locale], localeTranslations?.[`toolName.${toolSlug}`]],
+      englishNames,
+    ),
+    description: pickTranslated(
+      [enhanced?.description?.[locale], localeTranslations?.[`toolDesc.${toolSlug}`]],
+      englishDescriptions,
+    ),
   };
-}
-
-/**
- * Returns the localized URL path for a given target locale.
- * e.g. getLocalizedPath('/tools/json/json-formatter', 'tr') -> '/tr/tools/json/json-formatter'
- * e.g. getLocalizedPath('/tr/tools/json/json-formatter', 'en') -> '/tools/json/json-formatter'
- * e.g. getLocalizedPath('/', 'de') -> '/de'
- */
-export function getLocalizedPath(href: string, targetLocale: Language = DEFAULT_LOCALE): string {
-  if (!href.startsWith('/') || href.startsWith('//')) return href;
-
-  const suffixIndex = href.search(/[?#]/);
-  const pathname = suffixIndex < 0 ? href : href.slice(0, suffixIndex);
-  const suffix = suffixIndex < 0 ? '' : href.slice(suffixIndex);
-  const { cleanPath } = stripLocaleFromPath(pathname);
-  if (
-    cleanPath !== '/' &&
-    !cleanPath.startsWith('/tools/') &&
-    cleanPath !== '/collections' &&
-    !cleanPath.startsWith('/collections/') &&
-    cleanPath !== '/for' &&
-    !cleanPath.startsWith('/for/') &&
-    !LOCALIZED_PAGES.some((page) => cleanPath === `/${page}`)
-  )
-    return href;
-
-  const normalizedClean = cleanPath === '/' ? '' : cleanPath;
-
-  if (targetLocale === DEFAULT_LOCALE) {
-    return `${cleanPath}${suffix}`;
-  }
-
-  return `/${targetLocale}${normalizedClean}${suffix}`;
-}
-
-/**
- * Generates hreflang alternate URLs for SEO metadata.
- */
-export function getHreflangAlternates(
-  pathname: string,
-  siteUrl: string = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app',
-): Record<string, string> {
-  const { cleanPath } = stripLocaleFromPath(pathname);
-  const normalizedClean = cleanPath === '/' ? '' : cleanPath;
-  const baseUrl = siteUrl.replace(/\/$/, '');
-
-  const defaultUrl = `${baseUrl}${cleanPath}`;
-  const alternates: Record<string, string> = {
-    'x-default': defaultUrl,
-  };
-
-  for (const locale of SUPPORTED_LOCALES) {
-    alternates[locale] =
-      locale === DEFAULT_LOCALE ? defaultUrl : `${baseUrl}/${locale}${normalizedClean}`;
-  }
-
-  return alternates;
 }
 
 /**
  * Resolves localized name and description for a tool.
+ *
+ * A real translation always wins over an English placeholder: an
+ * `enhancedTools` entry whose locale value merely repeats the English text does
+ * not shadow a genuine `toolName.<slug>` / `toolDesc.<slug>` translation.
  */
 export function getLocalizedToolMeta(
   toolSlug: string,
@@ -148,17 +112,63 @@ export function getLocalizedToolMeta(
     return { name: defaultName, description: defaultDescription };
   }
 
-  const enhanced = enhancedTools[toolSlug];
-  const translatedName =
-    enhanced?.name?.[locale] || translations[locale]?.[`toolName.${toolSlug}`] || defaultName;
-
-  const translatedDesc =
-    enhanced?.description?.[locale] ||
-    translations[locale]?.[`toolDesc.${toolSlug}`] ||
-    defaultDescription;
+  const translated = resolveTranslatedToolText(toolSlug, locale, {
+    name: defaultName,
+    description: defaultDescription,
+  });
 
   return {
-    name: translatedName,
-    description: translatedDesc,
+    name: translated.name ?? defaultName,
+    description: translated.description ?? defaultDescription,
   };
+}
+
+const toolLocaleIndexableCache = new Map<string, boolean>();
+
+/**
+ * Whether the `locale` version of a tool page carries a real translation and
+ * should therefore be indexed (self-canonical, in hreflang and the sitemap).
+ *
+ * Always true for the default locale. For other locales both the localized
+ * name and description must exist and differ (trimmed, case-insensitive) from
+ * every English value of that tool. Untranslated pages stay reachable but are
+ * served as `noindex, follow` with the English URL as canonical.
+ */
+export function isToolLocaleIndexable(toolSlug: string, locale: Language): boolean {
+  if (locale === DEFAULT_LOCALE) return true;
+
+  const cacheKey = `${locale}:${toolSlug}`;
+  const cached = toolLocaleIndexableCache.get(cacheKey);
+  if (cached !== undefined) return cached;
+
+  const translated = resolveTranslatedToolText(toolSlug, locale);
+  const indexable = Boolean(translated.name && translated.description);
+  toolLocaleIndexableCache.set(cacheKey, indexable);
+  return indexable;
+}
+
+/**
+ * hreflang alternates for a tool page: x-default + en, plus only those
+ * non-default locales for which {@link isToolLocaleIndexable} is true.
+ */
+export function getToolHreflangAlternates(
+  toolSlug: string,
+  canonicalCategory: string,
+  siteUrl: string = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app',
+): Record<string, string> {
+  const baseUrl = siteUrl.replace(/\/$/, '');
+  const toolPath = `/tools/${canonicalCategory}/${toolSlug}`;
+  const defaultUrl = `${baseUrl}${toolPath}`;
+  const alternates: Record<string, string> = {
+    'x-default': defaultUrl,
+    [DEFAULT_LOCALE]: defaultUrl,
+  };
+
+  for (const locale of NON_DEFAULT_LOCALES) {
+    if (isToolLocaleIndexable(toolSlug, locale)) {
+      alternates[locale] = `${baseUrl}/${locale}${toolPath}`;
+    }
+  }
+
+  return alternates;
 }

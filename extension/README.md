@@ -1,6 +1,6 @@
 # DevsTools Browser Extension (Manifest V3)
 
-Official browser extension for **DevsTools** ([devstools.app](https://devstools.app)) — 500 free, privacy-first developer tools running 100% client-side in your browser.
+Official browser extension for **DevsTools** ([devstools.app](https://devstools.app)) — 490 free, privacy-first developer tools running 100% client-side in your browser.
 
 Includes Chromium and Firefox packages. Chrome, Edge, Brave and Opera use the Chromium package; Firefox 142+ uses its own background-script manifest.
 
@@ -9,7 +9,7 @@ Includes Chromium and Firefox packages. Chrome, Edge, Brave and Opera use the Ch
 ## 🌟 Key Features
 
 1. 🔍 **Omnibox Direct Search (`dt <query>`)**:
-   - Type `dt` followed by space in your browser address bar to search 500 tools instantly.
+   - Type `dt` followed by space in your browser address bar to search 490 tools instantly.
    - Press `Enter` to launch directly into the desired tool.
 
 2. ⚡ **Offline Quick Tools (Zero-Latency in Popup)**:

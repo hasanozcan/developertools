@@ -870,7 +870,7 @@ test('batch 367-382 high-traffic tools interactive and rendering validation', as
   await expect(page.locator('body')).toContainText('Prisma Schema (.prisma)');
 
   // 16. Docker Compose to Kubernetes YAML
-  await page.goto('/tools/converters/docker-compose-to-kubernetes');
+  await page.goto('/tools/converters/docker-compose-to-k8s');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Docker Compose to Kubernetes');
   await expect(page.locator('body')).toContainText('Kubernetes Deployment & Service YAML');
 });
@@ -913,10 +913,10 @@ test('batch 383-398 high-traffic tools interactive and rendering validation', as
   await expect(page.getByRole('heading', { level: 1 })).toContainText('CSS Multi-Layer 3D Box Shadow');
   await expect(page.locator('body')).toContainText('Elevation Level');
 
-  // 8. HTML Entities to Unicode
-  await page.goto('/tools/encoding/html-entities-converter');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('HTML Entities to Unicode');
-  await expect(page.locator('body')).toContainText('Encode to HTML Entities');
+  // 8. HTML Entity Encoder/Decoder (also covers the former HTML Entities Converter)
+  await page.goto('/tools/encoding/html-entity');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('HTML Entity Encoder');
+  await expect(page.locator('body')).toContainText('Encode');
 
   // 9. Structured XML System Prompt Builder
   await page.goto('/tools/generators/system-prompt-xml-builder');
@@ -929,9 +929,9 @@ test('batch 383-398 high-traffic tools interactive and rendering validation', as
   await expect(page.locator('body')).toContainText('Estimated Prompt Tokens');
 
   // 11. JSON to Python Pydantic V2
-  await page.goto('/tools/converters/json-to-python-pydantic');
+  await page.goto('/tools/converters/json-to-pydantic');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('JSON to Python Pydantic');
-  await expect(page.locator('body')).toContainText('Root Model Name');
+  await expect(page.locator('body')).toContainText('Root model name');
 
   // 12. JSON to SQL INSERT Generator
   await page.goto('/tools/converters/json-to-sql-insert');
@@ -960,7 +960,7 @@ test('batch 383-398 high-traffic tools interactive and rendering validation', as
 });
 test('batch 399-426 converters render correctly without browser errors', async ({ page }) => {
   const converters = [
-    'json-to-rust-types', 'json-to-golang-models', 'sql-to-go-gorm', 'sql-to-python-sqlalchemy',
+    'json-to-rust-serde', 'json-to-go-struct', 'sql-to-go-gorm', 'sql-to-python-sqlalchemy',
     'postman-to-openapi', 'openapi-to-postman', 'protobuf-to-json-schema', 'json-schema-to-protobuf',
     'yaml-to-terraform-hcl', 'terraform-hcl-to-yaml', 'csv-to-geojson', 'geojson-to-csv',
     'json-to-typescript-type-guards', 'typescript-interface-to-zod', 'zod-to-typescript-type',
@@ -1032,8 +1032,8 @@ test('batch 477-500 crypto encoding json text render correctly without browser e
     { cat: 'encoding', slug: 'bcd-binary-coded-decimal-converter' },
     { cat: 'encoding', slug: 'ieee754-hex-float-converter' },
     { cat: 'encoding', slug: 'rot47-encoder-decoder' },
-    { cat: 'encoding', slug: 'url-safe-base64-converter' },
-    { cat: 'json', slug: 'json-path-query-tester' },
+    { cat: 'encoding', slug: 'base64url-encoder' },
+    { cat: 'json', slug: 'jsonpath-tester' },
     { cat: 'json', slug: 'json-key-sorter' },
     { cat: 'json', slug: 'json-array-splitter-chunker' },
     { cat: 'text', slug: 'text-prefix-suffix-appender' },

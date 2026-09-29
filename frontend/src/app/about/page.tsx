@@ -4,19 +4,22 @@ import { Code2, Shield, Zap, Heart } from 'lucide-react';
 import Breadcrumb from '@/components/common/Breadcrumb';
 import Link from '@/components/common/LocalizedLink';
 import { useLanguage } from '@/context/LanguageContext';
-import Script from 'next/script';
+import { getLocalizedPath } from '@/lib/localeRouting';
+import { serializeJsonForHtmlScript } from '@/lib/scriptSafeJson';
 
 export default function AboutPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
+  const pageUrl = `${siteUrl}${getLocalizedPath('/about', language)}`;
 
   // WebPage structured data for About page
   const webPageStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    '@id': `${siteUrl}/about#webpage`,
-    url: `${siteUrl}/about`,
-    name: 'About DevsTools - Free Online Developer Tools',
+    '@id': `${pageUrl}#webpage`,
+    url: pageUrl,
+    inLanguage: language,
+    name: language === 'en' ? 'About DevsTools - Free Online Developer Tools' : `${t('about.title')} – DevsTools`,
     description: 'Learn about DevsTools - Free online developer tools with privacy-first approach, lightning-fast performance, and forever free access.',
     isPartOf: {
       '@type': 'WebSite',
@@ -30,10 +33,9 @@ export default function AboutPage() {
 
   return (
     <>
-      <Script
-        id="about-webpage-structured-data"
+      <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageStructuredData) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonForHtmlScript(webPageStructuredData) }}
       />
       <div className="w-full px-4 sm:px-8 lg:px-16 xl:px-24 py-8">
       <Breadcrumb

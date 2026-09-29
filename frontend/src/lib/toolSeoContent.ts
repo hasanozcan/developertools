@@ -1,4 +1,6 @@
 import { getToolManifest } from '@/lib/toolManifest';
+import { getToolSeoCopy } from '@/lib/toolSeoCopy';
+import type { Language } from '@/translations';
 
 export interface ToolSeoSection {
   heading: string;
@@ -19,48 +21,65 @@ export function buildSupplementalToolSections(
   toolSlug: string,
   toolName: string,
   description: string,
+  locale: Language = 'en',
 ): ToolSeoSection[] {
+  const copy = getToolSeoCopy(locale);
   const manifest = getToolManifest(toolSlug);
-  const inputTypes = manifest?.inputTypes.map(humanizeDataType) ?? ['text'];
-  const outputTypes = manifest?.outputTypes.map(humanizeDataType) ?? ['text'];
+  const labelDataType = (value: string) => copy.dataTypeLabels[value] ?? humanizeDataType(value);
+  const inputTypes = (manifest?.inputTypes ?? ['text']).map(labelDataType);
+  const outputTypes = (manifest?.outputTypes ?? ['text']).map(labelDataType);
   const workflowTargets = manifest?.workflowTargets ?? [];
 
   const bullets = [
-    `Start with ${inputTypes.join(' or ')} input that represents the real value you want to inspect, convert, or generate.`,
-    `Use ${toolName} to ${description.replace(/\.$/, '').toLowerCase()}.`,
-    `Review the ${outputTypes.join(' or ')} result before copying it into application code, configuration, documentation, or a test fixture.`,
+    copy.startBullet(inputTypes.join(copy.or)),
+    copy.useBullet(toolName, description),
+    copy.reviewBullet(outputTypes.join(copy.or)),
   ];
 
   if (workflowTargets.length > 0) {
-    bullets.push(
-      `Continue the workflow with one of the suggested next-step tools; compatible output can be transferred directly when the current tool publishes a result.`,
-    );
+    bullets.push(copy.continueBullet);
   }
 
   return [
     {
-      heading: `Example workflow with ${toolName}`,
-      paragraphs: [
-        `A practical way to use ${toolName} is to begin with a small representative sample, verify the output, and then repeat the same workflow with production-sized input. This makes formatting, conversion, or validation problems easier to isolate before the result is reused elsewhere.`,
-      ],
+      heading: copy.exampleHeading(toolName),
+      paragraphs: [copy.exampleParagraph(toolName)],
       bullets,
     },
   ];
 }
 
-export function buildSupplementalToolFaqs(toolName: string): ToolFaq[] {
+export function buildSupplementalToolFaqs(toolName: string, locale: Language = 'en'): ToolFaq[] {
+  const copy = getToolSeoCopy(locale);
   return [
-    {
-      question: `Do I need to install anything to use ${toolName}?`,
-      answer:
-        'No. The interactive developer tool runs in the browser, so you can use it without installing a CLI or desktop application.',
-    },
-    {
-      question: `What should I do with the result from ${toolName}?`,
-      answer:
-        'Review the generated or transformed output, then copy it into your code, configuration, request, test fixture, or a compatible next-step tool in the workflow.',
-    },
+    { question: copy.installQuestion(toolName), answer: copy.installAnswer },
+    { question: copy.resultQuestion(toolName), answer: copy.resultAnswer },
   ];
+}
+
+function normalizeCopy(value: string) {
+  return value.trim().replace(/\s+/g, ' ').toLowerCase();
+}
+
+/**
+ * Drops the auto-generated "What is {tool name}?" FAQ whose answer merely
+ * repeats the tool's meta description. Hand-written "What is …?" FAQs (for
+ * example "What is JSON?") and ones with a distinct answer are kept.
+ */
+export function removeTemplatedDefinitionFaq(
+  faqs: ToolFaq[],
+  toolName: string,
+  descriptions: string[],
+): ToolFaq[] {
+  const templatedQuestion = normalizeCopy(`What is ${toolName}?`);
+  const repeatedAnswers = new Set(descriptions.filter(Boolean).map(normalizeCopy));
+  return faqs.filter(
+    (faq) =>
+      !(
+        normalizeCopy(faq.question) === templatedQuestion &&
+        repeatedAnswers.has(normalizeCopy(faq.answer))
+      ),
+  );
 }
 
 export function mergeToolFaqs(existing: ToolFaq[], supplemental: ToolFaq[]): ToolFaq[] {

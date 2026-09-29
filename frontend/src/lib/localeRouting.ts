@@ -1,0 +1,142 @@
+import type { Language } from '@/translations';
+
+// Client-safe locale routing helpers. This module must stay free of runtime imports
+// (translations, enhancedTools, the tool catalog): client components import it, and
+// pulling the locale dictionaries in here would ship them in every page's JS.
+// Server-only tool-text helpers (getLocalizedToolMeta, isToolLocaleIndexable, ...)
+// live in `@/lib/i18nRouting`.
+
+export type { Language };
+
+export const SUPPORTED_LOCALES: readonly Language[] = [
+  'en',
+  'tr',
+  'de',
+  'es',
+  'fr',
+  'ru',
+  'zh',
+] as const;
+export const DEFAULT_LOCALE: Language = 'en';
+export const NON_DEFAULT_LOCALES: readonly Language[] = [
+  'tr',
+  'de',
+  'es',
+  'fr',
+  'ru',
+  'zh',
+] as const;
+export const LOCALIZED_PAGES = ['about', 'privacy', 'terms', 'contact'] as const;
+
+/**
+ * BCP 47 / Open Graph locale tags per supported language.
+ * e.g. getOpenGraphLocale('tr') -> 'tr_TR'
+ */
+export const OPEN_GRAPH_LOCALES: Record<Language, string> = {
+  en: 'en_US',
+  tr: 'tr_TR',
+  de: 'de_DE',
+  es: 'es_ES',
+  fr: 'fr_FR',
+  ru: 'ru_RU',
+  zh: 'zh_CN',
+} as const;
+
+export function getOpenGraphLocale(locale: Language): string {
+  return OPEN_GRAPH_LOCALES[locale] ?? OPEN_GRAPH_LOCALES.en;
+}
+
+export function getOpenGraphAlternateLocales(locale: Language): string[] {
+  const current = getOpenGraphLocale(locale);
+  return (Object.values(OPEN_GRAPH_LOCALES) as string[]).filter(
+    (candidate) => candidate !== current,
+  );
+}
+
+export function isValidLocale(locale: string): locale is Language {
+  return (SUPPORTED_LOCALES as readonly string[]).includes(locale);
+}
+
+export function isNonDefaultLocale(locale: string): locale is (typeof NON_DEFAULT_LOCALES)[number] {
+  return (NON_DEFAULT_LOCALES as readonly string[]).includes(locale);
+}
+
+/**
+ * Strips any supported locale prefix from a pathname.
+ * e.g. "/tr/tools/json/json-formatter" -> "/tools/json/json-formatter"
+ * e.g. "/tr" -> "/"
+ * e.g. "/tools/json/json-formatter" -> "/tools/json/json-formatter"
+ */
+export function stripLocaleFromPath(pathname: string): { cleanPath: string; locale: Language } {
+  const segments = pathname.split('/').filter(Boolean);
+  if (segments.length > 0 && isValidLocale(segments[0])) {
+    const locale = segments[0];
+    const remaining = '/' + segments.slice(1).join('/');
+    return {
+      cleanPath: remaining === '' ? '/' : remaining,
+      locale,
+    };
+  }
+  return {
+    cleanPath: pathname.startsWith('/') ? pathname : `/${pathname}`,
+    locale: DEFAULT_LOCALE,
+  };
+}
+
+/**
+ * Returns the localized URL path for a given target locale.
+ * e.g. getLocalizedPath('/tools/json/json-formatter', 'tr') -> '/tr/tools/json/json-formatter'
+ * e.g. getLocalizedPath('/tr/tools/json/json-formatter', 'en') -> '/tools/json/json-formatter'
+ * e.g. getLocalizedPath('/', 'de') -> '/de'
+ */
+export function getLocalizedPath(href: string, targetLocale: Language = DEFAULT_LOCALE): string {
+  if (!href.startsWith('/') || href.startsWith('//')) return href;
+
+  const suffixIndex = href.search(/[?#]/);
+  const pathname = suffixIndex < 0 ? href : href.slice(0, suffixIndex);
+  const suffix = suffixIndex < 0 ? '' : href.slice(suffixIndex);
+  const { cleanPath } = stripLocaleFromPath(pathname);
+  if (
+    cleanPath !== '/' &&
+    !cleanPath.startsWith('/tools/') &&
+    cleanPath !== '/collections' &&
+    !cleanPath.startsWith('/collections/') &&
+    cleanPath !== '/for' &&
+    !cleanPath.startsWith('/for/') &&
+    !LOCALIZED_PAGES.some((page) => cleanPath === `/${page}`)
+  )
+    return href;
+
+  const normalizedClean = cleanPath === '/' ? '' : cleanPath;
+
+  if (targetLocale === DEFAULT_LOCALE) {
+    return `${cleanPath}${suffix}`;
+  }
+
+  return `/${targetLocale}${normalizedClean}${suffix}`;
+}
+
+/**
+ * Generates hreflang alternate URLs for SEO metadata.
+ */
+export function getHreflangAlternates(
+  pathname: string,
+  siteUrl: string = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app',
+): Record<string, string> {
+  const { cleanPath } = stripLocaleFromPath(pathname);
+  const normalizedClean = cleanPath === '/' ? '' : cleanPath;
+  const baseUrl = siteUrl.replace(/\/$/, '');
+
+  const defaultUrl = `${baseUrl}${cleanPath}`;
+  const alternates: Record<string, string> = {
+    'x-default': defaultUrl,
+  };
+
+  for (const locale of SUPPORTED_LOCALES) {
+    alternates[locale] =
+      locale === DEFAULT_LOCALE ? defaultUrl : `${baseUrl}/${locale}${normalizedClean}`;
+  }
+
+  return alternates;
+}
+

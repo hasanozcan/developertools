@@ -1,4 +1,10 @@
-export function jsonToCsharp(jsonString: string, rootClassName = 'RootObject'): string {
+export type CsharpOutputStyle = 'class' | 'record';
+
+export function jsonToCsharp(
+  jsonString: string,
+  rootClassName = 'RootObject',
+  style: CsharpOutputStyle = 'class',
+): string {
   let parsed: unknown;
   try {
     parsed = JSON.parse(jsonString);
@@ -48,6 +54,15 @@ export function jsonToCsharp(jsonString: string, rootClassName = 'RootObject'): 
   ];
 
   for (const [className, props] of Object.entries(classes)) {
+    if (style === 'record') {
+      const params = Object.entries(props).map(
+        ([k, v]) => `    [property: JsonPropertyName("${k}")] ${v} ${toPascalCase(k)}`,
+      );
+      lines.push(`public record ${className}(`);
+      lines.push(params.join(',\n'));
+      lines.push(');\n');
+      continue;
+    }
     lines.push(`public class ${className}`);
     lines.push('{');
     for (const [k, v] of Object.entries(props)) {

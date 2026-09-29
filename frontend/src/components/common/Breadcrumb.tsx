@@ -1,5 +1,9 @@
+'use client';
+
 import Link from '@/components/common/LocalizedLink';
 import { ChevronRight } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
+import { getLocalizedPath } from '@/lib/localeRouting';
 
 interface BreadcrumbItem {
   name: string;
@@ -11,15 +15,22 @@ interface BreadcrumbProps {
 }
 
 export default function Breadcrumb({ items }: BreadcrumbProps) {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
+  const { t, language } = useLanguage();
+  const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app').replace(/\/$/, '');
+  // The home root is always labelled in the page language, even when a caller
+  // passes a hardcoded English "Home".
+  const localizedItems = items.map((item, index) =>
+    index === 0 && item.href === '/' ? { ...item, name: t('common.home') || item.name } : item,
+  );
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, index) => ({
+    itemListElement: localizedItems.map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
-      item: item.href ? `${baseUrl}${item.href}` : undefined,
+      // Same locale prefix the visible LocalizedLink applies (EN stays unprefixed).
+      item: item.href ? `${baseUrl}${getLocalizedPath(item.href, language)}` : undefined,
     })),
   };
 
@@ -30,11 +41,14 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <nav className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-6">
-        {items.map((item, index) => (
+        {localizedItems.map((item, index) => (
           <span key={index} className="flex items-center">
             {index > 0 && <ChevronRight className="w-4 h-4 mx-2" />}
             {item.href ? (
-              <Link href={item.href} className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+              <Link
+                href={item.href}
+                className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              >
                 {item.name}
               </Link>
             ) : (

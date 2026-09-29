@@ -5,10 +5,13 @@ import { fireEvent, render, screen, waitFor, within } from '@testing-library/rea
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import ContactPage from './page';
 
-const { trackProductEventMock } = vi.hoisted(() => ({ trackProductEventMock: vi.fn() }));
+const { trackProductEventMock, languageState } = vi.hoisted(() => ({
+  trackProductEventMock: vi.fn(),
+  languageState: { current: 'en' },
+}));
 
 vi.mock('@/context/LanguageContext', () => ({
-  useLanguage: () => ({ t: (key: string) => ({
+  useLanguage: () => ({ language: languageState.current, t: (key: string) => ({
     'contact.name': 'Name',
     'contact.email': 'Email',
     'contact.subject': 'Subject',
@@ -21,7 +24,37 @@ vi.mock('@/context/LanguageContext', () => ({
 vi.mock('@/lib/analytics', () => ({ trackProductEvent: trackProductEventMock }));
 vi.mock('@/lib/googleAds', () => ({ trackGoogleAdsConversion: vi.fn() }));
 vi.mock('@/components/common/Breadcrumb', () => ({ default: () => null }));
-vi.mock('next/script', () => ({ default: () => null }));
+
+function readJsonLd(container: HTMLElement) {
+  const script = container.querySelector('script[type="application/ld+json"]');
+  expect(script).not.toBeNull();
+  return JSON.parse(script?.textContent ?? '{}') as Record<string, unknown>;
+}
+
+describe('Contact page structured data', () => {
+  afterEach(() => {
+    languageState.current = 'en';
+  });
+
+  it('renders JSON-LD as a plain script so it is present in the prerendered HTML', () => {
+    const { container } = render(<ContactPage />);
+    const data = readJsonLd(container);
+
+    expect(data['@id']).toBe('https://devstools.app/contact#contactpage');
+    expect(data.url).toBe('https://devstools.app/contact');
+    expect(data.inLanguage).toBe('en');
+  });
+
+  it('uses the locale-prefixed URL and inLanguage on localized variants', () => {
+    languageState.current = 'tr';
+    const { container } = render(<ContactPage />);
+    const data = readJsonLd(container);
+
+    expect(data['@id']).toBe('https://devstools.app/tr/contact#contactpage');
+    expect(data.url).toBe('https://devstools.app/tr/contact');
+    expect(data.inLanguage).toBe('tr');
+  });
+});
 
 describe('Pro interest contact flow', () => {
   beforeEach(() => {

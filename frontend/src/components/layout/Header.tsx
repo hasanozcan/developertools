@@ -12,13 +12,15 @@ import LanguageSelector from '@/components/common/LanguageSelector';
 import CommandPalette from '@/components/layout/CommandPalette';
 import { toolCatalog } from '@/lib/api';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
-import { getLocalizedPath } from '@/lib/i18nRouting';
+import { getLocalizedPath } from '@/lib/localeRouting';
+import { prefetchToolIndex, useToolIndex } from '@/lib/toolIndexClient';
 import { trackToolEvent } from '@/lib/analytics';
 import { getToolManifest } from '@/lib/toolManifest';
 
 // Derive search coverage from the same catalog that powers the home page and API.
 const toolSlugs = toolCatalog.map((tool) => ({
   slug: tool.slug,
+  defaultName: tool.name,
   category: tool.categorySlug,
   keywords: [
     tool.slug.replace(/-/g, ' '),
@@ -175,15 +177,19 @@ export default function Header() {
     [t],
   );
 
+  // Localized tool names are not in the client dictionary: they come from the lazy
+  // current-locale index, loaded only once the favorites/search UI actually needs them.
+  const toolIndex = useToolIndex(language, showFavorites || searchOpen);
+
   // All tools with translated names for search
   const allTools = useMemo(
     () =>
       toolSlugs.map((tool) => ({
         ...tool,
         category: getCanonicalToolCategory(tool.slug, tool.category),
-        name: t(`toolName.${tool.slug}`),
+        name: toolIndex?.get(tool.slug)?.name || tool.defaultName,
       })),
-    [t],
+    [toolIndex],
   );
 
   const handleSelectTool = useCallback(
@@ -410,6 +416,8 @@ export default function Header() {
             {/* Search Trigger */}
             <button
               onClick={() => setCommandPaletteOpen(true)}
+              onPointerEnter={() => prefetchToolIndex(language)}
+              onFocus={() => prefetchToolIndex(language)}
               aria-label={t('search')}
               aria-controls="tool-search-results"
               aria-haspopup="dialog"

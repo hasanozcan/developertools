@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { ArrowRight, Copy, Check, GitBranch } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { buildToolPath } from '@/lib/toolRoutes';
-import { getLocalizedPath } from '@/lib/i18nRouting';
+import { getLocalizedPath } from '@/lib/localeRouting';
 import { getToolManifest, getWorkflowTargets } from '@/lib/toolManifest';
 import { trackToolEvent } from '@/lib/analytics';
 import {

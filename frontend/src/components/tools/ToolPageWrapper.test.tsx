@@ -5,9 +5,11 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import ToolPageWrapper from './ToolPageWrapper';
 
+let mockLanguage = 'en';
+
 vi.mock('@/context/LanguageContext', () => ({
   useLanguage: () => ({
-    language: 'en',
+    language: mockLanguage,
     t: (key: string) =>
       ({
         zenMode: 'Full Screen',
@@ -20,6 +22,10 @@ vi.mock('@/context/LanguageContext', () => ({
         'toolPage.continueWith': 'Continue with',
         'toolPage.sourcesAndReferences': 'Sources & references',
         'toolPage.primaryReferences': 'Primary references:',
+        // English placeholders, as the real dicts hold for tools whose
+        // translation lives only in enhancedTools.
+        'toolName.openapi-to-postman': 'OpenAPI to Postman Collection Generator',
+        'toolDesc.openapi-to-postman': 'Generate a Postman collection from OpenAPI.',
       })[key] || key,
   }),
 }));
@@ -40,21 +46,31 @@ vi.mock('@/components/common/PostToolAdBanner', () => ({
 }));
 vi.mock('@/components/common/LocalizedLink', () => ({
   default: ({ href, children, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
-    <a href={String(href)} {...props}>{children}</a>
+    <a href={String(href)} data-localized-link="true" {...props}>
+      {children}
+    </a>
   ),
 }));
 vi.mock('@/components/common/AdSense', () => ({
-  default: ({ slot, placement, format, responsive }: {
+  default: ({
+    slot,
+    placement,
+    format,
+    responsive,
+    immediate,
+  }: {
     slot: string;
     placement: string;
     format: string;
     responsive: boolean;
+    immediate?: boolean;
   }) => (
     <div
       data-testid={`ad-${placement}`}
       data-slot={slot}
       data-format={format}
       data-responsive={String(responsive)}
+      data-immediate={String(Boolean(immediate))}
     />
   ),
 }));
@@ -179,5 +195,140 @@ describe('ToolPageWrapper full screen ads', () => {
     await waitFor(() => expect(screen.getByTestId('ad-tool-zen-left')).toBeInTheDocument());
     expect(screen.queryByTestId('ad-tool-zen-bottom')).not.toBeInTheDocument();
     expect(screen.getByTestId('ad-tool-bottom')).toHaveAttribute('data-slot', '1234567890');
+  });
+});
+
+describe('ToolPageWrapper localization, layout stability, and sidebar ad loading', () => {
+  afterEach(() => {
+    mockLanguage = 'en';
+    vi.unstubAllGlobals();
+  });
+
+  function renderWithLinks() {
+    return render(
+      <ToolPageWrapper
+        toolSlug="json-formatter"
+        category="json"
+        categoryName="JSON"
+        defaultName="JSON Formatter"
+        defaultDescription="Format JSON"
+        faqs={[]}
+        sources={[]}
+        answerSections={[]}
+        relatedTools={[
+          {
+            name: 'JSON Validator',
+            description: 'Validate JSON',
+            href: '/tools/json/json-validator',
+          },
+        ]}
+        topicCollections={[
+          { name: 'JSON Development', description: 'JSON tools', href: '/collections/json' },
+        ]}
+      >
+        <div>Tool content</div>
+      </ToolPageWrapper>,
+    );
+  }
+
+  it('renders related tools through the locale-aware link component', () => {
+    renderWithLinks();
+    const relatedSection = document.querySelector('[data-related-tools="true"]')!;
+    const links = relatedSection.querySelectorAll('a[href="/tools/json/json-validator"]');
+    expect(links).toHaveLength(2);
+    links.forEach((link) => expect(link).toHaveAttribute('data-localized-link', 'true'));
+  });
+
+  it('localizes the topic collections heading', () => {
+    renderWithLinks();
+    expect(screen.getByRole('heading', { name: 'Topic collections' })).toBeInTheDocument();
+  });
+
+  it('uses the current language for the topic collections heading', () => {
+    mockLanguage = 'tr';
+    renderWithLinks();
+    expect(screen.getByRole('heading', { name: 'Konu koleksiyonları' })).toBeInTheDocument();
+    expect(screen.queryByText('Topic collections')).not.toBeInTheDocument();
+  });
+
+  it('reserves height for the client-only tool interface', () => {
+    renderWithLinks();
+    const slot = document.querySelector('[data-tool-interface="true"] [data-tool-slot="true"]');
+    expect(slot).toHaveStyle({ minHeight: '420px' });
+  });
+
+  it('loads the sidebar ad lazily when the viewport is below lg', () => {
+    vi.stubGlobal('matchMedia', (query: string) => ({
+      matches: false,
+      media: query,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    }));
+    renderWithLinks();
+    expect(screen.getByTestId('ad-tool-sidebar')).toHaveAttribute('data-immediate', 'false');
+  });
+
+  it('loads the sidebar ad immediately on lg+ viewports', () => {
+    vi.stubGlobal('matchMedia', (query: string) => ({
+      matches: query === '(min-width: 1024px)',
+      media: query,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    }));
+    renderWithLinks();
+    expect(screen.getByTestId('ad-tool-sidebar')).toHaveAttribute('data-immediate', 'true');
+  });
+});
+
+describe('ToolPageWrapper localized tool name', () => {
+  afterEach(() => {
+    mockLanguage = 'en';
+  });
+
+  function renderOpenApiToPostman(props: {
+    localizedName?: string;
+    localizedDescription?: string;
+  }) {
+    return render(
+      <ToolPageWrapper
+        toolSlug="openapi-to-postman"
+        category="converters"
+        categoryName="Converters"
+        defaultName="OpenAPI to Postman Collection Generator"
+        defaultDescription="Generate a Postman collection from OpenAPI."
+        faqs={[]}
+        sources={[]}
+        answerSections={[]}
+        relatedTools={[]}
+        topicCollections={[]}
+        {...props}
+      >
+        <div>Tool content</div>
+      </ToolPageWrapper>,
+    );
+  }
+
+  it('prefers the server-resolved localized name over an English dict placeholder', () => {
+    mockLanguage = 'tr';
+    renderOpenApiToPostman({
+      localizedName: 'OpenAPI to Postman Koleksiyonu Üretici',
+      localizedDescription: 'OpenAPI tanımından Postman koleksiyonu üretin.',
+    });
+
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
+      'OpenAPI to Postman Koleksiyonu Üretici',
+    );
+    expect(screen.getByText('OpenAPI tanımından Postman koleksiyonu üretin.')).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { name: 'How to use OpenAPI to Postman Koleksiyonu Üretici' }),
+    ).toBeInTheDocument();
+    expect(screen.queryByText('OpenAPI to Postman Collection Generator')).not.toBeInTheDocument();
+  });
+
+  it('keeps the translation-dict name when no localized name is passed (EN)', () => {
+    renderOpenApiToPostman({});
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
+      'OpenAPI to Postman Collection Generator',
+    );
   });
 });

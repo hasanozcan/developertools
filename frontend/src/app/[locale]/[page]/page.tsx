@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import AboutPage from '@/app/about/page';
-import PrivacyPage from '@/app/privacy/page';
-import TermsPage from '@/app/terms/page';
+import PrivacyPage from '@/app/(default)/privacy/page';
+import TermsPage from '@/app/(default)/terms/page';
 import ContactPage from '@/app/contact/page';
 import { translations } from '@/translations';
 import {

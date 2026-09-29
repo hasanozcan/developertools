@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useSyncExternalStore } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { useTheme } from '@/context/ThemeContext';
 import FavoriteButton from '@/components/common/FavoriteButton';
@@ -20,6 +20,33 @@ import {
   resolveAdSenseSlot,
   resolveDistinctAdSenseSlot,
 } from '@/lib/adsenseSlots';
+import { getToolSeoCopy } from '@/lib/toolSeoCopy';
+
+/** Matches Tailwind's `lg` breakpoint, where the sidebar sits beside the tool. */
+const DESKTOP_SIDEBAR_QUERY = '(min-width: 1024px)';
+
+/** Reserved height for the client-only tool UI so its mount doesn't shift the page. */
+export const DEFAULT_TOOL_INTERFACE_MIN_HEIGHT = 420;
+
+function subscribeToDesktopSidebar(onChange: () => void) {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+    return () => {};
+  }
+  const mediaQuery = window.matchMedia(DESKTOP_SIDEBAR_QUERY);
+  mediaQuery.addEventListener('change', onChange);
+  return () => mediaQuery.removeEventListener('change', onChange);
+}
+
+function getDesktopSidebarSnapshot() {
+  return (
+    typeof window.matchMedia === 'function' && window.matchMedia(DESKTOP_SIDEBAR_QUERY).matches
+  );
+}
+
+// The server cannot know the viewport; render the lazy (mobile-safe) variant.
+function getDesktopSidebarServerSnapshot() {
+  return false;
+}
 
 interface ToolPageWrapperProps {
   toolSlug: string;
@@ -27,12 +54,22 @@ interface ToolPageWrapperProps {
   categoryName: string;
   defaultName: string;
   defaultDescription: string;
+  /**
+   * Server-resolved localized name (non-default locales only). Wins over the
+   * `toolName.<slug>` dict entry, which may be an English placeholder when the
+   * real translation lives in enhancedTools.
+   */
+  localizedName?: string;
+  /** Server-resolved localized description; see {@link localizedName}. */
+  localizedDescription?: string;
   faqs: { question: string; answer: string }[];
   sources: { name: string; url: string }[];
   answerSections: { heading: string; paragraphs?: string[]; bullets?: string[] }[];
   relatedTools: { name: string; description: string; href: string }[];
   topicCollections: { name: string; description: string; href: string }[];
   howToUseSteps?: string[];
+  /** Minimum height (px) reserved for the tool UI before it mounts. */
+  interfaceMinHeight?: number;
   children: React.ReactNode;
 }
 
@@ -42,15 +79,30 @@ export default function ToolPageWrapper({
   categoryName,
   defaultName,
   defaultDescription,
+  localizedName,
+  localizedDescription,
   faqs,
   sources,
   answerSections,
   relatedTools,
   topicCollections,
   howToUseSteps: customHowToUseSteps,
+  interfaceMinHeight = DEFAULT_TOOL_INTERFACE_MIN_HEIGHT,
   children,
 }: ToolPageWrapperProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const seoCopy = getToolSeoCopy(language);
+  // Only request the sidebar ad eagerly when the sidebar is beside the tool;
+  // on smaller viewports it stacks at the bottom and should load lazily.
+  const isDesktopSidebar = useSyncExternalStore(
+    subscribeToDesktopSidebar,
+    getDesktopSidebarSnapshot,
+    getDesktopSidebarServerSnapshot,
+  );
+  const translateOr = (key: string, fallback: string) => {
+    const value = t(key);
+    return value && value !== key ? value : fallback;
+  };
   const { setTheme, resolvedTheme } = useTheme();
   const [isZenMode, setIsZenMode] = useState(false);
   const [zenAdSession, setZenAdSession] = useState(0);
@@ -110,15 +162,11 @@ export default function ToolPageWrapper({
     };
   }, [isZenMode]);
 
-  // Get translated tool name, fallback to default
-  const toolName =
-    t(`toolName.${toolSlug}`) !== `toolName.${toolSlug}` ? t(`toolName.${toolSlug}`) : defaultName;
-
-  // Get translated tool description, fallback to default
+  // Prefer the server-resolved localized text (matches <title> and JSON-LD),
+  // then the translation dict, then the default.
+  const toolName = localizedName || translateOr(`toolName.${toolSlug}`, defaultName);
   const toolDescription =
-    t(`toolDesc.${toolSlug}`) !== `toolDesc.${toolSlug}`
-      ? t(`toolDesc.${toolSlug}`)
-      : defaultDescription;
+    localizedDescription || translateOr(`toolDesc.${toolSlug}`, defaultDescription);
 
   // Get translated category name
   const translatedCategoryName =
@@ -210,7 +258,10 @@ export default function ToolPageWrapper({
           {answerSections.slice(0, 1).map((section) => renderAnswerSection(section, true))}
 
           {/* Tool Component */}
-          <div className="surface-card mb-8 rounded-3xl p-4 sm:p-7 relative" data-tool-interface="true">
+          <div
+            className="surface-card mb-8 rounded-3xl p-4 sm:p-7 relative"
+            data-tool-interface="true"
+          >
             {/* Tool Toolbar (Full Screen Toggle) */}
             <div className="flex flex-wrap items-center justify-between gap-2 mb-4 pb-2 border-b border-slate-100 dark:border-white/5">
               <WorkspaceControls toolSlug={toolSlug} />
@@ -229,7 +280,11 @@ export default function ToolPageWrapper({
                 </button>
               </div>
             </div>
-            {children}
+            {/* The tool UI is client-only; reserve its typical height so mounting it
+                doesn't push the content below (CLS). */}
+            <div data-tool-slot="true" style={{ minHeight: `${interfaceMinHeight}px` }}>
+              {children}
+            </div>
             <ToolWorkflowBar toolSlug={toolSlug} />
           </div>
 
@@ -244,7 +299,9 @@ export default function ToolPageWrapper({
               {/* Header Bar */}
               <div className="sticky top-0 z-20 flex items-center justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white/95 px-4 py-3 shadow-xl backdrop-blur-xl mb-4 dark:border-white/10 dark:bg-slate-900/90 w-full">
                 <div className="flex items-center gap-3">
-                  <span className="eyebrow py-0.5 px-2.5 text-[10px]">{translatedCategoryName}</span>
+                  <span className="eyebrow py-0.5 px-2.5 text-[10px]">
+                    {translatedCategoryName}
+                  </span>
                   <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight truncate">
                     {toolName}
                   </h2>
@@ -253,8 +310,16 @@ export default function ToolPageWrapper({
                   {/* Theme Toggle Button */}
                   <button
                     onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-                    title={resolvedTheme === 'dark' ? 'Light Mode' : 'Dark Mode'}
-                    aria-label={resolvedTheme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                    title={
+                      resolvedTheme === 'dark'
+                        ? translateOr('lightMode', 'Light Mode')
+                        : translateOr('darkMode', 'Dark Mode')
+                    }
+                    aria-label={
+                      resolvedTheme === 'dark'
+                        ? translateOr('lightMode', 'Light Mode')
+                        : translateOr('darkMode', 'Dark Mode')
+                    }
                     className="inline-flex items-center justify-center h-8 w-8 rounded-xl border border-slate-200/80 bg-white text-slate-700 shadow-sm transition hover:bg-slate-50 hover:border-slate-300 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
                   >
                     {resolvedTheme === 'dark' ? (
@@ -277,7 +342,9 @@ export default function ToolPageWrapper({
                     className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-lg shadow-indigo-600/30 transition hover:bg-indigo-500 hover:-translate-y-0.5"
                   >
                     <Minimize2 className="h-4 w-4" />
-                    <span className="hidden sm:inline">{t('exitZenMode') || 'Exit Full Screen'}</span>
+                    <span className="hidden sm:inline">
+                      {t('exitZenMode') || 'Exit Full Screen'}
+                    </span>
                   </button>
                 </div>
               </div>
@@ -353,19 +420,19 @@ export default function ToolPageWrapper({
               {relatedTools.map((relatedTool, index) => (
                 <span key={`reader-${relatedTool.href}`}>
                   {index > 0 ? ', ' : ''}
-                  <a
+                  <Link
                     href={relatedTool.href}
                     className="text-primary-600 dark:text-primary-400 hover:underline"
                   >
                     {relatedTool.name}
-                  </a>
+                  </Link>
                 </span>
               ))}
               .
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {relatedTools.map((relatedTool) => (
-                <a
+                <Link
                   key={relatedTool.href}
                   href={relatedTool.href}
                   className="interactive-card block rounded-2xl p-4"
@@ -376,7 +443,7 @@ export default function ToolPageWrapper({
                   <p className="text-sm text-gray-600 dark:text-gray-300">
                     {relatedTool.description}
                   </p>
-                </a>
+                </Link>
               ))}
             </div>
           </section>
@@ -384,7 +451,7 @@ export default function ToolPageWrapper({
           {topicCollections.length > 0 && (
             <section className="mb-8" data-topic-collections="true">
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-                Topic collections
+                {translateOr('toolPage.topicCollections', seoCopy.topicCollectionsHeading)}
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {topicCollections.map((collection) => (
@@ -479,7 +546,7 @@ export default function ToolPageWrapper({
             <AdSense
               slot={sidebarSlot}
               format="vertical"
-              immediate={true}
+              immediate={isDesktopSidebar}
               placement="tool-sidebar"
               className="min-h-[300px] rounded-lg"
             />

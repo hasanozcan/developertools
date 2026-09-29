@@ -1,6 +1,6 @@
 # DevsTools
 
-> 500 free, privacy-first online developer tools. Tool inputs and transformations run 100% client-side in the browser. No paywalls or mandatory signups.
+> 490 free, privacy-first online developer tools. Tool inputs and transformations run 100% client-side in the browser. No paywalls or mandatory signups.
 
 Site: https://devstools.app
 Sitemap: https://devstools.app/sitemap.xml

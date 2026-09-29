@@ -5,7 +5,7 @@ import { Flame } from 'lucide-react';
 import Link from '@/components/common/LocalizedLink';
 import { useLanguage } from '@/context/LanguageContext';
 import { findCatalogTool } from '@/lib/api';
-import { getLocalizedToolMeta } from '@/lib/i18nRouting';
+import { useToolIndex } from '@/lib/toolIndexClient';
 import { getLocalTrendingToolSlugs, TOOL_USAGE_UPDATED_EVENT } from '@/lib/toolPopularity';
 import { buildToolPath } from '@/lib/toolRoutes';
 
@@ -25,6 +25,9 @@ export default function TrendingTools() {
     [slugs],
   );
 
+  // English uses the catalog text directly; other locales use the lazy localized tool index.
+  const toolIndex = useToolIndex(language, language !== 'en' && tools.length >= 2);
+
   if (tools.length < 2) return null;
 
   return (
@@ -36,7 +39,11 @@ export default function TrendingTools() {
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {tools.map((tool) => {
           if (!tool) return null;
-          const meta = getLocalizedToolMeta(tool.slug, language, tool.name, tool.shortDescription || tool.name);
+          const localized = language === 'en' ? undefined : toolIndex?.get(tool.slug);
+          const meta = {
+            name: localized?.name || tool.name,
+            description: localized?.description || tool.shortDescription || tool.name,
+          };
           return (
             <Link key={tool.slug} href={buildToolPath(tool.categorySlug, tool.slug)} className="interactive-card rounded-2xl p-4">
               <h3 className="text-sm font-semibold text-slate-950 dark:text-white">{meta.name}</h3>

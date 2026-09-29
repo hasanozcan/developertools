@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import HomePageClient from '../page';
+import HomePageClient from '../(default)/HomePageClient';
 import {
   NON_DEFAULT_LOCALES,
   isNonDefaultLocale,
@@ -9,15 +9,22 @@ import {
   getOpenGraphLocale,
 } from '@/lib/i18nRouting';
 import type { Language } from '@/translations';
+import { getHomeHubs } from '@/lib/homeHubs';
+import { ToolTextProvider } from '@/context/LanguageContext';
+import { getToolTextMap } from '@/lib/toolText';
+import { toolCatalog } from '@/lib/api';
+
+// Same rounding as the root layout ("490+") so titles stay stable as tools are added.
+const toolCountLabel = `${Math.max(10, Math.floor(toolCatalog.length / 10) * 10)}+`;
 
 const titles: Record<Language, string> = {
-  en: 'DevsTools – 500 Free, Privacy-First Developer Tools',
-  tr: 'DevsTools – 500 Ücretsiz, Gizlilik Odaklı Geliştirici Araçları',
-  de: 'DevsTools – 500 kostenlose, datenschutzfreundliche Entwickler-Tools',
-  es: 'DevsTools – 500 herramientas gratuitas y privadas para desarrolladores',
-  fr: 'DevsTools – 500 outils gratuits et respectueux de la vie privée pour développeurs',
-  ru: 'DevsTools – 500 бесплатных инструментов для разработчиков',
-  zh: 'DevsTools – 500 款免费且注重隐私的在线开发者工具',
+  en: `DevsTools – ${toolCountLabel} Free, Privacy-First Developer Tools`,
+  tr: `DevsTools – ${toolCountLabel} Ücretsiz, Gizlilik Odaklı Geliştirici Araçları`,
+  de: `DevsTools – ${toolCountLabel} kostenlose, datenschutzfreundliche Entwickler-Tools`,
+  es: `DevsTools – ${toolCountLabel} herramientas gratuitas y privadas para desarrolladores`,
+  fr: `DevsTools – ${toolCountLabel} outils gratuits et respectueux de la vie privée pour développeurs`,
+  ru: `DevsTools – ${toolCountLabel} бесплатных инструментов для разработчиков`,
+  zh: `DevsTools – ${toolCountLabel} 款免费且注重隐私的在线开发者工具`,
 };
 
 const descriptions: Record<Language, string> = {
@@ -27,7 +34,7 @@ const descriptions: Record<Language, string> = {
   es: 'Herramientas de desarrollo rápidas, gratuitas y privadas que se ejecutan 100% en el navegador. Formateadores JSON, codificadores, convertidores y más.',
   fr: 'Outils en ligne rapides, gratuits et privés pour développeurs s’exécutant à 100 % côté client. Formateurs JSON, convertisseurs, encodeurs et plus.',
   ru: 'Быстрые, бесплатные и конфиденциальные онлайн-инструменты для разработчиков, работающие на 100% в браузере. JSON-форматеры, конвертеры и многое другое.',
-  zh: '在浏览器本地运行的快速、免费、注重隐私的在线开发者工具套件。包含 JSON 格式化、编码转换、代码生成等 500 款实用工具。',
+  zh: `在浏览器本地运行的快速、免费、注重隐私的在线开发者工具套件。包含 JSON 格式化、编码转换、代码生成等 ${toolCountLabel} 款实用工具。`,
 };
 
 interface PageProps {
@@ -88,5 +95,10 @@ export default async function LocalizedHomePage({ params }: PageProps) {
     notFound();
   }
 
-  return <HomePageClient />;
+  // Tool names/descriptions are not in the client dictionary; the tool grid gets them here.
+  return (
+    <ToolTextProvider text={getToolTextMap(locale as Language)}>
+      <HomePageClient hubs={getHomeHubs(locale as Language)} />
+    </ToolTextProvider>
+  );
 }

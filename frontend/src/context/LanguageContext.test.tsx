@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { usePathname, useRouter } from 'next/navigation';
-import { LanguageProvider, useLanguage } from './LanguageContext';
+import { LanguageProvider, ToolTextProvider, useLanguage } from './LanguageContext';
 import LocalizedLink from '@/components/common/LocalizedLink';
 
 function Navigation() {
@@ -67,5 +67,38 @@ describe('localized navigation', () => {
       </LanguageProvider>,
     );
     expect(useRouter().replace).toHaveBeenCalledWith('/tr/tools/crypto/sha256-hash#input=abc');
+  });
+});
+
+describe('dictionary and tool text', () => {
+  function Probe() {
+    const { t } = useLanguage();
+    return (
+      <>
+        <span data-testid="ui">{t('search')}</span>
+        <span data-testid="tool">{t('toolName.json-formatter')}</span>
+        <span data-testid="missing">{`[${t('toolName.not-in-client-dictionary')}]`}</span>
+      </>
+    );
+  }
+
+  it('resolves page-scoped tool names through ToolTextProvider only', () => {
+    vi.mocked(usePathname).mockReturnValue('/');
+    const { rerender } = render(
+      <LanguageProvider>
+        <Probe />
+      </LanguageProvider>,
+    );
+    expect(screen.getByTestId('missing')).toHaveTextContent('[]');
+
+    rerender(
+      <LanguageProvider>
+        <ToolTextProvider text={{ 'toolName.not-in-client-dictionary': 'Scoped name' }}>
+          <Probe />
+        </ToolTextProvider>
+      </LanguageProvider>,
+    );
+    expect(screen.getByTestId('missing')).toHaveTextContent('[Scoped name]');
+    expect(screen.getByTestId('ui').textContent).not.toBe('');
   });
 });

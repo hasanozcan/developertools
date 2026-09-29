@@ -1,0 +1,12378 @@
+// Per-tool page copy (titles, descriptions, FAQs, answer sections, how-to steps),
+// keyed by category then tool slug. Rendered by src/app/tools/[category]/[tool]/page.tsx.
+export interface ToolPageContent {
+  name: string;
+  metadataTitle?: string;
+  description: string;
+  longDescription: string;
+  keywords: string[];
+  faqs: { question: string; answer: string }[];
+  answerSections?: { heading: string; paragraphs?: string[]; bullets?: string[] }[];
+  howToUseSteps?: string[];
+}
+
+export const toolPageContent: Record<string, Record<string, ToolPageContent>> = {
+  json: {
+    'json-patch-generator': {
+      name: 'RFC 6902 JSON Patch Generator',
+      metadataTitle: 'JSON Patch Generator (RFC 6902) Online',
+      description: 'Generate standard RFC 6902 JSON patch differential operations between two objects.',
+      longDescription: 'Generate standard RFC 6902 JSON patch differential operations between two objects.',
+      keywords: ['json-patch-generator', 'json', 'developer tool'],
+      faqs: [
+        { question: 'What is RFC 6902 JSON Patch Generator?', answer: 'Generate standard RFC 6902 JSON patch differential operations between two objects.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'json-flatten-unflatten': {
+      name: 'JSON Deep Object Flattener',
+      metadataTitle: 'JSON Deep Object Flattener & Unflattener',
+      description: 'Flatten deeply nested JSON objects into single-level dot notation keys.',
+      longDescription: 'Flatten deeply nested JSON objects into single-level dot notation keys.',
+      keywords: ['json-flatten-unflatten', 'json', 'developer tool'],
+      faqs: [
+        { question: 'What is JSON Deep Object Flattener?', answer: 'Flatten deeply nested JSON objects into single-level dot notation keys.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'json-formatter': {
+      name: 'JSON Formatter',
+      metadataTitle: 'JSON Formatter & Validator Online',
+      description:
+        'Format, validate, beautify, minify, and recursively sort JSON in your browser. Get immediate syntax errors without uploading data.',
+      longDescription:
+        'Free online JSON formatter and minifier. Paste valid JSON to create consistently indented, readable output or a compact representation without changing the intended data.',
+      keywords: [
+        'json formatter',
+        'json beautifier',
+        'format json online',
+        'json pretty print',
+        'json minifier',
+      ],
+      faqs: [
+        {
+          question: 'What is JSON?',
+          answer:
+            'JSON (JavaScript Object Notation) is a lightweight data interchange format that is easy for humans to read and write, and easy for machines to parse and generate.',
+        },
+        {
+          question: 'How do I format JSON?',
+          answer:
+            'Paste valid JSON in the input field, choose the indentation and key-sorting options you need, then select Format JSON.',
+        },
+        {
+          question: 'Is my data safe?',
+          answer:
+            'Yes! All processing happens in your browser. Your data never leaves your computer.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the JSON Formatter does',
+          paragraphs: [
+            'A JSON formatter parses JSON text and serializes the resulting value with consistent whitespace. This tool can pretty-print with the selected indentation, minify the result, and optionally sort object keys recursively. RFC 8259 requires double-quoted object names and strings; comments, trailing commas, NaN, and Infinity are outside the JSON grammar. Formatting changes presentation, not the intended data meaning.',
+          ],
+        },
+        {
+          heading: 'Common uses and validation boundary',
+          paragraphs: [
+            'Use the formatter when you need to inspect or normalize JSON during development:',
+          ],
+          bullets: [
+            'Make a compact API response, webhook body, configuration, or log entry easier to read.',
+            'Minify valid JSON before copying it into a request, test fixture, or environment variable.',
+            'Sort keys for a more predictable manual comparison between two objects.',
+            'Expose parse errors caused by missing commas, mismatched brackets, or invalid quotation marks.',
+            'Treat a successful parse as a syntax check only. It does not apply JSON Schema, API contracts, required fields, domain types, or business rules.',
+          ],
+        },
+        {
+          heading: 'Worked formatting example',
+          paragraphs: [
+            'Input {"active":true,"user":{"id":42,"roles":["admin","editor"]}} becomes an indented object whose nested user value and roles array are visible at a glance. Minifying produces the compact form again. If the input contained a trailing comma, the browser parser would reject it instead of silently repairing the document.',
+          ],
+        },
+        {
+          heading: 'Limitations and privacy',
+          bullets: [
+            'Parsing uses JavaScript numbers, so integers beyond the reliably representable range can lose precision.',
+            'Duplicate object names may collapse during parsing; avoid parse-and-reserialize workflows when duplicate preservation matters.',
+            'Sorted output is convenient, but it is not a cryptographic JSON canonicalization format and should not be used to prepare signed data.',
+            'Processing runs in the browser. Sensitive JSON can still be exposed through clipboard history, browser extensions, screen sharing, or a shared device.',
+          ],
+        },
+      ],
+    },
+    'json-validator': {
+      name: 'JSON Validator',
+      metadataTitle: 'JSON Validator – Check & Fix JSON Online',
+      description:
+        'Validate JSON syntax online and find errors fast. See the parser message with its line and column, count objects, keys and depth, and copy formatted JSON.',
+      longDescription:
+        'Check whether text is valid JSON as you type, using the same JSON.parse that browsers and Node.js use. Valid documents get structure statistics and can be copied back with 2-space indentation.',
+      keywords: [
+        'json validator',
+        'validate json',
+        'json syntax checker',
+        'json lint',
+        'jsonlint online',
+        'check json online',
+        'json error finder',
+        'is my json valid',
+      ],
+      faqs: [
+        {
+          question: 'What does this tool check?',
+          answer:
+            'It checks JSON syntax as defined by RFC 8259: double-quoted keys and strings, commas between items, matching brackets and braces, valid numbers and escapes, and a single top-level value.',
+        },
+        {
+          question: 'What are common JSON errors?',
+          answer:
+            'Missing commas, trailing commas, single quotes instead of double quotes, unquoted property names, comments, unescaped line breaks inside strings, and missing closing brackets.',
+        },
+        {
+          question: 'Why does JSON with comments or trailing commas fail?',
+          answer:
+            'Standard JSON allows neither. Editors such as VS Code accept them in JSONC settings files, and JSON5 allows them too, but JSON.parse and most APIs reject them. Remove them before sending the data to a strict parser.',
+        },
+        {
+          question: 'Why does the error point to the wrong place?',
+          answer:
+            'Parsers report where they gave up, which is often just after the real mistake. A missing comma is flagged at the next key, and an unclosed string or bracket may only be detected at the end of the input.',
+        },
+        {
+          question: 'Does valid JSON mean it matches my API contract?',
+          answer:
+            'No. Syntax validation only proves the text parses. To check required fields, types, and allowed values, validate the document against a schema with the JSON Schema Validator.',
+        },
+        {
+          question: 'Is my data safe?',
+          answer:
+            'Yes. Validation runs in your browser with JSON.parse, and the JSON you paste is not uploaded.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What makes JSON valid',
+          paragraphs: [
+            'JSON is stricter than JavaScript object syntax. A document is a single value: an object, array, string, number, true, false, or null. Keys and strings must use double quotes, and only a small set of backslash escapes (such as \\n, \\t, \\" and \\uXXXX) is allowed inside strings. Numbers cannot have leading zeros, a leading +, or a trailing decimal point, and NaN and Infinity are not valid. Comments and trailing commas are not part of the standard, so JSONC and JSON5 files fail here even if your editor accepts them.',
+          ],
+        },
+        {
+          heading: 'Common JSON errors and how to fix them',
+          bullets: [
+            'Trailing comma: {"a": 1,} - delete the comma after the last item.',
+            "Single quotes: {'a': 'b'} - replace them with double quotes.",
+            'Unquoted keys: {a: 1} - quote every key: {"a": 1}.',
+            'Missing comma: {"a": 1 "b": 2} - the error usually points at "b", the start of the next item.',
+            'Literal line breaks or tabs inside a string - write them as \\n or \\t.',
+            'Language literals: True, None, undefined, and NaN are not JSON values; use true, null, or a string.',
+          ],
+        },
+        {
+          heading: 'Reading the error position',
+          paragraphs: [
+            "The error text comes from your browser's JSON parser, so the wording differs between Chrome, Firefox, and Safari. When the message includes a character position, the validator converts it to a line and column. Look at that spot and just before it: parsers fail at the first character that cannot continue a valid document, which is often one token after the actual mistake.",
+          ],
+        },
+        {
+          heading: 'Statistics and parser limits',
+          paragraphs: [
+            'For valid JSON the tool counts objects, arrays, strings, numbers, booleans, nulls, and total keys, and reports the maximum nesting depth. These figures help spot unexpectedly deep payloads or type drift, such as numbers arriving as strings. Two JSON.parse behaviors are worth knowing: duplicate keys are accepted and the last value wins, and numbers are read as 64-bit floats, so integers larger than 2^53 - 1 lose precision in the parsed value and in the formatted copy.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste JSON into the editor. With Auto-validate on, it is checked as you type.',
+        'Read the result: a valid badge with statistics, or the parser error with its line and column.',
+        'Fix the problem at or just before the reported position, then check again.',
+        'Once the JSON is valid, use Copy formatted JSON to copy it with 2-space indentation.',
+      ],
+    },
+    'json-schema-validator': {
+      name: 'JSON Schema Validator',
+      metadataTitle: 'JSON Schema Validator Online (Ajv Errors)',
+      description:
+        'Validate a JSON document against a Draft 7-compatible JSON Schema locally in your browser with detailed Ajv error paths.',
+      longDescription:
+        'Free online JSON Schema validator powered by Ajv. Check required properties, types, formats, ranges, nested structures, and additional-property rules without uploading your document.',
+      keywords: [
+        'json schema validator',
+        'validate json schema',
+        'ajv validator',
+        'json contract checker',
+        'draft 7 json schema',
+      ],
+      faqs: [
+        {
+          question: 'How is this different from the JSON Validator?',
+          answer:
+            'JSON Validator checks whether text is valid JSON syntax. JSON Schema Validator also checks the parsed value against rules such as required properties, types, ranges, and nested structures.',
+        },
+        {
+          question: 'Which JSON Schema version does this tool support?',
+          answer:
+            'The tool uses Ajv v8 with its default Draft 7-compatible validator. Unknown extension keywords are ignored with a visible warning, while schemas requiring another meta-schema may need draft-specific configuration.',
+        },
+        {
+          question: 'Is my JSON uploaded?',
+          answer:
+            'No. Parsing, schema compilation, and validation run in your browser. Avoid sensitive data on shared devices because clipboard history and browser extensions can still expose it.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What JSON Schema validation checks',
+          paragraphs: [
+            'JSON syntax validation only proves that text can be parsed. JSON Schema validation applies a contract to the parsed value. It can require properties, constrain value types and ranges, reject unexpected fields, and validate nested arrays or objects. The result includes the instance path, schema path, keyword, and message for every detected rule failure.',
+          ],
+        },
+        {
+          heading: 'How to use the validator',
+          bullets: [
+            'Paste the JSON value you want to test into the document editor.',
+            'Paste a Draft 7-compatible JSON Schema into the schema editor.',
+            'Select Validate to compile the schema and report all matching errors.',
+            'Use instance paths to locate bad document values and schema paths to locate the rule that rejected them.',
+          ],
+        },
+        {
+          heading: 'Limits and privacy',
+          paragraphs: [
+            'A valid result means the current document satisfies every rule recognized from the supplied schema; it does not prove the schema expresses every business rule. Unknown extension keywords are ignored with a visible warning. External schemas are not fetched automatically, and schemas targeting unsupported drafts or remote references can require application-specific configuration. Both document and schema are parsed with JavaScript numbers, so integers outside the safe integer range can lose precision.',
+          ],
+        },
+      ],
+    },
+    'json-csv': {
+      name: 'JSON to CSV Converter',
+      metadataTitle: 'JSON to CSV Converter Online',
+      description:
+        'Convert JSON arrays to CSV or CSV to JSON in your browser. Flatten nested objects into dot-notation columns, pick a delimiter, preview rows and download.',
+      longDescription:
+        'Turn an array of JSON objects into spreadsheet-ready CSV, or parse CSV with quoted fields back into JSON objects. Choose comma, semicolon, tab, or pipe delimiters and control how nested objects are written.',
+      keywords: [
+        'json to csv',
+        'csv to json',
+        'convert json to csv online',
+        'json to csv converter',
+        'csv to json converter',
+        'nested json to csv',
+        'json to tsv',
+        'json array to csv',
+      ],
+      faqs: [
+        {
+          question: 'What formats are supported?',
+          answer:
+            'JSON arrays of objects on one side, and delimited text on the other: comma-separated CSV, semicolon-separated CSV, tab-separated TSV, or pipe-separated values.',
+        },
+        {
+          question: 'How are nested objects handled?',
+          answer:
+            'With Nested Handling set to Flatten, nested objects become dot-notation columns such as address.city and arrays are written as JSON text. JSON String writes each nested object or array as JSON text in a single top-level column.',
+        },
+        {
+          question: 'Can I convert a single JSON object to CSV?',
+          answer:
+            'Wrap it in square brackets first, for example [{"id": 1}]. The converter expects a non-empty array, where each object becomes one row.',
+        },
+        {
+          question: 'Why are all values strings after converting CSV to JSON?',
+          answer:
+            'CSV has no data types, so every cell is returned as a string ("30", not 30) to avoid guessing wrong about values such as ZIP codes or IDs with leading zeros. Convert the fields you need in your own code.',
+        },
+        {
+          question: 'Why does Excel show garbled accented characters?',
+          answer:
+            'The downloaded file is UTF-8 without a byte order mark, and some Excel versions assume a legacy encoding when you double-click a CSV. Import it through Data > From Text/CSV and choose UTF-8 instead.',
+        },
+        {
+          question: 'Is my data uploaded?',
+          answer:
+            'No. Parsing and conversion run in your browser, and the download is generated locally.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What JSON shape converts to CSV',
+          paragraphs: [
+            'CSV is a flat table, so the input must be a JSON array of objects, for example [{"id": 1, "name": "Ada"}, {"id": 2, "name": "Linus"}]. Each object becomes a row. The header row is the union of all keys in order of first appearance, so an object with a missing key gets an empty cell instead of shifting the other columns, and null values are also written as empty cells. Input that is not a non-empty array is rejected, and an array of plain values such as [1, 2, 3] has no keys to turn into columns.',
+          ],
+        },
+        {
+          heading: 'Handling nested objects and arrays',
+          bullets: [
+            'Flatten (default): {"address": {"city": "Paris"}} becomes an address.city column. Arrays are written as JSON text in one cell, for example ["a","b"].',
+            'JSON String: keeps only top-level columns and writes each nested object or array as JSON text in its cell.',
+            'Expand: also keeps top-level columns but does not serialize nested objects, so they appear as [object Object]. Use Flatten or JSON String when your data is nested.',
+            'Quoting: fields that contain the delimiter, a double quote, or a line break are wrapped in double quotes, and embedded quotes are doubled (""), as RFC 4180 describes.',
+          ],
+        },
+        {
+          heading: 'Converting CSV back to JSON',
+          paragraphs: [
+            'The CSV parser handles quoted fields, doubled quotes, and line breaks inside quoted values, and accepts both LF and CRLF line endings. With First Row is Headers enabled, the header cells become property names; otherwise the keys are column1, column2, and so on. Blank lines are skipped, missing cells become empty strings, and cells beyond the header width are dropped. Dotted headers such as address.city are not rebuilt into nested objects, and every value stays a string, so post-process the result if you need numbers, booleans, or nesting.',
+          ],
+        },
+        {
+          heading: 'Choosing a delimiter',
+          paragraphs: [
+            'Use a comma for most tools and APIs. Use a semicolon when the file will be opened in spreadsheet software set to a locale that uses a comma as the decimal separator, a tab when you want TSV that pastes cleanly into spreadsheets, or a pipe when values often contain commas. Use the same delimiter setting when converting the file back.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose JSON to CSV or CSV to JSON. Switching direction clears the input.',
+        'Paste your data or load the sample, then pick a delimiter and set the header option.',
+        'For nested JSON, choose Flatten or JSON String under Nested Handling.',
+        'Select Convert, check the preview, then copy the result or download it as data.csv or data.json.',
+      ],
+    },
+    'json-to-typescript': {
+      name: 'JSON to TypeScript',
+      metadataTitle: 'JSON to TypeScript Interface Generator',
+      description:
+        'Convert JSON to TypeScript interfaces or type aliases in your browser. Handles nested objects, arrays, nulls and mixed-type unions, with optional export.',
+      longDescription:
+        'Paste a JSON sample and generate TypeScript interfaces or type aliases from its structure. Options cover optional properties, export keywords, extracted nested types, union detection for mixed arrays, and JSDoc comments.',
+      keywords: [
+        'json to typescript',
+        'json to ts',
+        'json to typescript interface',
+        'generate typescript types from json',
+        'typescript interface generator',
+        'json to type alias',
+        'convert json to typescript online',
+      ],
+      faqs: [
+        {
+          question: 'What is the difference between interface and type?',
+          answer:
+            'Both describe object shapes. Interfaces can be extended with extends and merged across declarations, while type aliases can also express unions, intersections, and mapped types. For plain API models either works, so follow your codebase convention.',
+        },
+        {
+          question: 'How are arrays handled?',
+          answer:
+            'Arrays of one type become string[], number[], and so on. Mixed arrays become unions such as (string | null)[]. For arrays of objects, the keys of all items are merged into one element type, and an empty array becomes unknown[].',
+        },
+        {
+          question: 'Why is a property typed as null or unknown[]?',
+          answer:
+            'The sample did not contain enough information. A null value can only be typed as null, and an empty array has no element to inspect. Replace these with the real types, for example string | null or Order[].',
+        },
+        {
+          question: 'Do the generated types validate data at runtime?',
+          answer:
+            'No. TypeScript types are erased when the code is compiled, so they cannot reject a bad API response. Pair them with a runtime validator such as Zod, or with JSON Schema validation, for untrusted input.',
+        },
+        {
+          question: 'How do I use the generated interface?',
+          answer:
+            'Save it in a .ts file, import it, and annotate the parsed data, for example const user = (await response.json()) as Root; The cast documents the expected shape but does not check it.',
+        },
+        {
+          question: 'Is my JSON uploaded?',
+          answer:
+            'No. The JSON is parsed and converted in your browser, and the generated types are not sent anywhere.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How types are inferred from a JSON sample',
+          paragraphs: [
+            'The converter parses your JSON and maps each value to a TypeScript type: strings to string, numbers to number (JSON has no separate integer type), true and false to boolean, and null to null. Objects become interfaces or type aliases, and arrays become their element type followed by []. For example, {"id": 1, "tags": ["a", "b"], "owner": null} produces id: number; tags: string[]; owner: null;. Keys that are not valid identifiers, such as "first-name", are quoted in the output.',
+          ],
+        },
+        {
+          heading: 'Options and what they change',
+          bullets: [
+            'Root Type Name sets the name of the top-level type, converted to PascalCase.',
+            'Use Interface switches between interface declarations and type aliases.',
+            'Make Properties Optional adds ? to every property.',
+            'Add Export Keyword prefixes each declaration with export.',
+            'Extract Nested creates a named interface for each nested object and for objects inside arrays (orders becomes OrdersItem[]) instead of inline object types.',
+            'Detect Unions writes mixed arrays as unions such as (string | null)[].',
+            'JSDoc Comments adds a comment above each property; with Extract Nested enabled the comments include example values.',
+          ],
+        },
+        {
+          heading: 'Limits of inferring types from one sample',
+          paragraphs: [
+            'A single JSON document shows what one response looked like, not every shape an API can return. Review these cases before relying on the output:',
+          ],
+          bullets: [
+            'Values that are null in the sample are typed as null only. With Extract Nested enabled they are also marked optional.',
+            'For arrays of objects, the first value seen for each key decides its type, and keys that appear in only some items are not marked optional unless you enable Make Properties Optional.',
+            'With Extract Nested enabled, ISO date strings such as 2024-01-15 or 2024-01-15T00:00:00Z are typed as Date. JSON.parse returns strings, so change these to string unless your code converts them.',
+            'Numeric strings stay string and large integers stay number; the generator does not guess bigint or branded ID types.',
+            'Properties keep the order of the sample, and an object with no keys becomes {} with interfaces or Record<string, unknown> with type aliases.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste a representative JSON object or array into the input, or load the sample.',
+        'Set the root type name and choose options such as Use Interface, Extract Nested, and Make Properties Optional.',
+        'Select Convert to TypeScript.',
+        'Review null, empty-array, and date-like fields, then copy the types into a .ts file.',
+      ],
+    },
+    'yaml-json': {
+      name: 'YAML ↔ JSON Converter',
+      metadataTitle: 'YAML to JSON Converter & Validator Online',
+      description:
+        'Convert YAML to JSON or JSON to YAML in your browser. Resolves anchors, aliases and merge keys, reports parse errors by line and column, and keeps key order.',
+      longDescription:
+        'Switch between YAML to JSON and JSON to YAML for Kubernetes manifests, CI pipelines, and configuration files. Parsing uses js-yaml with YAML 1.1 compatibility, and output can use 2- or 4-space indentation.',
+      keywords: [
+        'yaml to json',
+        'json to yaml',
+        'yaml json converter',
+        'convert yaml to json online',
+        'kubernetes yaml to json',
+        'yaml parser online',
+        'yaml syntax checker',
+      ],
+      faqs: [
+        {
+          question: 'What is YAML?',
+          answer:
+            "YAML (YAML Ain't Markup Language) is a human-readable data serialization format that uses indentation instead of braces. It is common in configuration files for Kubernetes, Docker Compose, GitHub Actions, and Ansible.",
+        },
+        {
+          question: 'When should I use YAML vs JSON?',
+          answer:
+            'YAML is easier to read and edit by hand and supports comments, which suits configuration files. JSON is simpler to parse, has no indentation rules, and is supported everywhere, which suits APIs and data interchange.',
+        },
+        {
+          question: 'Which YAML compatibility mode is used?',
+          answer:
+            'Conversion uses the js-yaml YAML 1.1 compatibility schema so anchors, aliases, merge keys, explicit tags, and typed scalars work as shown in the sample. YAML 1.1 can interpret some plain scalars differently from YAML 1.2.',
+        },
+        {
+          question: 'Why did yes, no, or NO turn into true or false?',
+          answer:
+            'Under YAML 1.1, unquoted yes, no, on, and off are booleans. Quote the value, for example country: "NO", when it must stay a string.',
+        },
+        {
+          question: 'Can I convert a multi-document YAML file?',
+          answer:
+            'Not in one pass. This converter reads a single document and reports an error when it finds --- separators with more content. Split the file and convert each document separately.',
+        },
+        {
+          question: 'Are YAML comments preserved?',
+          answer:
+            'No. JSON has no comment syntax, so comments are dropped when converting to JSON and cannot be restored when converting back to YAML.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How YAML maps to JSON',
+          paragraphs: [
+            'YAML mappings become JSON objects, sequences become arrays, and scalars become strings, numbers, booleans, or null. Comments are discarded, and anchors (&name), aliases (*name), and merge keys (<<: *defaults) are expanded into full copies, so the JSON can be longer than the YAML. Converting JSON to YAML produces plain block-style YAML: keys keep their original order, long strings are not wrapped, and repeated objects are written out in full instead of as anchors.',
+          ],
+        },
+        {
+          heading: 'YAML 1.1 values that are not strings',
+          paragraphs: [
+            'The YAML 1.1 schema matches many existing configuration parsers, but it types some unquoted values in ways that surprise people:',
+          ],
+          bullets: [
+            'yes, no, on, and off become true or false. This is the classic Norway problem, where country: NO turns into false.',
+            'Numbers with a leading zero such as 010 are read as octal (8), and 0x1F as hexadecimal (31).',
+            'Colon-separated digits such as 22:22 are read as base-60 numbers (1342), which can break port mappings and times.',
+            'version: 1.10 becomes the number 1.1, and dates such as 2024-01-01 become timestamps (2024-01-01T00:00:00.000Z).',
+          ],
+        },
+        {
+          heading: 'Quoting and common parse errors',
+          bullets: [
+            'Quote any value that must stay text: version: "1.10", port: "22:22", country: "NO". JSON to YAML output quotes such strings automatically.',
+            'Tabs are not allowed for indentation. The error message shows the line and column, for example (2:1).',
+            'A bad indentation of a mapping entry error usually means one key is indented by a different number of spaces than its siblings.',
+            'Plain values that start with *, &, !, %, @ or a backtick have special meaning in YAML and must be quoted.',
+            'JSON to YAML needs strict JSON: trailing commas, comments, and single-quoted strings are rejected.',
+          ],
+        },
+        {
+          heading: 'Checking Kubernetes and CI files',
+          paragraphs: [
+            'Kubernetes manifests, Docker Compose files, and GitHub Actions workflows are written in YAML, while tools such as kubectl get -o json output and jq work with JSON. Converting a file to JSON is a quick way to see exactly how a parser typed each value, for example whether a port became a number or a version stayed a string, before a deployment fails on it. When converting back to YAML, re-add any comments you need by hand.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose YAML to JSON or JSON to YAML. Switching direction clears both editors.',
+        'Paste your YAML or JSON, or load the Kubernetes sample.',
+        'Pick 2- or 4-space indentation and run the conversion.',
+        'Fix any reported parse error, then copy the output, or use the swap button to convert it back and compare.',
+      ],
+    },
+    'json-pointer': {
+      name: 'JSON Pointer Evaluator',
+      metadataTitle: 'JSON Pointer Evaluator Online (RFC 6901)',
+      description:
+        'Evaluate RFC 6901 JSON Pointer paths against a JSON document in your browser, including escaped slash and tilde member names.',
+      longDescription:
+        'Free online JSON Pointer evaluator. Resolve an empty pointer or slash-separated reference tokens against JSON objects and arrays without uploading the document.',
+      keywords: ['json pointer', 'rfc 6901', 'json path evaluator', 'json reference token'],
+      faqs: [
+        {
+          question: 'Is JSON Pointer the same as JSONPath?',
+          answer:
+            'No. JSON Pointer is the compact RFC 6901 syntax for identifying one value. JSONPath is a separate query language with filters, wildcards, and other selection features.',
+        },
+        {
+          question: 'How do I reference a slash or tilde in a key?',
+          answer:
+            'Encode a tilde as ~0 and a slash as ~1 inside each reference token. For example, /a~1b selects the object member named a/b.',
+        },
+        {
+          question: 'What does an empty pointer select?',
+          answer: 'The empty JSON Pointer selects the complete JSON document.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the JSON Pointer evaluator does',
+          paragraphs: [
+            'JSON Pointer identifies one value by walking slash-separated reference tokens through a JSON document. Object tokens match member names exactly, while array tokens use zero-based indexes. The evaluator reports a missing member, invalid escape, invalid array index, or attempt to traverse through a primitive instead of silently returning the wrong value.',
+          ],
+        },
+        {
+          heading: 'Syntax and boundaries',
+          bullets: [
+            'Use an empty string for the document root and / for an object member whose name is empty.',
+            'Encode ~ as ~0 and / as ~1 inside a token; decoding happens in that order as RFC 6901 requires.',
+            'Array indexes are canonical non-negative decimal integers. The special - token is useful for JSON Patch append operations but does not identify an existing value.',
+            'The tool evaluates JSON Pointer syntax only; it does not implement JSONPath filters, JSON Patch operations, URI fragment decoding, or schema validation.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste or edit a valid JSON document.',
+        'Enter an empty pointer or an RFC 6901 pointer beginning with /.',
+        'Review the resolved value or the precise path error.',
+        'Copy the selected JSON value when needed.',
+      ],
+    },
+    'jsonpath-tester': {
+      name: 'JSONPath Tester',
+      metadataTitle: 'JSONPath Tester Online (RFC 9535)',
+      description:
+        'Test JSONPath queries against JSON in your browser with child selectors, array indexes, wildcards, slices, and recursive descent.',
+      longDescription:
+        'Free online JSONPath tester for selecting one or more values from a JSON document. Inspect each matched value and its normalized path without uploading the input or evaluating scripts.',
+      keywords: [
+        'jsonpath tester',
+        'jsonpath online',
+        'json path evaluator',
+        'rfc 9535',
+        'query json online',
+        'json path query tester',
+        'jsonpath evaluator',
+        'jsonpath query online',
+        'extract values from json',
+      ],
+      faqs: [
+        {
+          question: 'How is JSONPath different from JSON Pointer?',
+          answer:
+            'JSON Pointer identifies one exact value with slash-separated tokens. JSONPath is a query language that can select multiple values with wildcards, slices, and recursive descent.',
+        },
+        {
+          question: 'Does this tester support filter expressions?',
+          answer:
+            'No. It intentionally supports a safe RFC 9535 core subset and rejects filters or script expressions instead of evaluating code. Use child names, indexes, wildcards, slices, or recursive descent.',
+        },
+        {
+          question: 'Is the JSON document uploaded?',
+          answer:
+            'No. JSON parsing and path evaluation run in your browser. Clipboard history, extensions, page scripts, and shared devices can still expose sensitive input.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the JSONPath tester selects',
+          paragraphs: [
+            'A JSONPath query starts at $ and walks object members or array elements. A singular path such as $.store.book[0].title selects one value, while wildcards, slices, and recursive descent can produce an ordered list of matches. Each result includes the selected value and a normalized path back to its location in the input document.',
+          ],
+        },
+        {
+          heading: 'Supported syntax and safety boundary',
+          bullets: [
+            "Use .name or ['name'] for object members and [0] or [-1] for array indexes.",
+            'Use .* or [*] for child wildcards, [start:end:step] for array slices, and ..name or ..* for recursive descent.',
+            'Filter selectors, embedded JavaScript, functions, and shell-like expressions are rejected; the tool never evaluates query text as code.',
+            'The tester validates JSON syntax before querying. It does not apply JSON Schema or prove that selected values satisfy an API contract.',
+          ],
+        },
+        {
+          heading: 'JSONPath result interpretation',
+          paragraphs: [
+            'Zero matches means the valid query did not select a value in the current document; it is different from selecting a JSON null. Wildcards and recursive descent can return many values, and duplicate values at different locations remain separate matches because their normalized paths differ.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste or edit a valid JSON document.',
+        'Enter an RFC 9535-style path beginning with $.',
+        'Review every matched path and value, or correct the reported syntax error.',
+        'Copy the result list when you need it for debugging or tests.',
+      ],
+    },
+    'json-to-zod': {
+      name: 'JSON to Zod Schema',
+      metadataTitle: 'JSON to Zod Schema Generator Online',
+      description:
+        'Convert JSON samples to Zod object, array, union, and format-aware schemas with an optional inferred TypeScript type, entirely in your browser.',
+      longDescription:
+        'Free online JSON to Zod generator. Paste a representative JSON value and produce a readable Zod schema plus an optional z.infer TypeScript type without uploading the sample.',
+      keywords: [
+        'json to zod',
+        'zod schema generator',
+        'json to zod schema',
+        'generate zod from json',
+        'typescript validation schema',
+      ],
+      faqs: [
+        {
+          question: 'Can one JSON sample describe every valid payload?',
+          answer:
+            'No. The generator can infer only the values and shapes present in the sample. Review required versus optional fields, business constraints, enums, defaults, refinements, and transformations against the real API contract.',
+        },
+        {
+          question: 'How are arrays and missing object properties handled?',
+          answer:
+            'Array element types are merged. Objects found in the same array share a combined shape, and a property missing from any sample object becomes optional. Mixed primitive arrays become Zod unions, while empty arrays use z.unknown() elements.',
+        },
+        {
+          question: 'Is my JSON uploaded?',
+          answer:
+            'No. JSON parsing and schema generation run in your browser. Sensitive data can still be exposed through clipboard history, browser extensions, screen sharing, or a shared device, so use sanitized examples when possible.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the JSON to Zod generator produces',
+          paragraphs: [
+            'The generator parses one JSON value and maps strings, numbers, integers, booleans, nulls, arrays, and objects to Zod expressions. The root name is normalized into a TypeScript-safe schema identifier. When inferred types are enabled, the output also includes a z.infer alias so the runtime validator and compile-time type come from the same schema.',
+          ],
+        },
+        {
+          heading: 'Inference rules worth reviewing',
+          bullets: [
+            'Integers become z.number().int(), while values containing a fractional part become z.number().',
+            'Mixed array samples become unions. Arrays of objects merge observed keys and mark keys missing from any sample as optional.',
+            'Optional format inference recognizes representative UUID, ISO date-time, email, and HTTP(S) URL strings with Zod string checks.',
+            'Strict object mode appends .strict() so unknown keys are rejected instead of silently stripped by the generated object schemas.',
+            'Empty arrays cannot reveal an element type and therefore become z.array(z.unknown()).',
+          ],
+        },
+        {
+          heading: 'Sample inference is a starting point, not a contract',
+          paragraphs: [
+            'A sample cannot prove minimum lengths, numeric ranges, permitted enum values, cross-field rules, defaults, coercion behavior, or whether a field that happened to be present is always required. Compare the result with API documentation and real edge cases, then add Zod refinements and tests before accepting untrusted input. The tool generates source text only; it does not execute the schema or install Zod in your project.',
+          ],
+        },
+        {
+          heading: 'Privacy and input limits',
+          paragraphs: [
+            'Generation is local and deterministic for the same options and input. Deeply nested input is capped to keep the browser responsive. Avoid pasting production tokens or personal data even into local tools when a sanitized payload can describe the same structure.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste a representative valid JSON object, array, or primitive value.',
+        'Choose the schema name and whether to infer common string formats, use strict objects, and include a TypeScript alias.',
+        'Generate the Zod source and review unions, optional fields, unknown arrays, and inferred formats.',
+        'Copy the result, install the appropriate Zod version in your project, and add contract-specific constraints and tests.',
+      ],
+    },
+    'json-diff-patch': {
+      name: 'JSON Diff & Patch Generator',
+      metadataTitle: 'JSON Diff & JSON Patch Generator Online',
+      description:
+        'Compare two JSON values, generate deterministic RFC 6902 add, remove, and replace operations, then edit and apply any JSON Patch locally.',
+      longDescription:
+        'Free local JSON Diff and Patch tool. Generate an RFC 6902 patch from source and target JSON, inspect escaped JSON Pointer paths, and apply add, remove, replace, move, copy, or test operations.',
+      keywords: [
+        'json diff',
+        'json patch generator',
+        'rfc 6902',
+        'apply json patch',
+        'json compare online',
+      ],
+      faqs: [
+        {
+          question: 'Which JSON Patch operations are supported?',
+          answer:
+            'The applicator supports add, remove, replace, move, copy, and test. Generated patches use deterministic add, remove, and replace operations; changed arrays are replaced as one value instead of attempting an unstable element-by-element diff.',
+        },
+        {
+          question: 'How are slash and tilde characters represented in paths?',
+          answer:
+            'JSON Patch paths use RFC 6901 JSON Pointer. A slash inside an object key becomes ~1 and a tilde becomes ~0, so a key named a/b is addressed as /a~1b.',
+        },
+        {
+          question: 'Does applying a patch change the source editor?',
+          answer:
+            'No. The source JSON is cloned before operations run, and the result is shown separately. Removing the complete document root is rejected because the tool always returns a valid JSON value.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How the JSON diff becomes a patch',
+          paragraphs: [
+            'Object keys are compared in sorted order so the same input produces the same operation sequence. Missing keys become remove operations, new keys become add operations, and changed primitive or array values become replace operations. Nested objects are traversed recursively, while every emitted path is escaped as an RFC 6901 JSON Pointer.',
+          ],
+        },
+        {
+          heading: 'Patch application and failure behavior',
+          bullets: [
+            'Array indexes are validated strictly, and the special - token appends only during add operations.',
+            'Replace, remove, move, copy, and test require their source paths to exist; failures identify the operation number.',
+            'Move rejects placing a value inside one of its own descendants and applies array index changes in operation order.',
+            'Test uses structural JSON equality rather than object identity or serialized key order.',
+            'Special object names such as __proto__ are created as own data properties without changing object prototypes.',
+          ],
+        },
+        {
+          heading: 'Determinism, privacy, and review',
+          paragraphs: [
+            'Generation and application run entirely in this browser. The generated diff is intentionally predictable rather than guaranteed minimal, especially for arrays. Review operation order, array replacement cost, concurrent document versions, and application authorization before using a patch against persistent data or an API.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste valid source and target JSON values, or load the sample.',
+        'Generate the deterministic patch and inspect each JSON Pointer path.',
+        'Edit or paste any supported RFC 6902 operation sequence if needed.',
+        'Apply the patch to the source and compare the separate result with the intended target.',
+      ],
+    },
+    'json-to-models': {
+      name: 'JSON to Multi-Language Models',
+      metadataTitle: 'JSON to Go, Python, Rust & C# Models Online',
+      description:
+        'Convert JSON data into idiomatic Go structs, Python Pydantic v2 models, Rust Serde structs, C# records, and Kotlin data classes locally.',
+      longDescription:
+        'Free online JSON to Multi-Language Struct and Model Generator. Generate typed models for Go, Python, Rust, C#, and Kotlin with JSON tags, optional fields, and nested structures without uploading data.',
+      keywords: [
+        'json to go',
+        'json to pydantic',
+        'json to rust serde',
+        'json to csharp',
+        'json to model generator',
+      ],
+      faqs: [
+        {
+          question: 'Which programming languages are supported?',
+          answer:
+            'The generator currently supports Go (Golang structs with JSON tags), Python (Pydantic v2 BaseModels), Rust (Serde structs), C# (Records with JsonPropertyName), and Kotlin (Data classes).',
+        },
+        {
+          question: 'How are nested objects and arrays handled?',
+          answer:
+            'Nested JSON objects are extracted into separate, typed structs or classes with camel/pascal casing, and array item types are automatically inferred.',
+        },
+        {
+          question: 'Is my JSON data uploaded to any server?',
+          answer:
+            'No. The code generation runs 100% locally inside your browser using client-side JavaScript.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste a representative JSON payload or array of objects into the editor.',
+        'Select your target language (Go, Python, Rust, C#, or Kotlin).',
+        'Customize the Root Model Name if needed.',
+        'Copy the generated typed model definitions into your codebase.',
+      ],
+    },
+    'json-size-analyzer': {
+      name: 'JSON Size & Memory Analyzer',
+      metadataTitle: 'JSON Size & Memory Analyzer Online',
+      description:
+        'Analyze JSON payload byte size, nesting depth, object distribution, array length, and minification savings in real-time.',
+      longDescription:
+        'Free online JSON Size and Memory Footprint Analyzer. Inspect large API responses, telemetry records, and config files to measure raw vs. minified payload size, maximum object depth, key count, and null field frequency.',
+      keywords: [
+        'json size analyzer',
+        'json memory footprint',
+        'json byte counter',
+        'json nesting depth',
+        'json payload size',
+      ],
+      faqs: [
+        {
+          question: 'How does this tool calculate JSON byte size?',
+          answer:
+            'It calculates the exact UTF-8 byte count of both formatted and minified JSON payloads using the browser TextEncoder API.',
+        },
+        {
+          question: 'What metrics are extracted?',
+          answer:
+            'Raw byte size, minified byte size, percentage reduction, total keys, nested object count, array count, max hierarchy depth, and null field counts.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your JSON payload into the input editor.',
+        'View instant metrics in the dashboard cards.',
+        'Inspect the depth and size breakdown to identify payload bloat.',
+      ],
+    },
+    'json-key-sorter': {
+      name: 'JSON Alphabetical Key Sorter',
+      metadataTitle: 'JSON Alphabetical Key Sorter Online',
+      description: 'Recursively sort all JSON object keys alphabetically for clean diffs and determinism.',
+      longDescription: 'Recursively sort all JSON object keys alphabetically for clean diffs and determinism. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['json key sorter', 'json', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is JSON Alphabetical Key Sorter?', answer: 'Recursively sort all JSON object keys alphabetically for clean diffs and determinism.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'json-array-splitter-chunker': {
+      name: 'JSON Large Array Batch Splitter',
+      metadataTitle: 'JSON Large Array Splitter & Chunker Online',
+      description: 'Split large JSON datasets and arrays into smaller batch chunks for API limits.',
+      longDescription: 'Split large JSON datasets and arrays into smaller batch chunks for API limits. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['json array splitter chunker', 'json', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is JSON Large Array Batch Splitter?', answer: 'Split large JSON datasets and arrays into smaller batch chunks for API limits.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+  },
+  encoding: {
+    'quoted-printable-encoder': {
+      name: 'Quoted-Printable MIME Encoder & Decoder',
+      metadataTitle: 'Quoted-Printable MIME Encoder & Decoder Online',
+      description: 'Encode and decode MIME Quoted-Printable (RFC 2045) text strings for email data.',
+      longDescription: 'Free online Quoted-Printable encoder and decoder. Convert text to RFC 2045 format for email transport and decode QP strings safely in your browser.',
+      keywords: ['quoted-printable', 'mime encoder', 'rfc 2045', 'email encoding'],
+      faqs: [
+        { question: 'What is Quoted-Printable encoding?', answer: 'Quoted-Printable is an encoding using printable ASCII characters (RFC 2045) designed for email transport of non-ASCII characters.' },
+        { question: 'Is my data secure?', answer: 'Yes, all encoding and decoding runs 100% locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Paste your text or quoted-printable string in the input box.',
+        'Choose Encode or Decode mode to process the content instantly.',
+        'Copy the result with one click.'
+      ]
+    },
+    'morse-code-audio-converter': {
+      name: 'Morse Code Text Encoder',
+      metadataTitle: 'Morse Code Text Encoder Online',
+      description: 'Convert alphanumeric text into International Morse Code.',
+      longDescription: 'Convert alphanumeric text into International Morse Code.',
+      keywords: ['morse-code-audio-converter', 'encoding', 'developer tool'],
+      faqs: [
+        { question: 'What is Morse Code Text Encoder?', answer: 'Convert alphanumeric text into International Morse Code.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'base64url-encoder': {
+      name: 'Base64URL Encoder & Decoder',
+      metadataTitle: 'Base64URL Encoder, Decoder & Base64 Converter Online',
+      description: 'Encode and decode URL-safe Base64 without padding, or convert between standard Base64 and Base64url.',
+      longDescription: 'Free online Base64URL encoder and decoder. Encode text as unpadded Base64url, decode it back to UTF-8, or convert an existing standard Base64 string to URL-safe Base64url and back, all in your browser.',
+      keywords: ['base64url-encoder', 'encoding', 'developer tool', 'url safe base64 converter', 'base64 to base64url', 'base64url to base64', 'base64url decode', 'base64url encode online'],
+      faqs: [
+        { question: 'What is Base64URL Encoder & Decoder?', answer: 'Encode and decode URL-safe Base64 without padding characters.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' },
+        { question: 'How does Base64url differ from standard Base64?', answer: 'Base64url replaces + with - and / with _ so the value can sit safely in URLs, filenames, and JWT segments, and it usually omits the = padding.' },
+        { question: 'Can I convert an existing Base64 string instead of encoding text?', answer: 'Yes. Use the Base64 to Base64url mode to swap the alphabet and strip padding, or Base64url to Base64 to restore + and / and the = padding. The bytes are not re-encoded.' },
+      ],
+      howToUseSteps: [
+        'Choose a mode: text to Base64url, Base64url to text, Base64 to Base64url, or Base64url to Base64.',
+        'Paste your input; the result updates as you type.',
+        'Copy the result, or fix the reported error if the input is not valid Base64url.',
+      ]
+    },
+    'base58-encoder': {
+      name: 'Base58 Encoder & Decoder (Bitcoin / Solana / IPFS)',
+      metadataTitle: 'Base58 Encoder & Decoder (Bitcoin / Solana / IPFS)',
+      description: 'Encode and decode plain text and raw bytes to Base58 and Base58Check formats.',
+      longDescription: 'Free online Base58 Encoder & Decoder (Bitcoin / Solana / IPFS). Fast, accurate, client-side processing with instant export options.',
+      keywords: ['base58-encoder', 'base58 encoder & decoder (bitcoin / solana / ipfs)', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Base58 Encoder & Decoder (Bitcoin / Solana / IPFS)?',
+          answer: 'Encode and decode plain text and raw bytes to Base58 and Base58Check formats.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'hex-dump-viewer': {
+      name: 'Hex Dump Viewer & Binary Offset Inspector',
+      metadataTitle: 'Hex Dump Viewer & Binary Offset Inspector Online',
+      description: 'Format text strings into classic 16-byte offset hex dump and ASCII sidebar views.',
+      longDescription: 'Free online Hex Dump Viewer & Binary Offset Inspector. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['hex-dump-viewer', 'hex dump viewer & binary offset inspector', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Hex Dump Viewer & Binary Offset Inspector?',
+          answer: 'Format text strings into classic 16-byte offset hex dump and ASCII sidebar views.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    base64: {
+      name: 'Base64 Encoder/Decoder',
+      metadataTitle: 'Base64 Encode & Decode Online',
+      description:
+        'Encode text to Base64 or decode Base64 back to readable UTF-8 text in your browser. Handles emoji and accents, with a batch mode for one value per line.',
+      longDescription:
+        'Convert UTF-8 text to standard Base64 and back without uploading anything. Batch mode encodes or decodes each line as a separate value, and malformed input is reported as an error instead of producing garbled output.',
+      keywords: [
+        'base64 encode',
+        'base64 decode',
+        'base64 encoder',
+        'base64 decoder',
+        'base64 to text',
+        'text to base64',
+        'decode base64 online',
+        'base64 utf-8',
+      ],
+      faqs: [
+        {
+          question: 'Is Base64 encryption?',
+          answer:
+            'No. Base64 is a reversible encoding with no key, and anyone can decode it. Never use it to hide passwords, API tokens, or personal data; use real encryption such as AES-GCM for that.',
+        },
+        {
+          question: 'How do I decode Base64 in JavaScript?',
+          answer:
+            "In Node.js use Buffer.from(value, 'base64').toString('utf8'). In the browser, atob(value) returns a binary string, so for UTF-8 text use new TextDecoder().decode(Uint8Array.from(atob(value), (c) => c.charCodeAt(0))).",
+        },
+        {
+          question: 'How do I encode a string to Base64 in Python?',
+          answer:
+            "Use base64.b64encode('text'.encode('utf-8')).decode('ascii') after import base64. For the URL-safe alphabet, call base64.urlsafe_b64encode instead.",
+        },
+        {
+          question: 'Why does Base64 end with = or ==?',
+          answer:
+            'Base64 encodes 3 bytes as 4 characters. When the input length is not a multiple of 3, one or two = characters pad the output to a multiple of 4. They carry no data, and this decoder also accepts input with the padding removed entirely.',
+        },
+        {
+          question: 'Why does valid-looking Base64 fail to decode here?',
+          answer:
+            'Either the string contains characters outside the standard alphabet (often - or _ from Base64URL) or the decoded bytes are not UTF-8 text. Images, PDFs, and other binary data fail in this text decoder even when the Base64 itself is well formed; use Base64 to Image or Base64 to PDF instead.',
+        },
+        {
+          question: 'Is my data sent to a server?',
+          answer:
+            "No. Encoding and decoding use the browser's built-in btoa and atob functions on your device, and nothing you paste is uploaded.",
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How Base64 encoding works',
+          paragraphs: [
+            'Base64 reads the input three bytes (24 bits) at a time and splits them into four 6-bit groups. Each group selects one character from a 64-character alphabet: A-Z, a-z, 0-9, + and /. When the input length is not a multiple of three, the output is padded with one or two = signs so that its length stays a multiple of four. For example, Man encodes to TWFu, Ma to TWE=, and M to TQ==.',
+            'This tool converts your text to UTF-8 bytes before encoding, so characters outside ASCII round-trip correctly: é is two bytes and encodes to w6k=, while the emoji 😀 is four bytes and encodes to 8J+YgA==.',
+          ],
+        },
+        {
+          heading: 'Why Base64 output is about 33% larger',
+          paragraphs: [
+            'Every 3 input bytes become 4 output characters, so encoded data grows by roughly one third, plus up to two padding characters. A 30 KB payload becomes about 40 KB of Base64. That overhead is the price of representing arbitrary bytes with printable characters, which is why Base64 appears in JSON fields, data URIs, email attachments, and HTTP Basic authentication headers. It is not compression and it is not encryption.',
+          ],
+        },
+        {
+          heading: 'Base64 vs Base64URL',
+          paragraphs: [
+            'Standard Base64 (RFC 4648, section 4) uses + and / and pads with =. Base64URL (section 5) replaces + with - and / with _, and usually omits padding, so values can appear in URLs, file names, and JWT segments without percent-encoding. This tool uses the standard alphabet. To decode a Base64URL value here, replace - with + and _ with / first, or use the dedicated Base64URL encoder.',
+          ],
+        },
+        {
+          heading: 'Common decoding errors and fixes',
+          bullets: [
+            'Invalid characters: anything outside A-Z, a-z, 0-9, +, / and = is rejected. The usual culprits are - and _ from Base64URL, or quotes copied along with the value.',
+            'Wrong length: a value whose length leaves a remainder of 1 when divided by 4 cannot be valid, which usually means a character was lost while copying. Padding that is missing entirely is accepted.',
+            'Binary content: the decoded bytes must be valid UTF-8 text. Base64 for images, PDFs, or compressed data will fail here even though the encoding is valid.',
+            'Line breaks: spaces and line breaks inside a single value, such as MIME output wrapped at 76 characters, are ignored. In Batch Mode, however, every line is treated as a separate value.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose Encode to turn text into Base64, or Decode to turn Base64 back into text.',
+        'Paste your input. Turn on Batch Mode if you have several values, one per line.',
+        'Select the Encode or Decode button to run the conversion.',
+        'Copy the result, or use the swap button to move the output into the input and reverse the direction as a round-trip check.',
+      ],
+    },
+    'url-encoder': {
+      name: 'URL Encoder/Decoder',
+      metadataTitle: 'URL Encoder & Decoder Online',
+      description:
+        'Encode or decode URI components, complete URLs, or multiple lines locally in your browser with clear malformed-input errors.',
+      longDescription:
+        'Free online URL encoder and decoder. Percent-encode a query value or preserve URL separators in full-URL mode, then decode valid percent-encoded text without uploading it.',
+      keywords: ['url encoder', 'url decoder', 'urlencode online', 'percent encoding'],
+      faqs: [
+        {
+          question: 'What is URL encoding?',
+          answer:
+            'Percent-encoding represents a UTF-8 byte as % followed by two hexadecimal digits. It is used when a character cannot safely appear in a particular part of a URI.',
+        },
+        {
+          question: 'Should I encode a component or a full URL?',
+          answer:
+            'Use component mode for one query value, path segment, or fragment value because it also escapes separators such as &, =, /, and ?. Use full URL mode when the input already contains a complete URL and its structural separators must remain readable.',
+        },
+        {
+          question: 'Why does decoding sometimes fail?',
+          answer:
+            'A percent sign must be followed by two hexadecimal digits and the resulting byte sequence must be decodable. Incomplete sequences such as %2 or malformed UTF-8 are rejected instead of being silently changed.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the URL encoder changes',
+          paragraphs: [
+            'Component mode uses the browser encodeURIComponent and decodeURIComponent behavior. It is appropriate for an individual query value or path segment because reserved URL separators are encoded as data. Full URL mode uses encodeURI and decodeURI, which preserve structural characters such as :, /, ?, #, &, and = so an already assembled URL keeps its shape.',
+          ],
+        },
+        {
+          heading: 'Worked percent-encoding example',
+          paragraphs: [
+            'Encoding the component "hello world&role=admin" produces hello%20world%26role%3Dadmin. If the same text were inserted into a query string without component encoding, the ampersand and equals sign could be interpreted as new query parameters rather than part of the value. Batch mode applies the selected operation independently to every non-empty input line.',
+          ],
+        },
+        {
+          heading: 'Boundaries and privacy',
+          bullets: [
+            'This is URI percent-encoding, not application/x-www-form-urlencoded serialization; form encoders commonly represent spaces with + and apply field-level rules.',
+            'Decoding does not validate whether the result is a safe, reachable, or trusted URL. Validate schemes, hosts, and redirect destinations separately.',
+            'Do not repeatedly encode an already encoded value unless double encoding is intentional; % can become %25.',
+            'Conversion runs in the browser. Clipboard history, extensions, shared devices, and any destination where you paste the result remain separate exposure paths.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose Encode or Decode.',
+        'Select Component for one URL value or Full URL for an already assembled URL.',
+        'Paste one value, or enable Batch Mode for one value per line.',
+        'Convert, review any malformed-input error, and copy the result you need.',
+      ],
+    },
+    'jwt-decoder': {
+      name: 'JWT Decoder, Signer & HMAC Verifier',
+      metadataTitle: 'JWT Decoder, Signer & Verifier Online',
+      description:
+        'Decode compact JWTs, create HS256, HS384, or HS512 signatures, and verify HMAC signatures plus time, issuer, and audience claims locally.',
+      longDescription:
+        'Free browser-based JWT decoder, HMAC signer, and verifier for development. Inspect claims, verify supported shared-secret signatures, or create a synthetic test token without uploading its fields.',
+      keywords: [
+        'jwt decoder',
+        'jwt verifier',
+        'jwt signature validator',
+        'hs256 jwt generator',
+        'jwt parser',
+      ],
+      faqs: [
+        {
+          question: 'Does decoding prove that a JWT is authentic?',
+          answer:
+            'No. Anyone can Base64URL-encode a header and payload. Authenticity is established only after an allowed algorithm verifies with the correct key and every required claim policy passes.',
+        },
+        {
+          question: 'Which JWT algorithms can this page sign and verify?',
+          answer:
+            'It supports HMAC algorithms HS256, HS384, and HS512 with a text secret. It deliberately rejects alg:none and does not accept RSA, ECDSA, EdDSA, JWK, JWKS, or certificate keys.',
+        },
+        {
+          question: 'Are tokens and secrets uploaded?',
+          answer:
+            'No. Decoding, Web Crypto HMAC signing, and signature verification run in the browser. Bearer tokens and secrets remain sensitive to clipboard history, extensions, screen sharing, and shared devices, so use synthetic data.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'Decode, verify, and sign are separate operations',
+          paragraphs: [
+            'Decode splits a three-part compact token and reads its JSON header and claims without trusting them. Verify selects HS256, HS384, or HS512 from the protected header, checks the exact signing input with Web Crypto, then evaluates exp, nbf, iat and optional issuer or audience expectations. Sign serializes the supplied JSON objects, overwrites header.alg with the selected HMAC algorithm, and creates a compact JWS for testing.',
+          ],
+        },
+        {
+          heading: 'Verification rules and debugging signals',
+          bullets: [
+            'A valid HMAC signature proves that the signer held the same secret; it does not prove the secret was stored or distributed safely.',
+            'The token is rejected when its header omits alg, selects none, or requests an unsupported asymmetric algorithm.',
+            'Expiration, not-before, and issued-at values must be finite NumericDate seconds; clock skew can be set from zero through 300 seconds.',
+            'Optional issuer matching is exact. Audience matching accepts the expected value as either the aud string or one item in an aud array.',
+            'Authorization claims such as roles and scopes are displayed but remain application-specific and are not evaluated by this page.',
+          ],
+        },
+        {
+          heading: 'Security and interoperability boundary',
+          paragraphs: [
+            'A production verifier should configure its allowed algorithm independently, select keys from a trusted issuer configuration, enforce all application claims, rotate secrets, and handle replay or revocation policy. This page does not decrypt JWE, resolve JWK or JWKS documents, validate certificates, or reproduce library-specific JSON serialization. Generate production tokens only in the trusted identity system that owns the key.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste a compact three-part JWT or load the synthetic HS256 sample.',
+        'Inspect decoded fields, remembering they are untrusted until verification succeeds.',
+        'For HMAC verification, enter the matching test secret and any expected issuer or audience, then verify.',
+        'To create a test token, open the signing section, edit header and payload JSON, select HS256, HS384, or HS512, and sign.',
+      ],
+    },
+    'html-entity': {
+      name: 'HTML Entity Encoder/Decoder',
+      metadataTitle: 'HTML Entity Encoder & Decoder Online',
+      description:
+        'Decode named, decimal, and hexadecimal HTML entities, or encode reserved HTML characters and non-ASCII text locally in your browser.',
+      longDescription:
+        'Free online HTML entity decoder and encoder. Decode named or numeric references and encode reserved HTML characters without sending the text to a conversion API.',
+      keywords: [
+        'html entity encoder',
+        'html entity decoder',
+        'html encode',
+        'special characters html',
+        'html entities converter',
+        'html entities to unicode',
+        'named decimal hex html entities',
+        'html special characters converter',
+      ],
+      faqs: [
+        {
+          question: 'What are HTML entities?',
+          answer:
+            'HTML entities are special codes used to display reserved characters in HTML. For example, &lt; represents < and &amp; represents &.',
+        },
+        {
+          question: 'Why encode HTML entities?',
+          answer:
+            'Encoding reserved characters can keep text from being interpreted as markup in an HTML text context. It is not a complete XSS defense: attributes, URLs, CSS, JavaScript, and untrusted HTML require context-specific escaping or sanitization.',
+        },
+        {
+          question: 'Which entity formats can this tool decode?',
+          answer:
+            'It decodes browser-recognized named references such as &amp;, decimal numeric references such as &#169;, and hexadecimal references such as &#xA9;.',
+        },
+        { question: 'Is this the same as an HTML entities converter?', answer: 'Yes. This one tool encodes and decodes HTML entities, so there is no separate HTML entities to Unicode converter. Enable the extended option to emit decimal character references for non-ASCII text; decoding also resolves hexadecimal references.' },
+      ],
+      answerSections: [
+        {
+          heading: 'What the HTML entity decoder and encoder does',
+          paragraphs: [
+            'HTML character references represent characters that would otherwise be ambiguous in markup. The encoder replaces reserved characters such as ampersand, less-than, greater-than, quotation mark, and apostrophe. Its extended option also emits decimal references for non-ASCII characters. The decoder resolves named, decimal, and hexadecimal references using the browser HTML parser.',
+          ],
+        },
+        {
+          heading: 'HTML entity examples',
+          bullets: [
+            '&lt; becomes the less-than character, while &gt; becomes greater-than.',
+            '&amp; becomes an ampersand and &quot; becomes a quotation mark.',
+            '&#169; and &#xA9; are decimal and hexadecimal references for the copyright symbol.',
+            'Encoding <p>Research & Development</p> produces text that can be displayed as markup characters instead of being parsed as the same element.',
+          ],
+        },
+        {
+          heading: 'Security and rendering boundaries',
+          paragraphs: [
+            'Entity encoding is context-sensitive. Escaping text for an HTML text node does not make the same value safe inside an event handler, URL, CSS declaration, JavaScript string, or arbitrary HTML fragment. Use framework escaping by default and a maintained sanitizer when trusted formatting must be preserved. Decoding untrusted entities should produce text for inspection, not a reason to inject the result with innerHTML.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose Encode to escape text or Decode to resolve character references.',
+        'Paste the source text and optionally enable the extended encoding option.',
+        'Select Encode or Decode, then review the converted output.',
+        'Apply context-specific escaping or sanitization before using untrusted output in an application.',
+      ],
+    },
+    'hex-encoder': {
+      name: 'HEX Encoder/Decoder',
+      metadataTitle: 'Hex Encoder & Decoder Online',
+      description:
+        'Encode or decode text to/from hexadecimal. Free online HEX encoder and decoder.',
+      longDescription:
+        'Free online HEX encoder and decoder. Convert text to hexadecimal encoding or decode hexadecimal strings back to plain text instantly.',
+      keywords: ['hex encoder', 'hex decoder', 'hexadecimal encoder', 'hex to text', 'text to hex'],
+      faqs: [
+        {
+          question: 'What is hexadecimal encoding?',
+          answer: 'Hexadecimal encoding represents UTF-8 bytes in base-16 notation (0-9, A-F).',
+        },
+        {
+          question: 'How do I use this tool?',
+          answer:
+            'Enter text in the input field and it will automatically be converted to hexadecimal. You can also paste hexadecimal to decode it back to text.',
+        },
+      ],
+    },
+    'binary-encoder': {
+      name: 'Binary Encoder/Decoder',
+      metadataTitle: 'Binary Encoder & Decoder – Text to Binary',
+      description:
+        'Convert UTF-8 text to 8-bit binary byte groups or decode binary back to text locally in your browser.',
+      longDescription:
+        'Free online text-to-binary encoder and binary-to-text decoder. The tool converts UTF-8 bytes into 8-bit groups of 0s and 1s, validates complete binary bytes during decoding, and runs locally in your browser.',
+      keywords: [
+        'binary encoder',
+        'binary decoder',
+        'binary converter',
+        'text to binary',
+        'binary to text',
+      ],
+      faqs: [
+        {
+          question: 'What is binary encoding?',
+          answer: 'Binary encoding represents UTF-8 bytes in base-2 notation using only 0s and 1s.',
+        },
+        {
+          question: 'How many bits per character?',
+          answer:
+            'Each UTF-8 byte is represented by 8 bits. ASCII characters use one byte, while characters such as accented letters and emoji can use multiple bytes.',
+        },
+        {
+          question: 'Can I convert binary back to text?',
+          answer:
+            'Yes. Decode mode accepts complete 8-bit binary bytes, with optional whitespace between groups, and converts valid UTF-8 bytes back to text.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What does this binary encoder and decoder do?',
+          paragraphs: [
+            'This tool converts text into the binary representation of its UTF-8 bytes and decodes binary bytes back into text. Each output group contains eight bits. Spaces between byte groups make the result readable and can be removed or retained when decoding. The conversion runs in browser code, so the text does not need to be uploaded for processing.',
+          ],
+        },
+        {
+          heading: 'Text-to-binary examples',
+          paragraphs: [
+            'The letter A is UTF-8 byte 65, so it becomes 01000001. The character é uses the two UTF-8 bytes C3 and A9, so its binary form is 11000011 10101001. This distinction matters: the tool represents encoded bytes, not one fixed 8-bit value for every visible character.',
+            'Binary text encoding is different from converting a decimal number into base 2. Entering the text 10 encodes the characters 1 and 0 as two UTF-8 bytes. Use the Number Base Converter when the goal is numeric base conversion.',
+          ],
+        },
+        {
+          heading: 'Binary-to-text validation',
+          paragraphs: [
+            'Decode mode ignores whitespace between groups but requires only 0 and 1 digits and a complete number of 8-bit bytes. Incomplete bytes, other characters, or byte sequences that are not valid UTF-8 produce an error instead of a misleading partial result.',
+            'Binary encoding is a representation, not encryption or compression. Anyone with the binary bytes can decode them, and the bit string can be longer than the original visible text.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose Encode to convert text to binary, or Decode to convert binary bytes to text.',
+        'Enter the source text or a binary value made of complete 8-bit groups.',
+        'Review the live result and any validation message.',
+        'Copy or download the converted output when it is correct.',
+      ],
+    },
+    'image-to-base64': {
+      name: 'Image to Base64',
+      metadataTitle: 'Image to Base64 Converter Online',
+      description:
+        'Convert an image to a Base64 string or data URI in your browser. Works with PNG, JPG, GIF, WebP and SVG, and shows the size increase plus HTML and CSS usage.',
+      longDescription:
+        'Drop an image file to encode it as Base64 without uploading it. Copy either the raw Base64 string or a complete data URI, and compare the original file size with the encoded size before you embed it.',
+      keywords: [
+        'image to base64',
+        'convert image to base64',
+        'png to base64',
+        'jpg to base64',
+        'image to data uri',
+        'base64 image encoder',
+        'svg to base64',
+        'base64 image in html',
+      ],
+      faqs: [
+        {
+          question: 'What is a Base64 data URI?',
+          answer:
+            'A data URI embeds file contents directly in HTML or CSS, in the form data:image/png;base64,<encoded bytes>. The browser decodes it in place, so the image needs no separate HTTP request.',
+        },
+        {
+          question: 'When should I use Base64 images?',
+          answer:
+            'Use them for small icons, tiny placeholders, and single-file demos. Larger images are better served as normal files, because Base64 adds about 33% to the size and inlined images cannot be cached separately.',
+        },
+        {
+          question: 'Why is the Base64 string bigger than my image file?',
+          answer:
+            'Base64 represents every 3 bytes with 4 characters, so the output is about a third larger than the file. The tool shows both the original size and the Base64 size so you can judge whether inlining is worth it.',
+        },
+        {
+          question: 'Which image formats are supported?',
+          answer:
+            'Any file your browser identifies with an image/* MIME type, including PNG, JPEG, GIF, WebP, and SVG. Other formats such as AVIF or ICO work when the browser reports an image type for them. Files without an image type are rejected.',
+        },
+        {
+          question: 'How do I convert Base64 back to an image?',
+          answer:
+            "Use the Base64 to Image tool, or in Node.js write the bytes to disk with fs.writeFileSync('image.png', Buffer.from(base64String, 'base64')).",
+        },
+        {
+          question: 'Is my image uploaded to a server?',
+          answer:
+            "No. The file is read with the browser's FileReader API and encoded on your device. Nothing is sent to a server.",
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'Data URI vs raw Base64',
+          paragraphs: [
+            'A data URI packages the MIME type and the encoded bytes into one string that browsers accept anywhere a URL is expected, for example data:image/png;base64,iVBORw0KGgo... The Base64 option drops the data:image/png;base64, prefix and returns only the encoded bytes, which is what most JSON APIs, databases, and upload endpoints expect when the content type is stored in a separate field. The MIME type in the data URI comes from the file type your browser reports for the selected file.',
+          ],
+        },
+        {
+          heading: 'Embedding the result',
+          bullets: [
+            'HTML: <img src="data:image/png;base64,..." alt="Logo" width="32" height="32">. Keep meaningful alt text and explicit dimensions, as with any image.',
+            'CSS: background-image: url("data:image/png;base64,..."); with the data URI in quotes.',
+            'JSON: store the raw Base64 string next to a contentType field and decode it on the server.',
+            'Markdown: ![alt](data:image/png;base64,...) works in some renderers, but many hosted platforms block data URIs in Markdown, so test where it will be displayed.',
+          ],
+        },
+        {
+          heading: 'When Base64 images help and when they hurt',
+          paragraphs: [
+            'Encoding makes the data about 33% larger. An inlined image also cannot be cached on its own: it is downloaded again whenever the HTML or CSS file that contains it changes, and it makes that file slower to parse. Inlining pays off for very small assets such as icons, 1x1 placeholders, or self-contained demo pages. For photos and anything larger than a few kilobytes, a regular image file served with caching headers is usually faster. For SVG, a URL-encoded data URI is often shorter than Base64; the SVG to CSS data URI tool produces one.',
+          ],
+        },
+        {
+          heading: 'What happens to your file',
+          paragraphs: [
+            'The file is encoded exactly as stored. There is no resizing, recompression, or metadata removal, so EXIF data in a JPEG, such as camera details or GPS coordinates, is carried into the Base64 string. Compress the image or strip its metadata first if that matters. One file is converted at a time, and very large images produce very long strings that can make the page slow to scroll or copy.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Drop an image onto the upload area, or click it to choose a file.',
+        'Check the preview, file type, dimensions, original size, and Base64 size.',
+        'Choose Data URI for HTML or CSS, or Base64 for APIs that take the raw string.',
+        'Copy the output and paste it into your markup, stylesheet, or request payload.',
+      ],
+    },
+    'unicode-escape': {
+      name: 'Unicode Escape Encoder/Decoder',
+      metadataTitle: 'Unicode Escape Encoder & Decoder Online',
+      description:
+        'Encode text as Unicode escape sequences or decode \\uXXXX, \\u{XXXXX}, and \\xFF values locally in your browser.',
+      longDescription:
+        'Free online Unicode escape encoder and decoder. Convert text into hexadecimal Unicode escape sequences or decode supported \\uXXXX, \\u{XXXXX}, and \\xFF values back to readable characters without a server upload.',
+      keywords: [
+        'unicode escape',
+        'unicode encoder',
+        'unicode decoder',
+        'escape sequence',
+        '\\uXXXX',
+      ],
+      faqs: [
+        {
+          question: 'What is Unicode escaping?',
+          answer:
+            'Unicode escaping represents characters using hexadecimal code points, such as \\u0041 for "A".',
+        },
+        {
+          question: 'Can I decode Unicode escape sequences online?',
+          answer:
+            'Yes. Paste text containing supported \\uXXXX, \\u{XXXXX}, or \\xFF sequences, choose Decode, and the tool replaces those sequences with their characters locally in your browser.',
+        },
+        {
+          question: 'Is this the same as JSON string unescaping?',
+          answer:
+            'No. This tool targets hexadecimal Unicode and byte-style escapes. Use the JSON String Escape tool when you also need JSON escapes such as \\n, \\t, escaped quotes, or backslashes handled as a complete JSON string fragment.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What does this Unicode escape decoder do?',
+          paragraphs: [
+            'The decoder turns recognized hexadecimal escape sequences into readable characters. It supports four-digit JavaScript-style values such as \\u0041, braced code points such as \\u{1F600}, and two-digit byte-style values such as \\x41. Other text remains unchanged, which makes the result easy to inspect before copying.',
+          ],
+        },
+        {
+          heading: 'Unicode escape encoding examples',
+          paragraphs: [
+            'With ASCII escaping enabled, A becomes \\u0041. Characters above the basic multilingual plane use braced code-point notation; for example, 😀 becomes \\u{1F600}. When ASCII escaping is disabled, ordinary ASCII text remains readable while non-ASCII characters are escaped.',
+            'Unicode escaping changes how characters are written, not what they mean. It is useful when inspecting logs, source code, API payloads, or copied text that exposes escape notation instead of rendered characters.',
+          ],
+        },
+        {
+          heading: 'Unicode escapes, JSON, and safety',
+          paragraphs: [
+            'This converter is not a full programming-language parser. It replaces the supported hexadecimal patterns but does not interpret every escape rule from JSON, JavaScript, regular expressions, or shell syntax. Use a format-specific parser when exact document validation is required.',
+            'Encoding is not encryption: an escaped value can be decoded by anyone. Processing occurs in browser code, but you should still avoid placing secrets into online utilities unless the execution environment is appropriate for the data.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose Encode to create Unicode escapes, or Decode to turn supported escapes into text.',
+        'Enter or paste the source value and select whether ASCII characters should also be escaped.',
+        'Check the converted output, especially when the source comes from a larger JSON or code document.',
+        'Copy or download the result.',
+      ],
+    },
+    'json-string-escape': {
+      name: 'JSON String Escape',
+      metadataTitle: 'JSON String Escape & Unescape Online',
+      description: 'Escape and unescape JSON string content online.',
+      longDescription:
+        'Free online JSON string escape tool. Convert raw text into escaped JSON string format or decode escaped JSON string fragments back to readable text.',
+      keywords: ['json string escape', 'json escape', 'json unescape', 'string escaping'],
+      faqs: [
+        {
+          question: 'What does JSON string escaping do?',
+          answer:
+            'It converts special characters like newlines, tabs, and quotes into escaped forms such as \\n, \\t, and \\\".',
+        },
+        {
+          question: 'When is this useful?',
+          answer:
+            'It is useful when you need to embed strings safely in JSON payloads, configuration files, or API requests.',
+        },
+      ],
+    },
+    'base64-to-image': {
+      name: 'Base64 to Image Decoder',
+      metadataTitle: 'Base64 to Image Decoder Online',
+      description:
+        'Convert Base64 strings and Data URIs back into viewable PNG, JPG, GIF, WebP, and SVG images with instant download.',
+      longDescription:
+        'Free online Base64 to Image Decoder. Decode raw Base64 data strings or data:image/* URIs into full-resolution images with live browser preview and 1-click file download.',
+      keywords: [
+        'base64 to image',
+        'base64 image decoder',
+        'convert base64 to png',
+        'decode data uri to image',
+        'base64 to jpg online',
+      ],
+      faqs: [
+        {
+          question: 'Does this tool support raw Base64 and Data URI prefixes?',
+          answer:
+            'Yes. You can paste raw Base64 strings (starting with iVBORw0KGgo... or /9j/...) or full data:image/png;base64,... URIs.',
+        },
+        {
+          question: 'Are my images uploaded to any server?',
+          answer:
+            'No. Decoding and image rendering are performed 100% inside your browser using client-side data URLs and blobs.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your Base64 encoded string or Data URI into the editor.',
+        'View the instant live preview of the decoded image.',
+        'Click "Download Image" to save the file to your computer.',
+        'Or click "Copy Data URI" to copy the normalized image URI.',
+      ],
+    },
+    'hex-to-base64': {
+      name: 'Hex to Base64 Converter',
+      metadataTitle: 'Hex to Base64 & Base64 to Hex Converter',
+      description:
+        'Convert hexadecimal byte strings into Base64 encoding and decode Base64 back to hex in real-time.',
+      longDescription:
+        'Free online Hex to Base64 and Base64 to Hex byte converter. Easily convert cryptographic hashes, byte arrays, blockchain keys, and binary strings between Hex and Base64.',
+      keywords: [
+        'hex to base64',
+        'base64 to hex',
+        'hexadecimal to base64',
+        'byte array base64 converter',
+        'hex base64 online',
+      ],
+      faqs: [
+        {
+          question: 'What format should the hexadecimal input be in?',
+          answer:
+            'Any even-length hexadecimal string (e.g. 48656c6c6f) with or without spaces and prefixes.',
+        },
+        {
+          question: 'Is the conversion bidirectional?',
+          answer:
+            'Yes! You can convert Hex to Base64 and Base64 to Hex with zero data loss.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your hexadecimal string or Base64 payload.',
+        'Click the convert button to run the conversion.',
+        'Copy the result with 1 click.',
+      ],
+    },
+    'base32-encoder': {
+      name: 'Base32 Encoder & Decoder',
+      metadataTitle: 'Base32 Encoder & Decoder Online (RFC 4648)',
+      description:
+        'Encode and decode strings to RFC 4648 Base32 format with padding for 2FA TOTP secrets, tokens, and binary keys.',
+      longDescription:
+        'Free online Base32 Encoder and Decoder tool. Convert plain text into standard RFC 4648 Base32 and decode Base32 strings back to original ASCII/UTF-8 text for two-factor authentication secrets.',
+      keywords: [
+        'base32 encoder',
+        'base32 decoder',
+        'base32 online',
+        'rfc 4648 base32',
+        'totp secret base32',
+      ],
+      faqs: [
+        {
+          question: 'What is Base32 encoding used for?',
+          answer:
+            'Base32 uses a 32-character alphabet (A-Z, 2-7) which is case-insensitive and avoids visually ambiguous characters, commonly used in 2FA TOTP secret keys and human-entered verification codes.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste plain text or Base32 into the input box.',
+        'Click "Encode to Base32" or "Decode to Plain Text".',
+        'Copy the converted result.',
+      ],
+    },
+    'punycode-idn-converter': {
+      name: 'Punycode IDN Domain Converter',
+      metadataTitle: 'Punycode IDN Domain Converter Online',
+      description: 'Convert internationalized Unicode domain names into ASCII-compatible Punycode (xn--).',
+      longDescription: 'Convert internationalized Unicode domain names into ASCII-compatible Punycode (xn--). 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['punycode idn converter', 'encoding', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Punycode IDN Domain Converter?', answer: 'Convert internationalized Unicode domain names into ASCII-compatible Punycode (xn--).' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'crockford-base32-encoder': {
+      name: 'Crockford Base32 Encoder & Decoder',
+      metadataTitle: 'Crockford Base32 Encoder & Decoder Online',
+      description: 'Encode numbers into human-friendly Crockford Base32 strings that exclude confusing letters.',
+      longDescription: 'Encode numbers into human-friendly Crockford Base32 strings that exclude confusing letters. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['crockford base32 encoder', 'encoding', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Crockford Base32 Encoder & Decoder?', answer: 'Encode numbers into human-friendly Crockford Base32 strings that exclude confusing letters.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'bcd-binary-coded-decimal-converter': {
+      name: 'Binary Coded Decimal (BCD 8421) Converter',
+      metadataTitle: 'Binary Coded Decimal (BCD 8421) Converter Online',
+      description: 'Convert decimal numbers into 4-bit Binary Coded Decimal (BCD 8421) nibbles and back.',
+      longDescription: 'Convert decimal numbers into 4-bit Binary Coded Decimal (BCD 8421) nibbles and back. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['bcd binary coded decimal converter', 'encoding', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Binary Coded Decimal (BCD 8421) Converter?', answer: 'Convert decimal numbers into 4-bit Binary Coded Decimal (BCD 8421) nibbles and back.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'ieee754-hex-float-converter': {
+      name: 'IEEE-754 Floating Point to Hex Converter',
+      metadataTitle: 'IEEE-754 Floating Point to Hex Converter Online',
+      description: 'Convert 32-bit single precision floats into IEEE-754 hexadecimal representations.',
+      longDescription: 'Convert 32-bit single precision floats into IEEE-754 hexadecimal representations. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['ieee754 hex float converter', 'encoding', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is IEEE-754 Floating Point to Hex Converter?', answer: 'Convert 32-bit single precision floats into IEEE-754 hexadecimal representations.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'rot47-encoder-decoder': {
+      name: 'ROT47 Cipher Text Encoder & Decoder',
+      metadataTitle: 'ROT47 Cipher Text Encoder & Decoder Online',
+      description: 'Rotate full printable ASCII characters (33-126) using the 47-character Caesar cipher.',
+      longDescription: 'Rotate full printable ASCII characters (33-126) using the 47-character Caesar cipher. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['rot47 encoder decoder', 'encoding', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is ROT47 Cipher Text Encoder & Decoder?', answer: 'Rotate full printable ASCII characters (33-126) using the 47-character Caesar cipher.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+  },
+  generators: {
+    'schema-org-generator': {
+      name: 'Schema.org JSON-LD Structured Data Builder',
+      metadataTitle: 'Schema.org JSON-LD Generator Online',
+      description: 'Generate Google-compliant structured data markup for FAQPage, Article, Product, Organization, and LocalBusiness.',
+      longDescription: 'Free Schema.org JSON-LD Generator. Create valid, search-engine-ready structured data script tags to boost SEO rich snippet results on Google, Bing, and search engines.',
+      keywords: ['schema markup generator', 'json ld generator', 'faq schema generator', 'schema org builder'],
+      faqs: [
+        { question: 'What is JSON-LD structured data?', answer: 'JSON-LD is a standard format recommended by Google to provide explicit information about a page and classify the page content for rich search results.' },
+        { question: 'How do I add the generated schema to my website?', answer: 'Copy the generated <script type="application/ld+json"> tag and paste it into your HTML <head> or <body> section.' }
+      ],
+      howToUseSteps: [
+        'Select the schema type (FAQPage, Article, Product, Organization, etc.).',
+        'Fill in the visual form fields.',
+        'Copy the generated JSON-LD script tag.'
+      ]
+    },
+    'openai-structured-outputs': {
+      name: 'OpenAI Strict Structured Outputs Builder',
+      metadataTitle: 'OpenAI Strict Structured Outputs Builder Online',
+      description: 'Generate strict JSON Schema schemas for OpenAI function calling.',
+      longDescription: 'Generate strict JSON Schema schemas for OpenAI function calling. 100% free client-side tool with instant browser execution.',
+      keywords: ['openai-structured-outputs', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is OpenAI Strict Structured Outputs Builder?', answer: 'Generate strict JSON Schema schemas for OpenAI function calling.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'langgraph-state-generator': {
+      name: 'LangGraph State Schema Generator',
+      metadataTitle: 'LangGraph State Schema Generator Online',
+      description: 'Generate LangGraph State TypedDict and workflow definitions.',
+      longDescription: 'Generate LangGraph State TypedDict and workflow definitions. 100% free client-side tool with instant browser execution.',
+      keywords: ['langgraph-state-generator', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is LangGraph State Schema Generator?', answer: 'Generate LangGraph State TypedDict and workflow definitions.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'anthropic-tool-builder': {
+      name: 'Anthropic Claude Tool Builder',
+      metadataTitle: 'Anthropic Claude Tool Builder Online',
+      description: 'Build input_schema JSON definitions for Anthropic Claude tools.',
+      longDescription: 'Build input_schema JSON definitions for Anthropic Claude tools. 100% free client-side tool with instant browser execution.',
+      keywords: ['anthropic-tool-builder', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Anthropic Claude Tool Builder?', answer: 'Build input_schema JSON definitions for Anthropic Claude tools.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'nextjs-metadata-generator': {
+      name: 'Next.js App Router Metadata Generator',
+      metadataTitle: 'Next.js App Router Metadata Generator Online',
+      description: 'Generate Next.js 16 generateMetadata, OpenGraph, and Twitter card configs.',
+      longDescription: 'Generate Next.js 16 generateMetadata, OpenGraph, and Twitter card configs. 100% free client-side tool with instant browser execution.',
+      keywords: ['nextjs-metadata-generator', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Next.js App Router Metadata Generator?', answer: 'Generate Next.js 16 generateMetadata, OpenGraph, and Twitter card configs.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'svg-to-css': {
+      name: 'SVG to CSS Background Data URI',
+      metadataTitle: 'SVG to CSS Background Data URI Online',
+      description: 'Encode and optimize SVG into CSS background-image and mask-image data URIs.',
+      longDescription: 'Encode and optimize SVG into CSS background-image and mask-image data URIs. 100% free client-side tool with instant browser execution.',
+      keywords: ['svg-to-css', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is SVG to CSS Background Data URI?', answer: 'Encode and optimize SVG into CSS background-image and mask-image data URIs.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'systemd-timer-generator': {
+      name: 'Systemd Service & Timer Generator',
+      metadataTitle: 'Systemd Service & Timer Generator Online',
+      description: 'Generate paired systemd .service and .timer units for Linux automation.',
+      longDescription: 'Generate paired systemd .service and .timer units for Linux automation. 100% free client-side tool with instant browser execution.',
+      keywords: ['systemd-timer-generator', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Systemd Service & Timer Generator?', answer: 'Generate paired systemd .service and .timer units for Linux automation.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'jwt-builder': {
+      name: 'JWT Payload Builder & Simulator',
+      metadataTitle: 'JWT Payload Builder & Simulator Online',
+      description: 'Build custom header/payload JWT tokens with signature simulation.',
+      longDescription: 'Build custom header/payload JWT tokens with signature simulation. 100% free client-side tool with instant browser execution.',
+      keywords: ['jwt-builder', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is JWT Payload Builder & Simulator?', answer: 'Build custom header/payload JWT tokens with signature simulation.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'nanoid-custom-alphabet': {
+      name: 'NanoID Custom Alphabet Generator',
+      metadataTitle: 'NanoID Custom Alphabet Generator Online',
+      description: 'Generate collision-resistant NanoIDs using custom alphabets and lengths.',
+      longDescription: 'Generate collision-resistant NanoIDs using custom alphabets and lengths. 100% free client-side tool with instant browser execution.',
+      keywords: ['nanoid-custom-alphabet', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is NanoID Custom Alphabet Generator?', answer: 'Generate collision-resistant NanoIDs using custom alphabets and lengths.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'mock-credit-card-generator': {
+      name: 'Test Credit Card Generator (Luhn Valid)',
+      metadataTitle: 'Test Credit Card Generator (Luhn Valid) Online',
+      description: 'Generate Luhn-compliant test credit card numbers for Stripe and sandbox testing.',
+      longDescription: 'Generate Luhn-compliant test credit card numbers for Stripe and sandbox testing. 100% free client-side tool with instant browser execution.',
+      keywords: ['mock-credit-card-generator', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Test Credit Card Generator (Luhn Valid)?', answer: 'Generate Luhn-compliant test credit card numbers for Stripe and sandbox testing.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'tailwind-spacing-generator': {
+      name: 'Tailwind Spacing Scale Generator',
+      metadataTitle: 'Tailwind Spacing Scale Generator Online',
+      description: 'Generate custom fluid spacing and margin/padding scales for Tailwind CSS.',
+      longDescription: 'Generate custom fluid spacing and margin/padding scales for Tailwind CSS. 100% free client-side tool with instant browser execution.',
+      keywords: ['tailwind-spacing-generator', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Tailwind Spacing Scale Generator?', answer: 'Generate custom fluid spacing and margin/padding scales for Tailwind CSS.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'docker-compose-env-generator': {
+      name: 'Docker Compose .env Template Generator',
+      metadataTitle: 'Docker Compose .env Template Generator Online',
+      description: 'Extract all environment variables from docker-compose.yml into a clean .env template.',
+      longDescription: 'Extract all environment variables from docker-compose.yml into a clean .env template. 100% free client-side tool with instant browser execution.',
+      keywords: ['docker-compose-env-generator', 'generators', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Docker Compose .env Template Generator?', answer: 'Extract all environment variables from docker-compose.yml into a clean .env template.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+
+    'mongodb-aggregate-builder': {
+      name: 'MongoDB Aggregation Pipeline Generator',
+      metadataTitle: 'MongoDB Aggregation Pipeline Generator Online',
+      description: 'Build multi-stage MongoDB aggregation pipelines ($match, $group, $sort).',
+      longDescription: 'Build multi-stage MongoDB aggregation pipelines ($match, $group, $sort).',
+      keywords: ['mongodb-aggregate-builder', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is MongoDB Aggregation Pipeline Generator?', answer: 'Build multi-stage MongoDB aggregation pipelines ($match, $group, $sort).' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'clickhouse-ddl-generator': {
+      name: 'ClickHouse MergeTree DDL Generator',
+      metadataTitle: 'ClickHouse MergeTree DDL Generator Online',
+      description: 'Generate optimized ClickHouse CREATE TABLE DDL with MergeTree engines.',
+      longDescription: 'Generate optimized ClickHouse CREATE TABLE DDL with MergeTree engines.',
+      keywords: ['clickhouse-ddl-generator', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is ClickHouse MergeTree DDL Generator?', answer: 'Generate optimized ClickHouse CREATE TABLE DDL with MergeTree engines.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'elasticsearch-query-builder': {
+      name: 'Elasticsearch Query DSL Generator',
+      metadataTitle: 'Elasticsearch Query DSL Generator Online',
+      description: 'Generate structured JSON Elasticsearch boolean search queries with filters.',
+      longDescription: 'Generate structured JSON Elasticsearch boolean search queries with filters.',
+      keywords: ['elasticsearch-query-builder', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is Elasticsearch Query DSL Generator?', answer: 'Generate structured JSON Elasticsearch boolean search queries with filters.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'react-hook-form-generator': {
+      name: 'React Hook Form Component Generator',
+      metadataTitle: 'React Hook Form Component Generator Online',
+      description: 'Generate ready-to-use React Hook Form components with validation rules.',
+      longDescription: 'Generate ready-to-use React Hook Form components with validation rules.',
+      keywords: ['react-hook-form-generator', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is React Hook Form Component Generator?', answer: 'Generate ready-to-use React Hook Form components with validation rules.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'gitlab-ci-generator': {
+      name: 'GitLab CI/CD Pipeline Generator',
+      metadataTitle: 'GitLab CI/CD Pipeline Generator Online',
+      description: 'Build multi-stage .gitlab-ci.yml pipeline configuration files.',
+      longDescription: 'Build multi-stage .gitlab-ci.yml pipeline configuration files.',
+      keywords: ['gitlab-ci-generator', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is GitLab CI/CD Pipeline Generator?', answer: 'Build multi-stage .gitlab-ci.yml pipeline configuration files.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'kubernetes-ingress-generator': {
+      name: 'Kubernetes Ingress & Cert-Manager Generator',
+      metadataTitle: 'Kubernetes Ingress & Cert-Manager Generator',
+      description: 'Generate Kubernetes Ingress manifests with TLS termination and Cert-Manager annotations.',
+      longDescription: 'Generate Kubernetes Ingress manifests with TLS termination and Cert-Manager annotations.',
+      keywords: ['kubernetes-ingress-generator', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is Kubernetes Ingress & Cert-Manager Generator?', answer: 'Generate Kubernetes Ingress manifests with TLS termination and Cert-Manager annotations.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'ollama-modelfile-generator': {
+      name: 'Ollama Modelfile Builder',
+      metadataTitle: 'Ollama Modelfile Builder Online',
+      description: 'Create custom Modelfile configurations with system prompts and parameters for Ollama.',
+      longDescription: 'Create custom Modelfile configurations with system prompts and parameters for Ollama.',
+      keywords: ['ollama-modelfile-generator', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is Ollama Modelfile Builder?', answer: 'Create custom Modelfile configurations with system prompts and parameters for Ollama.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'cloudflare-wrangler-builder': {
+      name: 'Cloudflare Wrangler Config Generator',
+      metadataTitle: 'Cloudflare Wrangler Config Generator Online',
+      description: 'Generate wrangler.json configuration files for Cloudflare Workers, KV, and D1.',
+      longDescription: 'Generate wrangler.json configuration files for Cloudflare Workers, KV, and D1.',
+      keywords: ['cloudflare-wrangler-builder', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is Cloudflare Wrangler Config Generator?', answer: 'Generate wrangler.json configuration files for Cloudflare Workers, KV, and D1.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'github-actions-matrix-builder': {
+      name: 'GitHub Actions Matrix CI Workflow Generator',
+      metadataTitle: 'GitHub Actions Matrix CI Workflow Generator',
+      description: 'Build multi-OS and multi-version matrix build workflows for GitHub Actions CI/CD.',
+      longDescription: 'Build multi-OS and multi-version matrix build workflows for GitHub Actions CI/CD.',
+      keywords: ['github-actions-matrix-builder', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is GitHub Actions Matrix CI Workflow Generator?', answer: 'Build multi-OS and multi-version matrix build workflows for GitHub Actions CI/CD.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'tailwind-v4-color-palette': {
+      name: 'Tailwind CSS v4 OKLCH Color Palette Generator',
+      metadataTitle: 'Tailwind CSS v4 OKLCH Color Palette Generator',
+      description: 'Generate modern OKLCH color scales from 50 to 950 for Tailwind CSS v4.',
+      longDescription: 'Generate modern OKLCH color scales from 50 to 950 for Tailwind CSS v4.',
+      keywords: ['tailwind-v4-color-palette', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is Tailwind CSS v4 OKLCH Color Palette Generator?', answer: 'Generate modern OKLCH color scales from 50 to 950 for Tailwind CSS v4.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'shadcn-theme-generator': {
+      name: 'Shadcn UI Theme & CSS Variables Generator',
+      metadataTitle: 'Shadcn UI Theme & CSS Variables Generator Online',
+      description: 'Create custom color palettes and CSS variables for Shadcn UI and Radix components.',
+      longDescription: 'Create custom color palettes and CSS variables for Shadcn UI and Radix components.',
+      keywords: ['shadcn-theme-generator', 'generators', 'developer tool'],
+      faqs: [
+        { question: 'What is Shadcn UI Theme & CSS Variables Generator?', answer: 'Create custom color palettes and CSS variables for Shadcn UI and Radix components.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'sampling-curve-visualizer': {
+      name: 'LLM Temperature & Top-P Sampling Curve Visualizer',
+      metadataTitle: 'LLM Temperature & Top-P Sampling Curve Visualizer',
+      description: 'Simulate and visualize token probability distributions under temperature, Top-P, and Top-K sampling.',
+      longDescription: 'Free online LLM Temperature & Top-P Sampling Curve Visualizer. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['sampling-curve-visualizer', 'llm temperature & top-p sampling curve visualizer', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is LLM Temperature & Top-P Sampling Curve Visualizer?',
+          answer: 'Simulate and visualize token probability distributions under temperature, Top-P, and Top-K sampling.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'css-keyframes-generator': {
+      name: 'CSS Keyframe Animation Timeline Generator',
+      metadataTitle: 'CSS Keyframe Animation Timeline Generator Online',
+      description: 'Generate multi-step CSS @keyframes animations and timing rules with real-time visual preview.',
+      longDescription: 'Free online CSS Keyframe Animation Timeline Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['css-keyframes-generator', 'css keyframe animation timeline generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSS Keyframe Animation Timeline Generator?',
+          answer: 'Generate multi-step CSS @keyframes animations and timing rules with real-time visual preview.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'css-grid-area-builder': {
+      name: 'CSS Grid Template Areas Builder',
+      metadataTitle: 'CSS Grid Template Areas Builder Online',
+      description: 'Generate visual CSS grid-template-areas layout declarations and responsive area matrices.',
+      longDescription: 'Free online CSS Grid Template Areas Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['css-grid-area-builder', 'css grid template areas builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSS Grid Template Areas Builder?',
+          answer: 'Generate visual CSS grid-template-areas layout declarations and responsive area matrices.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'css-cubic-bezier': {
+      name: 'CSS Cubic-Bezier Curve Designer',
+      metadataTitle: 'CSS Cubic-Bezier Curve Designer Online',
+      description: 'Design and preview custom cubic-bezier timing functions with spring and bounce presets.',
+      longDescription: 'Free online CSS Cubic-Bezier Curve Designer. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['css-cubic-bezier', 'css cubic-bezier curve designer', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSS Cubic-Bezier Curve Designer?',
+          answer: 'Design and preview custom cubic-bezier timing functions with spring and bounce presets.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'color-harmony-generator': {
+      name: 'Color Harmony & Palette Generator',
+      metadataTitle: 'Color Harmony & Palette Generator Online',
+      description: 'Generate complementary, triadic, and analogous color harmonies with hex and HSL codes.',
+      longDescription: 'Free online Color Harmony & Palette Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['color-harmony-generator', 'color harmony & palette generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Color Harmony & Palette Generator?',
+          answer: 'Generate complementary, triadic, and analogous color harmonies with hex and HSL codes.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'redis-command-generator': {
+      name: 'Redis Command Builder & Key Helper',
+      metadataTitle: 'Redis Command Builder & Key Helper Online',
+      description: 'Build Redis CLI commands for hashes, sets, sorted sets, lists, and expiration TTL.',
+      longDescription: 'Free online Redis Command Builder & Key Helper. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['redis-command-generator', 'redis command builder & key helper', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Redis Command Builder & Key Helper?',
+          answer: 'Build Redis CLI commands for hashes, sets, sorted sets, lists, and expiration TTL.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'systemd-unit-generator': {
+      name: 'Linux Systemd Service Unit Generator',
+      metadataTitle: 'Linux Systemd Service Unit Generator Online',
+      description: 'Generate systemd .service unit configuration files for Node.js, Python, and Go daemons.',
+      longDescription: 'Free online Linux Systemd Service Unit Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['systemd-unit-generator', 'linux systemd service unit generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Linux Systemd Service Unit Generator?',
+          answer: 'Generate systemd .service unit configuration files for Node.js, Python, and Go daemons.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'aws-iam-policy-builder': {
+      name: 'AWS IAM Policy JSON Builder & Validator',
+      metadataTitle: 'AWS IAM Policy JSON Builder & Validator Online',
+      description: 'Build and validate AWS IAM JSON policy statements with Effect, Action, and Resource fields.',
+      longDescription: 'Free online AWS IAM Policy JSON Builder & Validator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['aws-iam-policy-builder', 'aws iam policy json builder & validator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is AWS IAM Policy JSON Builder & Validator?',
+          answer: 'Build and validate AWS IAM JSON policy statements with Effect, Action, and Resource fields.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'prometheus-alert-builder': {
+      name: 'Prometheus Alert Rule & PromQL Builder',
+      metadataTitle: 'Prometheus Alert Rule & PromQL Builder Online',
+      description: 'Generate Prometheus alerting rule YAML manifests with PromQL expressions and labels.',
+      longDescription: 'Free online Prometheus Alert Rule & PromQL Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['prometheus-alert-builder', 'prometheus alert rule & promql builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Prometheus Alert Rule & PromQL Builder?',
+          answer: 'Generate Prometheus alerting rule YAML manifests with PromQL expressions and labels.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'uuid-v7-generator': {
+      name: 'UUID v7 Generator (Time-Ordered)',
+      metadataTitle: 'UUID v7 Generator Online (Time-Ordered)',
+      description: 'Generate modern Unix Epoch time-ordered UUIDv7 identifiers and extract timestamps.',
+      longDescription: 'Free online UUID v7 Generator (Time-Ordered). Fast, accurate, client-side processing with instant export options.',
+      keywords: ['uuid-v7-generator', 'uuid v7 generator (time-ordered)', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is UUID v7 Generator (Time-Ordered)?',
+          answer: 'Generate modern Unix Epoch time-ordered UUIDv7 identifiers and extract timestamps.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'nanoid-generator': {
+      name: 'NanoID Generator & Custom Alphabet Builder',
+      metadataTitle: 'NanoID Generator & Alphabet Builder Online',
+      description: 'Generate compact, URL-friendly, cryptographically secure NanoIDs with custom alphabets.',
+      longDescription: 'Free online NanoID Generator & Custom Alphabet Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['nanoid-generator', 'nanoid generator & custom alphabet builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is NanoID Generator & Custom Alphabet Builder?',
+          answer: 'Generate compact, URL-friendly, cryptographically secure NanoIDs with custom alphabets.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'api-key-generator': {
+      name: 'API Key & Token Generator (Prefix-Ready)',
+      metadataTitle: 'API Key & Token Generator Online',
+      description: 'Generate cryptographically random API keys and session secrets with custom prefixes.',
+      longDescription: 'Free online API Key & Token Generator (Prefix-Ready). Fast, accurate, client-side processing with instant export options.',
+      keywords: ['api-key-generator', 'api key & token generator (prefix-ready)', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is API Key & Token Generator (Prefix-Ready)?',
+          answer: 'Generate cryptographically random API keys and session secrets with custom prefixes.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'android-manifest-builder': {
+      name: 'Android Manifest XML & Permissions Builder',
+      metadataTitle: 'Android Manifest XML & Permissions Builder',
+      description: 'Generate AndroidManifest.xml files with permissions, activities, and launcher intent filters.',
+      longDescription: 'Free online Android Manifest XML & Permissions Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['android-manifest-builder', 'android manifest xml & permissions builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Android Manifest XML & Permissions Builder?',
+          answer: 'Generate AndroidManifest.xml files with permissions, activities, and launcher intent filters.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'ios-plist-builder': {
+      name: 'iOS Info.plist Permission Key Builder',
+      metadataTitle: 'iOS Info.plist Permission Key Builder Online',
+      description: 'Build iOS Info.plist XML files with standard permission usage descriptions.',
+      longDescription: 'Free online iOS Info.plist Permission Key Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['ios-plist-builder', 'ios info.plist permission key builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is iOS Info.plist Permission Key Builder?',
+          answer: 'Build iOS Info.plist XML files with standard permission usage descriptions.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'app-icon-resizer': {
+      name: 'App Icon Resolution Package Reference',
+      metadataTitle: 'App Icon Resolution Package Reference Online',
+      description: 'View standard iOS App Store and Android Play Store icon size specifications.',
+      longDescription: 'Free online App Icon Resolution Package Reference. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['app-icon-resizer', 'app icon resolution package reference', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is App Icon Resolution Package Reference?',
+          answer: 'View standard iOS App Store and Android Play Store icon size specifications.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'flutter-theme-generator': {
+      name: 'Flutter Material 3 ColorScheme Generator',
+      metadataTitle: 'Flutter Material 3 ColorScheme Generator Online',
+      description: 'Convert hex color palettes into Flutter Material 3 ThemeData ColorScheme code.',
+      longDescription: 'Free online Flutter Material 3 ColorScheme Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['flutter-theme-generator', 'flutter material 3 colorscheme generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Flutter Material 3 ColorScheme Generator?',
+          answer: 'Convert hex color palettes into Flutter Material 3 ThemeData ColorScheme code.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'xcode-asset-catalog': {
+      name: 'Xcode Asset Catalog Contents.json Builder',
+      metadataTitle: 'Xcode Asset Catalog Contents.json Builder Online',
+      description: 'Generate standard 1x, 2x, 3x image asset catalog Contents.json manifests for iOS apps.',
+      longDescription: 'Free online Xcode Asset Catalog Contents.json Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['xcode-asset-catalog', 'xcode asset catalog contents.json builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Xcode Asset Catalog Contents.json Builder?',
+          answer: 'Generate standard 1x, 2x, 3x image asset catalog Contents.json manifests for iOS apps.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'electron-config-builder': {
+      name: 'Electron main.js & App Window Builder',
+      metadataTitle: 'Electron main.js & App Window Builder Online',
+      description: 'Generate Electron starter main.js files with BrowserWindow and security configurations.',
+      longDescription: 'Free online Electron main.js & App Window Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['electron-config-builder', 'electron main.js & app window builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Electron main.js & App Window Builder?',
+          answer: 'Generate Electron starter main.js files with BrowserWindow and security configurations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'capacitor-config-builder': {
+      name: 'Capacitor capacitor.config.json Builder',
+      metadataTitle: 'Capacitor capacitor.config.json Builder Online',
+      description: 'Build capacitor.config.json configuration files for hybrid iOS and Android mobile apps.',
+      longDescription: 'Free online Capacitor capacitor.config.json Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['capacitor-config-builder', 'capacitor capacitor.config.json builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Capacitor capacitor.config.json Builder?',
+          answer: 'Build capacitor.config.json configuration files for hybrid iOS and Android mobile apps.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'conventional-commit-builder': {
+      name: 'Conventional Git Commit Message Builder',
+      metadataTitle: 'Conventional Git Commit Message Builder Online',
+      description: 'Build standard Conventional Commits with feat, fix, scope, and breaking change footers.',
+      longDescription: 'Free online Conventional Git Commit Message Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['conventional-commit-builder', 'conventional git commit message builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Conventional Git Commit Message Builder?',
+          answer: 'Build standard Conventional Commits with feat, fix, scope, and breaking change footers.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'license-generator': {
+      name: 'Open Source License & SPDX Generator',
+      metadataTitle: 'Open Source License & SPDX Generator Online',
+      description: 'Generate MIT, Apache 2.0, and GPL open source software license texts with copyright headers.',
+      longDescription: 'Free online Open Source License & SPDX Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['license-generator', 'open source license & spdx generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Open Source License & SPDX Generator?',
+          answer: 'Generate MIT, Apache 2.0, and GPL open source software license texts with copyright headers.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'eslint-prettier-config': {
+      name: 'Prettier & ESLint Configuration Builder',
+      metadataTitle: 'Prettier & ESLint Configuration Builder Online',
+      description: 'Generate customized .prettierrc JSON configuration files with single quotes and tab width.',
+      longDescription: 'Free online Prettier & ESLint Configuration Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['eslint-prettier-config', 'prettier & eslint configuration builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Prettier & ESLint Configuration Builder?',
+          answer: 'Generate customized .prettierrc JSON configuration files with single quotes and tab width.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'changelog-generator': {
+      name: 'CHANGELOG.md Builder (Keep a Changelog)',
+      metadataTitle: 'CHANGELOG.md Builder (Keep a Changelog) Online',
+      description: 'Generate versioned changelog markdown following Keep a Changelog guidelines.',
+      longDescription: 'Free online CHANGELOG.md Builder (Keep a Changelog). Fast, accurate, client-side processing with instant export options.',
+      keywords: ['changelog-generator', 'changelog.md builder (keep a changelog)', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CHANGELOG.md Builder (Keep a Changelog)?',
+          answer: 'Generate versioned changelog markdown following Keep a Changelog guidelines.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'editorconfig-generator': {
+      name: '.editorconfig File Generator',
+      metadataTitle: '.editorconfig File Generator Online',
+      description: 'Generate .editorconfig files with cross-editor indentation, charset, and newline rules.',
+      longDescription: 'Free online .editorconfig File Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['editorconfig-generator', '.editorconfig file generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is .editorconfig File Generator?',
+          answer: 'Generate .editorconfig files with cross-editor indentation, charset, and newline rules.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'uuid-generator': {
+      name: 'UUID Generator',
+      metadataTitle: 'UUID Generator Online – v4, v7 & Bulk GUIDs',
+      description:
+        'Generate up to 1,000 cryptographically random UUID v4 or RFC 9562 UUID v7 identifiers locally, then format, copy, or download the batch.',
+      longDescription:
+        'Free online UUID v4 and v7 generator. Create random v4 or Unix-millisecond-based v7 identifiers, format them as UUIDs or GUIDs, and export a batch without an API upload.',
+      keywords: [
+        'uuid generator',
+        'guid generator',
+        'random uuid',
+        'uuid v4',
+        'uuid v7',
+        'time ordered uuid',
+      ],
+      faqs: [
+        {
+          question: 'What is a UUID?',
+          answer:
+            'UUID (Universally Unique Identifier) is a 128-bit identifier designed to be globally unique without a central issuing authority.',
+        },
+        {
+          question: 'What is UUID v4?',
+          answer:
+            'UUID version 4 is randomly generated. It has 122 random bits and 6 bits for version and variant information.',
+        },
+        {
+          question: 'What is UUID v7?',
+          answer:
+            'UUID version 7 starts with a 48-bit Unix timestamp in milliseconds and uses 74 additional bits for random data. Values with increasing encoded timestamps sort chronologically, but same-millisecond values are randomized and a backward system-clock adjustment can reverse generation order.',
+        },
+        {
+          question: 'Should I choose UUID v4 or v7?',
+          answer:
+            'Choose v4 when you want an opaque random identifier. Choose v7 when timestamp locality and chronological database indexing are useful. Neither version should be treated as a secret.',
+        },
+        {
+          question: 'Are the generated UUIDs cryptographically random?',
+          answer:
+            'The browser cryptography API supplies the 122 random bits in UUID v4 and the 74 random payload bits in UUID v7. UUID v7 also exposes its creation millisecond, so UUIDs are identifiers rather than passwords or tokens.',
+        },
+      ],
+      howToUseSteps: [
+        'Choose UUID v4 for random identifiers or UUID v7 for timestamp-based identifiers.',
+        'Set a quantity from 1 through 1,000 and choose uppercase, braces, or hyphen formatting.',
+        'Select Generate to create the batch locally in your browser.',
+        'Copy the newline-separated values or download them as a UTF-8 text file.',
+      ],
+      answerSections: [
+        {
+          heading: 'What this UUID v4 and v7 generator does',
+          paragraphs: [
+            'This generator creates RFC 9562 UUID version 4 or version 7 values entirely in the browser. Version 4 uses 122 cryptographically random bits. Version 7 stores the current Unix millisecond in its first 48 bits and fills its remaining 74 payload bits from crypto.getRandomValues(). Both set the RFC version and variant fields and use the canonical 8-4-4-4-12 hexadecimal layout.',
+          ],
+        },
+        {
+          heading: 'Choose v4 or v7',
+          paragraphs: [
+            'Use UUID v4 for an opaque random identifier with no timestamp. Use UUID v7 when records should group chronologically by creation millisecond, which can improve index locality compared with random v4 values. Ordering follows the encoded clock value: same-millisecond random tails are not strictly ordered, and a backward system-clock adjustment can reverse generation order.',
+          ],
+        },
+        {
+          heading: 'Bulk formatting and export',
+          paragraphs: [
+            'Generate from 1 through 1,000 values, switch hexadecimal letters to uppercase, remove hyphens, or wrap each value in braces for GUID-oriented workflows. Copy the newline-separated result or download the same batch as a UTF-8 text file.',
+          ],
+          bullets: [
+            'Create database or application identifiers without coordinating a central counter.',
+            'Populate test fixtures, mock API responses, and sample records.',
+            'Attach correlation IDs to requests, jobs, logs, or messages.',
+            'Prepare small batches for imports, prototypes, and local development.',
+          ],
+        },
+        {
+          heading: 'Format examples',
+          paragraphs: [
+            'A v4 result can look like 3f2504e0-4f89-41d3-9a0c-0305e82c3301, while a v7 result has 7 as its version nibble, such as 0190b0cc-4f71-7a8e-9c9a-6a74fbb21a92. Uppercase, hyphenless, and brace options change only presentation; downstream parsers may require the canonical lowercase hyphenated form.',
+          ],
+        },
+        {
+          heading: 'Limitations and privacy',
+          paragraphs: [
+            'UUID uniqueness is probabilistic, and this generator does not check a registry or guarantee uniqueness. UUID v7 exposes its creation millisecond, assumes a non-regressing system clock for generation-order sorting, and random values created within one millisecond are not strictly monotonic. A UUID is an identifier, not automatically a password, API key, or session token. Generation happens locally in the browser; anything you copy, paste, download, transmit, or store is handled by the destination you choose.',
+          ],
+        },
+      ],
+    },
+    'password-generator': {
+      name: 'Password Generator',
+      metadataTitle: 'Secure Password & Passphrase Generator',
+      description:
+        'Generate random passwords or EFF-word-list passphrases locally with browser cryptographic randomness and an explicit entropy estimate.',
+      longDescription:
+        'Free online password and passphrase generator. Choose character sets, length, similar-character filtering, or a six-to-twelve-word EFF passphrase while generation stays in your browser.',
+      keywords: [
+        'password generator',
+        'random password',
+        'secure password generator',
+        'strong password',
+      ],
+      faqs: [
+        {
+          question: 'How strong should my password be?',
+          answer:
+            'Prefer a unique password generated and stored by a password manager. Sixteen or more random characters from a broad pool, or a six-or-more-word random passphrase, is a practical baseline when the destination accepts it; account-specific requirements can differ.',
+        },
+        {
+          question: 'How is randomness generated?',
+          answer:
+            'The generator uses crypto.getRandomValues with rejection sampling, not Math.random. Random-character mode includes at least one character from every selected set when the requested length permits it, then securely shuffles the result.',
+        },
+        {
+          question: 'Are generated passwords uploaded or saved?',
+          answer:
+            'No. Generation and entropy estimation run locally and the app does not save the generated value. Copying can still place it in operating-system clipboard history, extensions can observe page content, and shared devices require extra care.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How secure password generation works',
+          paragraphs: [
+            'Random-character mode draws from the enabled lowercase, uppercase, number, and symbol sets with the browser cryptographic random-number generator. Rejection sampling avoids modulo bias. Passphrase mode selects each word independently from the EFF long word list and supports six to twelve words with a chosen separator.',
+          ],
+        },
+        {
+          heading: 'Choosing a password or passphrase',
+          bullets: [
+            'Use a unique value for every account; password reuse turns one breach into access to multiple services.',
+            'Prefer the longest value the destination reliably supports. Length usually contributes more than predictable substitutions such as replacing a with @.',
+            'Use passphrase mode when a value must be typed or read aloud, and random-character mode when a password manager will store and fill it.',
+            'Enable multi-factor authentication where available, especially for email, finance, cloud, and administrator accounts.',
+          ],
+        },
+        {
+          heading: 'Entropy estimate and privacy limits',
+          paragraphs: [
+            'The displayed entropy is a theoretical estimate based on independent uniform choices from the selected pool or word list. It is not a cracking-time promise and does not account for a compromised browser, device, clipboard, password manager, destination service, or recovery process. The generator does not test passwords against breach databases because doing so would require a separate privacy-preserving lookup design.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose Random Characters or Passphrase mode.',
+        'Set the length and character sets, or choose the word count and separator.',
+        'Generate a new value and review the estimated entropy and any destination-specific rules.',
+        'Store the value directly in a trusted password manager and clear clipboard history when appropriate.',
+      ],
+    },
+    'lorem-ipsum': {
+      name: 'Lorem Ipsum Generator',
+      metadataTitle: 'Lorem Ipsum Generator – Paragraphs & Words',
+      description:
+        'Generate lorem ipsum placeholder text by paragraphs, sentences or words. Optionally start with the classic Lorem ipsum dolor sit amet line, then copy it.',
+      longDescription:
+        'Create filler text for mockups, wireframes, and layout tests. Choose how many paragraphs, sentences, or words you need, and every generation produces a fresh random mix of classic lorem ipsum vocabulary.',
+      keywords: [
+        'lorem ipsum generator',
+        'lorem ipsum',
+        'placeholder text generator',
+        'dummy text generator',
+        'filler text',
+        'lorem ipsum dolor sit amet',
+        'lorem ipsum paragraphs',
+        'random placeholder text',
+      ],
+      faqs: [
+        {
+          question: 'What is Lorem Ipsum?',
+          answer:
+            'Lorem ipsum is Latin-looking placeholder text used in graphic design, web design, and publishing to fill space before the real content is available.',
+        },
+        {
+          question: 'Why use Lorem Ipsum?',
+          answer:
+            'It has a natural-looking mix of short and long words, so it shows how a layout handles real text without readers getting distracted by what the text says.',
+        },
+        {
+          question: 'What does lorem ipsum mean?',
+          answer:
+            'As written, nothing. It is a scrambled excerpt of Cicero\'s De finibus bonorum et malorum, where "dolorem ipsum" means "pain itself". Words were cut and altered, which is why "Lorem" is not a real Latin word.',
+        },
+        {
+          question: 'How long is each generated paragraph?',
+          answer:
+            'Each paragraph has 3 to 7 sentences, and each sentence has 5 to 15 words, so a paragraph is roughly 15 to 105 words. Use words mode when you need an exact word count.',
+        },
+        {
+          question: 'Can I generate lorem ipsum with HTML tags?',
+          answer:
+            'The output is plain text, with paragraphs separated by a blank line. Wrap each paragraph in <p> tags yourself when pasting into HTML.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'Where lorem ipsum comes from',
+          paragraphs: [
+            'Lorem ipsum is derived from De finibus bonorum et malorum, a treatise on ethics written by Cicero in 45 BC. The familiar opening, Lorem ipsum dolor sit amet, consectetur adipiscing elit, comes from a passage that begins Neque porro quisquam est qui dolorem ipsum quia dolor sit amet. Words were cut, altered, and rearranged, so the result reads like Latin but means nothing. Typesetters and designers have used versions of it as dummy text for decades because it has a realistic rhythm of word lengths without meaningful content.',
+          ],
+        },
+        {
+          heading: 'How this generator builds text',
+          bullets: [
+            'Words are drawn at random from a fixed list of lorem ipsum vocabulary, so each click of Generate produces a different result.',
+            'Sentences have 5 to 15 words, start with a capital letter, and end with a period.',
+            'Paragraphs have 3 to 7 sentences and are separated by a blank line.',
+            'With Start with "Lorem ipsum..." enabled, paragraph and sentence output begins with Lorem ipsum dolor sit amet, consectetur adipiscing elit., and word output begins with Lorem ipsum.',
+            'Words mode returns exactly the number of words requested, separated by spaces, without punctuation.',
+            'Totals for words, characters, sentences, and paragraphs are shown below the output.',
+          ],
+        },
+        {
+          heading: 'Using placeholder text well',
+          paragraphs: [
+            'Lorem ipsum is good for checking line length, wrapping, and vertical rhythm, but it hides problems that real content exposes. Before a design ships:',
+          ],
+          bullets: [
+            'Test with realistic copy, including the longest headline, name, or product title you expect.',
+            'Check translated strings: German or Finnish text is often longer than English, and Chinese or Japanese text wraps differently.',
+            'Search the codebase for lorem and ipsum before release so placeholder text does not reach production.',
+            'Keep lorem ipsum out of alt text and accessible names; screen readers will read it aloud.',
+            'For data-heavy mockups such as user tables or product cards, generate realistic fake records with a mock data generator instead. Lorem ipsum does not exercise names, numbers, dates, or long unbroken strings such as URLs.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose Paragraphs, Sentences, or Words as the output type.',
+        'Enter how many paragraphs, sentences, or words you need.',
+        'Keep or clear the Start with "Lorem ipsum..." option.',
+        'Select Generate, and select it again for a new random variation.',
+        'Copy the text into your design, template, or test fixture.',
+      ],
+    },
+    'qr-code': {
+      name: 'QR Code Generator',
+      metadataTitle: 'QR Code Generator Online (PNG & SVG)',
+      description:
+        'Generate QR codes for URLs, text, Wi-Fi, email, phone, SMS and vCards in your browser. Set size, error correction and colors, then download PNG or SVG.',
+      longDescription:
+        'Create static QR codes locally with the open-source qrcode library. Presets fill in standard payload formats, and the preview updates as you type so you can test the code with your phone before downloading it.',
+      keywords: [
+        'qr code generator',
+        'free qr code generator',
+        'create qr code',
+        'wifi qr code generator',
+        'qr code svg',
+        'vcard qr code',
+        'url to qr code',
+        'qr code generator no signup',
+      ],
+      faqs: [
+        {
+          question: 'What is a QR code?',
+          answer:
+            'A QR (Quick Response) code is a two-dimensional barcode that stores text such as a URL, contact card, or Wi-Fi configuration. Phone cameras and scanner apps decode it and offer an action, such as opening the link.',
+        },
+        {
+          question: 'What data can I encode?',
+          answer:
+            'Any text. The presets fill in standard formats for URLs, email (mailto:), phone (tel:), SMS (sms:), Wi-Fi (WIFI:), and vCard contacts, which phones recognize and act on.',
+        },
+        {
+          question: 'Do these QR codes expire?',
+          answer:
+            'No. They are static codes: the content is stored in the pattern itself, with no redirect service that could be switched off. A URL code works for as long as the URL does.',
+        },
+        {
+          question: 'Can I track scans or change the link later?',
+          answer:
+            'Not with a static code. To change the destination after printing, encode a short URL on a domain you control and update the redirect there; your own server logs can then count visits.',
+        },
+        {
+          question: 'Should I download PNG or SVG?',
+          answer:
+            'Use SVG for print and for designs that will be resized, because it scales without blurring. Use PNG for documents, slides, and tools that do not accept SVG; pick the 1024 px size if it will be enlarged.',
+        },
+        {
+          question: 'How do I make a Wi-Fi QR code?',
+          answer:
+            'Select the WiFi preset and edit WIFI:T:WPA;S:MyNetwork;P:MyPassword;; - T is the security type (WPA, WEP, or nopass), S the network name, and P the password. Escape ; , : and \\ in the name or password with a backslash.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'Static QR codes that do not expire',
+          paragraphs: [
+            'This generator creates static QR codes: your content is encoded directly in the pattern, and nothing sits between the scan and the destination. The code keeps working as long as the content itself is valid, and scans are not tracked or counted. The trade-off is that a printed static code cannot be edited. To keep the option of changing the destination, point the code at a URL you control and redirect it yourself.',
+          ],
+        },
+        {
+          heading: 'Payload formats for the presets',
+          bullets: [
+            'URL: https://example.com. Include the scheme so scanners treat it as a link.',
+            'Email: mailto:hello@example.com. Add ?subject=Hello to pre-fill a subject line.',
+            'Phone: tel:+1234567890, using the international format with a country code.',
+            'SMS: sms:+1234567890?body=Hello. Support for the pre-filled body varies between phones.',
+            'Wi-Fi: WIFI:T:WPA;S:MyNetwork;P:MyPassword;; joins a network without typing the password.',
+            'vCard: a BEGIN:VCARD ... END:VCARD block with fields such as FN, TEL, and EMAIL saves a contact.',
+          ],
+        },
+        {
+          heading: 'Choosing error correction and size',
+          paragraphs: [
+            'Error correction adds redundancy so a code can still be read when part of it is dirty, damaged, or covered. The four levels restore roughly 7% (L), 15% (M, the default), 25% (Q), or 30% (H) of the symbol. Higher levels and longer content both produce denser codes with more, smaller modules, which need a larger print size to scan reliably. The absolute maximum is 2,953 bytes at level L, but short content scans far more reliably, so keep URLs brief. Use M for screens and clean prints, and Q or H for labels that may get scuffed.',
+          ],
+        },
+        {
+          heading: 'Colors, contrast, and quiet zone',
+          paragraphs: [
+            'Scanners expect dark modules on a light background with strong contrast, so avoid pale foreground colors and light-on-dark (inverted) codes, which some scanner apps cannot read. The generated image includes a 1-module margin; the QR specification calls for a 4-module quiet zone, so leave extra plain space around the code when you place it on a busy or colored design. Test the final printed or exported code with more than one phone before publishing it.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Type or paste your content, or choose a preset (URL, Email, Phone, SMS, WiFi, vCard) and replace the placeholder values.',
+        'Pick a size, an error correction level, and foreground and background colors.',
+        'Check the live preview and scan it with your phone.',
+        'Download the code as PNG or SVG, or copy the image to your clipboard.',
+      ],
+    },
+    'slug-generator': {
+      name: 'Slug Generator',
+      metadataTitle: 'Slug Generator – URL-Friendly Slugs Online',
+      description: 'Generate SEO-friendly URL slugs from text. Free online slug generator.',
+      longDescription:
+        'Free online slug generator. Convert titles and text into clean, SEO-friendly URL slugs. Supports transliteration for special characters.',
+      keywords: ['slug generator', 'url slug', 'seo friendly url', 'permalink generator'],
+      faqs: [
+        {
+          question: 'What is a URL slug?',
+          answer:
+            'A URL slug is the part of a URL that identifies a particular page in a human-readable form. For example, in /blog/my-first-post, "my-first-post" is the slug.',
+        },
+        {
+          question: 'Why are slugs important for SEO?',
+          answer:
+            'SEO-friendly slugs help search engines understand your content and improve click-through rates by showing users what the page is about.',
+        },
+      ],
+    },
+    'css-gradient': {
+      name: 'CSS Gradient Generator',
+      metadataTitle: 'CSS Gradient Generator Online',
+      description: 'Create beautiful CSS gradients with a visual editor. Free gradient generator.',
+      longDescription:
+        'Free online CSS gradient generator. Create stunning linear and radial gradients with multiple color stops, presets, and export options. Get production-ready CSS code instantly.',
+      keywords: [
+        'css gradient generator',
+        'gradient maker',
+        'linear gradient',
+        'radial gradient',
+        'css background',
+      ],
+      faqs: [
+        {
+          question: 'What types of gradients are supported?',
+          answer:
+            'This tool supports both linear gradients (with customizable angles) and radial gradients (with circle or ellipse shapes).',
+        },
+        {
+          question: 'Can I export the gradient as an image?',
+          answer:
+            'Yes! You can download the gradient as a PNG image in addition to copying the CSS code.',
+        },
+      ],
+    },
+    'meta-tags': {
+      name: 'Meta Tags Generator',
+      metadataTitle: 'Meta Tags Generator – SEO & Open Graph',
+      description: 'Generate SEO meta tags for your website. Free meta tags generator.',
+      longDescription:
+        'Free online meta tags generator. Create essential HTML meta tags for SEO, Open Graph for social sharing, and Twitter Cards. Improve your website visibility.',
+      keywords: [
+        'meta tags generator',
+        'seo meta tags',
+        'open graph tags',
+        'twitter card generator',
+      ],
+      faqs: [
+        {
+          question: 'What are meta tags?',
+          answer:
+            'Meta tags are HTML elements that provide metadata about a web page. They help search engines understand your content and control how your page appears in search results.',
+        },
+        {
+          question: 'What are Open Graph tags?',
+          answer:
+            'Open Graph tags control how your content appears when shared on social media platforms like Facebook, LinkedIn, and others.',
+        },
+      ],
+    },
+    'css-box-shadow': {
+      name: 'CSS Box Shadow Generator',
+      metadataTitle: 'CSS Box Shadow Generator Online',
+      description:
+        'Create layered CSS box-shadows and glassmorphism styling visually with live preview and multi-layer support.',
+      longDescription:
+        'Free visual CSS Box Shadow and Glassmorphism generator. Configure multi-layer shadows, inset shadows, blur, spread, colors, opacity, and backdrop blur with 1-click CSS export.',
+      keywords: [
+        'css box shadow generator',
+        'box shadow tool',
+        'glassmorphism generator',
+        'css shadow presets',
+        'layered box shadow',
+      ],
+      faqs: [
+        {
+          question: 'How do multiple box-shadow layers work?',
+          answer:
+            'CSS box-shadow accepts comma-separated shadow definitions. Layers declared earlier in the list are rendered on top of layers declared later.',
+        },
+        {
+          question: 'What is glassmorphism in CSS?',
+          answer:
+            'Glassmorphism combines semi-transparent background colors with backdrop-filter: blur() and subtle light borders to mimic frosted glass.',
+        },
+      ],
+      howToUseSteps: [
+        'Pick a starter preset (Soft SaaS, Floating, Neon, Glassmorphism) or start from scratch.',
+        'Adjust X/Y offsets, blur radius, spread, color, and opacity for each shadow layer.',
+        'Add or remove shadow layers to achieve realistic depth.',
+        'Copy the generated CSS or Tailwind arbitrary class.',
+      ],
+    },
+    'cron-generator': {
+      name: 'Visual Cron Expression Builder',
+      metadataTitle: 'Cron Expression Generator Online',
+      description:
+        'Build and visualize standard 5-part cron expressions with minutes, hours, days, weeks, and months options.',
+      longDescription:
+        'Free online Cron Expression Generator. Build crontab schedules visually with user-friendly selectors and clear English explanations without memorizing syntax.',
+      keywords: [
+        'cron generator',
+        'cron expression builder',
+        'crontab generator online',
+        'cron schedule maker',
+      ],
+      faqs: [
+        {
+          question: 'What are the 5 parts of a standard cron expression?',
+          answer:
+            'Standard cron expressions consist of 5 fields: Minute (0-59), Hour (0-23), Day of Month (1-31), Month (1-12), and Day of Week (0-6, where 0 is Sunday).',
+        },
+        {
+          question: 'What does */15 mean in cron?',
+          answer:
+            'The step value */15 in the minute position means "every 15 minutes" (e.g. at :00, :15, :30, and :45).',
+        },
+      ],
+      howToUseSteps: [
+        'Select your frequency tab (Minutes, Hourly, Daily, Weekly, or Monthly).',
+        'Pick the specific intervals, days of the week, or times of the day.',
+        'Review the generated 5-part cron expression and human-readable explanation.',
+        'Copy the cron expression to your crontab, GitHub Action, or cloud scheduler.',
+      ],
+    },
+    'mock-data-generator': {
+      name: 'Mock Data JSON Generator',
+      metadataTitle: 'Mock Data & Fake JSON Generator Online',
+      description:
+        'Generate realistic dummy JSON data for users, products, orders, companies, and blog posts with customizable record counts.',
+      longDescription:
+        'Free online Mock Data JSON Generator. Generate realistic dummy datasets for testing REST APIs, database seeding, and frontend prototyping without installing heavy dependencies.',
+      keywords: [
+        'mock data generator',
+        'fake json generator',
+        'dummy data online',
+        'api mock data',
+        'test json generator',
+      ],
+      faqs: [
+        {
+          question: 'What types of mock data can I generate?',
+          answer:
+            'You can generate realistic dummy records for Users (with names, emails, phones, roles), Products (with SKUs, prices, ratings), Orders (with currencies, statuses), Companies, and Blog Posts.',
+        },
+        {
+          question: 'Can I download the generated mock data?',
+          answer:
+            'Yes, you can copy the JSON directly to your clipboard or download it as a .json file with a single click.',
+        },
+      ],
+      howToUseSteps: [
+        'Choose a data schema (Users, Products, Orders, Companies, or Posts).',
+        'Select the number of rows or records to generate (1 to 100).',
+        'Click Regenerate if you want a fresh set of randomized mock records.',
+        'Copy the JSON payload or download it as a .json file for your project.',
+      ],
+    },
+    'favicon-generator': {
+      name: 'Favicon & App Icon Generator',
+      metadataTitle: 'Favicon & App Icon Generator Online',
+      description:
+        'Convert any image into standard favicon sizes (16x16, 32x32, 48x48), Apple Touch icons, Android PWA icons, and copy HTML header tags.',
+      longDescription:
+        'Free online Favicon & Web App Icon Generator. Resize and generate standard PNG favicons, iOS Apple Touch icons, Android web app icons, and webmanifest tags directly in your browser using HTML5 Canvas.',
+      keywords: [
+        'favicon generator',
+        'generate favicon from png',
+        'apple touch icon generator',
+        'favicon 16x16 32x32',
+        'pwa icon generator',
+      ],
+      faqs: [
+        {
+          question: 'What sizes are generated?',
+          answer:
+            'The tool generates 16x16 (standard tab), 32x32 (retina tab), 48x48 (desktop shortcut), 180x180 (iOS Apple Touch icon), 192x192 (Android app), and 512x512 (PWA splash) PNG icons.',
+        },
+        {
+          question: 'Are my uploaded images sent to any server?',
+          answer:
+            'No. All resizing and image rendering is performed client-side using browser HTML5 Canvas. Your images never leave your computer.',
+        },
+      ],
+      howToUseSteps: [
+        'Upload any square or high-resolution PNG, JPG, SVG, or WebP image.',
+        'Preview the generated icons across all standard device sizes.',
+        'Download individual PNG sizes as needed.',
+        'Copy the HTML <link> tags and site.webmanifest config directly into your project.',
+      ],
+    },
+    'gitignore-generator': {
+      name: '.gitignore Generator',
+      metadataTitle: '.gitignore Generator Online',
+      description:
+        'Create customized .gitignore files for Node.js, Python, Go, Rust, macOS, Windows, VSCode, and JetBrains in seconds.',
+      longDescription:
+        'Free online .gitignore Generator. Select and combine standard ignore templates across programming languages, web frameworks, operating systems, and code editors without manual copy-pasting.',
+      keywords: [
+        'gitignore generator',
+        'node gitignore',
+        'python gitignore',
+        'vscode gitignore',
+        'ds_store gitignore',
+      ],
+      faqs: [
+        {
+          question: 'What templates are included in this .gitignore generator?',
+          answer:
+            'The generator includes standard rules for Node.js/TypeScript, Python, Go, Rust, Java/Gradle/Maven, React/Next.js/Vite, Vue/Nuxt, macOS (.DS_Store), Windows, Linux, VSCode, and JetBrains IDEs.',
+        },
+        {
+          question: 'Can I add custom ignore patterns?',
+          answer:
+            'Yes, you can write custom rule lines in the editor which will be automatically combined with the selected platform templates.',
+        },
+      ],
+      howToUseSteps: [
+        'Search and toggle the technologies, operating systems, and IDEs used in your repository.',
+        'Add any project-specific secret paths or local file patterns in the custom rules box.',
+        'Review the merged, formatted .gitignore output.',
+        'Click Copy or Download .gitignore to place it directly in your project root.',
+      ],
+    },
+    'css-blob-generator': {
+      name: 'CSS & SVG Blob Generator',
+      metadataTitle: 'CSS & SVG Blob Generator Online',
+      description:
+        'Generate smooth, organic, fluid blob shapes using CSS border-radius and SVG vector paths for modern web design backgrounds.',
+      longDescription:
+        'Free online CSS & SVG Blob Shape Generator. Create beautiful organic fluid blobs for website headers, hero illustrations, and UI backgrounds with 1-click CSS and SVG code export.',
+      keywords: [
+        'css blob generator',
+        'svg blob generator',
+        'organic shape generator',
+        'fancy border radius',
+        'blob maker online',
+      ],
+      faqs: [
+        {
+          question: 'How do CSS blobs work without SVG?',
+          answer:
+            'CSS blobs use the 8-value border-radius property syntax (horizontal-radii / vertical-radii) to create asymmetric, curved organic shapes purely in CSS.',
+        },
+        {
+          question: 'Can I download the shape as a scalable vector graphic (SVG)?',
+          answer:
+            'Yes, you can copy the raw SVG vector markup or download the shape as a standalone .svg file.',
+        },
+      ],
+      howToUseSteps: [
+        'Click "Generate Random Shape" to shuffle organic geometric curves.',
+        'Pick your desired brand or accent background color.',
+        'Copy the CSS border-radius snippet for pure CSS implementation.',
+        'Or click "Download SVG Vector" to import the shape into Figma or your HTML codebase.',
+      ],
+    },
+    'markdown-table-generator': {
+      name: 'Markdown Table Generator',
+      metadataTitle: 'Markdown Table Generator Online',
+      description:
+        'Create and format GitHub-flavored Markdown tables with an interactive spreadsheet editor, row/column controls, and text alignments.',
+      longDescription:
+        'Free online Markdown Table Generator. Visually create, edit, and format Markdown tables for GitHub, GitLab, and documentation with live text alignment and 1-click Markdown copy.',
+      keywords: [
+        'markdown table generator',
+        'markdown table maker',
+        'github markdown table builder',
+        'markdown spreadsheet',
+        'create markdown table online',
+      ],
+      faqs: [
+        {
+          question: 'Does this tool support column alignments (left, center, right)?',
+          answer:
+            'Yes. You can toggle text alignment for each column individually (:---, :---:, ---:) using the alignment buttons above each column.',
+        },
+        {
+          question: 'Can I add or remove rows and columns dynamically?',
+          answer:
+            'Yes, click the "+ Add Column" or "+ Add Row" buttons to expand the table, or use the trash icons to remove specific rows and columns.',
+        },
+      ],
+      howToUseSteps: [
+        'Edit table header titles and cell data directly in the spreadsheet grid.',
+        'Click the alignment icons on any column to toggle Left, Center, or Right text alignment.',
+        'Add or remove columns and rows as needed.',
+        'Click "Copy Markdown" to paste the formatted table directly into your GitHub README or documentation.',
+      ],
+    },
+    'svg-placeholder-generator': {
+      name: 'SVG Placeholder Generator',
+      metadataTitle: 'SVG Placeholder Generator Online',
+      description:
+        'Generate lightweight SVG and Data URI image placeholders with custom dimensions, background colors, and custom text labels.',
+      longDescription:
+        'Free online SVG Image Placeholder Generator. Create customized dummy image placeholders for website mockups, wireframes, and prototypes with custom dimensions and colors without external image hosting.',
+      keywords: [
+        'svg placeholder generator',
+        'dummy image generator',
+        'placeholder image svg',
+        'data uri placeholder',
+        'image placeholder maker',
+      ],
+      faqs: [
+        {
+          question: 'Why use SVG placeholders instead of external placeholder URLs?',
+          answer:
+            'SVG placeholders require zero HTTP network requests, load instantaneously offline, and are lightweight (~300 bytes) Data URIs directly embedded in HTML/CSS.',
+        },
+        {
+          question: 'Can I customize the label text inside the image?',
+          answer:
+            'Yes. You can specify any custom text (e.g. "Hero Banner", "Avatar 128x128") or leave it blank to automatically show dimensions.',
+        },
+      ],
+      howToUseSteps: [
+        'Set your desired width and height in pixels.',
+        'Choose background and text colors from the color pickers.',
+        'Type your custom label text.',
+        'Copy the inline SVG Data URI, copy raw SVG XML, or download the .svg file.',
+      ],
+    },
+    'ascii-art-generator': {
+      name: 'ASCII Art & Banner Generator',
+      metadataTitle: 'ASCII Art & Banner Generator Online',
+      description:
+        'Convert text into large ASCII font art banners for GitHub READMEs, terminal CLI intros, code comments, and discord headers.',
+      longDescription:
+        'Free online ASCII Art & Big Text Generator. Turn regular words and slogans into multi-line stylized ASCII character art banners with instant copy and text download.',
+      keywords: [
+        'ascii art generator',
+        'ascii text generator',
+        'ascii banner generator',
+        'big text generator',
+        'figlet online',
+      ],
+      faqs: [
+        {
+          question: 'Can I use generated ASCII banners in GitHub README files?',
+          answer:
+            'Yes. Wrap the output in a markdown code block (```) in your README.md to ensure monospaced alignment across all browsers.',
+        },
+        {
+          question: 'What font styles are supported?',
+          answer:
+            'Standard classic ASCII (slashes, pipes, underscores) and modern Unicode solid block characters (█) for crisp rendering.',
+        },
+      ],
+      howToUseSteps: [
+        'Type your word or slogan into the text input box.',
+        'Select your preferred font style (Standard ASCII or Solid Blocks).',
+        'Click "Copy ASCII" to copy the formatted banner to your clipboard.',
+        'Or click the download button to save it as a .txt file.',
+      ],
+    },
+    'ulid-generator': {
+      name: 'ULID & UUID v7 Generator',
+      metadataTitle: 'ULID & UUID v7 Generator Online',
+      description:
+        'Generate sortable, timestamp-ordered 128-bit ULIDs (Base32) and UUID v7 identifiers with millisecond timestamp decoding and bulk export.',
+      longDescription:
+        'Free online ULID and UUID v7 Generator. Create database-friendly, index-optimized unique identifiers that sort chronologically by creation time. Supports single and bulk generation with instant copy.',
+      keywords: [
+        'ulid generator',
+        'uuid v7 generator',
+        'timestamp ordered uuid',
+        'sortable unique id',
+        'ulid online',
+      ],
+      faqs: [
+        {
+          question: 'Why choose ULID or UUID v7 over UUID v4?',
+          answer:
+            'Unlike random UUID v4, ULID and UUID v7 begin with a millisecond timestamp prefix, preventing B-Tree index fragmentation and significantly accelerating database INSERT performance.',
+        },
+        {
+          question: 'Are generated ULIDs collision-safe?',
+          answer:
+            'Yes. Each ULID contains 80 bits of cryptographic randomness in addition to the 48-bit timestamp, offering effectively zero chance of collision.',
+        },
+      ],
+      howToUseSteps: [
+        'Choose your format: ULID (26-char Crockford Base32) or UUID v7 (36-char hex).',
+        'Select quantity (1 to 50 IDs) and click Regenerate if needed.',
+        'Click "Copy All" to paste the generated identifiers into your application.',
+      ],
+    },
+    'color-palette-generator': {
+      name: 'Tailwind Color Palette Generator',
+      metadataTitle: 'Tailwind Color Palette Generator Online',
+      description:
+        'Generate accessible 50-950 Tailwind CSS color shade scales and color harmony palettes from any hex color.',
+      longDescription:
+        'Free online Tailwind and UI Color Palette Generator. Pick any base brand color to compute an entire 11-step Tailwind-compatible shade scale (50 to 950) with instant copy and full JavaScript theme export.',
+      keywords: [
+        'tailwind palette generator',
+        'color palette generator',
+        'tailwind color shades',
+        'hex shade generator',
+        'ui color palette',
+      ],
+      faqs: [
+        {
+          question: 'How are the shade levels calculated?',
+          answer:
+            'The generator adjusts HSL lightness curves to match standard Tailwind CSS lightness distribution (50 at ~96% lightness to 950 at ~6% lightness).',
+        },
+      ],
+      howToUseSteps: [
+        'Pick a base brand color using the color picker or enter a hex code.',
+        'Click on any individual shade to copy its hex code.',
+        'Click "Copy Full JS Config" to export the entire color object into tailwind.config.js.',
+      ],
+    },
+    'mac-address-generator': {
+      name: 'MAC Address Generator & Formatter',
+      metadataTitle: 'MAC Address Generator Online',
+      description:
+        'Generate random unicast or multicast MAC addresses formatted in Colon, Hyphen, or Cisco dot notation.',
+      longDescription:
+        'Free online MAC Address Generator. Create valid IEEE 802 MAC hardware addresses for network testing, router simulation, and virtual machines in bulk with custom delimiter formats.',
+      keywords: [
+        'mac address generator',
+        'random mac address',
+        'cisco mac address format',
+        'mac generator online',
+        'oui mac address',
+      ],
+      faqs: [
+        {
+          question: 'What notation styles are available?',
+          answer:
+            'Standard Colon (00:1A:2B:3C:4D:5E), Hyphen (00-1A-2B-3C-4D-5E), Cisco Dot (001a.2b3c.4d5e), and raw uninterrupted hex.',
+        },
+      ],
+      howToUseSteps: [
+        'Choose separator style and uppercase/lowercase format.',
+        'Select the batch quantity (up to 25 MAC addresses).',
+        'Click "Regenerate" and copy the generated list.',
+      ],
+    },
+    'dockerfile-ai-optimized-generator': {
+      name: 'Multi-Stage Dockerfile Generator',
+      metadataTitle: 'Multi-Stage Dockerfile Generator Online',
+      description: 'Generate production multi-stage Dockerfiles for Node, Python, Go, and Rust with security.',
+      longDescription: 'Generate production multi-stage Dockerfiles for Node, Python, Go, and Rust with security. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['dockerfile ai optimized generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Multi-Stage Dockerfile Generator?', answer: 'Generate production multi-stage Dockerfiles for Node, Python, Go, and Rust with security.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'kubernetes-deployment-generator': {
+      name: 'Kubernetes Deployment YAML Generator',
+      metadataTitle: 'Kubernetes Deployment YAML Generator Online',
+      description: 'Generate production Kubernetes Deployment, Service, and resource limit YAML manifests.',
+      longDescription: 'Generate production Kubernetes Deployment, Service, and resource limit YAML manifests. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['kubernetes deployment generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Kubernetes Deployment YAML Generator?', answer: 'Generate production Kubernetes Deployment, Service, and resource limit YAML manifests.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'kubernetes-configmap-secret-builder': {
+      name: 'K8s ConfigMap & Secret Manifest Builder',
+      metadataTitle: 'K8s ConfigMap & Secret Manifest Builder Online',
+      description: 'Generate Kubernetes ConfigMap and Base64-encoded Secret YAML manifests effortlessly.',
+      longDescription: 'Generate Kubernetes ConfigMap and Base64-encoded Secret YAML manifests effortlessly. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['kubernetes configmap secret builder', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is K8s ConfigMap & Secret Manifest Builder?', answer: 'Generate Kubernetes ConfigMap and Base64-encoded Secret YAML manifests effortlessly.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'helm-chart-yaml-generator': {
+      name: 'Helm Chart & Values Scaffold Generator',
+      metadataTitle: 'Helm Chart & Values Scaffold Generator Online',
+      description: 'Generate Helm Chart.yaml and values.yaml starter templates for cloud-native Kubernetes apps.',
+      longDescription: 'Generate Helm Chart.yaml and values.yaml starter templates for cloud-native Kubernetes apps. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['helm chart yaml generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Helm Chart & Values Scaffold Generator?', answer: 'Generate Helm Chart.yaml and values.yaml starter templates for cloud-native Kubernetes apps.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'gitlab-ci-pipeline-builder': {
+      name: 'GitLab CI/CD Pipeline YAML Builder',
+      metadataTitle: 'GitLab CI/CD Pipeline YAML Builder Online',
+      description: 'Generate multi-stage .gitlab-ci.yml pipeline configuration with build, test, and caching.',
+      longDescription: 'Generate multi-stage .gitlab-ci.yml pipeline configuration with build, test, and caching. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['gitlab ci pipeline builder', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is GitLab CI/CD Pipeline YAML Builder?', answer: 'Generate multi-stage .gitlab-ci.yml pipeline configuration with build, test, and caching.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'github-issue-pr-template-generator': {
+      name: 'GitHub Issue & PR Template Builder',
+      metadataTitle: 'GitHub Issue & PR Template Builder Online',
+      description: 'Generate standard GitHub markdown issue templates and pull request checklist templates.',
+      longDescription: 'Generate standard GitHub markdown issue templates and pull request checklist templates. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['github issue pr template generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is GitHub Issue & PR Template Builder?', answer: 'Generate standard GitHub markdown issue templates and pull request checklist templates.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'opa-rego-policy-builder': {
+      name: 'Open Policy Agent (OPA) Rego Builder',
+      metadataTitle: 'Open Policy Agent (OPA) Rego Builder Online',
+      description: 'Generate OPA Rego authorization policies for RBAC, ABAC, and API security enforcement.',
+      longDescription: 'Generate OPA Rego authorization policies for RBAC, ABAC, and API security enforcement. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['opa rego policy builder', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Open Policy Agent (OPA) Rego Builder?', answer: 'Generate OPA Rego authorization policies for RBAC, ABAC, and API security enforcement.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'systemd-service-hardened-builder': {
+      name: 'Linux systemd Hardened Service Builder',
+      metadataTitle: 'Linux systemd Hardened Service Builder Online',
+      description: 'Generate Linux systemd service unit files with security sandboxing and NoNewPrivileges.',
+      longDescription: 'Generate Linux systemd service unit files with security sandboxing and NoNewPrivileges. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['systemd service hardened builder', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Linux systemd Hardened Service Builder?', answer: 'Generate Linux systemd service unit files with security sandboxing and NoNewPrivileges.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'nginx-security-conf-generator': {
+      name: 'Hardened Nginx Server Configuration Builder',
+      metadataTitle: 'Hardened Nginx Server Configuration Builder',
+      description: 'Generate hardened Nginx server blocks with SSL TLS 1.3, HSTS, and rate limiting.',
+      longDescription: 'Generate hardened Nginx server blocks with SSL TLS 1.3, HSTS, and rate limiting. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['nginx security conf generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Hardened Nginx Server Configuration Builder?', answer: 'Generate hardened Nginx server blocks with SSL TLS 1.3, HSTS, and rate limiting.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'caddyfile-production-generator': {
+      name: 'Production Caddyfile Configuration Builder',
+      metadataTitle: 'Production Caddyfile Configuration Builder',
+      description: 'Generate modern Caddyfile configs with automatic HTTPS, reverse proxy, and compression.',
+      longDescription: 'Generate modern Caddyfile configs with automatic HTTPS, reverse proxy, and compression. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['caddyfile production generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Production Caddyfile Configuration Builder?', answer: 'Generate modern Caddyfile configs with automatic HTTPS, reverse proxy, and compression.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'prometheus-recording-rules-generator': {
+      name: 'Prometheus Alerting & Recording Rules Builder',
+      metadataTitle: 'Prometheus Alerting & Recording Rules Builder',
+      description: 'Generate Prometheus alert rules and recording rules YAML for SLO monitoring and latency.',
+      longDescription: 'Generate Prometheus alert rules and recording rules YAML for SLO monitoring and latency. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['prometheus recording rules generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Prometheus Alerting & Recording Rules Builder?', answer: 'Generate Prometheus alert rules and recording rules YAML for SLO monitoring and latency.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'tailwind-v4-mesh-gradient-generator': {
+      name: 'Tailwind CSS Mesh Radial Gradient Generator',
+      metadataTitle: 'Tailwind CSS Mesh Radial Gradient Generator',
+      description: 'Create modern colorful radial mesh background gradients for CSS and Tailwind CSS.',
+      longDescription: 'Create modern colorful radial mesh background gradients for CSS and Tailwind CSS. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['tailwind v4 mesh gradient generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Tailwind CSS Mesh Radial Gradient Generator?', answer: 'Create modern colorful radial mesh background gradients for CSS and Tailwind CSS.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'css-isometric-grid-generator': {
+      name: 'CSS Isometric 3D Grid & Transform Generator',
+      metadataTitle: 'CSS Isometric 3D Grid & Transform Generator',
+      description: 'Generate 2.5D isometric 3D CSS transform grids and tile coordinate matrix styles.',
+      longDescription: 'Generate 2.5D isometric 3D CSS transform grids and tile coordinate matrix styles. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['css isometric grid generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is CSS Isometric 3D Grid & Transform Generator?', answer: 'Generate 2.5D isometric 3D CSS transform grids and tile coordinate matrix styles.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'css-ribbon-banner-generator': {
+      name: 'CSS Corner Ribbon & Badge Generator',
+      metadataTitle: 'CSS Corner Ribbon & Badge Generator Online',
+      description: 'Create responsive corner ribbons, sale badges, and promotional labels with pure CSS.',
+      longDescription: 'Create responsive corner ribbons, sale badges, and promotional labels with pure CSS. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['css ribbon banner generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is CSS Corner Ribbon & Badge Generator?', answer: 'Create responsive corner ribbons, sale badges, and promotional labels with pure CSS.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'svg-wavy-divider-generator': {
+      name: 'SVG Wavy Page Section Divider Generator',
+      metadataTitle: 'SVG Wavy Page Section Divider Generator Online',
+      description: 'Generate smooth SVG wave curve dividers and section transitions for landing pages.',
+      longDescription: 'Generate smooth SVG wave curve dividers and section transitions for landing pages. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['svg wavy divider generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is SVG Wavy Page Section Divider Generator?', answer: 'Generate smooth SVG wave curve dividers and section transitions for landing pages.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'opengraph-banner-canvas-generator': {
+      name: 'OpenGraph & Twitter Card Meta Tags Builder',
+      metadataTitle: 'OpenGraph & Twitter Card Meta Tags Builder',
+      description: 'Generate dynamic OpenGraph and Twitter social preview card meta tags and banner markup.',
+      longDescription: 'Generate dynamic OpenGraph and Twitter social preview card meta tags and banner markup. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['opengraph banner canvas generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is OpenGraph & Twitter Card Meta Tags Builder?', answer: 'Generate dynamic OpenGraph and Twitter social preview card meta tags and banner markup.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'prisma-seed-generator': {
+      name: 'Prisma Client Seeding Script Generator',
+      metadataTitle: 'Prisma Client Seeding Script Generator Online',
+      description: 'Generate TypeScript Prisma database seed scripts (prisma/seed.ts) with batch inserts.',
+      longDescription: 'Generate TypeScript Prisma database seed scripts (prisma/seed.ts) with batch inserts. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['prisma seed generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Prisma Client Seeding Script Generator?', answer: 'Generate TypeScript Prisma database seed scripts (prisma/seed.ts) with batch inserts.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'faker-js-mock-schema-generator': {
+      name: 'Faker.js Synthetic Dataset Generator',
+      metadataTitle: 'Faker.js Synthetic Dataset Generator Online',
+      description: 'Generate mock dataset schemas using Faker.js for names, emails, avatars, and dates.',
+      longDescription: 'Generate mock dataset schemas using Faker.js for names, emails, avatars, and dates. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['faker js mock schema generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Faker.js Synthetic Dataset Generator?', answer: 'Generate mock dataset schemas using Faker.js for names, emails, avatars, and dates.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'llm-few-shot-prompt-formatter': {
+      name: 'LLM Few-Shot Structured Prompt Builder',
+      metadataTitle: 'LLM Few-Shot Structured Prompt Builder Online',
+      description: 'Build high-accuracy Few-Shot prompt templates with delimiter-separated demonstration pairs.',
+      longDescription: 'Build high-accuracy Few-Shot prompt templates with delimiter-separated demonstration pairs. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['llm few shot prompt formatter', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is LLM Few-Shot Structured Prompt Builder?', answer: 'Build high-accuracy Few-Shot prompt templates with delimiter-separated demonstration pairs.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'cot-chain-of-thought-prompt-builder': {
+      name: 'Chain-of-Thought (CoT) Prompt Builder',
+      metadataTitle: 'Chain-of-Thought (CoT) Prompt Builder Online',
+      description: 'Generate structured Chain-of-Thought reasoning scaffolds for complex AI reasoning tasks.',
+      longDescription: 'Generate structured Chain-of-Thought reasoning scaffolds for complex AI reasoning tasks. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['cot chain of thought prompt builder', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Chain-of-Thought (CoT) Prompt Builder?', answer: 'Generate structured Chain-of-Thought reasoning scaffolds for complex AI reasoning tasks.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'sql-stored-procedure-generator': {
+      name: 'SQL Stored Procedure & Trigger Generator',
+      metadataTitle: 'SQL Stored Procedure & Trigger Generator Online',
+      description: 'Generate PostgreSQL and MySQL stored procedure, function, and audit trigger templates.',
+      longDescription: 'Generate PostgreSQL and MySQL stored procedure, function, and audit trigger templates. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['sql stored procedure generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is SQL Stored Procedure & Trigger Generator?', answer: 'Generate PostgreSQL and MySQL stored procedure, function, and audit trigger templates.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'redis-lua-script-generator': {
+      name: 'Atomic Redis Lua Script Generator',
+      metadataTitle: 'Atomic Redis Lua Script Generator Online',
+      description: 'Generate atomic Redis Lua scripts for token bucket rate limiters, mutex locks, and queues.',
+      longDescription: 'Generate atomic Redis Lua scripts for token bucket rate limiters, mutex locks, and queues. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['redis lua script generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Atomic Redis Lua Script Generator?', answer: 'Generate atomic Redis Lua scripts for token bucket rate limiters, mutex locks, and queues.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'crontab-randomized-generator': {
+      name: 'Crontab Jitter & Randomized Offset Generator',
+      metadataTitle: 'Crontab Jitter & Randomized Offset Generator',
+      description: 'Generate cron schedule commands with randomized sleep offsets to prevent thundering herds.',
+      longDescription: 'Generate cron schedule commands with randomized sleep offsets to prevent thundering herds. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['crontab randomized generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Crontab Jitter & Randomized Offset Generator?', answer: 'Generate cron schedule commands with randomized sleep offsets to prevent thundering herds.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'ansible-playbook-scaffolder': {
+      name: 'Ansible Automation Playbook Scaffolder',
+      metadataTitle: 'Ansible Automation Playbook Scaffolder Online',
+      description: 'Generate production Ansible YAML playbooks with tasks, handlers, and package managers.',
+      longDescription: 'Generate production Ansible YAML playbooks with tasks, handlers, and package managers. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['ansible playbook scaffolder', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Ansible Automation Playbook Scaffolder?', answer: 'Generate production Ansible YAML playbooks with tasks, handlers, and package managers.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'terraform-module-scaffolder': {
+      name: 'Modular Terraform Module Scaffolder',
+      metadataTitle: 'Modular Terraform Module Scaffolder Online',
+      description: 'Generate structured Terraform main.tf, variables.tf, and outputs.tf module architectures.',
+      longDescription: 'Generate structured Terraform main.tf, variables.tf, and outputs.tf module architectures. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['terraform module scaffolder', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Modular Terraform Module Scaffolder?', answer: 'Generate structured Terraform main.tf, variables.tf, and outputs.tf module architectures.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'css-glassmorphism-claymorphism': {
+      name: 'CSS Glassmorphism & Claymorphism 3D Generator',
+      metadataTitle: 'CSS Glassmorphism & Claymorphism Generator',
+      description: 'Design modern backdrop blur glassmorphism and claymorphism 3D neumorphic UI cards with CSS.',
+      longDescription: 'Design modern backdrop blur glassmorphism and claymorphism 3D neumorphic UI cards with CSS. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['css glassmorphism claymorphism', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is CSS Glassmorphism & Claymorphism 3D Generator?', answer: 'Design modern backdrop blur glassmorphism and claymorphism 3D neumorphic UI cards with CSS.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'css-clamp-calculator': {
+      name: 'CSS Fluid Clamp & Responsive Typography Calculator',
+      metadataTitle: 'CSS Fluid Clamp & Responsive Type Calculator',
+      description: 'Calculate responsive CSS clamp() viewport formulas for fluid font sizes, margins, and layouts.',
+      longDescription: 'Calculate responsive CSS clamp() viewport formulas for fluid font sizes, margins, and layouts. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['css clamp calculator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is CSS Fluid Clamp & Responsive Typography Calculator?', answer: 'Calculate responsive CSS clamp() viewport formulas for fluid font sizes, margins, and layouts.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'llm-function-calling-builder': {
+      name: 'LLM Function Calling & Tool Definition Builder',
+      metadataTitle: 'LLM Function Calling & Tool Definition Builder',
+      description: 'Build OpenAI, Claude, and Gemini function calling schemas and tool parameter definitions visually.',
+      longDescription: 'Build OpenAI, Claude, and Gemini function calling schemas and tool parameter definitions visually. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['llm function calling builder', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is LLM Function Calling & Tool Definition Builder?', answer: 'Build OpenAI, Claude, and Gemini function calling schemas and tool parameter definitions visually.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'json-to-json-schema': {
+      name: 'JSON to JSON Schema (Draft-07 & 2020-12) Generator',
+      metadataTitle: 'JSON to JSON Schema Generator (Draft-07)',
+      description: 'Infer Draft-07 and 2020-12 JSON Schema validation rules, required fields, and types from JSON.',
+      longDescription: 'Infer Draft-07 and 2020-12 JSON Schema validation rules, required fields, and types from JSON. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['json to json schema', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is JSON to JSON Schema (Draft-07 & 2020-12) Generator?', answer: 'Infer Draft-07 and 2020-12 JSON Schema validation rules, required fields, and types from JSON.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'api-mock-response-generator': {
+      name: 'REST API Mock JSON & Fake Data Generator',
+      metadataTitle: 'REST API Mock JSON & Fake Data Generator Online',
+      description: 'Generate mock JSON API endpoint response datasets with pagination envelopes for frontend prototyping.',
+      longDescription: 'Generate mock JSON API endpoint response datasets with pagination envelopes for frontend prototyping. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['api mock response generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is REST API Mock JSON & Fake Data Generator?', answer: 'Generate mock JSON API endpoint response datasets with pagination envelopes for frontend prototyping.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'css-triangle-bubble-generator': {
+      name: 'CSS Triangle & Speech Bubble Polygon Generator',
+      metadataTitle: 'CSS Triangle & Speech Bubble Polygon Generator',
+      description: 'Generate pure CSS triangle arrows, tooltips, and speech bubble popovers with pointing tails.',
+      longDescription: 'Generate pure CSS triangle arrows, tooltips, and speech bubble popovers with pointing tails. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['css triangle bubble generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is CSS Triangle & Speech Bubble Polygon Generator?', answer: 'Generate pure CSS triangle arrows, tooltips, and speech bubble popovers with pointing tails.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'css-3d-box-shadow-generator': {
+      name: 'CSS Multi-Layer 3D Box Shadow Generator',
+      metadataTitle: 'CSS Multi-Layer 3D Box Shadow Generator Online',
+      description: 'Create multi-layer layered elevation box-shadow styles with customizable depth, ambient lighting, and opacity.',
+      longDescription: 'Create multi-layer layered elevation box-shadow styles with customizable depth, ambient lighting, and opacity. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['css 3d box shadow generator', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is CSS Multi-Layer 3D Box Shadow Generator?', answer: 'Create multi-layer layered elevation box-shadow styles with customizable depth, ambient lighting, and opacity.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'system-prompt-xml-builder': {
+      name: 'Claude & OpenAI XML Structured System Prompt Builder',
+      metadataTitle: 'Claude & OpenAI XML Structured System Prompt Builder',
+      description: 'Build structured system prompts for Claude and OpenAI using production XML tag hierarchies and constraints.',
+      longDescription: 'Build structured system prompts for Claude and OpenAI using production XML tag hierarchies and constraints. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['system prompt xml builder', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Claude & OpenAI XML Structured System Prompt Builder?', answer: 'Build structured system prompts for Claude and OpenAI using production XML tag hierarchies and constraints.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'git-command-cheat-builder': {
+      name: 'Git Advanced Command & Workflow Builder',
+      metadataTitle: 'Git Advanced Command & Workflow Builder Online',
+      description: 'Visually generate terminal commands for interactive rebase, cherry-pick, soft undo, and bisect debugging.',
+      longDescription: 'Visually generate terminal commands for interactive rebase, cherry-pick, soft undo, and bisect debugging. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['git command cheat builder', 'generators', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Git Advanced Command & Workflow Builder?', answer: 'Visually generate terminal commands for interactive rebase, cherry-pick, soft undo, and bisect debugging.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+  },
+  crypto: {
+    'image-exif-stripper': {
+      name: 'Image EXIF Metadata Viewer & Stripper',
+      metadataTitle: 'Image EXIF Metadata Viewer & Remover',
+      description: 'View camera model, GPS geolocation, and timestamps in photos. Strip EXIF metadata with 1 click before sharing.',
+      longDescription: 'Free online EXIF metadata cleaner. Protect your privacy by removing GPS coordinates, device info, and creation dates from JPEG, PNG, and WebP images client-side.',
+      keywords: ['remove exif data', 'view photo metadata', 'exif stripper online', 'clean photo gps'],
+      faqs: [
+        { question: 'Why should I remove EXIF data?', answer: 'Photos taken with smartphones often contain precise GPS coordinates and device identifiers that expose your privacy when shared publicly.' },
+        { question: 'Does stripping EXIF reduce image quality?', answer: 'No, only metadata tags are stripped while the image pixels remain intact.' }
+      ],
+      howToUseSteps: [
+        'Upload your image to inspect metadata.',
+        'Click "Strip All EXIF & Privacy Tags".',
+        'Download your clean image.'
+      ]
+    },
+    'file-checksum-comparator': {
+      name: 'Multi-Hash File Checksum & Comparator',
+      metadataTitle: 'File Checksum Calculator & Hash Comparator',
+      description: 'Calculate and verify MD5, SHA-1, SHA-256, SHA-512, and CRC32 checksums for any file or text string.',
+      longDescription: 'Free client-side multi-hash checksum calculator. Drop any file or paste text to compute MD5, SHA-1, SHA-256, and SHA-512 hashes simultaneously and verify integrity against an expected hash.',
+      keywords: ['file checksum calculator', 'compare file hash', 'sha256 file checksum', 'md5 file verifier'],
+      faqs: [
+        { question: 'How do I verify a downloaded file checksum?', answer: 'Drop your file into the tool and paste the author\'s expected hash into the comparator box.' },
+        { question: 'Is my file uploaded to a server?', answer: 'No, all cryptographic hashing runs 100% locally in your browser using the Web Crypto API.' }
+      ],
+      howToUseSteps: [
+        'Drop any file or enter text into the input field.',
+        'Optionally paste the expected checksum to compare.',
+        'Review computed hashes and copy with one click.'
+      ]
+    },
+    'uuid-v5-generator': {
+      name: 'UUID v5 (SHA-1 Namespace) Generator',
+      metadataTitle: 'UUID v5 (SHA-1 Namespace) Generator Online',
+      description: 'Generate deterministic RFC 4122 UUID v5 hashes from namespaces.',
+      longDescription: 'Generate deterministic RFC 4122 UUID v5 hashes from namespaces. 100% free client-side tool with instant browser execution.',
+      keywords: ['uuid-v5-generator', 'crypto', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is UUID v5 (SHA-1 Namespace) Generator?', answer: 'Generate deterministic RFC 4122 UUID v5 hashes from namespaces.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'bip39-seed-phrase-generator': {
+      name: 'BIP-39 Mnemonic Seed Phrase Generator',
+      metadataTitle: 'BIP-39 Mnemonic Seed Phrase Generator Online',
+      description: 'Generate 12 and 24-word cryptographically secure BIP-39 seed phrases.',
+      longDescription: 'Generate 12 and 24-word cryptographically secure BIP-39 seed phrases. 100% free client-side tool with instant browser execution.',
+      keywords: ['bip39-seed-phrase-generator', 'crypto', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is BIP-39 Mnemonic Seed Phrase Generator?', answer: 'Generate 12 and 24-word cryptographically secure BIP-39 seed phrases.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'eip712-hasher': {
+      name: 'Ethereum EIP-712 Typed Data Hasher',
+      metadataTitle: 'Ethereum EIP-712 Typed Data Hasher Online',
+      description: 'Compute domain separator and struct hash for EIP-712 typed data signing.',
+      longDescription: 'Compute domain separator and struct hash for EIP-712 typed data signing. 100% free client-side tool with instant browser execution.',
+      keywords: ['eip712-hasher', 'crypto', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Ethereum EIP-712 Typed Data Hasher?', answer: 'Compute domain separator and struct hash for EIP-712 typed data signing.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'passphrase-wordlist-generator': {
+      name: 'Diceware Passphrase Generator',
+      metadataTitle: 'Diceware Passphrase Generator Online',
+      description: 'Generate strong, memorable Diceware passphrases with custom separators.',
+      longDescription: 'Generate strong, memorable Diceware passphrases with custom separators. 100% free client-side tool with instant browser execution.',
+      keywords: ['passphrase-wordlist-generator', 'crypto', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Diceware Passphrase Generator?', answer: 'Generate strong, memorable Diceware passphrases with custom separators.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'sha3-hash-generator': {
+      name: 'SHA-3 (Keccak) Hash Generator',
+      metadataTitle: 'SHA-3 (Keccak) Hash Generator Online',
+      description: 'Generate cryptographic SHA3-256 and SHA3-512 hashes.',
+      longDescription: 'Generate cryptographic SHA3-256 and SHA3-512 hashes. 100% free client-side tool with instant browser execution.',
+      keywords: ['sha3-hash-generator', 'crypto', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is SHA-3 (Keccak) Hash Generator?', answer: 'Generate cryptographic SHA3-256 and SHA3-512 hashes.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+
+    'totp-authenticator-simulator': {
+      name: 'RFC 6238 TOTP Authenticator Simulator',
+      metadataTitle: 'RFC 6238 TOTP Authenticator Simulator Online',
+      description: 'Generate 6-digit Time-Based One-Time Passwords (TOTP) with countdown timer.',
+      longDescription: 'Generate 6-digit Time-Based One-Time Passwords (TOTP) with countdown timer.',
+      keywords: ['totp-authenticator-simulator', 'crypto', 'developer tool'],
+      faqs: [
+        { question: 'What is RFC 6238 TOTP Authenticator Simulator?', answer: 'Generate 6-digit Time-Based One-Time Passwords (TOTP) with countdown timer.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'ed25519-key-generator': {
+      name: 'Ed25519 Keypair Generator',
+      metadataTitle: 'Ed25519 Keypair Generator Online',
+      description: 'Generate Ed25519 cryptographic public/private keypairs.',
+      longDescription: 'Generate Ed25519 cryptographic public/private keypairs.',
+      keywords: ['ed25519-key-generator', 'crypto', 'developer tool'],
+      faqs: [
+        { question: 'What is Ed25519 Keypair Generator?', answer: 'Generate Ed25519 cryptographic public/private keypairs.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'x509-csr-decoder': {
+      name: 'X.509 Certificate Signing Request (CSR) Decoder',
+      metadataTitle: 'X.509 Certificate Signing Request (CSR) Decoder',
+      description: 'Decode and inspect PEM-encoded Certificate Signing Requests (CSR).',
+      longDescription: 'Decode and inspect PEM-encoded Certificate Signing Requests (CSR).',
+      keywords: ['x509-csr-decoder', 'crypto', 'developer tool'],
+      faqs: [
+        { question: 'What is X.509 Certificate Signing Request (CSR) Decoder?', answer: 'Decode and inspect PEM-encoded Certificate Signing Requests (CSR).' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'abi-encoder-decoder': {
+      name: 'Solidity ABI Parameter Encoder',
+      metadataTitle: 'Solidity ABI Parameter Encoder Online',
+      description: 'Encode function parameters into 32-byte hexadecimal Solidity ABI payloads.',
+      longDescription: 'Encode function parameters into 32-byte hexadecimal Solidity ABI payloads.',
+      keywords: ['abi-encoder-decoder', 'crypto', 'developer tool'],
+      faqs: [
+        { question: 'What is Solidity ABI Parameter Encoder?', answer: 'Encode function parameters into 32-byte hexadecimal Solidity ABI payloads.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'ethereum-keccak256-hasher': {
+      name: 'Ethereum Keccak-256 & Selector Hasher',
+      metadataTitle: 'Ethereum Keccak-256 & Selector Hasher Online',
+      description: 'Compute Keccak-256 hashes and 4-byte smart contract function selectors.',
+      longDescription: 'Compute Keccak-256 hashes and 4-byte smart contract function selectors.',
+      keywords: ['ethereum-keccak256-hasher', 'crypto', 'developer tool'],
+      faqs: [
+        { question: 'What is Ethereum Keccak-256 & Selector Hasher?', answer: 'Compute Keccak-256 hashes and 4-byte smart contract function selectors.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'solana-address-validator': {
+      name: 'Solana Base58 Address Validator',
+      metadataTitle: 'Solana Base58 Address Validator Online',
+      description: 'Validate Solana public key addresses and Base58 character encoding.',
+      longDescription: 'Validate Solana public key addresses and Base58 character encoding.',
+      keywords: ['solana-address-validator', 'crypto', 'developer tool'],
+      faqs: [
+        { question: 'What is Solana Base58 Address Validator?', answer: 'Validate Solana public key addresses and Base58 character encoding.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'ssl-certificate-inspector': {
+      name: 'SSL Certificate PEM & SANs Inspector',
+      metadataTitle: 'SSL Certificate PEM & SANs Inspector Online',
+      description: 'Inspect x509 PEM SSL/TLS certificates for validity, issuer, Subject Alternative Names, and expiry.',
+      longDescription: 'Free online SSL Certificate PEM & SANs Inspector. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['ssl-certificate-inspector', 'ssl certificate pem & sans inspector', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is SSL Certificate PEM & SANs Inspector?',
+          answer: 'Inspect x509 PEM SSL/TLS certificates for validity, issuer, Subject Alternative Names, and expiry.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'csr-generator': {
+      name: 'CSR (Certificate Signing Request) Builder',
+      metadataTitle: 'CSR (Certificate Signing Request) Builder Online',
+      description: 'Generate OpenSSL Certificate Signing Request commands with Common Name and SAN domains.',
+      longDescription: 'Free online CSR (Certificate Signing Request) Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['csr-generator', 'csr (certificate signing request) builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSR (Certificate Signing Request) Builder?',
+          answer: 'Generate OpenSSL Certificate Signing Request commands with Common Name and SAN domains.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'webhook-signature-verifier': {
+      name: 'HMAC Webhook Signature Verifier',
+      metadataTitle: 'HMAC Webhook Signature Verifier Online',
+      description: 'Verify Stripe, GitHub, and Shopify HMAC SHA-256 webhook payload signatures.',
+      longDescription: 'Free online HMAC Webhook Signature Verifier. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['webhook-signature-verifier', 'hmac webhook signature verifier', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is HMAC Webhook Signature Verifier?',
+          answer: 'Verify Stripe, GitHub, and Shopify HMAC SHA-256 webhook payload signatures.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'ssh-key-inspector': {
+      name: 'SSH Public Key Fingerprint Inspector',
+      metadataTitle: 'SSH Public Key Fingerprint Inspector Online',
+      description: 'Parse OpenSSH public keys to extract key algorithms, comments, and SHA-256 fingerprints.',
+      longDescription: 'Free online SSH Public Key Fingerprint Inspector. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['ssh-key-inspector', 'ssh public key fingerprint inspector', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is SSH Public Key Fingerprint Inspector?',
+          answer: 'Parse OpenSSH public keys to extract key algorithms, comments, and SHA-256 fingerprints.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'pgp-key-inspector': {
+      name: 'PGP & GPG Key Block Inspector',
+      metadataTitle: 'PGP & GPG Key Block Inspector Online',
+      description: 'Validate and inspect ASCII-armored PGP public/private keys and encrypted message blocks.',
+      longDescription: 'Free online PGP & GPG Key Block Inspector. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['pgp-key-inspector', 'pgp & gpg key block inspector', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is PGP & GPG Key Block Inspector?',
+          answer: 'Validate and inspect ASCII-armored PGP public/private keys and encrypted message blocks.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'jwt-signature-validator': {
+      name: 'JWT Signature & Expiry Validator',
+      metadataTitle: 'JWT Signature & Expiry Validator Online',
+      description: 'Inspect JWT headers, claims, and verify token structure and expiration timestamps.',
+      longDescription: 'Free online JWT Signature & Expiry Validator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['jwt-signature-validator', 'jwt signature & expiry validator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is JWT Signature & Expiry Validator?',
+          answer: 'Inspect JWT headers, claims, and verify token structure and expiration timestamps.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'aes-crypto-playground': {
+      name: 'AES-256 Encryption & Decryption Playground',
+      metadataTitle: 'AES-256 Encryption & Decryption Playground',
+      description: 'Generate 256-bit AES cryptographic keys and test AES-GCM encryption parameters.',
+      longDescription: 'Free online AES-256 Encryption & Decryption Playground. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['aes-crypto-playground', 'aes-256 encryption & decryption playground', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is AES-256 Encryption & Decryption Playground?',
+          answer: 'Generate 256-bit AES cryptographic keys and test AES-GCM encryption parameters.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'bip39-seed-deriver': {
+      name: 'BIP-39 Mnemonic to Seed Deriver',
+      metadataTitle: 'BIP-39 Mnemonic to Seed Deriver Online',
+      description: 'Derive 512-bit binary seed hex strings from 12 and 24-word BIP-39 mnemonic phrases.',
+      longDescription: 'Free online BIP-39 Mnemonic to Seed Deriver. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['bip39-seed-deriver', 'bip-39 mnemonic to seed deriver', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is BIP-39 Mnemonic to Seed Deriver?',
+          answer: 'Derive 512-bit binary seed hex strings from 12 and 24-word BIP-39 mnemonic phrases.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'argon2-hash-generator': {
+      name: 'Argon2 Password Hash Formatter',
+      metadataTitle: 'Argon2 Password Hash Formatter Online',
+      description: 'Format Argon2id password hashes with custom memory cost, time iterations, and parallelism.',
+      longDescription: 'Free online Argon2 Password Hash Formatter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['argon2-hash-generator', 'argon2 password hash formatter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Argon2 Password Hash Formatter?',
+          answer: 'Format Argon2id password hashes with custom memory cost, time iterations, and parallelism.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'android-keystore-fingerprint': {
+      name: 'Android Keystore Fingerprint (SHA1/SHA256) Formatter',
+      metadataTitle: 'Android Keystore Fingerprint (SHA1/SHA256) Formatter',
+      description: 'Format Keystore SHA-1 and SHA-256 certificate fingerprints for Firebase and Google OAuth.',
+      longDescription: 'Free online Android Keystore Fingerprint (SHA1/SHA256) Formatter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['android-keystore-fingerprint', 'android keystore fingerprint (sha1/sha256) formatter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Android Keystore Fingerprint (SHA1/SHA256) Formatter?',
+          answer: 'Format Keystore SHA-1 and SHA-256 certificate fingerprints for Firebase and Google OAuth.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'md5-hash': {
+      name: 'MD5 Hash Generator',
+      metadataTitle: 'MD5 Hash Generator Online (Text & Files)',
+      description:
+        'Generate a 32-character MD5 digest from UTF-8 text or exact file bytes in your browser. Use MD5 only for legacy, non-security checksums.',
+      longDescription:
+        'Free online MD5 hash generator. Create MD5 hash values from any text input instantly. Useful for checksums and data verification.',
+      keywords: ['md5 generator', 'md5 hash', 'md5 online', 'generate md5'],
+      faqs: [
+        {
+          question: 'What is MD5?',
+          answer:
+            'MD5 (Message Digest 5) is a cryptographic hash function that produces a 128-bit (16-byte) hash value.',
+        },
+        {
+          question: 'Is MD5 secure?',
+          answer:
+            'MD5 is no longer considered secure for cryptographic purposes but is still useful for checksums and non-security-critical applications.',
+        },
+        {
+          question: 'Can an MD5 hash be converted back to text?',
+          answer:
+            'No. MD5 is a one-way hash, not reversible encryption. Services described as MD5 decoders usually guess likely inputs and compare their hashes; this tool generates hashes and does not perform reverse lookups.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What does this MD5 hash generator do?',
+          paragraphs: [
+            'This MD5 hash generator turns text or a selected file into the 128-bit message digest defined by RFC 1321 and renders it as 32 hexadecimal characters. Text is converted to UTF-8 bytes; file mode hashes the file bytes. Lowercase and uppercase are display choices for the same digest. The calculation runs in browser code, so the hashing flow requires no server upload.',
+          ],
+        },
+        {
+          heading: 'MD5 worked example and file checksum',
+          paragraphs: [
+            'For the exact three-character input abc—without quotation marks, spaces, or a trailing line break—the result is 900150983cd24fb0d6963f7d28e17f72. RFC 1321 publishes this test vector. Uppercase display changes only the representation, not the digest bits.',
+            'For a file checksum, select a file and compare all 32 hexadecimal characters with an expected value. A mismatch proves the file bytes differ from those used for the expected digest. A match can support accidental-error detection, but the source of the expected value matters and an MD5 match is not proof against deliberate substitution.',
+          ],
+        },
+        {
+          heading: 'Can MD5 be decrypted, and when should it be used?',
+          paragraphs: [
+            'This is an MD5 generator, not an MD5 decrypt or reverse-hash service. Hashing is not encryption, and a fixed-size digest does not contain a reversible copy of the input. Attempts to reverse a digest normally guess candidate inputs and hash each candidate for comparison.',
+            'RFC 6151 states that MD5 is no longer acceptable when collision resistance is required, including digital signatures. Do not rely on MD5 to detect deliberate tampering. The RFC allows an MD5 checksum used solely to protect against errors, but applications must state what security service, if any, they expect from it.',
+            'Browser-side calculation reduces the need to transmit text or files for hashing, but it does not make MD5 cryptographically safe. Avoid entering passwords or other secrets into an online hash page.',
+          ],
+        },
+      ],
+    },
+    'sha256-hash': {
+      name: 'SHA256 Hash Generator',
+      metadataTitle: 'SHA-256 Hash Generator Online',
+      description:
+        'Generate a 64-character SHA-256 digest from UTF-8 text or exact file bytes, then compare it with an expected checksum in your browser.',
+      longDescription:
+        'Free online SHA-256 hash generator for UTF-8 text and local file bytes. Check the hexadecimal digest against an expected checksum from a trusted source.',
+      keywords: ['sha256 generator', 'sha256 hash', 'sha256 online', 'generate sha256'],
+      faqs: [
+        {
+          question: 'What is SHA256?',
+          answer:
+            'SHA256 (Secure Hash Algorithm 256-bit) is a cryptographic hash function that produces a 256-bit (32-byte) hash value.',
+        },
+        {
+          question: 'Is SHA256 secure?',
+          answer:
+            'SHA-256 remains suitable for many integrity applications, but an unkeyed digest does not authenticate its source and is not a password-hashing function. Use a trusted expected checksum for file verification and a purpose-built password hash for passwords.',
+        },
+        {
+          question: 'How do I verify a file checksum?',
+          answer:
+            'Select the file and enter a 64-character SHA-256 value from a trusted independent source in the expected-checksum field. The tool reports whether the generated and expected digests match.',
+        },
+        {
+          question: 'Can a SHA-256 hash be decoded back to text?',
+          answer:
+            'No. SHA-256 hashing is not reversible encryption, so a digest cannot be decoded to recover its original input. This tool generates and compares SHA-256 values; it does not perform password cracking or reverse-hash lookups.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What does this SHA-256 generator do?',
+          paragraphs: [
+            'This SHA-256 generator computes the 256-bit message digest specified by NIST FIPS 180-4 for text or a selected file and renders it as 64 hexadecimal characters. In text mode, the browser converts characters to UTF-8 bytes. File mode digests the selected bytes. Lowercase and uppercase are display choices for the same value.',
+          ],
+        },
+        {
+          heading: 'SHA-256 worked example and file verification',
+          paragraphs: [
+            'For the exact three-character input abc—without quotation marks, spaces, or a trailing line break—the result is ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad. A newline, different capitalization, or a different encoding changes the input bytes and produces a different calculation.',
+            'To check a file, generate its SHA-256 value and enter the expected 64-character digest obtained from a trusted source. The comparison reports a match or mismatch. A mismatch proves the bytes differ from those used for the expected digest. A match verifies the comparison, but the source of the expected value still matters.',
+          ],
+        },
+        {
+          heading: 'Can SHA-256 be decrypted, and what does it prove?',
+          paragraphs: [
+            'This is a SHA-256 generator, not a decrypt or reverse-hash service. A digest compresses input into a fixed 256-bit result; it is not an encrypted or lossless copy that can be decoded to the original. Finding a likely original means guessing candidates and hashing them for comparison.',
+            'FIPS 180-4 specifies SHA-256 as a secure hash algorithm and describes hashes as components used with applications such as digital signatures and keyed message authentication. This unkeyed generator does not sign data, authenticate a sender, or encrypt content. Do not treat a digest supplied beside an untrusted file as independent proof of origin.',
+            'The text and file hashing paths run in browser code and require no server upload for the calculation. That privacy property does not make a hash encryption; avoid entering secrets into any online utility unless its execution environment is appropriate for your data.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Enter text or select a local file to generate its SHA-256 digest.',
+        'Choose lowercase or uppercase display; the underlying digest is unchanged.',
+        'For verification, enter a 64-character expected SHA-256 checksum from a trusted source.',
+        'Review the match or mismatch result and investigate any unexpected difference.',
+      ],
+    },
+    'sha512-hash': {
+      name: 'SHA512 Hash Generator',
+      metadataTitle: 'SHA-512 Hash Generator Online',
+      description: 'Generate SHA512 hash from text online. Free SHA512 hash generator.',
+      longDescription:
+        'Free online SHA512 hash generator. Create SHA512 hash values from any text input. SHA512 produces a 512-bit hash value and is part of the SHA-2 family.',
+      keywords: ['sha512 generator', 'sha512 hash', 'sha512 online', 'generate sha512', 'sha-512'],
+      faqs: [
+        {
+          question: 'What is SHA512?',
+          answer:
+            'SHA512 (Secure Hash Algorithm 512-bit) is a cryptographic hash function that produces a 512-bit (64-byte) hash value, typically rendered as a 128-digit hexadecimal number.',
+        },
+        {
+          question: 'Is SHA512 secure?',
+          answer:
+            'Yes, SHA512 is currently considered very secure for cryptographic purposes and is recommended for most applications.',
+        },
+      ],
+    },
+    'hmac-generator': {
+      name: 'HMAC Generator & Verifier',
+      metadataTitle: 'HMAC Generator & Verifier (SHA-256/384/512)',
+      description:
+        'Generate or verify HMAC-SHA-256, HMAC-SHA-384, and HMAC-SHA-512 signatures in hexadecimal or Base64, locally in your browser.',
+      longDescription:
+        'Free online HMAC generator and verifier using the browser Web Crypto API. Authenticate a message with a shared secret and compare supplied signatures without uploading the message or key.',
+      keywords: [
+        'hmac generator',
+        'hmac verifier',
+        'hmac sha256',
+        'hmac sha512',
+        'webhook signature verifier',
+        'message authentication code',
+      ],
+      faqs: [
+        {
+          question: 'What is HMAC?',
+          answer:
+            'HMAC is a keyed message authentication code that combines a cryptographic hash function with a shared secret to check message integrity and authenticity.',
+        },
+        {
+          question: 'Is HMAC encryption?',
+          answer:
+            'No. HMAC does not hide the message. It lets parties that share a secret detect changes and authenticate the message source.',
+        },
+        {
+          question: 'Which algorithms and output formats are supported?',
+          answer:
+            'The tool supports HMAC with SHA-256, SHA-384, or SHA-512 and displays or verifies signatures in hexadecimal or standard Base64.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'Generate and verify HMAC signatures',
+          paragraphs: [
+            'Enter the exact message bytes represented by your text, a shared secret, the expected SHA-2 variant, and the signature encoding. Generate produces a signature; Verify recalculates it with the same inputs and compares the decoded bytes. A different newline, character encoding, secret, algorithm, or output encoding changes the result.',
+          ],
+        },
+        {
+          heading: 'Common webhook and API uses',
+          bullets: [
+            'Reproduce a webhook signature while debugging an integration.',
+            'Compare a locally calculated HMAC with a signature from a trusted sender.',
+            'Convert the same HMAC bytes between hexadecimal and Base64 representations.',
+            'Confirm that message changes cause signature verification to fail.',
+          ],
+        },
+        {
+          heading: 'Security boundary',
+          paragraphs: [
+            'HMAC requires a strong shared secret delivered and stored securely. This browser tool is useful for test data, but production secrets should remain in controlled application environments. HMAC authenticates data; it does not encrypt it and it is not a password-storage scheme. Signature checking is delegated to the browser Web Crypto API instead of comparing signature bytes in application JavaScript.',
+          ],
+        },
+      ],
+    },
+    'pkce-generator': {
+      name: 'PKCE Generator & Verifier',
+      metadataTitle: 'PKCE Generator & Verifier for OAuth',
+      description:
+        'Generate cryptographically random OAuth PKCE code verifiers, derive S256 code challenges, and verify existing pairs locally in your browser.',
+      longDescription:
+        'Free OAuth PKCE generator and verifier using secure browser randomness and the Web Crypto SHA-256 implementation. Create standards-compatible verifier and S256 challenge pairs without sending them to a server.',
+      keywords: [
+        'pkce generator',
+        'pkce verifier',
+        'oauth pkce',
+        'code challenge generator',
+        's256 challenge',
+        'oauth security',
+      ],
+      faqs: [
+        {
+          question: 'What is PKCE?',
+          answer:
+            'PKCE is an OAuth extension that binds an authorization request to a secret code verifier held by the client, reducing authorization-code interception risk.',
+        },
+        {
+          question: 'Which challenge method does this tool use?',
+          answer:
+            'It uses S256: SHA-256 of the code verifier encoded as unpadded Base64url. The plain method is intentionally not generated.',
+        },
+        {
+          question: 'Can I use the generated value in production?',
+          answer:
+            'The values use secure browser randomness and valid PKCE characters, but you should generate and retain production verifiers inside the OAuth client that will complete the token exchange.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How the PKCE S256 pair is created',
+          paragraphs: [
+            'A PKCE client creates a high-entropy code verifier, hashes its exact ASCII value with SHA-256, and sends the unpadded Base64url result as the code challenge. The authorization request includes code_challenge and code_challenge_method=S256. The later token request sends the original code_verifier so the authorization server can derive and compare the same challenge.',
+          ],
+        },
+        {
+          heading: 'Verifier rules and verification',
+          bullets: [
+            'Generate creates 43 to 128 characters from the RFC 7636 unreserved character set using rejection-sampled secure random bytes.',
+            'Derive accepts an existing verifier only when its full value satisfies the length and character rules.',
+            'Verify derives S256 again and compares it with an exact 43-character Base64url challenge.',
+            'Whitespace is significant. Copy the verifier exactly and retain it only for the matching authorization flow.',
+          ],
+        },
+        {
+          heading: 'Security boundary',
+          paragraphs: [
+            'PKCE protects an authorization code from being redeemed without the matching verifier; it does not replace redirect URI validation, OAuth state or OIDC nonce checks, TLS, secure token storage, or authorization-server validation. Generation and hashing happen locally in this browser, but clipboard history, extensions, logs, or a shared device can still expose copied values.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose a verifier length from 43 to 128 characters and generate a secure pair.',
+        'Send the challenge with code_challenge_method=S256 in the authorization request.',
+        'Keep the verifier in the OAuth client and send it only during the matching token exchange.',
+        'To debug an existing pair, paste the verifier and expected challenge, then verify them.',
+      ],
+    },
+    'bcrypt-generator': {
+      name: 'Bcrypt Generator & Verifier',
+      metadataTitle: 'Bcrypt Hash Generator & Verifier Online',
+      description:
+        'Generate salted bcrypt hashes with an adjustable cost or verify a test password against an existing $2a$, $2b$, or $2y$ hash locally.',
+      longDescription:
+        'Free browser-based bcrypt generator and verifier for development and QA. Create a new salted hash or test a password/hash pair without sending field values to a server.',
+      keywords: [
+        'bcrypt generator',
+        'bcrypt hash generator',
+        'bcrypt verifier',
+        'bcrypt compare online',
+        'bcrypt password hash',
+      ],
+      faqs: [
+        {
+          question: 'Why does the same password produce a different hash each time?',
+          answer:
+            'Bcrypt generates a fresh random salt for every hash and stores the salt and cost inside the encoded result. Different hashes can therefore verify the same password without requiring a separate salt column.',
+        },
+        {
+          question: 'What does the bcrypt cost control?',
+          answer:
+            'The cost is a base-two work factor. Increasing it by one approximately doubles the hashing work. Choose a production cost by benchmarking your own authentication infrastructure rather than copying a browser timing.',
+        },
+        {
+          question: 'Why are passwords longer than 72 UTF-8 bytes rejected?',
+          answer:
+            'Bcrypt processes only the first 72 bytes. Rejecting longer input prevents two visibly different passwords from being silently treated as the same truncated byte sequence.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the bcrypt generator and verifier do',
+          paragraphs: [
+            'Generate creates a random salt, applies bcrypt with the selected cost, and returns the standard modular hash string containing the version, cost, salt, and checksum. Verify reads those parameters from an existing hash and performs bcrypt again before reporting whether the supplied test password matches. Bcrypt is deliberately slow, unlike fast checksum hashes such as MD5 or SHA-256.',
+          ],
+        },
+        {
+          heading: 'Cost, salt, and the 72-byte boundary',
+          bullets: [
+            'The interface offers browser-safe costs from 8 through 14; higher values can take noticeably longer on slower devices.',
+            'Every generated hash uses a new cryptographically random salt, so repeated generation should not return identical strings.',
+            'The complete encoded hash should be stored. Its salt and cost are already embedded and are used automatically during verification.',
+            'The tool counts UTF-8 bytes rather than JavaScript characters and rejects values over bcrypt’s 72-byte processing limit.',
+          ],
+        },
+        {
+          heading: 'Safe usage boundary',
+          paragraphs: [
+            'Use this page with synthetic development or QA data. Production password hashing belongs in a trusted server-side authentication flow with rate limiting, secure transport, breach monitoring, and a documented upgrade strategy. A successful comparison proves only that one password matches one encoded hash; it does not assess password strength, account security, or whether the selected cost is suitable for your servers.',
+          ],
+        },
+        {
+          heading: 'Local processing and compatibility',
+          paragraphs: [
+            'The bcrypt implementation is loaded only after an operation starts, and hashing or comparison runs in this browser. The verifier accepts standard $2a$, $2b$, and $2y$ forms within the cost limit. Clipboard managers, extensions, screen sharing, or an already-compromised device can still expose values, so do not paste real user credentials.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Enter a synthetic test password and choose a cost appropriate for an interactive browser check.',
+        'Generate the hash, then copy the complete encoded value if it is needed in a test fixture.',
+        'To verify, enter the candidate password and paste a supported bcrypt hash.',
+        'Review the match result and benchmark the final cost in the actual server environment before production use.',
+      ],
+    },
+    'certificate-decoder': {
+      name: 'PEM / X.509 Certificate Decoder',
+      metadataTitle: 'PEM & X.509 Certificate Decoder Online',
+      description:
+        'Decode one X.509 certificate or a PEM chain locally and inspect subject, issuer, dates, SANs, algorithms, extensions, and SHA-256 fingerprints.',
+      longDescription:
+        'Free browser-based PEM and X.509 certificate decoder. Inspect up to ten certificates from a PEM chain or Base64 DER without uploading certificate data.',
+      keywords: [
+        'certificate decoder',
+        'x509 certificate viewer',
+        'pem decoder',
+        'ssl certificate checker',
+        'certificate fingerprint',
+      ],
+      faqs: [
+        {
+          question: 'Does decoding prove that a certificate is trusted?',
+          answer:
+            'No. Parsing shows encoded fields and can test whether a certificate verifies with its own public key. Trust also requires a valid chain to an accepted root, purpose and name checks, policy, time, and often revocation or transparency evidence.',
+        },
+        {
+          question: 'Can I paste a complete PEM certificate chain?',
+          answer:
+            'Yes. The tool extracts and decodes up to ten CERTIFICATE blocks in input order. It does not reorder them or prove that each certificate signed the next one.',
+        },
+        {
+          question: 'Are private keys accepted?',
+          answer:
+            'No. The input accepts PEM CERTIFICATE blocks or Base64-encoded DER certificates. Private-key and certificate-request text is rejected; do not paste private keys into browser tools.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'Fields extracted from an X.509 certificate',
+          paragraphs: [
+            'The decoder reads ASN.1 DER carried directly as Base64 or inside RFC 7468 PEM boundaries. It reports distinguished subject and issuer names, serial number, not-before and not-after dates, signature and public-key algorithms, supported subject alternative names, extension OIDs, byte size, and a SHA-256 digest of the exact certificate bytes.',
+          ],
+        },
+        {
+          heading: 'Validity and self-signature are narrow checks',
+          bullets: [
+            'Currently valid means the browser clock is between notBefore and notAfter; it does not establish trust or intended usage.',
+            'Self-issued means subject and issuer names match, while cryptographically self-signed additionally requires the signature to verify with the certificate public key.',
+            'Unsupported browser cryptography can leave the self-signature result unknown even when the certificate structure decodes.',
+            'A SHA-256 fingerprint identifies exact DER bytes for comparison; it becomes a trust signal only when obtained from an independent trusted channel.',
+          ],
+        },
+        {
+          heading: 'Checks that still belong to a TLS or PKI validator',
+          paragraphs: [
+            'This page does not build a chain against operating-system or browser roots, retrieve intermediates, check key usage or policy for a specific purpose, match a hostname, query OCSP or CRLs, inspect Certificate Transparency logs, or connect to a server. Those decisions require the trust store, connection context, and validation policy of the real client.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste one PEM certificate, a PEM chain, or Base64-encoded DER.',
+        'Decode and review the validity badge, identity fields, algorithms, and SHA-256 fingerprint.',
+        'Inspect SAN entries and extension OIDs for the names and capabilities you expect.',
+        'Use a real TLS or PKI validator with the correct trust store before making a security decision.',
+      ],
+    },
+    'bip39-generator': {
+      name: 'BIP-39 Mnemonic Generator',
+      metadataTitle: 'BIP-39 Mnemonic Seed Phrase Generator',
+      description:
+        'Generate cryptographically secure 12, 15, 18, 21, and 24-word BIP-39 mnemonic seed phrases locally in your browser.',
+      longDescription:
+        'Free client-side BIP-39 Mnemonic Generator and Seed Phrase Validator. Generate crypto seed phrases with secure Web Crypto entropy, calculate checksums, and verify wordlists with zero network transmission.',
+      keywords: [
+        'bip39 generator',
+        'mnemonic phrase generator',
+        'crypto seed generator',
+        'bip39 validator',
+        '24 word seed phrase',
+      ],
+      faqs: [
+        {
+          question: 'What is BIP-39?',
+          answer:
+            'BIP-39 (Bitcoin Improvement Proposal 39) describes the implementation of a mnemonic sentence—a group of easy-to-remember words—for the generation of deterministic crypto wallets.',
+        },
+        {
+          question: 'Is it safe to generate seed phrases here?',
+          answer:
+            'All generation and entropy calculation uses window.crypto.getRandomValues() and runs 100% locally inside your browser. No seed phrases are ever transmitted over the network.',
+        },
+      ],
+      howToUseSteps: [
+        'Choose the desired seed phrase length (12 words for 128-bit entropy or 24 words for 256-bit entropy).',
+        'Click Generate New to create a cryptographically secure mnemonic phrase.',
+        'Copy and securely write down the seed phrase on a physical medium.',
+        'Optionally paste existing seed phrases into the validator to check word validity.',
+      ],
+    },
+    'rsa-key-pair-generator': {
+      name: 'RSA & ECDSA Key Pair Generator',
+      metadataTitle: 'RSA & ECDSA Key Pair Generator Online',
+      description:
+        'Generate cryptographically secure RSA (2048, 3072, 4096-bit) and ECDSA (P-256, P-384, P-521) public and private key pairs in PEM format.',
+      longDescription:
+        'Free online RSA & ECDSA Key Pair Generator. Generate PKCS#8 private keys and SPKI public keys in standard PEM format using the browser SubtleCrypto API. 100% private and client-side.',
+      keywords: [
+        'rsa key generator',
+        'rsa 2048 pem',
+        'ecdsa key generator',
+        'public private key pair',
+        'web crypto keygen',
+      ],
+      faqs: [
+        {
+          question: 'Are the private keys sent to your server?',
+          answer:
+            'No. The key pairs are generated using window.crypto.subtle directly on your device. The private keys never leave your browser.',
+        },
+        {
+          question: 'What format are the exported keys in?',
+          answer:
+            'Public keys are exported in SPKI PEM format (-----BEGIN PUBLIC KEY-----) and private keys are in PKCS#8 PEM format (-----BEGIN PRIVATE KEY-----).',
+        },
+      ],
+      howToUseSteps: [
+        'Select the cryptographic algorithm (RSA or ECDSA).',
+        'Choose your desired key length (e.g. 2048-bit or 4096-bit) or curve (e.g. P-256).',
+        'Click Generate to create a new key pair instantly.',
+        'Copy the PEM strings or download them as .pem files.',
+      ],
+    },
+    'htpasswd-generator': {
+      name: '.htpasswd Generator',
+      metadataTitle: '.htpasswd Generator Online (Bcrypt, MD5, SHA-1)',
+      description:
+        'Generate secure htpasswd entries for Apache and Nginx HTTP Basic Authentication with Bcrypt ($2y$), SHA-1, or MD5.',
+      longDescription:
+        'Free online .htpasswd Password Hash Generator. Create secure credentials for Nginx and Apache HTTP Basic Authentication using modern Bcrypt, SHA-1, and MD5 algorithms entirely in your browser.',
+      keywords: [
+        'htpasswd generator',
+        'htpasswd online',
+        'nginx basic auth generator',
+        'apache htpasswd bcrypt',
+        'htpasswd maker',
+      ],
+      faqs: [
+        {
+          question: 'Which algorithm is recommended for production .htpasswd?',
+          answer:
+            'Bcrypt ($2y$) is strongly recommended for production environments as it provides robust protection against brute-force and dictionary attacks.',
+        },
+        {
+          question: 'Is my plaintext password sent to any server?',
+          answer:
+            'No. Hashing is performed 100% locally in your browser using the Web Crypto API. Your passwords never touch a server.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter your desired username (e.g. admin).',
+        'Type or generate a strong password.',
+        'Choose your hashing algorithm (Bcrypt recommended, SHA-1 for Apache/Nginx compatibility).',
+        'Copy the generated .htpasswd line or download the .htpasswd file.',
+      ],
+    },
+    'totp-generator': {
+      name: '2FA / TOTP Authenticator Generator',
+      metadataTitle: '2FA TOTP Code Generator Online (RFC 6238)',
+      description:
+        'Generate RFC 6238 Time-based One-Time Passwords (TOTP), Base32 secret keys, and otpauth:// URIs for Google Authenticator.',
+      longDescription:
+        'Free online 2FA / TOTP Authenticator Code Generator. Test and generate 6-digit Time-Based One-Time Passwords (RFC 6238) with live 30-second countdowns and authenticator URI generation.',
+      keywords: [
+        'totp generator',
+        '2fa code generator online',
+        'authenticator code generator',
+        'totp secret key',
+        'rfc 6238 generator',
+      ],
+      faqs: [
+        {
+          question: 'How does Time-based One-Time Password (TOTP) work?',
+          answer:
+            'TOTP (RFC 6238) calculates a 6-digit verification code by computing an HMAC-SHA1 signature using a shared Base32 secret and the current 30-second Unix time epoch interval.',
+        },
+        {
+          question: 'Is this compatible with Google Authenticator, Authy, and 1Password?',
+          answer:
+            'Yes, the generated secret keys and otpauth:// URIs follow the open standard supported by Google Authenticator, Microsoft Authenticator, 1Password, and Bitwarden.',
+        },
+      ],
+      howToUseSteps: [
+        'Use the generated Base32 secret key or paste your existing 2FA secret.',
+        'Optionally customize your Issuer Name and Account Email.',
+        'Watch the live 6-digit authentication code update every 30 seconds.',
+        'Click the Copy button to quickly copy the current 6-digit security code.',
+      ],
+    },
+    'bcrypt-verifier': {
+      name: 'Bcrypt Hash Verifier',
+      metadataTitle: 'Bcrypt Hash Verifier & Checker Online',
+      description:
+        'Verify plain text passwords against Bcrypt hashes ($2a$, $2b$, $2y$) and inspect cost factors and salt components directly in your browser.',
+      longDescription:
+        'Free online Bcrypt Hash Verifier and Matcher. Check whether a plain text password matches a given Bcrypt hash string safely and securely in client-side WebAssembly without sending sensitive passwords over the network.',
+      keywords: [
+        'bcrypt verifier',
+        'verify bcrypt hash',
+        'bcrypt password checker',
+        'test bcrypt hash online',
+        'bcrypt compare',
+      ],
+      faqs: [
+        {
+          question: 'Is it safe to test passwords in this verifier?',
+          answer:
+            'Yes. All cryptographic verification runs 100% locally in your web browser. No plain text passwords or hashes are ever transmitted to any server.',
+        },
+        {
+          question: 'Which Bcrypt versions are supported?',
+          answer:
+            'Supports standard Modular Crypt Format Bcrypt strings including $2a$, $2b$, and $2y$ prefixes with any cost factor from 4 to 31.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter your plain text password in the top field.',
+        'Paste the target Bcrypt hash string ($2a$10$...) in the second field.',
+        'Click "Verify Password Against Hash".',
+        'View the match confirmation banner and inspect the hash anatomy (version, cost rounds).',
+      ],
+    },
+    'jwt-generator': {
+      name: 'JWT Token Generator',
+      metadataTitle: 'JWT Token Generator & Signer Online',
+      description:
+        'Generate and sign custom JWT tokens with HMAC-SHA256, HMAC-SHA384, or HMAC-SHA512 algorithms, custom claims, and expiration timestamps.',
+      longDescription:
+        'Free online JWT Token Generator and Claim Signer. Build standard JSON Web Tokens for API mock testing and authentication. Customize headers, payload claims (sub, iat, exp), and sign with your secret key using Web Crypto API.',
+      keywords: [
+        'jwt generator',
+        'create jwt token online',
+        'sign jwt token',
+        'jwt builder hs256',
+        'json web token generator',
+      ],
+      faqs: [
+        {
+          question: 'Which HMAC signing algorithms are supported?',
+          answer:
+            'Supports HS256 (HMAC-SHA256), HS384 (HMAC-SHA384), and HS512 (HMAC-SHA512) via the native browser Web Cryptography API.',
+        },
+        {
+          question: 'Are my signing secrets kept secure?',
+          answer:
+            'Yes! All cryptographic signature generation executes 100% locally in your browser. Secrets and payload data are never sent to any server.',
+        },
+      ],
+      howToUseSteps: [
+        'Select the HMAC algorithm (HS256, HS384, HS512) and type your signing secret key.',
+        'Edit the Header and Payload JSON objects with your desired claims and payload data.',
+        'Click "+ Add exp" if you need a standard 1-hour expiration timestamp.',
+        'Copy the generated 3-part encoded and signed JWT token.',
+      ],
+    },
+    'password-strength-analyzer': {
+      name: 'Password Strength & Entropy Analyzer',
+      metadataTitle: 'Password Strength & Entropy Checker Online',
+      description:
+        'Calculate password entropy bits, brute-force offline crack time estimates, and complexity scores in real-time.',
+      longDescription:
+        'Free online Password Strength and Information Entropy Calculator. Measure character pool entropy, dictionary strength score, and offline brute-force cracking resistance completely client-side.',
+      keywords: [
+        'password strength analyzer',
+        'password entropy calculator',
+        'password crack time estimator',
+        'password security test',
+        'password strength checker',
+      ],
+      faqs: [
+        {
+          question: 'What is password entropy?',
+          answer:
+            'Password entropy is a mathematical measure (in bits) of unpredictable information based on character set size and password length.',
+        },
+        {
+          question: 'Is my password safe to type here?',
+          answer:
+            'Yes. Analysis is computed 100% locally in your browser using pure JavaScript and never transmitted over the internet.',
+        },
+      ],
+      howToUseSteps: [
+        'Type any password or passphrase into the input field.',
+        'Review the real-time entropy bits and estimated crack time.',
+        'Use the checklist to verify uppercase, lowercase, numbers, and symbols.',
+      ],
+    },
+    'blake3-hash-generator': {
+      name: 'BLAKE3 Cryptographic Hash Generator',
+      metadataTitle: 'BLAKE3 Cryptographic Hash Generator Online',
+      description: 'Generate ultra-fast 256-bit BLAKE3 cryptographic hashes and tree digests client-side.',
+      longDescription: 'Generate ultra-fast 256-bit BLAKE3 cryptographic hashes and tree digests client-side. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['blake3 hash generator', 'crypto', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is BLAKE3 Cryptographic Hash Generator?', answer: 'Generate ultra-fast 256-bit BLAKE3 cryptographic hashes and tree digests client-side.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'pbkdf2-key-derivation': {
+      name: 'PBKDF2 Key Derivation Function Calculator',
+      metadataTitle: 'PBKDF2 Key Derivation Function Calculator Online',
+      description: 'Derive secure cryptographic keys using PBKDF2 with HMAC-SHA256 and configurable iterations.',
+      longDescription: 'Derive secure cryptographic keys using PBKDF2 with HMAC-SHA256 and configurable iterations. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['pbkdf2 key derivation', 'crypto', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is PBKDF2 Key Derivation Function Calculator?', answer: 'Derive secure cryptographic keys using PBKDF2 with HMAC-SHA256 and configurable iterations.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'hmac-sha384-sha512-calculator': {
+      name: 'HMAC-SHA384 & HMAC-SHA512 Signature Generator',
+      metadataTitle: 'HMAC-SHA384 & HMAC-SHA512 Signature Generator',
+      description: 'Calculate keyed hash message authentication codes (HMAC) with SHA-384 and SHA-512 digests.',
+      longDescription: 'Calculate keyed hash message authentication codes (HMAC) with SHA-384 and SHA-512 digests. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['hmac sha384 sha512 calculator', 'crypto', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is HMAC-SHA384 & HMAC-SHA512 Signature Generator?', answer: 'Calculate keyed hash message authentication codes (HMAC) with SHA-384 and SHA-512 digests.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'ethereum-eip191-signature-verifier': {
+      name: 'Ethereum EIP-191 Personal Sign Validator',
+      metadataTitle: 'Ethereum EIP-191 Personal Sign Validator Online',
+      description: 'Format and validate Ethereum EIP-191 personal_sign prefixed messages for Web3 wallets.',
+      longDescription: 'Format and validate Ethereum EIP-191 personal_sign prefixed messages for Web3 wallets. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['ethereum eip191 signature verifier', 'crypto', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Ethereum EIP-191 Personal Sign Validator?', answer: 'Format and validate Ethereum EIP-191 personal_sign prefixed messages for Web3 wallets.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'bitcoin-bech32-address-encoder': {
+      name: 'Bitcoin Bech32 & SegWit Address Validator',
+      metadataTitle: 'Bitcoin Bech32 & SegWit Address Validator Online',
+      description: 'Validate and decode Native SegWit (P2WPKH) and Taproot Bech32/Bech32m Bitcoin addresses.',
+      longDescription: 'Validate and decode Native SegWit (P2WPKH) and Taproot Bech32/Bech32m Bitcoin addresses. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['bitcoin bech32 address encoder', 'crypto', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Bitcoin Bech32 & SegWit Address Validator?', answer: 'Validate and decode Native SegWit (P2WPKH) and Taproot Bech32/Bech32m Bitcoin addresses.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'rsa-pkcs1-pkcs8-converter': {
+      name: 'RSA PKCS#1 to PKCS#8 Key Format Inspector',
+      metadataTitle: 'RSA PKCS#1 to PKCS#8 Key Format Inspector Online',
+      description: 'Detect and convert RSA private/public keys between PKCS#1 and PKCS#8 PEM formats.',
+      longDescription: 'Detect and convert RSA private/public keys between PKCS#1 and PKCS#8 PEM formats. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['rsa pkcs1 pkcs8 converter', 'crypto', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is RSA PKCS#1 to PKCS#8 Key Format Inspector?', answer: 'Detect and convert RSA private/public keys between PKCS#1 and PKCS#8 PEM formats.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'x509-san-csr-builder': {
+      name: 'X.509 CSR with Subject Alternative Name (SAN) Builder',
+      metadataTitle: 'X.509 CSR with Subject Alternative Name (SAN) Builder',
+      description: 'Generate OpenSSL Certificate Signing Request (CSR) configurations with multiple SAN domains.',
+      longDescription: 'Generate OpenSSL Certificate Signing Request (CSR) configurations with multiple SAN domains. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['x509 san csr builder', 'crypto', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is X.509 CSR with Subject Alternative Name (SAN) Builder?', answer: 'Generate OpenSSL Certificate Signing Request (CSR) configurations with multiple SAN domains.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'ed25519-sign-verify': {
+      name: 'Ed25519 Signature & Key Pair Inspector',
+      metadataTitle: 'Ed25519 Signature & Key Pair Inspector Online',
+      description: 'Sanitize and inspect Ed25519 256-bit elliptic curve public/private cryptographic keys.',
+      longDescription: 'Sanitize and inspect Ed25519 256-bit elliptic curve public/private cryptographic keys. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['ed25519 sign verify', 'crypto', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Ed25519 Signature & Key Pair Inspector?', answer: 'Sanitize and inspect Ed25519 256-bit elliptic curve public/private cryptographic keys.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'argon2-parameter-tuner': {
+      name: 'Argon2id Memory & Cost Parameter Tuner',
+      metadataTitle: 'Argon2id Memory & Cost Parameter Tuner Online',
+      description: 'Calculate recommended RFC-9106 Argon2id memory, iteration, and parallelism parameters.',
+      longDescription: 'Calculate recommended RFC-9106 Argon2id memory, iteration, and parallelism parameters. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['argon2 parameter tuner', 'crypto', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Argon2id Memory & Cost Parameter Tuner?', answer: 'Calculate recommended RFC-9106 Argon2id memory, iteration, and parallelism parameters.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'uuid-v7-timestamp-extractor': {
+      name: 'UUIDv7 Timestamp & Date Extractor',
+      metadataTitle: 'UUIDv7 Timestamp & Date Extractor Online',
+      description: 'Extract Unix millisecond timestamps, UTC dates, and sequences from UUIDv7 strings.',
+      longDescription: 'Extract Unix millisecond timestamps, UTC dates, and sequences from UUIDv7 strings. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['uuid v7 timestamp extractor', 'crypto', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is UUIDv7 Timestamp & Date Extractor?', answer: 'Extract Unix millisecond timestamps, UTC dates, and sequences from UUIDv7 strings.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'ethereum-abi-storage-slot-calculator': {
+      name: 'Solidity EVM State Variable Storage Slot Calculator',
+      metadataTitle: 'Solidity EVM State Variable Storage Slot Calculator',
+      description: 'Calculate 32-byte EVM storage slots for Solidity state variables and smart contracts.',
+      longDescription: 'Calculate 32-byte EVM storage slots for Solidity state variables and smart contracts. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['ethereum abi storage slot calculator', 'crypto', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Solidity EVM State Variable Storage Slot Calculator?', answer: 'Calculate 32-byte EVM storage slots for Solidity state variables and smart contracts.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'base64-pem-certificate-parser': {
+      name: 'X.509 TLS/SSL Certificate SAN & Info Parser',
+      metadataTitle: 'X.509 TLS/SSL Certificate SAN & Info Parser',
+      description: 'Parse X.509 PEM certificates to extract Subject Alternative Names, issuers, and validity.',
+      longDescription: 'Parse X.509 PEM certificates to extract Subject Alternative Names, issuers, and validity. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['base64 pem certificate parser', 'crypto', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is X.509 TLS/SSL Certificate SAN & Info Parser?', answer: 'Parse X.509 PEM certificates to extract Subject Alternative Names, issuers, and validity.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'bcrypt-hash-calculator': {
+      name: 'Bcrypt & Argon2 Password Hash Generator & Verifier',
+      metadataTitle: 'Bcrypt & Argon2 Password Hash Generator & Verifier',
+      description: 'Generate secure $2a$ Bcrypt password hashes with configurable cost factors and validate existing hash strings.',
+      longDescription: 'Generate secure $2a$ Bcrypt password hashes with configurable cost factors and validate existing hash strings. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['bcrypt hash calculator', 'crypto', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Bcrypt & Argon2 Password Hash Generator & Verifier?', answer: 'Generate secure $2a$ Bcrypt password hashes with configurable cost factors and validate existing hash strings.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+  },
+  text: {
+    'subtitle-srt-vtt-converter': {
+      name: 'SRT to WebVTT Subtitle Converter',
+      metadataTitle: 'SRT to WebVTT Subtitle Converter Online',
+      description: 'Convert SubRip (.srt) subtitles to HTML5 WebVTT (.vtt) format.',
+      longDescription: 'Convert SubRip (.srt) subtitles to HTML5 WebVTT (.vtt) format.',
+      keywords: ['subtitle-srt-vtt-converter', 'text', 'developer tool'],
+      faqs: [
+        { question: 'What is SRT to WebVTT Subtitle Converter?', answer: 'Convert SubRip (.srt) subtitles to HTML5 WebVTT (.vtt) format.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'sql-slugifier': {
+      name: 'SQL Database Identifier Slugifier',
+      metadataTitle: 'SQL Database Identifier Slugifier Online',
+      description: 'Convert text into valid snake_case SQL table and column identifiers.',
+      longDescription: 'Convert text into valid snake_case SQL table and column identifiers.',
+      keywords: ['sql-slugifier', 'text', 'developer tool'],
+      faqs: [
+        { question: 'What is SQL Database Identifier Slugifier?', answer: 'Convert text into valid snake_case SQL table and column identifiers.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'ai-agent-prompt-optimizer': {
+      name: 'AI Agent Prompt Optimizer',
+      metadataTitle: 'AI Agent Prompt Optimizer Online',
+      description: 'Structure autonomous AI agent persona, constraints, and goal instructions.',
+      longDescription: 'Structure autonomous AI agent persona, constraints, and goal instructions.',
+      keywords: ['ai-agent-prompt-optimizer', 'text', 'developer tool'],
+      faqs: [
+        { question: 'What is AI Agent Prompt Optimizer?', answer: 'Structure autonomous AI agent persona, constraints, and goal instructions.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'system-prompt-formatter': {
+      name: 'AI System Prompt Builder & Markdown Formatter',
+      metadataTitle: 'AI System Prompt Builder & Markdown Formatter',
+      description: 'Format and structure AI system instructions with roles, guidelines, output formats, and examples.',
+      longDescription: 'Free online AI System Prompt Builder & Markdown Formatter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['system-prompt-formatter', 'ai system prompt builder & markdown formatter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is AI System Prompt Builder & Markdown Formatter?',
+          answer: 'Format and structure AI system instructions with roles, guidelines, output formats, and examples.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'prompt-diff': {
+      name: 'AI Prompt Version & Semantic Diff Comparator',
+      metadataTitle: 'AI Prompt Version & Semantic Diff Comparator',
+      description: 'Compare two prompt revisions to highlight line changes, word additions, and token deltas.',
+      longDescription: 'Free online AI Prompt Version & Semantic Diff Comparator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['prompt-diff', 'ai prompt version & semantic diff comparator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is AI Prompt Version & Semantic Diff Comparator?',
+          answer: 'Compare two prompt revisions to highlight line changes, word additions, and token deltas.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'code-side-by-side-diff': {
+      name: 'Code Side-by-Side Diff Visualizer',
+      metadataTitle: 'Code Side-by-Side Diff Visualizer Online',
+      description: 'Compare two code snippets side-by-side with line-by-line difference tracking.',
+      longDescription: 'Free online Code Side-by-Side Diff Visualizer. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['code-side-by-side-diff', 'code side-by-side diff visualizer', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Code Side-by-Side Diff Visualizer?',
+          answer: 'Compare two code snippets side-by-side with line-by-line difference tracking.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'regex-tester': {
+      name: 'Regex Tester',
+      metadataTitle: 'Regex Tester Online – JavaScript RegExp',
+      description:
+        'Test JavaScript regular expressions online with live match highlighting, indices, capture groups, and browser-supported flags.',
+      longDescription:
+        'Free online regex tester. Test your regular expressions in real-time with match highlighting. Supports JavaScript regex syntax.',
+      keywords: ['regex tester', 'regex online', 'test regex', 'regular expression tester'],
+      faqs: [
+        {
+          question: 'What is regex?',
+          answer:
+            'Regular expressions (regex) are patterns used to match character combinations in strings. They are used for searching, replacing, and validating text.',
+        },
+        {
+          question: 'Which regex flavor is supported?',
+          answer:
+            'This tester uses the JavaScript RegExp engine and supports ECMAScript syntax and flags available in your browser. Invalid patterns are reported as syntax errors.',
+        },
+        {
+          question: 'Which regex flags can I test?',
+          answer:
+            'You can test the standard JavaScript flags supported by your browser, including global, case-insensitive, multiline, dotAll, Unicode, and sticky matching.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What this JavaScript regex tester does',
+          paragraphs: [
+            "This tester compiles the pattern and flags with the browser's JavaScript RegExp engine, applies it to the supplied text, highlights each match, and reports its starting index and capture groups. Enter the pattern source without surrounding slash delimiters. Add g to collect every match; without it, JavaScript returns only the first match. Use the match count and indices to confirm repeated matches occur where expected.",
+          ],
+        },
+        {
+          heading: 'Common use cases',
+          bullets: [
+            'Prototype validation rules for identifiers, dates, log lines, or other constrained text.',
+            'Extract repeated values such as email-like strings, ticket numbers, or named fields.',
+            'Compare case-sensitive and case-insensitive behavior with i, or line anchors with m.',
+            'Inspect capturing groups before moving a pattern into JavaScript or TypeScript code.',
+          ],
+        },
+        {
+          heading: 'Worked example',
+          paragraphs: [
+            'Pattern: \\b([A-Za-z0-9._%+-]+)@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})\\b. Flags: gi. Test text: "Contact Ada at ada@example.com or SUPPORT@EXAMPLE.ORG." The result is two highlighted matches. Capture group 1 contains each local part, while group 2 contains each domain. The g flag continues after the first match, and i makes letter case irrelevant.',
+          ],
+        },
+        {
+          heading: 'Limitations and privacy',
+          paragraphs: [
+            'This tool follows ECMAScript regular-expression syntax available in the current browser; PCRE, Python, .NET, and Java-specific constructs may fail or behave differently. A successful match proves only that the pattern matched, not that an email, URL, date, or other value is semantically valid. Ambiguous nested quantifiers can cause expensive backtracking on long input. Pattern evaluation and test text stay in the browser; still avoid sensitive production data on shared devices.',
+          ],
+        },
+      ],
+    },
+    'regex-escape': {
+      name: 'Regex Escape',
+      metadataTitle: 'Regex Escape Online – Literal Text to RegExp',
+      description:
+        'Escape JavaScript regular-expression metacharacters and literal slashes, or reverse only those supported escapes, entirely in your browser.',
+      longDescription:
+        'Free online regex escape tool. Convert literal text into a JavaScript-compatible pattern fragment without turning punctuation into unintended regex operators.',
+      keywords: ['regex escape', 'escape regex', 'unescape regex', 'regular expression escape'],
+      faqs: [
+        {
+          question: 'Why escape regex characters?',
+          answer:
+            'Characters such as ., *, +, ?, (, ), [, ], {, }, ^, $, |, and backslash have structural meaning in a regular expression. Prefixing them with a backslash makes the generated pattern fragment match those characters literally.',
+        },
+        {
+          question: 'When should I use this tool?',
+          answer:
+            'Use it before inserting trusted or untrusted literal text into a larger JavaScript regular expression. Escaping prevents the inserted text from changing the pattern structure, but the surrounding expression can still be inefficient or incorrect.',
+        },
+        {
+          question: 'Does unescape interpret sequences such as \\n or \\d?',
+          answer:
+            'No. Unescape reverses only the metacharacter and slash escapes produced by this tool. It deliberately preserves regex tokens and string escapes that could carry a different meaning.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What Regex Escape produces',
+          paragraphs: [
+            'The escape operation prefixes JavaScript regular-expression metacharacters with a backslash and also escapes / for convenient use inside a /pattern/ literal. For example, price (USD) + tax? becomes price \\(USD\\) \\+ tax\\?. The result is a pattern fragment; flags, anchors, capture groups, and the surrounding expression remain your responsibility.',
+          ],
+        },
+        {
+          heading: 'Dynamic-pattern safety boundary',
+          bullets: [
+            'Escape only the literal portion. Do not escape the operators you intentionally add around it, such as ^, $, or a capture group.',
+            'Escaping prevents regex syntax injection from that fragment, but it does not prevent catastrophic backtracking created elsewhere in the final pattern.',
+            'JavaScript RegExp syntax differs from PCRE, Python, .NET, Java, and other engines; test the final pattern in the same runtime that will execute it.',
+            'If the pattern is placed inside a JavaScript string, source-code string escaping is an additional layer separate from regex escaping.',
+          ],
+        },
+        {
+          heading: 'Unescape and privacy limits',
+          paragraphs: [
+            'Unescape is intentionally conservative: it removes a backslash only before punctuation handled by the escape operation. It does not parse a complete regular expression or convert tokens such as \\d, \\b, \\n, or Unicode escapes into text. Processing remains in the browser, while clipboard and destination-code handling remain outside the tool.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose Escape for literal text or Unescape for a fragment previously produced by this tool.',
+        'Paste the text and select Convert.',
+        'Insert the escaped fragment into the intended JavaScript regular expression.',
+        'Test the complete expression with representative and adversarial input before production use.',
+      ],
+    },
+    'text-diff': {
+      name: 'Text Diff Tool',
+      metadataTitle: 'Text Diff Checker – Compare Text Online',
+      description:
+        'Compare text and code side by side online. Highlight added, removed and changed lines down to the character, ignore case or whitespace, and copy the diff.',
+      longDescription:
+        'Compare text or code in split and unified views. Highlight added, removed, and changed lines; inspect character changes; and copy the displayed diff when you need to share the result.',
+      keywords: [
+        'text diff',
+        'compare text online',
+        'diff checker',
+        'string diff',
+        'text comparison tool',
+        'compare two files online',
+        'code diff online',
+        'find difference between two texts',
+      ],
+      faqs: [
+        {
+          question: 'How does text diff work?',
+          answer:
+            'It compares the two inputs line by line, marks additions, deletions, and changed lines, then highlights smaller changes within modified lines.',
+        },
+        {
+          question: 'Can I compare code with this tool?',
+          answer:
+            'Yes. Paste code, configuration, or prose into the two editors. Use Ignore whitespace or Ignore case when those differences are irrelevant.',
+        },
+        {
+          question: 'Can I compare two files?',
+          answer:
+            'Open each file in an editor, copy its contents, and paste them into the Original and Modified panels. The comparison works on the text, so any plain-text format works, including JSON, YAML, CSV, and source code.',
+        },
+        {
+          question: 'Does Ignore whitespace also ignore blank lines?',
+          answer:
+            'No. It collapses runs of spaces and tabs and trims each line before comparing, so indentation and trailing spaces stop counting as changes, but an added or removed blank line still appears as a change.',
+        },
+        {
+          question: 'How is this different from git diff?',
+          answer:
+            'Both find the longest common set of unchanged lines. This tool also pairs similar removed and added lines as modifications and highlights the exact characters that changed, which is easier to read for short edits. For commits and patches, git diff remains the source of truth.',
+        },
+        {
+          question: 'Is my text uploaded?',
+          answer:
+            'No. The comparison runs in your browser, and neither input is sent to a server.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'Compare two strings or longer documents',
+          paragraphs: [
+            'Paste the original text on the left and the revised text on the right; the comparison updates as you edit either input. Split view keeps corresponding lines side by side and scrolls both panels together. Unified view presents one continuous diff, with each removed line followed by its replacement. If you pasted the inputs in the wrong order, the swap button exchanges them.',
+          ],
+        },
+        {
+          heading: 'How changes are detected',
+          paragraphs: [
+            'The tool first finds the longest common subsequence of lines, which marks each line as unchanged, added, or removed. Within each block of changes, removed and added lines that are similar enough are paired as modified lines, so an edited line shows up as one change instead of a deletion plus an insertion. Modified lines are then compared in detail: lines shorter than 80 characters are diffed character by character and longer lines word by word, unless Character-level is enabled to force character detail. A summary counts additions, deletions, modifications, and unchanged lines.',
+          ],
+        },
+        {
+          heading: 'Options for noisy comparisons',
+          bullets: [
+            'Ignore whitespace collapses runs of spaces and tabs and trims each line, so re-indented code and trailing spaces do not count as changes. It does not treat a b and ab as equal.',
+            'Ignore case compares lines without regard to letter case, which helps with SQL keywords or environment variable names.',
+            'Show only changes hides unchanged lines, and Wrap lines keeps long lines readable without horizontal scrolling.',
+            'Text copied from Windows files can carry a carriage return at the end of each line. If identical-looking lines are reported as changed, enable Ignore whitespace.',
+          ],
+        },
+        {
+          heading: 'Review and share the differences',
+          bullets: [
+            'Copy diff produces a plain-text listing: unchanged lines start with two spaces, removed lines with -, and added lines with +.',
+            'The copy follows the current view, so enabling Show only changes copies only the changed lines.',
+            'Differences hidden by Ignore case or Ignore whitespace are not listed, so check the options before sharing the result.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste the original text on the left and the revised text on the right.',
+        'Choose split or unified view.',
+        'Turn on Ignore whitespace, Ignore case, Show only changes, Wrap lines, or Character-level as needed.',
+        'Review the highlighted changes and the summary counts, then copy the diff if you need to share it.',
+      ],
+    },
+    'markdown-preview': {
+      name: 'Markdown Preview',
+      metadataTitle: 'Markdown Preview Online – GFM to HTML',
+      description:
+        'Preview GitHub Flavored Markdown, inspect sanitized HTML, and export a standalone HTML file locally in your browser.',
+      longDescription:
+        'Free online Markdown preview tool. Render GitHub Flavored Markdown with line breaks, tables, tasks, and code blocks, then copy sanitized HTML or download a styled document.',
+      keywords: ['markdown preview', 'markdown editor', 'markdown to html', 'md preview'],
+      faqs: [
+        {
+          question: 'What is Markdown?',
+          answer:
+            'Markdown is a lightweight markup language for creating formatted text using a plain-text editor. It is widely used for documentation, readme files, and content writing.',
+        },
+        {
+          question: 'Can I export the HTML?',
+          answer:
+            'Yes. You can copy the sanitized fragment or download a standalone HTML document with basic responsive styles. Review the exported markup and links before publishing it in another security context.',
+        },
+        {
+          question: 'Is raw HTML in Markdown safe to preview?',
+          answer:
+            'Rendered output is sanitized with DOMPurify. Scripts, forms, iframes, style attributes, and other high-risk elements are removed. Linked images are blocked by default; enabling them can contact their hosts, while following a link still contacts its destination.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the Markdown preview supports',
+          paragraphs: [
+            'The renderer uses GitHub Flavored Markdown with hard line-break support. Headings, emphasis, links, images, ordered and unordered lists, task lists, tables, blockquotes, inline code, fenced code blocks, strikethrough, and horizontal rules can be previewed as you type. The HTML view exposes the generated sanitized fragment rather than executing Markdown as code.',
+          ],
+        },
+        {
+          heading: 'Sanitization and publishing boundary',
+          bullets: [
+            'DOMPurify removes scripts, forms, frames, embedded objects, style elements, style attributes, and other disallowed markup before preview or export.',
+            'Sanitization is context-specific. Re-sanitise or safely render the output again if another application modifies it, combines it with templates, or places it in a non-HTML context.',
+            'Syntax highlighting is not applied; fenced code language labels are preserved as markup hints only.',
+            'Linked images are replaced with a visible placeholder unless you explicitly allow them. Relative links and other assets still resolve according to the page where exported HTML is opened.',
+          ],
+        },
+        {
+          heading: 'Privacy and external-resource note',
+          paragraphs: [
+            'Markdown parsing and sanitization run locally and the text is not uploaded by this tool. Linked images are blocked by default. If you enable them, the browser can contact image hosts and disclose connection metadata such as your IP address; the preview applies no-referrer and lazy-loading hints. Following a link, clipboard history, downloaded files, browser extensions, and the location where you publish exported HTML are separate data paths.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Type Markdown or load the example document.',
+        'Switch between Preview and HTML to inspect the rendered result.',
+        'Keep linked images disabled for a network-isolated preview, or enable them only when you trust their hosts.',
+        'Copy the sanitized HTML fragment or export the standalone HTML document.',
+      ],
+    },
+    'case-converter': {
+      name: 'Case Converter',
+      metadataTitle: 'Case Converter Online – camelCase, snake_case',
+      description:
+        'Convert text to camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, dot.case or space case. See every variant at once and copy it in one click.',
+      longDescription:
+        'Paste an identifier or phrase to convert it between the naming conventions used in code, URLs, and configuration files. All seven variants are generated as you type, entirely in your browser.',
+      keywords: [
+        'case converter',
+        'camelcase converter',
+        'snake case converter',
+        'kebab case converter',
+        'pascal case converter',
+        'convert to camelcase',
+        'constant case',
+        'naming convention converter',
+      ],
+      faqs: [
+        {
+          question: 'What case types are supported?',
+          answer:
+            'This tool supports camelCase, PascalCase, kebab-case, snake_case, CONSTANT_CASE, space case, and dot.case.',
+        },
+        {
+          question: 'What is camelCase?',
+          answer:
+            'camelCase joins words without separators, starts with a lowercase letter, and capitalizes the first letter of each following word, as in userProfileId. It is the usual style for JavaScript and Java variables.',
+        },
+        {
+          question: 'What is the difference between snake_case and kebab-case?',
+          answer:
+            'Both are lowercase. snake_case separates words with underscores (user_profile_id) and is common in Python and SQL. kebab-case uses hyphens (user-profile-id) and is common in URLs and CSS, but it cannot be used for variable names in most languages because - means minus.',
+        },
+        {
+          question: 'Why does ALL-CAPS text convert strangely to camelCase?',
+          answer:
+            'camelCase and PascalCase keep existing capitals, so HELLO_WORLD becomes hELLOWORLD. Convert it to snake_case or space case first (hello_world), then convert that result to camelCase to get helloWorld.',
+        },
+        {
+          question: 'Which case should I use for environment variables?',
+          answer:
+            'CONSTANT_CASE, such as DATABASE_URL. Uppercase letters, digits, and underscores are the portable convention for environment variable names on Unix-like systems.',
+        },
+        {
+          question: 'Which case is best for URLs?',
+          answer:
+            'kebab-case. Lowercase words separated by hyphens are easy to read, and Google recommends hyphens rather than underscores to separate words in URLs.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'Naming conventions and where they are used',
+          bullets: [
+            'camelCase (userProfileId): JavaScript and Java variables and functions, and JSON keys in many APIs.',
+            'PascalCase (UserProfileId): class names, TypeScript types, React components, and C# members.',
+            'snake_case (user_profile_id): Python and Ruby variables and functions, and SQL column names.',
+            'CONSTANT_CASE (USER_PROFILE_ID): constants and environment variables.',
+            'kebab-case (user-profile-id): URL slugs, CSS class names, HTML attributes, and command-line flags.',
+            'dot.case (user.profile.id): configuration keys and translation message IDs.',
+            'space case (user profile id): plain lowercase words for labels or further editing.',
+          ],
+        },
+        {
+          heading: 'How words are detected',
+          paragraphs: [
+            'The converter splits words at spaces, hyphens, underscores, and dots, and wherever a lowercase letter is followed by an uppercase letter. That means user_profile-id, userProfileId, and User Profile Id all produce the same snake_case result: user_profile_id. Digits stay attached to the neighboring word, so api-v2 response becomes apiV2Response in camelCase and api_v2_response in snake_case.',
+          ],
+        },
+        {
+          heading: 'Edge cases to check',
+          bullets: [
+            'Runs of capitals count as one word: XMLHttpRequest becomes xmlhttp-request, not xml-http-request. Add separators (XML Http Request) if the acronym must be split.',
+            'camelCase and PascalCase keep existing capitals, so convert ALL-CAPS input to snake_case first and then to camelCase.',
+            'Punctuation other than - _ . and spaces is kept: Hello World! becomes helloWorld! in camelCase. Remove characters that are not allowed in identifiers.',
+            'Line breaks count as whitespace, so multi-line input is joined into a single identifier. Convert one name at a time.',
+            'Only A-Z are recognized as uppercase word boundaries, so an accented capital such as É inside a word does not start a new word.',
+          ],
+        },
+        {
+          heading: 'Converting names in code',
+          bullets: [
+            "JavaScript: lodash offers camelCase, kebabCase, and snakeCase. Lodash lowercases each word first, so its camelCase('HELLO_WORLD') returns helloWorld.",
+            'APIs: instead of renaming payload keys by hand, let the serializer map them, for example Jackson PropertyNamingStrategies.SNAKE_CASE in Java or an alias generator in Pydantic.',
+            "Refactoring: rename identifiers with your editor's rename command rather than find and replace, so references in other files are updated too.",
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Type or paste the text or identifier you want to convert.',
+        'Pick a target format in the Convert to menu to see a single result.',
+        'Scan All Case Conversions to compare every format at once.',
+        'Copy the variant you need with its copy button.',
+      ],
+    },
+    'word-counter': {
+      name: 'Word Counter',
+      metadataTitle: 'Word Counter & Character Counter Online',
+      description:
+        'Count words, characters, sentences, paragraphs and lines as you type, with and without spaces. Get an estimated reading time; your text stays in the browser.',
+      longDescription:
+        'Paste an essay, article, or interface string to get live counts for words, characters with and without spaces, lines, sentences, and paragraphs. Reading time is estimated at 200 words per minute.',
+      keywords: [
+        'word counter',
+        'character counter',
+        'word count online',
+        'character count with spaces',
+        'count characters without spaces',
+        'sentence counter',
+        'paragraph counter',
+        'reading time calculator',
+      ],
+      faqs: [
+        {
+          question: 'What is counted?',
+          answer:
+            'Words, characters with and without spaces, lines, sentences, and paragraphs, plus an estimated reading time. All counts update as you type.',
+        },
+        {
+          question: 'How is reading time calculated?',
+          answer:
+            'The word count is divided by an average reading speed of 200 words per minute and rounded up to the next whole minute, so 450 words shows as 3 minutes.',
+        },
+        {
+          question: 'Does the character count include spaces?',
+          answer:
+            'The Characters figure includes spaces, tabs, and line breaks. Characters without spaces excludes all whitespace. Check which one a form or style guide means before trimming your text.',
+        },
+        {
+          question: 'Why does an emoji count as two characters?',
+          answer:
+            'Characters are counted the way JavaScript measures string length, in UTF-16 code units. Most emoji and some rare symbols use two code units, so they add 2 to the total, and combined emoji such as family or flag sequences can add more.',
+        },
+        {
+          question: 'Why is the sentence count higher than expected?',
+          answer:
+            'Sentences are split at ., !, and ?. Abbreviations such as e.g. or Dr., decimal numbers such as 3.14, and URLs add extra breaks, so treat the sentence count as an estimate.',
+        },
+        {
+          question: 'Is my text stored or uploaded?',
+          answer:
+            'No. Counting happens in your browser, nothing is sent to a server, and the text is not saved when you leave the page.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How each count is calculated',
+          bullets: [
+            "Words: runs of characters separated by whitespace. Hyphenated words and contractions such as well-known or don't count as one word, and a standalone number or dash counts as a word too.",
+            'Characters: every character, including spaces and line breaks. Characters without spaces excludes all whitespace, including tabs and line breaks.',
+            'Lines: the number of line breaks plus one, including empty lines.',
+            'Sentences: text segments ending in ., !, or ?. Abbreviations and decimal numbers add extra breaks.',
+            'Paragraphs: blocks of text separated by at least one blank line. A single line break does not start a new paragraph.',
+            'Reading time: words divided by 200, rounded up to the next whole minute.',
+          ],
+        },
+        {
+          heading: 'Why counts differ between tools',
+          paragraphs: [
+            'Word processors and websites do not share one definition of a word or a character. Some split hyphenated compounds, ignore numbers, or treat an em dash between words as a separator. Character limits vary even more: this tool counts JavaScript string length, where most emoji count as two. Systems that count bytes, such as some database columns, or Unicode code points will report different totals for the same text. Languages written without spaces, such as Chinese and Japanese, are counted as one word per whitespace-separated run, so rely on the character count for them. Leading and trailing whitespace does not add words, but it does add to the character count.',
+          ],
+        },
+        {
+          heading: 'Checking text against common limits',
+          bullets: [
+            'SMS: one segment holds 160 characters in the GSM-7 alphabet, or 70 when the message contains characters outside it, such as emoji.',
+            'Search snippets: title tags are commonly kept under about 60 characters and meta descriptions around 150 to 160, because search engines truncate longer text by display width.',
+            'Social posts: platforms such as X apply their own counting rules, for example weighting links and emoji, so confirm the final length in the platform composer.',
+            'Essays and articles: word limits usually refer to body text, so check whether titles, references, and footnotes are included.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Type or paste your text into the editor (up to 250,000 characters).',
+        'Read the live counts for words, characters, lines, sentences, and paragraphs.',
+        'Use the characters-without-spaces figure or the reading time when a brief asks for them.',
+        'Edit the text in place and watch the counts update until you meet your limit.',
+      ],
+    },
+    'remove-duplicates': {
+      name: 'Remove Duplicate Lines',
+      metadataTitle: 'Remove Duplicate Lines Online',
+      description: 'Remove duplicate lines from text. Free online duplicate line remover.',
+      longDescription:
+        'Free online duplicate line remover. Remove duplicate lines from lists, code, or any text content with options for case sensitivity and whitespace trimming.',
+      keywords: [
+        'remove duplicates',
+        'duplicate line remover',
+        'remove duplicate lines',
+        'unique lines',
+        'deduplicate',
+      ],
+      faqs: [
+        {
+          question: 'How does duplicate detection work?',
+          answer:
+            'The tool compares each line and keeps only the first occurrence. You can toggle case-sensitive matching and whitespace trimming.',
+        },
+        {
+          question: 'What happens to empty lines?',
+          answer: 'Empty lines are preserved in their original positions.',
+        },
+      ],
+    },
+    'sort-lines': {
+      name: 'Sort Lines',
+      metadataTitle: 'Sort Lines Alphabetically Online',
+      description: 'Sort lines alphabetically. Free online line sorter.',
+      longDescription:
+        'Free online line sorter. Sort lines of text alphabetically in ascending or descending order with options for case-sensitive sorting.',
+      keywords: ['sort lines', 'line sorter', 'alphabetical sort', 'sort text lines', 'sort list'],
+      faqs: [
+        {
+          question: 'How does sorting work?',
+          answer:
+            'Lines are sorted alphabetically using Unicode character comparison. You can choose ascending or descending order.',
+        },
+        {
+          question: 'Is sorting case-sensitive?',
+          answer:
+            'By default, sorting is case-insensitive. You can enable case-sensitive sorting in the options.',
+        },
+      ],
+    },
+    'string-byte-counter': {
+      name: 'String Byte & UTF-8 Counter',
+      metadataTitle: 'String Byte & UTF-8 Length Counter Online',
+      description:
+        'Count UTF-8 bytes, characters, UTF-16 code units, words, and check capacity limits for database VARCHAR/CHAR columns.',
+      longDescription:
+        'Free online String Byte and UTF-8 Character Counter. Calculate exact byte storage and memory size for plain text, emojis, and international Unicode strings. Includes instant VARCHAR(255) capacity validation for SQL databases.',
+      keywords: [
+        'string byte counter',
+        'utf8 byte length',
+        'character byte counter',
+        'varchar byte limit checker',
+        'string size in bytes',
+      ],
+      faqs: [
+        {
+          question: 'Why is the UTF-8 byte count different from character count?',
+          answer:
+            'Standard ASCII characters use 1 byte each, while accented letters (e.g. é, ç) take 2 bytes, and emojis (e.g. 🚀, 🎉) take 4 bytes in UTF-8 encoding.',
+        },
+        {
+          question: 'How does the database column limit checker work?',
+          answer:
+            'You can select column types like VARCHAR(64), VARCHAR(255), or TEXT to see how many bytes remain before exceeding database row constraints.',
+        },
+      ],
+      howToUseSteps: [
+        'Type or paste your text into the editor input area.',
+        'View the live breakdown of UTF-8 Bytes, Characters, Words, and ASCII vs Multi-byte chars.',
+        'Select a column size (e.g. VARCHAR(255)) to check whether your text fits within database limits.',
+      ],
+    },
+    'slug-to-title': {
+      name: 'Slug to Title & Case Converter',
+      metadataTitle: 'Slug to Title Case & PascalCase Converter',
+      description:
+        'Convert URL slugs, kebab-case, and snake_case strings into Title Case headlines, Sentence case, PascalCase, and camelCase.',
+      longDescription:
+        'Free online URL Slug to Title Case Converter. Transform kebab-case URLs, file slugs, and snake_case variable names into clean, readable article headlines and programming identifiers with 1-click copy.',
+      keywords: [
+        'slug to title',
+        'kebab case to title case',
+        'slug to pascalcase',
+        'slug to camelcase',
+        'url slug converter',
+      ],
+      faqs: [
+        {
+          question: 'Does Title Case handle minor English prepositions correctly?',
+          answer:
+            'Yes. Words like "to", "a", "an", "the", "in", "for", "and" are kept lowercase when appropriate according to Chicago Manual of Style guidelines.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your URL slug or snake_case string into the input box.',
+        'View the converted versions in Title Case, Sentence Case, PascalCase, and camelCase.',
+        'Click the copy icon on your desired case format.',
+      ],
+    },
+    'text-obfuscator': {
+      name: 'Invisible Character & Zero-Width Detector',
+      metadataTitle: 'Invisible Character & Zero-Width Detector',
+      description:
+        'Detect, highlight, and remove hidden zero-width spaces, Unicode joiners, and invisible formatting artifacts from text.',
+      longDescription:
+        'Free online Invisible Character and Zero-Width Space Cleaner. Find hidden zero-width spaces (\\u200B), non-joiners, RTL marks, and invisible Unicode tags that cause bugs in code, passwords, and databases.',
+      keywords: [
+        'invisible character detector',
+        'zero width space remover',
+        'clean invisible characters',
+        'remove zero width space',
+        'hidden unicode characters',
+      ],
+      faqs: [
+        {
+          question: 'What kind of invisible characters are detected?',
+          answer:
+            'Zero-width spaces (U+200B), zero-width joiners (U+200D), non-joiners (U+200C), byte order marks (U+FEFF), soft hyphens (U+00AD), and directional marks.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your suspect text into the input field.',
+        'Review the detected hidden character count in the breakdown badges.',
+        'Click "Copy Clean Text" to copy the sanitized string without hidden characters.',
+      ],
+    },
+    'text-prefix-suffix-appender': {
+      name: 'Multi-Line Text Prefix & Suffix Appender',
+      metadataTitle: 'Multi-Line Text Prefix & Suffix Appender Online',
+      description: 'Add custom prefixes, suffixes, quotes, or line numbers to every line of text.',
+      longDescription: 'Add custom prefixes, suffixes, quotes, or line numbers to every line of text. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['text prefix suffix appender', 'text', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Multi-Line Text Prefix & Suffix Appender?', answer: 'Add custom prefixes, suffixes, quotes, or line numbers to every line of text.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'text-duplicate-line-counter': {
+      name: 'Duplicate Line Frequency Counter',
+      metadataTitle: 'Duplicate Line Frequency Counter Online',
+      description: 'Count duplicate lines in text lists and rank items by frequency occurrence.',
+      longDescription: 'Count duplicate lines in text lists and rank items by frequency occurrence. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['text duplicate line counter', 'text', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Duplicate Line Frequency Counter?', answer: 'Count duplicate lines in text lists and rank items by frequency occurrence.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'text-column-tabular-splitter': {
+      name: 'Text Delimited Column Tabular Splitter',
+      metadataTitle: 'Text Delimited Column Tabular Splitter Online',
+      description: 'Split CSV/TSV delimited text into structured fixed-width columns and matrix rows.',
+      longDescription: 'Split CSV/TSV delimited text into structured fixed-width columns and matrix rows. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['text column tabular splitter', 'text', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Text Delimited Column Tabular Splitter?', answer: 'Split CSV/TSV delimited text into structured fixed-width columns and matrix rows.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+  },
+  converters: {
+    'curl-to-axios': {
+      name: 'cURL to Axios Converter',
+      metadataTitle: 'cURL to Axios Converter Online (TypeScript)',
+      description: 'Convert cURL commands to modern JavaScript and TypeScript Axios requests with async/await support.',
+      longDescription: 'Free online cURL to Axios converter. Transform cURL network commands into production-ready Axios requests with TypeScript types, headers, params, and async/await syntax.',
+      keywords: ['curl to axios', 'curl to axios js', 'curl axios converter', 'curl to typescript axios'],
+      faqs: [
+        { question: 'What does the cURL to Axios Converter do?', answer: 'It translates terminal cURL commands into clean JavaScript or TypeScript Axios code snippets.' },
+        { question: 'Is my data private?', answer: 'Yes, all conversion happens 100% locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Paste your cURL command into the input box.',
+        'Select TypeScript or JavaScript and toggle Async/Await.',
+        'Copy the generated Axios code.'
+      ]
+    },
+    'fetch-to-curl': {
+      name: 'Fetch to cURL Converter',
+      metadataTitle: 'Fetch to cURL Converter Online',
+      description: 'Convert JavaScript fetch() code snippets and browser network requests into executable cURL terminal commands.',
+      longDescription: 'Free online Fetch to cURL generator. Convert browser fetch API calls into terminal-ready cURL commands for debugging and testing.',
+      keywords: ['fetch to curl', 'javascript fetch to curl', 'convert fetch to curl', 'curl generator from fetch'],
+      faqs: [
+        { question: 'How do I convert Fetch to cURL?', answer: 'Paste your fetch() code snippet and the tool will automatically output the formatted cURL command.' },
+        { question: 'Does it support headers and POST bodies?', answer: 'Yes, headers, HTTP methods, and JSON bodies are fully parsed and preserved.' }
+      ],
+      howToUseSteps: [
+        'Paste your fetch snippet into the editor.',
+        'Copy the generated cURL command for terminal use.'
+      ]
+    },
+    'json-to-xml': {
+      name: 'JSON to XML Converter',
+      metadataTitle: 'JSON to XML Converter & Formatter Online',
+      description: 'Convert JSON objects and arrays into structured, formatted XML documents with custom root tags.',
+      longDescription: 'Fast, secure online JSON to XML converter. Transform JSON data into clean, indented XML with customizable root tag, item tag, and attribute prefixes.',
+      keywords: ['json to xml', 'convert json to xml', 'json to xml online', 'json xml converter'],
+      faqs: [
+        { question: 'How does JSON to XML conversion work?', answer: 'It recursively converts JSON keys and values into valid XML elements and attributes.' },
+        { question: 'Can I customize the root XML tag?', answer: 'Yes, you can set any root tag and array item tag name.' }
+      ],
+      howToUseSteps: [
+        'Paste your JSON payload into the input editor.',
+        'Configure the root tag and XML declaration options.',
+        'Copy or download the generated XML.'
+      ]
+    },
+    'excel-to-json': {
+      name: 'Excel & CSV to JSON Converter',
+      metadataTitle: 'Excel & CSV to JSON Converter Online',
+      description: 'Convert Excel spreadsheets, CSV files, and TSV tables into clean, structured JSON arrays.',
+      longDescription: 'Free online Excel to JSON converter. Upload spreadsheet files or paste table cells directly to generate beautified JSON or JSON Lines with automatic number and boolean type parsing.',
+      keywords: ['excel to json', 'xlsx to json', 'csv to json converter', 'spreadsheet to json'],
+      faqs: [
+        { question: 'Can I paste directly from Excel or Google Sheets?', answer: 'Yes, copy any table cells and paste them directly into the editor.' },
+        { question: 'Are numbers and booleans parsed automatically?', answer: 'Yes, numeric values and true/false values are automatically parsed into native JSON types.' }
+      ],
+      howToUseSteps: [
+        'Paste spreadsheet cells or upload a CSV/TSV file.',
+        'Toggle number and boolean type parsing.',
+        'Copy or download the resulting JSON file.'
+      ]
+    },
+    'json-to-excel': {
+      name: 'JSON to Excel & CSV Converter',
+      metadataTitle: 'JSON to Excel & CSV Converter Online',
+      description: 'Convert JSON arrays and objects into downloadable Excel spreadsheets, CSV, and TSV files.',
+      longDescription: 'Convert complex JSON payloads into tabular Excel and CSV spreadsheets. Supports automatic object flattening and custom delimiters.',
+      keywords: ['json to excel', 'json to csv', 'export json to xlsx', 'json to spreadsheet'],
+      faqs: [
+        { question: 'Does it support nested JSON objects?', answer: 'Yes, nested objects are automatically flattened using dot notation keys.' },
+        { question: 'Can I export as CSV or TSV?', answer: 'Yes, choose between Comma, Tab, or Semicolon separated values.' }
+      ],
+      howToUseSteps: [
+        'Paste your JSON array of objects.',
+        'Select your preferred delimiter format.',
+        'Click Download to save your spreadsheet.'
+      ]
+    },
+    'image-converter': {
+      name: 'All-in-One Image Format Converter',
+      metadataTitle: 'Image Format Converter – PNG, JPG, WebP, AVIF',
+      description: 'Convert image formats in your browser without uploading files to a server. Supports PNG, JPG, WebP, AVIF, BMP, and ICO.',
+      longDescription: 'High-speed client-side image converter. Easily convert between PNG, JPEG, WebP, AVIF, BMP, and Favicon ICO formats without uploading the image for conversion.',
+      keywords: ['image converter', 'png to webp', 'webp to png', 'jpg to webp', 'image format converter online'],
+      faqs: [
+        { question: 'Is it safe to convert private photos?', answer: 'Yes, 100% of the image processing runs locally in your browser with HTML5 Canvas. Your photos never leave your device.' },
+        { question: 'Which formats are supported?', answer: 'PNG, JPEG, WebP, AVIF, BMP, and ICO.' }
+      ],
+      howToUseSteps: [
+        'Drag and drop or select an image file.',
+        'Choose your desired target format and quality level.',
+        'Click Download to save the converted image.'
+      ]
+    },
+    'images-to-pdf': {
+      name: 'Images to PDF Converter',
+      metadataTitle: 'Images to PDF Converter Online',
+      description: 'Convert and merge JPG, PNG, and WebP images into a single multi-page PDF document client-side.',
+      longDescription: 'Free online Images to PDF converter. Combine multiple photos into a customized PDF with A4/Letter sizing, auto-orientation, and custom margins.',
+      keywords: ['images to pdf', 'jpg to pdf', 'png to pdf', 'combine images to pdf', 'photos to pdf online'],
+      faqs: [
+        { question: 'Can I reorder the images before generating the PDF?', answer: 'Yes, use the arrow buttons on each thumbnail to arrange the page order.' },
+        { question: 'Are my images uploaded to a server?', answer: 'No, PDF document generation runs 100% client-side in your browser.' }
+      ],
+      howToUseSteps: [
+        'Select or drag & drop one or more images.',
+        'Reorder pages and configure page format and margins.',
+        'Click Create PDF and download your document.'
+      ]
+    },
+    'curl-to-python': {
+      name: 'cURL to Python Converter',
+      metadataTitle: 'cURL to Python Converter Online',
+      description: 'Convert cURL commands to Python requests or httpx code.',
+      longDescription: 'Convert cURL commands to Python requests or httpx code. 100% free client-side tool with instant browser execution.',
+      keywords: ['curl-to-python', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is cURL to Python Converter?', answer: 'Convert cURL commands to Python requests or httpx code.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'curl-to-javascript': {
+      name: 'cURL to JavaScript Fetch Converter',
+      metadataTitle: 'cURL to JavaScript Fetch Converter Online',
+      description: 'Convert cURL commands to modern Fetch API or Axios JavaScript code.',
+      longDescription: 'Convert cURL commands to modern Fetch API or Axios JavaScript code. 100% free client-side tool with instant browser execution.',
+      keywords: ['curl-to-javascript', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is cURL to JavaScript Fetch Converter?', answer: 'Convert cURL commands to modern Fetch API or Axios JavaScript code.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'curl-to-go': {
+      name: 'cURL to Go Converter',
+      metadataTitle: 'cURL to Go Converter Online',
+      description: 'Convert cURL commands to idiomatic Go net/http code.',
+      longDescription: 'Convert cURL commands to idiomatic Go net/http code. 100% free client-side tool with instant browser execution.',
+      keywords: ['curl-to-go', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is cURL to Go Converter?', answer: 'Convert cURL commands to idiomatic Go net/http code.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'curl-to-rust': {
+      name: 'cURL to Rust Converter',
+      metadataTitle: 'cURL to Rust Converter Online',
+      description: 'Convert cURL commands to Rust reqwest client code.',
+      longDescription: 'Convert cURL commands to Rust reqwest client code. 100% free client-side tool with instant browser execution.',
+      keywords: ['curl-to-rust', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is cURL to Rust Converter?', answer: 'Convert cURL commands to Rust reqwest client code.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'curl-to-php': {
+      name: 'cURL to PHP Converter',
+      metadataTitle: 'cURL to PHP Converter Online',
+      description: 'Convert cURL commands to PHP Guzzle or native curl code.',
+      longDescription: 'Convert cURL commands to PHP Guzzle or native curl code. 100% free client-side tool with instant browser execution.',
+      keywords: ['curl-to-php', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is cURL to PHP Converter?', answer: 'Convert cURL commands to PHP Guzzle or native curl code.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'curl-to-csharp': {
+      name: 'cURL to C# Converter',
+      metadataTitle: 'cURL to C# Converter Online',
+      description: 'Convert cURL commands to C# .NET HttpClient code.',
+      longDescription: 'Convert cURL commands to C# .NET HttpClient code. 100% free client-side tool with instant browser execution.',
+      keywords: ['curl-to-csharp', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is cURL to C# Converter?', answer: 'Convert cURL commands to C# .NET HttpClient code.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'curl-to-java': {
+      name: 'cURL to Java Converter',
+      metadataTitle: 'cURL to Java Converter Online',
+      description: 'Convert cURL commands to Java 11+ HttpClient code.',
+      longDescription: 'Convert cURL commands to Java 11+ HttpClient code. 100% free client-side tool with instant browser execution.',
+      keywords: ['curl-to-java', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is cURL to Java Converter?', answer: 'Convert cURL commands to Java 11+ HttpClient code.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'curl-to-ai-sdk': {
+      name: 'cURL to OpenAI & Claude SDK Converter',
+      metadataTitle: 'cURL to OpenAI & Claude SDK Converter Online',
+      description: 'Convert raw API cURL calls into official OpenAI and Anthropic SDK code.',
+      longDescription: 'Convert raw API cURL calls into official OpenAI and Anthropic SDK code. 100% free client-side tool with instant browser execution.',
+      keywords: ['curl-to-ai-sdk', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is cURL to OpenAI & Claude SDK Converter?', answer: 'Convert raw API cURL calls into official OpenAI and Anthropic SDK code.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'vercel-ai-core-message-converter': {
+      name: 'Vercel AI SDK Message Converter',
+      metadataTitle: 'Vercel AI SDK Message Converter Online',
+      description: 'Convert chat logs and OpenAI messages to Vercel AI SDK CoreMessage array.',
+      longDescription: 'Convert chat logs and OpenAI messages to Vercel AI SDK CoreMessage array. 100% free client-side tool with instant browser execution.',
+      keywords: ['vercel-ai-core-message-converter', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Vercel AI SDK Message Converter?', answer: 'Convert chat logs and OpenAI messages to Vercel AI SDK CoreMessage array.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'tailwind-v3-to-v4-migrator': {
+      name: 'Tailwind CSS v3 to v4 Migrator',
+      metadataTitle: 'Tailwind CSS v3 to v4 Migrator Online',
+      description: 'Migrate tailwind.config.js to Tailwind CSS v4 @theme CSS directives.',
+      longDescription: 'Migrate tailwind.config.js to Tailwind CSS v4 @theme CSS directives. 100% free client-side tool with instant browser execution.',
+      keywords: ['tailwind-v3-to-v4-migrator', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Tailwind CSS v3 to v4 Migrator?', answer: 'Migrate tailwind.config.js to Tailwind CSS v4 @theme CSS directives.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'css-box-shadow-to-tailwind': {
+      name: 'CSS Box-Shadow to Tailwind Converter',
+      metadataTitle: 'CSS Box-Shadow to Tailwind Converter Online',
+      description: 'Convert complex CSS box-shadow values into arbitrary Tailwind classes.',
+      longDescription: 'Convert complex CSS box-shadow values into arbitrary Tailwind classes. 100% free client-side tool with instant browser execution.',
+      keywords: ['css-box-shadow-to-tailwind', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is CSS Box-Shadow to Tailwind Converter?', answer: 'Convert complex CSS box-shadow values into arbitrary Tailwind classes.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'html-table-converter': {
+      name: 'HTML Table to Markdown & CSV Converter',
+      metadataTitle: 'HTML Table to Markdown & CSV Converter Online',
+      description: 'Convert HTML table markup to clean Markdown tables, CSV, or JSON array.',
+      longDescription: 'Convert HTML table markup to clean Markdown tables, CSV, or JSON array. 100% free client-side tool with instant browser execution.',
+      keywords: ['html-table-converter', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is HTML Table to Markdown & CSV Converter?', answer: 'Convert HTML table markup to clean Markdown tables, CSV, or JSON array.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'natural-language-to-cron': {
+      name: 'Natural Language to Cron Converter',
+      metadataTitle: 'Natural Language to Cron Converter Online',
+      description: 'Convert natural English descriptions into standard 5-part cron schedules.',
+      longDescription: 'Convert natural English descriptions into standard 5-part cron schedules. 100% free client-side tool with instant browser execution.',
+      keywords: ['natural-language-to-cron', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Natural Language to Cron Converter?', answer: 'Convert natural English descriptions into standard 5-part cron schedules.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'terraform-hcl-to-json': {
+      name: 'Terraform HCL to JSON Converter',
+      metadataTitle: 'Terraform HCL to JSON Converter Online',
+      description: 'Convert Terraform HCL resource definitions into terraform.tf.json syntax.',
+      longDescription: 'Convert Terraform HCL resource definitions into terraform.tf.json syntax. 100% free client-side tool with instant browser execution.',
+      keywords: ['terraform-hcl-to-json', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Terraform HCL to JSON Converter?', answer: 'Convert Terraform HCL resource definitions into terraform.tf.json syntax.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'sql-to-prisma': {
+      name: 'SQL DDL to Prisma Schema Converter',
+      metadataTitle: 'SQL DDL to Prisma Schema Converter Online',
+      description: 'Convert SQL CREATE TABLE statements into Prisma schema models.',
+      longDescription: 'Convert SQL CREATE TABLE statements into Prisma schema models. 100% free client-side tool with instant browser execution.',
+      keywords: ['sql-to-prisma', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is SQL DDL to Prisma Schema Converter?', answer: 'Convert SQL CREATE TABLE statements into Prisma schema models.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'sql-to-drizzle': {
+      name: 'SQL DDL to Drizzle ORM Schema Converter',
+      metadataTitle: 'SQL DDL to Drizzle ORM Schema Converter Online',
+      description: 'Convert SQL CREATE TABLE statements into Drizzle ORM TypeScript schemas.',
+      longDescription: 'Convert SQL CREATE TABLE statements into Drizzle ORM TypeScript schemas. 100% free client-side tool with instant browser execution.',
+      keywords: ['sql-to-drizzle', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is SQL DDL to Drizzle ORM Schema Converter?', answer: 'Convert SQL CREATE TABLE statements into Drizzle ORM TypeScript schemas.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'mongodb-to-sql': {
+      name: 'MongoDB Query to SQL Converter',
+      metadataTitle: 'MongoDB Query to SQL Converter Online',
+      description: 'Convert MongoDB find filters into SQL SELECT queries.',
+      longDescription: 'Convert MongoDB find filters into SQL SELECT queries. 100% free client-side tool with instant browser execution.',
+      keywords: ['mongodb-to-sql', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is MongoDB Query to SQL Converter?', answer: 'Convert MongoDB find filters into SQL SELECT queries.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'sql-to-django': {
+      name: 'SQL DDL to Django Model Converter',
+      metadataTitle: 'SQL DDL to Django Model Converter Online',
+      description: 'Convert SQL CREATE TABLE statements into Python Django ORM models.',
+      longDescription: 'Convert SQL CREATE TABLE statements into Python Django ORM models. 100% free client-side tool with instant browser execution.',
+      keywords: ['sql-to-django', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is SQL DDL to Django Model Converter?', answer: 'Convert SQL CREATE TABLE statements into Python Django ORM models.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'crypto-unit-converter': {
+      name: 'Crypto Multi-Unit Converter',
+      metadataTitle: 'Crypto Multi-Unit Converter Online',
+      description: 'Convert between Wei, Gwei, Ether, and Bitcoin Satoshis.',
+      longDescription: 'Convert between Wei, Gwei, Ether, and Bitcoin Satoshis. 100% free client-side tool with instant browser execution.',
+      keywords: ['crypto-unit-converter', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Crypto Multi-Unit Converter?', answer: 'Convert between Wei, Gwei, Ether, and Bitcoin Satoshis.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'json-to-python-dataclass': {
+      name: 'JSON to Python Dataclass Converter',
+      metadataTitle: 'JSON to Python Dataclass Converter Online',
+      description: 'Convert JSON objects into Python 3.10+ @dataclass classes.',
+      longDescription: 'Convert JSON objects into Python 3.10+ @dataclass classes. 100% free client-side tool with instant browser execution.',
+      keywords: ['json-to-python-dataclass', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is JSON to Python Dataclass Converter?', answer: 'Convert JSON objects into Python 3.10+ @dataclass classes.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'json-to-go-struct': {
+      name: 'JSON to Go Struct Converter',
+      metadataTitle: 'JSON to Go Struct Converter Online',
+      description: 'Convert JSON objects into Go structs with json tags.',
+      longDescription: 'Convert JSON objects into Go structs with json tags. 100% free client-side tool with instant browser execution.',
+      keywords: ['json-to-go-struct', 'converters', 'developer tool', 'online tool', 'json to golang struct', 'json to go models', 'golang struct generator', 'json to go online'],
+      faqs: [
+        { question: 'What is JSON to Go Struct Converter?', answer: 'Convert JSON objects into Go structs with json tags.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+        { question: 'Is this the same as a JSON to Golang struct generator?', answer: 'Yes. Go is often called Golang, and this single tool generates the struct definitions with json tags from any JSON sample, including nested objects and arrays.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'proto-to-typescript': {
+      name: 'Protobuf to TypeScript Interface Converter',
+      metadataTitle: 'Protobuf to TypeScript Interface Converter',
+      description: 'Convert Proto3 message definitions into TypeScript interfaces.',
+      longDescription: 'Convert Proto3 message definitions into TypeScript interfaces. 100% free client-side tool with instant browser execution.',
+      keywords: ['proto-to-typescript', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Protobuf to TypeScript Interface Converter?', answer: 'Convert Proto3 message definitions into TypeScript interfaces.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'http-headers-to-json': {
+      name: 'HTTP Headers to JSON Converter',
+      metadataTitle: 'HTTP Headers to JSON Converter Online',
+      description: 'Convert HTTP header text into JSON object and vice versa.',
+      longDescription: 'Convert HTTP header text into JSON object and vice versa. 100% free client-side tool with instant browser execution.',
+      keywords: ['http-headers-to-json', 'converters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is HTTP Headers to JSON Converter?', answer: 'Convert HTTP header text into JSON object and vice versa.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+
+    'svg-to-webp': {
+      name: 'SVG to WebP Data URI Converter',
+      metadataTitle: 'SVG to WebP Data URI Converter Online',
+      description: 'Encode SVG vector graphics into high-performance base64 data URIs.',
+      longDescription: 'Encode SVG vector graphics into high-performance base64 data URIs.',
+      keywords: ['svg-to-webp', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is SVG to WebP Data URI Converter?', answer: 'Encode SVG vector graphics into high-performance base64 data URIs.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'docker-to-compose': {
+      name: 'Docker Run to Docker Compose Converter',
+      metadataTitle: 'Docker Run to Docker Compose Converter',
+      description: 'Convert single docker run terminal commands into standard docker-compose.yml services.',
+      longDescription: 'Convert single docker run terminal commands into standard docker-compose.yml services.',
+      keywords: ['docker-to-compose', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is Docker Run to Docker Compose Converter?', answer: 'Convert single docker run terminal commands into standard docker-compose.yml services.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'har-to-k6': {
+      name: 'HAR to k6 Load Test Script Converter',
+      metadataTitle: 'HAR to k6 Load Test Script Converter Online',
+      description: 'Convert HTTP Archive (HAR) browser network logs into k6 performance test scripts.',
+      longDescription: 'Convert HTTP Archive (HAR) browser network logs into k6 performance test scripts.',
+      keywords: ['har-to-k6', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is HAR to k6 Load Test Script Converter?', answer: 'Convert HTTP Archive (HAR) browser network logs into k6 performance test scripts.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'json-to-graphql-query': {
+      name: 'JSON to GraphQL Query Generator',
+      metadataTitle: 'JSON to GraphQL Query Generator Online',
+      description: 'Generate structured GraphQL query strings and selection fields from JSON objects.',
+      longDescription: 'Generate structured GraphQL query strings and selection fields from JSON objects.',
+      keywords: ['json-to-graphql-query', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is JSON to GraphQL Query Generator?', answer: 'Generate structured GraphQL query strings and selection fields from JSON objects.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'avro-to-json-schema': {
+      name: 'Apache Avro to JSON Schema Converter',
+      metadataTitle: 'Apache Avro to JSON Schema Converter Online',
+      description: 'Convert Apache Avro record schema definitions into JSON Schema specifications.',
+      longDescription: 'Convert Apache Avro record schema definitions into JSON Schema specifications.',
+      keywords: ['avro-to-json-schema', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is Apache Avro to JSON Schema Converter?', answer: 'Convert Apache Avro record schema definitions into JSON Schema specifications.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'openapi-to-typescript-fetch': {
+      name: 'OpenAPI to TypeScript Fetch Client',
+      metadataTitle: 'OpenAPI to TypeScript Fetch Client Online',
+      description: 'Generate typed fetch API client functions from OpenAPI 3.0 and Swagger specs.',
+      longDescription: 'Generate typed fetch API client functions from OpenAPI 3.0 and Swagger specs.',
+      keywords: ['openapi-to-typescript-fetch', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is OpenAPI to TypeScript Fetch Client?', answer: 'Generate typed fetch API client functions from OpenAPI 3.0 and Swagger specs.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'postman-to-curl': {
+      name: 'Postman Collection to cURL Script',
+      metadataTitle: 'Postman Collection to cURL Script Online',
+      description: 'Convert exported Postman Collection JSON requests into executable terminal cURL commands.',
+      longDescription: 'Convert exported Postman Collection JSON requests into executable terminal cURL commands.',
+      keywords: ['postman-to-curl', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is Postman Collection to cURL Script?', answer: 'Convert exported Postman Collection JSON requests into executable terminal cURL commands.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'svg-to-react-native': {
+      name: 'SVG to React Native (SVGR) Converter',
+      metadataTitle: 'SVG to React Native (SVGR) Converter Online',
+      description: 'Transform raw SVG vector graphics into react-native-svg JSX components.',
+      longDescription: 'Transform raw SVG vector graphics into react-native-svg JSX components.',
+      keywords: ['svg-to-react-native', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is SVG to React Native (SVGR) Converter?', answer: 'Transform raw SVG vector graphics into react-native-svg JSX components.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'json-schema-to-zod': {
+      name: 'JSON Schema to Zod Converter',
+      metadataTitle: 'JSON Schema to Zod Converter Online',
+      description: 'Convert JSON Schema definitions into TypeScript Zod validation objects.',
+      longDescription: 'Convert JSON Schema definitions into TypeScript Zod validation objects.',
+      keywords: ['json-schema-to-zod', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is JSON Schema to Zod Converter?', answer: 'Convert JSON Schema definitions into TypeScript Zod validation objects.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'zod-to-json-schema': {
+      name: 'Zod to JSON Schema Converter',
+      metadataTitle: 'Zod to JSON Schema Converter Online',
+      description: 'Convert TypeScript Zod object schemas into standard JSON Schema draft-07 definitions.',
+      longDescription: 'Convert TypeScript Zod object schemas into standard JSON Schema draft-07 definitions.',
+      keywords: ['zod-to-json-schema', 'converters', 'developer tool'],
+      faqs: [
+        { question: 'What is Zod to JSON Schema Converter?', answer: 'Convert TypeScript Zod object schemas into standard JSON Schema draft-07 definitions.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'openai-function-schema': {
+      name: 'OpenAI Function Calling Schema Generator',
+      metadataTitle: 'OpenAI Function Calling Schema Generator Online',
+      description: 'Convert JSON objects into structured OpenAI tool and function calling parameter schemas.',
+      longDescription: 'Free online OpenAI Function Calling Schema Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['openai-function-schema', 'openai function calling schema generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is OpenAI Function Calling Schema Generator?',
+          answer: 'Convert JSON objects into structured OpenAI tool and function calling parameter schemas.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'prompt-format-converter': {
+      name: 'ChatML, Anthropic & Llama 3 Prompt Converter',
+      metadataTitle: 'ChatML, Anthropic & Llama 3 Prompt Converter',
+      description: 'Convert chat prompts between ChatML, Anthropic Human/Assistant, and Llama 3 template formats.',
+      longDescription: 'Free online ChatML, Anthropic & Llama 3 Prompt Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['prompt-format-converter', 'chatml, anthropic & llama 3 prompt converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is ChatML, Anthropic & Llama 3 Prompt Converter?',
+          answer: 'Convert chat prompts between ChatML, Anthropic Human/Assistant, and Llama 3 template formats.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'css-to-tailwind': {
+      name: 'CSS to Tailwind CSS Converter',
+      metadataTitle: 'CSS to Tailwind CSS Converter Online',
+      description: 'Convert standard CSS rules and declaration blocks into Tailwind CSS utility classes.',
+      longDescription: 'Free online CSS to Tailwind CSS Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['css-to-tailwind', 'css to tailwind css converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSS to Tailwind CSS Converter?',
+          answer: 'Convert standard CSS rules and declaration blocks into Tailwind CSS utility classes.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'tailwind-to-css': {
+      name: 'Tailwind to Vanilla CSS Converter',
+      metadataTitle: 'Tailwind to Vanilla CSS Converter Online',
+      description: 'Convert Tailwind CSS classes back into standard, reusable vanilla CSS stylesheets.',
+      longDescription: 'Free online Tailwind to Vanilla CSS Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['tailwind-to-css', 'tailwind to vanilla css converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Tailwind to Vanilla CSS Converter?',
+          answer: 'Convert Tailwind CSS classes back into standard, reusable vanilla CSS stylesheets.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'json-to-pydantic': {
+      name: 'JSON to Python Pydantic V2 Model',
+      metadataTitle: 'JSON to Pydantic V2 Model Converter Online',
+      description: 'Convert JSON payloads into type-safe Python Pydantic V2 BaseModel class definitions.',
+      longDescription: 'Free online JSON to Python Pydantic V2 Model. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['json-to-pydantic', 'json to python pydantic v2 model', 'developer tool', 'online tool', 'json to python pydantic', 'json to pydantic v2', 'pydantic model generator', 'json to basemodel'],
+      faqs: [
+        {
+          question: 'What is JSON to Python Pydantic V2 Model?',
+          answer: 'Convert JSON payloads into type-safe Python Pydantic V2 BaseModel class definitions.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+        { question: 'Can I choose the name of the root model?', answer: 'Yes. Set the root model name above the editor. Nested objects are named after their JSON keys, and a top-level array of objects is modelled by its first element.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'json-to-rust-serde': {
+      name: 'JSON to Rust Serde Struct Converter',
+      metadataTitle: 'JSON to Rust Serde Struct Converter Online',
+      description: 'Convert JSON objects into Rust struct definitions with serde derive attributes.',
+      longDescription: 'Free online JSON to Rust Serde Struct Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['json-to-rust-serde', 'json to rust serde struct converter', 'developer tool', 'online tool', 'json to rust types', 'json to rust structs', 'serde struct generator', 'json to rust online'],
+      faqs: [
+        {
+          question: 'What is JSON to Rust Serde Struct Converter?',
+          answer: 'Convert JSON objects into Rust struct definitions with serde derive attributes.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+        { question: 'Does the output include the serde derive macros?', answer: 'Yes. Each struct derives Serialize and Deserialize (plus Debug, Clone, and Default) and uses serde rename attributes to keep the original JSON keys. Add the serde and serde_json crates to your project.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'json-to-swift': {
+      name: 'JSON to Swift Codable Struct Converter',
+      metadataTitle: 'JSON to Swift Codable Struct Converter Online',
+      description: 'Convert JSON API responses into Swift Codable and Identifiable data structs.',
+      longDescription: 'Free online JSON to Swift Codable Struct Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['json-to-swift', 'json to swift codable struct converter', 'developer tool', 'online tool', 'json to swift struct', 'json to swift codable', 'swift codable generator'],
+      faqs: [
+        {
+          question: 'What is JSON to Swift Codable Struct Converter?',
+          answer: 'Convert JSON API responses into Swift Codable and Identifiable data structs.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+        { question: 'Does the generator produce structs or classes?', answer: 'Structs. Each JSON object becomes a struct that conforms to Codable and Identifiable, and nested objects become nested struct types. Review property names and optionals before using them in an app.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'json-to-kotlin': {
+      name: 'JSON to Kotlin Data Class Converter',
+      metadataTitle: 'JSON to Kotlin Data Class Converter Online',
+      description: 'Convert JSON into Kotlin data classes with @Serializable and @SerialName annotations.',
+      longDescription: 'Free online JSON to Kotlin Data Class Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['json-to-kotlin', 'json to kotlin data class converter', 'developer tool', 'online tool', 'json to kotlin class', 'json to kotlin data class online', 'kotlinx serialization generator'],
+      faqs: [
+        {
+          question: 'What is JSON to Kotlin Data Class Converter?',
+          answer: 'Convert JSON into Kotlin data classes with @Serializable and @SerialName annotations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+        { question: 'Which Kotlin serialization library does the output target?', answer: 'kotlinx.serialization. Every generated data class is annotated with @Serializable and each property with @SerialName so the JSON field names are preserved.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'json-to-csharp': {
+      name: 'JSON to C# Class Converter',
+      metadataTitle: 'JSON to C# Class & Record Converter Online',
+      description: 'Convert JSON into strongly-typed C# classes with System.Text.Json attributes.',
+      longDescription: 'Free online JSON to C# Class Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['json-to-csharp', 'json to c# class converter', 'developer tool', 'online tool', 'json to c# record', 'json to csharp class', 'json to c# class online', 'system.text.json class generator'],
+      faqs: [
+        {
+          question: 'What is JSON to C# Class Converter?',
+          answer: 'Convert JSON into strongly-typed C# classes with System.Text.Json attributes.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+        { question: 'Can I generate C# records instead of classes?', answer: 'Yes. Switch the output style to Record to get positional records with [property: JsonPropertyName] attributes, or keep Class for mutable classes with get and set properties. Nested objects become their own types in both styles.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'json-to-java-pojo': {
+      name: 'JSON to Java Lombok POJO Converter',
+      metadataTitle: 'JSON to Java Lombok POJO Converter Online',
+      description: 'Convert JSON objects into Java POJO classes with Lombok @Data and Jackson annotations.',
+      longDescription: 'Free online JSON to Java Lombok POJO Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['json-to-java-pojo', 'json to java lombok pojo converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is JSON to Java Lombok POJO Converter?',
+          answer: 'Convert JSON objects into Java POJO classes with Lombok @Data and Jackson annotations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'typescript-to-json-schema': {
+      name: 'TypeScript to JSON Schema Converter',
+      metadataTitle: 'TypeScript to JSON Schema Converter Online',
+      description: 'Convert TypeScript interface definitions into standard JSON Schema Draft 7/2020-12.',
+      longDescription: 'Free online TypeScript to JSON Schema Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['typescript-to-json-schema', 'typescript to json schema converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is TypeScript to JSON Schema Converter?',
+          answer: 'Convert TypeScript interface definitions into standard JSON Schema Draft 7/2020-12.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'yaml-to-typescript': {
+      name: 'YAML to TypeScript Interface Converter',
+      metadataTitle: 'YAML to TypeScript Interface Converter Online',
+      description: 'Convert YAML configuration documents directly into typed TypeScript interfaces.',
+      longDescription: 'Free online YAML to TypeScript Interface Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['yaml-to-typescript', 'yaml to typescript interface converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is YAML to TypeScript Interface Converter?',
+          answer: 'Convert YAML configuration documents directly into typed TypeScript interfaces.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'graphql-to-typescript': {
+      name: 'GraphQL SDL to TypeScript Types Converter',
+      metadataTitle: 'GraphQL SDL to TypeScript Types Converter Online',
+      description: 'Convert GraphQL schema definition language (SDL) types into TypeScript interfaces.',
+      longDescription: 'Free online GraphQL SDL to TypeScript Types Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['graphql-to-typescript', 'graphql sdl to typescript types converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is GraphQL SDL to TypeScript Types Converter?',
+          answer: 'Convert GraphQL schema definition language (SDL) types into TypeScript interfaces.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'protobuf-to-json': {
+      name: 'Protobuf (proto3) to JSON Schema Converter',
+      metadataTitle: 'Protobuf (proto3) to JSON Schema Converter',
+      description: 'Convert Protocol Buffer message schemas into standard JSON Schema definitions.',
+      longDescription: 'Free online Protobuf (proto3) to JSON Schema Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['protobuf-to-json', 'protobuf (proto3) to json schema converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Protobuf (proto3) to JSON Schema Converter?',
+          answer: 'Convert Protocol Buffer message schemas into standard JSON Schema definitions.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'sql-to-mongodb': {
+      name: 'SQL to MongoDB Query Converter',
+      metadataTitle: 'SQL to MongoDB Query Converter Online',
+      description: 'Convert SQL SELECT and WHERE queries into MongoDB db.collection.find() syntax.',
+      longDescription: 'Free online SQL to MongoDB Query Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['sql-to-mongodb', 'sql to mongodb query converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is SQL to MongoDB Query Converter?',
+          answer: 'Convert SQL SELECT and WHERE queries into MongoDB db.collection.find() syntax.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'json-to-sql-ddl': {
+      name: 'JSON to SQL CREATE TABLE DDL Generator',
+      metadataTitle: 'JSON to SQL CREATE TABLE DDL Generator Online',
+      description: 'Infer database column types from JSON data and generate SQL CREATE TABLE DDL schemas.',
+      longDescription: 'Free online JSON to SQL CREATE TABLE DDL Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['json-to-sql-ddl', 'json to sql create table ddl generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is JSON to SQL CREATE TABLE DDL Generator?',
+          answer: 'Infer database column types from JSON data and generate SQL CREATE TABLE DDL schemas.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'csv-to-parquet-schema': {
+      name: 'CSV to Apache Parquet Schema Converter',
+      metadataTitle: 'CSV to Apache Parquet Schema Converter Online',
+      description: 'Inspect CSV headers and generate PyArrow Apache Parquet schema declarations.',
+      longDescription: 'Free online CSV to Apache Parquet Schema Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['csv-to-parquet-schema', 'csv to apache parquet schema converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSV to Apache Parquet Schema Converter?',
+          answer: 'Inspect CSV headers and generate PyArrow Apache Parquet schema declarations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'postgres-to-mysql': {
+      name: 'PostgreSQL to MySQL Dialect Converter',
+      metadataTitle: 'PostgreSQL to MySQL Dialect Converter Online',
+      description: 'Convert PostgreSQL SQL dialect and data types into MySQL compatible schema syntax.',
+      longDescription: 'Free online PostgreSQL to MySQL Dialect Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['postgres-to-mysql', 'postgresql to mysql dialect converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is PostgreSQL to MySQL Dialect Converter?',
+          answer: 'Convert PostgreSQL SQL dialect and data types into MySQL compatible schema syntax.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'prisma-to-sql': {
+      name: 'Prisma Schema to SQL DDL Generator',
+      metadataTitle: 'Prisma Schema to SQL DDL Generator Online',
+      description: 'Convert Prisma ORM schema models into raw SQL CREATE TABLE statements.',
+      longDescription: 'Free online Prisma Schema to SQL DDL Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['prisma-to-sql', 'prisma schema to sql ddl generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Prisma Schema to SQL DDL Generator?',
+          answer: 'Convert Prisma ORM schema models into raw SQL CREATE TABLE statements.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'docker-compose-to-k8s': {
+      name: 'Docker Compose to Kubernetes YAML Converter',
+      metadataTitle: 'Docker Compose to Kubernetes YAML Converter',
+      description: 'Convert docker-compose.yml services into Kubernetes Deployment and Service manifests.',
+      longDescription: 'Free online Docker Compose to Kubernetes YAML Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['docker-compose-to-k8s', 'docker compose to kubernetes yaml converter', 'developer tool', 'online tool', 'docker compose to kubernetes', 'docker compose to k8s', 'docker-compose.yml to kubernetes', 'compose to kubernetes manifests'],
+      faqs: [
+        {
+          question: 'What is Docker Compose to Kubernetes YAML Converter?',
+          answer: 'Convert docker-compose.yml services into Kubernetes Deployment and Service manifests.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+        { question: 'Does the converter generate Ingress or ConfigMap resources?', answer: 'No. For each detected Compose service it generates a starter Deployment and a ClusterIP Service using placeholder image tags and port 80. Adjust images, ports, environment, and volumes, and add Ingress, ConfigMaps, Secrets, probes, and resource limits yourself before applying the manifests to a cluster.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'caddy-to-nginx': {
+      name: 'Caddyfile to Nginx Reverse Proxy Converter',
+      metadataTitle: 'Caddyfile to Nginx Reverse Proxy Converter',
+      description: 'Convert Caddy reverse proxy blocks into production-ready Nginx server configurations.',
+      longDescription: 'Free online Caddyfile to Nginx Reverse Proxy Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['caddy-to-nginx', 'caddyfile to nginx reverse proxy converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Caddyfile to Nginx Reverse Proxy Converter?',
+          answer: 'Convert Caddy reverse proxy blocks into production-ready Nginx server configurations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'curl-to-postman': {
+      name: 'cURL to Postman Collection Converter',
+      metadataTitle: 'cURL to Postman Collection Converter Online',
+      description: 'Convert cURL command strings into importable Postman v2.1 Collection JSON files.',
+      longDescription: 'Free online cURL to Postman Collection Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['curl-to-postman', 'curl to postman collection converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is cURL to Postman Collection Converter?',
+          answer: 'Convert cURL command strings into importable Postman v2.1 Collection JSON files.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'http-wire-format': {
+      name: 'HTTP Request to Raw Wire Format Converter',
+      metadataTitle: 'HTTP Request to Raw Wire Format Converter Online',
+      description: 'Convert structured HTTP requests into raw HTTP/1.1 wire transmission text payloads.',
+      longDescription: 'Free online HTTP Request to Raw Wire Format Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['http-wire-format', 'http request to raw wire format converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is HTTP Request to Raw Wire Format Converter?',
+          answer: 'Convert structured HTTP requests into raw HTTP/1.1 wire transmission text payloads.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'env-sanitizer': {
+      name: '.env to .env.example Secret Sanitizer',
+      metadataTitle: '.env to .env.example Secret Sanitizer Online',
+      description: 'Strip private API keys and database credentials from .env files to produce .env.example templates.',
+      longDescription: 'Free online .env to .env.example Secret Sanitizer. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['env-sanitizer', '.env to .env.example secret sanitizer', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is .env to .env.example Secret Sanitizer?',
+          answer: 'Strip private API keys and database credentials from .env files to produce .env.example templates.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'markdown-to-slides': {
+      name: 'Markdown to HTML Slide Deck Converter',
+      metadataTitle: 'Markdown to HTML Slide Deck Converter Online',
+      description: 'Convert markdown files separated by horizontal rules into responsive HTML presentation slides.',
+      longDescription: 'Free online Markdown to HTML Slide Deck Converter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['markdown-to-slides', 'markdown to html slide deck converter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Markdown to HTML Slide Deck Converter?',
+          answer: 'Convert markdown files separated by horizontal rules into responsive HTML presentation slides.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'multi-radix-converter': {
+      name: 'Multi-Radix Base Converter (Bin, Oct, Dec, Hex)',
+      metadataTitle: 'Multi-Radix Base Converter (Bin, Oct, Dec, Hex)',
+      description: 'Simultaneously convert numbers across Binary, Octal, Decimal, and Hexadecimal representations.',
+      longDescription: 'Free online Multi-Radix Base Converter (Bin, Oct, Dec, Hex). Fast, accurate, client-side processing with instant export options.',
+      keywords: ['multi-radix-converter', 'multi-radix base converter (bin, oct, dec, hex)', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Multi-Radix Base Converter (Bin, Oct, Dec, Hex)?',
+          answer: 'Simultaneously convert numbers across Binary, Octal, Decimal, and Hexadecimal representations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'cron-timezone-converter': {
+      name: 'Cron Expression Timezone Converter (Local ↔ UTC)',
+      metadataTitle: 'Cron Expression Timezone Converter (Local ↔ UTC)',
+      description: 'Shift cron expression hours between local timezones and server UTC schedules.',
+      longDescription: 'Free online Cron Expression Timezone Converter (Local ↔ UTC). Fast, accurate, client-side processing with instant export options.',
+      keywords: ['cron-timezone-converter', 'cron expression timezone converter (local ↔ utc)', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Cron Expression Timezone Converter (Local ↔ UTC)?',
+          answer: 'Shift cron expression hours between local timezones and server UTC schedules.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'timestamp-converter': {
+      name: 'Timestamp Converter',
+      metadataTitle: 'Unix Timestamp Converter Online',
+      description:
+        'Convert signed Unix timestamps in seconds or milliseconds to ISO UTC and local time, or convert a parseable date back to epoch time.',
+      longDescription:
+        'Free online Unix timestamp converter. Switch explicitly between seconds and milliseconds, inspect ISO UTC and browser-local output, or convert a valid date string back to epoch time.',
+      keywords: ['timestamp converter', 'unix timestamp', 'epoch converter', 'date converter'],
+      faqs: [
+        {
+          question: 'What is a Unix timestamp?',
+          answer:
+            'A Unix timestamp is the number of seconds that have elapsed since January 1, 1970 (UTC), also known as the Unix epoch.',
+        },
+        {
+          question: 'Should I use seconds or milliseconds?',
+          answer:
+            'Unix tools and many server APIs commonly use seconds, while JavaScript Date.now() returns milliseconds. A current value therefore has about 10 digits in seconds and 13 digits in milliseconds; select the unit explicitly instead of relying on digit guessing.',
+        },
+        {
+          question: 'How are time zones handled?',
+          answer:
+            'Timestamp output is shown as an ISO 8601 UTC value and as a local value using the browser time zone. When converting text to a timestamp, include Z or an explicit offset when the intended instant must be unambiguous.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How Unix timestamp conversion works',
+          paragraphs: [
+            'A Unix timestamp identifies an instant relative to 1970-01-01T00:00:00Z. The converter accepts an integer in the selected seconds or milliseconds unit, turns it into an ISO 8601 UTC string, and also formats the same instant in the browser local time zone. Reverse conversion parses a date string and returns the selected epoch unit.',
+          ],
+        },
+        {
+          heading: 'Worked seconds and milliseconds example',
+          paragraphs: [
+            'The timestamp 1704110400 seconds and 1704110400000 milliseconds represent the same instant: 2024-01-01T12:00:00.000Z. Choosing the wrong unit moves the value far outside the intended date or makes it invalid. Negative timestamps can represent supported dates before the Unix epoch.',
+          ],
+        },
+        {
+          heading: 'Parsing limits and precision',
+          bullets: [
+            'Timestamp input must be a signed safe JavaScript integer. Fractions, exponent notation, and integers outside the safe range are rejected.',
+            'Date strings without Z or an explicit numeric offset can be interpreted in the browser local time zone; include an offset for reproducible conversion.',
+            'JavaScript Date follows its supported calendar range and does not model leap seconds.',
+            'Conversion runs locally. The displayed local time depends on the device time-zone configuration and historical rules available to the browser.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Select Seconds or Milliseconds to match the source system.',
+        'Enter an integer timestamp, or enter an ISO date with an explicit offset.',
+        'Compare the UTC and browser-local representations.',
+        'Copy the required unit and verify it against the destination API contract.',
+      ],
+    },
+    'color-converter': {
+      name: 'Color Converter',
+      metadataTitle: 'Color Converter – HEX, RGB & HSL Online',
+      description:
+        'Convert colors between HEX, RGB and HSL instantly with a color picker. Copy CSS-ready values and build complementary, analogous and triadic color palettes.',
+      longDescription:
+        'Enter a 6-digit HEX code, RGB channels, or HSL values and the other formats update immediately. A palette panel shows complementary, analogous, triadic, and split-complementary colors based on the current hue.',
+      keywords: [
+        'color converter',
+        'hex to rgb',
+        'rgb to hex',
+        'hex to hsl',
+        'hsl to hex',
+        'rgb to hsl',
+        'color code converter',
+        'css color converter',
+      ],
+      faqs: [
+        {
+          question: 'What is HEX color?',
+          answer:
+            'A HEX color writes the red, green, and blue channels as three two-digit hexadecimal numbers after a #, from 00 to FF each. #FF5733 means red 255, green 87, blue 51.',
+        },
+        {
+          question: 'What is the difference between RGB and HSL?',
+          answer:
+            'RGB defines a color by how much red, green, and blue light it contains. HSL describes the same color as a hue angle, a saturation percentage, and a lightness percentage, which makes lighter, darker, or muted variants easier to create.',
+        },
+        {
+          question: 'How do I convert HEX to RGB?',
+          answer:
+            'Split the six digits into pairs and convert each from base 16: first digit times 16 plus second digit. #1E90FF gives 1E = 30, 90 = 144, FF = 255, so rgb(30, 144, 255).',
+        },
+        {
+          question: 'Why is #FFF not accepted?',
+          answer:
+            'The HEX field expects six digits. Expand 3-digit shorthand by doubling each digit: #FFF becomes #FFFFFF and #0AF becomes #00AAFF.',
+        },
+        {
+          question: 'Can I convert colors with transparency?',
+          answer:
+            'Not with this tool. It converts opaque colors, so 8-digit HEX, rgba(), and hsla() values are not supported. Convert the color part here and add the alpha value yourself, for example rgb(59 130 246 / 50%).',
+        },
+        {
+          question: 'What is a complementary color?',
+          answer:
+            'The color opposite on the color wheel: the same saturation and lightness with the hue rotated by 180 degrees. The palette panel generates it along with analogous, triadic, and split-complementary options.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How HEX, RGB, and HSL relate',
+          paragraphs: [
+            'All three formats describe the same sRGB colors. RGB lists red, green, and blue channels from 0 to 255. HEX writes the same three channels as two-digit hexadecimal pairs, so #3B82F6 is rgb(59, 130, 246): 3B = 59, 82 = 130, F6 = 246. HSL describes the color as a hue (an angle from 0 to 360 on the color wheel), a saturation from 0 to 100%, and a lightness from 0 to 100%; the same blue is hsl(217, 91%, 60%). HSL is convenient for variants: keep the hue and saturation and change only the lightness to get a lighter or darker shade.',
+          ],
+        },
+        {
+          heading: 'Converting between formats by hand',
+          paragraphs: [
+            'For HEX to RGB, split the six hex digits into three pairs and convert each pair from base 16. For #FF5733: FF = 15 x 16 + 15 = 255, 57 = 5 x 16 + 7 = 87, and 33 = 3 x 16 + 3 = 51, giving rgb(255, 87, 51). For RGB to HEX, convert each channel to hexadecimal and pad single digits with a leading zero, so rgb(0, 128, 255) becomes #0080FF. HSL conversion involves more arithmetic, which is where a converter saves time.',
+          ],
+        },
+        {
+          heading: 'Rounding and round trips',
+          paragraphs: [
+            'HSL values are rounded to whole numbers, and each RGB channel has only 256 levels, so several nearby HSL values map to the same RGB color. Converting HSL to RGB and back can therefore shift a value by one. When exact values matter, treat the HEX or RGB value as the source of truth, since that is what the browser renders.',
+          ],
+        },
+        {
+          heading: 'Supported input and output',
+          bullets: [
+            'HEX input needs six digits, with or without the leading #.',
+            'RGB and HSL fields accept whole numbers and are clamped to their valid ranges.',
+            'Alpha channels, named colors such as rebeccapurple, CMYK, and newer CSS spaces such as oklch() are not converted.',
+            'Copied values use CSS syntax, such as #3B82F6, rgb(59, 130, 246), and hsl(217, 91%, 60%), so they paste straight into a stylesheet.',
+            'Palette swatches rotate the hue: complementary by 180 degrees, analogous by plus or minus 30, triadic by 120 and 240, and split-complementary by 150 and 210. Click a swatch to copy its HEX value and load it.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Pick a color with the color picker, or type a 6-digit HEX code.',
+        'Or edit the R, G, B or H, S, L number fields; all formats update together.',
+        'Copy the HEX, rgb(), or hsl() value with the copy button next to it.',
+        'Open the palette panel to explore related colors, and click a swatch to use it.',
+      ],
+    },
+    'roman-numeral-converter': {
+      name: 'Roman Numeral Converter',
+      metadataTitle: 'Roman Numeral Converter Online',
+      description:
+        'Convert whole numbers from 1 to 3999 into standard Roman numerals, or validate and decode Roman numerals back to numbers.',
+      longDescription:
+        'Free online Roman numeral converter for both directions. Convert whole numbers from 1 through 3999 into canonical Roman notation, or validate and decode standard Roman numerals into decimal numbers locally in your browser.',
+      keywords: ['roman numeral converter', 'number to roman', 'roman to number', 'roman numerals'],
+      faqs: [
+        {
+          question: 'What is the range?',
+          answer:
+            'Roman numerals can represent numbers from 1 to 3999. Beyond that, special notation is required.',
+        },
+        {
+          question: 'How are numbers formed?',
+          answer:
+            'Roman numerals use additive notation (VI = 6) and subtractive notation (IV = 4) using letters I, V, X, L, C, D, M.',
+        },
+        {
+          question: 'Does the converter accept forms such as IIII or IC?',
+          answer:
+            'No. The decoder accepts canonical Roman numeral spelling, so 4 must be IV and 99 must be XCIX. Non-standard or malformed forms produce a validation error.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How does the Roman numeral converter work?',
+          paragraphs: [
+            'Number-to-Roman mode maps a whole decimal number to standard Roman symbols using the conventional subtractive pairs IV, IX, XL, XC, CD, and CM. Roman-to-number mode reads the symbols, calculates their value, and verifies that the input is the canonical spelling of that value before returning a result.',
+          ],
+        },
+        {
+          heading: 'Roman numeral conversion examples',
+          paragraphs: [
+            'The number 4 becomes IV, 49 becomes XLIX, 1994 becomes MCMXCIV, and 2026 becomes MMXXVI. In reverse mode, the same Roman values convert back to 4, 49, 1994, and 2026.',
+            'Subtractive notation places a smaller symbol before a larger one in the permitted pairs. For example, IX means 9 and CM means 900. Other values are formed additively, so VIII means 5 + 1 + 1 + 1, or 8.',
+          ],
+        },
+        {
+          heading: 'Range and validation rules',
+          paragraphs: [
+            'This converter supports whole numbers from 1 through 3999, the common range represented without overlines or extended notation. Zero, negative values, decimals, and numbers above 3999 are rejected rather than assigned a non-standard result.',
+            'Roman input is case-insensitive but must use a standard canonical form. The converter rejects invalid repetitions and non-standard shortcuts such as IIII or IC. That strict validation helps distinguish a recognized Roman numeral from a string that merely contains Roman numeral letters.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose Number to Roman or Roman to Number.',
+        'Enter a whole number from 1 to 3999, or a standard Roman numeral.',
+        'Review the converted value or correct any validation message.',
+        'Copy the result for use in your document or application.',
+      ],
+    },
+    'number-base-converter': {
+      name: 'Number Base Converter',
+      metadataTitle: 'Number Base Converter – Binary, Hex, Decimal',
+      description:
+        'Convert whole integers between decimal, hexadecimal, octal, and binary without JavaScript number precision loss.',
+      longDescription:
+        'Free online integer base converter backed by BigInt arithmetic. Convert complete base-10, base-16, base-8, and base-2 values without silently rounding large integers, with a practical input bound that protects the browser UI.',
+      keywords: [
+        'number base converter',
+        'decimal to hex',
+        'binary converter',
+        'hex converter',
+        'base converter',
+      ],
+      faqs: [
+        {
+          question: 'What number bases are supported?',
+          answer:
+            'This tool supports decimal (base-10), hexadecimal (base-16), octal (base-8), and binary (base-2).',
+        },
+        {
+          question: 'How do I use prefixes?',
+          answer:
+            'You can use prefixes like 0x for hex, 0o for octal, and 0b for binary. They are automatically handled.',
+        },
+        {
+          question: 'Can it convert integers larger than Number.MAX_SAFE_INTEGER?',
+          answer:
+            'Yes. Conversion uses BigInt and validates the entire input, so large whole integers are preserved instead of rounded. Inputs are limited to 10,000 digits to keep the browser responsive, and fractions are intentionally not supported.',
+        },
+      ],
+    },
+    'url-parser': {
+      name: 'URL Parser',
+      metadataTitle: 'URL Parser Online – Host, Path & Query',
+      description: 'Parse URLs and inspect protocol, host, path, and query parameters.',
+      longDescription:
+        'Free online URL parser. Break down any URL into protocol, domain, port, path, query parameters, and hash. Useful for debugging redirects, APIs, and tracking links.',
+      keywords: ['url parser', 'parse url', 'url analyzer', 'query parameters', 'url components'],
+      faqs: [
+        {
+          question: 'Can this parse URLs without protocol?',
+          answer:
+            'Yes. If no protocol is provided, the tool tries to parse the input by assuming HTTPS.',
+        },
+        {
+          question: 'Does it support repeated query params?',
+          answer: 'Yes. Repeated query parameters are preserved and returned as arrays.',
+        },
+      ],
+    },
+    'query-string-parser': {
+      name: 'Query String Parser',
+      metadataTitle: 'Query String Parser Online – URL Params to JSON',
+      description: 'Parse query strings to JSON and build query strings from JSON.',
+      longDescription:
+        'Free online query string parser and builder. Decode URL query parameters into structured JSON or generate query strings from JSON objects.',
+      keywords: ['query string parser', 'url parameters', 'parse query string', 'query builder'],
+      faqs: [
+        {
+          question: 'Can I parse a full URL?',
+          answer:
+            'Yes. You can paste a full URL and the tool will extract and parse the query string portion.',
+        },
+        {
+          question: 'Does it support repeated keys?',
+          answer: 'Yes. Repeated keys are preserved as arrays when parsing.',
+        },
+      ],
+    },
+    'env-to-json': {
+      name: '.env to JSON Converter',
+      metadataTitle: '.env to JSON Converter Online (Dotenv Parser)',
+      description:
+        'Convert dotenv KEY=VALUE files to JSON or JSON objects back to portable .env text locally, with quoted values, duplicate warnings, and optional primitive inference.',
+      longDescription:
+        'Free private .env to JSON converter and JSON to dotenv builder. Parse common dotenv syntax or serialize a JSON object without uploading configuration values.',
+      keywords: [
+        'env to json',
+        'dotenv to json',
+        'json to env',
+        'env file parser',
+        'convert env online',
+      ],
+      faqs: [
+        {
+          question: 'Are values in a .env file always strings?',
+          answer:
+            'Environment variables are strings at the process boundary. Optional inference is a convenience for JSON output and converts only clear booleans, JSON-style numbers, and null; leave it disabled when exact string preservation matters.',
+        },
+        {
+          question: 'What happens when a key is defined more than once?',
+          answer:
+            'The last definition wins, matching common dotenv behavior, and the converter displays a warning with both line numbers so the duplicate is not hidden.',
+        },
+        {
+          question: 'Does this tool expand variables such as ${HOST}?',
+          answer:
+            'No. It parses values but intentionally does not interpolate variables, execute shell expressions, read files, or contact a server. Expansion behavior differs between dotenv loaders and should be tested in the target runtime.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the .env and JSON converter supports',
+          paragraphs: [
+            'In .env to JSON mode, the parser accepts blank lines, comments, optional export prefixes, common environment variable names, unquoted values, and single-, double-, or backtick-quoted values. Double-quoted newline, carriage return, tab, quote, and backslash escapes are decoded. Quoted values can span lines, while inline comments outside quotes are removed.',
+          ],
+        },
+        {
+          heading: 'Type inference and duplicate handling',
+          bullets: [
+            'By default every parsed environment value remains a string, which reflects how operating systems expose process variables.',
+            'Optional inference converts true, false, null, and unambiguous JSON-style numbers; values such as 0012 remain strings to preserve leading zeros.',
+            'If a key appears multiple times, the final value is emitted and a warning identifies the duplicate definitions.',
+            'JSON output uses a prototype-safe dictionary so special names such as __proto__ remain ordinary data keys.',
+          ],
+        },
+        {
+          heading: 'How JSON is written as dotenv text',
+          paragraphs: [
+            'JSON to .env mode requires a top-level object whose keys are valid environment variable names. Strings are double-quoted and escaped, numbers and booleans are written as literals, null becomes an empty string with a warning, and arrays or nested objects become quoted JSON strings. Review structured values because the receiving application decides whether and how to parse them again.',
+          ],
+        },
+        {
+          heading: 'Privacy and dialect differences',
+          paragraphs: [
+            'Conversion runs in the browser and this tool does not upload field values. Dotenv syntax is a convention with implementation differences: interpolation, command substitution, export handling, and escape rules may vary between Node.js, Docker, shells, and framework-specific loaders. Validate the generated file with the exact runtime that will consume it, and prefer sanitized examples over production credentials.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose .env to JSON or JSON to .env and paste a sanitized configuration sample.',
+        'For .env input, decide whether JSON primitives should be inferred or all values should remain strings.',
+        'Convert and review duplicate-key or structured-value warnings.',
+        'Copy the result and validate it with the exact application or dotenv loader that will consume it.',
+      ],
+    },
+    'svg-to-jsx': {
+      name: 'SVG to JSX / React Converter',
+      metadataTitle: 'SVG to JSX / React Converter Online',
+      description:
+        'Convert SVG markup into clean React JSX or TypeScript TSX components with style conversion and forwardRef support.',
+      longDescription:
+        'Free online SVG to JSX and React Component generator. Transform SVG elements into production-ready React components with camelCase attributes, inline style objects, and custom props spread.',
+      keywords: [
+        'svg to jsx',
+        'svg to react',
+        'svg to tsx',
+        'convert svg to react component',
+        'svgr online',
+      ],
+      faqs: [
+        {
+          question: 'How does this handle SVG attributes in React?',
+          answer:
+            'All hyphenated HTML/SVG attributes (like stroke-width, fill-rule, clip-path) are converted to valid React camelCase (strokeWidth, fillRule, clipPath), and class becomes className.',
+        },
+        {
+          question: 'Does it support TypeScript and forwardRef?',
+          answer:
+            'Yes! You can toggle TypeScript interfaces, forwardRef wrappers, and standard prop spreads with one click.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your raw SVG code or load the sample.',
+        'Choose your desired component name and options (TypeScript, forwardRef, named export).',
+        'Copy the generated React component code directly into your project.',
+      ],
+    },
+    'css-clamp': {
+      name: 'CSS clamp() Fluid Calculator',
+      metadataTitle: 'CSS clamp() Fluid Calculator Online',
+      description:
+        'Calculate responsive CSS clamp() formulas for fluid typography and spacing across any viewport range.',
+      longDescription:
+        'Free online CSS clamp() generator. Calculate mathematically perfect responsive typography and spacing curves with SCSS mixins and Tailwind class outputs.',
+      keywords: [
+        'css clamp calculator',
+        'fluid typography generator',
+        'css fluid font size',
+        'clamp generator',
+        'responsive text calculator',
+      ],
+      faqs: [
+        {
+          question: 'How does CSS clamp() work?',
+          answer:
+            'The clamp(min, preferred, max) function sets a preferred value based on viewport width (vw) that is constrained between minimum and maximum bounds.',
+        },
+        {
+          question: 'Why use fluid typography?',
+          answer:
+            'Fluid typography smoothly scales text across screen sizes without jumping abruptly between fixed media query breakpoints.',
+        },
+      ],
+      howToUseSteps: [
+        'Set your minimum and maximum viewport widths (e.g. 375px to 1440px).',
+        'Set your minimum and maximum target font sizes or spacing values.',
+        'Use the interactive viewport slider to simulate and preview resizing in real-time.',
+        'Copy the generated clamp() value or Tailwind arbitrary class.',
+      ],
+    },
+    'docker-run-to-compose': {
+      name: 'Docker Run to Compose Converter',
+      metadataTitle: 'Docker Run to Compose Converter Online',
+      description:
+        'Convert complex docker run CLI commands into clean, modern docker-compose.yml services instantly.',
+      longDescription:
+        'Free online Docker Run to Docker Compose converter. Parse ports, volumes, environment variables, restart policies, and network configs into valid compose.yaml files.',
+      keywords: [
+        'docker run to compose',
+        'docker run to docker-compose',
+        'composerize online',
+        'convert docker run command',
+      ],
+      faqs: [
+        {
+          question: 'Which docker run flags are supported?',
+          answer:
+            'The converter parses flags including -p/--publish, -v/--volume, -e/--env, --name, --restart, --network, -w/--workdir, -u/--user, --privileged, and container command arguments.',
+        },
+        {
+          question: 'Is the output valid for modern Docker Compose?',
+          answer:
+            'Yes, the generated YAML follows the modern Docker Compose specification format.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste one or more docker run commands into the input box.',
+        'The tool parses the command and immediately generates formatted docker-compose.yml YAML.',
+        'Copy the YAML and save it as compose.yaml in your project directory.',
+      ],
+    },
+    'json-to-sql': {
+      name: 'JSON to SQL Converter',
+      metadataTitle: 'JSON to SQL INSERT Converter Online',
+      description:
+        'Convert JSON data into standard SQL INSERT statements and CREATE TABLE DDL queries for PostgreSQL, MySQL, and SQLite.',
+      longDescription:
+        'Free online JSON to SQL converter. Infer SQL column types, create tables, and generate single or batch INSERT queries from JSON objects or arrays.',
+      keywords: [
+        'json to sql',
+        'convert json to sql insert',
+        'json to create table',
+        'json to postgresql',
+        'json to mysql',
+      ],
+      faqs: [
+        {
+          question: 'Which SQL dialects are supported?',
+          answer:
+            'The converter supports PostgreSQL, MySQL, SQLite, and Microsoft SQL Server dialect flavors.',
+        },
+        {
+          question: 'How are data types inferred?',
+          answer:
+            'Numbers, booleans, ISO date strings, objects, and text lengths are analyzed across all rows to determine appropriate column data types.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your JSON object or array of objects into the editor.',
+        'Select your target SQL dialect and choose options (CREATE TABLE, batch inserts, quoted identifiers).',
+        'Copy the generated SQL script and run it in your database client.',
+      ],
+    },
+    'px-to-rem': {
+      name: 'PX to REM & EM Converter',
+      metadataTitle: 'PX to REM & EM Converter Online',
+      description:
+        'Convert pixels to REM, EM, VW, VH, PT, and percentage with configurable base root font size. Includes Tailwind & CSS scale tables.',
+      longDescription:
+        'Free online PX to REM and EM Converter. Convert pixel values into flexible, responsive CSS units (REM, EM, VW, VH, %) with custom base font size (16px default) and 1-click copying.',
+      keywords: [
+        'px to rem',
+        'rem to px',
+        'px to em',
+        'css unit converter',
+        'responsive font size converter',
+      ],
+      faqs: [
+        {
+          question: 'What is the standard base font size for REM calculation?',
+          answer:
+            'The standard browser default root font size is 16px (1rem = 16px). You can customize this base in the tool if your CSS sets html { font-size: 62.5%; } (10px base) or other scales.',
+        },
+        {
+          question: 'What is the difference between REM and EM?',
+          answer:
+            'REM (Root EM) is relative to the root <html> element font-size, whereas EM is relative to the font-size of its immediate parent container.',
+        },
+      ],
+      howToUseSteps: [
+        'Set your project root font size (default is 16px).',
+        'Type a pixel value (PX) or REM value into either box for instant bi-directional conversion.',
+        'Review the calculated EM, %, PT, VW, and VH values.',
+        'Click the Copy button next to any unit value to paste it into your CSS.',
+      ],
+    },
+    'csv-to-markdown': {
+      name: 'CSV to Markdown Table Converter',
+      metadataTitle: 'CSV to Markdown Table Converter Online',
+      description:
+        'Convert CSV and TSV spreadsheets to clean GitHub-flavored Markdown tables with left, center, or right column alignment.',
+      longDescription:
+        'Free online CSV to Markdown Table Converter. Convert tabular data from Excel, Google Sheets, or CSV files into GitHub Flavored Markdown (GFM) tables, or sync Markdown tables back to CSV.',
+      keywords: [
+        'csv to markdown',
+        'markdown table generator',
+        'tsv to markdown',
+        'markdown to csv',
+        'table converter',
+      ],
+      faqs: [
+        {
+          question: 'Does this tool support TSV (tab-separated values)?',
+          answer:
+            'Yes. You can paste comma-separated or tab-separated data copied directly from spreadsheet applications like Excel or Google Sheets.',
+        },
+        {
+          question: 'Can I convert Markdown tables back into CSV?',
+          answer:
+            'Yes, click the "Sync MD ➔ CSV" button to parse the Markdown table back into standard comma-separated format.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your raw CSV or TSV data into the left editor.',
+        'Select your desired column alignment (Left, Center, or Right).',
+        'Review the formatted GitHub Markdown table in the right editor.',
+        'Click Copy Markdown to use the table in your README.md or documentation.',
+      ],
+    },
+    'html-table-to-json': {
+      name: 'HTML Table to JSON Converter',
+      metadataTitle: 'HTML Table to JSON Converter Online',
+      description:
+        'Parse and extract data from HTML <table> markup into clean JSON objects or 2D arrays with automatic header detection.',
+      longDescription:
+        'Free online HTML Table to JSON Converter. Extract tabular data from HTML table elements into structured JSON objects or arrays directly in your browser.',
+      keywords: [
+        'html table to json',
+        'table to json converter',
+        'parse html table',
+        'extract table data json',
+      ],
+      faqs: [
+        {
+          question: 'How are table headers detected?',
+          answer:
+            'The converter automatically uses the first row of <th> or <td> elements as keys for the resulting JSON objects.',
+        },
+        {
+          question: 'Can I output a raw 2D array instead of objects?',
+          answer:
+            'Yes, toggle the output format to "2D Array (Rows & Columns)" to get a plain matrix array without named keys.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your raw HTML containing <table>...</table> into the editor.',
+        'Choose whether you want an array of objects or a 2D array.',
+        'Copy the parsed JSON payload or download it as a .json file.',
+      ],
+    },
+    'sql-to-json': {
+      name: 'SQL to JSON Converter',
+      metadataTitle: 'SQL to JSON Converter Online',
+      description:
+        'Convert SQL INSERT statements, table rows, and database dumps into structured JSON arrays and objects instantly.',
+      longDescription:
+        'Free online SQL to JSON Converter. Parse SQL INSERT INTO queries, table dumps, and exported database rows into structured JSON arrays and key-value objects directly in your browser.',
+      keywords: [
+        'sql to json',
+        'sql insert to json',
+        'convert sql to json online',
+        'sql dump to json',
+        'sql query to json object',
+      ],
+      faqs: [
+        {
+          question: 'Does this tool support multiple row INSERT statements?',
+          answer:
+            'Yes. The converter handles multi-row INSERT INTO table (col1, col2) VALUES (a, b), (c, d) statements seamlessly.',
+        },
+        {
+          question: 'Are data types (numbers, booleans, NULL) preserved?',
+          answer:
+            'Yes. Numbers, boolean literals (TRUE/FALSE), and NULL values are automatically parsed and cast into native JSON data types.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your SQL INSERT INTO statements or database query output into the editor.',
+        'Review the automatically generated, formatted JSON output.',
+        'Click Copy JSON or download it directly as a .json data file.',
+      ],
+    },
+    'aspect-ratio-calculator': {
+      name: 'Aspect Ratio Calculator',
+      metadataTitle: 'Aspect Ratio Calculator Online – 16:9, 4:3',
+      description:
+        'Calculate image and video aspect ratios (16:9, 4:3, 1:1, 21:9), resize dimensions proportionally, and copy CSS aspect-ratio code.',
+      longDescription:
+        'Free online Aspect Ratio Calculator. Calculate simplified aspect ratios from pixel dimensions, calculate proportional resizing for images and videos, and get modern CSS aspect-ratio rules.',
+      keywords: [
+        'aspect ratio calculator',
+        'calculate aspect ratio',
+        '16:9 calculator',
+        'proportional resize calculator',
+        'css aspect ratio',
+      ],
+      faqs: [
+        {
+          question: 'How is the aspect ratio simplified?',
+          answer:
+            'The calculator determines the Greatest Common Divisor (GCD) between width and height to produce the simplest whole-number ratio (e.g. 1920x1080 simplifies to 16:9).',
+        },
+        {
+          question: 'How do I use the proportional resize tool?',
+          answer:
+            'Enter your original width and height, then type your new target width to automatically calculate the exact proportional target height.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter original width and height in pixels (or pick a standard preset like 16:9 or 4:3).',
+        'Inspect the automatically simplified ratio (W:H).',
+        'Enter a new target width to calculate the proportional height.',
+        'Copy the modern CSS aspect-ratio snippet.',
+      ],
+    },
+    'html-to-markdown': {
+      name: 'HTML to Markdown Converter',
+      metadataTitle: 'HTML to Markdown Converter Online',
+      description:
+        'Convert HTML markup, headings, links, blockquotes, lists, and formatting into clean GitHub Markdown in your browser.',
+      longDescription:
+        'Free online HTML to Markdown Converter. Transform HTML source code or blog posts into clean, readable Markdown syntax without uploading any data.',
+      keywords: [
+        'html to markdown',
+        'convert html to markdown online',
+        'html to md converter',
+        'clean html to markdown',
+        'html parser to markdown',
+      ],
+      faqs: [
+        {
+          question: 'Which HTML elements are supported?',
+          answer:
+            'The converter supports <h1>-<h6> headings, <strong>/<b> bold, <em>/<i> italic, <a> links, <img> images, <blockquote> quotes, <ul>/<ol>/<li> lists, <code>/ <pre> blocks, and <hr> horizontal rules.',
+        },
+        {
+          question: 'Are HTML entities decoded?',
+          answer:
+            'Yes, common entities like &amp;, &lt;, &gt;, &quot;, and &#39; are converted to plain characters.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your HTML source code into the left editor (or click Load Sample).',
+        'Review the automatically generated clean Markdown text on the right.',
+        'Click "Copy Markdown" or download it as a .md file.',
+      ],
+    },
+    'markdown-to-html': {
+      name: 'Markdown to HTML Converter',
+      metadataTitle: 'Markdown to HTML Converter Online',
+      description:
+        'Convert GitHub-flavored Markdown text, headings, code blocks, lists, and links into clean, formatted HTML markup.',
+      longDescription:
+        'Free online Markdown to HTML Converter. Instantly transform Markdown documents, README notes, or blog posts into clean, semantic HTML code with 1-click copy and file download.',
+      keywords: [
+        'markdown to html',
+        'convert markdown to html online',
+        'md to html converter',
+        'markdown html generator',
+        'github markdown to html',
+      ],
+      faqs: [
+        {
+          question: 'Does this converter preserve code syntax tags?',
+          answer:
+            'Yes. Code blocks (```javascript ... ```) are converted to <pre><code class="language-javascript"> with properly escaped characters.',
+        },
+        {
+          question: 'Can I download the generated HTML output?',
+          answer:
+            'Yes, click the download icon to save your converted document directly as a .html file.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your Markdown text into the left editor (or click Load Sample).',
+        'Review the automatically generated clean HTML markup on the right.',
+        'Click "Copy HTML" or download it as a .html file.',
+      ],
+    },
+    'time-duration-calculator': {
+      name: 'Time Duration & Date Diff',
+      metadataTitle: 'Time Duration & Date Difference Calculator',
+      description:
+        'Calculate exact elapsed time between two dates or timestamps in days, hours, minutes, and seconds with unit conversions.',
+      longDescription:
+        'Free online Time Duration and Date Difference Calculator. Calculate precise time intervals between two dates, measure project duration, and convert between milliseconds, seconds, minutes, hours, and days.',
+      keywords: [
+        'time duration calculator',
+        'date difference calculator',
+        'calculate time between two dates',
+        'days between dates',
+        'hours minutes seconds calculator',
+      ],
+      faqs: [
+        {
+          question: 'How accurate is the date difference calculation?',
+          answer:
+            'Calculations are millisecond-accurate based on the native JavaScript Date API and standard UTC timestamps.',
+        },
+        {
+          question: 'Can I convert between time units (e.g. hours to seconds)?',
+          answer:
+            'Yes. The interactive unit conversion section lets you convert any amount between milliseconds, seconds, minutes, hours, and days simultaneously.',
+        },
+      ],
+      howToUseSteps: [
+        'Select the Start Date and End Date using the date-time pickers.',
+        'View the exact human-readable elapsed duration and broken-down metrics.',
+        'Use the Time Unit Conversion Matrix below to convert between time units.',
+      ],
+    },
+    'xml-to-json': {
+      name: 'XML to JSON & JSON to XML',
+      metadataTitle: 'XML to JSON & JSON to XML Converter Online',
+      description:
+        'Convert XML payloads into structured JSON objects and JSON data into formatted XML documents with attribute support.',
+      longDescription:
+        'Free online XML to JSON and JSON to XML Converter. Easily migrate between legacy XML/SOAP structures and modern JSON formats with accurate attribute (@attr) parsing, array detection, and instant file export.',
+      keywords: [
+        'xml to json',
+        'convert xml to json online',
+        'json to xml converter',
+        'xml json parser',
+        'soap to json converter',
+      ],
+      faqs: [
+        {
+          question: 'How are XML attributes converted to JSON?',
+          answer:
+            'Attributes are prefixed with "@" in the JSON object (e.g. @id="101") to preserve full fidelity when converting back to XML.',
+        },
+        {
+          question: 'Can I switch conversion direction from JSON to XML?',
+          answer:
+            'Yes, click "Switch to JSON ➔ XML" to convert any valid JSON object back into a formatted XML document.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your XML or JSON code into the left editor (or click Load Sample).',
+        'Click "Convert" to process the data.',
+        'Copy the formatted output to clipboard or download it as a .json / .xml file.',
+      ],
+    },
+    'list-to-sql-in': {
+      name: 'List to SQL IN Clause',
+      metadataTitle: 'List to SQL IN Clause Converter Online',
+      description:
+        'Convert newline or comma-separated lists into SQL IN clauses with customizable quotes, separators, and duplicate removal.',
+      longDescription:
+        'Free online List to SQL IN Clause Converter. Turn spreadsheets, logs, or plain text lists of IDs and strings into clean SQL WHERE IN (\'a\', \'b\') clauses with automatic quote escaping and deduplication.',
+      keywords: [
+        'list to sql in',
+        'convert list to sql in clause',
+        'text list to comma separated sql',
+        'sql in clause generator',
+        'list to comma separated quotes',
+      ],
+      faqs: [
+        {
+          question: 'Does this tool escape internal single quotes?',
+          answer:
+            'Yes. Internal single quotes (e.g. O\'Connor) are automatically escaped as double single quotes (\'\' in standard SQL) to prevent syntax errors.',
+        },
+        {
+          question: 'Can I format lists of numbers without quotes?',
+          answer:
+            'Yes! Select "No Quotes (Numbers / IDs)" in the Quote Style dropdown for integer and numeric lists.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your raw list of items (one per line or comma-separated) into the left box.',
+        'Choose single, double, or no quotes, and customize prefix/suffix if needed.',
+        'Enable or disable "Remove Duplicates" and "Trim Whitespace".',
+        'Click "Copy SQL" to use the generated IN (...) clause in your query.',
+      ],
+    },
+    'svg-to-png': {
+      name: 'SVG to PNG / JPG / WebP Converter',
+      metadataTitle: 'SVG to PNG, JPG & WebP Converter Online',
+      description:
+        'Convert vector SVG code or files into raster PNG, JPEG, or WebP images with 1x, 2x, and 4x resolution scaling directly in your browser.',
+      longDescription:
+        'Free online SVG to Raster Image Converter. Convert vector SVGs into crystal-clear PNG, JPG, or modern WebP formats at 1x, 2x Retina, or 4x Ultra HD resolutions without losing quality. 100% client-side via HTML5 Canvas.',
+      keywords: [
+        'svg to png converter',
+        'convert svg to png online',
+        'svg to jpg converter',
+        'svg to webp high resolution',
+        'rasterize svg canvas',
+      ],
+      faqs: [
+        {
+          question: 'Does this tool support transparent backgrounds?',
+          answer:
+            'Yes! PNG and WebP formats support full alpha transparency. You can also pick solid white or black backgrounds.',
+        },
+        {
+          question: 'How do resolution scales (2x, 4x) work?',
+          answer:
+            'The vector SVG is rendered directly onto a scaled HTML5 Canvas, ensuring crisp, pixel-perfect high-DPI output without pixelation.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste raw SVG markup or click "Upload .svg" to load an SVG file.',
+        'Select target format (PNG, JPEG, or WebP) and resolution scale (1x, 2x, or 4x).',
+        'Preview the rendered vector image in the visual sandbox.',
+        'Click "Convert & Download" to save the high-resolution image to your computer.',
+      ],
+    },
+    'base64-to-pdf': {
+      name: 'Base64 to PDF Converter',
+      metadataTitle: 'Base64 to PDF Converter Online',
+      description:
+        'Decode Base64 strings and Data URIs directly into an embedded PDF document preview with 1-click PDF download.',
+      longDescription:
+        'Free online Base64 to PDF Converter and Viewer. Decode base64-encoded PDF documents from invoices, receipts, and REST API payloads without uploading files to external servers. Preview and download instantly.',
+      keywords: [
+        'base64 to pdf',
+        'base64 pdf viewer',
+        'decode base64 to pdf online',
+        'convert base64 string to pdf',
+        'data uri pdf preview',
+      ],
+      faqs: [
+        {
+          question: 'Are my PDF documents uploaded to any server?',
+          answer:
+            'No! The entire decoding and rendering process happens 100% locally in your browser using Blob URLs and HTML5 sandboxed iframes.',
+        },
+        {
+          question: 'Does it support data:application/pdf;base64 prefixes?',
+          answer:
+            'Yes. The converter automatically detects and strips Data URI prefixes and extra whitespace from your Base64 input.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your Base64 string or click "Upload Text File" to load encoded PDF data.',
+        'Click "Preview PDF" to render the document inside the interactive PDF viewer.',
+        'Click "Download PDF" to save the decoded document directly to your device.',
+      ],
+    },
+    'html-to-jsx': {
+      name: 'HTML to JSX / React Converter',
+      metadataTitle: 'HTML to JSX Converter Online (React)',
+      description:
+        'Convert HTML markup into React JSX components with camelCase attributes, className, htmlFor, and inline style objects.',
+      longDescription:
+        'Free online HTML to JSX and React Component Converter. Effortlessly transform raw HTML templates and UI snippets into clean, modern React JSX syntax with self-closing tags and inline style translation.',
+      keywords: [
+        'html to jsx',
+        'html to react converter',
+        'html2jsx online',
+        'convert html to react',
+        'jsx generator',
+      ],
+      faqs: [
+        {
+          question: 'What HTML attributes are transformed?',
+          answer:
+            'Transforms `class` to `className`, `for` to `htmlFor`, inline styles to object syntax (`style={{ width: "100px" }}`), and converts SVG attributes like `stroke-width` to `strokeWidth`.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your HTML snippet into the editor.',
+        'Optionally enable "Wrap in React Function Component" and specify a component name.',
+        'Copy the generated JSX code with 1 click.',
+      ],
+    },
+    'csv-to-sql-insert': {
+      name: 'CSV to SQL INSERT Generator',
+      metadataTitle: 'CSV to SQL INSERT Generator Online',
+      description:
+        'Convert CSV spreadsheets into batch SQL INSERT statements for PostgreSQL, MySQL, SQLite, and standard SQL.',
+      longDescription:
+        'Free online CSV to SQL INSERT Statement Generator. Convert spreadsheet records and tabular CSV files into optimized batch SQL INSERT queries with custom table naming and dialect escaping.',
+      keywords: [
+        'csv to sql insert',
+        'csv to sql generator',
+        'convert csv to sql insert statements',
+        'batch sql insert generator',
+        'csv to postgres insert',
+      ],
+      faqs: [
+        {
+          question: 'Which database dialects are supported?',
+          answer:
+            'PostgreSQL (with double-quoted identifiers), MySQL (with backtick identifiers), and generic standard SQL.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter target table name and choose your SQL dialect.',
+        'Paste your CSV data (including column headers).',
+        'Copy the generated batch SQL INSERT statements.',
+      ],
+    },
+    'json-to-graphql': {
+      name: 'JSON to GraphQL Schema Generator',
+      metadataTitle: 'JSON to GraphQL Schema Generator Online',
+      description:
+        'Automatically infer GraphQL type definitions, inputs, and object schemas from sample JSON data payloads.',
+      longDescription:
+        'Free online JSON to GraphQL Schema Generator. Analyze nested JSON responses to automatically generate typed GraphQL schemas with Int, Float, String, Boolean, and custom nested sub-types.',
+      keywords: [
+        'json to graphql',
+        'json to graphql schema',
+        'graphql schema generator',
+        'infer graphql types from json',
+        'json2graphql',
+      ],
+      faqs: [
+        {
+          question: 'How are nested objects handled in GraphQL?',
+          answer:
+            'Nested JSON objects are extracted into distinct GraphQL `type` definitions and referenced by field name automatically.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste a sample JSON payload into the editor.',
+        'Specify the Root Type Name.',
+        'Copy the generated GraphQL type definitions.',
+      ],
+    },
+    'tsv-to-json': {
+      name: 'TSV to JSON Converter',
+      metadataTitle: 'TSV to JSON Converter Online',
+      description:
+        'Convert tab-separated values (TSV) into structured JSON arrays and convert JSON back into TSV tables.',
+      longDescription:
+        'Free online TSV (Tab-Separated Values) to JSON Converter. Easily convert spreadsheet copies, database tab dumps, and log files between TSV and structured JSON format in your browser.',
+      keywords: [
+        'tsv to json',
+        'json to tsv',
+        'tab separated values to json',
+        'tsv converter online',
+        'convert tsv to json array',
+      ],
+      faqs: [
+        {
+          question: 'Does this tool automatically parse numbers and booleans in TSV?',
+          answer:
+            'Yes. Numeric values and boolean strings (true/false) are automatically converted into native JSON primitives.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your tab-separated text or JSON array.',
+        'Click "TSV → JSON" or "JSON → TSV".',
+        'Copy the converted output.',
+      ],
+    },
+    'ndjson-to-json': {
+      name: 'NDJSON / JSONL to JSON Converter',
+      metadataTitle: 'NDJSON & JSONL to JSON Converter Online',
+      description:
+        'Convert newline-delimited JSON (NDJSON/JSONL) streaming log files into standard JSON arrays and vice versa.',
+      longDescription:
+        'Free online NDJSON (Newline Delimited JSON) and JSONL to JSON Converter. Transform big data streaming log files, Elasticsearch dumps, and AI datasets into clean JSON arrays.',
+      keywords: [
+        'ndjson to json',
+        'jsonl to json',
+        'newline delimited json converter',
+        'jsonl to json array',
+        'convert json lines to json',
+      ],
+      faqs: [
+        {
+          question: 'What is the difference between NDJSON and JSON?',
+          answer:
+            'NDJSON contains one valid JSON object per line without surrounding array brackets, making it ideal for streaming large log records.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your NDJSON/JSONL log lines or standard JSON array.',
+        'Click the conversion direction button.',
+        'Copy or download the result.',
+      ],
+    },
+    'punycode-converter': {
+      name: 'Punycode & IDN Domain Converter',
+      metadataTitle: 'Punycode Converter Online (IDN Domain Names)',
+      description:
+        'Convert international domain names (IDN) with Unicode characters into ASCII Punycode (xn--) and decode back.',
+      longDescription:
+        'Free online Punycode and IDN (Internationalized Domain Names) Converter. Convert non-ASCII domain names into standard RFC 3492 Punycode for DNS server records and email configuration.',
+      keywords: [
+        'punycode converter',
+        'idn domain converter',
+        'unicode domain to punycode',
+        'xn-- domain decoder',
+        'punycode online',
+      ],
+      faqs: [
+        {
+          question: 'What is Punycode?',
+          answer:
+            'Punycode is an encoding syntax defined in RFC 3492 that translates Unicode characters into ASCII character sequences prefixed with "xn--", allowing non-English domains to work with legacy DNS systems.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter an international domain (e.g. münchen.de).',
+        'Click "Unicode → Punycode" to see the xn-- domain string.',
+        'Or paste a Punycode domain to decode back into Unicode.',
+      ],
+    },
+    'morse-code-converter': {
+      name: 'Morse Code Audio & Text Translator',
+      metadataTitle: 'Morse Code Translator – Text & Audio Online',
+      description:
+        'Translate plain text to Morse code with real-time Web Audio API sound playback and decode Morse code back to text.',
+      longDescription:
+        'Free online Morse Code Translator and Sound Generator. Encode text to International Morse Code dots and dashes, listen to the acoustic tone playback, and decode Morse code strings back into readable text.',
+      keywords: [
+        'morse code translator',
+        'text to morse code',
+        'morse code audio player',
+        'morse code decoder',
+        'morse sound generator',
+      ],
+      faqs: [
+        {
+          question: 'Does this play real Morse code audio tones?',
+          answer:
+            'Yes! Using the Web Audio API, the tool synthesizes standard 650Hz sine wave beeps with precise dot/dash timing directly in your browser.',
+        },
+      ],
+      howToUseSteps: [
+        'Type your message into the plain text box.',
+        'Click "Text → Morse" to generate dots and dashes.',
+        'Click "Play Audio" to listen to the Morse code beeps.',
+      ],
+    },
+    'htaccess-to-nginx': {
+      name: 'Apache .htaccess to Nginx Converter',
+      metadataTitle: 'Apache .htaccess to Nginx Converter Online',
+      description:
+        'Convert Apache mod_rewrite rules, 301 redirects, security headers, and index directives into Nginx server blocks.',
+      longDescription:
+        'Free online .htaccess to Nginx Converter. Migrate Apache configurations, rewrite rules, and permanent redirects to high-performance Nginx server directives quickly and accurately.',
+      keywords: [
+        'htaccess to nginx',
+        'convert htaccess to nginx rewrite',
+        'apache rewrite to nginx',
+        'htaccess converter online',
+        'nginx rewrite generator',
+      ],
+      faqs: [
+        {
+          question: 'Which Apache directives are supported?',
+          answer:
+            'Supports RewriteRule (with R=301, L flags), Redirect 301, DirectoryIndex, and Header set directives.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your Apache .htaccess rules into the left editor.',
+        'Copy the generated Nginx configuration directives from the right editor.',
+      ],
+    },
+    'csv-column-extractor': {
+      name: 'CSV Column Extractor & Filter',
+      metadataTitle: 'CSV Column Extractor & Filter Online',
+      description:
+        'Select, extract, filter, and reorder specific columns from large CSV and spreadsheet data files.',
+      longDescription:
+        'Free online CSV Column Extractor and Filter. Pick and choose exactly which columns you want from massive CSV datasets and export clean, stripped-down CSV tables in seconds.',
+      keywords: [
+        'csv column extractor',
+        'extract columns from csv',
+        'filter csv columns online',
+        'csv column selector',
+        'remove csv columns',
+      ],
+      faqs: [
+        {
+          question: 'How large can the CSV file be?',
+          answer:
+            'Because processing happens locally in your browser memory, it can handle thousands of rows with zero latency.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your CSV dataset into the editor.',
+        'Click on the column badges to select or deselect columns.',
+        'Copy the newly filtered CSV output.',
+      ],
+    },
+    'sql-to-typescript': {
+      name: 'SQL Table to TypeScript Interface',
+      metadataTitle: 'SQL to TypeScript Interface Converter Online',
+      description:
+        'Convert SQL CREATE TABLE schema definitions into type-safe TypeScript interfaces and types.',
+      longDescription:
+        'Free online SQL to TypeScript Interface Converter. Parse SQL database table schemas (PostgreSQL, MySQL, SQLite) and generate strongly typed TypeScript interfaces with optional nullable fields.',
+      keywords: [
+        'sql to typescript',
+        'create table to typescript interface',
+        'sql schema to ts',
+        'sql2ts online',
+        'convert sql to typescript types',
+      ],
+      faqs: [
+        {
+          question: 'How are SQL data types mapped to TypeScript?',
+          answer:
+            'INTEGER/FLOAT/DECIMAL map to number, VARCHAR/TEXT/UUID map to string, BOOLEAN maps to boolean, and TIMESTAMP/DATE map to Date | string.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your SQL `CREATE TABLE ...` statement.',
+        'Optionally set a custom interface name.',
+        'Copy the resulting TypeScript interface.',
+      ],
+    },
+    'json-to-env': {
+      name: 'JSON to .env Converter',
+      metadataTitle: 'JSON to .env Converter Online',
+      description:
+        'Flatten nested JSON objects into UPPERCASE .env environment variables and parse .env files back into JSON.',
+      longDescription:
+        'Free online JSON to .env and .env to JSON Converter. Transform configuration objects into deployment-ready environment variable files with automatic uppercase key flattening.',
+      keywords: [
+        'json to env',
+        'env to json',
+        'convert json to environment variables',
+        'dotenv converter',
+        'flatten json to env',
+      ],
+      faqs: [
+        {
+          question: 'How are nested objects flattened into .env keys?',
+          answer:
+            'Nested keys are joined with underscores in uppercase (e.g. `{ database: { host: "..." } }` becomes `DATABASE_HOST="..."`).',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your JSON configuration or .env file.',
+        'Click "JSON → .env" or ".env → JSON".',
+        'Copy the converted configuration format.',
+      ],
+    },
+    'markdown-table-to-csv': {
+      name: 'Markdown Table to CSV Converter',
+      metadataTitle: 'Markdown Table to CSV Converter Online',
+      description:
+        'Convert GitHub Markdown tables into spreadsheet-ready CSV files and Excel downloads with 1-click export.',
+      longDescription:
+        'Free online Markdown Table to CSV Converter. Extract tabular data from Markdown README documentation, reports, and notes and convert into clean, standard CSV files.',
+      keywords: [
+        'markdown table to csv',
+        'convert markdown table to excel',
+        'markdown to spreadsheet',
+        'md table to csv online',
+        'markdown table exporter',
+      ],
+      faqs: [
+        {
+          question: 'Does it handle commas and quotes inside table cells?',
+          answer:
+            'Yes. Any cells containing commas or special characters are properly escaped with standard RFC 4180 double-quotes.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your GitHub Markdown table into the left editor.',
+        'View the generated CSV formatting in the right editor.',
+        'Click "Download .csv File" or copy to clipboard.',
+      ],
+    },
+    'sql-to-go-gorm': {
+      name: 'SQL DDL to Go GORM Models',
+      metadataTitle: 'SQL DDL to Go GORM Models Online',
+      description: 'Convert SQL CREATE TABLE schema definitions into Go GORM model structs with primary keys.',
+      longDescription: 'Convert SQL CREATE TABLE schema definitions into Go GORM model structs with primary keys. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['sql to go gorm', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is SQL DDL to Go GORM Models?', answer: 'Convert SQL CREATE TABLE schema definitions into Go GORM model structs with primary keys.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'sql-to-python-sqlalchemy': {
+      name: 'SQL DDL to SQLAlchemy 2.0 Models',
+      metadataTitle: 'SQL DDL to SQLAlchemy 2.0 Models Online',
+      description: 'Convert SQL CREATE TABLE statements into Python SQLAlchemy 2.0 Declarative Base model classes.',
+      longDescription: 'Convert SQL CREATE TABLE statements into Python SQLAlchemy 2.0 Declarative Base model classes. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['sql to python sqlalchemy', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is SQL DDL to SQLAlchemy 2.0 Models?', answer: 'Convert SQL CREATE TABLE statements into Python SQLAlchemy 2.0 Declarative Base model classes.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'postman-to-openapi': {
+      name: 'Postman Collection to OpenAPI 3.1 Converter',
+      metadataTitle: 'Postman Collection to OpenAPI 3.1 Converter',
+      description: 'Convert exported Postman Collection v2.1 JSON files into OpenAPI 3.1 YAML/JSON specifications.',
+      longDescription: 'Convert exported Postman Collection v2.1 JSON files into OpenAPI 3.1 YAML/JSON specifications. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['postman to openapi', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Postman Collection to OpenAPI 3.1 Converter?', answer: 'Convert exported Postman Collection v2.1 JSON files into OpenAPI 3.1 YAML/JSON specifications.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'openapi-to-postman': {
+      name: 'OpenAPI to Postman Collection Generator',
+      metadataTitle: 'OpenAPI to Postman Collection Generator Online',
+      description: 'Convert OpenAPI 3.0 and Swagger API specifications into importable Postman Collection v2.1 JSON.',
+      longDescription: 'Convert OpenAPI 3.0 and Swagger API specifications into importable Postman Collection v2.1 JSON. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['openapi to postman', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is OpenAPI to Postman Collection Generator?', answer: 'Convert OpenAPI 3.0 and Swagger API specifications into importable Postman Collection v2.1 JSON.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'protobuf-to-json-schema': {
+      name: 'Protobuf 3 to JSON Schema Converter',
+      metadataTitle: 'Protobuf 3 to JSON Schema Converter Online',
+      description: 'Convert Protocol Buffers (proto3) message definitions into JSON Schema Draft-07 schemas.',
+      longDescription: 'Convert Protocol Buffers (proto3) message definitions into JSON Schema Draft-07 schemas. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['protobuf to json schema', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Protobuf 3 to JSON Schema Converter?', answer: 'Convert Protocol Buffers (proto3) message definitions into JSON Schema Draft-07 schemas.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'json-schema-to-protobuf': {
+      name: 'JSON Schema to Protobuf 3 Generator',
+      metadataTitle: 'JSON Schema to Protobuf 3 Generator Online',
+      description: 'Convert JSON Schema definitions into clean Protocol Buffer proto3 message contracts.',
+      longDescription: 'Convert JSON Schema definitions into clean Protocol Buffer proto3 message contracts. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['json schema to protobuf', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is JSON Schema to Protobuf 3 Generator?', answer: 'Convert JSON Schema definitions into clean Protocol Buffer proto3 message contracts.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'yaml-to-terraform-hcl': {
+      name: 'YAML to Terraform HCL Converter',
+      metadataTitle: 'YAML to Terraform HCL Converter Online',
+      description: 'Convert YAML configuration maps into Terraform HCL locals and variable blocks.',
+      longDescription: 'Convert YAML configuration maps into Terraform HCL locals and variable blocks. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['yaml to terraform hcl', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is YAML to Terraform HCL Converter?', answer: 'Convert YAML configuration maps into Terraform HCL locals and variable blocks.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'terraform-hcl-to-yaml': {
+      name: 'Terraform HCL to YAML Converter',
+      metadataTitle: 'Terraform HCL to YAML Converter Online',
+      description: 'Convert Terraform HCL attributes and locals into clean, structured YAML mappings.',
+      longDescription: 'Convert Terraform HCL attributes and locals into clean, structured YAML mappings. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['terraform hcl to yaml', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Terraform HCL to YAML Converter?', answer: 'Convert Terraform HCL attributes and locals into clean, structured YAML mappings.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'csv-to-geojson': {
+      name: 'CSV to GeoJSON Point Converter',
+      metadataTitle: 'CSV to GeoJSON Point Converter Online',
+      description: 'Convert CSV coordinate datasets with latitude and longitude into GeoJSON FeatureCollections.',
+      longDescription: 'Convert CSV coordinate datasets with latitude and longitude into GeoJSON FeatureCollections. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['csv to geojson', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is CSV to GeoJSON Point Converter?', answer: 'Convert CSV coordinate datasets with latitude and longitude into GeoJSON FeatureCollections.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'geojson-to-csv': {
+      name: 'GeoJSON to CSV Coordinate Converter',
+      metadataTitle: 'GeoJSON to CSV Coordinate Converter Online',
+      description: 'Convert GeoJSON point geometry features and properties into CSV tabular coordinates.',
+      longDescription: 'Convert GeoJSON point geometry features and properties into CSV tabular coordinates. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['geojson to csv', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is GeoJSON to CSV Coordinate Converter?', answer: 'Convert GeoJSON point geometry features and properties into CSV tabular coordinates.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'json-to-typescript-type-guards': {
+      name: 'JSON to TypeScript Type Guards Generator',
+      metadataTitle: 'JSON to TypeScript Type Guards Generator Online',
+      description: 'Generate runtime boolean TypeScript type guard functions (isType) from JSON structures.',
+      longDescription: 'Generate runtime boolean TypeScript type guard functions (isType) from JSON structures. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['json to typescript type guards', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is JSON to TypeScript Type Guards Generator?', answer: 'Generate runtime boolean TypeScript type guard functions (isType) from JSON structures.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'typescript-interface-to-zod': {
+      name: 'TypeScript Interface to Zod Schema',
+      metadataTitle: 'TypeScript Interface to Zod Schema Online',
+      description: 'Convert TypeScript interfaces and types into runtime Zod validation schemas.',
+      longDescription: 'Convert TypeScript interfaces and types into runtime Zod validation schemas. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['typescript interface to zod', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is TypeScript Interface to Zod Schema?', answer: 'Convert TypeScript interfaces and types into runtime Zod validation schemas.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'zod-to-typescript-type': {
+      name: 'Zod Schema to TypeScript Type Inferer',
+      metadataTitle: 'Zod Schema to TypeScript Type Inferer Online',
+      description: 'Extract and infer static TypeScript type declarations from runtime Zod validation schemas.',
+      longDescription: 'Extract and infer static TypeScript type declarations from runtime Zod validation schemas. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['zod to typescript type', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Zod Schema to TypeScript Type Inferer?', answer: 'Extract and infer static TypeScript type declarations from runtime Zod validation schemas.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'css-to-scss': {
+      name: 'CSS to Nested SCSS & SASS Converter',
+      metadataTitle: 'CSS to Nested SCSS & SASS Converter Online',
+      description: 'Convert flat CSS stylesheet selectors into nested, clean SCSS/SASS hierarchy blocks.',
+      longDescription: 'Convert flat CSS stylesheet selectors into nested, clean SCSS/SASS hierarchy blocks. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['css to scss', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is CSS to Nested SCSS & SASS Converter?', answer: 'Convert flat CSS stylesheet selectors into nested, clean SCSS/SASS hierarchy blocks.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'scss-to-css': {
+      name: 'SCSS & SASS to Vanilla CSS Converter',
+      metadataTitle: 'SCSS & SASS to Vanilla CSS Converter Online',
+      description: 'Convert SCSS variables, mixins, and nested blocks into standard cross-browser vanilla CSS.',
+      longDescription: 'Convert SCSS variables, mixins, and nested blocks into standard cross-browser vanilla CSS. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['scss to css', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is SCSS & SASS to Vanilla CSS Converter?', answer: 'Convert SCSS variables, mixins, and nested blocks into standard cross-browser vanilla CSS.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'html-to-jsx-tailwind': {
+      name: 'HTML to JSX & Tailwind CSS Converter',
+      metadataTitle: 'HTML to JSX & Tailwind CSS Converter Online',
+      description: 'Convert HTML markup with class attributes into React JSX with className and self-closing tags.',
+      longDescription: 'Convert HTML markup with class attributes into React JSX with className and self-closing tags. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['html to jsx tailwind', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is HTML to JSX & Tailwind CSS Converter?', answer: 'Convert HTML markup with class attributes into React JSX with className and self-closing tags.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'jsx-to-html': {
+      name: 'React JSX to Standard HTML Converter',
+      metadataTitle: 'React JSX to Standard HTML Converter Online',
+      description: 'Convert React JSX snippets with className and JSX comments into pure HTML markup.',
+      longDescription: 'Convert React JSX snippets with className and JSX comments into pure HTML markup. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['jsx to html', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is React JSX to Standard HTML Converter?', answer: 'Convert React JSX snippets with className and JSX comments into pure HTML markup.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'markdown-to-bbcode': {
+      name: 'Markdown to Forum BBCode Converter',
+      metadataTitle: 'Markdown to Forum BBCode Converter Online',
+      description: 'Convert Markdown headings, bold, images, and links into standard forum BBCode tags.',
+      longDescription: 'Convert Markdown headings, bold, images, and links into standard forum BBCode tags. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['markdown to bbcode', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Markdown to Forum BBCode Converter?', answer: 'Convert Markdown headings, bold, images, and links into standard forum BBCode tags.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'bbcode-to-markdown': {
+      name: 'BBCode to GitHub Markdown Converter',
+      metadataTitle: 'BBCode to GitHub Markdown Converter Online',
+      description: 'Convert forum BBCode tags into standard GitHub-flavored Markdown text formatting.',
+      longDescription: 'Convert forum BBCode tags into standard GitHub-flavored Markdown text formatting. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['bbcode to markdown', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is BBCode to GitHub Markdown Converter?', answer: 'Convert forum BBCode tags into standard GitHub-flavored Markdown text formatting.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'curl-to-php-guzzle': {
+      name: 'cURL to PHP Guzzle Client Converter',
+      metadataTitle: 'cURL to PHP Guzzle Client Converter Online',
+      description: 'Convert terminal cURL commands with headers and body into executable PHP Guzzle client code.',
+      longDescription: 'Convert terminal cURL commands with headers and body into executable PHP Guzzle client code. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['curl to php guzzle', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is cURL to PHP Guzzle Client Converter?', answer: 'Convert terminal cURL commands with headers and body into executable PHP Guzzle client code.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'curl-to-ruby-faraday': {
+      name: 'cURL to Ruby Faraday Client Converter',
+      metadataTitle: 'cURL to Ruby Faraday Client Converter Online',
+      description: 'Convert cURL requests into Ruby Faraday and Net::HTTP client requests with headers.',
+      longDescription: 'Convert cURL requests into Ruby Faraday and Net::HTTP client requests with headers. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['curl to ruby faraday', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is cURL to Ruby Faraday Client Converter?', answer: 'Convert cURL requests into Ruby Faraday and Net::HTTP client requests with headers.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'curl-to-rust-reqwest': {
+      name: 'cURL to Rust reqwest Async Client',
+      metadataTitle: 'cURL to Rust reqwest Async Client Online',
+      description: 'Convert cURL commands into asynchronous Rust reqwest client request code blocks.',
+      longDescription: 'Convert cURL commands into asynchronous Rust reqwest client request code blocks. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['curl to rust reqwest', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is cURL to Rust reqwest Async Client?', answer: 'Convert cURL commands into asynchronous Rust reqwest client request code blocks.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'curl-to-go-http': {
+      name: 'cURL to Go net/http Client Converter',
+      metadataTitle: 'cURL to Go net/http Client Converter Online',
+      description: 'Convert cURL commands into standard library Golang net/http client requests.',
+      longDescription: 'Convert cURL commands into standard library Golang net/http client requests. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['curl to go http', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is cURL to Go net/http Client Converter?', answer: 'Convert cURL commands into standard library Golang net/http client requests.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'svg-to-android-vector': {
+      name: 'SVG to Android Vector Drawable XML',
+      metadataTitle: 'SVG to Android Vector Drawable XML Online',
+      description: 'Convert SVG vector graphics into Android Vector Drawable XML format for native Android apps.',
+      longDescription: 'Convert SVG vector graphics into Android Vector Drawable XML format for native Android apps. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['svg to android vector', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is SVG to Android Vector Drawable XML?', answer: 'Convert SVG vector graphics into Android Vector Drawable XML format for native Android apps.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'svg-to-swiftui-shape': {
+      name: 'SVG to SwiftUI Shape & Path Generator',
+      metadataTitle: 'SVG to SwiftUI Shape & Path Generator Online',
+      description: 'Convert SVG vector path commands into native SwiftUI Path and Shape structs for iOS/macOS.',
+      longDescription: 'Convert SVG vector path commands into native SwiftUI Path and Shape structs for iOS/macOS. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['svg to swiftui shape', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is SVG to SwiftUI Shape & Path Generator?', answer: 'Convert SVG vector path commands into native SwiftUI Path and Shape structs for iOS/macOS.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'css-grid-to-tailwind': {
+      name: 'CSS Grid to Tailwind CSS Classes',
+      metadataTitle: 'CSS Grid to Tailwind CSS Classes Online',
+      description: 'Convert CSS grid-template-columns and gap styles into Tailwind CSS grid utility classes.',
+      longDescription: 'Convert CSS grid-template-columns and gap styles into Tailwind CSS grid utility classes. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['css grid to tailwind', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is CSS Grid to Tailwind CSS Classes?', answer: 'Convert CSS grid-template-columns and gap styles into Tailwind CSS grid utility classes.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'video-to-gif': {
+      name: 'Video to GIF Maker & Converter',
+      metadataTitle: 'Video to GIF Maker & Converter Online',
+      description: 'Convert MP4, WebM, and MOV video clips to animated GIF with FPS, dimension, and trim controls.',
+      longDescription: 'Convert MP4, WebM, and MOV video clips to animated GIF with FPS, dimension, and trim controls. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['video to gif', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Video to GIF Maker & Converter?', answer: 'Convert MP4, WebM, and MOV video clips to animated GIF with FPS, dimension, and trim controls.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'svg-to-png-hd': {
+      name: 'SVG to PNG & JPG High-Res Converter',
+      metadataTitle: 'SVG to High-Res PNG & JPG Converter Online',
+      description: 'Convert SVG vector graphics into crisp PNG, JPG, and WebP raster images up to 8x resolution.',
+      longDescription: 'Convert SVG vector graphics into crisp PNG, JPG, and WebP raster images up to 8x resolution. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['svg to png hd', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is SVG to PNG & JPG High-Res Converter?', answer: 'Convert SVG vector graphics into crisp PNG, JPG, and WebP raster images up to 8x resolution.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'pdf-to-image': {
+      name: 'PDF to PNG & JPG Image Converter',
+      metadataTitle: 'PDF to PNG & JPG Image Converter Online',
+      description: 'Convert PDF document pages into high-resolution PNG and JPEG images client-side with ZIP download.',
+      longDescription: 'Convert PDF document pages into high-resolution PNG and JPEG images client-side with ZIP download. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['pdf to image', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is PDF to PNG & JPG Image Converter?', answer: 'Convert PDF document pages into high-resolution PNG and JPEG images client-side with ZIP download.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'audio-converter': {
+      name: 'Audio Format Converter & Trimmer',
+      metadataTitle: 'Audio Format Converter & Trimmer Online',
+      description: 'Convert audio files between WAV, MP3, and OGG formats with waveform preview and trimming.',
+      longDescription: 'Convert audio files between WAV, MP3, and OGG formats with waveform preview and trimming. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['audio converter', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Audio Format Converter & Trimmer?', answer: 'Convert audio files between WAV, MP3, and OGG formats with waveform preview and trimming.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'swagger-to-typescript': {
+      name: 'Swagger & OpenAPI to TypeScript Client Generator',
+      metadataTitle: 'Swagger & OpenAPI to TypeScript Client Generator',
+      description: 'Generate fully-typed TypeScript API clients, interfaces, and fetch/axios requests from OpenAPI v2/v3 schemas.',
+      longDescription: 'Generate fully-typed TypeScript API clients, interfaces, and fetch/axios requests from OpenAPI v2/v3 schemas. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['swagger to typescript', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Swagger & OpenAPI to TypeScript Client Generator?', answer: 'Generate fully-typed TypeScript API clients, interfaces, and fetch/axios requests from OpenAPI v2/v3 schemas.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'postman-collection-to-curl': {
+      name: 'Postman Collection to cURL & Fetch Converter',
+      metadataTitle: 'Postman Collection to cURL & Fetch Converter',
+      description: 'Convert Postman Collection v2/v2.1 JSON files into executable cURL commands, Fetch, and Axios snippets.',
+      longDescription: 'Convert Postman Collection v2/v2.1 JSON files into executable cURL commands, Fetch, and Axios snippets. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['postman collection to curl', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Postman Collection to cURL & Fetch Converter?', answer: 'Convert Postman Collection v2/v2.1 JSON files into executable cURL commands, Fetch, and Axios snippets.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'html-to-gfm-converter': {
+      name: 'HTML to Markdown & Markdown to HTML Converter',
+      metadataTitle: 'HTML to Markdown & Markdown to HTML Converter',
+      description: 'Bi-directional live converter between rich HTML markup and GitHub Flavored Markdown (GFM).',
+      longDescription: 'Bi-directional live converter between rich HTML markup and GitHub Flavored Markdown (GFM). 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['html to gfm converter', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is HTML to Markdown & Markdown to HTML Converter?', answer: 'Bi-directional live converter between rich HTML markup and GitHub Flavored Markdown (GFM).' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'tailwind-to-inline-css': {
+      name: 'Tailwind CSS to Inline Style Converter',
+      metadataTitle: 'Tailwind CSS to Inline Style Converter Online',
+      description: 'Convert HTML with Tailwind CSS utility classes into standalone HTML with inline style attributes for emails.',
+      longDescription: 'Convert HTML with Tailwind CSS utility classes into standalone HTML with inline style attributes for emails. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['tailwind to inline css', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Tailwind CSS to Inline Style Converter?', answer: 'Convert HTML with Tailwind CSS utility classes into standalone HTML with inline style attributes for emails.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'sql-to-orm-schema': {
+      name: 'SQL DDL to Prisma & Drizzle ORM Schema Converter',
+      metadataTitle: 'SQL DDL to Prisma & Drizzle Schema Converter',
+      description: 'Convert SQL CREATE TABLE DDL queries into Prisma schema models and Drizzle ORM TypeScript definitions.',
+      longDescription: 'Convert SQL CREATE TABLE DDL queries into Prisma schema models and Drizzle ORM TypeScript definitions. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['sql to orm schema', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is SQL DDL to Prisma & Drizzle ORM Schema Converter?', answer: 'Convert SQL CREATE TABLE DDL queries into Prisma schema models and Drizzle ORM TypeScript definitions.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'curl-to-har': {
+      name: 'cURL to HTTP Archive HAR 1.2 Converter',
+      metadataTitle: 'cURL to HTTP Archive HAR 1.2 Converter Online',
+      description: 'Convert cURL commands with headers and request payloads into standardized HTTP Archive (HAR 1.2) JSON files.',
+      longDescription: 'Convert cURL commands with headers and request payloads into standardized HTTP Archive (HAR 1.2) JSON files. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['curl to har', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is cURL to HTTP Archive HAR 1.2 Converter?', answer: 'Convert cURL commands with headers and request payloads into standardized HTTP Archive (HAR 1.2) JSON files.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'graphql-schema-to-zod': {
+      name: 'GraphQL SDL to Zod Schema Validator Generator',
+      metadataTitle: 'GraphQL SDL to Zod Schema Validator Generator',
+      description: 'Convert GraphQL schema definition language (SDL) types and enums into TypeScript Zod validation schemas.',
+      longDescription: 'Convert GraphQL schema definition language (SDL) types and enums into TypeScript Zod validation schemas. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['graphql schema to zod', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is GraphQL SDL to Zod Schema Validator Generator?', answer: 'Convert GraphQL schema definition language (SDL) types and enums into TypeScript Zod validation schemas.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'svg-to-css-data-uri': {
+      name: 'SVG to CSS Data URI & Background Mask Inliner',
+      metadataTitle: 'SVG to CSS Data URI & Mask Inliner Online',
+      description: 'Convert SVG markup into clean UTF-8 URL-encoded or Base64 CSS background-image and mask-image rules.',
+      longDescription: 'Convert SVG markup into clean UTF-8 URL-encoded or Base64 CSS background-image and mask-image rules. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['svg to css data uri', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is SVG to CSS Data URI & Background Mask Inliner?', answer: 'Convert SVG markup into clean UTF-8 URL-encoded or Base64 CSS background-image and mask-image rules.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'json-to-sql-insert': {
+      name: 'JSON & CSV to SQL INSERT & UPDATE Generator',
+      metadataTitle: 'JSON & CSV to SQL INSERT & UPDATE Generator',
+      description: 'Convert structured JSON arrays and CSV tables into PostgreSQL, MySQL, SQLite, and SQL Server INSERT/UPDATE scripts.',
+      longDescription: 'Convert structured JSON arrays and CSV tables into PostgreSQL, MySQL, SQLite, and SQL Server INSERT/UPDATE scripts. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['json to sql insert', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is JSON & CSV to SQL INSERT & UPDATE Generator?', answer: 'Convert structured JSON arrays and CSV tables into PostgreSQL, MySQL, SQLite, and SQL Server INSERT/UPDATE scripts.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'nginx-to-caddy-converter': {
+      name: 'Nginx to Caddyfile & Apache Reverse Proxy Converter',
+      metadataTitle: 'Nginx to Caddyfile & Apache Reverse Proxy Converter',
+      description: 'Convert Nginx server blocks and proxy_pass locations into modern Caddyfile and Apache VirtualHost configurations.',
+      longDescription: 'Convert Nginx server blocks and proxy_pass locations into modern Caddyfile and Apache VirtualHost configurations. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['nginx to caddy converter', 'converters', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Nginx to Caddyfile & Apache Reverse Proxy Converter?', answer: 'Convert Nginx server blocks and proxy_pass locations into modern Caddyfile and Apache VirtualHost configurations.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+  },
+  formatters: {
+    'sql-keyword-uppercaser': {
+      name: 'SQL Keyword Uppercaser & Formatter',
+      metadataTitle: 'SQL Keyword Uppercaser & Formatter Online',
+      description: 'Uppercase all SQL keywords while preserving column and table names.',
+      longDescription: 'Uppercase all SQL keywords while preserving column and table names. 100% free client-side tool with instant browser execution.',
+      keywords: ['sql-keyword-uppercaser', 'formatters', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is SQL Keyword Uppercaser & Formatter?', answer: 'Uppercase all SQL keywords while preserving column and table names.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+
+    'apache-conf-formatter': {
+      name: 'Apache VirtualHost Config Formatter',
+      metadataTitle: 'Apache VirtualHost Config Formatter Online',
+      description: 'Format and indent Apache HTTP Server VirtualHost and Directory directives.',
+      longDescription: 'Format and indent Apache HTTP Server VirtualHost and Directory directives.',
+      keywords: ['apache-conf-formatter', 'formatters', 'developer tool'],
+      faqs: [
+        { question: 'What is Apache VirtualHost Config Formatter?', answer: 'Format and indent Apache HTTP Server VirtualHost and Directory directives.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'docker-compose-formatter': {
+      name: 'Docker Compose YAML Formatter',
+      metadataTitle: 'Docker Compose YAML Formatter Online',
+      description: 'Format and clean tab indentations in docker-compose.yml files.',
+      longDescription: 'Format and clean tab indentations in docker-compose.yml files.',
+      keywords: ['docker-compose-formatter', 'formatters', 'developer tool'],
+      faqs: [
+        { question: 'What is Docker Compose YAML Formatter?', answer: 'Format and clean tab indentations in docker-compose.yml files.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'toml-formatter': {
+      name: 'TOML Configuration File Formatter',
+      metadataTitle: 'TOML Configuration File Formatter Online',
+      description: 'Format and organize TOML configuration keys and table headers.',
+      longDescription: 'Format and organize TOML configuration keys and table headers.',
+      keywords: ['toml-formatter', 'formatters', 'developer tool'],
+      faqs: [
+        { question: 'What is TOML Configuration File Formatter?', answer: 'Format and organize TOML configuration keys and table headers.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'protobuf-formatter': {
+      name: 'Protocol Buffers (.proto) Formatter',
+      metadataTitle: 'Protocol Buffers (.proto) Formatter Online',
+      description: 'Format and indent Protobuf proto3 service and message definitions.',
+      longDescription: 'Format and indent Protobuf proto3 service and message definitions.',
+      keywords: ['protobuf-formatter', 'formatters', 'developer tool'],
+      faqs: [
+        { question: 'What is Protocol Buffers (.proto) Formatter?', answer: 'Format and indent Protobuf proto3 service and message definitions.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'tailwind-class-sorter': {
+      name: 'Tailwind Class Sorter & Formatter',
+      metadataTitle: 'Tailwind Class Sorter & Formatter Online',
+      description: 'Sort and deduplicate Tailwind CSS classes following the official Prettier ordering hierarchy.',
+      longDescription: 'Free online Tailwind Class Sorter & Formatter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['tailwind-class-sorter', 'tailwind class sorter & formatter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Tailwind Class Sorter & Formatter?',
+          answer: 'Sort and deduplicate Tailwind CSS classes following the official Prettier ordering hierarchy.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'nginx-formatter': {
+      name: 'Nginx Config Formatter & Validator',
+      metadataTitle: 'Nginx Config Formatter & Validator Online',
+      description: 'Format and indent Nginx server blocks, location directives, and upstream configurations.',
+      longDescription: 'Free online Nginx Config Formatter & Validator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['nginx-formatter', 'nginx config formatter & validator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Nginx Config Formatter & Validator?',
+          answer: 'Format and indent Nginx server blocks, location directives, and upstream configurations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'terraform-formatter': {
+      name: 'Terraform HCL Formatter & Linter',
+      metadataTitle: 'Terraform HCL Formatter & Linter Online',
+      description: 'Format HashiCorp Terraform (.tf) configuration files with standard 2-space indentation.',
+      longDescription: 'Free online Terraform HCL Formatter & Linter. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['terraform-formatter', 'terraform hcl formatter & linter', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Terraform HCL Formatter & Linter?',
+          answer: 'Format HashiCorp Terraform (.tf) configuration files with standard 2-space indentation.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'graphql-query-formatter': {
+      name: 'GraphQL Query Formatter & Minifier',
+      metadataTitle: 'GraphQL Query Formatter & Minifier Online',
+      description: 'Prettify or minify GraphQL queries, mutations, subscriptions, and fragments.',
+      longDescription: 'Free online GraphQL Query Formatter & Minifier. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['graphql-query-formatter', 'graphql query formatter & minifier', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is GraphQL Query Formatter & Minifier?',
+          answer: 'Prettify or minify GraphQL queries, mutations, subscriptions, and fragments.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'package-json-formatter': {
+      name: 'Package.json Dependency Sorter & Prettifier',
+      metadataTitle: 'Package.json Dependency Sorter & Prettifier',
+      description: 'Alphabetically sort dependencies and format package.json files cleanly.',
+      longDescription: 'Free online Package.json Dependency Sorter & Prettifier. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['package-json-formatter', 'package.json dependency sorter & prettifier', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Package.json Dependency Sorter & Prettifier?',
+          answer: 'Alphabetically sort dependencies and format package.json files cleanly.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'sql-formatter': {
+      name: 'SQL Formatter',
+      metadataTitle: 'SQL Formatter & Beautifier Online',
+      description:
+        'Format SQL queries online with dialect-aware indentation for PostgreSQL, MySQL, SQL Server, BigQuery and more. Uppercase keywords or minify SQL in the browser.',
+      longDescription:
+        'Paste one or more SQL statements, choose a dialect and indentation, and get consistently formatted output from the open-source sql-formatter library. Inline -- comments stay on their lines, and a separate Minify action collapses whitespace.',
+      keywords: [
+        'sql formatter',
+        'format sql online',
+        'sql beautifier',
+        'sql pretty print',
+        'postgresql formatter',
+        'mysql query formatter',
+        't-sql formatter',
+        'sql minifier',
+      ],
+      faqs: [
+        {
+          question: 'What SQL dialects are supported?',
+          answer:
+            'Standard SQL, MySQL, MariaDB, PostgreSQL, SQLite, SQL Server (T-SQL), Oracle PL/SQL, BigQuery, Snowflake, and Trino/Presto. Pick the one your query targets so dialect-specific syntax is recognized.',
+        },
+        {
+          question: 'Can I minify SQL?',
+          answer:
+            'Yes. Minify collapses whitespace into single spaces and removes spaces around commas, parentheses, = and semicolons. It does not remove comments, so delete -- comments first; otherwise everything after one on the same line is commented out.',
+        },
+        {
+          question: 'Does formatting change what my query does?',
+          answer:
+            'No. Formatting rewrites whitespace and the letter case of keywords only. Identifiers, string literals, and clause order are unchanged, and the query is never executed.',
+        },
+        {
+          question: 'Why do I get a parse error?',
+          answer:
+            'The selected dialect does not recognize part of the syntax, or a quote, bracket, or parenthesis is unbalanced. Switch to the dialect the query was written for. Template syntax such as {{ }} from dbt or Jinja may not parse.',
+        },
+        {
+          question: 'Can I indent with tabs?',
+          answer:
+            'The output always uses spaces. The indentation options are 2 spaces, 4 spaces, or a tab-width setting of 8 spaces.',
+        },
+        {
+          question: 'Is my SQL sent to a server?',
+          answer:
+            'No. Formatting runs in your browser with the sql-formatter JavaScript library, and no database connection is made.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the formatter changes',
+          paragraphs: [
+            'The formatter tokenizes your SQL for the selected dialect and rebuilds the layout. Each major clause (SELECT, FROM, JOIN, WHERE, GROUP BY, ORDER BY, LIMIT) starts on its own line, column lists and conditions are indented beneath it, and multiple statements are separated by blank lines. For example, select id, name from users where active = 1 order by name becomes a query with SELECT, FROM, WHERE, and ORDER BY on separate lines and id and name indented under SELECT. Keywords are printed in uppercase or lowercase depending on the option. Identifiers, literals, and the order of your clauses are not changed, and the query is not validated against a database schema.',
+          ],
+        },
+        {
+          heading: 'Choosing the right dialect',
+          paragraphs: [
+            'Dialects differ in quoting, operators, and parameters, and the formatter only recognizes the syntax of the dialect you select. If formatting fails or the output looks wrong, first check that the dialect matches the database. Examples of dialect-specific syntax:',
+          ],
+          bullets: [
+            'PostgreSQL: :: type casts, $1 positional parameters, and dollar-quoted function bodies.',
+            'SQL Server (T-SQL): [bracketed identifiers], TOP, and @variables.',
+            'MySQL and MariaDB: `backtick` identifiers.',
+            'BigQuery: backtick-quoted project.dataset.table names and STRUCT or ARRAY types.',
+          ],
+        },
+        {
+          heading: 'Minify is a text transformation',
+          paragraphs: [
+            'Minify collapses every run of whitespace to a single space and removes spaces around commas, parentheses, = and semicolons. It works on plain text rather than parsed SQL, which has two consequences. First, it does not remove comments: because a -- comment runs to the end of its line, putting the whole query on one line can comment out everything after it, so remove -- comments or convert them to /* */ before minifying. Second, repeated spaces inside string literals are collapsed too, so compare the result with the original if spacing inside strings matters.',
+          ],
+        },
+        {
+          heading: 'Comments and multiple statements',
+          paragraphs: [
+            'When formatting, a -- comment at the end of a line of code stays on that line, and full-line comments are kept in place. Several statements separated by semicolons are formatted one after another with blank lines between them, so you can paste a whole migration or seed script at once and review it statement by statement.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Select the SQL dialect that matches your database.',
+        'Choose the indentation width and whether keywords should be uppercase.',
+        'Paste your SQL into the input and select Format, or Minify for single-line output.',
+        'Review the result and copy it.',
+      ],
+    },
+    'css-minifier': {
+      name: 'CSS Minifier',
+      metadataTitle: 'CSS Minifier Online – Compress CSS',
+      description:
+        'Minify CSS online with the CSSO parser, right in your browser. Strip whitespace and comments, shorten colors and zero values, and compare the size savings.',
+      longDescription:
+        'Minify a stylesheet in your browser with CSSO, optionally retaining comments. Review the reported character reduction and copy the compact result; the separate beautify action helps inspect CSS during development.',
+      keywords: [
+        'css minifier',
+        'minify css',
+        'minify css online',
+        'css compressor',
+        'css optimizer',
+        'csso online',
+        'compress css',
+        'css beautifier',
+      ],
+      faqs: [
+        {
+          question: 'How much can CSS be reduced?',
+          answer:
+            'It depends on your stylesheet. Remove comments and extra whitespace, then compare the original and output counts shown by the tool. Already compact CSS may change very little.',
+        },
+        {
+          question: 'Is the minified CSS valid?',
+          answer:
+            'Minification uses a CSS parser and disables rule restructuring, but you should still check the output in your own pages before deploying it.',
+        },
+        {
+          question: 'Does minifying change how my CSS behaves?',
+          answer:
+            'It should not. Rule restructuring is disabled, so selectors are not merged and rules are not reordered, which keeps the cascade as written. Only equivalent shorter forms are used, such as #fff for #ffffff.',
+        },
+        {
+          question: 'Will license comments be kept?',
+          answer:
+            'Only if you turn off Remove comments. With the option on, every comment is removed, including /*! */ license banners. With it off, all comments are kept in place.',
+        },
+        {
+          question: 'Can I un-minify CSS?',
+          answer:
+            'Use Beautify to add line breaks and indentation back. Original comments and the exact formatting cannot be recovered once they have been removed.',
+        },
+        {
+          question: 'Is my CSS uploaded?',
+          answer:
+            'No. CSSO runs in your browser, so the stylesheet is minified on your device and not sent to a server.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'Minify CSS without changing your build setup',
+          paragraphs: [
+            'Paste a stylesheet, decide whether comments should be removed, and select Minify. CSSO parses the CSS into a syntax tree and prints it back compactly, rather than deleting characters with regular expressions. Rule restructuring is turned off, so selectors are not merged and rules are not moved. The displayed reduction compares character counts, so it is an estimate of text saved rather than a compressed network transfer size.',
+          ],
+        },
+        {
+          heading: 'What gets smaller',
+          bullets: [
+            'Whitespace, line breaks, and indentation between tokens are removed.',
+            'The last semicolon in each declaration block is dropped: .a { color: red; } becomes .a{color:red}.',
+            'Colors are written in a shorter equivalent form where one exists, for example #ffffff becomes #fff.',
+            'Units are removed from zero lengths, so margin: 0px 0px becomes margin:0 0.',
+            'With Remove comments on, all comments are deleted, including /*! */ license banners.',
+            'Selectors and values are otherwise kept as written. Unused rules are not detected or removed, because the minifier cannot see the HTML that uses the stylesheet.',
+          ],
+        },
+        {
+          heading: 'Use the output safely',
+          bullets: [
+            'Copy the minified CSS into a test build and check the affected pages at relevant screen sizes.',
+            'Keep required license comments by turning off Remove comments before minifying.',
+            'Use Beautify as a reading aid; review complex CSS after formatting because it is separate from parser-based minification.',
+            'Minification works alongside server compression rather than replacing it: gzip or Brotli still shrink the minified file further in transfer.',
+          ],
+        },
+        {
+          heading: 'When to use a build tool instead',
+          paragraphs: [
+            'If your project already uses a bundler or framework, CSS minification is usually configured there, for example with Lightning CSS, cssnano, or esbuild, and runs on every build. This tool suits one-off stylesheets, CMS or theme files, CSS pasted into a third-party widget, and quick checks of what a minifier does to a particular rule. Stylesheets in the document head block rendering until they load, so smaller files help first paint on slow connections, although removing unused rules often saves more than minification alone.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste CSS into the input editor and choose whether to remove comments.',
+        'Select Minify and compare the original and output character counts.',
+        'Copy the compact CSS and test it in your site before deployment.',
+        'Use Beautify when you need to read minified CSS again.',
+      ],
+    },
+    'js-minifier': {
+      name: 'JavaScript Minifier',
+      metadataTitle: 'JavaScript Minifier Online – Compress JS',
+      description:
+        'Minify JavaScript online with Terser. Remove comments, console calls and debugger statements, compress the code and see the size reduction, all in your browser.',
+      longDescription:
+        'Paste JavaScript to compress it with Terser, the parser-based minifier that webpack uses by default. Variable names are kept as written, so the output stays readable in stack traces while whitespace, comments, and dead code are removed.',
+      keywords: [
+        'javascript minifier',
+        'js minifier',
+        'minify javascript online',
+        'terser online',
+        'javascript compressor',
+        'remove console.log from javascript',
+        'minify js',
+        'uglify js online',
+      ],
+      faqs: [
+        {
+          question: 'What optimizations are applied?',
+          answer:
+            'Terser removes whitespace, optional semicolons, and comments, folds constant expressions, drops unreachable code, and simplifies conditionals. Optional settings remove console.* calls and debugger statements and shorten true and false to !0 and !1.',
+        },
+        {
+          question: 'Should I use this for production?',
+          answer:
+            'This tool uses Terser for parser-backed JavaScript minification. Production builds should still integrate minification into a bundler such as Webpack, Rollup, or esbuild.',
+        },
+        {
+          question: 'Will minification break my code?',
+          answer:
+            'Terser only applies transformations that preserve behavior for valid JavaScript. Problems usually come from code that inspects its own source, such as reading Function.prototype.toString(), or from console calls that did real work being removed. Test the output before deploying it.',
+        },
+        {
+          question: 'How do I remove console.log from JavaScript?',
+          answer:
+            'Enable Remove console.* and minify. Every console method call is dropped, including console.error and console.warn, together with its arguments. In a build, set compress.drop_console in your Terser options.',
+        },
+        {
+          question: 'Why are my variable names not shortened?',
+          answer:
+            'Name mangling is turned off, so the output keeps readable identifiers for debugging without source maps. Bundlers usually enable mangling for production, which saves more bytes.',
+        },
+        {
+          question: 'Can I minify TypeScript or JSX?',
+          answer:
+            'No. Terser parses JavaScript only, so type annotations and JSX cause a syntax error. Compile the code first with tsc, esbuild, Babel, or SWC, then minify the JavaScript output.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the minifier does to your code',
+          paragraphs: [
+            'Terser parses the code into a syntax tree, applies compression passes, and prints the result without unneeded whitespace. Compression folds constants, removes unreachable code and unused local variables, shortens conditionals, and joins statements where it is safe. Because the code is parsed rather than edited with regular expressions, strings, regular expressions, and template literals stay intact. For example, function add(a, b) { return a + b; } // sum becomes function add(a,b){return a+b}, and const ok = true; becomes const ok=!0; with Shorten Booleans enabled.',
+          ],
+        },
+        {
+          heading: 'Options explained',
+          bullets: [
+            'Remove Comments: strips every comment, including /*! */ license banners. Turn it off to keep all comments, for example when a license requires the notice to stay with the code.',
+            'Remove console.*: drops calls such as console.log, console.warn, and console.error, including their arguments, so do not rely on side effects inside those calls.',
+            'Remove debugger: deletes debugger statements.',
+            'Shorten Booleans: rewrites true and false as !0 and !1 and simplifies boolean expressions.',
+          ],
+        },
+        {
+          heading: 'What this tool does not do',
+          bullets: [
+            'It does not rename variables (mangling is off), so output is larger than a typical production bundle but easier to debug.',
+            'It does not generate source maps or bundle imports from other files.',
+            'It accepts JavaScript only; TypeScript and JSX must be compiled first.',
+            'It does not transpile modern syntax for older browsers. Optional chaining, class fields, and similar features stay as written, so use Babel or esbuild with a target if you need that.',
+            'Beautify is a simple reformatter that adds line breaks after braces and semicolons. It is meant for quick reading, can mis-handle comments and regular expressions, and is not a replacement for Prettier.',
+          ],
+        },
+        {
+          heading: 'Reading the size statistics',
+          paragraphs: [
+            'Original and minified sizes are character counts of the text, and the reduction percentage compares them. The real transfer saving is usually smaller, because servers typically send JavaScript with gzip or Brotli compression, which already shrinks whitespace and repeated identifiers. Measure the compressed size of your built file when you need exact numbers.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste your JavaScript or load the sample.',
+        'Choose which optimizations to apply: comments, console calls, debugger statements, and boolean shortening.',
+        'Select Minify and fix any reported syntax error.',
+        'Compare the original and minified sizes, then copy the output and test it before deploying.',
+      ],
+    },
+    'html-formatter': {
+      name: 'HTML Formatter',
+      metadataTitle: 'HTML Formatter & Beautifier Online',
+      description:
+        'Indent HTML with selectable spacing and inspect output statistics locally, without executing or uploading the pasted markup.',
+      longDescription:
+        'Free online HTML formatter. Apply consistent two, four, or eight-space indentation to ordinary HTML markup while preserving comments and inline text for easier review.',
+      keywords: [
+        'html formatter',
+        'html beautifier',
+        'format html',
+        'html pretty print',
+        'beautify html',
+      ],
+      faqs: [
+        {
+          question: 'What does the formatter do?',
+          answer:
+            'The formatter tokenizes tags, comments, and text, then adds indentation and line breaks around recognized block-level structure. It is a readability helper, not an HTML parser, validator, sanitizer, or browser rendering engine.',
+        },
+        {
+          question: 'Can I choose indent size?',
+          answer: 'Yes! You can choose between 2, 4, or 8 spaces for indentation.',
+        },
+        {
+          question: 'Does formatting fix invalid or unsafe HTML?',
+          answer:
+            'No. It does not repair mismatched tags, validate attributes, remove scripts, or prove that markup is safe. Use an HTML validator and a context-appropriate sanitizer when correctness or untrusted content matters.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the HTML formatter changes',
+          paragraphs: [
+            'The formatter separates ordinary block tags onto readable lines, keeps a known set of inline elements with surrounding text, preserves comments, and indents nested structure with the selected number of spaces. The output panel also reports character and line counts so the result can be compared with the input.',
+          ],
+        },
+        {
+          heading: 'Formatter versus parser or validator',
+          bullets: [
+            'Formatting changes whitespace and layout; it does not construct a browser DOM or apply the HTML parsing algorithm.',
+            'Mismatched, omitted, or malformed tags are not repaired and may produce misleading indentation.',
+            'Scripts, event-handler attributes, unsafe URLs, and other active content are preserved as text. Formatting is not sanitization.',
+            'Embedded script, style, template, SVG, or attribute content containing angle brackets can exceed the simple tokenizer boundary and should be handled by a parser-aware development tool.',
+          ],
+        },
+        {
+          heading: 'Whitespace and privacy limits',
+          paragraphs: [
+            'Whitespace can be meaningful in preformatted text, inline flows, templates, emails, and framework directives. Compare behavior in the target browser or template engine before replacing production source. Formatting runs in the browser and the editor does not execute the pasted HTML, but clipboard history, extensions, and any later destination remain separate exposure paths.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste the HTML source or load the sample.',
+        'Choose two, four, or eight spaces for indentation.',
+        'Review the formatted structure and check complex embedded content manually.',
+        'Validate and test the result in the target browser or template engine before production use.',
+      ],
+    },
+    'html-minifier': {
+      name: 'HTML Minifier',
+      metadataTitle: 'HTML Minifier Online – Compress HTML',
+      description: 'Minify HTML code for production. Free online HTML minifier.',
+      longDescription:
+        'Free online HTML minifier. Reduce HTML file size by removing comments and whitespace. Optimize your HTML for faster loading times.',
+      keywords: [
+        'html minifier',
+        'minify html',
+        'html compressor',
+        'html optimizer',
+        'compress html',
+      ],
+      faqs: [
+        {
+          question: 'What optimizations are applied?',
+          answer:
+            'The minifier removes HTML comments and collapses whitespace. You can choose which options to apply.',
+        },
+        {
+          question: 'How much can HTML be reduced?',
+          answer:
+            'Minification typically reduces HTML file size by 10-30% depending on the original formatting and comment density.',
+        },
+      ],
+    },
+    'xml-formatter': {
+      name: 'XML Formatter',
+      metadataTitle: 'XML Formatter & Beautifier Online',
+      description:
+        'Indent ordinary XML markup with selectable spacing while preserving comments, CDATA, processing instructions, and simple DOCTYPE declarations.',
+      longDescription:
+        'Free online XML formatter. Apply consistent indentation to XML tags and inspect comments, CDATA, processing instructions, and text locally in your browser.',
+      keywords: [
+        'xml formatter',
+        'xml beautifier',
+        'format xml',
+        'xml pretty print',
+        'beautify xml',
+      ],
+      faqs: [
+        {
+          question: 'What XML features are supported?',
+          answer:
+            'The tokenizer recognizes ordinary tags, self-closing tags, comments, CDATA sections, processing instructions, and simple DOCTYPE declarations. It does not resolve schemas, namespaces, entities, or external DTD resources.',
+        },
+        {
+          question: 'Can I choose indent size?',
+          answer: 'Yes! You can choose between 2, 4, or 8 spaces for indentation.',
+        },
+        {
+          question: 'Does this tool validate well-formed XML?',
+          answer:
+            'No. It formats token-like markup but does not perform a standards-compliant XML parse. Use an XML parser or validator to detect mismatched tags, invalid names, entity errors, schema violations, and namespace problems.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the XML formatter changes',
+          paragraphs: [
+            'The formatter walks recognizable XML tags and content, decreases indentation before a closing tag, increases it after an opening tag, and preserves self-closing tags, comments, CDATA, processing instructions, and simple DOCTYPE tokens. Two, four, or eight spaces can be selected without sending the document to a server.',
+          ],
+        },
+        {
+          heading: 'Formatting is not XML validation',
+          bullets: [
+            'The tool does not verify one root element, matching tag names, legal attributes, namespace bindings, entity declarations, XSD, DTD, or business rules.',
+            'A formatted result can still be malformed XML; validate it with the parser and schema used by the destination system.',
+            'Complex internal DTD subsets and unusual markup containing > inside declarations can exceed the simple tokenizer boundary.',
+            'External entities are not resolved, which avoids fetching them but also means entity-dependent correctness is not checked.',
+          ],
+        },
+        {
+          heading: 'Mixed content, signatures, and privacy',
+          paragraphs: [
+            'The formatter trims text tokens and inserts whitespace, so mixed-content documents where spaces are semantically significant require careful review. Do not format canonicalized or digitally signed XML because any byte change can invalidate a signature. Processing is local, while clipboard history, extensions, shared devices, and the destination where output is pasted remain separate risks.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste XML or load the sample document.',
+        'Choose the indentation width.',
+        'Review comments, CDATA, mixed content, and declarations in the formatted output.',
+        'Run the result through the destination XML parser and schema validator before use.',
+      ],
+    },
+    'svg-minifier': {
+      name: 'SVG Optimizer & Minifier',
+      metadataTitle: 'SVG Minifier & Optimizer Online',
+      description:
+        'Minify, optimize, and strip metadata from SVG graphics locally to reduce file size with real-time rendered preview.',
+      longDescription:
+        'Free online SVG Minifier and Optimizer. Remove editor namespaces, metadata, unneeded decimal precision, and whitespace from SVG files to speed up web page load times.',
+      keywords: [
+        'svg minifier',
+        'svg optimizer',
+        'compress svg',
+        'shrink svg online',
+        'clean svg markup',
+      ],
+      faqs: [
+        {
+          question: 'How much does SVG minification reduce file size?',
+          answer:
+            'Depending on how much editor metadata (Adobe Illustrator, Inkscape) and comment bloat exists, SVG file sizes are often reduced by 30% to 70%.',
+        },
+        {
+          question: 'Does minification affect visual quality?',
+          answer:
+            'No. The minifier preserves essential visual vectors and curves while rounding redundant multi-digit decimals to maintain pixel-perfect rendering.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste bloated or raw SVG markup into the original input area.',
+        'Inspect the file size savings percentage and live rendered preview.',
+        'Copy the minified SVG markup or click Download to save the optimized SVG file.',
+      ],
+    },
+    'svg-optimizer': {
+      name: 'SVG Optimizer & Cleaner',
+      metadataTitle: 'SVG Optimizer & Cleaner Online',
+      description:
+        'Clean and optimize SVG vectors by removing editor namespaces (Figma, Illustrator), comments, and redundant precision.',
+      longDescription:
+        'Free online SVG Optimizer and Vector Cleaner. Strips unnecessary editor metadata, doctypes, and comments while formatting and calculating byte savings with live SVG visual preview.',
+      keywords: [
+        'svg optimizer',
+        'clean svg',
+        'minify svg',
+        'svgo online',
+        'compress svg',
+      ],
+      faqs: [
+        {
+          question: 'What metadata is stripped during optimization?',
+          answer:
+            'The optimizer removes XML declarations, DOCTYPE headers, HTML/XML comments, and editor-specific attributes from Adobe Illustrator, Figma, Inkscape, and Sketch.',
+        },
+        {
+          question: 'Can I preview the optimized SVG before downloading?',
+          answer:
+            'Yes, a live rendered SVG visual preview is displayed below the editor so you can verify rendering quality.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your raw SVG code into the editor or click Load Sample.',
+        'View the original size, optimized size, and total byte savings.',
+        'Check the live rendered preview box to ensure visual integrity.',
+        'Copy the optimized SVG markup or download it directly as an .svg file.',
+      ],
+    },
+    'sql-minifier': {
+      name: 'SQL Query Minifier',
+      metadataTitle: 'SQL Query Minifier Online',
+      description:
+        'Strip comments (-- and /* */) and collapse whitespace to minify SQL queries into compact single-line statements.',
+      longDescription:
+        'Free online SQL Query Minifier. Strip single-line and multi-line comments, remove unnecessary whitespace, and format SQL into single-line queries for embedded code and network transmission.',
+      keywords: [
+        'sql minifier',
+        'minify sql query',
+        'sql compressor',
+        'strip sql comments',
+        'compress sql online',
+      ],
+      faqs: [
+        {
+          question: 'Does SQL minification alter query logic or results?',
+          answer:
+            'No. It only removes non-executable comments and collapses whitespace around operators and parentheses.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your SQL query into the left editor.',
+        'View the instant minification stats and byte savings.',
+        'Copy the single-line minified SQL string with 1 click.',
+      ],
+    },
+    'json-minifier': {
+      name: 'JSON Minifier & Stringifier',
+      metadataTitle: 'JSON Minifier & Compressor Online',
+      description:
+        'Minify JSON files and strings by stripping all whitespace and newlines to compress API payload bandwidth.',
+      longDescription:
+        'Free online JSON Minifier and Compressor. Remove all whitespace, indentation, and formatting from JSON objects to create compact, single-line payloads for network requests and storage.',
+      keywords: [
+        'json minifier',
+        'compress json online',
+        'compact json stringifier',
+        'json compressor',
+        'minify json string',
+      ],
+      faqs: [
+        {
+          question: 'Why minify JSON?',
+          answer:
+            'Minified JSON reduces byte transfer size by 20% to 50%, speeding up API responses and reducing storage costs.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your formatted JSON payload into the editor.',
+        'View the minified single-line string and byte reduction rate.',
+        'Copy the minified JSON to your clipboard.',
+      ],
+    },
+  },
+  utilities: {
+    'image-compressor': {
+      name: 'Image Compressor & Optimizer',
+      metadataTitle: 'Image Compressor Online – PNG, JPG & WebP',
+      description: 'Compress PNG, JPEG, and WebP images client-side with visual quality control and side-by-side metrics.',
+      longDescription: 'Free online image compressor. Reduce file sizes by up to 80% with adjustable compression sliders, bicubic resampling, and instant download without quality loss.',
+      keywords: ['image compressor', 'compress image online', 'compress png', 'compress jpg', 'webp compressor'],
+      faqs: [
+        { question: 'How much can I reduce my image size?', answer: 'Depending on the image and format (such as WebP), you can typically achieve 50% to 80% file size savings.' },
+        { question: 'Is my data private?', answer: 'Yes! Everything is processed locally in your browser with zero server uploads.' }
+      ],
+      howToUseSteps: [
+        'Select or drag and drop an image.',
+        'Adjust the quality slider to find the sweet spot between size and quality.',
+        'Click Download to save the optimized image.'
+      ]
+    },
+    'image-color-extractor': {
+      name: 'Image Color Palette Extractor & Eyedropper',
+      metadataTitle: 'Image Color Palette Extractor Online',
+      description: 'Extract dominant color palettes from any photo with HEX, RGB, HSL codes and interactive pixel eyedropper.',
+      longDescription: 'Extract harmonious color palettes from your photos and graphics. Inspect individual pixels with a built-in magnifying eyedropper and copy HEX codes with one click.',
+      keywords: ['extract colors from image', 'image to color palette', 'color palette generator from image', 'image eyedropper'],
+      faqs: [
+        { question: 'How does the color palette extraction work?', answer: 'It samples the image pixel data and groups colors into dominant clusters using fast color quantization.' },
+        { question: 'Can I inspect specific pixel colors?', answer: 'Yes, click anywhere on the image preview to pick exact pixel colors with the eyedropper.' }
+      ],
+      howToUseSteps: [
+        'Upload your graphic or photo.',
+        'Click any palette swatch to copy its HEX code.',
+        'Click on the image preview to sample specific pixel colors.'
+      ]
+    },
+    'pdf-merger': {
+      name: 'PDF Merger & Combiner',
+      metadataTitle: 'PDF Merger Online – Combine PDF Files',
+      description: 'Combine multiple PDF documents into a single PDF file securely inside your browser.',
+      longDescription: 'Free online PDF merger. Drag and drop multiple PDF files, reorder pages, and merge them into a single high-quality PDF with complete privacy and zero server uploads.',
+      keywords: ['merge pdf online', 'combine pdf files', 'merge pdf free', 'pdf joiner'],
+      faqs: [
+        { question: 'Is it safe to merge sensitive PDF documents?', answer: 'Yes, DevsTools merges PDFs 100% locally in your browser using pdf-lib. Your documents are never uploaded to any server.' },
+        { question: 'Can I change the order of the merged PDFs?', answer: 'Yes, use the Up and Down arrow buttons to easily arrange files before merging.' }
+      ],
+      howToUseSteps: [
+        'Select or drag & drop multiple PDF files.',
+        'Arrange files in your desired order.',
+        'Click "Merge All PDFs" and download the merged document.'
+      ]
+    },
+    'pdf-splitter': {
+      name: 'PDF Splitter & Page Extractor',
+      metadataTitle: 'PDF Splitter Online – Extract PDF Pages',
+      description: 'Extract specific pages or page ranges from PDF files with custom intervals and instant download.',
+      longDescription: 'Free online PDF splitter. Extract specific pages or custom ranges (e.g. 1-3, 5, 8-10) from any PDF document without uploading files to a third-party server.',
+      keywords: ['split pdf', 'extract pages from pdf', 'separate pdf pages', 'split pdf online free'],
+      faqs: [
+        { question: 'How do I specify page ranges to split?', answer: 'Enter page ranges such as "1-3, 5, 8-10" or use the quick preset buttons.' },
+        { question: 'Does splitting affect document quality?', answer: 'No, vector text, embedded images, and fonts are preserved at original quality.' }
+      ],
+      howToUseSteps: [
+        'Upload your PDF file.',
+        'Specify the page numbers or range to extract.',
+        'Click "Extract Selected Pages" to generate and download the new PDF.'
+      ]
+    },
+    'llm-pricing-calculator': {
+      name: 'All-in-One LLM Token & Pricing Calculator',
+      metadataTitle: 'LLM Pricing Calculator Online',
+      description: 'Compare API pricing and token costs across OpenAI (GPT-4o, o1, o3-mini), Anthropic (Claude 3.5), Google Gemini, and DeepSeek.',
+      longDescription: 'Interactive LLM Pricing Calculator. Calculate and compare cost per request, cost per 1M tokens, prompt caching savings, batch discounts, and monthly API budgets across all major AI models.',
+      keywords: ['llm pricing calculator', 'token cost calculator', 'openai vs claude pricing', 'deepseek api pricing', 'ai model cost comparison'],
+      faqs: [
+        { question: 'Which models are included in the comparison?', answer: 'GPT-4o, GPT-4o-mini, o1, o3-mini, Claude 3.5 Sonnet/Haiku/Opus, Gemini 2.0 Flash, Gemini 1.5 Pro, DeepSeek V3/R1, and Llama 3.3.' },
+        { question: 'Does it calculate prompt caching discounts?', answer: 'Yes, adjust the prompt caching percentage slider to view discounted input token costs.' }
+      ],
+      howToUseSteps: [
+        'Enter your average prompt and completion tokens per request.',
+        'Set your daily request volume.',
+        'Compare per-request and monthly costs across all models in the table.'
+      ]
+    },
+    'code-playground': {
+      name: 'Live HTML/CSS/JS Sandbox & Playground',
+      metadataTitle: 'HTML CSS JS Code Playground Online',
+      description: 'Interactive in-browser code editor with instant live preview, Tailwind CSS support, device viewports, and console logging.',
+      longDescription: 'Free online code playground. Write HTML, CSS, and JavaScript with instant live preview, responsive device toggles (Desktop, Tablet, Mobile), and one-click standalone HTML export.',
+      keywords: ['html css js online editor', 'code playground', 'javascript sandbox', 'live code editor online'],
+      faqs: [
+        { question: 'Does the sandbox support Tailwind CSS?', answer: 'Yes, choose the Tailwind preset to automatically include the Tailwind CDN.' },
+        { question: 'Can I export my sandbox project?', answer: 'Yes, click "Export HTML" to download a standalone single-file HTML document.' }
+      ],
+      howToUseSteps: [
+        'Choose a starter template or write code in HTML, CSS, and JS tabs.',
+        'View live rendered output and console logs.',
+        'Toggle mobile/tablet viewports or export to HTML.'
+      ]
+    },
+    'embedding-cost-calculator': {
+      name: 'Vector Embedding Cost Calculator',
+      metadataTitle: 'Vector Embedding Cost Calculator Online',
+      description: 'Calculate costs, vector dimensions, and memory usage for embedding models.',
+      longDescription: 'Calculate costs, vector dimensions, and memory usage for embedding models. 100% free client-side tool with instant browser execution.',
+      keywords: ['embedding-cost-calculator', 'utilities', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Vector Embedding Cost Calculator?', answer: 'Calculate costs, vector dimensions, and memory usage for embedding models.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'gitignore-tester': {
+      name: '.gitignore Pattern Matcher & Tester',
+      metadataTitle: '.gitignore Pattern Matcher & Tester Online',
+      description: 'Test .gitignore and .dockerignore glob rules against file trees.',
+      longDescription: 'Test .gitignore and .dockerignore glob rules against file trees. 100% free client-side tool with instant browser execution.',
+      keywords: ['gitignore-tester', 'utilities', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is .gitignore Pattern Matcher & Tester?', answer: 'Test .gitignore and .dockerignore glob rules against file trees.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'k8s-resource-calculator': {
+      name: 'Kubernetes Pod Resource & QoS Calculator',
+      metadataTitle: 'Kubernetes Pod Resource & QoS Calculator Online',
+      description: 'Calculate CPU/Memory requests, limits, and QoS classes for Kubernetes pods.',
+      longDescription: 'Calculate CPU/Memory requests, limits, and QoS classes for Kubernetes pods. 100% free client-side tool with instant browser execution.',
+      keywords: ['k8s-resource-calculator', 'utilities', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Kubernetes Pod Resource & QoS Calculator?', answer: 'Calculate CPU/Memory requests, limits, and QoS classes for Kubernetes pods.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'postgres-explain-visualizer': {
+      name: 'PostgreSQL EXPLAIN Plan Analyzer',
+      metadataTitle: 'PostgreSQL EXPLAIN Plan Analyzer Online',
+      description: 'Analyze and visualize PostgreSQL query plans from EXPLAIN JSON output.',
+      longDescription: 'Analyze and visualize PostgreSQL query plans from EXPLAIN JSON output. 100% free client-side tool with instant browser execution.',
+      keywords: ['postgres-explain-visualizer', 'utilities', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is PostgreSQL EXPLAIN Plan Analyzer?', answer: 'Analyze and visualize PostgreSQL query plans from EXPLAIN JSON output.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'subnet-calculator': {
+      name: 'IPv4 Subnet Mask & CIDR Calculator',
+      metadataTitle: 'IPv4 Subnet Mask & CIDR Calculator Online',
+      description: 'Calculate subnet mask, broadcast, and usable host range from CIDR.',
+      longDescription: 'Calculate subnet mask, broadcast, and usable host range from CIDR. 100% free client-side tool with instant browser execution.',
+      keywords: ['subnet-calculator', 'utilities', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is IPv4 Subnet Mask & CIDR Calculator?', answer: 'Calculate subnet mask, broadcast, and usable host range from CIDR.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'dns-propagation-checker': {
+      name: 'DNS Record Propagation Checker',
+      metadataTitle: 'DNS Record Propagation Checker Online',
+      description: 'Check simulated global DNS propagation across multiple worldwide PoP locations.',
+      longDescription: 'Check simulated global DNS propagation across multiple worldwide PoP locations. 100% free client-side tool with instant browser execution.',
+      keywords: ['dns-propagation-checker', 'utilities', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is DNS Record Propagation Checker?', answer: 'Check simulated global DNS propagation across multiple worldwide PoP locations.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+    'url-utm-builder': {
+      name: 'Google Analytics UTM Campaign URL Builder',
+      metadataTitle: 'Google Analytics UTM Campaign URL Builder Online',
+      description: 'Build clean marketing campaign URLs with utm_source, utm_medium, and utm_campaign.',
+      longDescription: 'Build clean marketing campaign URLs with utm_source, utm_medium, and utm_campaign. 100% free client-side tool with instant browser execution.',
+      keywords: ['url-utm-builder', 'utilities', 'developer tool', 'online tool'],
+      faqs: [
+        { question: 'What is Google Analytics UTM Campaign URL Builder?', answer: 'Build clean marketing campaign URLs with utm_source, utm_medium, and utm_campaign.' },
+        { question: 'Is my data private and secure?', answer: 'Yes, all processing executes locally in your browser with zero server storage.' },
+      ],
+      howToUseSteps: [
+        'Enter or paste your data into the editor.',
+        'Configure any options or formats.',
+        'Copy or download the generated result.',
+      ],
+    },
+
+    'aspect-ratio-resizer': {
+      name: 'Aspect Ratio & Resolution Calculator',
+      metadataTitle: 'Aspect Ratio & Resolution Calculator Online',
+      description: 'Calculate standard aspect ratios (16:9, 4:3, 21:9) and scale resolution dimensions.',
+      longDescription: 'Calculate standard aspect ratios (16:9, 4:3, 21:9) and scale resolution dimensions.',
+      keywords: ['aspect-ratio-resizer', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is Aspect Ratio & Resolution Calculator?', answer: 'Calculate standard aspect ratios (16:9, 4:3, 21:9) and scale resolution dimensions.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'subresource-integrity-generator': {
+      name: 'Subresource Integrity (SRI) Hash Builder',
+      metadataTitle: 'Subresource Integrity (SRI) Hash Builder Online',
+      description: 'Generate secure sha384 and sha512 integrity hashes for CDN script and stylesheet tags.',
+      longDescription: 'Generate secure sha384 and sha512 integrity hashes for CDN script and stylesheet tags.',
+      keywords: ['subresource-integrity-generator', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is Subresource Integrity (SRI) Hash Builder?', answer: 'Generate secure sha384 and sha512 integrity hashes for CDN script and stylesheet tags.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'csp-evaluator': {
+      name: 'CSP (Content Security Policy) Evaluator',
+      metadataTitle: 'CSP (Content Security Policy) Evaluator Online',
+      description: 'Analyze Content Security Policy headers for missing directives and XSS vulnerabilities.',
+      longDescription: 'Analyze Content Security Policy headers for missing directives and XSS vulnerabilities.',
+      keywords: ['csp-evaluator', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is CSP (Content Security Policy) Evaluator?', answer: 'Analyze Content Security Policy headers for missing directives and XSS vulnerabilities.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'nginx-rate-limit-calculator': {
+      name: 'Nginx Rate Limit Directives Builder',
+      metadataTitle: 'Nginx Rate Limit Directives Builder Online',
+      description: 'Generate optimized limit_req_zone rate limiting directives for Nginx reverse proxies.',
+      longDescription: 'Generate optimized limit_req_zone rate limiting directives for Nginx reverse proxies.',
+      keywords: ['nginx-rate-limit-calculator', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is Nginx Rate Limit Directives Builder?', answer: 'Generate optimized limit_req_zone rate limiting directives for Nginx reverse proxies.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'cron-next-runs-visualizer': {
+      name: 'Cron Next 20 Runs Calculator',
+      metadataTitle: 'Cron Next 20 Runs Calculator Online',
+      description: 'Calculate and preview the exact next 20 execution timestamps for any cron schedule.',
+      longDescription: 'Calculate and preview the exact next 20 execution timestamps for any cron schedule.',
+      keywords: ['cron-next-runs-visualizer', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is Cron Next 20 Runs Calculator?', answer: 'Calculate and preview the exact next 20 execution timestamps for any cron schedule.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'rag-chunking-visualizer': {
+      name: 'RAG Semantic Chunking Visualizer',
+      metadataTitle: 'RAG Semantic Chunking Visualizer Online',
+      description: 'Visualize document text chunking with custom token sizes and overlapping sliding windows.',
+      longDescription: 'Visualize document text chunking with custom token sizes and overlapping sliding windows.',
+      keywords: ['rag-chunking-visualizer', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is RAG Semantic Chunking Visualizer?', answer: 'Visualize document text chunking with custom token sizes and overlapping sliding windows.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'mcp-inspector': {
+      name: 'Model Context Protocol (MCP) Inspector',
+      metadataTitle: 'Model Context Protocol (MCP) Inspector Online',
+      description: 'Validate and inspect MCP JSON-RPC 2.0 requests, responses, and notification payloads.',
+      longDescription: 'Validate and inspect MCP JSON-RPC 2.0 requests, responses, and notification payloads.',
+      keywords: ['mcp-inspector', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is Model Context Protocol (MCP) Inspector?', answer: 'Validate and inspect MCP JSON-RPC 2.0 requests, responses, and notification payloads.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'tiktoken-visualizer': {
+      name: 'Tiktoken BPE Tokenizer Visualizer',
+      metadataTitle: 'Tiktoken BPE Tokenizer Visualizer Online',
+      description: 'Visual token breakdown and colorized segmentation for OpenAI and Llama BPE models.',
+      longDescription: 'Visual token breakdown and colorized segmentation for OpenAI and Llama BPE models.',
+      keywords: ['tiktoken-visualizer', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is Tiktoken BPE Tokenizer Visualizer?', answer: 'Visual token breakdown and colorized segmentation for OpenAI and Llama BPE models.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'claude-token-counter': {
+      name: 'Claude Token & Cost Calculator',
+      metadataTitle: 'Claude Token & Cost Calculator Online',
+      description: 'Calculate token counts and pricing for Claude 3.5 Sonnet, Haiku, and Opus models.',
+      longDescription: 'Calculate token counts and pricing for Claude 3.5 Sonnet, Haiku, and Opus models.',
+      keywords: ['claude-token-counter', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is Claude Token & Cost Calculator?', answer: 'Calculate token counts and pricing for Claude 3.5 Sonnet, Haiku, and Opus models.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'deepseek-token-counter': {
+      name: 'DeepSeek Token & Cost Calculator',
+      metadataTitle: 'DeepSeek Token & Cost Calculator Online',
+      description: 'Calculate exact BPE token counts and API inference costs for DeepSeek V3 and DeepSeek R1 models.',
+      longDescription: 'Calculate exact BPE token counts and API inference costs for DeepSeek V3 and DeepSeek R1 models.',
+      keywords: ['deepseek-token-counter', 'utilities', 'developer tool'],
+      faqs: [
+        { question: 'What is DeepSeek Token & Cost Calculator?', answer: 'Calculate exact BPE token counts and API inference costs for DeepSeek V3 and DeepSeek R1 models.' },
+        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input.',
+        'Review the result and copy with one click.'
+      ]
+    },
+    'llm-token-counter': {
+      name: 'LLM Token & Cost Calculator',
+      metadataTitle: 'LLM Token & Cost Calculator Online',
+      description: 'Estimate token counts and API inference costs for GPT-4o, Claude 3.5, Gemini, and Llama 3 models.',
+      longDescription: 'Free online LLM Token & Cost Calculator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['llm-token-counter', 'llm token & cost calculator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is LLM Token & Cost Calculator?',
+          answer: 'Estimate token counts and API inference costs for GPT-4o, Claude 3.5, Gemini, and Llama 3 models.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'prompt-template-formatter': {
+      name: 'Prompt Template Compiler & Interpolator',
+      metadataTitle: 'Prompt Template Compiler & Interpolator Online',
+      description: 'Interpolate variables and validate placeholders in Jinja2 and Mustache AI prompt templates.',
+      longDescription: 'Free online Prompt Template Compiler & Interpolator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['prompt-template-formatter', 'prompt template compiler & interpolator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Prompt Template Compiler & Interpolator?',
+          answer: 'Interpolate variables and validate placeholders in Jinja2 and Mustache AI prompt templates.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'embedding-similarity': {
+      name: 'Embedding Vector Similarity Calculator',
+      metadataTitle: 'Embedding Vector Similarity Calculator Online',
+      description: 'Calculate Cosine Similarity, Euclidean Distance, and Dot Product between embedding vectors.',
+      longDescription: 'Free online Embedding Vector Similarity Calculator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['embedding-similarity', 'embedding vector similarity calculator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Embedding Vector Similarity Calculator?',
+          answer: 'Calculate Cosine Similarity, Euclidean Distance, and Dot Product between embedding vectors.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'text-chunk-splitter': {
+      name: 'RAG Text Chunk Splitter & Token Window Simulator',
+      metadataTitle: 'RAG Text Chunk Splitter & Token Window Simulator',
+      description: 'Split documents into overlapping token or character chunks for RAG vector search pipelines.',
+      longDescription: 'Free online RAG Text Chunk Splitter & Token Window Simulator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['text-chunk-splitter', 'rag text chunk splitter & token window simulator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is RAG Text Chunk Splitter & Token Window Simulator?',
+          answer: 'Split documents into overlapping token or character chunks for RAG vector search pipelines.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'jsonl-dataset-validator': {
+      name: 'OpenAI JSONL Fine-Tuning Validator',
+      metadataTitle: 'OpenAI JSONL Fine-Tuning Validator Online',
+      description: 'Validate JSONL dataset files and message structures for OpenAI and Gemini model fine-tuning.',
+      longDescription: 'Free online OpenAI JSONL Fine-Tuning Validator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['jsonl-dataset-validator', 'openai jsonl fine-tuning validator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is OpenAI JSONL Fine-Tuning Validator?',
+          answer: 'Validate JSONL dataset files and message structures for OpenAI and Gemini model fine-tuning.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'css-specificity-calculator': {
+      name: 'CSS Specificity Calculator & Inspector',
+      metadataTitle: 'CSS Specificity Calculator & Inspector Online',
+      description: 'Calculate selector specificity tuples (IDs, classes, elements) and compare cascade overrides.',
+      longDescription: 'Free online CSS Specificity Calculator & Inspector. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['css-specificity-calculator', 'css specificity calculator & inspector', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSS Specificity Calculator & Inspector?',
+          answer: 'Calculate selector specificity tuples (IDs, classes, elements) and compare cascade overrides.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'fluid-typography': {
+      name: 'CSS Fluid Typography & Clamp Calculator',
+      metadataTitle: 'CSS Fluid Typography & Clamp Calculator',
+      description: 'Calculate responsive CSS clamp() formulas for fluid font sizes across viewport breakpoints.',
+      longDescription: 'Free online CSS Fluid Typography & Clamp Calculator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['fluid-typography', 'css fluid typography & clamp calculator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSS Fluid Typography & Clamp Calculator?',
+          answer: 'Calculate responsive CSS clamp() formulas for fluid font sizes across viewport breakpoints.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'css-media-query-builder': {
+      name: 'CSS Media Query Range Builder',
+      metadataTitle: 'CSS Media Query Range Builder Online',
+      description: 'Build modern range-syntax CSS @media queries with dark mode and motion preference filters.',
+      longDescription: 'Free online CSS Media Query Range Builder. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['css-media-query-builder', 'css media query range builder', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is CSS Media Query Range Builder?',
+          answer: 'Build modern range-syntax CSS @media queries with dark mode and motion preference filters.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'sql-explainer': {
+      name: 'SQL Query Visual Explainer',
+      metadataTitle: 'SQL Query Visual Explainer Online',
+      description: 'Break down complex SQL SELECT joins, filters, and aggregations into plain English steps.',
+      longDescription: 'Free online SQL Query Visual Explainer. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['sql-explainer', 'sql query visual explainer', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is SQL Query Visual Explainer?',
+          answer: 'Break down complex SQL SELECT joins, filters, and aggregations into plain English steps.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'postgres-connection-builder': {
+      name: 'PostgreSQL Connection URI Builder & Parser',
+      metadataTitle: 'PostgreSQL Connection URI Builder & Parser',
+      description: 'Build and parse PostgreSQL database connection strings and parameters.',
+      longDescription: 'Free online PostgreSQL Connection URI Builder & Parser. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['postgres-connection-builder', 'postgresql connection uri builder & parser', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is PostgreSQL Connection URI Builder & Parser?',
+          answer: 'Build and parse PostgreSQL database connection strings and parameters.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'mongodb-objectid-parser': {
+      name: 'MongoDB ObjectId Timestamp & Metadata Parser',
+      metadataTitle: 'MongoDB ObjectId Timestamp & Metadata Parser',
+      description: 'Extract creation timestamps, machine identifiers, and process IDs from MongoDB ObjectIds.',
+      longDescription: 'Free online MongoDB ObjectId Timestamp & Metadata Parser. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['mongodb-objectid-parser', 'mongodb objectid timestamp & metadata parser', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is MongoDB ObjectId Timestamp & Metadata Parser?',
+          answer: 'Extract creation timestamps, machine identifiers, and process IDs from MongoDB ObjectIds.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'sql-index-advisor': {
+      name: 'SQL B-Tree Composite Index Advisor',
+      metadataTitle: 'SQL B-Tree Composite Index Advisor Online',
+      description: 'Analyze SQL WHERE and JOIN clauses to recommend optimal B-Tree composite database indexes.',
+      longDescription: 'Free online SQL B-Tree Composite Index Advisor. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['sql-index-advisor', 'sql b-tree composite index advisor', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is SQL B-Tree Composite Index Advisor?',
+          answer: 'Analyze SQL WHERE and JOIN clauses to recommend optimal B-Tree composite database indexes.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'kubeconfig-validator': {
+      name: 'Kubernetes Kubeconfig Validator',
+      metadataTitle: 'Kubernetes Kubeconfig Validator Online',
+      description: 'Validate Kubeconfig YAML files, cluster contexts, server endpoints, and user credentials.',
+      longDescription: 'Free online Kubernetes Kubeconfig Validator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['kubeconfig-validator', 'kubernetes kubeconfig validator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Kubernetes Kubeconfig Validator?',
+          answer: 'Validate Kubeconfig YAML files, cluster contexts, server endpoints, and user credentials.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'helm-values-evaluator': {
+      name: 'Helm Template & Values.yaml Evaluator',
+      metadataTitle: 'Helm Template & Values.yaml Evaluator Online',
+      description: 'Simulate Helm template variable interpolation with custom values.yaml payloads.',
+      longDescription: 'Free online Helm Template & Values.yaml Evaluator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['helm-values-evaluator', 'helm template & values.yaml evaluator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Helm Template & Values.yaml Evaluator?',
+          answer: 'Simulate Helm template variable interpolation with custom values.yaml payloads.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'dockerfile-linter': {
+      name: 'Dockerfile Linter & Best-Practice Checker',
+      metadataTitle: 'Dockerfile Linter & Best-Practice Checker Online',
+      description: 'Analyze Dockerfiles for caching issues, layer bloat, and container security best practices.',
+      longDescription: 'Free online Dockerfile Linter & Best-Practice Checker. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['dockerfile-linter', 'dockerfile linter & best-practice checker', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Dockerfile Linter & Best-Practice Checker?',
+          answer: 'Analyze Dockerfiles for caching issues, layer bloat, and container security best practices.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'websocket-tester': {
+      name: 'WebSocket Client & Latency Tester',
+      metadataTitle: 'WebSocket Client & Latency Tester Online',
+      description: 'Connect to wss:// WebSocket endpoints, send JSON payloads, and monitor message logs.',
+      longDescription: 'Free online WebSocket Client & Latency Tester. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['websocket-tester', 'websocket client & latency tester', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is WebSocket Client & Latency Tester?',
+          answer: 'Connect to wss:// WebSocket endpoints, send JSON payloads, and monitor message logs.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'sse-stream-tester': {
+      name: 'Server-Sent Events (SSE) Stream Tester',
+      metadataTitle: 'Server-Sent Events (SSE) Stream Tester Online',
+      description: 'Test real-time Server-Sent Events (SSE) streams and inspect incoming EventSource chunks.',
+      longDescription: 'Free online Server-Sent Events (SSE) Stream Tester. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['sse-stream-tester', 'server-sent events (sse) stream tester', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Server-Sent Events (SSE) Stream Tester?',
+          answer: 'Test real-time Server-Sent Events (SSE) streams and inspect incoming EventSource chunks.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'har-viewer': {
+      name: 'HAR (HTTP Archive) File Viewer & Analyzer',
+      metadataTitle: 'HAR (HTTP Archive) File Viewer & Analyzer Online',
+      description: 'Parse HTTP Archive (.har) logs to inspect request timelines, headers, and status codes.',
+      longDescription: 'Free online HAR (HTTP Archive) File Viewer & Analyzer. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['har-viewer', 'har (http archive) file viewer & analyzer', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is HAR (HTTP Archive) File Viewer & Analyzer?',
+          answer: 'Parse HTTP Archive (.har) logs to inspect request timelines, headers, and status codes.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'dns-lookup-simulator': {
+      name: 'DNS Records & Propagation Simulator',
+      metadataTitle: 'DNS Records & Propagation Simulator Online',
+      description: 'Simulate DNS lookups for A, AAAA, CNAME, MX, TXT, and NS records with TTL durations.',
+      longDescription: 'Free online DNS Records & Propagation Simulator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['dns-lookup-simulator', 'dns records & propagation simulator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is DNS Records & Propagation Simulator?',
+          answer: 'Simulate DNS lookups for A, AAAA, CNAME, MX, TXT, and NS records with TTL durations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'universal-links-validator': {
+      name: 'Apple Universal Links & Android App Links Generator',
+      metadataTitle: 'Apple Universal Links & Android App Links Generator',
+      description: 'Generate apple-app-site-association and assetlinks.json deep link configuration files.',
+      longDescription: 'Free online Apple Universal Links & Android App Links Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['universal-links-validator', 'apple universal links & android app links generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Apple Universal Links & Android App Links Generator?',
+          answer: 'Generate apple-app-site-association and assetlinks.json deep link configuration files.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'react-native-icon-finder': {
+      name: 'React Native Vector Icons Finder & Code Generator',
+      metadataTitle: 'React Native Vector Icons Finder & Code Generator',
+      description: 'Search and export icon names and JSX import tags for react-native-vector-icons.',
+      longDescription: 'Free online React Native Vector Icons Finder & Code Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['react-native-icon-finder', 'react native vector icons finder & code generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is React Native Vector Icons Finder & Code Generator?',
+          answer: 'Search and export icon names and JSX import tags for react-native-vector-icons.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'git-command-builder': {
+      name: 'Git Interactive Command Generator',
+      metadataTitle: 'Git Interactive Command Generator Online',
+      description: 'Generate Git commands for interactive rebase, cherry-pick, hard reset, and stashing.',
+      longDescription: 'Free online Git Interactive Command Generator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['git-command-builder', 'git interactive command generator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Git Interactive Command Generator?',
+          answer: 'Generate Git commands for interactive rebase, cherry-pick, hard reset, and stashing.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'ieee754-visualizer': {
+      name: 'IEEE 754 Floating Point 32-bit Visualizer',
+      metadataTitle: 'IEEE 754 Floating Point 32-bit Visualizer Online',
+      description: 'Break down 32-bit float numbers into sign, exponent, and mantissa binary bits.',
+      longDescription: 'Free online IEEE 754 Floating Point 32-bit Visualizer. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['ieee754-visualizer', 'ieee 754 floating point 32-bit visualizer', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is IEEE 754 Floating Point 32-bit Visualizer?',
+          answer: 'Break down 32-bit float numbers into sign, exponent, and mantissa binary bits.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'bitwise-calculator': {
+      name: 'Bitwise Logic Calculator (AND, OR, XOR, Shift)',
+      metadataTitle: 'Bitwise Logic Calculator (AND, OR, XOR, Shift)',
+      description: 'Perform 32-bit bitwise AND, OR, XOR, NOT, and bit shifts with binary and hex results.',
+      longDescription: 'Free online Bitwise Logic Calculator (AND, OR, XOR, Shift). Fast, accurate, client-side processing with instant export options.',
+      keywords: ['bitwise-calculator', 'bitwise logic calculator (and, or, xor, shift)', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Bitwise Logic Calculator (AND, OR, XOR, Shift)?',
+          answer: 'Perform 32-bit bitwise AND, OR, XOR, NOT, and bit shifts with binary and hex results.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'bignumber-calculator': {
+      name: 'Arbitrary Precision BigNumber Calculator',
+      metadataTitle: 'Arbitrary Precision BigNumber Calculator Online',
+      description: 'Perform exact arbitrary precision integer math, powers, and modulo arithmetic.',
+      longDescription: 'Free online Arbitrary Precision BigNumber Calculator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['bignumber-calculator', 'arbitrary precision bignumber calculator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Arbitrary Precision BigNumber Calculator?',
+          answer: 'Perform exact arbitrary precision integer math, powers, and modulo arithmetic.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'timezone-meeting-planner': {
+      name: 'Timezone Meeting Planner & Overlap Matrix',
+      metadataTitle: 'Timezone Meeting Planner & Overlap Matrix Online',
+      description: 'Coordinate global meeting hours across UTC, EST, PST, CET, TRT, and JST timezones.',
+      longDescription: 'Free online Timezone Meeting Planner & Overlap Matrix. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['timezone-meeting-planner', 'timezone meeting planner & overlap matrix', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Timezone Meeting Planner & Overlap Matrix?',
+          answer: 'Coordinate global meeting hours across UTC, EST, PST, CET, TRT, and JST timezones.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'bandwidth-calculator': {
+      name: 'Bandwidth & File Download Time Calculator',
+      metadataTitle: 'Bandwidth & File Download Time Calculator Online',
+      description: 'Calculate file transfer durations for file sizes over Mbps and Gbps internet speeds.',
+      longDescription: 'Free online Bandwidth & File Download Time Calculator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['bandwidth-calculator', 'bandwidth & file download time calculator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Bandwidth & File Download Time Calculator?',
+          answer: 'Calculate file transfer durations for file sizes over Mbps and Gbps internet speeds.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'percentage-growth-calculator': {
+      name: 'Percentage Growth & Change Calculator',
+      metadataTitle: 'Percentage Growth & Change Calculator Online',
+      description: 'Calculate percentage increases, decreases, and compound metrics for dashboards.',
+      longDescription: 'Free online Percentage Growth & Change Calculator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['percentage-growth-calculator', 'percentage growth & change calculator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Percentage Growth & Change Calculator?',
+          answer: 'Calculate percentage increases, decreases, and compound metrics for dashboards.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'matrix-calculator': {
+      name: 'Matrix Arithmetic & Transpose Calculator',
+      metadataTitle: 'Matrix Arithmetic & Transpose Calculator Online',
+      description: 'Perform matrix multiplication, dimensions check, and matrix transposition calculations.',
+      longDescription: 'Free online Matrix Arithmetic & Transpose Calculator. Fast, accurate, client-side processing with instant export options.',
+      keywords: ['matrix-calculator', 'matrix arithmetic & transpose calculator', 'developer tool', 'online tool'],
+      faqs: [
+        {
+          question: 'What is Matrix Arithmetic & Transpose Calculator?',
+          answer: 'Perform matrix multiplication, dimensions check, and matrix transposition calculations.',
+        },
+        {
+          question: 'Is my data processed securely?',
+          answer: 'Yes, all processing and computations run 100% locally in your browser for privacy and speed.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter or paste your input parameters into the provided configuration panels.',
+        'View the live updated result in real-time in the output editor.',
+        'Click the Copy or Download button to export your output.',
+      ],
+    },
+    'cron-parser': {
+      name: 'Cron Expression Parser',
+      metadataTitle: 'Cron Expression Parser & Explainer Online',
+      description:
+        'Parse a 5-field cron expression into plain English and preview the next five run times in your local time zone. Includes common presets and a visual builder.',
+      longDescription:
+        'Paste a standard crontab schedule to see what it means and when it fires next. The parser validates each field, names the field that is wrong, and follows Cronie rules for combining day-of-month and day-of-week.',
+      keywords: [
+        'cron expression parser',
+        'cron parser',
+        'crontab explained',
+        'cron next run time',
+        'cron schedule checker',
+        'crontab syntax',
+        'cron every 5 minutes',
+        'cron expression to human readable',
+      ],
+      faqs: [
+        {
+          question: 'What format does this tool use?',
+          answer:
+            'This tool uses the numeric 5-field Cronie format: minute (0-59), hour (0-23), day of month (1-31), month (1-12), and day of week (0-7, where 0 and 7 are Sunday). Month/day names and tilde randomization are not supported.',
+        },
+        {
+          question: 'What does */5 * * * * mean?',
+          answer:
+            'Run every five minutes: at :00, :05, :10, and so on through :55 of every hour, every day.',
+        },
+        {
+          question: 'How do I run a cron job every day at midnight?',
+          answer:
+            'Use 0 0 * * *. The first field is the minute and the second is the hour, so the job runs at 00:00 in the time zone of the machine running cron.',
+        },
+        {
+          question: 'Why does my job run on more days than I expected?',
+          answer:
+            'When both day-of-month and day-of-week are restricted, cron runs the job when either matches. 0 9 1 * 1 runs on the 1st of each month and on every Monday. Set one of the two fields to * to use only the other.',
+        },
+        {
+          question: 'Which time zone do cron jobs use?',
+          answer:
+            "Classic crontab uses the server's system time zone, which is often UTC. Kubernetes CronJobs can set spec.timeZone, and GitHub Actions schedules run in UTC. This tool previews runs in your browser's time zone.",
+        },
+        {
+          question: 'Does it support @daily, seconds, or L and W?',
+          answer:
+            'No. Macros such as @daily and @reboot, a seconds or year field, and Quartz characters such as ?, L, W, and # are rejected. Write @daily as 0 0 * * *.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'Reading the five cron fields',
+          paragraphs: [
+            'A standard crontab schedule has five space-separated fields: minute (0-59), hour (0-23), day of month (1-31), month (1-12), and day of week (0-7, where both 0 and 7 mean Sunday). The command that follows the schedule in a crontab line is not part of the expression, so paste only the five fields. For example, 30 2 * * 1 runs at 02:30 every Monday, and 0 9 * * 1-5 runs at 09:00 Monday through Friday. Each field accepts four operators:',
+          ],
+          bullets: [
+            '* matches every value in the field.',
+            'A comma builds a list: 0,30 in the minute field runs at :00 and :30.',
+            'A hyphen builds an inclusive range: 9-17 in the hour field covers 9 AM through 5 PM.',
+            'A slash adds a step to * or a range: */15 means every 15 minutes, and 8-18/2 means every second hour from 8 to 18.',
+          ],
+        },
+        {
+          heading: 'Day of month and day of week: the OR rule',
+          paragraphs: [
+            'When both day fields are restricted, cron runs the job when either one matches, not only when both do. So 0 0 13 * 5 runs at midnight on the 13th of every month and also on every Friday, not just on Friday the 13th. If either day field starts with *, including a step such as */2, the fields are combined with AND instead. This parser follows the same rule as Cronie and Vixie cron, and the next-run list shows the effect immediately.',
+          ],
+        },
+        {
+          heading: 'How the next run times are calculated',
+          paragraphs: [
+            "The next five runs are computed in your browser in your device's current time zone, and each time is shown with its zone abbreviation. Servers usually run cron in their own zone, often UTC, so a job shown at 09:00 here may run at a different wall-clock time on the server. Daylight saving changes can skip a local time, such as 02:30 on the spring-forward date, or repeat one in the fall. The preview lists each actual local occurrence, so check how your cron daemon handles those transitions.",
+          ],
+        },
+        {
+          heading: 'Syntax this parser rejects',
+          bullets: [
+            'Month and weekday names such as JAN or MON; use the numbers 1-12 and 0-7.',
+            'Macros such as @hourly, @daily, and @reboot.',
+            'Quartz and Spring extensions: a seconds or year field, ?, L, W, and #.',
+            'A step on a single value such as 5/10; write 5-59/10 instead.',
+            'Randomized values such as Jenkins-style H or the ~ syntax some cron versions support.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Type or paste a five-field cron expression, or pick one of the common presets.',
+        'Read the plain-English description to confirm the schedule matches your intent.',
+        'Check the next five run times, shown in your local time zone.',
+        'Optionally open the visual builder, choose minute, hour, day, month, and weekday values, and generate an expression.',
+        'Copy the expression into your crontab, CI schedule, or job configuration.',
+      ],
+    },
+    'http-headers-parser': {
+      name: 'HTTP Headers Parser',
+      metadataTitle: 'HTTP Headers Parser Online',
+      description: 'Parse raw HTTP headers to JSON and build raw headers from JSON.',
+      longDescription:
+        'Free online HTTP headers parser. Convert header blocks into JSON format and generate header blocks back from JSON for quick debugging and API testing.',
+      keywords: ['http headers parser', 'parse headers', 'request headers', 'response headers'],
+      faqs: [
+        {
+          question: 'Can it parse duplicate headers?',
+          answer: 'Yes. Duplicate header keys are grouped into arrays in the parsed JSON output.',
+        },
+        {
+          question: 'What input format is expected?',
+          answer: 'Use one header per line in the format "Header-Name: value".',
+        },
+      ],
+    },
+    'http-status-codes': {
+      name: 'HTTP Status Codes',
+      metadataTitle: 'HTTP Status Codes Reference – 1xx to 5xx',
+      description: 'Search, filter, and reference common HTTP response status codes.',
+      longDescription:
+        'Free online HTTP status code reference. Quickly find informational, success, redirect, client error, and server error codes with clear descriptions.',
+      keywords: ['http status codes', 'status code reference', '404', '500', 'http errors'],
+      faqs: [
+        {
+          question: 'What are HTTP status codes?',
+          answer:
+            'HTTP status codes are standardized server responses that indicate whether a request succeeded, failed, or was redirected.',
+        },
+        {
+          question: 'Which status code classes exist?',
+          answer:
+            '1xx informational, 2xx success, 3xx redirection, 4xx client errors, and 5xx server errors.',
+        },
+      ],
+    },
+    'user-agent-parser': {
+      name: 'User Agent Parser Online',
+      metadataTitle: 'User Agent Parser Online – Browser & OS',
+      description:
+        'Parse single or batch User-Agent strings into browser, version, OS, engine, device, CPU, and known bot signals locally in your browser.',
+      longDescription:
+        'Online user-agent parser powered by the bundled UAParser.js 1.0.41 ruleset. Inspect one string or batch lines and extract browser/version, operating system, rendering engine, device vendor/model/type, CPU architecture, and known bot signals without a parsing API upload.',
+      keywords: [
+        'user agent parser online',
+        'online user agent parser',
+        'ua parser online',
+        'browser detection',
+        'device detection',
+        'bot detection',
+      ],
+      faqs: [
+        {
+          question: 'How accurate is UA parsing?',
+          answer:
+            'The tool uses the bundled UAParser.js 1.0.41 ruleset, but results remain heuristic because User-Agent strings are self-reported, reduced, and can be spoofed.',
+        },
+        {
+          question: 'Can it detect bots?',
+          answer:
+            'It identifies common named search and AI crawler tokens and applies a fallback bot/crawler/spider heuristic. An unlisted or disguised crawler can still be missed.',
+        },
+        {
+          question: 'Can I parse multiple User-Agent strings?',
+          answer:
+            'Yes. Enable batch mode and paste one User-Agent string per line to receive a JSON array of parsed results.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What this online user-agent parser returns',
+          paragraphs: [
+            'Paste one user-agent string—or enable batch mode for one string per line—to parse browser name/version, operating system, rendering engine, device vendor/model/type, CPU architecture, and known bot signals. RFC 9110 defines User-Agent as a request field containing product identifiers and optional comments about the software originating a request. This tool reads those self-reported tokens; it does not contact the device or inspect the browser that submitted them.',
+          ],
+        },
+        {
+          heading: 'How detection works',
+          bullets: [
+            'The bundled UAParser.js 1.0.41 ruleset applies its browser, engine, OS, device, and CPU regular-expression data in the browser.',
+            'The result exposes versions plus device vendor and model when the pasted string actually contains enough information.',
+            'A separate bot layer recognizes named tokens such as Googlebot, Bingbot, OAI-SearchBot, GPTBot, PerplexityBot, ClaudeBot, and Applebot, then applies a generic crawler keyword fallback.',
+            'Use my User-Agent reads navigator.userAgent from this browser; batch mode parses one pasted string per line.',
+          ],
+        },
+        {
+          heading: 'Accuracy and limitations',
+          paragraphs: [
+            'Treat every result as a clue, not verified identity. User-agent strings can be changed or spoofed, compatibility tokens can name several browsers, and reduced strings may omit versions or device detail. Unknown values remain Unknown, while an unrecognized non-mobile string falls back to Desktop. Bot detection is also heuristic: an unlisted or disguised crawler can be missed, and an ordinary product name containing a crawler keyword can be flagged. Client Hints and capability detection can provide different or more useful signals when you control the application.',
+          ],
+        },
+        {
+          heading: 'Privacy and safe use',
+          paragraphs: [
+            'Parsing happens in your browser as you type. The input is not sent to a parsing API, but user-agent values can contribute to fingerprinting when combined with other data. Avoid treating this output as authentication, authorization, fraud proof, or a substitute for capability detection.',
+          ],
+        },
+      ],
+    },
+    'cidr-calculator': {
+      name: 'IPv4 CIDR Calculator',
+      metadataTitle: 'IPv4 CIDR Calculator – Subnet & Host Range',
+      description:
+        'Calculate an IPv4 network address, applicable broadcast address, netmask, wildcard mask, address count, and usable host range from CIDR or dotted mask input.',
+      longDescription:
+        'Free IPv4 CIDR and subnet calculator. Enter an address with a prefix length or contiguous dotted-decimal mask to inspect the canonical network and host range without uploading data.',
+      keywords: [
+        'cidr calculator',
+        'subnet calculator',
+        'ipv4 calculator',
+        'network address calculator',
+        'netmask calculator',
+        'wildcard mask',
+      ],
+      faqs: [
+        {
+          question: 'What input formats are supported?',
+          answer:
+            'Enter a canonical dotted-decimal IPv4 address and either a prefix such as /24 or a contiguous subnet mask such as 255.255.255.0.',
+        },
+        {
+          question: 'How are /31 and /32 networks handled?',
+          answer:
+            'A /31 is shown with the RFC 3021 point-to-point interpretation, where both endpoints are usable and no broadcast address exists; confirm that the target link supports it. A /32 represents one host route and also has no broadcast address.',
+        },
+        {
+          question: 'Does this calculator support IPv6?',
+          answer:
+            'No. This version deliberately validates IPv4 only so its address and host-range semantics remain explicit.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the IPv4 CIDR calculator returns',
+          paragraphs: [
+            'CIDR combines an IPv4 address with a prefix length that states how many leading bits identify the network. The calculator normalizes the entered address to its canonical network, then displays the broadcast boundary, dotted netmask, inverse wildcard mask, total address count, and usable host range.',
+          ],
+        },
+        {
+          heading: 'Strict input and edge cases',
+          bullets: [
+            'IPv4 input must contain four decimal octets from 0 through 255; ambiguous leading-zero and shorthand forms are rejected.',
+            'Prefix lengths from /0 through /32 are supported, as are contiguous dotted-decimal masks.',
+            'For /0 through /30, the network and broadcast boundaries are excluded from the usable host range.',
+            'For /31, both point-to-point endpoints are usable under RFC 3021; /32 represents one host route.',
+          ],
+        },
+        {
+          heading: 'Operational boundary',
+          paragraphs: [
+            'The result describes address arithmetic, not routing reachability, firewall policy, DHCP allocation, cloud-provider reservations, VLAN membership, or whether an address is publicly routable. Apply the rules of the target network platform before allocating hosts.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Enter an IPv4 address such as 192.168.1.130.',
+        'Enter a CIDR prefix such as /26 or a contiguous mask such as 255.255.255.192.',
+        'Calculate the subnet and review the canonical network, boundaries, masks, and host range.',
+        'Copy the result only after confirming the target platform uses the same host semantics.',
+      ],
+    },
+    'chmod-calculator': {
+      name: 'Chmod Calculator',
+      metadataTitle: 'Chmod Calculator – Octal & Symbolic Modes',
+      description:
+        'Convert Unix file permissions between octal digits, rwx symbolic mode, and a ready-to-copy chmod command, including setuid, setgid, and sticky bits.',
+      longDescription:
+        'Free Unix chmod calculator. Enter a three- or four-digit octal mode or toggle permission bits to inspect the matching symbolic mode and command locally.',
+      keywords: [
+        'chmod calculator',
+        'linux permissions calculator',
+        'octal permissions',
+        'rwx converter',
+      ],
+      faqs: [
+        {
+          question: 'What do 755 and 644 mean?',
+          answer:
+            'Each octal digit combines read (4), write (2), and execute (1). Mode 755 is rwxr-xr-x, while 644 is rw-r--r--.',
+        },
+        {
+          question: 'What are setuid, setgid, and sticky bits?',
+          answer:
+            'They are special mode bits represented by a leading octal digit. Their exact security effect depends on the object type, operating system, filesystem, mount options, and execution context.',
+        },
+        {
+          question: 'Does this tool change a file?',
+          answer:
+            'No. It only calculates and copies permission notation; it cannot access or modify your filesystem.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How the chmod calculator works',
+          paragraphs: [
+            'Unix permission modes group read, write, and execute bits for the owner, group, and others. Adding the bit values produces each octal digit: read is 4, write is 2, and execute is 1. The calculator keeps the octal, rwx, and checkbox representations synchronized.',
+          ],
+        },
+        {
+          heading: 'Security boundary',
+          bullets: [
+            'Avoid broad write permissions such as 777 unless the exact threat model and environment require them.',
+            'A mode does not show file ownership, ACLs, capabilities, SELinux or AppArmor rules, mount flags, container mappings, or inherited policy.',
+            'Uppercase S or T means the special bit is set while the corresponding execute bit is not set.',
+            'Review the target path and ownership before running any copied chmod command, especially recursively.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Enter a three- or four-digit octal mode such as 755 or 4755.',
+        'Alternatively, toggle read, write, execute, and special bits.',
+        'Review the synchronized octal and symbolic representations.',
+        'Copy the command only after checking the target path and ownership.',
+      ],
+    },
+    'cache-control': {
+      name: 'Cache-Control Parser & Builder',
+      metadataTitle: 'Cache-Control Header Parser & Builder Online',
+      description:
+        'Parse and normalize HTTP Cache-Control directives, inspect values, load common response-header presets, and flag frequent directive conflicts.',
+      longDescription:
+        'Free Cache-Control header parser and builder. Inspect caching directives and common semantic conflicts locally before applying a header to an origin, CDN, or framework.',
+      keywords: [
+        'cache control header',
+        'cache-control parser',
+        'http caching',
+        'cache header builder',
+      ],
+      faqs: [
+        {
+          question: 'What is the difference between no-cache and no-store?',
+          answer:
+            'no-cache allows a stored response but requires validation before reuse. no-store tells caches not to store the response. They are not interchangeable.',
+        },
+        {
+          question: 'What does s-maxage control?',
+          answer:
+            's-maxage sets freshness for shared caches and takes precedence over max-age there. Browser and private-cache behavior can still differ.',
+        },
+        {
+          question: 'Can this tool guarantee CDN behavior?',
+          answer:
+            'No. It validates syntax and flags common conflicts, but actual behavior depends on the complete response, request directives, cache implementation, CDN policy, framework defaults, and invalidation state.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the Cache-Control tool checks',
+          paragraphs: [
+            'The parser separates comma-delimited directives without splitting commas inside quoted values, normalizes directive names, removes duplicate names in the formatted output, and warns about common conflicts such as public with private or non-numeric freshness values.',
+          ],
+        },
+        {
+          heading: 'Operational limits',
+          bullets: [
+            'Cache-Control semantics differ between requests and responses; the presets are response-oriented examples.',
+            'A valid header does not override every CDN rule, surrogate header, framework cache, service worker, browser heuristic, or explicit purge.',
+            'immutable is most appropriate for versioned resources whose URL changes whenever content changes.',
+            'Do not cache personalized or sensitive responses publicly without a complete review of authentication, Vary, cookies, and intermediary behavior.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste a Cache-Control header value or choose a response-oriented preset.',
+        'Review the parsed directives, normalized header, and any conflict warnings.',
+        'Adjust directive values for the origin and cache architecture you actually use.',
+        'Verify the deployed response headers and cache behavior after publishing.',
+      ],
+    },
+    'csp-builder': {
+      name: 'CSP Header Builder & Analyzer',
+      metadataTitle: 'CSP Header Builder & Analyzer Online',
+      description:
+        'Generate, normalize, and statically analyze a Content-Security-Policy header. Flag duplicate directives, unsafe script sources, and missing baseline restrictions.',
+      longDescription:
+        'Free CSP header builder and static analyzer. Start from a strict preset, add or replace directives, and review common security findings locally before testing a policy in Report-Only mode.',
+      keywords: [
+        'content security policy builder',
+        'csp generator',
+        'csp analyzer',
+        'csp header checker',
+        'content-security-policy online',
+      ],
+      faqs: [
+        {
+          question: 'Can the analyzer prove that a CSP is secure?',
+          answer:
+            'No. It flags common static problems, but it cannot understand every application flow, browser behavior, nonce lifecycle, third-party integration, reporting endpoint, or bypass in the protected application.',
+        },
+        {
+          question: 'Why should I start with Report-Only mode?',
+          answer:
+            'Content-Security-Policy-Report-Only records violations without enforcing the policy. It helps identify required resources before enforcement, although reports still need careful review and can contain sensitive URLs.',
+        },
+        {
+          question: 'What happens to duplicate directives?',
+          answer:
+            'Browsers use the first occurrence and ignore later duplicate directives. The analyzer reports duplicates, and the normalized builder output keeps one explicit directive.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the CSP builder checks',
+          paragraphs: [
+            "Content Security Policy restricts where a document can load or execute resources. This tool parses semicolon-delimited directives, normalizes their values, detects duplicates, and highlights common risks such as broad script sources, data: scripts, 'unsafe-eval', or 'unsafe-inline' without a nonce or hash.",
+          ],
+        },
+        {
+          heading: 'Baseline directives and findings',
+          bullets: [
+            'default-src provides a fallback for fetch directives that are not declared explicitly.',
+            "object-src 'none' blocks legacy plugin content when the application does not need it.",
+            'base-uri limits changes to the document base URL, while frame-ancestors controls which parents may embed the page.',
+            'A syntactically valid policy can still break production or permit an unsafe flow. Validate required origins, nonces, hashes, workers, frames, forms, and reporting separately.',
+          ],
+        },
+        {
+          heading: 'Safe deployment workflow',
+          paragraphs: [
+            'Begin with a least-privilege draft, deploy it as Content-Security-Policy-Report-Only, exercise real application paths, and inspect violations. Remove accidental dependencies or add the narrowest required sources, then enforce the tested policy. Keep the header under version control and re-test it when frameworks, CDNs, analytics, ads, or authentication flows change.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste an existing policy or load a strict starting preset.',
+        'Add or replace directives with the builder and copy the normalized policy.',
+        'Resolve high and medium findings in the context of the real application.',
+        'Deploy in Report-Only mode, test real flows, then enforce the verified policy.',
+      ],
+    },
+    'curl-to-fetch': {
+      name: 'cURL Builder & Fetch Converter',
+      metadataTitle: 'cURL to Fetch Converter & Request Builder Online',
+      description:
+        'Convert supported cURL commands to JavaScript Fetch, or build quoted cURL and Fetch requests from method, URL, headers, query, and body input. Nothing is executed.',
+      longDescription:
+        'Free browser-based cURL command builder and cURL-to-fetch converter. Configure a method, URL, query parameters, headers, and body or parse a supported cURL command with sensitive-header redaction.',
+      keywords: [
+        'curl to fetch',
+        'curl converter',
+        'curl command builder',
+        'generate curl command',
+        'curl to javascript',
+      ],
+      faqs: [
+        {
+          question: 'Does this tool run the cURL command?',
+          answer:
+            'No. It only tokenizes supported input and generates text. It never starts a shell, contacts the target URL, or sends the headers and body.',
+        },
+        {
+          question: 'Which cURL options can be converted?',
+          answer:
+            'The converter handles common request options including method, URL, headers, and data, plus harmless location or compression flags. Unsupported or ambiguous shell features are rejected instead of guessed.',
+        },
+        {
+          question: 'Are cURL and fetch always equivalent?',
+          answer:
+            'No. Redirects, cookies, TLS, proxies, compression, streaming, CORS, browser-forbidden headers, credentials, and multipart uploads can behave differently. Review and test the generated code in its real runtime.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the cURL and fetch converter does',
+          paragraphs: [
+            'The request builder turns structured method, URL, query, header, and body input into a POSIX-shell-quoted cURL command and a JavaScript fetch example. The converter tokenizes a supported pasted cURL command without executing it, then maps the request data to fetch syntax.',
+          ],
+        },
+        {
+          heading: 'Parsing and security boundaries',
+          bullets: [
+            'Shell substitutions, backticks, NUL bytes, malformed quoting, CRLF header injection, and unsupported options are rejected.',
+            'Sensitive Authorization, Cookie, proxy authorization, and API-key values can be redacted in generated output and are redacted by default in the interface.',
+            'POSIX shell quoting is not PowerShell or Windows cmd quoting. Review the target shell before running copied text.',
+            'Repeated request headers may be combined by the Fetch Headers API; the generated snippet calls out duplicate names for manual review.',
+            'The tool does not send a request, validate a remote server, store credentials, or prove that copied secrets are safe from extensions, page scripts, clipboard history, or screen sharing.',
+          ],
+        },
+        {
+          heading: 'Why generated fetch may need changes',
+          paragraphs: [
+            'Browser fetch applies CORS and forbidden-header rules that the curl command-line client does not. Server-side JavaScript has another cookie, proxy, and TLS environment. Multipart form uploads, streaming request bodies, client certificates, custom DNS resolution, or curl-specific retry behavior require runtime-specific code beyond a direct conversion.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Build a request from fields or paste a supported cURL command.',
+        'Keep sensitive-header redaction enabled when sharing or reviewing output.',
+        'Copy the POSIX cURL command or JavaScript fetch snippet.',
+        'Review shell, CORS, credential, redirect, and body semantics before running it.',
+      ],
+    },
+    'color-contrast-checker': {
+      name: 'Color Contrast Checker',
+      metadataTitle: 'WCAG Color Contrast Checker Online (AA & AAA)',
+      description:
+        'Calculate WCAG 2.x contrast ratios for opaque sRGB hex colors, check normal text, large text, and UI thresholds, and preview the pair live.',
+      longDescription:
+        'Free local color contrast checker for accessibility reviews. Test foreground and background colors against WCAG AA and AAA thresholds and apply a higher-contrast black or white suggestion.',
+      keywords: [
+        'color contrast checker',
+        'wcag contrast checker',
+        'accessibility color checker',
+        'contrast ratio',
+        'wcag aa aaa',
+      ],
+      faqs: [
+        {
+          question: 'What contrast ratios does WCAG require for text?',
+          answer:
+            'For most text, AA requires at least 4.5:1 and AAA requires 7:1. Large text uses 3:1 for AA and 4.5:1 for AAA. Large text is at least 18 point regular or 14 point bold, commonly approximated as 24 CSS pixels or about 18.66 CSS pixels bold.',
+        },
+        {
+          question: 'What does the UI components result represent?',
+          answer:
+            'It applies the 3:1 threshold commonly used for visual information needed to identify user-interface components and graphical objects. Applicability depends on state, boundaries, adjacent colors, and whether the visual is required to understand or operate the interface.',
+        },
+        {
+          question: 'Does a passing ratio make the whole design accessible?',
+          answer:
+            'No. Contrast is one requirement. Font weight, size, spacing, hover and focus states, gradients, images, color-vision differences, zoom, forced colors, and conveying information without color all need separate testing.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How the contrast ratio is calculated',
+          paragraphs: [
+            'Each opaque sRGB channel is converted from its encoded value to linear light, combined with the WCAG relative-luminance coefficients, and compared as (lighter + 0.05) / (darker + 0.05). The ratio ranges from 1:1 for identical luminance to 21:1 for black and white. Swapping foreground and background does not change the numeric ratio.',
+          ],
+        },
+        {
+          heading: 'AA, AAA, and live preview',
+          bullets: [
+            'Normal-text AA passes at 4.5:1 and AAA at 7:1.',
+            'Large-text AA passes at 3:1 and AAA at 4.5:1.',
+            'The UI sample reports the 3:1 non-text threshold without assuming that every visible border must meet it.',
+            'The suggestion chooses whichever of opaque black or white has the higher ratio against the current background; it does not preserve brand intent.',
+            'The live preview helps spot obvious readability problems but is not a substitute for testing the rendered product at its real sizes and states.',
+          ],
+        },
+        {
+          heading: 'Color and rendering boundaries',
+          paragraphs: [
+            'The calculator accepts three- or six-digit opaque hexadecimal sRGB colors. Alpha transparency, gradients, images, blend modes, display calibration, anti-aliasing, wide-gamut colors, and text drawn over changing content require evaluating the final composited pixels. Processing is local and does not sample another webpage automatically.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Enter or pick an opaque foreground and background hex color.',
+        'Review the exact ratio and each normal-text, large-text, and UI threshold.',
+        'Use the live preview and optionally apply the higher-contrast black or white suggestion.',
+        'Test the complete interface at real font sizes, weights, component states, zoom levels, and color modes.',
+      ],
+    },
+    'openapi-validator': {
+      name: 'OpenAPI Validator & Endpoint Explorer',
+      metadataTitle: 'OpenAPI Validator & Endpoint Explorer Online',
+      description:
+        'Parse OpenAPI 3.0, 3.1, or 3.2 JSON and YAML locally, check core structure and references, and search an endpoint inventory by path, method, tag, or operation ID.',
+      longDescription:
+        'Free local OpenAPI validator and endpoint explorer. Inspect operations, responses, security inheritance, path parameters, duplicate operation IDs, and local references without fetching remote files.',
+      keywords: [
+        'openapi validator',
+        'swagger validator',
+        'openapi endpoint explorer',
+        'validate openapi yaml',
+        'openapi parser online',
+      ],
+      faqs: [
+        {
+          question: 'Which OpenAPI versions are supported?',
+          answer:
+            'The structural analyzer accepts version strings for OpenAPI 3.0, 3.1, and 3.2. Swagger 2.0 is reported as unsupported rather than being silently converted.',
+        },
+        {
+          question: 'Are external $ref documents downloaded?',
+          answer:
+            'No. Local fragment references beginning with # are resolved inside the pasted document. File and network references are listed as warnings but are never fetched, which keeps analysis local and avoids hidden network access.',
+        },
+        {
+          question: 'Does a valid result guarantee full OpenAPI conformance?',
+          answer:
+            'No. This is a focused structural analyzer, not the official schema plus every semantic rule. Use a version-specific validator and the target generator or gateway in CI before publishing an API contract.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What the structural validator checks',
+          paragraphs: [
+            'The parser accepts JSON or bounded YAML input, requires an OpenAPI 3 version, info title and version, and a paths object, then inventories standard HTTP operations. It reports missing responses, duplicate operation IDs, unmatched or optional path-template parameters, unusual response keys, unresolved local references, unsupported root versions, and unknown Path Item fields.',
+          ],
+        },
+        {
+          heading: 'How the endpoint explorer summarizes the contract',
+          bullets: [
+            'Each row shows method, path, summary, operationId, response keys, deprecation, and effective security status.',
+            'Operation-level security overrides root security; an empty security array is shown as explicitly public.',
+            'Search covers path, summary, operationId, and tags, while the method selector narrows the visible operation list.',
+            'The normalized JSON view makes YAML parsing results and merged aliases visible for review.',
+            'External references are counted and reported without any browser request.',
+          ],
+        },
+        {
+          heading: 'Validation and security boundaries',
+          paragraphs: [
+            'A structurally valid document can still contain incompatible schemas, invalid examples, broken callbacks, incorrect media types, generator-specific extensions, unusable authentication flows, or business behavior that does not match the implementation. Local $ref resolution checks existence but does not fully dereference every semantic context. YAML depth, aliases, merge expansion, and total input size are bounded to protect browser responsiveness.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Paste an OpenAPI 3 JSON or YAML document, or load the synthetic sample.',
+        'Validate and review errors before warnings; correct unresolved local references and operation contract gaps.',
+        'Search or filter the endpoint table to inspect methods, responses, IDs, and inherited security.',
+        'Copy the normalized JSON when useful, then run the target ecosystem validator and generator in CI.',
+      ],
+    },
+    'dmarc-generator': {
+      name: 'DMARC & SPF Record Generator',
+      metadataTitle: 'DMARC & SPF Record Generator Online',
+      description:
+        'Create valid SPF and DMARC DNS TXT records to prevent email spoofing, phishing, and improve inbox deliverability.',
+      longDescription:
+        'Free online SPF and DMARC DNS TXT record generator. Configure authorized IP ranges, Google Workspace, Microsoft 365, SendGrid, and DMARC enforcement policies with 1-click copy.',
+      keywords: [
+        'dmarc generator',
+        'spf record generator',
+        'email security dns',
+        'dkim generator',
+        'txt record generator',
+      ],
+      faqs: [
+        {
+          question: 'What is SPF and why is it needed?',
+          answer:
+            'SPF (Sender Policy Framework) is a DNS TXT record that lists authorized mail servers allowed to send emails on behalf of your domain name.',
+        },
+        {
+          question: 'What is DMARC?',
+          answer:
+            'DMARC (Domain-based Message Authentication, Reporting, and Conformance) uses SPF and DKIM to instruct receiving servers how to handle emails that fail authentication.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter your domain name (e.g. example.com).',
+        'Configure your SPF authorized servers (MX, Google Workspace, Microsoft 365, custom IPs).',
+        'Switch to the DMARC tab and select your enforcement policy (none, quarantine, or reject).',
+        'Copy the generated DNS TXT records and paste them into your domain registrar / DNS provider.',
+      ],
+    },
+    'curl-to-code': {
+      name: 'cURL to Multi-Language Code',
+      metadataTitle: 'cURL to Code Converter – Python, JS, Go, Rust',
+      description:
+        'Convert cURL commands to JavaScript Fetch, Axios, Python Requests, Go net/http, PHP cURL, and Rust reqwest code snippets.',
+      longDescription:
+        'Free online cURL to Code Converter. Translate complex cURL HTTP requests into idiomatic, copy-pasteable client code across JavaScript, Python, Go, PHP, and Rust directly in your browser.',
+      keywords: [
+        'curl to python',
+        'curl to fetch',
+        'curl to axios',
+        'curl to go',
+        'curl to code converter',
+      ],
+      faqs: [
+        {
+          question: 'Which programming languages and HTTP libraries are supported?',
+          answer:
+            'The tool generates code for JavaScript (Fetch API & Axios), Python (Requests library), Go (standard net/http), PHP (curl_init), and Rust (reqwest async).',
+        },
+        {
+          question: 'Does this execute or send my cURL request over the internet?',
+          answer:
+            'No. The command is parsed and tokenized 100% locally inside your browser to generate code. Nothing is ever sent or executed.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your cURL command into the left editor (or click Load Sample).',
+        'Select your desired target programming language from the top toolbar.',
+        'Review the automatically generated idiomatic code snippet.',
+        'Click Copy Code to paste the code into your application.',
+      ],
+    },
+    'dockerfile-generator': {
+      name: 'Dockerfile Generator',
+      metadataTitle: 'Dockerfile Generator Online (Node, Python, Go)',
+      description:
+        'Generate optimized multi-stage production Dockerfiles for Node.js, Python, Go, Rust, and Nginx in seconds.',
+      longDescription:
+        'Free online Dockerfile Generator. Create lightweight, secure, and production-ready multi-stage Dockerfiles with non-root user security and cached dependency layers for modern cloud deployments.',
+      keywords: [
+        'dockerfile generator',
+        'dockerfile online',
+        'node dockerfile generator',
+        'python dockerfile generator',
+        'multi stage dockerfile',
+      ],
+      faqs: [
+        {
+          question: 'What is a multi-stage Docker build?',
+          answer:
+            'Multi-stage builds use separate intermediate containers for compilation and production runtime, drastically reducing final image sizes and eliminating build-time dependencies from production.',
+        },
+        {
+          question: 'Does the generated Dockerfile run as a non-root user?',
+          answer:
+            'Yes, where applicable, the generated Dockerfile configures a dedicated non-root user (e.g. USER node or appuser) for container security best practices.',
+        },
+      ],
+      howToUseSteps: [
+        'Select your application runtime (Node.js, Python, Go, Rust, Static Nginx, or PHP).',
+        'Specify the base image version, internal port, and package manager.',
+        'Review the generated multi-stage Dockerfile code.',
+        'Copy the Dockerfile or download it directly to place in your repository root.',
+      ],
+    },
+    'css-glassmorphism': {
+      name: 'CSS Glassmorphism Generator',
+      metadataTitle: 'CSS Glassmorphism Generator Online',
+      description:
+        'Design beautiful frosted glassmorphism UI cards with real-time backdrop blur, transparency, borders, and Tailwind CSS code.',
+      longDescription:
+        'Free online CSS Glassmorphism Generator. Customize backdrop blur, background transparency, border opacity, and shadow depth in real-time with copy-pasteable CSS and Tailwind CSS classes.',
+      keywords: [
+        'glassmorphism generator',
+        'frosted glass css',
+        'css glass effect',
+        'tailwind glassmorphism',
+        'backdrop blur generator',
+      ],
+      faqs: [
+        {
+          question: 'What CSS properties create the glassmorphism effect?',
+          answer:
+            'Glassmorphism is achieved using backdrop-filter: blur(), semi-transparent background (rgba), subtle white borders (rgba), and elevation box-shadows.',
+        },
+        {
+          question: 'Is backdrop-filter supported in all modern browsers?',
+          answer:
+            'Yes, backdrop-filter is supported in all modern browsers (Chrome, Edge, Safari, Firefox). Vendor prefixes (-webkit-backdrop-filter) are included for maximum compatibility.',
+        },
+      ],
+      howToUseSteps: [
+        'Adjust the backdrop blur and background opacity sliders.',
+        'Fine-tune border opacity and rounded corners.',
+        'Preview the glass card over vibrant floating geometric backgrounds.',
+        'Copy the CSS or Tailwind CSS utility snippet to paste into your components.',
+      ],
+    },
+    'css-grid-generator': {
+      name: 'CSS Grid Layout Generator',
+      metadataTitle: 'CSS Grid Layout Generator Online',
+      description:
+        'Build custom CSS Grid layouts visually. Configure columns, rows, gaps, and export clean CSS grid-template and HTML code.',
+      longDescription:
+        'Free online CSS Grid Layout Generator. Visually configure dynamic CSS Grid columns, rows, and gaps with live responsive preview and copy-pasteable CSS and HTML markup.',
+      keywords: [
+        'css grid generator',
+        'grid builder online',
+        'css grid visualizer',
+        'grid template columns generator',
+        'css layout generator',
+      ],
+      faqs: [
+        {
+          question: 'What units can I use for columns and rows?',
+          answer:
+            'You can configure flexible fractional units (fr), exact pixel dimensions (px), or percentages (%) for maximum layout responsiveness.',
+        },
+        {
+          question: 'Can I copy both the CSS and HTML?',
+          answer:
+            'Yes, both the .parent container CSS with grid-template-columns and the matching HTML structure are generated simultaneously.',
+        },
+      ],
+      howToUseSteps: [
+        'Set the number of columns and rows with the slider controls.',
+        'Adjust column gap and row gap dimensions in pixels.',
+        'Inspect the interactive visual grid preview box.',
+        'Copy the generated CSS Grid stylesheet and HTML container markup.',
+      ],
+    },
+    'robots-txt-generator': {
+      name: 'robots.txt Generator & Tester',
+      metadataTitle: 'robots.txt Generator & Tester Online',
+      description:
+        'Create SEO-friendly robots.txt files with custom user-agent rules (Googlebot, Bingbot), disallow directories, and sitemap directives.',
+      longDescription:
+        'Free online robots.txt Generator. Generate standardized robots.txt files to manage search engine web crawler access, protect private directories, and declare XML sitemaps.',
+      keywords: [
+        'robots txt generator',
+        'robots txt builder',
+        'googlebot disallow generator',
+        'seo robots txt online',
+        'create robots txt',
+      ],
+      faqs: [
+        {
+          question: 'What is the purpose of robots.txt?',
+          answer:
+            'A robots.txt file instructs search engine crawlers (Googlebot, Bingbot) which URLs and directories they can or cannot access on your website.',
+        },
+        {
+          question: 'Where should the robots.txt file be placed?',
+          answer:
+            'The robots.txt file must always be placed at the root level of your website domain (e.g. https://example.com/robots.txt).',
+        },
+      ],
+      howToUseSteps: [
+        'Configure crawler directives for all bots (*) and specific engines (Googlebot, Bingbot).',
+        'Add directory paths you want to disallow (e.g. /admin/, /private/, /api/).',
+        'Specify your XML sitemap URL.',
+        'Copy the generated text or download it directly as robots.txt for your web server root.',
+      ],
+    },
+    'sitemap-generator': {
+      name: 'XML Sitemap Generator',
+      metadataTitle: 'XML Sitemap Generator Online',
+      description:
+        'Generate valid sitemap.xml files from a list of URLs with custom lastmod, changefreq, and priority tags for Google Search Console.',
+      longDescription:
+        'Free online XML Sitemap Generator. Convert raw URL lists into standardized sitemap.xml files compliant with the Sitemaps.org protocol for search engine indexation.',
+      keywords: [
+        'xml sitemap generator',
+        'sitemap xml online',
+        'url to sitemap generator',
+        'google sitemap creator',
+        'sitemap maker',
+      ],
+      faqs: [
+        {
+          question: 'What tags are included in the generated sitemap XML?',
+          answer:
+            'The generated XML conforms to the sitemaps.org 0.9 schema, including <url>, <loc>, <lastmod>, <changefreq>, and <priority> elements.',
+        },
+        {
+          question: 'How do I submit this to Google Search Console?',
+          answer:
+            'Download the generated sitemap.xml, upload it to your website root directory (https://example.com/sitemap.xml), and submit the URL in Google Search Console.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your list of website URLs (one URL per line).',
+        'Select the default change frequency (e.g. weekly, daily) and priority weight.',
+        'Review the formatted XML urlset output in the right editor.',
+        'Copy the XML markup or click Download to save sitemap.xml.',
+      ],
+    },
+    'key-code-info': {
+      name: 'JavaScript Keycode Info',
+      metadataTitle: 'JavaScript Keycode & Key Event Info Online',
+      description:
+        'Inspect JavaScript keyboard event properties (event.key, code, which, keyCode) with a live interactive keypress listener and code generator.',
+      longDescription:
+        'Free online JavaScript Keycode Info Tool. Press any key on your keyboard to instantly see its numeric keyCode, modern event.key and event.code string identifiers, modifier states, and copy-pasteable JavaScript event listener snippets.',
+      keywords: [
+        'javascript keycode',
+        'key code info',
+        'event.key javascript',
+        'event.code checker',
+        'keyboard event listener generator',
+      ],
+      faqs: [
+        {
+          question: 'What is the difference between event.key and event.code?',
+          answer:
+            'event.key returns the value of the key pressed (taking Shift/Caps into account, like "A" or "a"), while event.code represents the physical key on the keyboard layout (like "KeyA").',
+        },
+        {
+          question: 'Why is keyCode deprecated in modern JavaScript?',
+          answer:
+            'event.keyCode was inconsistent across different operating systems and non-QWERTY layouts. Modern web development standardizes on event.key and event.code.',
+        },
+      ],
+      howToUseSteps: [
+        'Press any physical key on your keyboard.',
+        'Inspect the large numeric keyCode and modern event.key/code properties.',
+        'Check modifier key states (Ctrl, Shift, Alt, Meta).',
+        'Copy the generated JavaScript keydown event listener code block.',
+      ],
+    },
+    'css-triangle-generator': {
+      name: 'CSS Triangle Generator',
+      metadataTitle: 'CSS Triangle Generator Online (Border Arrows)',
+      description:
+        'Generate pure CSS border triangles and tooltip arrows pointing top, bottom, left, right, or diagonally with customizable dimensions and colors.',
+      longDescription:
+        'Free online CSS Triangle Generator. Create pure CSS triangles using transparent border hacks for tooltips, popovers, dropdown arrows, and UI accents with live preview and instant CSS code export.',
+      keywords: [
+        'css triangle generator',
+        'css arrow generator',
+        'css border triangle',
+        'pure css tooltip arrow',
+        'css shape generator',
+      ],
+      faqs: [
+        {
+          question: 'How do pure CSS triangles work?',
+          answer:
+            'CSS triangles work by setting an element with 0 width and 0 height, and applying thick borders where three sides are transparent and one side is colored.',
+        },
+        {
+          question: 'Can I generate diagonal corner triangles?',
+          answer:
+            'Yes! You can choose from 8 directions: Top, Bottom, Left, Right, Top-Left, Top-Right, Bottom-Left, and Bottom-Right.',
+        },
+      ],
+      howToUseSteps: [
+        'Choose the pointing direction (e.g. Top, Bottom, Diagonal).',
+        'Adjust the width and height sliders to resize your triangle.',
+        'Pick your desired triangle fill color.',
+        'Click Copy CSS to paste the lightweight CSS snippet into your project.',
+      ],
+    },
+    'css-flexbox-generator': {
+      name: 'CSS Flexbox Generator',
+      metadataTitle: 'CSS Flexbox Generator & Playground Online',
+      description:
+        'Visual interactive CSS Flexbox layout builder with direction, alignment, wrap, and gap controls with pure CSS and Tailwind export.',
+      longDescription:
+        'Free online CSS Flexbox Generator & Playground. Visually design modern flexible layouts, test alignment and justify properties on live preview items, and export pure CSS or Tailwind CSS utility classes.',
+      keywords: [
+        'css flexbox generator',
+        'flexbox playground',
+        'css flex generator',
+        'flexbox visual builder',
+        'tailwind flexbox generator',
+      ],
+      faqs: [
+        {
+          question: 'Does this generator provide both pure CSS and Tailwind classes?',
+          answer:
+            'Yes. Both standard CSS rules (display: flex, justify-content, align-items, gap) and Tailwind utility classes are generated in real-time.',
+        },
+        {
+          question: 'Can I add or remove test flex items in the sandbox?',
+          answer:
+            'Yes, use the + and - buttons to adjust the number of test cards inside the container to see how wrapping and spacing behaves.',
+        },
+      ],
+      howToUseSteps: [
+        'Adjust container properties: direction, justify-content, align-items, and flex-wrap.',
+        'Use the gap slider to set the spacing between flex items.',
+        'Preview how child items react in the live visual playground.',
+        'Copy either the pure CSS code or Tailwind CSS classes.',
+      ],
+    },
+    'open-graph-previewer': {
+      name: 'Open Graph & Social Previewer',
+      metadataTitle: 'Open Graph Previewer – Social Share Preview',
+      description:
+        'Simulate and preview social media share cards for Twitter/X, Facebook, LinkedIn, Discord, and Google Search SERP with meta tag export.',
+      longDescription:
+        'Free online Open Graph and Social Media Link Previewer. Test how your website or blog URL looks when shared on Twitter, Facebook, LinkedIn, and Google Search. Export complete Open Graph meta tags.',
+      keywords: [
+        'open graph previewer',
+        'social share card preview',
+        'twitter card preview',
+        'og meta tags generator',
+        'facebook link preview',
+      ],
+      faqs: [
+        {
+          question: 'Which social platforms are simulated in the previewer?',
+          answer:
+            'You can toggle between Twitter/X Large Image Card, Facebook Feed Post, LinkedIn Link Share, and Google Search SERP snippet views.',
+        },
+        {
+          question: 'What is the recommended Open Graph image resolution?',
+          answer:
+            'The standard recommended image size for Twitter Cards and Facebook Open Graph is 1200 × 630 pixels (1.91:1 aspect ratio).',
+        },
+      ],
+      howToUseSteps: [
+        'Enter your page title, description, canonical URL, and 1200x630 image URL.',
+        'Switch between Twitter, Facebook, LinkedIn, and Google SERP tabs to preview social cards.',
+        'Click "Copy Meta Tags" to paste the <meta> tags directly into your website <head>.',
+      ],
+    },
+    'css-animation-generator': {
+      name: 'CSS Animation Generator',
+      metadataTitle: 'CSS Animation Generator Online (Keyframes)',
+      description:
+        'Generate CSS @keyframes animations (bounce, pulse, shake, spin, fade in, flip, wobble, zoom) with live interactive preview and timing controls.',
+      longDescription:
+        'Free online CSS Animation & Keyframes Generator. Create smooth CSS transitions and keyframe animations with custom duration, easing, delay, and iteration controls. Export pure CSS code.',
+      keywords: [
+        'css animation generator',
+        'css keyframes generator',
+        'css animation builder',
+        'bounce pulse spin animation css',
+        'css animation effects',
+      ],
+      faqs: [
+        {
+          question: 'What animation presets are available?',
+          answer:
+            'Presets include Bounce, Pulse, Spin, Shake, Fade In, 3D Flip, Wobble, and Zoom In.',
+        },
+        {
+          question: 'Can I customize the timing function (easing)?',
+          answer:
+            'Yes. You can select between ease, linear, ease-in, ease-out, and ease-in-out, as well as customize duration and delay in seconds.',
+        },
+      ],
+      howToUseSteps: [
+        'Select an animation preset (e.g. Bounce, Pulse, 3D Flip).',
+        'Adjust duration, delay, timing function, and iteration count sliders.',
+        'Watch the interactive animated box in the live sandbox.',
+        'Copy the generated CSS animation class and @keyframes snippet.',
+      ],
+    },
+    'css-text-shadow': {
+      name: 'CSS Text Shadow Generator',
+      metadataTitle: 'CSS Text Shadow Generator Online',
+      description:
+        'Create multi-layer CSS text-shadow effects with customizable offsets, blur radius, color pickers, and presets (neon, 3D, retro, soft drop).',
+      longDescription:
+        'Free online CSS Text Shadow Generator. Design beautiful typography shadow effects, 3D extruded text, neon glowing titles, and retro outlines with real-time preview and 1-click CSS export.',
+      keywords: [
+        'css text shadow generator',
+        'text shadow online',
+        '3d text css generator',
+        'neon glow text css',
+        'multi layer text shadow',
+      ],
+      faqs: [
+        {
+          question: 'Can I add multiple shadow layers to the text?',
+          answer:
+            'Yes. You can add as many stacked text-shadow layers as you need to achieve realistic 3D depth, multi-colored retro borders, or multi-stage neon glow.',
+        },
+        {
+          question: 'Are there ready-to-use style presets?',
+          answer:
+            'Yes! One-click presets include Soft Drop, Neon Glow, 3D Extruded, and Retro Outline.',
+        },
+      ],
+      howToUseSteps: [
+        'Type your custom preview text and adjust the font size slider.',
+        'Click a preset or customize individual shadow layer X/Y offsets, blur, and colors.',
+        'Add additional shadow layers with "+ Add Layer" for complex 3D or glow effects.',
+        'Click "Copy CSS" to paste the text-shadow property into your stylesheet.',
+      ],
+    },
+    'ip-subnet-calculator': {
+      name: 'IPv4 Subnet Calculator',
+      metadataTitle: 'IPv4 Subnet Calculator Online (Host Range)',
+      description:
+        'Calculate network address, broadcast address, first and last usable host IP, total hosts, subnet mask, and binary representation.',
+      longDescription:
+        'Free online IPv4 Subnet Calculator. Determine CIDR notation, network address, broadcast address, usable host IP ranges, wildcard masks, and binary address breakdowns for network engineering and IP planning.',
+      keywords: [
+        'ip subnet calculator',
+        'subnet mask calculator',
+        'cidr calculator ipv4',
+        'usable host ip range',
+        'network broadcast address calculator',
+      ],
+      faqs: [
+        {
+          question: 'What information does the subnet calculator provide?',
+          answer:
+            'It calculates Network Address, Broadcast Address, Subnet Mask, Wildcard Mask, First/Last Usable Host IP, Total and Usable Host Count, IP Class, and 32-bit Binary representations.',
+        },
+        {
+          question: 'Does it support all CIDR prefixes (/0 to /32)?',
+          answer:
+            'Yes. All subnet prefixes from /0 through /32 are supported, including special /31 point-to-point links (RFC 3021) and single /32 host masks.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter an IPv4 address (e.g. 192.168.1.100).',
+        'Select the subnet mask prefix (/0 to /32) from the dropdown.',
+        'Inspect the automatically calculated network metrics and binary breakdown.',
+        'Click "Copy Summary" to copy the complete subnet details to your clipboard.',
+      ],
+    },
+    'css-filter-generator': {
+      name: 'CSS Filter Generator',
+      metadataTitle: 'CSS Filter Generator Online – Live Preview',
+      description:
+        'Create visual CSS image filter effects (blur, brightness, contrast, grayscale, hue-rotate, invert, saturate, sepia, opacity) with live preview.',
+      longDescription:
+        'Free online CSS Image Filter Generator. Adjust sliders for blur, contrast, brightness, sepia, invert, and hue-rotate on a live image preview and copy clean cross-browser CSS code with 1 click.',
+      keywords: [
+        'css filter generator',
+        'css image filters',
+        'css blur brightness contrast',
+        'css sepia grayscale generator',
+        'css backdrop filter',
+      ],
+      faqs: [
+        {
+          question: 'Which CSS filter functions are supported?',
+          answer:
+            'Supported functions include blur(), brightness(), contrast(), grayscale(), hue-rotate(), invert(), saturate(), sepia(), and opacity().',
+        },
+        {
+          question: 'Are vendor prefixes included in the generated CSS?',
+          answer:
+            'Yes. Both standard `filter` and `-webkit-filter` properties are output for maximum cross-browser compatibility.',
+        },
+      ],
+      howToUseSteps: [
+        'Drag any filter slider (blur, brightness, contrast, hue, sepia) to adjust image effects.',
+        'See immediate real-time changes rendered on the preview photo.',
+        'Click "Copy CSS" to copy the generated filter property into your stylesheet.',
+      ],
+    },
+    'css-border-radius': {
+      name: 'CSS 8-Point Border Radius',
+      metadataTitle: 'CSS 8-Point Border Radius & Squircle Generator',
+      description:
+        'Generate 8-point asymmetric border-radius values, organic blobs, and Apple-style squircles with interactive percentage and pixel sliders.',
+      longDescription:
+        'Free online CSS 8-Point Border Radius Generator. Design modern organic shapes, rounded squircles, egg contours, and leaf corners using the full 8-value CSS border-radius syntax with real-time visual feedback.',
+      keywords: [
+        'css border radius generator',
+        'fancy border radius',
+        '8 point border radius',
+        'squircle generator css',
+        'organic blob shape generator',
+      ],
+      faqs: [
+        {
+          question: 'How does 8-point border-radius syntax work in CSS?',
+          answer:
+            'The slash (/) separates horizontal radii from vertical radii: `border-radius: [TL-h] [TR-h] [BR-h] [BL-h] / [TL-v] [TR-v] [BR-v] [BL-v]`, creating smooth organic non-circular curves.',
+        },
+        {
+          question: 'Can I choose between percentage (%) and pixel (px) units?',
+          answer:
+            'Yes, toggle between % and px using the unit switcher in the controls panel.',
+        },
+      ],
+      howToUseSteps: [
+        'Select a ready-made preset (Organic Blob, Apple Squircle, Egg Shape, Leaf Corner).',
+        'Or adjust individual horizontal (X) and vertical (Y) radius sliders for each corner.',
+        'Observe the responsive shape change in the center preview card.',
+        'Click "Copy CSS" to copy the full `border-radius` snippet.',
+      ],
+    },
+    'curl-builder': {
+      name: 'cURL Command Builder',
+      metadataTitle: 'cURL Command Builder Online',
+      description:
+        'Construct and export executable cURL commands with HTTP methods, query params, headers, authentication, and JSON/Form payloads.',
+      longDescription:
+        'Free online visual cURL Command Builder. Design HTTP requests (GET, POST, PUT, DELETE, PATCH), customize headers, bearer/basic auth, and request payloads with live command generation for your terminal or scripts.',
+      keywords: [
+        'curl builder online',
+        'generate curl command',
+        'curl request generator',
+        'curl api client',
+        'curl command line creator',
+      ],
+      faqs: [
+        {
+          question: 'Which authentication methods are supported?',
+          answer:
+            'Supports Bearer Tokens (`-H "Authorization: Bearer ..."`) and Basic Authentication (`-u "user:pass"`).',
+        },
+        {
+          question: 'Are special characters and single quotes escaped safely?',
+          answer:
+            'Yes. Body JSON and header strings are properly escaped to prevent shell syntax breakages in bash and zsh terminals.',
+        },
+      ],
+      howToUseSteps: [
+        'Select the HTTP Method (GET, POST, etc.) and enter the target API endpoint URL.',
+        'Choose Authentication (Bearer or Basic) and add custom HTTP headers if needed.',
+        'Select body type (JSON, Form, Raw) and input your request payload.',
+        'Click "Copy cURL" to paste the ready-to-run command directly into your terminal.',
+      ],
+    },
+    'css-neumorphism': {
+      name: 'CSS Neumorphism Generator',
+      metadataTitle: 'CSS Neumorphism Generator Online',
+      description:
+        'Generate modern soft UI neumorphic cards and buttons with dual light/dark shadows, inset depth, and pure CSS export.',
+      longDescription:
+        'Free online CSS Neumorphism and Soft UI Generator. Design tactile extruded, pressed, concave, and convex card surfaces with real-time shadow distance, blur, intensity, and color adjustments.',
+      keywords: [
+        'css neumorphism generator',
+        'soft ui generator css',
+        'neumorphic shadow generator',
+        'inset box shadow generator',
+        'neumorphism button css',
+      ],
+      faqs: [
+        {
+          question: 'What surface shapes are available?',
+          answer:
+            'Supports Flat, Pressed (inset shadow), Concave (gradient curve), and Convex (reversed gradient curve) surfaces.',
+        },
+        {
+          question: 'How are dual shadows calculated?',
+          answer:
+            'The generator automatically computes the complementary light-source highlight and dark-side drop shadow based on your base color and intensity settings.',
+        },
+      ],
+      howToUseSteps: [
+        'Choose your desired surface shape (Flat, Pressed, Concave, or Convex).',
+        'Adjust the background color, element size, border radius, shadow distance, and blur sliders.',
+        'Preview the soft tactile element in the real-time canvas.',
+        'Click "Copy CSS" to copy the generated `box-shadow` and `background` rules.',
+      ],
+    },
+    'css-mesh-gradient': {
+      name: 'CSS Mesh Gradient Generator',
+      metadataTitle: 'CSS Mesh Gradient & Aura Background Generator Online',
+      description:
+        'Create modern multi-point mesh and aura radial gradients for web hero backgrounds with pure CSS export.',
+      longDescription:
+        'Free online CSS Mesh Gradient and Aura Background Generator. Position multi-colored radial gradient anchors with adjustable blur radius and background colors to build futuristic UI landing page aesthetics.',
+      keywords: [
+        'css mesh gradient generator',
+        'mesh gradient css',
+        'aura gradient generator',
+        'multi color radial gradient css',
+        'modern hero background css',
+      ],
+      faqs: [
+        {
+          question: 'How do CSS mesh gradients work without canvas or SVG?',
+          answer:
+            'Multiple layered `radial-gradient()` positions are blended together on a solid background with backdrop/filter blur effects for ultra-fast GPU rendering.',
+        },
+        {
+          question: 'Can I add or reposition multiple color nodes?',
+          answer:
+            'Yes! You can add up to 6 custom color nodes and independently position their X/Y coordinates from 0% to 100%.',
+        },
+      ],
+      howToUseSteps: [
+        'Pick the canvas base background color and adjust the aura blur radius.',
+        'Add or modify color anchor points and drag the X/Y position sliders.',
+        'Observe the live color blending in the preview banner.',
+        'Click "Copy CSS" to copy the composite background styles to your stylesheet.',
+      ],
+    },
+    'css-clip-path': {
+      name: 'CSS Clip-Path & Polygon Generator',
+      metadataTitle: 'CSS Clip-Path & Polygon Generator Online',
+      description:
+        'Design custom CSS clip-path polygon masks, geometric shapes, triangles, stars, and speech bubbles with visual controls.',
+      longDescription:
+        'Free online CSS Clip-Path Generator. Create modern geometric polygon shapes, angled section dividers, and masking layers using interactive coordinate sliders with pure CSS polygon() output.',
+      keywords: [
+        'css clip path generator',
+        'clip path polygon maker',
+        'css polygon generator',
+        'css mask shape generator',
+        'clip path online',
+      ],
+      faqs: [
+        {
+          question: 'What shapes are preconfigured?',
+          answer:
+            'Includes Triangles, Trapezoids, Parallelograms, Rhombuses, Pentagons, Hexagons, Stars, and Message Speech Bubbles.',
+        },
+      ],
+      howToUseSteps: [
+        'Select a preset shape or create a custom polygon.',
+        'Adjust the X% and Y% coordinates for each control point.',
+        'Preview the clipped element live.',
+        'Click "Copy CSS" to copy the `clip-path` property.',
+      ],
+    },
+    'css-scrollbar-generator': {
+      name: 'Custom CSS Scrollbar Generator',
+      metadataTitle: 'Custom CSS Scrollbar Generator Online',
+      description:
+        'Style custom scrollbars with modern CSS scrollbar-color/scrollbar-width and ::-webkit-scrollbar pseudo-elements.',
+      longDescription:
+        'Free online CSS Scrollbar Designer. Customize scrollbar thumb color, track color, width, border radius, and hover effects with instant scrollable live preview and cross-browser CSS code generation.',
+      keywords: [
+        'css scrollbar generator',
+        'custom scrollbar css',
+        'webkit scrollbar generator',
+        'scrollbar color css',
+        'scrollbar styling online',
+      ],
+      faqs: [
+        {
+          question: 'Does this support Firefox and modern Chromium browsers?',
+          answer:
+            'Yes. It generates both modern standards (`scrollbar-color` and `scrollbar-width`) and `::-webkit-scrollbar` vendor rules for full browser coverage.',
+        },
+      ],
+      howToUseSteps: [
+        'Customize thumb, track, and hover colors using the palette controls.',
+        'Adjust width and border radius.',
+        'Test scroll interactions in the preview container.',
+        'Copy the generated CSS styles.',
+      ],
+    },
+    'css-pattern-generator': {
+      name: 'CSS Background Pattern Generator',
+      metadataTitle: 'CSS Background Pattern Generator Online',
+      description:
+        'Create pure CSS repeating background patterns including dot grids, blueprints, stripes, diagonals, and checkerboards.',
+      longDescription:
+        'Free online CSS Pattern Generator. Design repeatable lightweight background patterns using linear and radial CSS gradients without external image assets.',
+      keywords: [
+        'css pattern generator',
+        'css background pattern',
+        'dot grid pattern css',
+        'blueprint grid css',
+        'css texture generator',
+      ],
+      faqs: [
+        {
+          question: 'Are image files required to render these patterns?',
+          answer:
+            'No. All patterns are generated using pure CSS `radial-gradient` and `linear-gradient` functions.',
+        },
+      ],
+      howToUseSteps: [
+        'Select a pattern style (Dots, Grid, Stripes, Diagonal, Checkerboard).',
+        'Customize background color, pattern color, and grid size.',
+        'Copy the generated background CSS snippet.',
+      ],
+    },
+    'svg-path-visualizer': {
+      name: 'SVG Path Visualizer & Inspector',
+      metadataTitle: 'SVG Path Visualizer & Inspector Online',
+      description:
+        'Visualize, inspect, and analyze SVG path d-attribute commands, Bezier curves, arc segments, and coordinates.',
+      longDescription:
+        'Free online SVG Path Visualizer. Paste any SVG path d-string to render vectors on an interactive canvas, inspect node coordinates, and parse MoveTo, LineTo, CurveTo, and Arc segments.',
+      keywords: [
+        'svg path visualizer',
+        'svg path viewer online',
+        'inspect svg path d',
+        'svg bezier curve visualizer',
+        'svg path parser',
+      ],
+      faqs: [
+        {
+          question: 'Can I paste raw <path> HTML tags?',
+          answer:
+            'Yes. The tool automatically extracts the `d="..."` attribute from raw SVG tags.',
+        },
+      ],
+      howToUseSteps: [
+        'Paste your SVG path `d` attribute value.',
+        'Adjust stroke color, fill color, and stroke width.',
+        'Review the parsed coordinate table below the canvas.',
+      ],
+    },
+    'semver-calculator': {
+      name: 'Semver Range & Version Calculator',
+      metadataTitle: 'Semver Calculator Online – Ranges & Bumps',
+      description:
+        'Evaluate semantic versioning ranges (^, ~, >=), check npm satisfies constraints, and calculate next release version bumps.',
+      longDescription:
+        'Free online SemVer Calculator. Validate semantic versioning strings, test npm semver ranges, and calculate Major, Minor, and Patch release numbers.',
+      keywords: [
+        'semver calculator',
+        'semver satisfies online',
+        'semantic versioning tester',
+        'npm semver checker',
+        'version bump calculator',
+      ],
+      faqs: [
+        {
+          question: 'What is the difference between ^ and ~ in npm?',
+          answer:
+            '`^1.2.3` allows updates that do not modify the left-most non-zero digit (< 2.0.0), while `~1.2.3` only allows patch-level changes (< 1.3.0).',
+        },
+      ],
+      howToUseSteps: [
+        'Enter your current version number and a target range to test.',
+        'Check whether the range satisfies the version.',
+        'View the next release version numbers for Major, Minor, and Patch bumps.',
+      ],
+    },
+    'ipv6-subnet-calculator': {
+      name: 'IPv6 Subnet & Prefix Calculator',
+      metadataTitle: 'IPv6 Subnet & Prefix Calculator Online',
+      description:
+        'Expand, compress, and calculate IPv6 prefix ranges, CIDR subnets, address types, and host count boundaries.',
+      longDescription:
+        'Free online IPv6 Subnet Calculator. Convert between compressed (RFC 5952) and expanded 128-bit full IPv6 notation, calculate /64 network boundaries, and identify link-local, loopback, and global unicast address ranges.',
+      keywords: [
+        'ipv6 subnet calculator',
+        'ipv6 cidr calculator',
+        'ipv6 expand compress',
+        'ipv6 prefix calculator',
+        'ipv6 address calculator',
+      ],
+      faqs: [
+        {
+          question: 'What is the standard subnet prefix for IPv6 local networks?',
+          answer:
+            'A /64 prefix is the standard subnet size for IPv6 local network segments according to RFC 4291.',
+        },
+      ],
+      howToUseSteps: [
+        'Enter an IPv6 address (compressed or expanded).',
+        'Select the subnet prefix length (e.g. /64, /48).',
+        'Copy the breakdown or full JSON subnet details.',
+      ],
+    },
+    'crontab-descriptor': {
+      name: 'Crontab Expression Explainer',
+      metadataTitle: 'Crontab Expression Explainer Online',
+      description:
+        'Translate standard 5-part cron schedule expressions into natural human-readable English descriptions.',
+      longDescription:
+        'Free online Crontab Explainer and Schedule Descriptor. Turn cryptic 5-part cron expressions (* * * * *) into plain English explanations with 1-click presets.',
+      keywords: [
+        'crontab explainer',
+        'cron expression to english',
+        'crontab guru online',
+        'cron schedule translator',
+        'describe cron expression',
+      ],
+      faqs: [
+        {
+          question: 'What fields make up a 5-part cron expression?',
+          answer:
+            'Minute (0-59), Hour (0-23), Day of Month (1-31), Month (1-12), and Day of Week (0-6, Sunday=0).',
+        },
+      ],
+      howToUseSteps: [
+        'Type your 5-part cron expression or pick a preset.',
+        'Read the human-readable explanation in the card.',
+        'Copy the description with 1 click.',
+      ],
+    },
+    'dns-record-generator': {
+      name: 'DNS Email Security Record Builder',
+      metadataTitle: 'DNS Email Security Record Builder Online',
+      description:
+        'Generate SPF (v=spf1), DKIM public key TXT records, and email authentication configurations for your domain.',
+      longDescription:
+        'Free online DNS Email Security Record Builder. Generate valid Sender Policy Framework (SPF) TXT records with Google/SendGrid includes and format DKIM public key hostnames for domain DNS management.',
+      keywords: [
+        'dns record generator',
+        'spf record generator',
+        'dkim txt record generator',
+        'email authentication dns',
+        'spf builder online',
+      ],
+      faqs: [
+        {
+          question: 'Why is SPF important for domain emails?',
+          answer:
+            'SPF (Sender Policy Framework) prevents spammers from sending unauthorized emails that spoof your domain name, protecting your domain reputation and email deliverability.',
+        },
+      ],
+      howToUseSteps: [
+        'Choose SPF or DKIM tab.',
+        'Enter your domain, authorized servers, and policy.',
+        'Copy the generated DNS TXT hostname and record value.',
+      ],
+    },
+    'http-cache-control-tester': {
+      name: 'HTTP Cache-Control Header Tester',
+      metadataTitle: 'HTTP Cache-Control Header Tester Online',
+      description: 'Analyze HTTP Cache-Control, max-age, must-revalidate, and immutable caching directives.',
+      longDescription: 'Analyze HTTP Cache-Control, max-age, must-revalidate, and immutable caching directives. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['http cache control tester', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is HTTP Cache-Control Header Tester?', answer: 'Analyze HTTP Cache-Control, max-age, must-revalidate, and immutable caching directives.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'dns-soa-dnssec-inspector': {
+      name: 'DNS SOA Serial & DNSSEC Record Inspector',
+      metadataTitle: 'DNS SOA Serial & DNSSEC Record Inspector Online',
+      description: 'Inspect DNS SOA serial numbers, date formats, zone revisions, and DNSSEC records.',
+      longDescription: 'Inspect DNS SOA serial numbers, date formats, zone revisions, and DNSSEC records. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['dns soa dnssec inspector', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is DNS SOA Serial & DNSSEC Record Inspector?', answer: 'Inspect DNS SOA serial numbers, date formats, zone revisions, and DNSSEC records.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'ip-supernetting-calculator': {
+      name: 'IP Supernetting & CIDR Aggregator',
+      metadataTitle: 'IP Supernetting & CIDR Aggregator Online',
+      description: 'Calculate aggregated supernets and summarize multiple IP CIDR network prefixes.',
+      longDescription: 'Calculate aggregated supernets and summarize multiple IP CIDR network prefixes. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['ip supernetting calculator', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is IP Supernetting & CIDR Aggregator?', answer: 'Calculate aggregated supernets and summarize multiple IP CIDR network prefixes.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'opengraph-tag-inspector': {
+      name: 'OpenGraph & Social Meta Tag Inspector',
+      metadataTitle: 'OpenGraph & Social Meta Tag Inspector Online',
+      description: 'Extract and inspect OpenGraph, Twitter Card, and LinkedIn preview metadata tags.',
+      longDescription: 'Extract and inspect OpenGraph, Twitter Card, and LinkedIn preview metadata tags. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['opengraph tag inspector', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is OpenGraph & Social Meta Tag Inspector?', answer: 'Extract and inspect OpenGraph, Twitter Card, and LinkedIn preview metadata tags.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'jwt-expiry-calculator': {
+      name: 'JWT Token Expiry & Lifetime Calculator',
+      metadataTitle: 'JWT Token Expiry & Lifetime Calculator Online',
+      description: 'Calculate remaining seconds, expiration timestamp, and validity from JWT payloads.',
+      longDescription: 'Calculate remaining seconds, expiration timestamp, and validity from JWT payloads. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['jwt expiry calculator', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is JWT Token Expiry & Lifetime Calculator?', answer: 'Calculate remaining seconds, expiration timestamp, and validity from JWT payloads.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'regex-benchmark-simulator': {
+      name: 'Regex ReDoS & Backtracking Risk Analyzer',
+      metadataTitle: 'Regex ReDoS & Backtracking Risk Analyzer Online',
+      description: 'Detect catastrophic exponential backtracking risks and evaluate regex complexity.',
+      longDescription: 'Detect catastrophic exponential backtracking risks and evaluate regex complexity. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['regex benchmark simulator', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Regex ReDoS & Backtracking Risk Analyzer?', answer: 'Detect catastrophic exponential backtracking risks and evaluate regex complexity.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'llm-context-window-shrinker': {
+      name: 'LLM Prompt Context Window Optimizer',
+      metadataTitle: 'LLM Prompt Context Window Optimizer Online',
+      description: 'Shrink prompt token consumption by stripping comments, docstrings, and extra whitespace.',
+      longDescription: 'Shrink prompt token consumption by stripping comments, docstrings, and extra whitespace. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['llm context window shrinker', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is LLM Prompt Context Window Optimizer?', answer: 'Shrink prompt token consumption by stripping comments, docstrings, and extra whitespace.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'embedding-token-cost-estimator': {
+      name: 'Text Embedding Token & API Cost Estimator',
+      metadataTitle: 'Text Embedding Token & API Cost Estimator Online',
+      description: 'Calculate vector embedding token costs across OpenAI text-embedding-3 and Voyage AI models.',
+      longDescription: 'Calculate vector embedding token costs across OpenAI text-embedding-3 and Voyage AI models. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['embedding token cost estimator', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Text Embedding Token & API Cost Estimator?', answer: 'Calculate vector embedding token costs across OpenAI text-embedding-3 and Voyage AI models.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'webhook-payload-simulator': {
+      name: 'Webhook Mock Event Payload Simulator',
+      metadataTitle: 'Webhook Mock Event Payload Simulator Online',
+      description: 'Generate synthetic webhook JSON event payloads for Stripe, GitHub, Slack, and Shopify.',
+      longDescription: 'Generate synthetic webhook JSON event payloads for Stripe, GitHub, Slack, and Shopify. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['webhook payload simulator', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Webhook Mock Event Payload Simulator?', answer: 'Generate synthetic webhook JSON event payloads for Stripe, GitHub, Slack, and Shopify.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'network-port-reference': {
+      name: 'TCP/UDP Port Number Reference & Directory',
+      metadataTitle: 'TCP/UDP Port Number Reference & Directory Online',
+      description: 'Look up standard TCP and UDP port numbers, service assignments, and security notes.',
+      longDescription: 'Look up standard TCP and UDP port numbers, service assignments, and security notes. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['network port reference', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is TCP/UDP Port Number Reference & Directory?', answer: 'Look up standard TCP and UDP port numbers, service assignments, and security notes.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'ssl-tls-handshake-simulator': {
+      name: 'TLS 1.2 & TLS 1.3 Cryptographic Handshake Simulator',
+      metadataTitle: 'TLS 1.2 & TLS 1.3 Cryptographic Handshake Simulator',
+      description: 'Simulate and compare TLS 1.2 (2-RTT) and TLS 1.3 (1-RTT) cryptographic handshake flows.',
+      longDescription: 'Simulate and compare TLS 1.2 (2-RTT) and TLS 1.3 (1-RTT) cryptographic handshake flows. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['ssl tls handshake simulator', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is TLS 1.2 & TLS 1.3 Cryptographic Handshake Simulator?', answer: 'Simulate and compare TLS 1.2 (2-RTT) and TLS 1.3 (1-RTT) cryptographic handshake flows.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'http2-http3-frame-inspector': {
+      name: 'HTTP/2 & HTTP/3 QUIC Frame Inspector',
+      metadataTitle: 'HTTP/2 & HTTP/3 QUIC Frame Inspector Online',
+      description: 'Inspect binary frame types, flags, and payload functions for HTTP/2 and HTTP/3 QUIC streams.',
+      longDescription: 'Inspect binary frame types, flags, and payload functions for HTTP/2 and HTTP/3 QUIC streams. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['http2 http3 frame inspector', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is HTTP/2 & HTTP/3 QUIC Frame Inspector?', answer: 'Inspect binary frame types, flags, and payload functions for HTTP/2 and HTTP/3 QUIC streams.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'dns-spf-record-flattener': {
+      name: 'DNS SPF Lookup Counter & Record Flattener',
+      metadataTitle: 'DNS SPF Lookup Counter & Record Flattener Online',
+      description: 'Count DNS lookups in SPF TXT records and verify RFC compliance (< 10 lookup limit).',
+      longDescription: 'Count DNS lookups in SPF TXT records and verify RFC compliance (< 10 lookup limit). 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['dns spf record flattener', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is DNS SPF Lookup Counter & Record Flattener?', answer: 'Count DNS lookups in SPF TXT records and verify RFC compliance (< 10 lookup limit).' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'mime-type-extension-lookup': {
+      name: 'File Extension to MIME Content-Type Lookup',
+      metadataTitle: 'File Extension to MIME Content-Type Lookup',
+      description: 'Look up standard IANA MIME content-types and headers by file extension.',
+      longDescription: 'Look up standard IANA MIME content-types and headers by file extension. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['mime type extension lookup', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is File Extension to MIME Content-Type Lookup?', answer: 'Look up standard IANA MIME content-types and headers by file extension.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'color-blindness-simulator': {
+      name: 'Color Blindness Accessibility Simulator',
+      metadataTitle: 'Color Blindness Accessibility Simulator Online',
+      description: 'Simulate color accessibility for Protanopia, Deuteranopia, and Tritanopia vision.',
+      longDescription: 'Simulate color accessibility for Protanopia, Deuteranopia, and Tritanopia vision. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['color blindness simulator', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Color Blindness Accessibility Simulator?', answer: 'Simulate color accessibility for Protanopia, Deuteranopia, and Tritanopia vision.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'contrast-ratio-apca-calculator': {
+      name: 'WCAG & APCA Text Contrast Ratio Calculator',
+      metadataTitle: 'WCAG & APCA Text Contrast Ratio Calculator',
+      description: 'Calculate text and background color contrast ratios according to WCAG 2.1 AAA guidelines.',
+      longDescription: 'Calculate text and background color contrast ratios according to WCAG 2.1 AAA guidelines. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['contrast ratio apca calculator', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is WCAG & APCA Text Contrast Ratio Calculator?', answer: 'Calculate text and background color contrast ratios according to WCAG 2.1 AAA guidelines.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'viewport-size-tester': {
+      name: 'Responsive Viewport & Breakpoint Inspector',
+      metadataTitle: 'Responsive Viewport & Breakpoint Inspector',
+      description: 'Inspect Tailwind CSS breakpoints (xs, sm, md, lg, xl, 2xl) and standard screen sizes.',
+      longDescription: 'Inspect Tailwind CSS breakpoints (xs, sm, md, lg, xl, 2xl) and standard screen sizes. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['viewport size tester', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Responsive Viewport & Breakpoint Inspector?', answer: 'Inspect Tailwind CSS breakpoints (xs, sm, md, lg, xl, 2xl) and standard screen sizes.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'unicode-glyph-category-inspector': {
+      name: 'Unicode Glyph & Code Point Inspector',
+      metadataTitle: 'Unicode Glyph & Code Point Inspector Online',
+      description: 'Inspect Unicode character code points, hexadecimal encodings, and Unicode category blocks.',
+      longDescription: 'Inspect Unicode character code points, hexadecimal encodings, and Unicode category blocks. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['unicode glyph category inspector', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Unicode Glyph & Code Point Inspector?', answer: 'Inspect Unicode character code points, hexadecimal encodings, and Unicode category blocks.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'seo-robots-noindex-simulator': {
+      name: 'Robots.txt & X-Robots-Tag Indexing Simulator',
+      metadataTitle: 'Robots.txt & X-Robots-Tag Indexing Simulator',
+      description: 'Evaluate search engine indexation rules, noindex, nofollow, and crawl permissions.',
+      longDescription: 'Evaluate search engine indexation rules, noindex, nofollow, and crawl permissions. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['seo robots noindex simulator', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Robots.txt & X-Robots-Tag Indexing Simulator?', answer: 'Evaluate search engine indexation rules, noindex, nofollow, and crawl permissions.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'cors-preflight-inspector': {
+      name: 'CORS Preflight OPTIONS Request Inspector',
+      metadataTitle: 'CORS Preflight OPTIONS Request Inspector Online',
+      description: 'Inspect Cross-Origin Resource Sharing preflight headers, origins, and credentials.',
+      longDescription: 'Inspect Cross-Origin Resource Sharing preflight headers, origins, and credentials. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['cors preflight inspector', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is CORS Preflight OPTIONS Request Inspector?', answer: 'Inspect Cross-Origin Resource Sharing preflight headers, origins, and credentials.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'css-selector-speed-profiler': {
+      name: 'CSS Selector Specificity & Speed Profiler',
+      metadataTitle: 'CSS Selector Specificity & Speed Profiler Online',
+      description: 'Calculate CSS selector specificity triplets [ID, Class, Tag] and rendering efficiency.',
+      longDescription: 'Calculate CSS selector specificity triplets [ID, Class, Tag] and rendering efficiency. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['css selector speed profiler', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is CSS Selector Specificity & Speed Profiler?', answer: 'Calculate CSS selector specificity triplets [ID, Class, Tag] and rendering efficiency.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'git-conflict-marker-cleaner': {
+      name: 'Git Merge Conflict Marker Stripper',
+      metadataTitle: 'Git Merge Conflict Marker Stripper Online',
+      description: 'Strip and resolve merge conflict markers (HEAD, ===, >>>) from source code files.',
+      longDescription: 'Strip and resolve merge conflict markers (HEAD, ===, >>>) from source code files. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['git conflict marker cleaner', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Git Merge Conflict Marker Stripper?', answer: 'Strip and resolve merge conflict markers (HEAD, ===, >>>) from source code files.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'semver-range-evaluator': {
+      name: 'Semantic Versioning (SemVer) Range Evaluator',
+      metadataTitle: 'Semantic Versioning (SemVer) Range Evaluator',
+      description: 'Evaluate npm semver ranges (^, ~, >=) and determine version compatibility.',
+      longDescription: 'Evaluate npm semver ranges (^, ~, >=) and determine version compatibility. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['semver range evaluator', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Semantic Versioning (SemVer) Range Evaluator?', answer: 'Evaluate npm semver ranges (^, ~, >=) and determine version compatibility.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'package-json-license-checker': {
+      name: 'package.json Open Source License Checker',
+      metadataTitle: 'package.json Open Source License Checker Online',
+      description: 'Scan package.json dependencies for open-source commercial license compatibility.',
+      longDescription: 'Scan package.json dependencies for open-source commercial license compatibility. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['package json license checker', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is package.json Open Source License Checker?', answer: 'Scan package.json dependencies for open-source commercial license compatibility.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'api-rate-limit-cost-calculator': {
+      name: 'Token Bucket API Rate Limit Calculator',
+      metadataTitle: 'Token Bucket API Rate Limit Calculator Online',
+      description: 'Calculate Token Bucket and Leaky Bucket capacity, refill rates, and burst limits.',
+      longDescription: 'Calculate Token Bucket and Leaky Bucket capacity, refill rates, and burst limits. 100% private, client-side execution in your browser with zero data retention.',
+      keywords: ['api rate limit cost calculator', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Token Bucket API Rate Limit Calculator?', answer: 'Calculate Token Bucket and Leaky Bucket capacity, refill rates, and burst limits.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'json-csv-grid-editor': {
+      name: 'JSON to CSV & CSV to JSON Interactive Grid Editor',
+      metadataTitle: 'JSON CSV Grid Editor – Edit Tables Online',
+      description: 'Live spreadsheet table editor with bi-directional JSON/CSV sync, cell editing, and format export.',
+      longDescription: 'Live spreadsheet table editor with bi-directional JSON/CSV sync, cell editing, and format export. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['json csv grid editor', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is JSON to CSV & CSV to JSON Interactive Grid Editor?', answer: 'Live spreadsheet table editor with bi-directional JSON/CSV sync, cell editing, and format export.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'rag-chunking-calculator': {
+      name: 'RAG Text Chunking Visualizer & Cost Estimator',
+      metadataTitle: 'RAG Text Chunking Visualizer & Cost Estimator',
+      description: 'Visualize recursive and sliding-window text chunking, overlap boundaries, and token embedding costs.',
+      longDescription: 'Visualize recursive and sliding-window text chunking, overlap boundaries, and token embedding costs. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['rag chunking calculator', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is RAG Text Chunking Visualizer & Cost Estimator?', answer: 'Visualize recursive and sliding-window text chunking, overlap boundaries, and token embedding costs.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'http-security-headers-analyzer': {
+      name: 'HTTP Security Headers & CORS Analyzer',
+      metadataTitle: 'HTTP Security Headers & CORS Analyzer Online',
+      description: 'Audit web server HTTP response headers for HSTS, CSP, X-Frame-Options, and security best practices.',
+      longDescription: 'Audit web server HTTP response headers for HSTS, CSP, X-Frame-Options, and security best practices. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['http security headers analyzer', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is HTTP Security Headers & CORS Analyzer?', answer: 'Audit web server HTTP response headers for HSTS, CSP, X-Frame-Options, and security best practices.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'multi-llm-token-comparator': {
+      name: 'Multi-Model LLM Token Counter & Cost Comparator',
+      metadataTitle: 'Multi-Model LLM Token Counter & Cost Comparator',
+      description: 'Compare prompt token counts and API pricing across GPT-4o, Claude 3.5, Gemini 1.5, and DeepSeek in real-time.',
+      longDescription: 'Compare prompt token counts and API pricing across GPT-4o, Claude 3.5, Gemini 1.5, and DeepSeek in real-time. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['multi llm token comparator', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Multi-Model LLM Token Counter & Cost Comparator?', answer: 'Compare prompt token counts and API pricing across GPT-4o, Claude 3.5, Gemini 1.5, and DeepSeek in real-time.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+    'crontab-schedule-translator': {
+      name: 'Crontab Schedule & Human Language Translator',
+      metadataTitle: 'Crontab Schedule & Human Language Translator',
+      description: 'Translate standard 5-field cron schedules into plain English and Turkish with next execution timestamps.',
+      longDescription: 'Translate standard 5-field cron schedules into plain English and Turkish with next execution timestamps. 100% client-side execution in your browser with zero data retention and instant results.',
+      keywords: ['crontab schedule translator', 'utilities', 'developer tools', 'online generator'],
+      faqs: [
+        { question: 'What is Crontab Schedule & Human Language Translator?', answer: 'Translate standard 5-field cron schedules into plain English and Turkish with next execution timestamps.' },
+        { question: 'Is my data private?', answer: 'Yes, all processing occurs locally in your browser.' }
+      ],
+      howToUseSteps: [
+        'Enter or paste your input in the editor panel.',
+        'Review the live output and copy with one click.'
+      ]
+    },
+  },
+};

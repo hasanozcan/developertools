@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import CategoryPage from '@/app/tools/[category]/page';
+import CategoryPage from '@/app/(default)/tools/[category]/page';
 import { categoryCatalog } from '@/lib/api';
 import {
   NON_DEFAULT_LOCALES,
@@ -11,6 +11,7 @@ import {
   type Language,
 } from '@/lib/i18nRouting';
 import { translations } from '@/translations';
+import { resolveTitle } from '@/lib/toolTitle';
 
 interface LocalizedCategoryPageProps {
   params: Promise<{ locale: string; category: string }>;
@@ -38,13 +39,19 @@ export async function generateMetadata({ params }: LocalizedCategoryPageProps): 
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
   const canonicalUrl = `${siteUrl}/${locale}/tools/${categorySlug}`;
-  const translatedName = translations[locale as Language]?.[`cat.${categorySlug}`] || category.name;
-  const pageTitle = `${translatedName} – DevsTools`;
-  const description = category.description || `${translatedName} developer tools and utilities.`;
+  const localeTranslations = translations[locale as Language];
+  const translatedName = localeTranslations?.[`cat.${categorySlug}`] || category.name;
+  const pageTitle = (
+    localeTranslations?.['categoryPage.metaTitle'] || '{category} - Free Online Developer Tools'
+  ).replace('{category}', translatedName);
+  const description =
+    localeTranslations?.[`categoryPage.description.${categorySlug}`] ||
+    category.description ||
+    `${translatedName} developer tools and utilities.`;
   const ogImageUrl = `${siteUrl}/tools/${categorySlug}/opengraph-image`;
 
   return {
-    title: { absolute: pageTitle },
+    title: resolveTitle(pageTitle, { stripBoilerplate: false }).title,
     description,
     alternates: {
       canonical: canonicalUrl,
@@ -82,5 +89,10 @@ export default async function LocalizedCategoryPageRoute({ params }: LocalizedCa
     notFound();
   }
 
-  return <CategoryPage params={Promise.resolve({ category: resolvedParams.category })} />;
+  return (
+    <CategoryPage
+      params={Promise.resolve({ category: resolvedParams.category })}
+      locale={resolvedParams.locale}
+    />
+  );
 }

@@ -3,15 +3,21 @@
 import { ThemeProvider } from '@/context/ThemeContext';
 import { FavoritesProvider } from '@/context/FavoritesContext';
 import { HistoryProvider } from '@/context/HistoryContext';
-import { LanguageProvider } from '@/context/LanguageContext';
+import { LanguageProvider, type Language } from '@/context/LanguageContext';
 import ContentBlockerOverlay from '@/components/common/ContentBlockerOverlay';
 import { WorkspaceProvider } from '@/context/WorkspaceContext';
 import { ReactNode } from 'react';
 
-export function Providers({ children }: { children: ReactNode }) {
+export function Providers({
+  children,
+  initialLocale,
+}: {
+  children: ReactNode;
+  initialLocale?: Language;
+}) {
   return (
     <ThemeProvider>
-      <LanguageProvider>
+      <LanguageProvider initialLocale={initialLocale}>
         <WorkspaceProvider>
           <FavoritesProvider>
             <HistoryProvider>

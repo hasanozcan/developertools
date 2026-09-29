@@ -77,6 +77,45 @@ describe('ContentBlockerOverlay', () => {
     act(() => lateSlot.remove());
   });
 
+  it('closes the gate when the monetized slot is removed without a route change', async () => {
+    detector.mockResolvedValue('blocked');
+    const tree = (showSlot: boolean) => (
+      <LanguageProvider>
+        {showSlot && <div data-site-support-slot="true" />}
+        <ContentBlockerOverlay />
+      </LanguageProvider>
+    );
+
+    const { rerender } = render(tree(true));
+    await screen.findByRole('dialog');
+
+    rerender(tree(false));
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
+  });
+
+  it('does not query the whole document for unrelated DOM mutations', async () => {
+    detector.mockResolvedValue('clear');
+    renderOverlay();
+    await waitFor(() => expect(detector).toHaveBeenCalledOnce());
+
+    const querySpy = vi.spyOn(document, 'querySelector');
+    const output = document.createElement('pre');
+    await act(async () => {
+      document.body.appendChild(output);
+      for (let i = 0; i < 5; i += 1) {
+        output.appendChild(document.createElement('span')).textContent = String(i);
+      }
+      await Promise.resolve();
+    });
+    act(() => output.remove());
+    await act(async () => {
+      await Promise.resolve();
+    });
+
+    expect(querySpy).not.toHaveBeenCalled();
+    querySpy.mockRestore();
+  });
+
   it('keeps content available while the initial check is pending, then clears without reloading', async () => {
     let resolveInitial: ((result: 'clear') => void) | undefined;
     const reloadPage = vi.fn();

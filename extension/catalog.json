@@ -2688,30 +2688,6 @@
     "categoryName": "Converter Online"
   },
   {
-    "id": 337,
-    "slug": "json-to-kotlin-class",
-    "name": "JSON to Kotlin Data Class Converter",
-    "shortDescription": "Convert JSON into Kotlin @Serializable data classes.",
-    "categorySlug": "converters",
-    "categoryName": "Converter Online"
-  },
-  {
-    "id": 338,
-    "slug": "json-to-swift-struct",
-    "name": "JSON to Swift Struct (Codable) Converter",
-    "shortDescription": "Convert JSON objects into Swift Codable structs.",
-    "categorySlug": "converters",
-    "categoryName": "Converter Online"
-  },
-  {
-    "id": 339,
-    "slug": "json-to-csharp-class",
-    "name": "JSON to C# Record & Class Converter",
-    "shortDescription": "Convert JSON into C# records with JsonPropertyName annotations.",
-    "categorySlug": "converters",
-    "categoryName": "Converter Online"
-  },
-  {
     "id": 340,
     "slug": "proto-to-typescript",
     "name": "Protobuf to TypeScript Interface Converter",
@@ -2842,7 +2818,7 @@
   {
     "id": 356,
     "slug": "image-converter",
-    "name": "Image Format Converter",
+    "name": "All-in-One Image Format Converter",
     "shortDescription": "Convert images between PNG, JPG, WebP, AVIF, BMP, and ICO formats.",
     "categorySlug": "converters",
     "categoryName": "Converters"
@@ -3048,14 +3024,6 @@
     "categoryName": "Converters"
   },
   {
-    "id": 382,
-    "slug": "docker-compose-to-kubernetes",
-    "name": "Docker Compose to Kubernetes YAML Converter",
-    "shortDescription": "Convert docker-compose.yml services into Kubernetes Deployment, Service, ConfigMap, and Ingress manifests.",
-    "categorySlug": "converters",
-    "categoryName": "Converters"
-  },
-  {
     "id": 383,
     "slug": "curl-to-har",
     "name": "cURL to HTTP Archive HAR 1.2 Converter",
@@ -3112,14 +3080,6 @@
     "categoryName": "Generators"
   },
   {
-    "id": 390,
-    "slug": "html-entities-converter",
-    "name": "HTML Entities to Unicode & Character Encoder",
-    "shortDescription": "Encode special characters into named HTML entities or decimal/hex NCRs and decode back to UTF-8 text.",
-    "categorySlug": "encoding",
-    "categoryName": "Encoders & Decoders"
-  },
-  {
     "id": 391,
     "slug": "system-prompt-xml-builder",
     "name": "Claude & OpenAI XML Structured System Prompt Builder",
@@ -3134,14 +3094,6 @@
     "shortDescription": "Compare prompt token counts and API pricing across GPT-4o, Claude 3.5, Gemini 1.5, and DeepSeek in real-time.",
     "categorySlug": "utilities",
     "categoryName": "Utilities"
-  },
-  {
-    "id": 393,
-    "slug": "json-to-python-pydantic",
-    "name": "JSON to Python Pydantic V2 & TypedDict Generator",
-    "shortDescription": "Convert JSON payloads into typed Python Pydantic V2 BaseModel classes, nested schemas, and TypedDicts.",
-    "categorySlug": "converters",
-    "categoryName": "Converters"
   },
   {
     "id": 394,
@@ -3182,22 +3134,6 @@
     "shortDescription": "Generate secure $2a$ Bcrypt password hashes with configurable cost factors and validate existing hash strings.",
     "categorySlug": "crypto",
     "categoryName": "Crypto & Security"
-  },
-  {
-    "id": 399,
-    "slug": "json-to-rust-types",
-    "name": "JSON to Rust Serde Structs",
-    "shortDescription": "Convert JSON payloads into strongly typed Rust Serde structs with derive macro annotations.",
-    "categorySlug": "converters",
-    "categoryName": "Converters"
-  },
-  {
-    "id": 400,
-    "slug": "json-to-golang-models",
-    "name": "JSON to Golang Struct Generator",
-    "shortDescription": "Generate Go struct definitions with json and yaml struct tags from JSON sample data.",
-    "categorySlug": "converters",
-    "categoryName": "Converters"
   },
   {
     "id": 401,
@@ -3942,22 +3878,6 @@
     "shortDescription": "Rotate full printable ASCII characters (33-126) using the 47-character Caesar cipher.",
     "categorySlug": "encoding",
     "categoryName": "Encoding"
-  },
-  {
-    "id": 494,
-    "slug": "url-safe-base64-converter",
-    "name": "URL-Safe Base64 (Base64url) Converter",
-    "shortDescription": "Convert standard Base64 (+, /, =) to URL-safe Base64url (-, _) with padding stripping.",
-    "categorySlug": "encoding",
-    "categoryName": "Encoding"
-  },
-  {
-    "id": 495,
-    "slug": "json-path-query-tester",
-    "name": "JSONPath Query Evaluator & Filter",
-    "shortDescription": "Query, filter, and extract nested properties from JSON document trees using JSONPath.",
-    "categorySlug": "json",
-    "categoryName": "JSON Tools"
   },
   {
     "id": 496,

@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 import { toolCatalog } from '@/lib/api';
 
 export const runtime = 'nodejs';
-export const alt = 'DevsTools - 500+ Free Online Developer Tools';
+export const alt = 'DevsTools - Free Online Developer Tools';
 export const size = {
   width: 1200,
   height: 630,

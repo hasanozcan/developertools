@@ -7,6 +7,7 @@ import { useHistory } from '@/context/HistoryContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { useLanguage } from '@/context/LanguageContext';
 import { findCatalogTool } from '@/lib/api';
+import { useToolIndex } from '@/lib/toolIndexClient';
 
 interface QuickAccessBarProps {
   currentSlug?: string;
@@ -16,10 +17,13 @@ interface QuickAccessBarProps {
 export default function QuickAccessBar({ currentSlug, className = '' }: QuickAccessBarProps) {
   const { history } = useHistory();
   const { favorites } = useFavorites();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   // Filter out the currently active tool from recents
   const recentItems = history.filter((item) => item.slug !== currentSlug).slice(0, 5);
+  // Localized names come from the lazy tool index (tool names are not in the client
+  // dictionary); the name stored with the history entry is shown until it loads.
+  const toolIndex = useToolIndex(language, recentItems.length > 0);
 
   return (
     <div
@@ -36,7 +40,7 @@ export default function QuickAccessBar({ currentSlug, className = '' }: QuickAcc
             {recentItems.map((item) => {
               const catalogTool = findCatalogTool(item.slug);
               const category = catalogTool?.categorySlug || item.category || 'tools';
-              const name = t(`toolName.${item.slug}`) !== `toolName.${item.slug}` ? t(`toolName.${item.slug}`) : item.name;
+              const name = toolIndex?.get(item.slug)?.name || item.name;
               return (
                 <Link
                   key={item.slug}

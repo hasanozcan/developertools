@@ -6,6 +6,8 @@ import {
   LOCALIZED_PAGES,
   NON_DEFAULT_LOCALES,
   getHreflangAlternates,
+  getToolHreflangAlternates,
+  isToolLocaleIndexable,
 } from '@/lib/i18nRouting';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
@@ -36,7 +38,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const englishTools = toolCatalog.map((tool) => ({
     url: `${BASE_URL}/tools/${tool.categorySlug}/${tool.slug}`,
     alternates: {
-      languages: getHreflangAlternates(`/tools/${tool.categorySlug}/${tool.slug}`, BASE_URL),
+      languages: getToolHreflangAlternates(tool.slug, tool.categorySlug, BASE_URL),
     },
   }));
 
@@ -87,12 +89,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       },
     }));
 
-    const tools = toolCatalog.map((tool) => ({
-      url: `${BASE_URL}/${locale}/tools/${tool.categorySlug}/${tool.slug}`,
-      alternates: {
-        languages: getHreflangAlternates(`/tools/${tool.categorySlug}/${tool.slug}`, BASE_URL),
-      },
-    }));
+    // Untranslated locale×tool pages are noindex (canonical → English), so
+    // they are left out of the sitemap and out of every hreflang cluster.
+    const tools = toolCatalog
+      .filter((tool) => isToolLocaleIndexable(tool.slug, locale))
+      .map((tool) => ({
+        url: `${BASE_URL}/${locale}/tools/${tool.categorySlug}/${tool.slug}`,
+        alternates: {
+          languages: getToolHreflangAlternates(tool.slug, tool.categorySlug, BASE_URL),
+        },
+      }));
 
     const pages = staticPages.map((page) => ({
       url: `${BASE_URL}/${locale}/${page}`,
