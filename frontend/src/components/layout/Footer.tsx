@@ -100,6 +100,10 @@ export default function Footer() {
               <Link href="/for" className="hover:text-primary-600 dark:hover:text-primary-400">
                 Tools by role
               </Link>
+              <span className="px-2" aria-hidden="true">·</span>
+              <Link href="/guides" hrefLang="en" className="hover:text-primary-600 dark:hover:text-primary-400">
+                Guides (English)
+              </Link>
             </p>
           </div>
 

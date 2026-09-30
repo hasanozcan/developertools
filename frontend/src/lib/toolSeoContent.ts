@@ -2,10 +2,17 @@ import { getToolManifest } from '@/lib/toolManifest';
 import { getToolSeoCopy } from '@/lib/toolSeoCopy';
 import type { Language } from '@/translations';
 
+export interface CodeExampleContent {
+  title: string;
+  language: string;
+  code: string;
+}
+
 export interface ToolSeoSection {
   heading: string;
   paragraphs?: string[];
   bullets?: string[];
+  codeExamples?: CodeExampleContent[];
 }
 
 export interface ToolFaq {

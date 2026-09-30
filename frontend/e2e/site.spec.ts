@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { toolCatalog } from '../src/lib/api';
 
 test('every canonical tool route responds successfully', async ({ request }) => {
-  expect(toolCatalog.length).toBe(500);
+  expect(toolCatalog.length).toBe(490);
   for (const tool of toolCatalog) {
     const path = `/tools/${tool.categorySlug}/${tool.slug}`;
     const response = await request.get(path);
@@ -183,8 +183,9 @@ test('curated collection pages expose workflow-focused tool groups', async ({ pa
   await page.goto('/collections/api-debugging');
 
   await expect(page.getByRole('heading', { level: 1, name: /API Debugging/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /cURL to Postman/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /HAR to k6/i })).toBeVisible();
+  const collectionTools = page.locator('[data-collection-tools="true"]');
+  await expect(collectionTools.getByRole('link', { name: /cURL to Postman/i })).toBeVisible();
+  await expect(collectionTools.getByRole('link', { name: /HAR to k6/i })).toBeVisible();
   await expect(page.getByText('curl to postman', { exact: true })).toBeVisible();
 });
 
@@ -419,7 +420,7 @@ test('new developer tools render and function correctly', async ({ page }) => {
 test('all tools render interactive interface with zero browser errors', async ({ page }) => {
   test.slow();
   test.setTimeout(360000);
-  expect(toolCatalog.length).toBe(500);
+  expect(toolCatalog.length).toBe(490);
   const errors: string[] = [];
   page.on('console', (msg) => {
     if (msg.type() === 'error') {

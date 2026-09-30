@@ -31,27 +31,37 @@ function toModuleId(file: string): string {
     .replace(/\.(ts|tsx)$/, '');
 }
 
+const resolvedImportCache = new Map<string, string | null>();
+
 function resolveImport(from: string, specifier: string): string | null {
   let base: string;
   if (specifier.startsWith('@/')) base = path.join(SRC, specifier.slice(2));
   else if (specifier.startsWith('.')) base = path.resolve(path.dirname(from), specifier);
   else return null;
+  if (resolvedImportCache.has(base)) return resolvedImportCache.get(base)!;
   for (const candidate of [
     `${base}.ts`,
     `${base}.tsx`,
     path.join(base, 'index.ts'),
     path.join(base, 'index.tsx'),
   ]) {
-    if (existsSync(candidate)) return candidate;
+    if (existsSync(candidate)) {
+      resolvedImportCache.set(base, candidate);
+      return candidate;
+    }
   }
+  resolvedImportCache.set(base, null);
   return null;
 }
 
 const IMPORT_PATTERN =
   /(?:^|\n)\s*(?:import|export)\s+(type\s+)?(?:[^'";]*?\sfrom\s+)?['"]([^'"]+)['"]/g;
 const DYNAMIC_IMPORT_PATTERN = /import\(\s*['"]([^'"]+)['"]\s*\)/g;
+const runtimeImportCache = new Map<string, string[]>();
 
 function runtimeImports(file: string): string[] {
+  const cached = runtimeImportCache.get(file);
+  if (cached) return cached;
   const source = readFileSync(file, 'utf8');
   const found: string[] = [];
   for (const match of source.matchAll(IMPORT_PATTERN)) {
@@ -59,6 +69,7 @@ function runtimeImports(file: string): string[] {
     found.push(match[2]);
   }
   for (const match of source.matchAll(DYNAMIC_IMPORT_PATTERN)) found.push(match[1]);
+  runtimeImportCache.set(file, found);
   return found;
 }
 

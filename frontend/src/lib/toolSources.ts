@@ -234,7 +234,9 @@ export const toolSources: Record<string, ToolSource[]> = {
   ],
   'uuid-generator': [
     { name: 'UUID v4 & v7 Generator Reference', url: 'https://devstools.app/tools/generators/uuid-generator' },
-    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+    { name: 'RFC 9562 UUID versions', url: 'https://www.rfc-editor.org/rfc/rfc9562.html' },
+    { name: 'MDN crypto.randomUUID', url: 'https://developer.mozilla.org/en-US/docs/Web/API/Crypto/randomUUID' },
+    { name: 'Python uuid', url: 'https://docs.python.org/3/library/uuid.html' },
   ],
   'password-generator': [
     { name: 'Password Generator Reference', url: 'https://devstools.app/tools/generators/password-generator' },
@@ -262,7 +264,8 @@ export const toolSources: Record<string, ToolSource[]> = {
   ],
   'sha256-hash': [
     { name: 'SHA256 Hash Reference', url: 'https://devstools.app/tools/crypto/sha256-hash' },
-    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+    { name: 'MDN Web Crypto digest', url: 'https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest' },
+    { name: 'Python hashlib', url: 'https://docs.python.org/3/library/hashlib.html' },
   ],
   'regex-tester': [
     { name: 'Regex Tester Reference', url: 'https://devstools.app/tools/text/regex-tester' },
@@ -362,7 +365,8 @@ export const toolSources: Record<string, ToolSource[]> = {
   ],
   'unicode-escape': [
     { name: 'Unicode Escape Encoder/Decoder Reference', url: 'https://devstools.app/tools/encoding/unicode-escape' },
-    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+    { name: 'RFC 8259 JSON strings', url: 'https://www.rfc-editor.org/rfc/rfc8259.html#section-7' },
+    { name: 'MDN JSON.parse', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse' },
   ],
   'json-string-escape': [
     { name: 'JSON String Escape Reference', url: 'https://devstools.app/tools/encoding/json-string-escape' },
