@@ -9,6 +9,7 @@ import {
 } from '@/lib/i18nRouting';
 import { toolCollections } from '@/lib/toolCollections';
 import { developerAudiences } from '@/lib/developerAudiences';
+import { developerGuides } from '@/lib/developerGuides';
 import sitemap from './sitemap';
 
 const BASE = 'https://devstools.app';
@@ -31,7 +32,8 @@ describe('sitemap', () => {
     const expectedLength =
       nonToolPagesPerLocale * SUPPORTED_LOCALES.length +
       toolCatalog.length +
-      indexableLocalizedTools;
+      indexableLocalizedTools +
+      1 + developerGuides.length;
 
     expect(entries).toHaveLength(expectedLength);
     expect(entries.every((entry) => !('lastModified' in entry))).toBe(true);
@@ -51,6 +53,10 @@ describe('sitemap', () => {
     expect(urls).toContain(`${BASE}/tr/collections/api-debugging`);
     expect(urls).toContain(`${BASE}/for/api-developers`);
     expect(urls).toContain(`${BASE}/de/for/devops-engineers`);
+    expect(urls).toContain(`${BASE}/guides`);
+    for (const guide of developerGuides) {
+      expect(urls).toContain(`${BASE}/guides/${guide.slug}`);
+    }
   });
 
   it('always includes every English tool page', () => {

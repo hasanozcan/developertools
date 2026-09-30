@@ -8,14 +8,15 @@ test('locale survives category, tool, search and footer navigation', async ({ pa
     .getByRole('link', { name: 'Kodlayıcılar', exact: true })
     .click();
   await expect(page).toHaveURL(/\/tr\/tools\/encoding$/);
-  await page.locator('main a[href="/tr/tools/encoding/base64"]').first().click();
+  await page.mouse.move(0, 200);
+  await page.locator('main a.interactive-card[href="/tr/tools/encoding/base64"]').click();
   await expect(page).toHaveURL(/\/tr\/tools\/encoding\/base64$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'tr');
 
   await page.locator('button[aria-controls="tool-search-results"]').click();
   await page.locator('input[role="combobox"][aria-controls="tool-search-results"]').fill('json formatter');
   await page
-    .getByRole('option', { name: /json formatter/i })
+    .getByRole('option', { name: /JSON Biçimlendirici/i })
     .first()
     .click();
   await expect(page).toHaveURL(/\/tr\/tools\/json\/json-formatter$/);

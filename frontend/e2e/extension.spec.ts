@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { chromium, expect, test } from '@playwright/test';
+import { toolCatalog } from '../src/lib/api';
 
 test('Chromium loads the extension and its offline tools work', async () => {
   const extensionPath = path.resolve('../extension/dist/chromium');
@@ -15,7 +16,7 @@ test('Chromium loads the extension and its offline tools work', async () => {
     const errors: string[] = [];
     page.on('pageerror', (error) => errors.push(error.message));
     await page.goto(`chrome-extension://${extensionId}/popup.html`);
-    await expect(page.locator('#tool-count')).toHaveText('500 Tools');
+    await expect(page.locator('#tool-count')).toHaveText(`${toolCatalog.length} Tools`);
     await page.locator('#tool-search-input').fill('sha256');
     await expect(page.locator('.tool-item[href$="/crypto/sha256-hash"]')).toBeVisible();
     await page.getByRole('tab', { name: /Offline Tools/ }).click();

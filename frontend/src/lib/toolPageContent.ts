@@ -1,5 +1,8 @@
 // Per-tool page copy (titles, descriptions, FAQs, answer sections, how-to steps),
 // keyed by category then tool slug. Rendered by src/app/tools/[category]/[tool]/page.tsx.
+import type { ToolSeoSection } from './toolSeoContent';
+import { sha256Examples, unicodeExamples, uuidExamples } from './guideExamples';
+
 export interface ToolPageContent {
   name: string;
   metadataTitle?: string;
@@ -7,7 +10,7 @@ export interface ToolPageContent {
   longDescription: string;
   keywords: string[];
   faqs: { question: string; answer: string }[];
-  answerSections?: { heading: string; paragraphs?: string[]; bullets?: string[] }[];
+  answerSections?: ToolSeoSection[];
   howToUseSteps?: string[];
 }
 
@@ -1389,9 +1392,9 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
     },
     'unicode-escape': {
       name: 'Unicode Escape Encoder/Decoder',
-      metadataTitle: 'Unicode Escape Encoder & Decoder Online',
+      metadataTitle: 'Unicode Escape Decoder & Encoder Online',
       description:
-        'Encode text as Unicode escape sequences or decode \\uXXXX, \\u{XXXXX}, and \\xFF values locally in your browser.',
+        'Decode Unicode escapes such as \\u0041, \\u{1F600}, and \\x41 into text, or encode characters locally. Includes JSON and JavaScript examples.',
       longDescription:
         'Free online Unicode escape encoder and decoder. Convert text into hexadecimal Unicode escape sequences or decode supported \\uXXXX, \\u{XXXXX}, and \\xFF values back to readable characters without a server upload.',
       keywords: [
@@ -1431,6 +1434,14 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
             'With ASCII escaping enabled, A becomes \\u0041. Characters above the basic multilingual plane use braced code-point notation; for example, 😀 becomes \\u{1F600}. When ASCII escaping is disabled, ordinary ASCII text remains readable while non-ASCII characters are escaped.',
             'Unicode escaping changes how characters are written, not what they mean. It is useful when inspecting logs, source code, API payloads, or copied text that exposes escape notation instead of rendered characters.',
           ],
+        },
+        {
+          heading: 'Decode Unicode escapes in JavaScript and Python',
+          paragraphs: [
+            'For a complete JSON string value, use JSON.parse() in JavaScript or json.loads() in Python. Both process JSON’s four-digit Unicode escapes and surrogate pairs. JSON does not accept JavaScript braced escapes or \\xXX notation; the online decoder supports those separate text representations.',
+            'The examples preserve literal backslashes until parsing runs and print Aé😀. Do not use eval() to decode external input. A JSON document should be parsed once according to its source format rather than repeatedly replacing escape sequences.',
+          ],
+          codeExamples: unicodeExamples,
         },
         {
           heading: 'Unicode escapes, JSON, and safety',
@@ -2524,9 +2535,9 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
     },
     'uuid-generator': {
       name: 'UUID Generator',
-      metadataTitle: 'UUID Generator Online – v4, v7 & Bulk GUIDs',
+      metadataTitle: 'UUID v4 & v7 Generator Online – Bulk GUIDs',
       description:
-        'Generate up to 1,000 cryptographically random UUID v4 or RFC 9562 UUID v7 identifiers locally, then format, copy, or download the batch.',
+        'Generate UUID v4 or v7 online, create up to 1,000 IDs, and copy or download UUIDs and GUIDs. Includes JavaScript and Python examples.',
       longDescription:
         'Free online UUID v4 and v7 generator. Create random v4 or Unix-millisecond-based v7 identifiers, format them as UUIDs or GUIDs, and export a batch without an API upload.',
       keywords: [
@@ -2576,6 +2587,14 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
           paragraphs: [
             'This generator creates RFC 9562 UUID version 4 or version 7 values entirely in the browser. Version 4 uses 122 cryptographically random bits. Version 7 stores the current Unix millisecond in its first 48 bits and fills its remaining 74 payload bits from crypto.getRandomValues(). Both set the RFC version and variant fields and use the canonical 8-4-4-4-12 hexadecimal layout.',
           ],
+        },
+        {
+          heading: 'Generate UUIDs in JavaScript and Python',
+          paragraphs: [
+            'JavaScript crypto.randomUUID() creates a UUID v4 in secure browser contexts. Python uuid.uuid4() also creates v4 IDs; uuid.uuid7() is available in the standard library starting with Python 3.14. The examples below check Python v7 support instead of assuming it is available.',
+            'Different UUID v7 generators may use different methods to order IDs within one millisecond. This browser tool uses a random tail, while Python’s implementation uses a counter. Keep a database uniqueness constraint and do not use an identifier as an authorization credential.',
+          ],
+          codeExamples: uuidExamples,
         },
         {
           heading: 'Choose v4 or v7',
@@ -4279,9 +4298,9 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
     },
     'sha256-hash': {
       name: 'SHA256 Hash Generator',
-      metadataTitle: 'SHA-256 Hash Generator Online',
+      metadataTitle: 'SHA-256 Hash Generator & File Checksum Checker',
       description:
-        'Generate a 64-character SHA-256 digest from UTF-8 text or exact file bytes, then compare it with an expected checksum in your browser.',
+        'Generate SHA-256 hashes from text or files and verify a trusted checksum locally in your browser. Includes working JavaScript and Python examples.',
       longDescription:
         'Free online SHA-256 hash generator for UTF-8 text and local file bytes. Check the hexadecimal digest against an expected checksum from a trusted source.',
       keywords: ['sha256 generator', 'sha256 hash', 'sha256 online', 'generate sha256'],
@@ -4320,6 +4339,14 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
             'For the exact three-character input abc—without quotation marks, spaces, or a trailing line break—the result is ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad. A newline, different capitalization, or a different encoding changes the input bytes and produces a different calculation.',
             'To check a file, generate its SHA-256 value and enter the expected 64-character digest obtained from a trusted source. The comparison reports a match or mismatch. A mismatch proves the bytes differ from those used for the expected digest. A match verifies the comparison, but the source of the expected value still matters.',
           ],
+        },
+        {
+          heading: 'Calculate SHA-256 in JavaScript and Python',
+          paragraphs: [
+            'JavaScript’s Web Crypto digest function operates on bytes. Use TextEncoder for UTF-8 text or a File’s arrayBuffer() for exact file contents. The example hashes abc in both forms and logs the same digest. Browser digest() requires a secure context and reads the input into memory.',
+            'Python’s hashlib can update a digest incrementally. The file example reads an existing download.zip in binary mode using one-megabyte chunks. Change the path to your file and compare the complete digest with the trusted expected value.',
+          ],
+          codeExamples: sha256Examples,
         },
         {
           heading: 'Can SHA-256 be decrypted, and what does it prove?',

@@ -210,7 +210,7 @@ const quickSearchTags = [
 const INITIAL_PAGE_SIZE = 48;
 const LOAD_MORE_STEP = 48;
 
-export default function Home({ hubs }: { hubs: HomeHubs }) {
+export default function Home({ hubs, children }: { hubs: HomeHubs; children?: React.ReactNode }) {
   const { t, language } = useLanguage();
   const { favorites, toggleFavorite, isFavorite } = useFavorites();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -222,7 +222,8 @@ export default function Home({ hubs }: { hubs: HomeHubs }) {
   useEffect(() => {
     const hash = new URLSearchParams(window.location.hash.slice(1));
     const query = new URLSearchParams(window.location.search);
-    setSearchQuery(hash.get('search') ?? query.get('search') ?? '');
+    const initialSearch = hash.get('search') ?? query.get('search');
+    if (initialSearch !== null) setSearchQuery((current) => current || initialSearch);
   }, []);
 
   const normalizedPopular = useMemo(() => {
@@ -416,6 +417,8 @@ export default function Home({ hubs }: { hubs: HomeHubs }) {
             )}
           </div>
         </section>
+
+        {children}
 
         {/* 🌟 Spotlight Top Launchpad Band */}
         <section className="mb-8" aria-label="Spotlight Quick Launchpad">

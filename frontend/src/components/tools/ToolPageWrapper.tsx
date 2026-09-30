@@ -21,6 +21,8 @@ import {
   resolveDistinctAdSenseSlot,
 } from '@/lib/adsenseSlots';
 import { getToolSeoCopy } from '@/lib/toolSeoCopy';
+import CodeExample from '@/components/common/CodeExample';
+import type { ToolSeoSection } from '@/lib/toolSeoContent';
 
 /** Matches Tailwind's `lg` breakpoint, where the sidebar sits beside the tool. */
 const DESKTOP_SIDEBAR_QUERY = '(min-width: 1024px)';
@@ -64,9 +66,10 @@ interface ToolPageWrapperProps {
   localizedDescription?: string;
   faqs: { question: string; answer: string }[];
   sources: { name: string; url: string }[];
-  answerSections: { heading: string; paragraphs?: string[]; bullets?: string[] }[];
+  answerSections: ToolSeoSection[];
   relatedTools: { name: string; description: string; href: string }[];
   topicCollections: { name: string; description: string; href: string }[];
+  relatedGuides?: { name: string; description: string; href: string }[];
   howToUseSteps?: string[];
   /** Minimum height (px) reserved for the tool UI before it mounts. */
   interfaceMinHeight?: number;
@@ -86,6 +89,7 @@ export default function ToolPageWrapper({
   answerSections,
   relatedTools,
   topicCollections,
+  relatedGuides = [],
   howToUseSteps: customHowToUseSteps,
   interfaceMinHeight = DEFAULT_TOOL_INTERFACE_MIN_HEIGHT,
   children,
@@ -181,7 +185,7 @@ export default function ToolPageWrapper({
   const howToUseSteps = customHowToUseSteps || t('toolPage.howToUseSteps').split('\n');
 
   const renderAnswerSection = (
-    section: { heading: string; paragraphs?: string[]; bullets?: string[] },
+    section: ToolSeoSection,
     answerFirst = false,
   ) => (
     <section
@@ -193,6 +197,9 @@ export default function ToolPageWrapper({
       <div className="space-y-3 text-gray-600 dark:text-gray-300">
         {section.paragraphs?.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
+        ))}
+        {language === 'en' && section.codeExamples?.map((example) => (
+          <CodeExample key={example.title} {...example} />
         ))}
         {section.bullets && (
           <ul className="list-disc pl-6 space-y-2">
@@ -409,6 +416,18 @@ export default function ToolPageWrapper({
 
           {/* Supporting server-readable answer content for search and AI retrieval. */}
           {answerSections.slice(1).map((section) => renderAnswerSection(section))}
+
+          {relatedGuides.length > 0 && (
+            <section className="mb-8" aria-labelledby="tool-guides-heading" data-related-guides="true">
+              <h2 id="tool-guides-heading" className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Follow a worked example</h2>
+              {relatedGuides.map((guide) => (
+                <Link key={guide.href} href={guide.href} hrefLang="en" className="interactive-card block rounded-2xl p-5">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">{guide.name} →</h3>
+                  <p className="mt-2 text-sm leading-6 text-gray-600 dark:text-gray-300">{guide.description}</p>
+                </Link>
+              ))}
+            </section>
+          )}
 
           {/* Contextual internal links keep each tool connected to its topic cluster. */}
           <section className="mb-8" data-related-tools="true">

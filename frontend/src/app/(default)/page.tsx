@@ -4,6 +4,7 @@ import { getHomeHubs } from '@/lib/homeHubs';
 import { ToolTextProvider } from '@/context/LanguageContext';
 import { getToolTextMap } from '@/lib/toolText';
 import { rootMetadata } from '../_shell/RootDocument';
+import GuideCards from '@/components/seo/GuideCards';
 
 // The homepage used to pick up app/opengraph-image.tsx and app/twitter-image.tsx
 // automatically because it lived in the app root segment. It now sits in the
@@ -33,7 +34,9 @@ export default function HomePage() {
   // Tool names/descriptions are not in the client dictionary; the tool grid gets them here.
   return (
     <ToolTextProvider text={getToolTextMap('en')}>
-      <HomePageClient hubs={getHomeHubs('en')} />
+      <HomePageClient hubs={getHomeHubs('en')}>
+        <GuideCards />
+      </HomePageClient>
     </ToolTextProvider>
   );
 }

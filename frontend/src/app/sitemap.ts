@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next';
 import { categoryCatalog, toolCatalog } from '@/lib/api';
 import { toolCollections } from '@/lib/toolCollections';
 import { developerAudiences } from '@/lib/developerAudiences';
+import { developerGuides } from '@/lib/developerGuides';
 import {
   LOCALIZED_PAGES,
   NON_DEFAULT_LOCALES,
@@ -134,6 +135,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...collectionUrls,
     ...audienceUrls,
     ...staticUrls,
+    { url: `${BASE_URL}/guides` },
+    ...developerGuides.map((guide) => ({ url: `${BASE_URL}/guides/${guide.slug}` })),
     ...localizedEntries,
   ];
 }
