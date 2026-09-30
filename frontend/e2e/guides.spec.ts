@@ -30,6 +30,7 @@ test('guides are discoverable, server-rendered, and connected to their tools', a
     );
     await expect(page.locator('link[rel="alternate"][hreflang="tr"]')).toHaveCount(0);
     await expect(page.locator('[data-code-example="true"]').first()).toBeVisible();
+    await page.evaluate(() => window.scrollTo(0, 0));
     await page.screenshot({ path: test.info().outputPath(`${guide.slug}.png`), fullPage: true });
 
     await page.getByRole('link', { name: `Open ${guide.toolName}`, exact: false }).click();
@@ -69,6 +70,7 @@ test('guide code can be copied and pages fit mobile screens without serious acce
         .filter((violation) => violation.impact === 'critical' || violation.impact === 'serious')
         .map(({ id, nodes }) => ({ id, targets: nodes.map((node) => node.target) })),
     ).toEqual([]);
+    await page.evaluate(() => window.scrollTo(0, 0));
     await page.screenshot({
       path: test.info().outputPath(`${guide.slug}-mobile.png`),
       fullPage: true,
