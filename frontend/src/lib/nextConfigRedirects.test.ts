@@ -3,6 +3,7 @@
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { ADSENSE_PRODUCTION_ORIGIN, isAdSenseAllowedOrigin } from './adsense';
 
 const require = createRequire(import.meta.url);
 
@@ -21,22 +22,21 @@ const { getPathMatch } = require('next/dist/shared/lib/router/utils/path-match')
     options?: Record<string, unknown>,
   ) => (pathname: string) => Record<string, string> | false;
 };
-const { matchHas, prepareDestination } = require(
-  'next/dist/shared/lib/router/utils/prepare-destination',
-) as {
-  matchHas: (
-    req: { headers: Record<string, string> },
-    query: Record<string, string>,
-    has?: RouteHas[],
-    missing?: RouteHas[],
-  ) => Record<string, string> | false;
-  prepareDestination: (args: {
-    appendParamsToQuery: boolean;
-    destination: string;
-    params: Record<string, string>;
-    query: Record<string, string>;
-  }) => { parsedDestination: { pathname: string; query: Record<string, string> } };
-};
+const { matchHas, prepareDestination } =
+  require('next/dist/shared/lib/router/utils/prepare-destination') as {
+    matchHas: (
+      req: { headers: Record<string, string> },
+      query: Record<string, string>,
+      has?: RouteHas[],
+      missing?: RouteHas[],
+    ) => Record<string, string> | false;
+    prepareDestination: (args: {
+      appendParamsToQuery: boolean;
+      destination: string;
+      params: Record<string, string>;
+      query: Record<string, string>;
+    }) => { parsedDestination: { pathname: string; query: Record<string, string> } };
+  };
 
 /** Applies the first matching redirect the way Next's router does; null when none match. */
 function applyRedirect(rules: RedirectRule[], href: string, host = 'devstools.app'): string | null {
@@ -81,6 +81,18 @@ describe('Next.js configuration', () => {
       destination: 'https://devstools.app/:path*',
       permanent: true,
     });
+  });
+
+  it('keeps the www redirect aligned with the single allowed advertisement origin', async () => {
+    const redirects = await loadConfig().redirects();
+    const www = redirects.find((rule) =>
+      rule.has?.some(
+        (condition) => condition.type === 'host' && condition.value === 'www.devstools.app',
+      ),
+    );
+    expect(www?.destination).toBe(`${ADSENSE_PRODUCTION_ORIGIN}/:path*`);
+    expect(www?.permanent).toBe(true);
+    expect(isAdSenseAllowedOrigin('https://www.devstools.app')).toBe(false);
   });
 
   it('permanently redirects legacy ?lang=xx URLs to the locale-prefixed path', async () => {
@@ -168,13 +180,19 @@ describe('Next.js configuration', () => {
     );
     // A legacy ?lang link to a merged tool resolves without looping.
     let href = '/tools/converters/json-to-kotlin-class?lang=tr';
-    for (let i = 0, next = applyRedirect(redirects, href); next; next = applyRedirect(redirects, href)) {
+    for (
+      let i = 0, next = applyRedirect(redirects, href);
+      next;
+      next = applyRedirect(redirects, href)
+    ) {
       expect(++i).toBeLessThanOrEqual(3);
       href = next;
     }
     expect(href).toBe('/tr/tools/converters/json-to-kotlin?lang=tr');
     expect(
-      redirects.filter((rule) => /json-to-csharp-class/.test(rule.source)).every((rule) => rule.permanent),
+      redirects
+        .filter((rule) => /json-to-csharp-class/.test(rule.source))
+        .every((rule) => rule.permanent),
     ).toBe(true);
   });
 

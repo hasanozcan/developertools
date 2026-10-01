@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { normalizeAdSenseClientId } from '@/lib/adsense';
+import { isAdSenseAllowedInBrowser, normalizeAdSenseClientId } from '@/lib/adsense';
+import { useAdSenseAllowedHost } from './useAdSenseAllowedHost';
 import { trackProductEvent } from '@/lib/analytics';
 
 declare global {
@@ -27,8 +28,9 @@ export default function AdSense({
   immediate = false,
   placement,
 }: AdSenseProps) {
+  const adsAllowed = useAdSenseAllowedHost();
   const adClient = normalizeAdSenseClientId(process.env.NEXT_PUBLIC_ADSENSE_ID);
-  if (!adClient) return null;
+  if (!adClient || !adsAllowed) return null;
 
   return (
     <AdSenseSlot
@@ -96,7 +98,13 @@ function AdSenseSlot({
         placement,
         format,
         slot,
-        page_type: toolMatch ? 'tool' : collectionMatch ? 'collection' : pathname === '/' ? 'home' : 'other',
+        page_type: toolMatch
+          ? 'tool'
+          : collectionMatch
+            ? 'collection'
+            : pathname === '/'
+              ? 'home'
+              : 'other',
         category: toolMatch?.[1],
         tool: toolMatch?.[2],
         collection: collectionMatch?.[1],
@@ -106,6 +114,7 @@ function AdSenseSlot({
 
     function requestAd() {
       if (
+        !isAdSenseAllowedInBrowser() ||
         pushedRequestRef.current ||
         requestInFlightRef.current ||
         !isNearViewport ||
@@ -134,7 +143,13 @@ function AdSenseSlot({
           format,
           slot,
           attempt: requestAttempts,
-          page_type: toolMatch ? 'tool' : collectionMatch ? 'collection' : pathname === '/' ? 'home' : 'other',
+          page_type: toolMatch
+            ? 'tool'
+            : collectionMatch
+              ? 'collection'
+              : pathname === '/'
+                ? 'home'
+                : 'other',
           category: toolMatch?.[1],
           tool: toolMatch?.[2],
           collection: collectionMatch?.[1],

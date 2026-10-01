@@ -96,6 +96,17 @@ Collection reklamları için üç gerçek AdSense unit tanımlıdır ve birbirin
 - Open Graph meta tags
 - Breadcrumb navigation
 
+### AdSense delivery and tool bottom slots
+
+AdSense scripts (including Auto Ads), manual placements and content-blocker probes run only on the actual browser origin `https://devstools.app`. Localhost, preview deployments, alternate subdomains and custom ports are disabled even when a publisher ID is configured. `www.devstools.app` permanently redirects to the canonical host. `NEXT_PUBLIC_SITE_URL` does not grant permission to serve ads.
+
+The optional bottom placements require two genuine, distinct AdSense display-unit IDs:
+
+- `NEXT_PUBLIC_ADSENSE_TOOL_BOTTOM_SLOT`: the normal `tool-bottom` placement.
+- `NEXT_PUBLIC_ADSENSE_TOOL_ZEN_BOTTOM_SLOT`: the mobile/tablet fullscreen `tool-zen-bottom` placement.
+
+Missing, malformed or colliding bottom IDs leave that placement hidden; no other unit is used as a fallback. Keep them empty until their actual IDs are known. These `NEXT_PUBLIC_` values are embedded at build time, so changing them requires a new build. This code does not create ad units or change AdSense experiments.
+
 ## Build
 
 ```bash

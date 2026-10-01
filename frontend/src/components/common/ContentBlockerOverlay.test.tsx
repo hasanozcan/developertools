@@ -3,6 +3,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { detectContentBlocker } from '@/lib/contentBlockerDetection';
 import ContentBlockerOverlay from './ContentBlockerOverlay';
+import { NON_PRODUCTION_AD_ORIGINS, setBrowserUrl } from '@/test/browserLocation';
+
+const originalUrl = window.location.href;
 
 vi.mock('@/lib/contentBlockerDetection', () => ({
   detectContentBlocker: vi.fn(),
@@ -26,6 +29,7 @@ function renderOverlay(reloadPage?: () => void) {
 
 describe('ContentBlockerOverlay', () => {
   beforeEach(() => {
+    setBrowserUrl('https://devstools.app/tools/json/json-formatter');
     vi.stubEnv('NEXT_PUBLIC_ADSENSE_ID', 'ca-pub-123');
     detector.mockReset();
     localStorage.clear();
@@ -33,9 +37,25 @@ describe('ContentBlockerOverlay', () => {
   });
 
   afterEach(() => {
+    setBrowserUrl(originalUrl);
     vi.unstubAllEnvs();
     document.body.style.overflow = '';
   });
+
+  it.each(NON_PRODUCTION_AD_ORIGINS)(
+    'does not probe or show the blocking dialog on %s',
+    async (origin) => {
+      setBrowserUrl(origin);
+      detector.mockResolvedValue('blocked');
+      renderOverlay();
+      await act(async () => {
+        window.dispatchEvent(new Event('focus'));
+        document.dispatchEvent(new Event('visibilitychange'));
+      });
+      expect(detector).not.toHaveBeenCalled();
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    },
+  );
 
   it('does not run detection when AdSense is not configured', async () => {
     vi.stubEnv('NEXT_PUBLIC_ADSENSE_ID', '');

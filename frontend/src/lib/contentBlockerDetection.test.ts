@@ -1,5 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { detectContentBlocker, probeAdSenseRuntime } from './contentBlockerDetection';
+import { NON_PRODUCTION_AD_ORIGINS, setBrowserUrl } from '@/test/browserLocation';
+
+const originalUrl = window.location.href;
 
 function mockBaitSize(size: number) {
   vi.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockReturnValue(size);
@@ -10,13 +13,27 @@ function mockBaitSize(size: number) {
 
 describe('detectContentBlocker', () => {
   beforeEach(() => {
+    setBrowserUrl('https://devstools.app');
     document.body.innerHTML = '';
     mockBaitSize(1);
   });
 
   afterEach(() => {
+    setBrowserUrl(originalUrl);
     vi.restoreAllMocks();
     document.body.innerHTML = '';
+  });
+
+  it.each(NON_PRODUCTION_AD_ORIGINS)('skips all advertisement probes on %s', async (origin) => {
+    setBrowserUrl(origin);
+    const fetchImpl = vi.fn<typeof fetch>();
+    const runtimeProbeImpl = vi.fn();
+    await expect(detectContentBlocker('ca-pub-123', { fetchImpl, runtimeProbeImpl })).resolves.toBe(
+      'unknown',
+    );
+    expect(fetchImpl).not.toHaveBeenCalled();
+    expect(runtimeProbeImpl).not.toHaveBeenCalled();
+    expect(document.querySelector('.adsbox')).toBeNull();
   });
 
   it('returns clear when the bait and AdSense runtime are available', async () => {

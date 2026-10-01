@@ -1,3 +1,5 @@
+import { isAdSenseAllowedInBrowser } from './adsense';
+
 const DEFAULT_BAIT_SETTLE_MS = 300;
 const DEFAULT_NETWORK_TIMEOUT_MS = 2500;
 
@@ -100,6 +102,8 @@ export async function detectContentBlocker(
   adClient: string,
   options: DetectionOptions = {},
 ): Promise<ContentBlockerDetection> {
+  if (!isAdSenseAllowedInBrowser()) return 'unknown';
+
   const {
     fetchImpl = globalThis.fetch?.bind(globalThis),
     runtimeProbeImpl = probeAdSenseRuntime,

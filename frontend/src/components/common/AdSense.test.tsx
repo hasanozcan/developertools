@@ -1,7 +1,12 @@
 import { StrictMode } from 'react';
 import { act, render } from '@testing-library/react';
+import { hydrateRoot } from 'react-dom/client';
+import { renderToString } from 'react-dom/server';
+import { NON_PRODUCTION_AD_ORIGINS, setBrowserUrl } from '@/test/browserLocation';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import AdSense from './AdSense';
+
+const originalUrl = window.location.href;
 
 const { trackProductEventMock } = vi.hoisted(() => ({
   trackProductEventMock: vi.fn(),
@@ -41,6 +46,7 @@ function revealObservedAds() {
 
 describe('AdSense', () => {
   beforeEach(() => {
+    setBrowserUrl('https://devstools.app/tools/json/json-formatter');
     trackProductEventMock.mockReset();
     window.history.replaceState({}, '', '/tools/json/json-formatter');
     vi.stubEnv('NEXT_PUBLIC_ADSENSE_ID', 'ca-pub-123');
@@ -48,7 +54,9 @@ describe('AdSense', () => {
     observedAds = [];
     resizeCallbacks = [];
     availableWidth = 600;
-    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (this: HTMLElement) {
+    vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (
+      this: HTMLElement,
+    ) {
       return new DOMRect(0, 0, this.closest('[hidden]') ? 0 : availableWidth, 90);
     });
     vi.stubGlobal(
@@ -97,10 +105,55 @@ describe('AdSense', () => {
   });
 
   afterEach(() => {
+    setBrowserUrl(originalUrl);
     vi.restoreAllMocks();
     vi.unstubAllEnvs();
     vi.unstubAllGlobals();
     Reflect.deleteProperty(window, 'adsbygoogle');
+  });
+
+  it.each(NON_PRODUCTION_AD_ORIGINS)(
+    'never renders or queues configured manual ads on %s',
+    (origin) => {
+      setBrowserUrl(origin);
+      const { container } = render(<AdSense slot="123" immediate placement="tool-bottom" />);
+      revealObservedAds();
+      resizeAdContainers();
+      expect(container).toBeEmptyDOMElement();
+      expect(Reflect.get(window, 'adsbygoogle')).toBeUndefined();
+      expect(trackProductEventMock).not.toHaveBeenCalled();
+    },
+  );
+
+  it('rechecks the origin before a lazy ad request', () => {
+    render(<AdSense slot="123" />);
+    setBrowserUrl('https://developertools-git-test.vercel.app');
+    revealObservedAds();
+    resizeAdContainers();
+    expect(Reflect.get(window, 'adsbygoogle')).toBeUndefined();
+    expect(trackProductEventMock).not.toHaveBeenCalled();
+  });
+
+  it('keeps server markup empty and hydrates a production ad without a mismatch', async () => {
+    const onRecoverableError = vi.fn();
+    const element = <AdSense slot="123" immediate />;
+    const html = renderToString(element);
+    expect(html).toBe('');
+    const container = document.createElement('div');
+    container.innerHTML = html;
+    document.body.appendChild(container);
+    let root: ReturnType<typeof hydrateRoot> | undefined;
+    try {
+      await act(async () => {
+        root = hydrateRoot(container, element, { onRecoverableError });
+      });
+      expect(container.querySelector('ins')).toHaveAttribute('data-ad-slot', '123');
+      expect(window.adsbygoogle).toHaveLength(1);
+      expect(onRecoverableError).not.toHaveBeenCalled();
+    } finally {
+      act(() => root?.unmount());
+      container.remove();
+    }
   });
 
   it('renders nothing when AdSense is not configured', () => {

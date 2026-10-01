@@ -138,6 +138,34 @@ describe('ToolPageWrapper full screen ads', () => {
     await waitFor(() => expect(screen.getByTestId('ad-tool-zen-left')).toBeInTheDocument());
   });
 
+  it.each([undefined, 'not-a-slot', '1234x'])(
+    'hides both bottom placements with invalid slot %s',
+    async (slot) => {
+      vi.stubEnv('NEXT_PUBLIC_ADSENSE_TOOL_BOTTOM_SLOT', slot);
+      vi.stubEnv('NEXT_PUBLIC_ADSENSE_TOOL_ZEN_BOTTOM_SLOT', slot);
+      renderToolPage();
+      expect(screen.queryByTestId('ad-tool-bottom')).not.toBeInTheDocument();
+      fireEvent.click(screen.getByRole('button', { name: 'Full Screen' }));
+      await waitFor(() => expect(screen.getByTestId('ad-tool-zen-left')).toBeInTheDocument());
+      expect(screen.queryByTestId('ad-tool-zen-bottom')).not.toBeInTheDocument();
+    },
+  );
+
+  it.each([
+    ['NEXT_PUBLIC_ADSENSE_TOOL_BOTTOM_SLOT', 'tool-bottom', 'tool-zen-bottom'],
+    ['NEXT_PUBLIC_ADSENSE_TOOL_ZEN_BOTTOM_SLOT', 'tool-zen-bottom', 'tool-bottom'],
+  ])(
+    'keeps the other bottom placement independent when %s is missing',
+    async (key, missing, configured) => {
+      vi.stubEnv(key, '');
+      renderToolPage();
+      fireEvent.click(screen.getByRole('button', { name: 'Full Screen' }));
+      await waitFor(() => expect(screen.getByTestId('ad-tool-zen-left')).toBeInTheDocument());
+      expect(screen.queryByTestId(`ad-${missing}`)).not.toBeInTheDocument();
+      expect(screen.getByTestId(`ad-${configured}`)).toBeInTheDocument();
+    },
+  );
+
   it('hides a placement that has no slot of its own instead of reusing another one', async () => {
     vi.stubEnv('NEXT_PUBLIC_ADSENSE_TOOL_ZEN_BOTTOM_SLOT', '');
     vi.stubEnv('NEXT_PUBLIC_ADSENSE_TOOL_BOTTOM_SLOT', '');

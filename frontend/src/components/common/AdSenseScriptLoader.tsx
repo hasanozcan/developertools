@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { trackProductEvent } from '@/lib/analytics';
+import { isAdSenseAllowedInBrowser } from '@/lib/adsense';
 
 const MAX_SCRIPT_ATTEMPTS = 3;
 const RETRY_DELAYS_MS = [1500, 5000] as const;
@@ -11,6 +12,8 @@ export const ADSENSE_SCRIPT_READY_EVENT = 'devstools:adsense-script-ready';
 
 export default function AdSenseScriptLoader({ clientId }: { clientId: string }) {
   useEffect(() => {
+    if (!isAdSenseAllowedInBrowser()) return;
+
     let disposed = false;
     let attempt = 0;
     let retryTimer: number | undefined;
@@ -66,7 +69,7 @@ export default function AdSenseScriptLoader({ clientId }: { clientId: string }) 
     }
 
     function loadScript() {
-      if (disposed) return;
+      if (disposed || !isAdSenseAllowedInBrowser()) return;
 
       const existing = document.querySelector<HTMLScriptElement>(SCRIPT_SELECTOR);
       if (existing) {
@@ -93,7 +96,7 @@ export default function AdSenseScriptLoader({ clientId }: { clientId: string }) 
     }
 
     const retryWhenOnline = () => {
-      if (disposed) return;
+      if (disposed || !isAdSenseAllowedInBrowser()) return;
       const existing = document.querySelector<HTMLScriptElement>(SCRIPT_SELECTOR);
       if (existing?.dataset.loaded === 'true') return;
       if (retryTimer !== undefined) window.clearTimeout(retryTimer);

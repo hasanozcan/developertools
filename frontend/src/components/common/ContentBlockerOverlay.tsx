@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useLanguage } from '@/context/LanguageContext';
 import { normalizeAdSenseClientId } from '@/lib/adsense';
 import { detectContentBlocker } from '@/lib/contentBlockerDetection';
+import { useAdSenseAllowedHost } from './useAdSenseAllowedHost';
 
 interface ContentBlockerOverlayProps {
   reloadPage?: () => void;
@@ -24,7 +25,10 @@ export default function ContentBlockerOverlay({
 }: ContentBlockerOverlayProps) {
   const { t } = useLanguage();
   const pathname = usePathname();
-  const adClient = normalizeAdSenseClientId(process.env.NEXT_PUBLIC_ADSENSE_ID);
+  const adsAllowed = useAdSenseAllowedHost();
+  const adClient = adsAllowed
+    ? normalizeAdSenseClientId(process.env.NEXT_PUBLIC_ADSENSE_ID)
+    : undefined;
   const [hasMonetizedContent, setHasMonetizedContent] = useState(false);
   const [detected, setDetected] = useState(false);
   const [checking, setChecking] = useState(false);

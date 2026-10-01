@@ -1,6 +1,9 @@
 import { act, fireEvent, render } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import AdSenseScriptLoader, { ADSENSE_SCRIPT_READY_EVENT } from './AdSenseScriptLoader';
+import { NON_PRODUCTION_AD_ORIGINS, setBrowserUrl } from '@/test/browserLocation';
+
+const originalUrl = window.location.href;
 
 const { trackProductEventMock } = vi.hoisted(() => ({
   trackProductEventMock: vi.fn(),
@@ -12,13 +15,42 @@ vi.mock('@/lib/analytics', () => ({
 
 describe('AdSenseScriptLoader', () => {
   beforeEach(() => {
+    setBrowserUrl('https://devstools.app');
     trackProductEventMock.mockReset();
     vi.useFakeTimers();
   });
 
   afterEach(() => {
+    setBrowserUrl(originalUrl);
     vi.useRealTimers();
-    document.querySelectorAll('script[data-devstools-adsense-loader="true"]').forEach((script) => script.remove());
+    document
+      .querySelectorAll('script[data-devstools-adsense-loader="true"]')
+      .forEach((script) => script.remove());
+  });
+
+  it.each(NON_PRODUCTION_AD_ORIGINS)(
+    'never loads or retries the Google script on %s',
+    async (origin) => {
+      setBrowserUrl(origin);
+      render(<AdSenseScriptLoader clientId="ca-pub-123" />);
+      await act(async () => {
+        window.dispatchEvent(new Event('online'));
+        await vi.advanceTimersByTimeAsync(10_000);
+      });
+      expect(document.querySelector('script[data-devstools-adsense-loader="true"]')).toBeNull();
+      expect(trackProductEventMock).not.toHaveBeenCalled();
+    },
+  );
+
+  it('rechecks the origin before a scheduled retry or online recovery', async () => {
+    render(<AdSenseScriptLoader clientId="ca-pub-123" />);
+    fireEvent.error(document.querySelector('script[data-devstools-adsense-loader="true"]')!);
+    setBrowserUrl('https://developertools-git-test.vercel.app');
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(1500);
+      window.dispatchEvent(new Event('online'));
+    });
+    expect(document.querySelector('script[data-devstools-adsense-loader="true"]')).toBeNull();
   });
 
   it('retries a failed script load and announces readiness after recovery', async () => {
@@ -26,17 +58,23 @@ describe('AdSenseScriptLoader', () => {
     window.addEventListener(ADSENSE_SCRIPT_READY_EVENT, ready);
     render(<AdSenseScriptLoader clientId="ca-pub-123" />);
 
-    const first = document.querySelector<HTMLScriptElement>('script[data-devstools-adsense-loader="true"]');
+    const first = document.querySelector<HTMLScriptElement>(
+      'script[data-devstools-adsense-loader="true"]',
+    );
     expect(first).toHaveAttribute('data-attempt', '1');
     fireEvent.error(first!);
 
-    expect(trackProductEventMock).toHaveBeenCalledWith('adsense_script_load_failed', { attempt: 1 });
+    expect(trackProductEventMock).toHaveBeenCalledWith('adsense_script_load_failed', {
+      attempt: 1,
+    });
 
     await act(async () => {
       await vi.advanceTimersByTimeAsync(1500);
     });
 
-    const second = document.querySelector<HTMLScriptElement>('script[data-devstools-adsense-loader="true"]');
+    const second = document.querySelector<HTMLScriptElement>(
+      'script[data-devstools-adsense-loader="true"]',
+    );
     expect(second).not.toBe(first);
     expect(second).toHaveAttribute('data-attempt', '2');
     fireEvent.load(second!);
