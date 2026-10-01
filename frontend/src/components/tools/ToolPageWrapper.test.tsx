@@ -75,7 +75,7 @@ vi.mock('@/components/common/AdSense', () => ({
   ),
 }));
 
-function renderToolPage() {
+function renderToolPage(relatedGuides: { name: string; description: string; href: string }[] = []) {
   return render(
     <ToolPageWrapper
       toolSlug="json-formatter"
@@ -88,11 +88,35 @@ function renderToolPage() {
       answerSections={[]}
       relatedTools={[]}
       topicCollections={[]}
+      relatedGuides={relatedGuides}
     >
       <div>Tool content</div>
     </ToolPageWrapper>,
   );
 }
+
+describe('ToolPageWrapper contextual guides', () => {
+  afterEach(() => {
+    mockLanguage = 'en';
+  });
+
+  it('keeps a compact localized guide next to the tool controls and links to the English guide', () => {
+    mockLanguage = 'tr';
+    renderToolPage([{
+      name: 'How to Decode Unicode Escapes in Text and JSON',
+      description: 'Decode escaped text.',
+      href: '/guides/decode-unicode-escapes',
+    }]);
+    const nav = screen.getByRole('navigation', { name: 'Pratik rehberler' });
+    expect(nav.closest('[data-tool-interface]')).not.toBeNull();
+    expect(nav.querySelector('a')).toHaveTextContent('Unicode kaçışlarını çözme (İngilizce)');
+    expect(nav.querySelector('a')).toHaveAttribute('href', '/guides/decode-unicode-escapes');
+    expect(nav.querySelector('a')).toHaveAttribute('hreflang', 'en');
+    expect(document.querySelectorAll('[data-related-guides]')).toHaveLength(1);
+    const slot = document.querySelector('[data-tool-slot]')!;
+    expect(nav.compareDocumentPosition(slot) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+});
 
 describe('ToolPageWrapper full screen ads', () => {
   beforeEach(() => {

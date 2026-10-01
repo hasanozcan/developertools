@@ -35,8 +35,21 @@ vi.mock('@/components/common/CodeEditor', () => ({
 }));
 
 describe('UnicodeEscapeTool', () => {
+  it('starts in Decode mode and converts escaped text without changing modes', () => {
+    render(<UnicodeEscapeTool />);
+    expect(screen.getByRole('button', { name: 'Decode' })).toHaveAttribute('aria-pressed', 'true');
+    expect(screen.getByRole('button', { name: 'Encode' })).toHaveAttribute('aria-pressed', 'false');
+    fireEvent.change(screen.getByLabelText('Source input'), {
+      target: { value: String.raw`\u0041\uD83D\uDE00` },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Convert' }));
+    expect(screen.getByLabelText('Converted output')).toHaveValue('A😀');
+    expect(screen.queryByRole('checkbox')).not.toBeInTheDocument();
+  });
+
   it('round-trips literal escape text through the ASCII encode and decode controls', () => {
     render(<UnicodeEscapeTool />);
+    fireEvent.click(screen.getByRole('button', { name: 'Encode' }));
     const input = String.raw`\x41 \u0041 \u{1F680} 👋`;
     fireEvent.change(screen.getByLabelText('Source input'), { target: { value: input } });
     fireEvent.click(screen.getByRole('checkbox', { name: 'Encode ASCII characters too' }));
@@ -54,6 +67,10 @@ describe('UnicodeEscapeTool', () => {
     render(<UnicodeEscapeTool />);
     const whitespace = ' \t\n';
     fireEvent.change(screen.getByLabelText('Source input'), { target: { value: whitespace } });
+    fireEvent.click(screen.getByRole('button', { name: 'Convert' }));
+    expect(screen.getByLabelText('Converted output')).toHaveValue(whitespace);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Encode' }));
     fireEvent.click(screen.getByRole('button', { name: 'Convert' }));
     expect(screen.getByLabelText('Converted output')).toHaveValue(whitespace);
 

@@ -6,6 +6,7 @@ vi.mock('@/components/tools/ToolRenderer', () => ({ default: () => null }));
 
 import ToolPage from './page';
 import { enhancedTools } from '@/translations/enhancedTools';
+import type { ToolSeoSection } from '@/lib/toolSeoContent';
 
 type Props = {
   children?: ReactNode;
@@ -31,6 +32,26 @@ async function renderToolPage(locale: 'en' | 'tr', tool = 'json-formatter', cate
 }
 
 describe('ToolPage structured data', () => {
+  it('leads SHA-256 with the irreversible-hash explanation and keeps a single existing decode FAQ', async () => {
+    const { byType, wrapperProps } = await renderToolPage('en', 'sha256-hash', 'crypto');
+    const firstAnswer = (wrapperProps.answerSections as ToolSeoSection[])[0].paragraphs!.join(' ');
+    expect(firstAnswer).toContain('a hash cannot be decoded into the original text or file');
+    expect(firstAnswer).toMatch(/generate a digest.*trusted expected checksum/);
+    expect(byType('FAQPage').mainEntity.filter((faq: { name: string }) => /decoded back/.test(faq.name))).toHaveLength(1);
+  });
+
+  it.each([
+    ['sha256-hash', 'crypto', 'verify-sha256-file-checksum'],
+    ['unicode-escape', 'encoding', 'decode-unicode-escapes'],
+    ['uuid-generator', 'generators', 'uuid-v4-vs-v7'],
+    ['uuid-v7-generator', 'generators', 'uuid-v4-vs-v7'],
+  ])('passes the existing guide to %s on English and Turkish pages', async (tool, category, guide) => {
+    for (const locale of ['en', 'tr'] as const) {
+      const { wrapperProps } = await renderToolPage(locale, tool, category);
+      expect(wrapperProps.relatedGuides).toEqual([expect.objectContaining({ href: `/guides/${guide}` })]);
+    }
+  });
+
   it('keeps English URLs and names on the default locale', async () => {
     const { byType, wrapperProps } = await renderToolPage('en');
     const breadcrumb = byType('BreadcrumbList');

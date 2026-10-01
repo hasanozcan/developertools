@@ -2,6 +2,8 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import CopyButton from '@/components/common/CopyButton';
+import Link from '@/components/common/LocalizedLink';
+import { getGuideLinkCopy } from '@/lib/guideLinkCopy';
 import { Download, RefreshCw, Trash2 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { formatUuid, generateUuidV4, generateUuidV7, type UuidVersion } from '@/lib/uuid';
@@ -12,10 +14,10 @@ function generateUuid(version: UuidVersion): string {
   return version === 'v7' ? generateUuidV7() : generateUuidV4();
 }
 
-export default function UuidGeneratorTool() {
-  const { t } = useLanguage();
+export default function UuidGeneratorTool({ presetVersion }: { presetVersion?: UuidVersion }) {
+  const { t, language } = useLanguage();
   const [uuids, setUuids] = useState<string[]>([]);
-  const [version, setVersion] = useState<UuidVersion>('v4');
+  const [version, setVersion] = useState<UuidVersion>(presetVersion ?? 'v4');
   const [count, setCount] = useState(1);
   const [uppercase, setUppercase] = useState(false);
   const [includeHyphens, setIncludeHyphens] = useState(true);
@@ -27,13 +29,13 @@ export default function UuidGeneratorTool() {
   useEffect(() => {
     if (!isInitialized) {
       try {
-        setUuids([generateUuid('v4')]);
+        setUuids([generateUuid(presetVersion ?? 'v4')]);
       } catch (generationError) {
         setError(generationError instanceof Error ? generationError.message : 'UUID generation failed');
       }
       setIsInitialized(true);
     }
-  }, [isInitialized]);
+  }, [isInitialized, presetVersion]);
 
   const formatUuidValue = useCallback((uuid: string): string => formatUuid(uuid, {
     uppercase,
@@ -71,24 +73,26 @@ export default function UuidGeneratorTool() {
     <div className="space-y-6">
       {/* Controls */}
       <div className="flex flex-wrap items-center gap-4">
-        <div className="flex items-center gap-2">
-          <label htmlFor="uuid-version" className="text-sm text-gray-600 dark:text-gray-400">
-            {t('tool.uuidGenerator.version')}:
-          </label>
-          <select
-            id="uuid-version"
-            value={version}
-            onChange={(event) => {
-              setVersion(event.target.value as UuidVersion);
-              setUuids([]);
-              setError('');
-            }}
-            className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-          >
-            <option value="v4">UUID v4</option>
-            <option value="v7">UUID v7</option>
-          </select>
-        </div>
+        {!presetVersion && (
+          <div className="flex items-center gap-2">
+            <label htmlFor="uuid-version" className="text-sm text-gray-600 dark:text-gray-400">
+              {t('tool.uuidGenerator.version')}:
+            </label>
+            <select
+              id="uuid-version"
+              value={version}
+              onChange={(event) => {
+                setVersion(event.target.value as UuidVersion);
+                setUuids([]);
+                setError('');
+              }}
+              className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            >
+              <option value="v4">UUID v4</option>
+              <option value="v7">UUID v7</option>
+            </select>
+          </div>
+        )}
 
         <div className="flex items-center gap-2">
           <label htmlFor="uuid-quantity" className="text-sm text-gray-600 dark:text-gray-400">
@@ -163,6 +167,17 @@ export default function UuidGeneratorTool() {
           {t('common.download')}
         </button>
       </div>
+
+      {version === 'v7' && (
+        <p className="text-sm">
+          <Link
+            href="/tools/crypto/uuid-v7-timestamp-extractor"
+            className="font-medium text-indigo-700 underline underline-offset-4 hover:text-indigo-800 dark:text-indigo-300 dark:hover:text-indigo-200"
+          >
+            {getGuideLinkCopy(language).extractTimestamp}
+          </Link>
+        </p>
+      )}
 
       {error && (
         <p role="alert" className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-300">

@@ -675,8 +675,11 @@ test('new high-traffic tools interactive functionality and visual validation', a
 
   // 4. UUID v7 Generator
   await page.goto('/tools/generators/uuid-v7-generator');
-  await expect(page.locator('body')).toContainText('UUIDv7');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('UUID v7');
   await page.getByRole('button', { name: /generate/i }).click();
+  await expect(page.getByRole('textbox', { name: 'Generated UUIDs' })).toHaveValue(
+    /^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/,
+  );
   await page.screenshot({ path: test.info().outputPath('uuid_v7_live.png') });
 
   // 5. Conventional Commit Builder

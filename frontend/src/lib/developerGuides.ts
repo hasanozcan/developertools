@@ -211,3 +211,8 @@ export const developerGuides: DeveloperGuide[] = [
     ],
   },
 ];
+
+export function getDeveloperGuidesForTool(toolSlug: string): DeveloperGuide[] {
+  const guideToolSlug = toolSlug === 'uuid-v7-generator' ? 'uuid-generator' : toolSlug;
+  return developerGuides.filter((guide) => guide.toolSlug === guideToolSlug);
+}

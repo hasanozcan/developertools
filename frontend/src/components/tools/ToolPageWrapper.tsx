@@ -22,6 +22,7 @@ import {
 } from '@/lib/adsenseSlots';
 import { getToolSeoCopy } from '@/lib/toolSeoCopy';
 import CodeExample from '@/components/common/CodeExample';
+import RelatedGuideLinks from '@/components/common/RelatedGuideLinks';
 import type { ToolSeoSection } from '@/lib/toolSeoContent';
 
 /** Matches Tailwind's `lg` breakpoint, where the sidebar sits beside the tool. */
@@ -194,7 +195,7 @@ export default function ToolPageWrapper({
       data-answer-first={answerFirst ? 'true' : undefined}
     >
       <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{section.heading}</h2>
-      <div className="space-y-3 text-gray-600 dark:text-gray-300">
+      <div className="space-y-3 break-words text-gray-600 dark:text-gray-300">
         {section.paragraphs?.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
@@ -287,6 +288,7 @@ export default function ToolPageWrapper({
                 </button>
               </div>
             </div>
+            <RelatedGuideLinks guides={relatedGuides} locale={language} />
             {/* The tool UI is client-only; reserve its typical height so mounting it
                 doesn't push the content below (CLS). */}
             <div data-tool-slot="true" style={{ minHeight: `${interfaceMinHeight}px` }}>
@@ -375,6 +377,7 @@ export default function ToolPageWrapper({
 
                 {/* Center Tool Content (Fluid width) */}
                 <main className="flex-1 min-w-0 w-full rounded-3xl border border-slate-200/80 bg-white p-4 sm:p-6 md:p-8 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900">
+                  <RelatedGuideLinks guides={relatedGuides} locale={language} />
                   {children}
                 </main>
 
@@ -416,18 +419,6 @@ export default function ToolPageWrapper({
 
           {/* Supporting server-readable answer content for search and AI retrieval. */}
           {answerSections.slice(1).map((section) => renderAnswerSection(section))}
-
-          {relatedGuides.length > 0 && (
-            <section className="mb-8" aria-labelledby="tool-guides-heading" data-related-guides="true">
-              <h2 id="tool-guides-heading" className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Follow a worked example</h2>
-              {relatedGuides.map((guide) => (
-                <Link key={guide.href} href={guide.href} hrefLang="en" className="interactive-card block rounded-2xl p-5">
-                  <h3 className="font-semibold text-gray-900 dark:text-white">{guide.name} →</h3>
-                  <p className="mt-2 text-sm leading-6 text-gray-600 dark:text-gray-300">{guide.description}</p>
-                </Link>
-              ))}
-            </section>
-          )}
 
           {/* Contextual internal links keep each tool connected to its topic cluster. */}
           <section className="mb-8" data-related-tools="true">

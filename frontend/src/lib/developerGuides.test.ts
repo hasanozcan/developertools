@@ -4,7 +4,8 @@ import { webcrypto } from 'node:crypto';
 import { TextEncoder } from 'node:util';
 import { runInNewContext } from 'node:vm';
 import { describe, expect, it } from 'vitest';
-import { developerGuides } from './developerGuides';
+import { developerGuides, getDeveloperGuidesForTool } from './developerGuides';
+import { guideLinkCopy } from './guideLinkCopy';
 import { sha256Examples, unicodeExamples, uuidExamples } from './guideExamples';
 import { findCatalogTool } from './api';
 import { getToolCollection } from './toolCollections';
@@ -25,6 +26,20 @@ async function runJavaScript(code: string): Promise<string[]> {
 }
 
 describe('developer guides', () => {
+  it('reuses the existing UUID guide for the dedicated v7 generator', () => {
+    expect(getDeveloperGuidesForTool('uuid-v7-generator')).toEqual(getDeveloperGuidesForTool('uuid-generator'));
+    expect(getDeveloperGuidesForTool('uuid-v7-generator')).toHaveLength(1);
+    expect(getDeveloperGuidesForTool('not-a-tool')).toEqual([]);
+  });
+
+  it('has localized link labels for every published guide without inventing routes', () => {
+    const hrefs = developerGuides.map((guide) => `/guides/${guide.slug}`).sort();
+    for (const copy of Object.values(guideLinkCopy)) {
+      expect(Object.keys(copy.labels).sort()).toEqual(hrefs);
+      expect([copy.heading, copy.english, copy.extractTimestamp, ...Object.values(copy.labels)].every((label) => label.trim())).toBe(true);
+    }
+  });
+
   it('links each guide to a canonical tool and an existing collection', () => {
     for (const guide of developerGuides) {
       const tool = findCatalogTool(guide.toolSlug);

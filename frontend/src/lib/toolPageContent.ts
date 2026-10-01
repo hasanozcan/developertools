@@ -2206,13 +2206,13 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
     'uuid-v7-generator': {
       name: 'UUID v7 Generator (Time-Ordered)',
       metadataTitle: 'UUID v7 Generator Online (Time-Ordered)',
-      description: 'Generate modern Unix Epoch time-ordered UUIDv7 identifiers and extract timestamps.',
-      longDescription: 'Free online UUID v7 Generator (Time-Ordered). Fast, accurate, client-side processing with instant export options.',
+      description: 'Generate time-ordered UUID v7 identifiers, copy or download a batch, and inspect timestamps with the linked extractor.',
+      longDescription: 'Generate UUID v7 identifiers locally with secure browser randomness. Choose a quantity and format, copy or download the batch, and open the UUID v7 Timestamp Extractor to inspect an embedded creation time.',
       keywords: ['uuid-v7-generator', 'uuid v7 generator (time-ordered)', 'developer tool', 'online tool'],
       faqs: [
         {
           question: 'What is UUID v7 Generator (Time-Ordered)?',
-          answer: 'Generate modern Unix Epoch time-ordered UUIDv7 identifiers and extract timestamps.',
+          answer: 'Generate time-ordered UUID v7 identifiers with secure browser randomness and export them as text. The linked UUID v7 Timestamp Extractor reads an identifier’s embedded creation time.',
         },
         {
           question: 'Is my data processed securely?',
@@ -2220,9 +2220,10 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
         },
       ],
       howToUseSteps: [
-        'Enter or paste your input parameters into the provided configuration panels.',
-        'View the live updated result in real-time in the output editor.',
-        'Click the Copy or Download button to export your output.',
+        'Choose a quantity from 1 to 1,000 and adjust uppercase, hyphens, or braces.',
+        'Select Generate to create a new UUID v7 batch locally in your browser.',
+        'Copy the formatted identifiers or download them as a text file.',
+        'To inspect a creation time, copy an identifier and open the linked UUID v7 Timestamp Extractor.',
       ],
     },
     'nanoid-generator': {
@@ -4331,6 +4332,7 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
           heading: 'What does this SHA-256 generator do?',
           paragraphs: [
             'This SHA-256 generator computes the 256-bit message digest specified by NIST FIPS 180-4 for text or a selected file and renders it as 64 hexadecimal characters. In text mode, the browser converts characters to UTF-8 bytes. File mode digests the selected bytes. Lowercase and uppercase are display choices for the same value.',
+            'SHA-256 is not reversible: a hash cannot be decoded into the original text or file. Enter text or select a file to generate a digest; compare a file’s digest with a trusted expected checksum to verify it.',
           ],
         },
         {

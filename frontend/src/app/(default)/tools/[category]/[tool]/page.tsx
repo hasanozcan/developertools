@@ -20,7 +20,7 @@ import { serializeJsonForHtmlScript } from '@/lib/scriptSafeJson';
 import { translations } from '@/translations';
 import { toolPageContent as tools } from '@/lib/toolPageContent';
 import { resolveToolTitle } from '@/lib/toolTitle';
-import { developerGuides } from '@/lib/developerGuides';
+import { getDeveloperGuidesForTool } from '@/lib/developerGuides';
 
 function assertToolPageCatalogIntegrity(): void {
   const configuredRoutes = new Set<string>();
@@ -347,11 +347,11 @@ export default async function ToolPage({ params, locale = 'en' }: PageProps & { 
         answerSections={effectiveAnswerSections}
         relatedTools={relatedTools}
         topicCollections={topicCollections}
-        relatedGuides={locale === 'en' ? developerGuides.filter((guide) => guide.toolSlug === toolSlug).map((guide) => ({
+        relatedGuides={getDeveloperGuidesForTool(toolSlug).map((guide) => ({
           name: guide.title,
           description: guide.description,
           href: `/guides/${guide.slug}`,
-        })) : []}
+        }))}
         howToUseSteps={effectiveHowToUseSteps}
       >
         <ToolRenderer toolSlug={toolSlug} />

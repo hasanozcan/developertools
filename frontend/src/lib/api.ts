@@ -2448,7 +2448,7 @@ export const toolCatalog = [
     id: 261,
     slug: 'uuid-v7-generator',
     name: 'UUID v7 Generator (Time-Ordered)',
-    shortDescription: 'Generate modern Unix Epoch time-ordered UUIDv7 identifiers and extract timestamps.',
+    shortDescription: 'Generate time-ordered UUID v7 identifiers, copy or download a batch, and inspect timestamps with the linked extractor.',
     categorySlug: 'generators',
     categoryName: 'Generator Online',
     isFeatured: false,

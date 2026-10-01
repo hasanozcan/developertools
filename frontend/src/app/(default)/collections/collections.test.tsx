@@ -4,6 +4,8 @@ import { describe, expect, it, vi } from 'vitest';
 import { getToolCollection, toolCollections } from '@/lib/toolCollections';
 import { developerAudiences } from '@/lib/developerAudiences';
 import { isToolLocaleIndexable, type Language } from '@/lib/i18nRouting';
+import { developerGuides } from '@/lib/developerGuides';
+import { guideLinkCopy } from '@/lib/guideLinkCopy';
 
 vi.mock('@/components/common/AdSense', () => ({ default: () => null }));
 
@@ -42,6 +44,25 @@ async function renderAudience(locale: Language, audience: string) {
 }
 
 describe('collection detail page', () => {
+  it('connects each guide to its matching collection in every locale using its English URL', async () => {
+    for (const guide of developerGuides) {
+      for (const locale of Object.keys(guideLinkCopy) as Language[]) {
+        const slug = guide.collectionHref.split('/').pop()!;
+        const { doc } = await renderCollection(locale, slug);
+        const nav = doc.querySelector('[data-related-guides]')!;
+        const link = nav.querySelector('a')!;
+        const href = `/guides/${guide.slug}`;
+        expect(nav.getAttribute('aria-label')).toBe(guideLinkCopy[locale].heading);
+        expect(nav.querySelectorAll('a')).toHaveLength(1);
+        expect(link.getAttribute('href')).toBe(href);
+        expect(link.getAttribute('hreflang')).toBe('en');
+        expect(link.textContent).toContain(guideLinkCopy[locale].labels[href]);
+        if (locale !== 'en') expect(link.textContent).toContain(guideLinkCopy[locale].english);
+      }
+    }
+    expect((await renderCollection('en', 'api-debugging')).doc.querySelector('[data-related-guides]')).toBeNull();
+  });
+
   it('renders EN long-form intro, tools as h3 cards and an ordered workflow', async () => {
     const collection = getToolCollection('api-debugging')!;
     const { doc, jsonLd } = await renderCollection('en', 'api-debugging');

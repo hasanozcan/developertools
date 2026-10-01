@@ -9,7 +9,7 @@ type Mode = 'encode' | 'decode';
 
 export default function UnicodeEscapeTool() {
   const { t } = useLanguage();
-  const [mode, setMode] = useState<Mode>('encode');
+  const [mode, setMode] = useState<Mode>('decode');
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [encodeAscii, setEncodeAscii] = useState(false);
@@ -54,6 +54,7 @@ export default function UnicodeEscapeTool() {
         <div className="inline-flex rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
           <button
             onClick={() => setMode('encode')}
+            aria-pressed={mode === 'encode'}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
               mode === 'encode'
                 ? 'bg-primary-600 text-white'
@@ -64,6 +65,7 @@ export default function UnicodeEscapeTool() {
           </button>
           <button
             onClick={() => setMode('decode')}
+            aria-pressed={mode === 'decode'}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
               mode === 'decode'
                 ? 'bg-primary-600 text-white'

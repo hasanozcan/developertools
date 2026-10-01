@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import RelatedGuideLinks from '@/components/common/RelatedGuideLinks';
+import { developerGuides } from '@/lib/developerGuides';
 import AdSense from '@/components/common/AdSense';
 import {
   DEFAULT_ADSENSE_COLLECTION_BOTTOM_SLOT,
@@ -139,6 +141,9 @@ export function CollectionDetailContent({ locale, collection }: { locale: Langua
     tools.map((tool) => [tool.slug, getLocalizedToolMeta(tool.slug, locale, tool.name, tool.shortDescription || tool.name)]),
   );
   const workflowSteps = locale === 'en' && localized.workflowSteps ? localized.workflowSteps : undefined;
+  const guides = developerGuides
+    .filter((guide) => guide.collectionHref === `/collections/${slug}`)
+    .map((guide) => ({ name: guide.title, href: `/guides/${guide.slug}` }));
 
   // Localized pages list every tool visibly but only advertise tool pages that are indexable in
   // that locale (untranslated tool pages are noindex, so they do not belong in structured data).
@@ -181,6 +186,8 @@ export function CollectionDetailContent({ locale, collection }: { locale: Langua
           ))}
         </div>
       </section>
+
+      <RelatedGuideLinks guides={guides} locale={locale} />
 
       <AdSense slot={topSlot} format="auto" placement={`collection-${slug}${placementSuffix}-top`} className="mb-8 min-h-[90px]" />
 
