@@ -3,45 +3,9 @@
 import { useCallback, useState } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { useLanguage } from '@/context/LanguageContext';
+import { decodeUnicode, encodeUnicode } from '@/lib/unicodeEscape';
 
 type Mode = 'encode' | 'decode';
-
-function encodeUnicode(input: string, encodeAscii: boolean): string {
-  return Array.from(input)
-    .map((char) => {
-      const codePoint = char.codePointAt(0);
-      if (codePoint === undefined) {
-        return char;
-      }
-
-      if (!encodeAscii && codePoint <= 0x7f) {
-        return char;
-      }
-
-      if (codePoint <= 0xffff) {
-        return `\\u${codePoint.toString(16).toUpperCase().padStart(4, '0')}`;
-      }
-
-      return `\\u{${codePoint.toString(16).toUpperCase()}}`;
-    })
-    .join('');
-}
-
-function decodeUnicode(input: string): string {
-  return input
-    .replace(/\\u\{([0-9a-fA-F]+)\}/g, (_, hex: string) => {
-      const codePoint = Number.parseInt(hex, 16);
-      return Number.isNaN(codePoint) ? _ : String.fromCodePoint(codePoint);
-    })
-    .replace(/\\u([0-9a-fA-F]{4})/g, (_, hex: string) => {
-      const codePoint = Number.parseInt(hex, 16);
-      return Number.isNaN(codePoint) ? _ : String.fromCharCode(codePoint);
-    })
-    .replace(/\\x([0-9a-fA-F]{2})/g, (_, hex: string) => {
-      const codePoint = Number.parseInt(hex, 16);
-      return Number.isNaN(codePoint) ? _ : String.fromCharCode(codePoint);
-    });
-}
 
 export default function UnicodeEscapeTool() {
   const { t } = useLanguage();
@@ -52,7 +16,7 @@ export default function UnicodeEscapeTool() {
   const [error, setError] = useState<string | null>(null);
 
   const handleConvert = useCallback(() => {
-    if (!input.trim()) {
+    if (input.length === 0) {
       setOutput('');
       setError(null);
       return;
@@ -143,7 +107,10 @@ export default function UnicodeEscapeTool() {
       )}
 
       {error && (
-        <div className="p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-300">
+        <div
+          role="alert"
+          className="p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-300"
+        >
           {error}
         </div>
       )}

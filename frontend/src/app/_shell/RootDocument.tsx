@@ -8,8 +8,8 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Providers } from '@/components/Providers';
 import ServiceWorkerRegister from '@/components/common/ServiceWorkerRegister';
-import AdSenseScriptLoader from '@/components/common/AdSenseScriptLoader';
-import { normalizeAdSenseClientId, normalizeAdSensePublisherId } from '@/lib/adsense';
+import AdSenseScripts from '@/components/common/AdSenseScripts';
+import { normalizeAdSenseClientId } from '@/lib/adsense';
 import { getHreflangAlternates, getOpenGraphAlternateLocales } from '@/lib/i18nRouting';
 import { toolCatalog } from '@/lib/api';
 import type { Language } from '@/translations';
@@ -41,7 +41,6 @@ const homeTitle = `${toolCountLabel} Free Online Developer Tools | DevsTools`;
 const homeSocialDescription = `${toolCountLabel} free online developer tools for JSON, encoding, UUIDs, hashing, regex, QR codes, HTTP utilities and more. No registration required.`;
 const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 const adSenseClientId = normalizeAdSenseClientId(process.env.NEXT_PUBLIC_ADSENSE_ID);
-const adSensePublisherId = normalizeAdSensePublisherId(process.env.NEXT_PUBLIC_ADSENSE_ID);
 const enableVercelObservability =
   process.env.VERCEL === '1' || process.env.NEXT_PUBLIC_ENABLE_VERCEL_ANALYTICS === 'true';
 
@@ -51,23 +50,6 @@ const socialProfiles = (process.env.NEXT_PUBLIC_SOCIAL_PROFILES || '')
   .split(',')
   .map((value) => value.trim())
   .filter((value) => /^https:\/\//i.test(value));
-
-const signalGoogleFundingChoices = `(function() {
-  function signalGooglefcPresent() {
-    if (!window.frames['googlefcPresent']) {
-      if (document.body) {
-        const iframe = document.createElement('iframe');
-        iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;';
-        iframe.style.display = 'none';
-        iframe.name = 'googlefcPresent';
-        document.body.appendChild(iframe);
-      } else {
-        setTimeout(signalGooglefcPresent, 0);
-      }
-    }
-  }
-  signalGooglefcPresent();
-})();`;
 
 const setInitialTheme = `
     (function() {
@@ -239,21 +221,7 @@ export function RootDocument({
             </div>
           </Providers>
         </Dictionary>
-        {adSensePublisherId && (
-          <>
-            <Script
-              id="google-funding-choices"
-              strategy="afterInteractive"
-              src={`https://fundingchoicesmessages.google.com/i/${adSensePublisherId}?ers=1`}
-            />
-            <Script id="google-funding-choices-signal" strategy="afterInteractive">
-              {signalGoogleFundingChoices}
-            </Script>
-          </>
-        )}
-        {adSenseClientId && (
-          <AdSenseScriptLoader clientId={adSenseClientId} />
-        )}
+        {adSenseClientId && <AdSenseScripts clientId={adSenseClientId} />}
         {googleAdsId && (
           <>
             <Script

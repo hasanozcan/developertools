@@ -440,6 +440,9 @@ export const enUi: Record<string, string> = {
   'tool.sha256Hash.hashingFile': 'Hashing file...',
   'tool.sha256Hash.uploadFile': 'Click to upload a file',
   'tool.sha256Hash.outputPlaceholder': 'Hash will appear here...',
+  'tool.sha256Hash.fileError':
+    'Could not read or hash this file. Try again or choose another file.',
+  'tool.sha256Hash.retryFile': 'Retry file hash',
   'tool.sha256Hash.expectedChecksum': 'Expected SHA-256 checksum',
   'tool.sha256Hash.expectedPlaceholder': 'Paste a 64-character SHA-256 checksum',
   'tool.sha256Hash.checksumHelp':

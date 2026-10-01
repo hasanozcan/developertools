@@ -410,6 +410,9 @@ export const esUi: Record<string, string> = {
   'tool.sha256Hash.hashingFile': 'Calculando el hash del archivo...',
   'tool.sha256Hash.uploadFile': 'Haz clic para subir un archivo',
   'tool.sha256Hash.outputPlaceholder': 'El hash aparecerá aquí...',
+  'tool.sha256Hash.fileError':
+    'No se pudo leer o calcular el hash de este archivo. Inténtalo de nuevo o elige otro archivo.',
+  'tool.sha256Hash.retryFile': 'Reintentar hash del archivo',
   'tool.sha256Hash.expectedChecksum': 'Suma de comprobación SHA-256 esperada',
   'tool.sha256Hash.expectedPlaceholder': 'Pega una suma de comprobación SHA-256 de 64 caracteres',
   'tool.sha256Hash.checksumHelp':

@@ -13,6 +13,9 @@ vi.mock('@/context/LanguageContext', () => ({
         'tool.sha256Hash.hashingFile': 'Hashing file...',
         'tool.sha256Hash.uploadFile': 'Click to upload a file',
         'tool.sha256Hash.fileHash': 'File SHA-256 hash',
+        'tool.sha256Hash.fileError':
+          'Could not read or hash this file. Try again or choose another file.',
+        'tool.sha256Hash.retryFile': 'Retry file hash',
         'tool.sha256Hash.expectedChecksum': 'Expected SHA-256 checksum',
         'tool.sha256Hash.expectedPlaceholder': 'Paste a checksum',
         'tool.sha256Hash.checksumHelp': 'Paste a trusted checksum.',
@@ -111,5 +114,106 @@ describe('Sha256HashTool file checksum verification', () => {
     });
 
     await expect(sha256File(new File(['abc'], 'sample.txt'))).rejects.toThrow('Digest unavailable');
+  });
+
+  it('announces a file-read failure and retries the same selected file successfully', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.spyOn(FileReader.prototype, 'readAsArrayBuffer').mockImplementationOnce(function (
+      this: FileReader,
+    ) {
+      queueMicrotask(() => this.onerror?.(new ProgressEvent('error') as ProgressEvent<FileReader>));
+    });
+
+    const { container } = render(<Sha256HashTool />);
+    fireEvent.change(container.querySelector<HTMLInputElement>('input[type="file"]')!, {
+      target: { files: [new File(['abc'], 'sample.txt')] },
+    });
+    expect(await screen.findByRole('alert')).toHaveTextContent('Could not read or hash this file.');
+    expect(screen.getByText('sample.txt')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Retry file hash' }));
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    expect(
+      await screen.findByText('ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'),
+    ).toBeInTheDocument();
+  });
+
+  it('announces a digest failure, then retries without requiring a new file selection', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    const digest = vi
+      .fn((algorithm: string, data: ArrayBuffer) => webcrypto.subtle.digest(algorithm, data))
+      .mockRejectedValueOnce(new Error('Digest unavailable'));
+    vi.stubGlobal('crypto', { subtle: { digest } });
+
+    const { container } = render(<Sha256HashTool />);
+    fireEvent.change(container.querySelector<HTMLInputElement>('input[type="file"]')!, {
+      target: { files: [new File(['abc'], 'sample.txt')] },
+    });
+    expect(await screen.findByRole('alert')).toHaveTextContent('Could not read or hash this file.');
+    fireEvent.click(screen.getByRole('button', { name: 'Retry file hash' }));
+    expect(
+      await screen.findByText('ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'),
+    ).toBeInTheDocument();
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    expect(digest).toHaveBeenCalledTimes(2);
+  });
+
+  it('clears an error when removing the file and allows a different file to be hashed', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    const digest = vi
+      .fn((algorithm: string, data: ArrayBuffer) => webcrypto.subtle.digest(algorithm, data))
+      .mockRejectedValueOnce(new Error('Digest unavailable'));
+    vi.stubGlobal('crypto', { subtle: { digest } });
+    const { container } = render(<Sha256HashTool />);
+    fireEvent.change(container.querySelector<HTMLInputElement>('input[type="file"]')!, {
+      target: { files: [new File(['broken'], 'first.txt')] },
+    });
+    await screen.findByRole('alert');
+    fireEvent.click(screen.getByRole('button', { name: 'Remove file' }));
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    fireEvent.change(container.querySelector<HTMLInputElement>('input[type="file"]')!, {
+      target: { files: [new File(['abc'], 'second.txt')] },
+    });
+    expect(
+      await screen.findByText('ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'),
+    ).toBeInTheDocument();
+    expect(screen.queryByText('first.txt')).not.toBeInTheDocument();
+  });
+
+  it('ignores a stale failure while the newest file is still being hashed', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    let rejectFirst!: (reason: Error) => void;
+    let resolveSecond!: (value: ArrayBuffer) => void;
+    const digest = vi
+      .fn()
+      .mockImplementationOnce(
+        () =>
+          new Promise<ArrayBuffer>((_, reject) => {
+            rejectFirst = reject;
+          }),
+      )
+      .mockImplementationOnce(
+        () =>
+          new Promise<ArrayBuffer>((resolve) => {
+            resolveSecond = resolve;
+          }),
+      );
+    vi.stubGlobal('crypto', { subtle: { digest } });
+    const { container } = render(<Sha256HashTool />);
+    fireEvent.change(container.querySelector<HTMLInputElement>('input[type="file"]')!, {
+      target: { files: [new File(['first'], 'first.txt')] },
+    });
+    await waitFor(() => expect(digest).toHaveBeenCalledTimes(1));
+    fireEvent.click(screen.getByRole('button', { name: 'Remove file' }));
+    fireEvent.change(container.querySelector<HTMLInputElement>('input[type="file"]')!, {
+      target: { files: [new File(['second'], 'second.txt')] },
+    });
+    await waitFor(() => expect(digest).toHaveBeenCalledTimes(2));
+    await act(async () => rejectFirst(new Error('Late failure')));
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+    expect(screen.getByText('Hashing file...')).toBeInTheDocument();
+    expect(screen.getByText('second.txt')).toBeInTheDocument();
+    await act(async () => resolveSecond(Uint8Array.from({ length: 32 }, () => 0xab).buffer));
+    expect(await screen.findByText('ab'.repeat(32))).toBeInTheDocument();
+    expect(screen.queryByText('Hashing file...')).not.toBeInTheDocument();
   });
 });

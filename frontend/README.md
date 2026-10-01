@@ -98,7 +98,7 @@ Collection reklamları için üç gerçek AdSense unit tanımlıdır ve birbirin
 
 ### AdSense delivery and tool bottom slots
 
-AdSense scripts (including Auto Ads), manual placements and content-blocker probes run only on the actual browser origin `https://devstools.app`. Localhost, preview deployments, alternate subdomains and custom ports are disabled even when a publisher ID is configured. `www.devstools.app` permanently redirects to the canonical host. `NEXT_PUBLIC_SITE_URL` does not grant permission to serve ads.
+AdSense scripts (including Auto Ads), Funding Choices consent scripts and their presence signal, manual placements and content-blocker probes run only on the actual browser origin `https://devstools.app`. Localhost, preview deployments, alternate subdomains and custom ports are disabled even when a publisher ID is configured. `www.devstools.app` permanently redirects to the canonical host. `NEXT_PUBLIC_SITE_URL` does not grant permission to serve ads.
 
 The optional bottom placements require two genuine, distinct AdSense display-unit IDs:
 

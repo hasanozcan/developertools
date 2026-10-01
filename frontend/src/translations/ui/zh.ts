@@ -348,6 +348,9 @@ export const zhUi: Record<string, string> = {
   'tool.sha256Hash.hashingFile': '正在计算文件哈希...',
   'tool.sha256Hash.uploadFile': '点击上传文件',
   'tool.sha256Hash.outputPlaceholder': '哈希将显示在这里...',
+  'tool.sha256Hash.fileError':
+    '无法读取文件或计算哈希。请重试或选择其他文件。',
+  'tool.sha256Hash.retryFile': '重新计算文件哈希',
   'tool.sha256Hash.expectedChecksum': '预期的 SHA-256 校验和',
   'tool.sha256Hash.expectedPlaceholder': '粘贴 64 个字符的 SHA-256 校验和',
   'tool.sha256Hash.checksumHelp': '粘贴可信下载来源提供的校验和，以验证此文件。',

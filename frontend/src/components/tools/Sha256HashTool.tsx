@@ -44,6 +44,7 @@ export default function Sha256HashTool() {
   const [file, setFile] = useState<File | null>(null);
   const [fileHash, setFileHash] = useState<string | null>(null);
   const [hashingFile, setHashingFile] = useState(false);
+  const [fileError, setFileError] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [expectedChecksum, setExpectedChecksum] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -110,6 +111,7 @@ export default function Sha256HashTool() {
     const requestId = ++fileHashRequestRef.current;
     setFile(selectedFile);
     setFileHash(null);
+    setFileError(false);
     setHashingFile(true);
 
     try {
@@ -119,6 +121,7 @@ export default function Sha256HashTool() {
       }
     } catch (err) {
       if (fileHashRequestRef.current === requestId) {
+        setFileError(true);
         console.error('File hashing error:', err);
       }
     } finally {
@@ -162,6 +165,7 @@ export default function Sha256HashTool() {
     fileHashRequestRef.current += 1;
     setFile(null);
     setFileHash(null);
+    setFileError(false);
     setHashingFile(false);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
@@ -235,7 +239,7 @@ export default function Sha256HashTool() {
               <div>
                 <div className="font-medium text-gray-900 dark:text-white">{file.name}</div>
                 <div className="text-sm text-gray-600 dark:text-gray-400">
-                  {formatFileSize(file.size)}
+                  {hashingFile ? t('tool.sha256Hash.hashingFile') : formatFileSize(file.size)}
                 </div>
               </div>
             </div>
@@ -274,6 +278,21 @@ export default function Sha256HashTool() {
                   ? 'Drop file here to compute SHA-256...'
                   : t('tool.sha256Hash.uploadFile')}
               </span>
+            </button>
+          </div>
+        )}
+
+        {fileError && file && (
+          <div
+            role="alert"
+            className="mt-3 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/30 dark:text-red-300"
+          >
+            <p>{t('tool.sha256Hash.fileError')}</p>
+            <button
+              onClick={() => void processSelectedFile(file)}
+              className="mt-2 rounded-lg border border-red-300 px-3 py-1.5 font-medium hover:bg-red-100 dark:border-red-700 dark:hover:bg-red-900/50"
+            >
+              {t('tool.sha256Hash.retryFile')}
             </button>
           </div>
         )}

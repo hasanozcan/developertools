@@ -387,6 +387,9 @@ export const frUi: Record<string, string> = {
   'tool.sha256Hash.hashingFile': 'Calcul du hachage du fichier...',
   'tool.sha256Hash.uploadFile': 'Cliquez pour téléverser un fichier',
   'tool.sha256Hash.outputPlaceholder': 'Le hachage apparaîtra ici...',
+  'tool.sha256Hash.fileError':
+    'Impossible de lire ou de calculer le hachage de ce fichier. Réessayez ou choisissez un autre fichier.',
+  'tool.sha256Hash.retryFile': 'Réessayer le hachage',
   'tool.sha256Hash.expectedChecksum': 'Somme de contrôle SHA-256 attendue',
   'tool.sha256Hash.expectedPlaceholder': 'Collez une somme de contrôle SHA-256 de 64 caractères',
   'tool.sha256Hash.checksumHelp':

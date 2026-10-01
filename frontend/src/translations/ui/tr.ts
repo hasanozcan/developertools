@@ -445,6 +445,9 @@ export const trUi: Record<string, string> = {
   'tool.sha256Hash.hashingFile': 'Dosyanın hash değeri hesaplanıyor...',
   'tool.sha256Hash.uploadFile': 'Dosya yüklemek için tıklayın',
   'tool.sha256Hash.outputPlaceholder': 'Hash burada görünecek...',
+  'tool.sha256Hash.fileError':
+    'Dosya okunamadı veya özeti hesaplanamadı. Yeniden deneyin ya da başka bir dosya seçin.',
+  'tool.sha256Hash.retryFile': 'Dosya özetini yeniden hesapla',
   'tool.sha256Hash.expectedChecksum': 'Beklenen SHA-256 sağlama toplamı',
   'tool.sha256Hash.expectedPlaceholder': '64 karakterlik SHA-256 sağlama toplamını yapıştırın',
   'tool.sha256Hash.checksumHelp':

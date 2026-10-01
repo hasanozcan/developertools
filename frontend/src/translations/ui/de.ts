@@ -427,6 +427,9 @@ export const deUi: Record<string, string> = {
   'tool.sha256Hash.hashingFile': 'Datei wird gehasht...',
   'tool.sha256Hash.uploadFile': 'Zum Hochladen einer Datei klicken',
   'tool.sha256Hash.outputPlaceholder': 'Der Hash wird hier angezeigt...',
+  'tool.sha256Hash.fileError':
+    'Die Datei konnte nicht gelesen oder gehasht werden. Versuchen Sie es erneut oder wählen Sie eine andere Datei.',
+  'tool.sha256Hash.retryFile': 'Datei erneut hashen',
   'tool.sha256Hash.expectedChecksum': 'Erwartete SHA-256-Prüfsumme',
   'tool.sha256Hash.expectedPlaceholder': 'Eine 64-stellige SHA-256-Prüfsumme einfügen',
   'tool.sha256Hash.checksumHelp':

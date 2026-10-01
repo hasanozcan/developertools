@@ -355,6 +355,9 @@ export const ruUi: Record<string, string> = {
   'tool.sha256Hash.hashingFile': 'Вычисление хеша файла...',
   'tool.sha256Hash.uploadFile': 'Нажмите, чтобы загрузить файл',
   'tool.sha256Hash.outputPlaceholder': 'Хеш появится здесь...',
+  'tool.sha256Hash.fileError':
+    'Не удалось прочитать файл или вычислить его хеш. Повторите попытку или выберите другой файл.',
+  'tool.sha256Hash.retryFile': 'Повторить вычисление хеша',
   'tool.sha256Hash.expectedChecksum': 'Ожидаемая контрольная сумма SHA-256',
   'tool.sha256Hash.expectedPlaceholder': 'Вставьте 64-символьную контрольную сумму SHA-256',
   'tool.sha256Hash.checksumHelp':
