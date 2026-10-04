@@ -1,49 +1,77 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Copy, Check, Upload, CheckCircle2, XCircle, FileText } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ShieldCheck, Copy, Check, Upload, CheckCircle2, XCircle } from 'lucide-react';
 import { calculateAllChecksums, type ChecksumResult } from '@/lib/fileChecksumComparator';
 
 export default function FileChecksumComparatorTool() {
   const [inputText, setInputText] = useState('DevsTools Secure Client-Side Hash Verification');
   const [expectedHash, setExpectedHash] = useState('');
-  const [fileName, setFileName] = useState<string | null>(null);
-  const [fileSize, setFileSize] = useState<number | null>(null);
+  const [fileSource, setFileSource] = useState<{ file: File } | null>(null);
+  const selectedFile = fileSource?.file ?? null;
   const [checksums, setChecksums] = useState<ChecksumResult[]>([]);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [inputError, setInputError] = useState(false);
+  const hashRequest = useRef(0);
+  const normalizedExpectedHash = expectedHash.trim().toLowerCase();
+  const comparedChecksums = checksums.map((checksum) => ({
+    ...checksum,
+    matchesExpected: normalizedExpectedHash
+      ? checksum.hash.toLowerCase() === normalizedExpectedHash
+      : undefined,
+  }));
 
   useEffect(() => {
     let active = true;
-    const encoder = new TextEncoder();
-    const data = encoder.encode(inputText);
+    const requestId = ++hashRequest.current;
+    let reader: FileReader | undefined;
+    const isCurrent = () => active && requestId === hashRequest.current;
+    setChecksums([]);
+    setInputError(false);
 
-    calculateAllChecksums(data, expectedHash).then((res) => {
-      if (active) setChecksums(res);
-    });
+    const calculate = async (data: Uint8Array) => {
+      try {
+        const results = await calculateAllChecksums(data);
+        if (isCurrent()) setChecksums(results);
+      } catch {
+        if (isCurrent()) setInputError(true);
+      }
+    };
+
+    if (fileSource) {
+      reader = new FileReader();
+      reader.onload = () => {
+        if (isCurrent() && reader?.result instanceof ArrayBuffer) {
+          void calculate(new Uint8Array(reader.result));
+        }
+      };
+      reader.onerror = () => {
+        if (isCurrent()) setInputError(true);
+      };
+      try {
+        reader.readAsArrayBuffer(fileSource.file);
+      } catch {
+        if (isCurrent()) setInputError(true);
+      }
+    } else {
+      void calculate(new TextEncoder().encode(inputText));
+    }
 
     return () => {
       active = false;
+      if (reader?.readyState === FileReader.LOADING) reader.abort();
     };
-  }, [inputText, expectedHash]);
+  }, [inputText, fileSource]);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
-
-    setFileName(file.name);
-    setFileSize(file.size);
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const buffer = event.target?.result as ArrayBuffer;
-      if (buffer) {
-        const uint8 = new Uint8Array(buffer);
-        calculateAllChecksums(uint8, expectedHash).then((res) => {
-          setChecksums(res);
-        });
-      }
-    };
-    reader.readAsArrayBuffer(file);
+    if (!file && !fileSource) return;
+    ++hashRequest.current;
+    setChecksums([]);
+    setInputError(false);
+    setFileSource(file ? { file } : null);
+    // Allow selecting the same file again after changing the source.
+    e.target.value = '';
   };
 
   const handleCopy = (hash: string, algo: string) => {
@@ -61,9 +89,9 @@ export default function FileChecksumComparatorTool() {
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Input Mode (Text or File)
             </span>
-            {fileName && (
+            {selectedFile && (
               <span className="text-xs text-indigo-600 dark:text-indigo-400 font-medium">
-                {fileName} ({Math.round((fileSize || 0) / 1024)} KB)
+                {selectedFile.name} ({Math.round(selectedFile.size / 1024)} KB)
               </span>
             )}
           </div>
@@ -71,7 +99,10 @@ export default function FileChecksumComparatorTool() {
           <textarea
             value={inputText}
             onChange={(e) => {
-              setFileName(null);
+              ++hashRequest.current;
+              setChecksums([]);
+              setInputError(false);
+              setFileSource(null);
               setInputText(e.target.value);
             }}
             placeholder="Type or paste text to hash in real-time..."
@@ -99,7 +130,8 @@ export default function FileChecksumComparatorTool() {
               <ShieldCheck className="h-3.5 w-3.5 text-indigo-500" /> Expected Checksum Comparator
             </span>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              Paste the publisher&apos;s expected MD5, SHA-256 or SHA-512 hash to verify integrity instantly.
+              Paste the publisher&apos;s expected MD5, SHA-256 or SHA-512 hash to verify integrity
+              instantly.
             </p>
             <input
               type="text"
@@ -110,15 +142,17 @@ export default function FileChecksumComparatorTool() {
             />
           </div>
 
-          {expectedHash && (
+          {normalizedExpectedHash && (
             <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 text-xs">
-              {checksums.some((c) => c.matchesExpected) ? (
+              {comparedChecksums.some((c) => c.matchesExpected) ? (
                 <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold">
-                  <CheckCircle2 className="h-4 w-4" /> Perfect Match! File checksum is authentic.
+                  <CheckCircle2 className="h-4 w-4" /> Perfect Match! Computed checksum matches the
+                  expected hash.
                 </div>
               ) : (
                 <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-medium">
-                  <XCircle className="h-4 w-4" /> No matching hash algorithm found yet for this input.
+                  <XCircle className="h-4 w-4" /> No matching hash algorithm found yet for this
+                  input.
                 </div>
               )}
             </div>
@@ -126,13 +160,15 @@ export default function FileChecksumComparatorTool() {
         </div>
       </div>
 
+      {inputError && <p role="alert">Could not read or hash this input. Try again.</p>}
+
       {/* Computed Hash Table */}
       <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm dark:border-white/10 dark:bg-slate-900">
         <div className="p-4 border-b border-slate-100 dark:border-white/5 font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
           Computed Hashes & Checksums
         </div>
         <div className="divide-y divide-slate-100 dark:divide-slate-800/60">
-          {checksums.map(({ algorithm, hash, matchesExpected }) => (
+          {comparedChecksums.map(({ algorithm, hash, matchesExpected }) => (
             <div
               key={algorithm}
               className={`p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
@@ -143,15 +179,14 @@ export default function FileChecksumComparatorTool() {
                 <span className="w-20 font-bold text-xs text-slate-900 dark:text-white">
                   {algorithm}
                 </span>
-                {matchesExpected !== undefined && (
-                  matchesExpected ? (
+                {matchesExpected !== undefined &&
+                  (matchesExpected ? (
                     <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
                       <CheckCircle2 className="h-3.5 w-3.5" /> MATCH
                     </span>
-                  ) : expectedHash ? (
+                  ) : normalizedExpectedHash ? (
                     <span className="text-[11px] text-slate-400">Mismatch</span>
-                  ) : null
-                )}
+                  ) : null)}
               </div>
 
               <div className="flex items-center gap-2 flex-1 max-w-xl">
@@ -165,7 +200,11 @@ export default function FileChecksumComparatorTool() {
                   className="p-1.5 text-slate-500 hover:text-indigo-600 dark:text-slate-400 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition"
                   title="Copy Hash"
                 >
-                  {copiedKey === algorithm ? <Check className="h-4 w-4 text-emerald-500" /> : <Copy className="h-4 w-4" />}
+                  {copiedKey === algorithm ? (
+                    <Check className="h-4 w-4 text-emerald-500" />
+                  ) : (
+                    <Copy className="h-4 w-4" />
+                  )}
                 </button>
               </div>
             </div>
