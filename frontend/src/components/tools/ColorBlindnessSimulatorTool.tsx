@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { simulateProtanopia } from '@/lib/colorBlindnessSimulator';
@@ -7,6 +8,7 @@ import { simulateProtanopia } from '@/lib/colorBlindnessSimulator';
 const SAMPLE = "#ef4444";
 
 export default function ColorBlindnessSimulatorTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE);
   let output = '';
 
@@ -22,8 +24,8 @@ export default function ColorBlindnessSimulatorTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Hex Color Value</label>
-            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.a9b52770")}</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -34,7 +36,7 @@ export default function ColorBlindnessSimulatorTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Simulated Color Matrix</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.bf6579c3")}</label>
             <CopyButton text={output} />
           </div>
           <textarea

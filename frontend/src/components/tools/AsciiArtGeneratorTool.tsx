@@ -44,26 +44,26 @@ export default function AsciiArtGeneratorTool() {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="sm:col-span-2">
-            <label className="text-xs font-bold text-slate-500 block mb-1">Your Text / Heading</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.c3ebf446")}</label>
             <input
               type="text"
               value={text}
               maxLength={24}
               onChange={(e) => setText(e.target.value)}
               className="w-full px-3.5 py-2 text-xs font-bold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
-              placeholder="e.g. WELCOME"
+              placeholder={t("uiText.817b7b97")}
             />
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Font Style</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.21e047b5")}</label>
             <select
               value={font}
               onChange={(e) => setFont(e.target.value as AsciiFont)}
               className="w-full px-3.5 py-2 text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
             >
-              <option value="standard">Standard ASCII</option>
-              <option value="blocks">Unicode Solid Blocks (█)</option>
+              <option value="standard">{t("uiText.8b87fa83")}</option>
+              <option value="blocks">{t("uiText.80b0ab58")}</option>
             </select>
           </div>
         </div>
@@ -73,8 +73,7 @@ export default function AsciiArtGeneratorTool() {
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            ASCII Banner Output
-          </span>
+            {t("uiText.dda73bbb")}</span>
           <div className="flex items-center gap-1.5">
             <button
               onClick={handleCopy}
@@ -86,14 +85,14 @@ export default function AsciiArtGeneratorTool() {
             <button
               onClick={handleDownload}
               className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition"
-              title="Download banner.txt"
+              title={t("uiText.a75cb7db")}
             >
               <Download className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
         <pre className="w-full overflow-x-auto rounded-xl border border-slate-200 bg-slate-900 p-5 font-mono text-xs leading-none text-emerald-400 shadow-inner dark:border-white/10 dark:bg-slate-950">
-          {asciiOutput || 'Type text above to generate ASCII banner'}
+          {asciiOutput || t("uiText.0d4ea880")}
         </pre>
       </div>
     </div>

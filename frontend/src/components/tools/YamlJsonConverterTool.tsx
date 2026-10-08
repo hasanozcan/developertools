@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import { Copy, Check, ArrowLeftRight, FileText, Trash2 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { convertJsonToYaml, convertYamlToJson } from '@/lib/yamlJson';
+import { localizeUiText } from '@/lib/localizedText';
 
 interface YamlError {
   message: string;
@@ -199,8 +200,7 @@ service:
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200'
             }`}
           >
-            YAML → JSON
-          </button>
+            {t("uiText.e718dc4a")}</button>
           <button
             onClick={() => { setMode('jsonToYaml'); setInput(''); setOutput(''); setError(null); setErrorLine(null); }}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
@@ -209,8 +209,7 @@ service:
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200'
             }`}
           >
-            JSON → YAML
-          </button>
+            {t("uiText.682810b4")}</button>
         </div>
 
         <div className="flex items-center gap-2">
@@ -262,11 +261,11 @@ service:
       {/* Error */}
       {error && (
         <div className="p-4 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg text-sm">
-          <div className="font-medium mb-1">Parse Error</div>
-          <div>{error}</div>
+          <div className="font-medium mb-1">{t("uiText.6598e9f2")}</div>
+          <div>{localizeUiText(error, t)}</div>
           {errorLine && (
             <div className="mt-2 text-xs text-red-500 dark:text-red-400">
-              Error at line {errorLine}
+              {t("tool.jsonValidator.errorAtLine")}{errorLine}
             </div>
           )}
         </div>
@@ -276,20 +275,20 @@ service:
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            {mode === 'yamlToJson' ? 'YAML Input' : 'JSON Input'}
+            {mode === 'yamlToJson' ? t("uiText.ab2d6d2e") : t("tool.jsonCsv.jsonInput")}
           </label>
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
             rows={16}
-            placeholder={mode === 'yamlToJson' ? 'key: value\n# Supports anchors, aliases, multiline strings, etc.' : '{"key": "value"}'}
+            placeholder={mode === 'yamlToJson' ? t("uiText.9f7fc4f5") : '{"key": "value"}'}
             className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
           />
         </div>
         <div>
           <div className="flex items-center justify-between mb-2">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              {mode === 'yamlToJson' ? 'JSON Output' : 'YAML Output'}
+              {mode === 'yamlToJson' ? t("tool.jsonCsv.jsonOutput") : t("uiText.87c84d2b")}
             </label>
             {output && (
               <button
@@ -311,13 +310,13 @@ service:
       <div className="text-sm text-gray-500 dark:text-gray-400 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
         <p className="font-medium text-blue-900 dark:text-blue-300 mb-2">{t('tool.yamlJson.tip')}</p>
         <p className="mb-2">{t('tool.yamlJson.tipText')}</p>
-        <p className="text-blue-700 dark:text-blue-400 font-medium">YAML 1.1 compatibility mode powered by js-yaml:</p>
+        <p className="text-blue-700 dark:text-blue-400 font-medium">{t("uiText.e7a33ea9")}</p>
         <ul className="mt-1 ml-4 list-disc space-y-1">
-          <li>✓ Anchors (&amp;) and aliases (*)</li>
-          <li>✓ Multi-line strings (|, &gt;)</li>
-          <li>✓ Explicit type tags (!!str, !!int, etc.)</li>
-          <li>✓ Set and merge keys (&lt;&lt;)</li>
-          <li>✓ Better error messages with line numbers</li>
+          <li>{t("uiText.fd7d3825")}</li>
+          <li>{t("uiText.4ee010eb")}</li>
+          <li>{t("uiText.5dc301c2")}</li>
+          <li>{t("uiText.5efc01d8")}</li>
+          <li>{t("uiText.3ea9329e")}</li>
         </ul>
       </div>
     </div>

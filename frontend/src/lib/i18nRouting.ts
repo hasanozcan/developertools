@@ -85,11 +85,11 @@ function resolveTranslatedToolText(
   const localeTranslations = translations[locale];
   return {
     name: pickTranslated(
-      [enhanced?.name?.[locale], localeTranslations?.[`toolName.${toolSlug}`]],
+      [localeTranslations?.[`toolName.${toolSlug}`], enhanced?.name?.[locale]],
       englishNames,
     ),
     description: pickTranslated(
-      [enhanced?.description?.[locale], localeTranslations?.[`toolDesc.${toolSlug}`]],
+      [localeTranslations?.[`toolDesc.${toolSlug}`], enhanced?.description?.[locale]],
       englishDescriptions,
     ),
   };

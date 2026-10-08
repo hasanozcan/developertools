@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { ArrowLeftRight, Copy, Check } from 'lucide-react';
 import { convertJsonToEnv, convertEnvToJson } from '@/lib/jsonToEnv';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE_JSON = `{
   "PORT": 8080,
@@ -68,8 +69,7 @@ export default function JsonToEnvTool() {
             onClick={handleJsonToEnv}
             className="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-sm transition"
           >
-            JSON → .env
-          </button>
+            {t("uiText.602d4a7a")}</button>
           <button
             onClick={handleEnvToJson}
             className="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 text-xs font-bold hover:bg-slate-50 transition"
@@ -81,7 +81,7 @@ export default function JsonToEnvTool() {
 
       {error && (
         <div className="p-4 rounded-xl border border-red-200 bg-red-50 text-xs text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-300">
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -89,7 +89,7 @@ export default function JsonToEnvTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">JSON Object</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.d08e7456")}</span>
             <button
               onClick={() => {
                 setJsonInput(SAMPLE_JSON);
@@ -111,7 +111,7 @@ export default function JsonToEnvTool() {
 
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">.env File Output</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("tool.jsonToEnv.fileOutput")}</span>
             {envInput && (
               <button
                 onClick={handleCopyEnv}

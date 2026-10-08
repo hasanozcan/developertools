@@ -30,7 +30,7 @@ export default function SemverCalculatorTool() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Current Version</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.394a0b32")}</label>
             <input
               type="text"
               value={version}
@@ -41,12 +41,12 @@ export default function SemverCalculatorTool() {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Target Range to Test</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.7b917eee")}</label>
             <input
               type="text"
               value={testRange}
               onChange={(e) => setTestRange(e.target.value)}
-              placeholder="^1.2.0 or ~1.2.0"
+              placeholder={t("uiText.d93da76e")}
               className="w-full px-3.5 py-2 text-xs font-mono rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900"
             />
           </div>
@@ -61,7 +61,7 @@ export default function SemverCalculatorTool() {
           <div className="flex items-center gap-2 text-xs font-bold">
             {isMatch ? <CheckCircle className="w-4 h-4 text-emerald-600" /> : <XCircle className="w-4 h-4 text-red-600" />}
             <span>
-              Version <code className="font-mono bg-white/60 dark:bg-black/30 px-1.5 py-0.5 rounded">{version}</code> {isMatch ? 'SATISFIES' : 'DOES NOT SATISFY'} range <code className="font-mono bg-white/60 dark:bg-black/30 px-1.5 py-0.5 rounded">{testRange}</code>
+              {t("tool.uuidGenerator.version")}<code className="font-mono bg-white/60 dark:bg-black/30 px-1.5 py-0.5 rounded">{version}</code> {isMatch ? t("uiText.46131b1a") : t("uiText.d86419b0")} {' ' + t("tool.cronParser.rangeValue") + ' '}<code className="font-mono bg-white/60 dark:bg-black/30 px-1.5 py-0.5 rounded">{testRange}</code>
             </span>
           </div>
         </div>
@@ -71,41 +71,41 @@ export default function SemverCalculatorTool() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {/* Breakdown */}
         <div className="surface-card rounded-2xl p-6 space-y-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Semver Anatomy Breakdown</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.33cf58d7")}</span>
           {parsed ? (
             <div className="space-y-2 text-xs font-mono">
               <div className="flex justify-between p-2 rounded bg-slate-50 dark:bg-slate-900">
-                <span className="text-slate-400">Major:</span>
-                <span className="font-bold text-indigo-600 dark:text-indigo-400">{parsed.major} (Breaking Changes)</span>
+                <span className="text-slate-400">{t("uiText.6d2f0ca8")}</span>
+                <span className="font-bold text-indigo-600 dark:text-indigo-400">{parsed.major} {' ' + t("uiText.8dbca282")}</span>
               </div>
               <div className="flex justify-between p-2 rounded bg-slate-50 dark:bg-slate-900">
-                <span className="text-slate-400">Minor:</span>
-                <span className="font-bold text-purple-600 dark:text-purple-400">{parsed.minor} (New Features)</span>
+                <span className="text-slate-400">{t("uiText.ba87359c")}</span>
+                <span className="font-bold text-purple-600 dark:text-purple-400">{parsed.minor} {' ' + t("uiText.ceba31a9")}</span>
               </div>
               <div className="flex justify-between p-2 rounded bg-slate-50 dark:bg-slate-900">
-                <span className="text-slate-400">Patch:</span>
-                <span className="font-bold text-emerald-600 dark:text-emerald-400">{parsed.patch} (Bug Fixes)</span>
+                <span className="text-slate-400">{t("uiText.149cac09")}</span>
+                <span className="font-bold text-emerald-600 dark:text-emerald-400">{parsed.patch} {' ' + t("uiText.fcf44fab")}</span>
               </div>
             </div>
           ) : (
-            <span className="text-xs text-red-500">Invalid SemVer string</span>
+            <span className="text-xs text-red-500">{t("uiText.c43ada45")}</span>
           )}
         </div>
 
         {/* Bump Calculator */}
         <div className="surface-card rounded-2xl p-6 space-y-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Next Release Bump Options</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.8e88a4b1")}</span>
           <div className="space-y-2 text-xs font-mono">
             <div className="flex justify-between p-2 rounded bg-slate-50 dark:bg-slate-900 items-center">
-              <span className="text-slate-500">Major Bump:</span>
+              <span className="text-slate-500">{t("uiText.5e5a81c4")}</span>
               <span className="font-bold px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300">{majorBump}</span>
             </div>
             <div className="flex justify-between p-2 rounded bg-slate-50 dark:bg-slate-900 items-center">
-              <span className="text-slate-500">Minor Bump:</span>
+              <span className="text-slate-500">{t("uiText.7bc1f340")}</span>
               <span className="font-bold px-2 py-0.5 rounded bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300">{minorBump}</span>
             </div>
             <div className="flex justify-between p-2 rounded bg-slate-50 dark:bg-slate-900 items-center">
-              <span className="text-slate-500">Patch Bump:</span>
+              <span className="text-slate-500">{t("uiText.d031443f")}</span>
               <span className="font-bold px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300">{patchBump}</span>
             </div>
           </div>

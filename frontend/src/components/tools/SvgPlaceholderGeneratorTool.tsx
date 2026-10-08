@@ -62,7 +62,7 @@ export default function SvgPlaceholderGeneratorTool() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Width (px)</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.919814e2")}</label>
             <input
               type="number"
               value={width}
@@ -72,7 +72,7 @@ export default function SvgPlaceholderGeneratorTool() {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Height (px)</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.266287b1")}</label>
             <input
               type="number"
               value={height}
@@ -82,18 +82,18 @@ export default function SvgPlaceholderGeneratorTool() {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Custom Text</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.dcbea721")}</label>
             <input
               type="text"
               value={customText}
               onChange={(e) => setCustomText(e.target.value)}
-              placeholder="e.g. Hero Image"
+              placeholder={t("uiText.e4f25744")}
               className="w-full px-3 py-1.5 text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
             />
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Background</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("tool.qrCode.background")}</label>
             <div className="flex items-center gap-1.5">
               <input
                 type="color"
@@ -111,7 +111,7 @@ export default function SvgPlaceholderGeneratorTool() {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Text Color</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.328fc54d")}</label>
             <div className="flex items-center gap-1.5">
               <input
                 type="color"
@@ -136,8 +136,7 @@ export default function SvgPlaceholderGeneratorTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Inline SVG Data URI
-            </span>
+              {t("uiText.d18f9e74")}</span>
             <button
               onClick={() => copyText(dataUri, setCopiedDataUri)}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
@@ -158,8 +157,7 @@ export default function SvgPlaceholderGeneratorTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Raw SVG XML
-            </span>
+              {t("uiText.2f8a2bee")}</span>
             <div className="flex items-center gap-1.5">
               <button
                 onClick={() => copyText(svg, setCopiedSvg)}
@@ -171,7 +169,7 @@ export default function SvgPlaceholderGeneratorTool() {
               <button
                 onClick={downloadSvg}
                 className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition"
-                title="Download .svg"
+                title={t("uiText.80a17893")}
               >
                 <Download className="w-3.5 h-3.5" />
               </button>

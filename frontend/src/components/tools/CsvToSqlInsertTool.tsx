@@ -45,31 +45,31 @@ export default function CsvToSqlInsertTool() {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Target Table Name</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.28371cef")}</label>
             <input
               type="text"
               value={tableName}
               onChange={(e) => setTableName(e.target.value)}
               className="w-full px-3 py-2 text-xs font-mono rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900"
-              placeholder="table_name"
+              placeholder={t("uiText.43b48003")}
             />
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">SQL Dialect</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("tool.sqlFormatter.dialect")}</label>
             <select
               value={dialect}
               onChange={(e) => setDialect(e.target.value as typeof dialect)}
               className="w-full px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900"
             >
-              <option value="postgres">PostgreSQL (&quot;col&quot;)</option>
-              <option value="mysql">MySQL (`col`)</option>
-              <option value="generic">Standard SQL (col)</option>
+              <option value="postgres">{t("uiText.f0d9d68e")}</option>
+              <option value="mysql">{t("uiText.7c182a3c")}</option>
+              <option value="generic">{t("uiText.f471b045")}</option>
             </select>
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Batch Size (Rows per INSERT)</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.c4a16016")}</label>
             <input
               type="number"
               min="1"
@@ -86,7 +86,7 @@ export default function CsvToSqlInsertTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">CSV Data Input</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.2fe2f855")}</span>
             <button
               onClick={() => setCsvInput(SAMPLE_CSV)}
               className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-semibold"
@@ -99,13 +99,13 @@ export default function CsvToSqlInsertTool() {
             onChange={(e) => setCsvInput(e.target.value)}
             rows={12}
             className="w-full flex-1 rounded-xl border border-slate-200 bg-white p-4 font-mono text-xs text-slate-900 shadow-inner focus:outline-none dark:border-white/10 dark:bg-slate-900 dark:text-slate-100 resize-y"
-            placeholder="id,name,email..."
+            placeholder={t("uiText.bc224e67")}
           />
         </div>
 
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Generated SQL INSERT Queries</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.0573e673")}</span>
             <button
               onClick={handleCopy}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

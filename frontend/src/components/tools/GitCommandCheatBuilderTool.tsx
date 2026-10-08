@@ -1,10 +1,12 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { Copy, Check, GitFork, AlertCircle } from 'lucide-react';
 import { buildGitCommand, GitAction } from '@/lib/gitCommandCheatBuilder';
 
 export default function GitCommandCheatBuilderTool() {
+  const { t } = useLanguage();
   const [action, setAction] = useState<GitAction>('squash-rebase');
   const [commitsCount, setCommitsCount] = useState<number>(3);
   const [branchName, setBranchName] = useState<string>('main');
@@ -36,26 +38,25 @@ export default function GitCommandCheatBuilderTool() {
         <div className="p-4 rounded-xl border border-border bg-card space-y-4">
           <div>
             <label className="text-xs font-semibold text-muted-foreground block mb-2">
-              Select Git Workflow
-            </label>
+              {t("uiText.be4384ee")}</label>
             <select
               value={action}
               onChange={(e) => setAction(e.target.value as GitAction)}
               className="select select-bordered select-sm w-full"
             >
-              <option value="squash-rebase">Squash Commits (Interactive Rebase)</option>
-              <option value="cherry-pick">Cherry-Pick Commit</option>
-              <option value="undo-commit">Undo Last Commit</option>
-              <option value="hard-reset">Safe Hard Reset to Remote</option>
-              <option value="git-bisect">Git Bisect (Find Bug Commit)</option>
-              <option value="submodule-update">Update Submodules Recursively</option>
+              <option value="squash-rebase">{t("uiText.9a33f409")}</option>
+              <option value="cherry-pick">{t("uiText.8442f5d3")}</option>
+              <option value="undo-commit">{t("uiText.8a0a648a")}</option>
+              <option value="hard-reset">{t("uiText.9b0c2d9b")}</option>
+              <option value="git-bisect">{t("uiText.938d2746")}</option>
+              <option value="submodule-update">{t("uiText.dc56f574")}</option>
             </select>
           </div>
 
           {action === 'squash-rebase' && (
             <div>
               <label className="text-xs text-muted-foreground block mb-1">
-                Number of Commits to Squash ({commitsCount})
+                {t("uiText.4ac86061")}{commitsCount})
               </label>
               <input
                 type="range"
@@ -70,7 +71,7 @@ export default function GitCommandCheatBuilderTool() {
 
           {action === 'cherry-pick' && (
             <div>
-              <label className="text-xs text-muted-foreground block mb-1">Commit SHA Hash</label>
+              <label className="text-xs text-muted-foreground block mb-1">{t("uiText.41c47f6a")}</label>
               <input
                 type="text"
                 value={commitHash}
@@ -82,7 +83,7 @@ export default function GitCommandCheatBuilderTool() {
 
           {action === 'hard-reset' && (
             <div>
-              <label className="text-xs text-muted-foreground block mb-1">Target Remote Branch</label>
+              <label className="text-xs text-muted-foreground block mb-1">{t("uiText.28c67052")}</label>
               <input
                 type="text"
                 value={branchName}
@@ -102,8 +103,7 @@ export default function GitCommandCheatBuilderTool() {
                 className="checkbox checkbox-primary checkbox-sm"
               />
               <label htmlFor="softUndo" className="text-xs text-muted-foreground cursor-pointer">
-                Keep changed files staged (--soft)
-              </label>
+                {t("uiText.9e347fc0")}</label>
             </div>
           )}
         </div>
@@ -121,10 +121,10 @@ export default function GitCommandCheatBuilderTool() {
 
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <label className="text-xs font-medium text-muted-foreground">Terminal Shell Commands:</label>
+              <label className="text-xs font-medium text-muted-foreground">{t("uiText.cf115b5b")}</label>
               <button onClick={handleCopy} className="btn btn-primary btn-xs gap-1">
                 {copied ? <Check className="w-3.5 h-3.5 text-success" /> : <Copy className="w-3.5 h-3.5" />}
-                {copied ? 'Copied' : 'Copy Commands'}
+                {copied ? t("uiText.8dc21305") : t("uiText.ea71d462")}
               </button>
             </div>
             <textarea

@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { parseCertificateSan } from '@/lib/base64PemCertificateParser';
@@ -7,6 +8,7 @@ import { parseCertificateSan } from '@/lib/base64PemCertificateParser';
 const SAMPLE = "DNS:example.com DNS:api.example.com DNS:*.example.com";
 
 export default function Base64PemCertificateParserTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE);
   let output = '';
 
@@ -22,8 +24,8 @@ export default function Base64PemCertificateParserTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Raw X.509 Certificate Extensions</label>
-            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.5147b126")}</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -34,7 +36,7 @@ export default function Base64PemCertificateParserTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Parsed Subject Alternative Names (SANs)</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.8f30e92f")}</label>
             <CopyButton text={output} />
           </div>
           <textarea

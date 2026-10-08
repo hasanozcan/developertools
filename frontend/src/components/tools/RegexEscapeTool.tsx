@@ -55,8 +55,7 @@ export default function RegexEscapeTool() {
                 : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300'
             }`}
           >
-            Escape
-          </button>
+            {t("uiText.b7bb7226")}</button>
           <button
             onClick={() => setMode('unescape')}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
@@ -65,8 +64,7 @@ export default function RegexEscapeTool() {
                 : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300'
             }`}
           >
-            Unescape
-          </button>
+            {t("uiText.06ee8c0d")}</button>
         </div>
 
         <button
@@ -99,7 +97,7 @@ export default function RegexEscapeTool() {
             onChange={setInput}
             language="text"
             placeholder={
-              mode === 'escape' ? 'Enter raw text for regex...' : 'Enter escaped regex text...'
+              mode === 'escape' ? t("uiText.0a122378") : t("uiText.9cf9a470")
             }
             minHeight="220px"
           />
@@ -114,7 +112,7 @@ export default function RegexEscapeTool() {
             onChange={() => {}}
             readOnly
             language="text"
-            placeholder="Result will appear here..."
+            placeholder={t("tool.htmlEntity.resultPlaceholder")}
             minHeight="220px"
           />
         </div>

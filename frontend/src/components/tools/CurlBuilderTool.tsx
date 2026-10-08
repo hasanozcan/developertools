@@ -86,7 +86,7 @@ export default function CurlBuilderTool() {
 
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">HTTP Method</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.9251f4f6")}</label>
             <select
               value={method}
               onChange={(e) => setMethod(e.target.value as typeof method)}
@@ -103,7 +103,7 @@ export default function CurlBuilderTool() {
           </div>
 
           <div className="sm:col-span-3">
-            <label className="text-xs font-bold text-slate-500 block mb-1">Target Endpoint URL</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.e965a49c")}</label>
             <input
               type="text"
               value={url}
@@ -116,21 +116,21 @@ export default function CurlBuilderTool() {
         {/* Authentication */}
         <div className="pt-2 border-t border-slate-100 dark:border-white/5 grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Auth Type</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.c7ed7fd5")}</label>
             <select
               value={authType}
               onChange={(e) => setAuthType(e.target.value as typeof authType)}
               className="w-full px-3 py-1.5 text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
             >
-              <option value="none">No Auth</option>
-              <option value="bearer">Bearer Token</option>
-              <option value="basic">Basic Auth (user:pass)</option>
+              <option value="none">{t("uiText.583fcd24")}</option>
+              <option value="bearer">{t("uiText.17c86d65")}</option>
+              <option value="basic">{t("uiText.918da504")}</option>
             </select>
           </div>
 
           {authType === 'bearer' && (
             <div className="sm:col-span-2">
-              <label className="text-xs font-bold text-slate-500 block mb-1">Bearer Token</label>
+              <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.17c86d65")}</label>
               <input
                 type="text"
                 value={bearerToken}
@@ -143,7 +143,7 @@ export default function CurlBuilderTool() {
           {authType === 'basic' && (
             <>
               <div>
-                <label className="text-xs font-bold text-slate-500 block mb-1">Username</label>
+                <label className="text-xs font-bold text-slate-500 block mb-1">{t("tool.regexTester.patternUsername")}</label>
                 <input
                   type="text"
                   value={basicUser}
@@ -152,7 +152,7 @@ export default function CurlBuilderTool() {
                 />
               </div>
               <div>
-                <label className="text-xs font-bold text-slate-500 block mb-1">Password</label>
+                <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.2cc30838")}</label>
                 <input
                   type="password"
                   value={basicPass}
@@ -171,14 +171,13 @@ export default function CurlBuilderTool() {
         <div className="surface-card rounded-2xl p-6 space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Custom HTTP Headers
-            </span>
+              {t("uiText.67a01abc")}</span>
             <button
               onClick={addHeader}
               className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-300 text-xs font-semibold hover:bg-indigo-100"
             >
               <Plus className="w-3.5 h-3.5" />
-              <span>Add Header</span>
+              <span>{t("uiText.9b2981a9")}</span>
             </button>
           </div>
 
@@ -187,14 +186,14 @@ export default function CurlBuilderTool() {
               <div key={i} className="flex items-center gap-2">
                 <input
                   type="text"
-                  placeholder="Header (e.g. X-Api-Key)"
+                  placeholder={t("uiText.05b79390")}
                   value={h.key}
                   onChange={(e) => updateHeader(i, 'key', e.target.value)}
                   className="w-1/2 px-2.5 py-1.5 text-xs font-mono rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900"
                 />
                 <input
                   type="text"
-                  placeholder="Value"
+                  placeholder={t("uiText.d147f96a")}
                   value={h.value}
                   onChange={(e) => updateHeader(i, 'value', e.target.value)}
                   className="w-1/2 px-2.5 py-1.5 text-xs font-mono rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900"
@@ -214,8 +213,7 @@ export default function CurlBuilderTool() {
         <div className="surface-card rounded-2xl p-6 space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Request Payload / Body
-            </span>
+              {t("uiText.b200f42b")}</span>
             <div className="flex items-center gap-1.5">
               {(['none', 'json', 'form', 'raw'] as const).map((b) => (
                 <button
@@ -237,12 +235,11 @@ export default function CurlBuilderTool() {
               onChange={(e) => setBodyContent(e.target.value)}
               rows={6}
               className="w-full rounded-xl border border-slate-200 bg-white p-3 font-mono text-xs text-slate-900 shadow-inner focus:outline-none dark:border-white/10 dark:bg-slate-900 dark:text-slate-100 resize-y"
-              placeholder={bodyType === 'json' ? '{"key": "value"}' : 'key=value'}
+              placeholder={bodyType === 'json' ? '{"key": "value"}' : t("uiText.0c583080")}
             />
           ) : (
             <div className="p-8 text-center text-xs text-slate-400 border border-dashed rounded-xl border-slate-200 dark:border-white/10">
-              No body attached (Standard for GET/HEAD requests)
-            </div>
+              {t("uiText.91d1664e")}</div>
           )}
         </div>
       </div>
@@ -251,8 +248,7 @@ export default function CurlBuilderTool() {
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            Executable cURL Command
-          </span>
+            {t("uiText.d436124c")}</span>
           <button
             onClick={handleCopy}
             className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

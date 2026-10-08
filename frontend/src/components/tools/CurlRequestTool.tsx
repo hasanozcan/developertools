@@ -12,6 +12,7 @@ import {
   type RequestHeader,
   type RequestQueryParameter,
 } from '@/lib/curlRequest';
+import { localizeUiText } from '@/lib/localizedText';
 
 const METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
 const SAMPLE_GET = "curl 'https://api.example.com/v1/items?limit=10'";
@@ -208,7 +209,7 @@ export default function CurlRequestTool() {
             role="alert"
             className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-300"
           >
-            {converterError}
+            {localizeUiText(converterError, t)}
           </div>
         )}
         <div>
@@ -337,14 +338,14 @@ export default function CurlRequestTool() {
             <div key={`header-${index}`} className="grid grid-cols-[1fr_1fr_auto] gap-2">
               <input
                 aria-label={indexedLabel(t('tool.curl.headerNameAria'), index)}
-                placeholder="Content-Type"
+                placeholder={t("uiText.220dc0d5")}
                 value={row.name}
                 onChange={(event) => updateHeader(index, 'name', event.target.value)}
                 className="min-w-0 rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-sm dark:border-gray-600 dark:bg-gray-900 dark:text-white"
               />
               <input
                 aria-label={indexedLabel(t('tool.curl.headerValueAria'), index)}
-                placeholder="application/json"
+                placeholder={t("uiText.69e8e6a8")}
                 value={row.value}
                 onChange={(event) => updateHeader(index, 'value', event.target.value)}
                 className="min-w-0 rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-sm dark:border-gray-600 dark:bg-gray-900 dark:text-white"
@@ -404,12 +405,12 @@ export default function CurlRequestTool() {
           >
             {builderResult.curlError && (
               <p>
-                {t('tool.curl.curlLabel')}: {builderResult.curlError}
+                {t('tool.curl.curlLabel')}: {localizeUiText(builderResult.curlError, t)}
               </p>
             )}
             {builderResult.fetchError && (
               <p>
-                {t('tool.curl.fetchLabel')}: {builderResult.fetchError}
+                {t('tool.curl.fetchLabel')}: {localizeUiText(builderResult.fetchError, t)}
               </p>
             )}
           </div>

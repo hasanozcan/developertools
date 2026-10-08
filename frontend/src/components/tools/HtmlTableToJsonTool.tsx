@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { Copy, Check, Download, Table as TableIcon } from 'lucide-react';
 import { htmlTableToJson } from '@/lib/htmlTableToJson';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE_HTML_TABLE = `<table>
   <thead>
@@ -92,8 +93,7 @@ export default function HtmlTableToJsonTool() {
                   : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              Objects (Array of Objects)
-            </button>
+              {t("uiText.c4bdb488")}</button>
             <button
               onClick={() => setAsObjects(false)}
               className={`px-3 py-1 text-xs font-semibold rounded-lg transition ${
@@ -102,8 +102,7 @@ export default function HtmlTableToJsonTool() {
                   : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              2D Array (Rows &amp; Columns)
-            </button>
+              {t("uiText.346647e5")}</button>
           </div>
         </div>
 
@@ -120,8 +119,7 @@ export default function HtmlTableToJsonTool() {
         {/* HTML Input */}
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            HTML Table Markup
-          </span>
+            {t("uiText.0fdc85f0")}</span>
           <textarea
             value={htmlInput}
             onChange={(e) => setHtmlInput(e.target.value)}
@@ -135,8 +133,7 @@ export default function HtmlTableToJsonTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Parsed JSON Output
-            </span>
+              {t("uiText.24116897")}</span>
             {jsonOutput && (
               <div className="flex items-center gap-1.5">
                 <button
@@ -149,7 +146,7 @@ export default function HtmlTableToJsonTool() {
                 <button
                   onClick={handleDownload}
                   className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition"
-                  title="Download JSON"
+                  title={t("uiText.41fa1c79")}
                 >
                   <Download className="w-3.5 h-3.5" />
                 </button>
@@ -159,7 +156,7 @@ export default function HtmlTableToJsonTool() {
 
           {error ? (
             <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-xs text-red-600 dark:border-red-800/40 dark:bg-red-900/20 dark:text-red-300">
-              {error}
+              {localizeUiText(error, t)}
             </div>
           ) : (
             <textarea

@@ -77,7 +77,7 @@ export default function CssGridGeneratorTool() {
 
           <div>
             <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-              <span>Column Gap</span>
+              <span>{t("uiText.64a2920f")}</span>
               <span className="font-mono">{columnGap}px</span>
             </div>
             <input
@@ -92,7 +92,7 @@ export default function CssGridGeneratorTool() {
 
           <div>
             <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-              <span>Row Gap</span>
+              <span>{t("uiText.11694fbb")}</span>
               <span className="font-mono">{rowGap}px</span>
             </div>
             <input
@@ -139,8 +139,7 @@ export default function CssGridGeneratorTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              CSS Grid Rules
-            </span>
+              {t("uiText.4a707f67")}</span>
             <button
               onClick={() => copyText(css, setCopiedCss)}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
@@ -161,8 +160,7 @@ export default function CssGridGeneratorTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              HTML Structure
-            </span>
+              {t("uiText.53fd38f5")}</span>
             <button
               onClick={() => copyText(html, setCopiedHtml)}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

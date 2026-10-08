@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { detectRsaKeyFormat } from '@/lib/rsaPkcs1Pkcs8Converter';
@@ -7,6 +8,7 @@ import { detectRsaKeyFormat } from '@/lib/rsaPkcs1Pkcs8Converter';
 const SAMPLE = "-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEA...\n-----END RSA PRIVATE KEY-----";
 
 export default function RsaPkcs1Pkcs8ConverterTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE);
   let output = '';
 
@@ -22,8 +24,8 @@ export default function RsaPkcs1Pkcs8ConverterTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">PEM Formatted Key String</label>
-            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.47f9ce2f")}</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -34,7 +36,7 @@ export default function RsaPkcs1Pkcs8ConverterTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Detected RSA Key Structure</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.6a5c9bfb")}</label>
             <CopyButton text={output} />
           </div>
           <textarea

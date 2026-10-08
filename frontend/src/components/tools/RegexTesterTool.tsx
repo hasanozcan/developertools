@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 interface RegexMatch {
   match: string;
@@ -274,7 +275,7 @@ export default function RegexTesterTool() {
             type="text"
             value={pattern}
             onChange={(e) => setPattern(e.target.value)}
-            placeholder="Enter regex pattern..."
+            placeholder={t("tool.regexTester.patternPlaceholder")}
             className="flex-1 border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           />
           <span className="text-gray-400 dark:text-gray-500 font-mono">/</span>
@@ -283,7 +284,7 @@ export default function RegexTesterTool() {
             value={flags}
             onChange={(e) => setFlags(e.target.value)}
             className="w-16 border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
-            placeholder="flags"
+            placeholder={t("uiText.9c677a2c")}
           />
         </div>
       </div>
@@ -313,7 +314,7 @@ export default function RegexTesterTool() {
       {/* Error */}
       {error && (
         <div className="p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-400 text-sm">
-          Invalid regex: {error}
+          {t("uiText.f562fcef")}{localizeUiText(error, t)}
         </div>
       )}
 
@@ -323,7 +324,7 @@ export default function RegexTesterTool() {
         <CodeEditor
           value={testString}
           onChange={setTestString}
-          placeholder="Enter text to test against the regex..."
+          placeholder={t("uiText.2b176322")}
           language="text"
           minHeight="150px"
         />

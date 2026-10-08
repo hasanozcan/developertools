@@ -148,8 +148,7 @@ background: ${gradient};`;
                     : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200'
                 }`}
               >
-                Linear
-              </button>
+                {t("uiText.fccc59e0")}</button>
               <button
                 onClick={() => setGradientType('radial')}
                 className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${
@@ -158,8 +157,7 @@ background: ${gradient};`;
                     : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200'
                 }`}
               >
-                Radial
-              </button>
+                {t("uiText.579f548e")}</button>
             </div>
           </div>
 
@@ -207,8 +205,7 @@ background: ${gradient};`;
                         : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200'
                     }`}
                   >
-                    Circle
-                  </button>
+                    {t("uiText.812746a9")}</button>
                   <button
                     onClick={() => setRadialShape('ellipse')}
                     className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${
@@ -217,8 +214,7 @@ background: ${gradient};`;
                         : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200'
                     }`}
                   >
-                    Ellipse
-                  </button>
+                    {t("uiText.b61e45f1")}</button>
                 </div>
               </div>
               <div>
@@ -230,15 +226,15 @@ background: ${gradient};`;
                   onChange={(e) => setRadialPosition(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700"
                 >
-                  <option value="center">Center</option>
-                  <option value="top">Top</option>
-                  <option value="bottom">Bottom</option>
-                  <option value="left">Left</option>
-                  <option value="right">Right</option>
-                  <option value="top left">Top Left</option>
-                  <option value="top right">Top Right</option>
-                  <option value="bottom left">Bottom Left</option>
-                  <option value="bottom right">Bottom Right</option>
+                  <option value="center">{t("uiText.4b9fbea4")}</option>
+                  <option value="top">{t("uiText.099b73dc")}</option>
+                  <option value="bottom">{t("uiText.22b5f34a")}</option>
+                  <option value="left">{t("uiText.92773890")}</option>
+                  <option value="right">{t("uiText.1e9e9f85")}</option>
+                  <option value="top left">{t("uiText.beba6915")}</option>
+                  <option value="top right">{t("uiText.ca5525ae")}</option>
+                  <option value="bottom left">{t("uiText.f6526e2b")}</option>
+                  <option value="bottom right">{t("uiText.affa50b4")}</option>
                 </select>
               </div>
             </div>
@@ -335,8 +331,7 @@ background: ${gradient};`;
               className="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2"
             >
               <Download className="w-4 h-4" />
-              PNG
-            </button>
+              {t("uiText.aceadefc")}</button>
             <button
               onClick={copyCSS}
               className="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2"

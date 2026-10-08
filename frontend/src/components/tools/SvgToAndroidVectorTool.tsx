@@ -1,12 +1,15 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { convertSvgToAndroidVector } from '@/lib/svgToAndroidVector';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE = "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\">\n  <path d=\"M12 2L2 22h20L12 2z\" fill=\"#000\" />\n</svg>";
 
 export default function SvgToAndroidVectorTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE);
   let output = '';
   let error = '';
@@ -22,8 +25,8 @@ export default function SvgToAndroidVectorTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">SVG Vector Graphics</label>
-            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.91ab490d")}</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -34,12 +37,12 @@ export default function SvgToAndroidVectorTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Android Vector Drawable XML</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.9dcf6762")}</label>
             <CopyButton text={output} />
           </div>
           {error ? (
             <div className="rounded-2xl border border-red-200 bg-red-50 p-4 font-mono text-xs text-red-600 dark:border-red-900/50 dark:bg-red-950/50 dark:text-red-400">
-              {error}
+              {localizeUiText(error, t)}
             </div>
           ) : (
             <textarea

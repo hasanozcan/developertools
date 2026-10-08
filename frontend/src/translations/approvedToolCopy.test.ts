@@ -26,7 +26,7 @@ describe('approved three-tool page copy', () => {
     expect(translations.en['toolDesc.sha256-hash']).toContain(
       'trusted 64-character expected checksum',
     );
-    expect(translations.tr['toolName.sha256-hash']).toBe('SHA256 Hash Oluşturucu');
+    expect(translations.tr['toolName.sha256-hash']).toBe('SHA-256 Özet Oluşturucu');
   });
 
   it('retains the existing cURL and SHA-256 SEO titles and descriptions and checksum title', () => {

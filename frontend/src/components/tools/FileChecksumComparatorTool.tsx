@@ -1,10 +1,13 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useEffect, useRef } from 'react';
 import { ShieldCheck, Copy, Check, Upload, CheckCircle2, XCircle } from 'lucide-react';
 import { calculateAllChecksums, type ChecksumResult } from '@/lib/fileChecksumComparator';
+import { interpolateText } from '@/lib/localizedText';
 
 export default function FileChecksumComparatorTool() {
+  const { t } = useLanguage();
   const [inputText, setInputText] = useState('DevsTools Secure Client-Side Hash Verification');
   const [expectedHash, setExpectedHash] = useState('');
   const [fileSource, setFileSource] = useState<{ file: File } | null>(null);
@@ -91,12 +94,10 @@ export default function FileChecksumComparatorTool() {
               htmlFor="checksum-text"
               className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400"
             >
-              Input Mode (Text or File)
-            </label>
+              {t("uiText.627c0307")}</label>
             {selectedFile && (
               <span className="text-xs text-indigo-600 dark:text-indigo-400 font-medium">
-                {selectedFile.name} ({Math.round(selectedFile.size / 1024)} KB)
-              </span>
+                {selectedFile.name} ({Math.round(selectedFile.size / 1024)} {t("uiText.14ba3f63")}</span>
             )}
           </div>
 
@@ -110,7 +111,7 @@ export default function FileChecksumComparatorTool() {
               setFileSource(null);
               setInputText(e.target.value);
             }}
-            placeholder="Type or paste text to hash in real-time..."
+            placeholder={t("uiText.0cb9b1ce")}
             rows={4}
             className="w-full rounded-xl border border-slate-200 bg-slate-50/50 p-3 font-mono text-xs text-slate-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-800 dark:bg-slate-950 dark:text-white"
           />
@@ -128,29 +129,25 @@ export default function FileChecksumComparatorTool() {
               }}
               className="rounded-lg border border-slate-300 px-3 py-2 font-semibold text-indigo-600 hover:bg-slate-50 dark:border-slate-700 dark:text-indigo-400 dark:hover:bg-slate-800"
             >
-              Load abc example
-            </button>
-            <span>Three UTF-8 bytes, without a trailing newline.</span>
+              {t("uiText.7ae3d337")}</button>
+            <span>{t("uiText.54ff4231")}</span>
           </div>
 
           <div className="relative focus-within:ring-2 focus-within:ring-indigo-500 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-xl p-4 text-center hover:border-indigo-400 dark:hover:border-indigo-600 transition">
             <input
               type="file"
-              aria-label="Select a local file"
+              aria-label={t("uiText.5cc87949")}
               aria-describedby="checksum-file-help"
               onChange={handleFileUpload}
               className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
             />
             <div className="flex items-center justify-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
               <Upload className="h-4 w-4 text-indigo-500" />
-              <span>Select or drop a local file to compute checksums</span>
+              <span>{t("uiText.391a11c1")}</span>
             </div>
           </div>
           <p id="checksum-file-help" className="text-xs text-slate-500 dark:text-slate-400">
-            Selected files are read locally into browser memory for hashing; they are not uploaded
-            for this calculation. Large files can exhaust available memory. Use a local terminal
-            checksum tool for large downloads.
-          </p>
+            {t("uiText.75970fd0")}</p>
         </div>
 
         {/* Expected Checksum Matcher */}
@@ -160,13 +157,9 @@ export default function FileChecksumComparatorTool() {
               htmlFor="checksum-expected"
               className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5"
             >
-              <ShieldCheck className="h-3.5 w-3.5 text-indigo-500" /> Expected Checksum Comparator
-            </label>
+              <ShieldCheck className="h-3.5 w-3.5 text-indigo-500" /> {t("uiText.ccd1cbc4")}</label>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              Paste a complete expected MD5, CRC32, SHA-1, SHA-256, SHA-384 or SHA-512 checksum from
-              the publisher or another trusted independent source. A match does not establish that a
-              file is harmless or authenticate its publisher.
-            </p>
+              {t("uiText.ce2adfa5")}</p>
             <input
               id="checksum-expected"
               type="text"
@@ -174,7 +167,7 @@ export default function FileChecksumComparatorTool() {
               autoComplete="off"
               value={expectedHash}
               onChange={(e) => setExpectedHash(e.target.value)}
-              placeholder="e.g. 5eb63bbbe01eeed093cb22bb8f5acdc3..."
+              placeholder={t("uiText.01fb2a13")}
               className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-3 py-2.5 font-mono text-xs text-slate-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-800 dark:bg-slate-950 dark:text-white"
             />
           </div>
@@ -183,21 +176,17 @@ export default function FileChecksumComparatorTool() {
             <div role="status" className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 text-xs">
               {comparedChecksums.some((c) => c.matchesExpected) ? (
                 <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold">
-                  <CheckCircle2 className="h-4 w-4" /> Perfect Match! Computed checksum matches the
-                  expected hash.
-                </div>
+                  <CheckCircle2 className="h-4 w-4" /> {t("uiText.35aba754")}</div>
               ) : (
                 <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-medium">
-                  <XCircle className="h-4 w-4" /> Checksum mismatch: none of the computed hashes
-                  matches the expected checksum.
-                </div>
+                  <XCircle className="h-4 w-4" /> {t("uiText.d53946be")}</div>
               )}
             </div>
           )}
         </div>
       </div>
 
-      {inputError && <p role="alert">Could not read or hash this input. Try again.</p>}
+      {inputError && <p role="alert">{t("uiText.8eee4c81")}</p>}
 
       {/* Computed Hash Table */}
       <div
@@ -205,12 +194,11 @@ export default function FileChecksumComparatorTool() {
         className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm dark:border-white/10 dark:bg-slate-900"
       >
         <div className="p-4 border-b border-slate-100 dark:border-white/5 font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
-          Computed Hashes & Checksums
-        </div>
+          {t("uiText.877ac750")}</div>
         {isHashing && (
           <p role="status" className="p-4 text-sm text-slate-600 dark:text-slate-300">
-            {selectedFile ? 'Reading and hashing the selected file...' : 'Hashing UTF-8 text...'}
-            {normalizedExpectedHash && ' Comparison will appear when hashing finishes.'}
+            {selectedFile ? t("uiText.5f8c262e") : t("uiText.c801b2b0")}
+            {normalizedExpectedHash && ' ' + t("uiText.ed95b99c")}
           </p>
         )}
         <div className="divide-y divide-slate-100 dark:divide-slate-800/60">
@@ -228,25 +216,24 @@ export default function FileChecksumComparatorTool() {
                 {matchesExpected !== undefined &&
                   (matchesExpected ? (
                     <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
-                      <CheckCircle2 className="h-3.5 w-3.5" /> MATCH
-                    </span>
+                      <CheckCircle2 className="h-3.5 w-3.5" /> {t("uiText.3bb15d76")}</span>
                   ) : normalizedExpectedHash ? (
-                    <span className="text-[11px] text-slate-400">Mismatch</span>
+                    <span className="text-[11px] text-slate-400">{t("uiText.bfdb40b1")}</span>
                   ) : null)}
               </div>
 
               <div className="flex items-center gap-2 flex-1 max-w-xl">
                 <input
                   readOnly
-                  aria-label={`${algorithm} checksum`}
+                  aria-label={interpolateText(t('tool.fileChecksum.algorithmLabel'), { algorithm })}
                   value={hash}
                   className="w-full font-mono text-xs bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-2.5 py-1 text-slate-800 dark:text-indigo-200"
                 />
                 <button
-                  aria-label={`Copy ${algorithm} checksum`}
+                  aria-label={interpolateText(t('tool.fileChecksum.copyAlgorithm'), { algorithm })}
                   onClick={() => handleCopy(hash, algorithm)}
                   className="p-1.5 text-slate-500 hover:text-indigo-600 dark:text-slate-400 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-                  title="Copy Hash"
+                  title={t("uiText.78551acc")}
                 >
                   {copiedKey === algorithm ? (
                     <Check className="h-4 w-4 text-emerald-500" />

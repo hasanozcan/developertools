@@ -4,6 +4,7 @@ import { useCallback, useRef, useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { useLanguage } from '@/context/LanguageContext';
 import { parseX509Certificates, type CertificateInfo } from '@/lib/certificate';
+import { localizeUiText } from '@/lib/localizedText';
 
 const MAX_INPUT_LENGTH = 250_000;
 
@@ -92,7 +93,7 @@ export default function CertificateDecoderTool() {
           role="alert"
           className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-300"
         >
-          {error}
+          {localizeUiText(error, t)}
         </p>
       ) : null}
 
@@ -229,8 +230,7 @@ export default function CertificateDecoderTool() {
               <details className="rounded-lg border border-gray-200 p-3 text-sm dark:border-gray-700">
                 <summary className="cursor-pointer font-medium text-gray-700 dark:text-gray-200">
                   {t('tool.certificate.extensions')} ({certificate.extensions.length}) ·{' '}
-                  {certificate.rawBytes} bytes
-                </summary>
+                  {certificate.rawBytes} {t("common.bytes")}</summary>
                 <ul className="mt-3 space-y-1 font-mono text-xs text-gray-600 dark:text-gray-300">
                   {certificate.extensions.map((extension, index) => (
                     <li key={`${extension.oid}-${index}`}>

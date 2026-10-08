@@ -68,6 +68,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
 import { getLocalizedPath } from '@/lib/localeRouting';
+import { interpolateText, translateCount } from '@/lib/localizedText';
 import { serializeJsonForHtmlScript } from '@/lib/scriptSafeJson';
 
 const categorySlugs = [
@@ -385,8 +386,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
           <div className="pointer-events-none absolute -left-16 -top-20 h-56 w-56 rounded-full bg-indigo-400/20 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-24 -right-12 h-64 w-64 rounded-full bg-cyan-400/20 blur-3xl" />
           <div className="eyebrow mb-5">
-            <Sparkles className="h-3.5 w-3.5" /> {toolCatalog.length} developer tools
-          </div>
+            <Sparkles className="h-3.5 w-3.5" /> {toolCatalog.length} {t("uiText.3323a216")}</div>
           <h1 className="relative mx-auto mb-4 max-w-5xl text-3xl font-extrabold tracking-[-0.04em] text-gray-950 dark:text-white md:text-5xl lg:text-6xl">
             {t('home.title')}
           </h1>
@@ -396,7 +396,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
           <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
             <a
               href="#tools"
-              title={`Browse ${toolCatalog.length} free developer tools`}
+              title={interpolateText(t('home.browseTools'), { count: toolCatalog.length })}
               className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-2.5 text-xs font-semibold text-white shadow-lg shadow-slate-950/20 transition hover:-translate-y-0.5 hover:bg-indigo-600 dark:bg-white dark:text-slate-950 dark:hover:bg-indigo-200"
             >
               <Search className="h-3.5 w-3.5" /> {t('home.popularTools')}
@@ -412,7 +412,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
                 className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 px-4 py-2.5 text-xs font-semibold text-amber-900 shadow-sm transition hover:bg-amber-100 dark:border-amber-700/50 dark:bg-amber-950/40 dark:text-amber-300"
               >
                 <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
-                <span>Favorites ({favorites.length})</span>
+                <span>{t("uiText.69396f32")}{favorites.length})</span>
               </button>
             )}
           </div>
@@ -421,15 +421,14 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
         {children}
 
         {/* 🌟 Spotlight Top Launchpad Band */}
-        <section className="mb-8" aria-label="Spotlight Quick Launchpad">
+        <section className="mb-8" aria-label={t("uiText.bc885c90")}>
           <div className="flex items-center justify-between mb-3 px-1">
             <div className="flex items-center gap-2">
               <Zap className="h-4 w-4 text-amber-500 fill-amber-500" />
               <h2 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
-                Spotlight & Daily Favorites
-              </h2>
+                {t("uiText.947317d5")}</h2>
             </div>
-            <span className="text-[11px] text-slate-400 dark:text-slate-500 hidden sm:inline">Instant 1-Click Launch</span>
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 hidden sm:inline">{t("uiText.71aeeea3")}</span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
@@ -440,7 +439,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
                 <Link
                   key={st.slug}
                   href={buildToolPath(st.category, st.slug)}
-                  title={`Quick launch ${toolName}`}
+                  title={interpolateText(t('home.quickLaunch'), { tool: toolName })}
                   className="group relative flex flex-col items-center justify-center p-3 rounded-2xl border border-slate-200/80 bg-white/80 text-center shadow-xs backdrop-blur-md transition hover:-translate-y-1 hover:border-indigo-300 hover:shadow-md dark:border-white/5 dark:bg-slate-900/60 dark:hover:border-indigo-500/50"
                 >
                   <div className={`mb-2 rounded-xl bg-gradient-to-br ${st.color} p-2.5 shadow-sm text-white transition group-hover:scale-110`}>
@@ -463,14 +462,12 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
         <section className="mb-10" aria-labelledby="workflow-collections-heading">
           <div className="mb-4 flex items-end justify-between gap-4">
             <div>
-              <span className="eyebrow mb-2">Workflows</span>
+              <span className="eyebrow mb-2">{t("uiText.e23d5661")}</span>
               <h2 id="workflow-collections-heading" className="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
-                Start with what you are trying to build
-              </h2>
+                {t("uiText.06e7efd4")}</h2>
             </div>
             <Link href="/collections" className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 sm:inline">
-              View all collections →
-            </Link>
+              {t("uiText.49d6ab9c")}</Link>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {hubs.collections.map((collection) => {
@@ -496,14 +493,12 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
         <section className="mb-10" aria-labelledby="role-toolboxes-heading">
           <div className="mb-4 flex items-end justify-between gap-4">
             <div>
-              <span className="eyebrow mb-2">By role</span>
+              <span className="eyebrow mb-2">{t("uiText.937daf64")}</span>
               <h2 id="role-toolboxes-heading" className="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
-                Toolboxes for the way you work
-              </h2>
+                {t("uiText.83151179")}</h2>
             </div>
             <Link href="/for" className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 sm:inline">
-              View all roles →
-            </Link>
+              {t("uiText.2168cca4")}</Link>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {hubs.audiences.map((audience) => {
@@ -525,10 +520,10 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
           {/* Header & Controls Bar */}
           <div className="mb-4 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <span className="eyebrow mb-1.5">Toolbox</span>
+              <span className="eyebrow mb-1.5">{t("uiText.239a9538")}</span>
               <div className="flex items-center gap-3">
                 <h2 className="text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl">
-                  {showFavoritesOnly ? '⭐ Pinned & Favorites' : t('home.popularTools')}
+                  {showFavoritesOnly ? t("uiText.6d8800c0") : t('home.popularTools')}
                 </h2>
                 <span className="rounded-full border border-slate-200/80 bg-white/80 px-2.5 py-0.5 text-xs font-semibold text-slate-600 shadow-sm dark:border-white/10 dark:bg-slate-800 dark:text-slate-300">
                   {filteredTools.length} / {normalizedPopular.length}
@@ -563,7 +558,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
                 <button
                   onClick={() => setViewMode('grid')}
                   title={t('home.viewGrid') || 'Grid View'}
-                  aria-label="Grid view"
+                  aria-label={t("uiText.00c3ebe6")}
                   className={`rounded-xl p-2 transition ${
                     viewMode === 'grid'
                       ? 'bg-indigo-600 text-white shadow-sm'
@@ -575,7 +570,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
                 <button
                   onClick={() => setViewMode('grouped')}
                   title={t('home.viewGrouped') || 'Grouped View'}
-                  aria-label="Grouped view"
+                  aria-label={t("uiText.b6ca2302")}
                   className={`rounded-xl p-2 transition ${
                     viewMode === 'grouped'
                       ? 'bg-indigo-600 text-white shadow-sm'
@@ -590,7 +585,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
 
           {/* 🏷️ Quick Search Suggestion Tags */}
           <div className="mb-5 flex flex-wrap items-center gap-1.5">
-            <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 mr-1">Quick Tags:</span>
+            <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 mr-1">{t("uiText.0b5c90c5")}</span>
             {quickSearchTags.map((tag) => {
               const isActive = searchQuery.toLowerCase() === tag.toLowerCase();
               return (
@@ -648,7 +643,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
               }`}
             >
               <Star className={`h-3.5 w-3.5 ${showFavoritesOnly ? 'fill-white text-white' : 'fill-amber-500 text-amber-500'}`} />
-              <span>Favorites</span>
+              <span>{t("commandPalette.favorites")}</span>
               <span
                 className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${
                   showFavoritesOnly
@@ -700,7 +695,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
               <Search className="mx-auto mb-3 h-8 w-8 text-slate-400" />
               <p className="text-base font-semibold text-slate-800 dark:text-slate-200">
                 {showFavoritesOnly
-                  ? 'No favorite tools pinned yet. Click the star icon on any tool card to add it to your favorites!'
+                  ? t("uiText.db45a87d")
                   : t('home.noToolsFound') || 'No tools found matching your filter.'}
               </p>
               <button
@@ -735,7 +730,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
                       <Link
                         key={`${tool.slug}-${tool.categorySlug}`}
                         href={buildToolPath(tool.categorySlug, tool.slug)}
-                        title={`${toolName} - ${toolDesc || `Open the ${toolName} developer tool`}`}
+                        title={`${toolName} - ${toolDesc || interpolateText(t('home.openTool'), { tool: toolName })}`}
                         className="interactive-card group rounded-2xl p-4 relative"
                       >
                         {/* ⭐ Favorite Pin Button */}
@@ -746,8 +741,8 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
                             e.stopPropagation();
                             toggleFavorite(tool.slug);
                           }}
-                          title={isFav ? 'Remove from favorites' : 'Pin to favorites'}
-                          aria-label={isFav ? `Remove ${toolName} from favorites` : `Add ${toolName} to favorites`}
+                          title={isFav ? t("uiText.c23fbb86") : t("uiText.2baec734")}
+                          aria-label={interpolateText(t(isFav ? 'home.removeFavorite' : 'home.addFavorite'), { tool: toolName })}
                           className={`absolute top-3 right-3 p-1.5 rounded-lg transition z-10 ${
                             isFav
                               ? 'text-amber-500 bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100'
@@ -800,7 +795,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
               {hasMore && (
                 <div className="mt-10 flex flex-col items-center justify-center gap-3">
                   <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">
-                    Showing <span className="text-indigo-600 dark:text-indigo-400 font-bold">{displayedGridTools.length}</span> of {filteredTools.length} tools
+                    {interpolateText(t('home.showingTools'), { shown: displayedGridTools.length, total: filteredTools.length })}
                   </div>
                   <div className="flex gap-2">
                     <button
@@ -808,13 +803,13 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
                       className="inline-flex items-center gap-1.5 rounded-2xl bg-indigo-600 px-5 py-2.5 text-xs font-semibold text-white shadow-md shadow-indigo-600/20 transition hover:bg-indigo-500 hover:-translate-y-0.5"
                     >
                       <ChevronDown className="h-4 w-4" />
-                      <span>Load More (+{LOAD_MORE_STEP} Tools)</span>
+                      <span>{translateCount(t, language, 'home.loadMoreTools', LOAD_MORE_STEP)}</span>
                     </button>
                     <button
                       onClick={() => setVisibleCount(filteredTools.length)}
                       className="inline-flex items-center gap-1.5 rounded-2xl border border-slate-200/80 bg-white/80 px-4 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200"
                     >
-                      <span>Show All (500)</span>
+                      <span>{t("uiText.1740cf15")}</span>
                     </button>
                   </div>
                 </div>
@@ -862,7 +857,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
                             <Link
                               key={`${tool.slug}-${tool.categorySlug}`}
                               href={buildToolPath(tool.categorySlug, tool.slug)}
-                              title={`${toolName} - ${toolDesc || `Open the ${toolName} developer tool`}`}
+                              title={`${toolName} - ${toolDesc || interpolateText(t('home.openTool'), { tool: toolName })}`}
                               className="interactive-card group rounded-2xl p-4 relative"
                             >
                               {/* ⭐ Favorite Pin Button */}
@@ -873,8 +868,8 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
                                   e.stopPropagation();
                                   toggleFavorite(tool.slug);
                                 }}
-                                title={isFav ? 'Remove from favorites' : 'Pin to favorites'}
-                                aria-label={isFav ? `Remove ${toolName} from favorites` : `Add ${toolName} to favorites`}
+                                title={isFav ? t("uiText.c23fbb86") : t("uiText.2baec734")}
+                                aria-label={interpolateText(t(isFav ? 'home.removeFavorite' : 'home.addFavorite'), { tool: toolName })}
                                 className={`absolute top-3 right-3 p-1.5 rounded-lg transition z-10 ${
                                   isFav
                                     ? 'text-amber-500 bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100'
@@ -932,7 +927,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
 
         {/* Categories */}
         <section className="mb-16" id="categories">
-          <span className="eyebrow mb-3">Explore</span>
+          <span className="eyebrow mb-3">{t("uiText.4d9eb2dc")}</span>
           <h2 className="mb-7 text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl">
             {t('home.browseByCategory')}
           </h2>

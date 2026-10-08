@@ -1,3 +1,4 @@
+import { enUiCompletion } from './completion/en';
 // Client-bundled UI strings for the 'en' locale (everything except toolName.* / toolDesc.*).
 // Tool names and descriptions stay in ../en.ts (they come from enhancedTools and are ~1 MB
 // together), so client code can load this small dictionary without the tool catalog text.
@@ -299,7 +300,7 @@ export const enUi: Record<string, string> = {
   'tool.jwtDecoder.validFrom': 'Valid from',
   'tool.jwtDecoder.validUntil': 'Valid until',
   'tool.jwtDecoder.signatureWarning':
-    '⚠️ Signature verification requires the secret key and is not performed client-side.',
+    "HMAC signatures can be verified locally with the shared secret; decoding alone does not verify a token.",
   'tool.jwtDecoder.infoText':
     'JWT tokens consist of three parts: Header, Payload, and Signature, separated by dots.',
   'tool.htmlEntity': 'HTML Entity Encoder/Decoder',
@@ -1388,4 +1389,5 @@ export const enUi: Record<string, string> = {
     'The hashing code processes text and selected file bytes in your browser; it does not upload them for this calculation.',
   'tool.sha256Hash.fileMemoryHelp':
     'Select a local file and compare its digest with a trusted expected checksum. Files are read into browser memory. Large files can exhaust memory; use a local terminal or the chunked Python example in the guide for large downloads.',
+  ...enUiCompletion,
 };

@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { Copy, Check, RefreshCw, Terminal, Layers } from 'lucide-react';
 import { parseDockerRun, generateDockerComposeYaml } from '@/lib/dockerComposeConverter';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE_DOCKER_RUN = `docker run -d \\
   --name web_app \\
@@ -59,7 +60,7 @@ export default function DockerRunToComposeTool() {
           <textarea
             value={command}
             onChange={(e) => setCommand(e.target.value)}
-            placeholder="docker run -d -p 80:80 --name my_app nginx..."
+            placeholder={t("uiText.60a1daad")}
             rows={14}
             className="w-full rounded-2xl border border-slate-200 bg-white p-4 font-mono text-xs text-slate-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-white/10 dark:bg-slate-900 dark:text-slate-100 resize-y"
           />
@@ -84,7 +85,7 @@ export default function DockerRunToComposeTool() {
 
           {error ? (
             <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-xs text-red-600 dark:border-red-800/40 dark:bg-red-900/20 dark:text-red-300">
-              {error}
+              {localizeUiText(error, t)}
             </div>
           ) : (
             <textarea

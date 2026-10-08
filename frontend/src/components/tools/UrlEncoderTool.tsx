@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { ArrowDownUp, Check, Layers } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 interface BatchResult {
   input: string;
@@ -151,7 +152,7 @@ export default function UrlEncoderTool() {
             className="w-4 h-4 text-primary-600 rounded border-gray-300 dark:border-gray-600"
           />
           <Layers className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-          <span className="text-sm text-gray-700 dark:text-gray-300">Batch Mode</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">{t("tool.base64.batchMode")}</span>
         </label>
 
         <button
@@ -180,7 +181,7 @@ export default function UrlEncoderTool() {
       {/* Error */}
       {error && (
         <div className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 px-4 py-2 rounded-lg">
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -190,28 +191,28 @@ export default function UrlEncoderTool() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              {mode === 'encode' ? 'URL Lines (one per line)' : 'Encoded URL Lines (one per line)'}
+              {mode === 'encode' ? t("uiText.f8301409") : t("uiText.bdc3adfb")}
             </label>
             <CodeEditor
               value={input}
               onChange={setInput}
               placeholder={mode === 'encode' 
                 ? 'https://example.com/page1?query=hello world\nhttps://example.com/page2?name=test'
-                : 'https%3A%2F%2Fexample.com%2Fpage1%3Fquery%3Dhello%20world\nhttps%3A%2F%2Fexample.com%2Fpage2'}
+                : t("uiText.d0b00c43")}
               language="text"
             />
           </div>
           <div>
             <div className="flex items-center justify-between mb-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Results ({batchResults.length})
+                {t("uiText.a7a3e345")}{batchResults.length})
               </label>
               {batchResults.length > 0 && (
                 <button
                   onClick={copyToClipboard}
                   className="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2"
                 >
-                  {copied ? <Check className="w-4 h-4 text-green-600" /> : 'Copy All'}
+                  {copied ? <Check className="w-4 h-4 text-green-600" /> : t("tool.slugGenerator.copyAll")}
                 </button>
               )}
             </div>
@@ -234,8 +235,7 @@ export default function UrlEncoderTool() {
                 ))}
                 {batchResults.length === 0 && (
                   <div className="px-4 py-8 text-center text-gray-400 dark:text-gray-500 text-sm">
-                    Enter URLs and click convert to see results
-                  </div>
+                    {t("uiText.78c28a89")}</div>
                 )}
               </div>
             </div>

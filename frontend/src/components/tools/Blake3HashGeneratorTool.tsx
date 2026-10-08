@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { calculateBlake3Fallback } from '@/lib/blake3HashGenerator';
@@ -7,6 +8,7 @@ import { calculateBlake3Fallback } from '@/lib/blake3HashGenerator';
 const SAMPLE = "The quick brown fox jumps over the lazy dog";
 
 export default function Blake3HashGeneratorTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE);
   let output = '';
 
@@ -22,8 +24,8 @@ export default function Blake3HashGeneratorTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Input Text String</label>
-            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.5f1a5627")}</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -34,7 +36,7 @@ export default function Blake3HashGeneratorTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">BLAKE3 Cryptographic Hash (Hex)</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.c99f8ad0")}</label>
             <CopyButton text={output} />
           </div>
           <textarea

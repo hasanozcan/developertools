@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { CheckCircle, XCircle, AlertTriangle, Copy, Check } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 interface ValidationResult {
   isValid: boolean;
@@ -269,10 +270,10 @@ export default function JsonValidatorTool() {
               </h3>
               {result.error && (
                 <p className="text-sm text-red-600 dark:text-red-400 mt-1">
-                  {result.error}
+                  {localizeUiText(result.error, t)}
                   {result.errorPosition && (
                     <span className="block mt-1">
-                      Line {result.errorPosition.line}, Column {result.errorPosition.column}
+                      {t("uiText.9808f547")}{result.errorPosition.line}{t("uiText.f14a825b") + ' '}{result.errorPosition.column}
                     </span>
                   )}
                 </p>

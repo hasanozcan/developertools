@@ -5,6 +5,7 @@ import CodeEditor from '@/components/common/CodeEditor';
 import { ArrowDownUp, Layers, Check } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { convertEncoding } from '@/lib/encodingWorkbench';
+import { localizeUiText } from '@/lib/localizedText';
 
 interface BatchResult {
   input: string;
@@ -142,8 +143,7 @@ export default function BinaryEncoderTool() {
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            Encode (Text → Binary)
-          </button>
+            {t("uiText.413fc3fe")}</button>
           <button
             onClick={() => setMode('decode')}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
@@ -152,8 +152,7 @@ export default function BinaryEncoderTool() {
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            Decode (Binary → Text)
-          </button>
+            {t("uiText.4f804d5e")}</button>
         </div>
 
         {/* Batch Mode Toggle */}
@@ -165,13 +164,13 @@ export default function BinaryEncoderTool() {
             className="w-4 h-4 text-primary-600 rounded border-gray-300 dark:border-gray-600"
           />
           <Layers className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-          <span className="text-sm text-gray-700 dark:text-gray-300">Batch Mode</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">{t("tool.base64.batchMode")}</span>
         </label>
 
         <button
           onClick={swapMode}
           className="p-2 text-gray-500 dark:text-gray-400 hover:text-primary-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-          title="Swap input/output"
+          title={t("tool.yamlJson.swap")}
         >
           <ArrowDownUp className="w-5 h-5" />
         </button>
@@ -180,14 +179,13 @@ export default function BinaryEncoderTool() {
           onClick={loadSample}
           className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
         >
-          Load Sample
-        </button>
+          {t("common.loadSample")}</button>
       </div>
 
       {/* Error */}
       {error && (
         <div className="p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-300">
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -197,12 +195,12 @@ export default function BinaryEncoderTool() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              {mode === 'encode' ? 'Text Lines (one per line)' : 'Binary Lines (one per line)'}
+              {mode === 'encode' ? t("uiText.0d6e88e9") : t("uiText.e3e6558b")}
             </label>
             <CodeEditor
               value={input}
               onChange={(e) => setInput(e)}
-              placeholder={mode === 'encode' ? 'Line 1\nLine 2\nLine 3' : '01001000 01100101 01101100 01101100 01101111'}
+              placeholder={mode === 'encode' ? t("uiText.a0697327") : '01001000 01100101 01101100 01101100 01101111'}
               language="text"
               minHeight="150px"
             />
@@ -210,20 +208,19 @@ export default function BinaryEncoderTool() {
               onClick={handleConvert}
               className="mt-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
             >
-              Convert All
-            </button>
+              {t("tool.base64.convertAll")}</button>
           </div>
           <div>
             <div className="flex items-center justify-between mb-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Results ({batchResults.length})
+                {t("uiText.a7a3e345")}{batchResults.length})
               </label>
               {batchResults.length > 0 && (
                 <button
                   onClick={copyToClipboard}
                   className="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2"
                 >
-                  {copied ? <Check className="w-4 h-4 text-green-600" /> : 'Copy All'}
+                  {copied ? <Check className="w-4 h-4 text-green-600" /> : t("tool.slugGenerator.copyAll")}
                 </button>
               )}
             </div>
@@ -246,8 +243,7 @@ export default function BinaryEncoderTool() {
                 ))}
                 {batchResults.length === 0 && (
                   <div className="px-4 py-8 text-center text-gray-400 dark:text-gray-500 text-sm">
-                    Enter text and click convert to see results
-                  </div>
+                    {t("uiText.3d5a67e2")}</div>
                 )}
               </div>
             </div>
@@ -258,19 +254,19 @@ export default function BinaryEncoderTool() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              {mode === 'encode' ? 'Text Input' : 'Binary Input'}
+              {mode === 'encode' ? t("uiText.c65f0bae") : t("uiText.3da1f918")}
             </label>
             <CodeEditor
               value={input}
               onChange={handleInputChange}
-              placeholder={mode === 'encode' ? 'Enter text to convert to binary...' : 'Enter binary to decode (e.g., 01001000 01100101)...'}
+              placeholder={mode === 'encode' ? t("uiText.20948512") : t("uiText.7201c13c")}
               language="text"
               minHeight="150px"
             />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              {mode === 'encode' ? 'Binary Output' : 'Decoded Text'}
+              {mode === 'encode' ? t("uiText.7e7c09f9") : t("tool.urlEncoder.decodedText")}
             </label>
             <div className="relative">
               <CodeEditor
@@ -289,8 +285,8 @@ export default function BinaryEncoderTool() {
       <div className="text-sm text-gray-500 dark:text-gray-400">
         <p>
           {mode === 'encode' 
-            ? 'Text is encoded as UTF-8 bytes, then each byte is shown as 8-bit binary.'
-            : 'Binary values are converted back to their corresponding characters. Each byte should be 8 bits.'}
+            ? t("uiText.eb4c5305")
+            : t("uiText.45fe45d4")}
         </p>
       </div>
     </div>

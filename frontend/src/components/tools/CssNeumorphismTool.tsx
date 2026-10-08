@@ -71,7 +71,7 @@ export default function CssNeumorphismTool() {
           }}
           className="flex items-center justify-center font-black text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400 select-none transition-all duration-150"
         >
-          <span>Soft UI</span>
+          <span>{t("uiText.c6898e45")}</span>
         </div>
       </div>
 
@@ -87,7 +87,7 @@ export default function CssNeumorphismTool() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {/* Base Color */}
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Background Color</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.ac01b156")}</label>
             <div className="flex items-center gap-2">
               <input
                 type="color"
@@ -107,7 +107,7 @@ export default function CssNeumorphismTool() {
           {/* Size */}
           <div>
             <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-              <span>Size</span>
+              <span>{t("tool.qrCode.size")}</span>
               <span className="font-mono">{options.size}px</span>
             </div>
             <input
@@ -123,7 +123,7 @@ export default function CssNeumorphismTool() {
           {/* Radius */}
           <div>
             <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-              <span>Radius</span>
+              <span>{t("uiText.3a8111d3")}</span>
               <span className="font-mono">{options.radius}px</span>
             </div>
             <input
@@ -139,7 +139,7 @@ export default function CssNeumorphismTool() {
           {/* Distance */}
           <div>
             <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-              <span>Distance</span>
+              <span>{t("uiText.d3d96082")}</span>
               <span className="font-mono">{options.distance}px</span>
             </div>
             <input
@@ -155,7 +155,7 @@ export default function CssNeumorphismTool() {
           {/* Blur */}
           <div>
             <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-              <span>Blur</span>
+              <span>{t("uiText.d2dcfbb8")}</span>
               <span className="font-mono">{options.blur}px</span>
             </div>
             <input
@@ -171,7 +171,7 @@ export default function CssNeumorphismTool() {
           {/* Intensity */}
           <div>
             <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-              <span>Intensity</span>
+              <span>{t("uiText.53b4f9aa")}</span>
               <span className="font-mono">{options.intensity}%</span>
             </div>
             <input
@@ -190,8 +190,7 @@ export default function CssNeumorphismTool() {
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            Neumorphic CSS Code
-          </span>
+            {t("uiText.c25183b1")}</span>
           <button
             onClick={handleCopy}
             className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

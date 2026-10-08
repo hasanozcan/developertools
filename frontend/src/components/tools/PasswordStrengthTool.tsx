@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { KeyRound, ShieldAlert, ShieldCheck, CheckCircle2, XCircle } from 'lucide-react';
 import { analyzePasswordStrength } from '@/lib/passwordStrength';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 export default function PasswordStrengthTool() {
   const { t } = useLanguage();
@@ -35,7 +36,7 @@ export default function PasswordStrengthTool() {
             type="text"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Type a password to test security & entropy..."
+            placeholder={t("uiText.8e638d85")}
             className="w-full px-4 py-3 text-sm font-mono rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
           />
         </div>
@@ -43,9 +44,9 @@ export default function PasswordStrengthTool() {
         {/* Strength Meter Bar */}
         <div className="space-y-2">
           <div className="flex justify-between items-center text-xs font-bold">
-            <span className="text-slate-500">Security Score:</span>
+            <span className="text-slate-500">{t("uiText.797f7d49")}</span>
             <span className={`px-2.5 py-0.5 rounded-lg text-xs font-bold ${scoreColors[analysis.score]}`}>
-              {analysis.label} ({analysis.score}/4)
+              {localizeUiText(analysis.label, t)} ({analysis.score}/4)
             </span>
           </div>
 
@@ -73,53 +74,53 @@ export default function PasswordStrengthTool() {
       {/* Metrics Dashboard */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="surface-card rounded-2xl p-5 border border-slate-200 dark:border-white/5">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">Estimated Crack Time</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">{t("uiText.6f3ddc20")}</span>
           <span className="text-xl font-black font-mono text-indigo-600 dark:text-indigo-400">
-            {analysis.crackTimeEstimate}
+            {localizeUiText(analysis.crackTimeEstimate, t)}
           </span>
-          <span className="text-[11px] text-slate-400 block mt-1">Brute-force offline hashing resistance</span>
+          <span className="text-[11px] text-slate-400 block mt-1">{t("uiText.661aeee3")}</span>
         </div>
 
         <div className="surface-card rounded-2xl p-5 border border-slate-200 dark:border-white/5">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">Information Entropy</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">{t("uiText.caf585bc")}</span>
           <span className="text-xl font-black font-mono text-slate-900 dark:text-white">
-            {analysis.entropy} <span className="text-xs font-normal text-slate-400">Bits</span>
+            {analysis.entropy} <span className="text-xs font-normal text-slate-400">{t("uiText.0bbc2f99")}</span>
           </span>
-          <span className="text-[11px] text-slate-400 block mt-1">Shannon entropy pool calculation</span>
+          <span className="text-[11px] text-slate-400 block mt-1">{t("uiText.3c2c9030")}</span>
         </div>
 
         <div className="surface-card rounded-2xl p-5 border border-slate-200 dark:border-white/5">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">Length</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">{t("uiText.cc5e1935")}</span>
           <span className="text-xl font-black font-mono text-slate-900 dark:text-white">
-            {analysis.length} <span className="text-xs font-normal text-slate-400">Characters</span>
+            {analysis.length} <span className="text-xs font-normal text-slate-400">{t("tool.wordCounter.characters")}</span>
           </span>
-          <span className="text-[11px] text-slate-400 block mt-1">Recommended &ge; 12 characters</span>
+          <span className="text-[11px] text-slate-400 block mt-1">{t("uiText.f4fcfe22")}</span>
         </div>
       </div>
 
       {/* Character Type Checklist */}
       <div className="surface-card rounded-2xl p-6 space-y-3">
-        <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Character Complexity Checklist</span>
+        <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.b9342178")}</span>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-semibold">
           <div className="flex items-center gap-2">
             {analysis.hasLower ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <XCircle className="w-4 h-4 text-slate-300" />}
-            <span className={analysis.hasLower ? 'text-slate-800 dark:text-slate-200' : 'text-slate-400'}>Lowercase (a-z)</span>
+            <span className={analysis.hasLower ? 'text-slate-800 dark:text-slate-200' : 'text-slate-400'}>{t("tool.passwordGenerator.lowercase")}</span>
           </div>
 
           <div className="flex items-center gap-2">
             {analysis.hasUpper ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <XCircle className="w-4 h-4 text-slate-300" />}
-            <span className={analysis.hasUpper ? 'text-slate-800 dark:text-slate-200' : 'text-slate-400'}>Uppercase (A-Z)</span>
+            <span className={analysis.hasUpper ? 'text-slate-800 dark:text-slate-200' : 'text-slate-400'}>{t("tool.passwordGenerator.uppercase")}</span>
           </div>
 
           <div className="flex items-center gap-2">
             {analysis.hasDigits ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <XCircle className="w-4 h-4 text-slate-300" />}
-            <span className={analysis.hasDigits ? 'text-slate-800 dark:text-slate-200' : 'text-slate-400'}>Numbers (0-9)</span>
+            <span className={analysis.hasDigits ? 'text-slate-800 dark:text-slate-200' : 'text-slate-400'}>{t("tool.passwordGenerator.numbers")}</span>
           </div>
 
           <div className="flex items-center gap-2">
             {analysis.hasSymbols ? <CheckCircle2 className="w-4 h-4 text-emerald-500" /> : <XCircle className="w-4 h-4 text-slate-300" />}
-            <span className={analysis.hasSymbols ? 'text-slate-800 dark:text-slate-200' : 'text-slate-400'}>Symbols (!@#$)</span>
+            <span className={analysis.hasSymbols ? 'text-slate-800 dark:text-slate-200' : 'text-slate-400'}>{t("uiText.4a3e4483")}</span>
           </div>
         </div>
       </div>

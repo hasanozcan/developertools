@@ -3,6 +3,7 @@
 import { useCallback, useState } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 type Mode = 'escape' | 'unescape';
 
@@ -67,8 +68,7 @@ export default function JsonStringEscapeTool() {
                 : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300'
             }`}
           >
-            Escape
-          </button>
+            {t("uiText.b7bb7226")}</button>
           <button
             onClick={() => setMode('unescape')}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
@@ -77,8 +77,7 @@ export default function JsonStringEscapeTool() {
                 : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300'
             }`}
           >
-            Unescape
-          </button>
+            {t("uiText.06ee8c0d")}</button>
         </div>
 
         <button
@@ -103,7 +102,7 @@ export default function JsonStringEscapeTool() {
 
       {error && (
         <div className="p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-300">
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -116,7 +115,7 @@ export default function JsonStringEscapeTool() {
             value={input}
             onChange={setInput}
             language="text"
-            placeholder={mode === 'escape' ? 'Enter raw text...' : 'Enter escaped JSON string fragment...'}
+            placeholder={mode === 'escape' ? t("uiText.91312fcc") : t("uiText.269f5e15")}
             minHeight="220px"
           />
         </div>
@@ -130,7 +129,7 @@ export default function JsonStringEscapeTool() {
             onChange={() => {}}
             readOnly
             language="text"
-            placeholder="Result will appear here..."
+            placeholder={t("tool.htmlEntity.resultPlaceholder")}
             minHeight="220px"
           />
         </div>

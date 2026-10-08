@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Code, Copy, Check, FileText, Trash2, Wand2 } from 'lucide-react';
 import { format as formatSqlLib, type SqlLanguage } from 'sql-formatter';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 interface FormatterOptions {
   indent: number;
@@ -267,7 +268,7 @@ export default function SqlFormatterTool() {
           >
             {DIALECT_OPTIONS.map((option) => (
               <option key={option.value} value={option.value}>
-                {option.label}
+                {localizeUiText(option.label, t)}
               </option>
             ))}
           </select>
@@ -357,7 +358,7 @@ export default function SqlFormatterTool() {
 
       {error && (
         <div className="p-3 rounded-lg bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-sm text-red-700 dark:text-red-200">
-          {t('common.error')}: {error}
+          {t('common.error')}: {localizeUiText(error, t)}
         </div>
       )}
 

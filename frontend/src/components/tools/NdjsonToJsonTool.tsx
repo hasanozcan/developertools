@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { ArrowLeftRight, Copy, Check } from 'lucide-react';
 import { ndjsonToJson, jsonToNdjson } from '@/lib/ndjsonToJson';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE_NDJSON = `{"id":1,"event":"login","timestamp":1771500000}
 {"id":2,"event":"page_view","url":"/tools"}
@@ -61,20 +62,18 @@ export default function NdjsonToJsonTool() {
             onClick={handleNdjsonToJson}
             className="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-sm transition"
           >
-            NDJSON → JSON Array
-          </button>
+            {t("uiText.02240f4a")}</button>
           <button
             onClick={handleJsonToNdjson}
             className="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 text-xs font-bold hover:bg-slate-50 transition"
           >
-            JSON Array → NDJSON
-          </button>
+            {t("uiText.1b7b9868")}</button>
         </div>
       </div>
 
       {error && (
         <div className="p-4 rounded-xl border border-red-200 bg-red-50 text-xs text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-300">
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -82,7 +81,7 @@ export default function NdjsonToJsonTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">NDJSON / JSONL (1 JSON per line)</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.da51b08f")}</span>
             <button
               onClick={() => {
                 setNdjsonInput(SAMPLE_NDJSON);
@@ -104,7 +103,7 @@ export default function NdjsonToJsonTool() {
 
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">JSON Array Output</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.ce3460cf")}</span>
             {jsonInput && (
               <button
                 onClick={handleCopy}

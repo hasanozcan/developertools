@@ -212,7 +212,7 @@ export default function SlugGeneratorTool() {
     <div className="space-y-6">
       {/* Mode Toggle */}
       <div className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
-        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Mode:</span>
+        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{t("uiText.2c856198")}</span>
         <div className="flex rounded-lg overflow-hidden border border-gray-300 dark:border-gray-600">
           <button
             onClick={() => { setBulkMode(false); setInput(''); }}
@@ -222,8 +222,7 @@ export default function SlugGeneratorTool() {
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            Single Slug
-          </button>
+            {t("uiText.8528f374")}</button>
           <button
             onClick={() => { setBulkMode(true); setInput(''); }}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
@@ -232,21 +231,20 @@ export default function SlugGeneratorTool() {
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            Bulk Mode
-          </button>
+            {t("tool.slugGenerator.bulkMode")}</button>
         </div>
       </div>
 
       {/* Input */}
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          {bulkMode ? 'Enter Titles (one per line)' : t('tool.slugGenerator.titleOrText')}
+          {bulkMode ? t("tool.slugGenerator.enterTitles") : t('tool.slugGenerator.titleOrText')}
         </label>
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
           rows={bulkMode ? 8 : 3}
-          placeholder={bulkMode ? 'How to Create a REST API\n10 Best Practices for JavaScript\nWhat\'s New in React 19' : t('tool.slugGenerator.inputPlaceholder')}
+          placeholder={bulkMode ? t("uiText.716f2f18") : t('tool.slugGenerator.inputPlaceholder')}
           className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
         />
       </div>
@@ -332,14 +330,14 @@ export default function SlugGeneratorTool() {
           <div>
             <div className="flex items-center justify-between mb-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Generated Slugs ({bulkSlugs.length})
+                {t("uiText.4304b0d6")}{bulkSlugs.length})
               </label>
               <button
                 onClick={copyToClipboard}
                 className="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2"
               >
                 {bulkCopied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
-                {bulkCopied ? 'Copied!' : 'Copy All'}
+                {bulkCopied ? t("common.copied") : t("tool.slugGenerator.copyAll")}
               </button>
             </div>
             <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
@@ -360,7 +358,7 @@ export default function SlugGeneratorTool() {
                     <button
                       onClick={() => copySingleSlug(item.slug)}
                       className="ml-3 p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg transition-colors"
-                      title="Copy this slug"
+                      title={t("uiText.bcb2c363")}
                     >
                       {copied && slug === item.slug ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
                     </button>
@@ -387,7 +385,7 @@ export default function SlugGeneratorTool() {
             <div className="flex-1 flex items-center px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-800">
               <Link2 className="w-4 h-4 text-gray-400 dark:text-gray-500 mr-3 flex-shrink-0" />
               <span className="font-mono text-sm text-gray-900 dark:text-white break-all">
-                {slug || <span className="text-gray-400 dark:text-gray-500 italic">your-slug-here</span>}
+                {slug || <span className="text-gray-400 dark:text-gray-500 italic">{t("uiText.ba647e0f")}</span>}
               </span>
             </div>
             <button
@@ -458,11 +456,11 @@ export default function SlugGeneratorTool() {
             <span>{t('tool.slugGenerator.seoTip4')}</span>
           </div>
           <div className="flex items-start gap-2">
-            <span className="text-red-600 dark:text-red-400">NO</span>
+            <span className="text-red-600 dark:text-red-400">{t("uiText.41e68bba")}</span>
             <span>{t('tool.slugGenerator.seoTip5')}</span>
           </div>
           <div className="flex items-start gap-2">
-            <span className="text-red-600 dark:text-red-400">NO</span>
+            <span className="text-red-600 dark:text-red-400">{t("uiText.41e68bba")}</span>
             <span>{t('tool.slugGenerator.seoTip6')}</span>
           </div>
         </div>

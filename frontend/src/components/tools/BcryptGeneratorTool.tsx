@@ -10,6 +10,7 @@ import {
   getBcryptPasswordByteLength,
   verifyBcryptHash,
 } from '@/lib/bcrypt';
+import { localizeUiText } from '@/lib/localizedText';
 
 type VerificationResult = 'match' | 'noMatch' | null;
 
@@ -216,8 +217,7 @@ export default function BcryptGeneratorTool() {
                 : 'text-gray-500 dark:text-gray-400'
             }`}
           >
-            {passwordBytes}/{BCRYPT_MAX_PASSWORD_BYTES} UTF-8 bytes
-          </p>
+            {passwordBytes}/{BCRYPT_MAX_PASSWORD_BYTES} {t("uiText.b664ccb0")}</p>
         </div>
 
         <button
@@ -234,7 +234,7 @@ export default function BcryptGeneratorTool() {
             role="alert"
             className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-300"
           >
-            {generationError}
+            {localizeUiText(generationError, t)}
           </p>
         )}
 
@@ -312,8 +312,7 @@ export default function BcryptGeneratorTool() {
                 : 'text-gray-500 dark:text-gray-400'
             }`}
           >
-            {verificationPasswordBytes}/{BCRYPT_MAX_PASSWORD_BYTES} UTF-8 bytes
-          </p>
+            {verificationPasswordBytes}/{BCRYPT_MAX_PASSWORD_BYTES} {t("uiText.b664ccb0")}</p>
         </div>
 
         <div>
@@ -356,7 +355,7 @@ export default function BcryptGeneratorTool() {
             role="alert"
             className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-300"
           >
-            {verificationError}
+            {localizeUiText(verificationError, t)}
           </p>
         )}
 

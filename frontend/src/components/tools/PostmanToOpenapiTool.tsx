@@ -1,13 +1,16 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useEffect, useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { convertPostmanToOpenapi } from '@/lib/postmanToOpenapi';
 import { readTransferredInput } from '@/lib/toolWorkflow';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE = "{\n  \"info\": { \"name\": \"Payment Gateway API\" },\n  \"item\": [\n    {\n      \"name\": \"Charge Credit Card\",\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"https://api.gateway.com/v1/charges\"\n      }\n    }\n  ]\n}";
 
 export default function PostmanToOpenapiTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE);
 
   useEffect(() => {
@@ -29,8 +32,8 @@ export default function PostmanToOpenapiTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Postman Collection v2.1 JSON</label>
-            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.c4cf9f2a")}</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -41,12 +44,12 @@ export default function PostmanToOpenapiTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">OpenAPI 3.1 Specification</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.12503b66")}</label>
             <CopyButton text={output} />
           </div>
           {error ? (
             <div className="rounded-2xl border border-red-200 bg-red-50 p-4 font-mono text-xs text-red-600 dark:border-red-900/50 dark:bg-red-950/50 dark:text-red-400">
-              {error}
+              {localizeUiText(error, t)}
             </div>
           ) : (
             <textarea

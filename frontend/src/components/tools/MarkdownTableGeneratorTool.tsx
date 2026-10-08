@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { Copy, Check, Download, Table, Plus, Trash2, AlignLeft, AlignCenter, AlignRight } from 'lucide-react';
 import { generateMarkdownTable, createEmptyTable, type ColumnAlignment } from '@/lib/markdownTableGenerator';
 import { useLanguage } from '@/context/LanguageContext';
+import { interpolateText } from '@/lib/localizedText';
 
 export default function MarkdownTableGeneratorTool() {
   const { t } = useLanguage();
@@ -133,7 +134,7 @@ export default function MarkdownTableGeneratorTool() {
                     <button
                       onClick={() => toggleAlignment(colIdx)}
                       className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500"
-                      title={`Align: ${tableData.alignments[colIdx]}`}
+                      title={interpolateText(t('tool.markdownTable.alignment'), { alignment: t(tableData.alignments[colIdx] === 'left' ? 'tool.markdownTable.alignLeft' : tableData.alignments[colIdx] === 'center' ? 'tool.markdownTable.alignCenter' : 'tool.markdownTable.alignRight') })}
                     >
                       {tableData.alignments[colIdx] === 'center' ? (
                         <AlignCenter className="w-3.5 h-3.5" />
@@ -147,7 +148,7 @@ export default function MarkdownTableGeneratorTool() {
                       <button
                         onClick={() => removeColumn(colIdx)}
                         className="p-1 text-slate-400 hover:text-red-500 rounded"
-                        title="Delete Column"
+                        title={t("uiText.a1d8b714")}
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -165,7 +166,7 @@ export default function MarkdownTableGeneratorTool() {
                     <button
                       onClick={() => removeRow(rowIdx)}
                       className="p-1 text-slate-400 hover:text-red-500 rounded"
-                      title="Delete Row"
+                      title={t("uiText.d15383b2")}
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -197,8 +198,7 @@ export default function MarkdownTableGeneratorTool() {
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            GitHub Markdown Table Output
-          </span>
+            {t("uiText.7731e330")}</span>
           <div className="flex items-center gap-1.5">
             <button
               onClick={handleCopy}
@@ -210,7 +210,7 @@ export default function MarkdownTableGeneratorTool() {
             <button
               onClick={handleDownload}
               className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition"
-              title="Download table.md"
+              title={t("uiText.39999a38")}
             >
               <Download className="w-3.5 h-3.5" />
             </button>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useRef } from 'react';
 import { Upload, Download, ArrowUp, ArrowDown, Trash2, FileCheck, Layers } from 'lucide-react';
 import { PDFDocument } from 'pdf-lib';
@@ -14,6 +15,7 @@ import {
 import { reorderPdfList } from '@/lib/pdfMerger';
 
 export default function ImagesToPdfTool() {
+  const { t } = useLanguage();
   const [images, setImages] = useState<ImageToPdfItem[]>([]);
   const [pageFormat, setPageFormat] = useState<PageFormat>('a4');
   const [orientation, setOrientation] = useState<PageOrientation>('auto');
@@ -162,11 +164,9 @@ export default function ImagesToPdfTool() {
         </div>
         <div>
           <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200">
-            Select or Drop Images to Convert to PDF
-          </h3>
+            {t("uiText.be704cf2")}</h3>
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            Convert JPG, PNG, WebP images into a single multi-page PDF document.
-          </p>
+            {t("uiText.63d9fd1b")}</p>
         </div>
       </div>
 
@@ -176,46 +176,43 @@ export default function ImagesToPdfTool() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-5 rounded-2xl bg-slate-50/80 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5">
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Page Size
-              </label>
+                {t("uiText.58f382eb")}</label>
               <select
                 value={pageFormat}
                 onChange={(e) => setPageFormat(e.target.value as PageFormat)}
                 className="w-full rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
               >
-                <option value="a4">A4 (Standard Document)</option>
-                <option value="letter">US Letter</option>
-                <option value="fit">Fit to Image Dimensions</option>
+                <option value="a4">{t("uiText.e27e4f49")}</option>
+                <option value="letter">{t("uiText.758e86ff")}</option>
+                <option value="fit">{t("uiText.696e2971")}</option>
               </select>
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Page Orientation
-              </label>
+                {t("uiText.05744c84")}</label>
               <select
                 value={orientation}
                 onChange={(e) => setOrientation(e.target.value as PageOrientation)}
                 className="w-full rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
               >
-                <option value="auto">Auto (Match Image Orientation)</option>
-                <option value="portrait">Portrait</option>
-                <option value="landscape">Landscape</option>
+                <option value="auto">{t("uiText.1a96dccb")}</option>
+                <option value="portrait">{t("uiText.29092ffa")}</option>
+                <option value="landscape">{t("uiText.2bfbe892")}</option>
               </select>
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Margins
-              </label>
+                {t("uiText.b5e3e838")}</label>
               <select
                 value={margin}
                 onChange={(e) => setMargin(e.target.value as MarginOption)}
                 className="w-full rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
               >
-                <option value="none">No Margins (Full Bleed)</option>
-                <option value="small">Small Margins (20pt)</option>
-                <option value="large">Large Margins (40pt)</option>
+                <option value="none">{t("uiText.7ee9aa6b")}</option>
+                <option value="small">{t("uiText.7ee38574")}</option>
+                <option value="large">{t("uiText.bfadde46")}</option>
               </select>
             </div>
           </div>
@@ -228,7 +225,7 @@ export default function ImagesToPdfTool() {
                 className="group relative rounded-2xl border border-slate-200 bg-white p-2.5 shadow-sm dark:border-white/10 dark:bg-slate-900 flex flex-col justify-between"
               >
                 <div className="flex justify-between items-center pb-1">
-                  <span className="text-[10px] font-bold text-slate-400">Page {idx + 1}</span>
+                  <span className="text-[10px] font-bold text-slate-400">{t("uiText.e83d9196") + ' '}{idx + 1}</span>
                   <button
                     onClick={() => removeImage(img.id)}
                     className="text-red-400 hover:text-red-500 p-0.5"
@@ -271,7 +268,7 @@ export default function ImagesToPdfTool() {
           {/* Action Footer */}
           <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-slate-50/80 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5">
             <span className="text-xs text-slate-600 dark:text-slate-400">
-              Total Images: {images.length}
+              {t("uiText.4cb981a5")}{images.length}
             </span>
 
             <div className="flex items-center gap-3">
@@ -281,7 +278,7 @@ export default function ImagesToPdfTool() {
                 className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-500 transition shadow-sm disabled:opacity-50"
               >
                 <FileCheck className="h-4 w-4" />
-                {isGenerating ? 'Generating PDF...' : 'Create PDF'}
+                {isGenerating ? t("uiText.174893f3") : t("uiText.446e879f")}
               </button>
 
               {pdfUrl && (
@@ -289,8 +286,7 @@ export default function ImagesToPdfTool() {
                   onClick={handleDownload}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-500 transition shadow-sm"
                 >
-                  <Download className="h-4 w-4" /> Download PDF
-                </button>
+                  <Download className="h-4 w-4" /> {t("uiText.643bf50b")}</button>
               )}
             </div>
           </div>

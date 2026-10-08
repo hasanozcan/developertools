@@ -1,12 +1,15 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { convertSvgToSwiftuiShape } from '@/lib/svgToSwiftuiShape';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE = "<svg width=\"100\" height=\"100\">\n  <path d=\"M10 10 L90 90\" />\n</svg>";
 
 export default function SvgToSwiftuiShapeTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE);
   let output = '';
   let error = '';
@@ -22,8 +25,8 @@ export default function SvgToSwiftuiShapeTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">SVG Code</label>
-            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.e0e7b18a")}</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -34,12 +37,12 @@ export default function SvgToSwiftuiShapeTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">SwiftUI Shape Implementation</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.ad1c6b33")}</label>
             <CopyButton text={output} />
           </div>
           {error ? (
             <div className="rounded-2xl border border-red-200 bg-red-50 p-4 font-mono text-xs text-red-600 dark:border-red-900/50 dark:bg-red-950/50 dark:text-red-400">
-              {error}
+              {localizeUiText(error, t)}
             </div>
           ) : (
             <textarea

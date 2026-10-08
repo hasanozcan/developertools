@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Copy, Check, Keyboard } from 'lucide-react';
 import { parseKeyboardEvent, type KeyInfo } from '@/lib/keyCodeInfo';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 export default function KeyCodeInfoTool() {
   const { t } = useLanguage();
@@ -60,7 +61,7 @@ export default function KeyCodeInfoTool() {
         </div>
 
         <span className="text-sm font-bold text-slate-700 dark:text-slate-300">
-          Key: <code className="text-indigo-600 dark:text-indigo-400">{keyInfo.key}</code> | Code:{' '}
+          {t("uiText.172ac002")}<code className="text-indigo-600 dark:text-indigo-400">{keyInfo.key}</code> {' ' + t("uiText.5be6d356")}{' '}
           <code className="text-indigo-600 dark:text-indigo-400">{keyInfo.code}</code>
         </span>
       </div>
@@ -74,7 +75,7 @@ export default function KeyCodeInfoTool() {
           { label: 'event.location', val: `${keyInfo.location} (${keyInfo.locationDescription})` },
         ].map((item) => (
           <div key={item.label} className="surface-card rounded-2xl p-4 space-y-1">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">{item.label}</span>
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">{localizeUiText(item.label, t)}</span>
             <span className="font-mono text-sm font-bold text-slate-900 dark:text-white truncate block">
               {item.val}
             </span>
@@ -84,7 +85,7 @@ export default function KeyCodeInfoTool() {
 
       {/* Modifier Keys Indicator */}
       <div className="surface-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3">
-        <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Modifiers:</span>
+        <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.d3d8c039")}</span>
         <div className="flex flex-wrap items-center gap-2">
           {[
             { label: 'Ctrl', active: keyInfo.ctrlKey },
@@ -100,7 +101,7 @@ export default function KeyCodeInfoTool() {
                   : 'bg-slate-100 dark:bg-slate-800 text-slate-400 border-transparent'
               }`}
             >
-              {m.label}
+              {localizeUiText(m.label, t)}
             </span>
           ))}
         </div>
@@ -110,8 +111,7 @@ export default function KeyCodeInfoTool() {
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            JavaScript Event Listener Code
-          </span>
+            {t("uiText.7504053b")}</span>
           <button
             onClick={copySnippet}
             className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

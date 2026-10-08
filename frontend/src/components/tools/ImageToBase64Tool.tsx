@@ -183,8 +183,7 @@ export default function ImageToBase64Tool() {
                       : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200'
                   }`}
                 >
-                  Data URI
-                </button>
+                  {t("tool.imageBase64.dataUri")}</button>
                 <button
                   onClick={() => setOutputFormat('base64')}
                   className={`px-3 py-1 text-xs font-medium transition-colors ${
@@ -220,14 +219,14 @@ export default function ImageToBase64Tool() {
           <h3 className="font-medium text-gray-900 dark:text-white">{t('tool.imageBase64.usageExamples')}</h3>
           
           <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
-            <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">HTML:</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">{t("uiText.a0a0c45e")}</div>
             <code className="block text-xs font-mono text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-900 p-3 rounded overflow-x-auto">
               {`<img src="${dataUri.substring(0, 50)}..." alt="image" />`}
             </code>
           </div>
           
           <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
-            <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">CSS:</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">{t("uiText.50e5fbae")}</div>
             <code className="block text-xs font-mono text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-900 p-3 rounded overflow-x-auto">
               {`background-image: url('${dataUri.substring(0, 50)}...');`}
             </code>

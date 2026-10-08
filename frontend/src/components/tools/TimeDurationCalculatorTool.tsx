@@ -4,9 +4,10 @@ import React, { useState, useMemo } from 'react';
 import { Clock, ArrowRightLeft, Calendar } from 'lucide-react';
 import { calculateDateDifference, convertTimeUnits } from '@/lib/timeDuration';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 export default function TimeDurationCalculatorTool() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [startDate, setStartDate] = useState('2026-01-01T00:00');
   const [endDate, setEndDate] = useState('2026-08-19T13:00');
 
@@ -21,6 +22,18 @@ export default function TimeDurationCalculatorTool() {
     return convertTimeUnits(unitValue, fromUnit);
   }, [unitValue, fromUnit]);
 
+  const humanReadable = dateDiff.humanReadable === 'Invalid dates'
+    ? t('tool.duration.invalidDates')
+    : language === 'en'
+      ? dateDiff.humanReadable
+      : new Intl.ListFormat(language, { type: 'unit', style: 'long' }).format(
+          Object.entries(dateDiff.breakdown)
+            .filter(([unit, value]) => value > 0 || (unit === 'seconds' && dateDiff.totalSeconds === 0))
+            .map(([unit, value]) => new Intl.NumberFormat(language, {
+              style: 'unit', unit: unit.slice(0, -1), unitDisplay: 'long',
+            }).format(value)),
+        );
+
   return (
     <div className="space-y-6">
       {/* Date Difference Calculator */}
@@ -34,7 +47,7 @@ export default function TimeDurationCalculatorTool() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Start Date & Time</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.2465707c")}</label>
             <input
               type="datetime-local"
               value={startDate}
@@ -44,7 +57,7 @@ export default function TimeDurationCalculatorTool() {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">End Date & Time</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.7b8745b1")}</label>
             <input
               type="datetime-local"
               value={endDate}
@@ -56,9 +69,9 @@ export default function TimeDurationCalculatorTool() {
 
         {/* Human Readable Difference Banner */}
         <div className="p-4 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/40 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span className="text-xs font-bold text-slate-600 dark:text-slate-300">Exact Elapsed Duration:</span>
+          <span className="text-xs font-bold text-slate-600 dark:text-slate-300">{t("uiText.03c46ac2")}</span>
           <span className="font-mono text-base font-black text-indigo-600 dark:text-indigo-400 text-center sm:text-right">
-            {dateDiff.humanReadable}
+            {humanReadable}
           </span>
         </div>
 
@@ -72,7 +85,7 @@ export default function TimeDurationCalculatorTool() {
           ].map((item) => (
             <div key={item.label} className="p-3.5 rounded-xl border border-slate-200/80 dark:border-white/5 bg-slate-50 dark:bg-slate-900/50">
               <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">
-                {item.label}
+                {localizeUiText(item.label, t)}
               </span>
               <span className="font-mono text-sm font-black text-slate-900 dark:text-white truncate block">
                 {item.val}
@@ -93,7 +106,7 @@ export default function TimeDurationCalculatorTool() {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="sm:col-span-2">
-            <label className="text-xs font-bold text-slate-500 block mb-1">Amount</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.244c9369")}</label>
             <input
               type="number"
               value={unitValue}
@@ -103,17 +116,17 @@ export default function TimeDurationCalculatorTool() {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">From Unit</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.c5088e0d")}</label>
             <select
               value={fromUnit}
               onChange={(e) => setFromUnit(e.target.value as typeof fromUnit)}
               className="w-full px-3.5 py-2 text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
             >
-              <option value="ms">Milliseconds (ms)</option>
-              <option value="s">Seconds (s)</option>
-              <option value="min">Minutes (min)</option>
-              <option value="h">Hours (h)</option>
-              <option value="d">Days (d)</option>
+              <option value="ms">{t("uiText.70136b2e")}</option>
+              <option value="s">{t("uiText.7e63d07e")}</option>
+              <option value="min">{t("uiText.48b08181")}</option>
+              <option value="h">{t("uiText.864be32f")}</option>
+              <option value="d">{t("uiText.75cdca01")}</option>
             </select>
           </div>
         </div>
@@ -129,7 +142,7 @@ export default function TimeDurationCalculatorTool() {
           ].map((item) => (
             <div key={item.label} className="p-3.5 rounded-xl border border-slate-200/80 dark:border-white/5 bg-slate-50 dark:bg-slate-900/50">
               <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">
-                {item.label}
+                {localizeUiText(item.label, t)}
               </span>
               <span className="font-mono text-xs font-bold text-emerald-600 dark:text-emerald-400 truncate block">
                 {item.val}

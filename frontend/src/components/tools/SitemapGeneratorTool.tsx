@@ -52,32 +52,32 @@ export default function SitemapGeneratorTool() {
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-500 font-semibold">Changefreq:</span>
+            <span className="text-xs text-slate-500 font-semibold">{t("uiText.546a546f")}</span>
             <select
               value={changefreq}
               onChange={(e) => setChangefreq(e.target.value as any)}
               className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-900 shadow-sm dark:border-white/10 dark:bg-slate-900 dark:text-white"
             >
-              <option value="always">always</option>
-              <option value="hourly">hourly</option>
-              <option value="daily">daily</option>
-              <option value="weekly">weekly</option>
-              <option value="monthly">monthly</option>
-              <option value="yearly">yearly</option>
+              <option value="always">{t("uiText.6736afe4")}</option>
+              <option value="hourly">{t("uiText.fc3a08e0")}</option>
+              <option value="daily">{t("uiText.ea3e071e")}</option>
+              <option value="weekly">{t("uiText.fb694aae")}</option>
+              <option value="monthly">{t("uiText.a8ec83b6")}</option>
+              <option value="yearly">{t("uiText.50fde58b")}</option>
             </select>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-500 font-semibold">Priority:</span>
+            <span className="text-xs text-slate-500 font-semibold">{t("uiText.03f16ae9")}</span>
             <select
               value={priority}
               onChange={(e) => setPriority(parseFloat(e.target.value))}
               className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-900 shadow-sm dark:border-white/10 dark:bg-slate-900 dark:text-white"
             >
-              <option value={1.0}>1.0 (Highest)</option>
-              <option value={0.8}>0.8 (Standard)</option>
-              <option value={0.5}>0.5 (Secondary)</option>
-              <option value={0.3}>0.3 (Low)</option>
+              <option value={1.0}>{t("uiText.99dfe931")}</option>
+              <option value={0.8}>{t("uiText.9c69bf27")}</option>
+              <option value={0.5}>{t("uiText.d3c4fd77")}</option>
+              <option value={0.3}>{t("uiText.09ac5789")}</option>
             </select>
           </div>
         </div>
@@ -110,8 +110,7 @@ export default function SitemapGeneratorTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Generated sitemap.xml
-            </span>
+              {t("uiText.a165dc2e")}</span>
             <div className="flex items-center gap-1.5">
               <button
                 onClick={handleCopy}
@@ -123,7 +122,7 @@ export default function SitemapGeneratorTool() {
               <button
                 onClick={handleDownload}
                 className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition"
-                title="Download sitemap.xml"
+                title={t("uiText.8d6971c1")}
               >
                 <Download className="w-3.5 h-3.5" />
               </button>

@@ -676,7 +676,7 @@ const VERY_LONG_LINE = "This is a very long line that will overflow horizontally
           <span className="text-sm text-gray-700 dark:text-gray-300">{t('tool.textDiff.wrapLines')}</span>
         </label>
 
-        <label className="flex items-center gap-2 cursor-pointer" title="Enable character-level diff for short strings">
+        <label className="flex items-center gap-2 cursor-pointer" title={t("uiText.300f7102")}>
           <input
             type="checkbox"
             checked={charLevelDiff}

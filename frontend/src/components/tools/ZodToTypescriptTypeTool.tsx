@@ -1,13 +1,16 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useEffect, useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { convertZodToTsType } from '@/lib/zodToTypescriptType';
 import { readTransferredInput } from '@/lib/toolWorkflow';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE = "export const UserSchema = z.object({\n  id: z.number(),\n  name: z.string()\n});";
 
 export default function ZodToTypescriptTypeTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE);
 
   useEffect(() => {
@@ -29,8 +32,8 @@ export default function ZodToTypescriptTypeTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Zod Schema Code</label>
-            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.7b2167c6")}</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -41,12 +44,12 @@ export default function ZodToTypescriptTypeTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Inferred TypeScript Types</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.6e66e170")}</label>
             <CopyButton text={output} />
           </div>
           {error ? (
             <div className="rounded-2xl border border-red-200 bg-red-50 p-4 font-mono text-xs text-red-600 dark:border-red-900/50 dark:bg-red-950/50 dark:text-red-400">
-              {error}
+              {localizeUiText(error, t)}
             </div>
           ) : (
             <textarea

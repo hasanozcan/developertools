@@ -10,6 +10,7 @@ import {
   validateCodeVerifier,
   verifyCodeChallenge,
 } from '@/lib/pkce';
+import { localizeUiText } from '@/lib/localizedText';
 
 type VerificationResult = 'valid' | 'invalid' | null;
 
@@ -234,7 +235,7 @@ export default function PkceGeneratorTool() {
           role="alert"
           className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-300"
         >
-          {error}
+          {localizeUiText(error, t)}
         </p>
       )}
 

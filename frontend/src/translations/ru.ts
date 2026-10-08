@@ -1,9 +1,8 @@
 import { ruUi } from './ui/ru';
-import { enhancedToolFallbacks, enhancedToolTranslations } from './enhancedTools';
+import { enhancedToolTranslations } from './enhancedTools';
+import { ruToolCompletion } from './completion/ru';
 
 export const ru = {
-  // English placeholders first so hand-written keys below take precedence.
-  ...enhancedToolFallbacks.ru,
   ...ruUi,
   // Tool Names
   'toolName.json-formatter': 'Форматировщик JSON',
@@ -119,7 +118,7 @@ export const ru = {
     'Подсчитывайте слова, символы, предложения, абзацы и оцените время чтения.',
   'toolDesc.remove-duplicates':
     'Удаляйте дублирующиеся и пустые строки из ваших текстовых списков.',
-  'toolDesc.sort-lines': 'С��ртируйте строки текста по алфавиту, численно или в случайном порядке.',
+  'toolDesc.sort-lines': 'Сортируйте строки текста по алфавиту, численно или в случайном порядке.',
   'toolDesc.hex-encoder': 'Кодируйте текст в шестнадцатеричный формат или декодируйте HEX в текст.',
   'toolDesc.binary-encoder':
     'Кодируйте текст в двоичный формат или декодируйте двоичный код в текст.',
@@ -155,4 +154,5 @@ export const ru = {
   'toolDesc.bcrypt-generator':
     'Создавайте bcrypt-хеши с солью и локально проверяйте тестовые пароли.',
   ...enhancedToolTranslations.ru,
+  ...ruToolCompletion,
 };

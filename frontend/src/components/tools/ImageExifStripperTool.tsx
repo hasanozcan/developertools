@@ -1,11 +1,13 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useRef } from 'react';
 import { Upload, Download, ShieldCheck, ShieldAlert, Camera, MapPin, Calendar, Info } from 'lucide-react';
 import { parseExifFromBuffer, stripJpegExif, type ParsedExifData } from '@/lib/imageExifStripper';
 import { formatFileSize } from '@/lib/imageCompressor';
 
 export default function ImageExifStripperTool() {
+  const { t } = useLanguage();
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [exifData, setExifData] = useState<ParsedExifData | null>(null);
@@ -103,11 +105,9 @@ export default function ImageExifStripperTool() {
           </div>
           <div className="space-y-1">
             <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200">
-              Select Photo to Inspect & Strip EXIF Metadata
-            </h3>
+              {t("uiText.b5b60fed")}</h3>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              Inspect hidden camera details, GPS geolocation, and timestamps. Remove all metadata with 1 click.
-            </p>
+              {t("uiText.318b8d7b")}</p>
           </div>
         </div>
       ) : (
@@ -124,8 +124,7 @@ export default function ImageExifStripperTool() {
                 onClick={() => fileInputRef.current?.click()}
                 className="px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
               >
-                Change Photo
-              </button>
+                {t("uiText.9c2b71f1")}</button>
               <input
                 ref={fileInputRef}
                 type="file"
@@ -139,15 +138,13 @@ export default function ImageExifStripperTool() {
                   onClick={handleStrip}
                   className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-500 transition shadow-sm"
                 >
-                  <ShieldCheck className="h-4 w-4" /> Strip All EXIF & Privacy Tags
-                </button>
+                  <ShieldCheck className="h-4 w-4" /> {t("uiText.52c3ae7f")}</button>
               ) : (
                 <button
                   onClick={handleDownload}
                   className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-500 transition shadow-sm"
                 >
-                  <Download className="h-4 w-4" /> Download Clean Image
-                </button>
+                  <Download className="h-4 w-4" /> {t("uiText.289070ad")}</button>
               )}
             </div>
           </div>
@@ -158,44 +155,40 @@ export default function ImageExifStripperTool() {
               {previewUrl && (
                 <img
                   src={isStripped && cleanUrl ? cleanUrl : previewUrl}
-                  alt="Preview"
+                  alt={t("tool.colorConverter.preview")}
                   className="max-h-80 object-contain rounded-xl shadow-sm"
                 />
               )}
               {isStripped && (
                 <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-emerald-600 dark:text-emerald-400">
-                  <ShieldCheck className="h-4 w-4" /> EXIF metadata successfully removed!
-                </span>
+                  <ShieldCheck className="h-4 w-4" /> {t("uiText.5df59474")}</span>
               )}
             </div>
 
             {/* Metadata Info Panel */}
             <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-900">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-                <Info className="h-3.5 w-3.5 text-indigo-500" /> Detected Metadata
-              </span>
+                <Info className="h-3.5 w-3.5 text-indigo-500" /> {t("uiText.1c937f7c")}</span>
 
               {exifData?.hasExif ? (
                 <div className="space-y-3 text-xs">
                   <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/40 flex items-center gap-2 text-amber-700 dark:text-amber-300">
                     <ShieldAlert className="h-4 w-4 flex-shrink-0" />
-                    <span>This photo contains embedded camera and exposure metadata.</span>
+                    <span>{t("uiText.d5788776")}</span>
                   </div>
 
                   <div className="divide-y divide-slate-100 dark:divide-slate-800">
                     {exifData.cameraModel && (
                       <div className="py-2 flex items-center justify-between">
                         <span className="text-slate-500 flex items-center gap-1.5">
-                          <Camera className="h-3.5 w-3.5" /> Camera / Device
-                        </span>
+                          <Camera className="h-3.5 w-3.5" /> {t("uiText.5eaf3f8b")}</span>
                         <span className="font-semibold">{exifData.cameraModel}</span>
                       </div>
                     )}
                     {exifData.dateTimeOriginal && (
                       <div className="py-2 flex items-center justify-between">
                         <span className="text-slate-500 flex items-center gap-1.5">
-                          <Calendar className="h-3.5 w-3.5" /> Date & Time Taken
-                        </span>
+                          <Calendar className="h-3.5 w-3.5" /> {t("uiText.5795e823")}</span>
                         <span className="font-semibold">{exifData.dateTimeOriginal}</span>
                       </div>
                     )}
@@ -209,8 +202,7 @@ export default function ImageExifStripperTool() {
                 </div>
               ) : (
                 <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/40 text-center text-xs text-slate-500 dark:text-slate-400">
-                  No EXIF privacy metadata found in this image.
-                </div>
+                  {t("uiText.6abcb6c5")}</div>
               )}
             </div>
           </div>

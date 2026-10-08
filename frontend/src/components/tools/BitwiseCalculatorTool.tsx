@@ -1,8 +1,10 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { calculateBitwise } from '@/lib/bitwiseCalculator';
 
 export default function BitwiseCalculatorTool() {
+  const { t } = useLanguage();
   const [a, setA] = useState(12);
   const [b, setB] = useState(10);
   const res = useMemo(() => calculateBitwise(a, b, 'AND'), [a, b]);
@@ -15,7 +17,7 @@ export default function BitwiseCalculatorTool() {
           <input type="number" value={b} onChange={(e) => setB(Number(e.target.value))} className="rounded-xl border p-2 text-xs" />
         </div>
         <div className="p-4 bg-slate-900 rounded-xl font-mono text-xs text-emerald-400">
-          <p>Result: {res.decimalResult} ({res.hexResult})</p>
+          <p>{t("uiText.e3f8965a") + ' '}{res.decimalResult} ({res.hexResult})</p>
         </div>
       </div>
     </div>

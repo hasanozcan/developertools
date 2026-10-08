@@ -1,3 +1,4 @@
+import { LanguageProvider } from '@/context/LanguageContext';
 import React from 'react';
 import { createHash, webcrypto } from 'node:crypto';
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
@@ -116,7 +117,7 @@ async function completeRead(
 async function readyControlledTool() {
   const readers = controlledReaders();
   const pending = controlledDigests();
-  const view = render(<FileChecksumComparatorTool />);
+  const view = render(<LanguageProvider><FileChecksumComparatorTool /></LanguageProvider>);
   await finishDigest(pending[0]);
   await waitFor(() => expect(hashes(view.container)).toHaveLength(6));
   return { ...view, readers, pending, ...inputs(view.container) };
@@ -141,7 +142,7 @@ describe('FileChecksumComparatorTool source changes', () => {
     async ({ name, bytes, crc32 }) => {
       const calculate = vi.spyOn(checksumLibrary, 'calculateAllChecksums');
       const digest = vi.spyOn(webcrypto.subtle, 'digest');
-      const { container } = render(<FileChecksumComparatorTool />);
+      const { container } = render(<LanguageProvider><FileChecksumComparatorTool /></LanguageProvider>);
       await waitFor(() => expect(hashes(container)).toHaveLength(6));
       const { file, expected } = inputs(container);
       const references = [
@@ -244,7 +245,7 @@ describe('FileChecksumComparatorTool source changes', () => {
   it('keeps the selected file when the previous text digest finishes afterward', async () => {
     const readers = controlledReaders();
     const pending = controlledDigests();
-    const { container } = render(<FileChecksumComparatorTool />);
+    const { container } = render(<LanguageProvider><FileChecksumComparatorTool /></LanguageProvider>);
     const previousTextDigest = pending[0];
     const bytes = encoder.encode('new file');
     selectFile(inputs(container).file, 'new.bin', bytes);
@@ -347,7 +348,7 @@ describe('FileChecksumComparatorTool source changes', () => {
 
 describe('FileChecksumComparatorTool', () => {
   it('loads exactly abc and allows the same example to be selected again without clearing results', async () => {
-    const { container } = render(<FileChecksumComparatorTool />);
+    const { container } = render(<LanguageProvider><FileChecksumComparatorTool /></LanguageProvider>);
     fireEvent.click(screen.getByRole('button', { name: 'Load abc example' }));
     expect(screen.getByLabelText('Input Mode (Text or File)')).toHaveValue('abc');
     const digest = createHash('sha256').update('abc').digest('hex');
@@ -361,7 +362,7 @@ describe('FileChecksumComparatorTool', () => {
 
   it('preserves file hashes when the expected checksum is pasted, changed and cleared', async () => {
     const calculate = vi.spyOn(checksumLibrary, 'calculateAllChecksums');
-    const { container } = render(<FileChecksumComparatorTool />);
+    const { container } = render(<LanguageProvider><FileChecksumComparatorTool /></LanguageProvider>);
     const fileInput = container.querySelector<HTMLInputElement>('input[type="file"]')!;
     const digest = 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad';
     fireEvent.change(fileInput, { target: { files: [new File(['abc'], 'sample.txt')] } });

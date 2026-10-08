@@ -323,7 +323,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_8px_30px_-24px_rgba(15,23,42,0.6)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/95">
       <nav
-        aria-label="Primary navigation"
+        aria-label={t("uiText.6fba33cd")}
         className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-10 xl:px-12"
       >
         <div className="flex h-[4.5rem] items-center">
@@ -365,7 +365,7 @@ export default function Header() {
               <circle cx="16" cy="16" r="2.5" fill="url(#logoGrad2)" />
             </svg>
             <span className="text-xl font-extrabold tracking-[-0.04em] text-slate-950 dark:text-white">
-              Devs<span className="gradient-text">Tools</span>
+              {t("uiText.11e991fd")}<span className="gradient-text">{t("uiText.950196fc")}</span>
             </span>
           </Link>
 
@@ -426,8 +426,7 @@ export default function Header() {
               <Search className="w-4 h-4 text-indigo-500" />
               <span className="text-xs lg:text-sm font-medium">{t('search')}...</span>
               <kbd className="hidden xl:inline-flex items-center px-1.5 py-0.5 text-[11px] font-mono font-semibold text-slate-800 bg-slate-200/90 dark:bg-slate-700 dark:text-slate-100 rounded border border-slate-300 dark:border-slate-600">
-                ⌘K / Ctrl+K
-              </kbd>
+                {t("uiText.1c039058")}</kbd>
             </button>
 
             {/* Favorites */}
@@ -547,7 +546,7 @@ export default function Header() {
           <div className="ml-auto flex items-center gap-1.5 md:hidden">
             <button
               onClick={() => setCommandPaletteOpen(true)}
-              aria-label="Open search dialog"
+              aria-label={t("uiText.ac59e99d")}
               aria-haspopup="dialog"
               className="rounded-xl border border-slate-200 bg-white/70 p-2 text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
             >
@@ -556,7 +555,7 @@ export default function Header() {
             <button
               className="rounded-xl border border-slate-200 bg-white/70 p-2 text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label={mobileMenuOpen ? 'Close navigation' : 'Open navigation'}
+              aria-label={mobileMenuOpen ? t("uiText.feac2727") : t("uiText.b807c8dd")}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-navigation"
             >

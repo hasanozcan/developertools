@@ -1,10 +1,12 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { Copy, Check, Box } from 'lucide-react';
 import { generateElevationShadows } from '@/lib/css3dBoxShadowGenerator';
 
 export default function Css3dBoxShadowGeneratorTool() {
+  const { t } = useLanguage();
   const [elevation, setElevation] = useState<number>(6);
   const [colorRgb, setColorRgb] = useState<string>('15, 23, 42');
   const [opacity, setOpacity] = useState<number>(0.15);
@@ -26,7 +28,7 @@ export default function Css3dBoxShadowGeneratorTool() {
         <div className="p-4 rounded-xl border border-border bg-card space-y-4">
           <div>
             <label className="text-xs font-semibold text-muted-foreground block mb-1">
-              Elevation Level: {elevation} / 24
+              {t("uiText.44f943f8")}{elevation} / 24
             </label>
             <input
               type="range"
@@ -40,7 +42,7 @@ export default function Css3dBoxShadowGeneratorTool() {
 
           <div>
             <label className="text-xs font-semibold text-muted-foreground block mb-1">
-              Shadow Opacity: {(opacity * 100).toFixed(0)}%
+              {t("uiText.27ee3016")}{(opacity * 100).toFixed(0)}%
             </label>
             <input
               type="range"
@@ -55,8 +57,7 @@ export default function Css3dBoxShadowGeneratorTool() {
 
           <div>
             <label className="text-xs font-semibold text-muted-foreground block mb-1">
-              Shadow RGB Tint (R, G, B)
-            </label>
+              {t("uiText.3a99f58d")}</label>
             <input
               type="text"
               value={colorRgb}
@@ -75,16 +76,15 @@ export default function Css3dBoxShadowGeneratorTool() {
                 boxShadow: shadowCss.replace('box-shadow: ', '').replace(';', ''),
               }}
             >
-              Elevation {elevation} Card
-            </div>
+              {t("uiText.1059d6e4")}{elevation} {t("uiText.0855387f")}</div>
           </div>
 
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <label className="text-xs font-medium text-muted-foreground">CSS Box-Shadow Output:</label>
+              <label className="text-xs font-medium text-muted-foreground">{t("uiText.5c9c1c5d")}</label>
               <button onClick={handleCopy} className="btn btn-primary btn-xs gap-1">
                 {copied ? <Check className="w-3.5 h-3.5 text-success" /> : <Copy className="w-3.5 h-3.5" />}
-                {copied ? 'Copied' : 'Copy CSS'}
+                {copied ? t("uiText.8dc21305") : t("uiText.9b2af91b")}
               </button>
             </div>
             <textarea

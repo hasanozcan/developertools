@@ -46,8 +46,7 @@ export default function PrivacyPage() {
         
         <div className="prose prose-gray dark:prose-invert max-w-none">
           <p className="text-gray-600 dark:text-gray-300 mb-6">
-            {t('privacy.lastUpdated')}: August 15, 2026
-          </p>
+            {t('privacy.lastUpdated')}{t("uiText.f22d8462")}</p>
 
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">{t('privacy.overview')}</h2>

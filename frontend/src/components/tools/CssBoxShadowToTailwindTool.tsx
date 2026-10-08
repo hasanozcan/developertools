@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { cssBoxShadowToTailwind } from '@/lib/cssBoxShadowToTailwind';
 import { Copy, Check } from 'lucide-react';
 
 export default function CssBoxShadowToTailwindTool() {
+  const { t } = useLanguage();
   const [shadow, setShadow] = useState('0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)');
   const [copied, setCopied] = useState(false);
   const twClass = cssBoxShadowToTailwind(shadow);
@@ -12,7 +14,7 @@ export default function CssBoxShadowToTailwindTool() {
     <div className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="text-xs font-semibold text-slate-500 uppercase">CSS box-shadow value</label>
+          <label className="text-xs font-semibold text-slate-500 uppercase">{t("uiText.3a4e51a9")}</label>
           <input
             value={shadow}
             onChange={(e) => setShadow(e.target.value)}
@@ -20,7 +22,7 @@ export default function CssBoxShadowToTailwindTool() {
           />
         </div>
         <div>
-          <label className="text-xs font-semibold text-slate-500 uppercase">Tailwind Class</label>
+          <label className="text-xs font-semibold text-slate-500 uppercase">{t("uiText.5d4bb2d1")}</label>
           <div className="flex gap-2">
             <input
               readOnly
@@ -42,8 +44,7 @@ export default function CssBoxShadowToTailwindTool() {
           className="w-48 h-32 rounded-2xl bg-white dark:bg-slate-800 flex items-center justify-center font-semibold text-sm text-slate-700 dark:text-slate-200"
           style={{ boxShadow: shadow }}
         >
-          Preview Box
-        </div>
+          {t("uiText.24778642")}</div>
       </div>
     </div>
   );

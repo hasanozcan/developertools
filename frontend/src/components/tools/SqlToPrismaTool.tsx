@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { sqlToPrisma } from '@/lib/sqlToPrisma';
 import { Copy, Check } from 'lucide-react';
 
 export default function SqlToPrismaTool() {
+  const { t } = useLanguage();
   const [sql, setSql] = useState(`CREATE TABLE users (
   id INT PRIMARY KEY,
   email VARCHAR(255) UNIQUE NOT NULL,
@@ -20,7 +22,7 @@ export default function SqlToPrismaTool() {
           className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md transition hover:bg-indigo-500"
         >
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          <span>{copied ? 'Copied' : 'Copy Prisma Schema'}</span>
+          <span>{copied ? t("uiText.8dc21305") : t("uiText.a4978c7b")}</span>
         </button>
       </div>
 

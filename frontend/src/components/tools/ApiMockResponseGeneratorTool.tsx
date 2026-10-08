@@ -1,10 +1,12 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { Copy, Check, RefreshCw, Layers } from 'lucide-react';
 import { generateMockData, MockDatasetType } from '@/lib/apiMockResponseGenerator';
 
 export default function ApiMockResponseGeneratorTool() {
+  const { t } = useLanguage();
   const [type, setType] = useState<MockDatasetType>('users');
   const [count, setCount] = useState<number>(5);
   const [includePagination, setIncludePagination] = useState<boolean>(true);
@@ -34,22 +36,22 @@ export default function ApiMockResponseGeneratorTool() {
       <div className="flex flex-wrap gap-4 items-center justify-between p-4 rounded-xl bg-card border border-border">
         <div className="flex flex-wrap items-center gap-4">
           <div>
-            <label className="text-xs text-muted-foreground block mb-1">Dataset Entity</label>
+            <label className="text-xs text-muted-foreground block mb-1">{t("uiText.14a6754e")}</label>
             <select
               value={type}
               onChange={(e) => setType(e.target.value as MockDatasetType)}
               className="select select-bordered select-sm"
             >
-              <option value="users">Users & Profiles</option>
-              <option value="products">E-Commerce Products</option>
-              <option value="orders">Orders & Cart</option>
-              <option value="posts">Blog Posts & Articles</option>
-              <option value="transactions">Financial Transactions</option>
+              <option value="users">{t("uiText.21623171")}</option>
+              <option value="products">{t("uiText.5647ee90")}</option>
+              <option value="orders">{t("uiText.52edce78")}</option>
+              <option value="posts">{t("uiText.bfcf6c3b")}</option>
+              <option value="transactions">{t("uiText.6a2fcadd")}</option>
             </select>
           </div>
 
           <div>
-            <label className="text-xs text-muted-foreground block mb-1">Items Count ({count})</label>
+            <label className="text-xs text-muted-foreground block mb-1">{t("uiText.d6e02074")}{count})</label>
             <input
               type="range"
               min="1"
@@ -61,16 +63,16 @@ export default function ApiMockResponseGeneratorTool() {
           </div>
 
           <div>
-            <label className="text-xs text-muted-foreground block mb-1">HTTP Status</label>
+            <label className="text-xs text-muted-foreground block mb-1">{t("uiText.872879e9")}</label>
             <select
               value={statusCode}
               onChange={(e) => setStatusCode(parseInt(e.target.value, 10))}
               className="select select-bordered select-sm"
             >
-              <option value={200}>200 OK</option>
-              <option value={201}>201 Created</option>
-              <option value={400}>400 Bad Request</option>
-              <option value={404}>404 Not Found</option>
+              <option value={200}>{t("uiText.e7a545a9")}</option>
+              <option value={201}>{t("uiText.32c04d5a")}</option>
+              <option value={400}>{t("uiText.485f4435")}</option>
+              <option value={404}>{t("uiText.fe41419a")}</option>
             </select>
           </div>
 
@@ -83,14 +85,13 @@ export default function ApiMockResponseGeneratorTool() {
               className="checkbox checkbox-primary checkbox-sm"
             />
             <label htmlFor="includePag" className="text-xs text-muted-foreground cursor-pointer">
-              Wrap with Pagination Envelope
-            </label>
+              {t("uiText.44eec8e7")}</label>
           </div>
         </div>
 
         <button onClick={handleCopy} className="btn btn-primary btn-sm gap-2">
           {copied ? <Check className="w-4 h-4 text-success" /> : <Copy className="w-4 h-4" />}
-          {copied ? 'Copied JSON' : 'Copy Mock Response'}
+          {copied ? t("uiText.16b0813d") : t("uiText.57a5d971")}
         </button>
       </div>
 

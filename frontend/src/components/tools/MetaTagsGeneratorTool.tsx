@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import { Copy, Check, RefreshCw, Info } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { serializeJsonForHtmlScript } from '@/lib/scriptSafeJson';
+import { localizeUiText } from '@/lib/localizedText';
 
 interface MetaTagsConfig {
   // Basic
@@ -292,7 +293,7 @@ export default function MetaTagsGeneratorTool() {
                 : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
             }`}
           >
-            {tab.label}
+            {localizeUiText(tab.label, t)}
           </button>
         ))}
       </div>
@@ -327,7 +328,7 @@ export default function MetaTagsGeneratorTool() {
                 value={config.title}
                 onChange={(e) => updateConfig('title', e.target.value)}
                 maxLength={60}
-                placeholder="My Awesome Website - Home"
+                placeholder={t("uiText.30085a1d")}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
               <p className="text-xs text-gray-500 mt-1">{config.title.length}/60 {t('tool.metaTags.characters')}</p>
@@ -341,7 +342,7 @@ export default function MetaTagsGeneratorTool() {
                 onChange={(e) => updateConfig('description', e.target.value)}
                 maxLength={160}
                 rows={3}
-                placeholder="A brief description of your page..."
+                placeholder={t("uiText.86fb70b5")}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm resize-none"
               />
               <p className="text-xs text-gray-500 mt-1">{config.description.length}/160 {t('tool.metaTags.characters')}</p>
@@ -354,7 +355,7 @@ export default function MetaTagsGeneratorTool() {
                 type="text"
                 value={config.keywords}
                 onChange={(e) => updateConfig('keywords', e.target.value)}
-                placeholder="keyword1, keyword2, keyword3"
+                placeholder={t("uiText.9ef1ef40")}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
@@ -366,7 +367,7 @@ export default function MetaTagsGeneratorTool() {
                 type="text"
                 value={config.author}
                 onChange={(e) => updateConfig('author', e.target.value)}
-                placeholder="John Doe"
+                placeholder={t("uiText.45e079f8")}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
@@ -379,10 +380,10 @@ export default function MetaTagsGeneratorTool() {
                 onChange={(e) => updateConfig('robots', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               >
-                <option value="index, follow">index, follow</option>
-                <option value="index, nofollow">index, nofollow</option>
-                <option value="noindex, follow">noindex, follow</option>
-                <option value="noindex, nofollow">noindex, nofollow</option>
+                <option value="index, follow">{t("uiText.c4a18e42")}</option>
+                <option value="index, nofollow">{t("uiText.b2a24ee1")}</option>
+                <option value="noindex, follow">{t("uiText.95c234ff")}</option>
+                <option value="noindex, nofollow">{t("uiText.e99264ac")}</option>
               </select>
             </div>
             <div className="md:col-span-2">
@@ -438,7 +439,7 @@ export default function MetaTagsGeneratorTool() {
                 type="text"
                 value={config.ogTitle}
                 onChange={(e) => updateConfig('ogTitle', e.target.value)}
-                placeholder={config.title || 'Open Graph Title'}
+                placeholder={config.title || t("uiText.5cdca37b")}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
@@ -450,7 +451,7 @@ export default function MetaTagsGeneratorTool() {
                 value={config.ogDescription}
                 onChange={(e) => updateConfig('ogDescription', e.target.value)}
                 rows={2}
-                placeholder={config.description || 'Open Graph Description'}
+                placeholder={config.description || t("uiText.1dca2c1f")}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm resize-none"
               />
             </div>
@@ -475,10 +476,10 @@ export default function MetaTagsGeneratorTool() {
                 onChange={(e) => updateConfig('ogType', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               >
-                <option value="website">website</option>
-                <option value="article">article</option>
-                <option value="book">book</option>
-                <option value="profile">profile</option>
+                <option value="website">{t("uiText.fcefccca")}</option>
+                <option value="article">{t("uiText.17676759")}</option>
+                <option value="book">{t("uiText.c1948a38")}</option>
+                <option value="profile">{t("uiText.4674caee")}</option>
                 <option value="video.movie">video.movie</option>
                 <option value="music.song">music.song</option>
               </select>
@@ -491,7 +492,7 @@ export default function MetaTagsGeneratorTool() {
                 type="text"
                 value={config.ogSiteName}
                 onChange={(e) => updateConfig('ogSiteName', e.target.value)}
-                placeholder="My Website"
+                placeholder={t("uiText.e0296fd6")}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
@@ -509,10 +510,10 @@ export default function MetaTagsGeneratorTool() {
                 onChange={(e) => updateConfig('twitterCard', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               >
-                <option value="summary">summary</option>
-                <option value="summary_large_image">summary_large_image</option>
-                <option value="app">app</option>
-                <option value="player">player</option>
+                <option value="summary">{t("uiText.10a44713")}</option>
+                <option value="summary_large_image">{t("uiText.92db9731")}</option>
+                <option value="app">{t("uiText.1f6a832c")}</option>
+                <option value="player">{t("uiText.2c99c300")}</option>
               </select>
             </div>
             <div>
@@ -523,7 +524,7 @@ export default function MetaTagsGeneratorTool() {
                 type="text"
                 value={config.twitterSite}
                 onChange={(e) => updateConfig('twitterSite', e.target.value)}
-                placeholder="@username"
+                placeholder={t("uiText.49739e07")}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
@@ -535,7 +536,7 @@ export default function MetaTagsGeneratorTool() {
                 type="text"
                 value={config.twitterCreator}
                 onChange={(e) => updateConfig('twitterCreator', e.target.value)}
-                placeholder="@author"
+                placeholder={t("uiText.4fea9530")}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
@@ -547,7 +548,7 @@ export default function MetaTagsGeneratorTool() {
                 type="text"
                 value={config.twitterTitle}
                 onChange={(e) => updateConfig('twitterTitle', e.target.value)}
-                placeholder={config.title || 'Twitter Title'}
+                placeholder={config.title || t("uiText.266c13aa")}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
@@ -559,7 +560,7 @@ export default function MetaTagsGeneratorTool() {
                 value={config.twitterDescription}
                 onChange={(e) => updateConfig('twitterDescription', e.target.value)}
                 rows={2}
-                placeholder={config.description || 'Twitter Description'}
+                placeholder={config.description || t("uiText.ec002d46")}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm resize-none"
               />
             </div>
@@ -582,32 +583,29 @@ export default function MetaTagsGeneratorTool() {
           <>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                LinkedIn Title
-              </label>
+                {t("uiText.7a36c8c1")}</label>
               <input
                 type="text"
                 value={config.linkedinTitle}
                 onChange={(e) => updateConfig('linkedinTitle', e.target.value)}
-                placeholder={config.title || 'LinkedIn Title'}
+                placeholder={config.title || t("uiText.7a36c8c1")}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                LinkedIn Description
-              </label>
+                {t("uiText.d2f096e1")}</label>
               <textarea
                 value={config.linkedinDescription}
                 onChange={(e) => updateConfig('linkedinDescription', e.target.value)}
                 rows={2}
-                placeholder={config.description || 'LinkedIn Description'}
+                placeholder={config.description || t("uiText.d2f096e1")}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm resize-none"
               />
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                LinkedIn Image
-              </label>
+                {t("uiText.767366b2")}</label>
               <input
                 type="url"
                 value={config.linkedinImage}
@@ -618,8 +616,7 @@ export default function MetaTagsGeneratorTool() {
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                LinkedIn URL
-              </label>
+                {t("uiText.91833986")}</label>
               <input
                 type="url"
                 value={config.linkedinUrl}
@@ -642,61 +639,56 @@ export default function MetaTagsGeneratorTool() {
                   className="w-4 h-4 text-primary-600 rounded border-gray-300 dark:border-gray-600"
                 />
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Include JSON-LD Structured Data
-                </span>
+                  {t("uiText.6ff3a51b")}</span>
               </label>
             </div>
 
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Schema Type
-              </label>
+                {t("tool.metaTags.schemaType")}</label>
               <select
                 value={config.jsonLdType}
                 onChange={(e) => updateConfig('jsonLdType', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               >
-                <option value="WebSite">WebSite</option>
-                <option value="WebPage">WebPage</option>
-                <option value="Article">Article</option>
-                <option value="BlogPosting">BlogPosting</option>
-                <option value="Organization">Organization</option>
-                <option value="Person">Person</option>
-                <option value="Product">Product</option>
-                <option value="LocalBusiness">LocalBusiness</option>
+                <option value="WebSite">{t("tool.metaTags.schemaWebSite")}</option>
+                <option value="WebPage">{t("tool.metaTags.schemaWebPage")}</option>
+                <option value="Article">{t("tool.metaTags.schemaArticle")}</option>
+                <option value="BlogPosting">{t("tool.metaTags.schemaBlogPosting")}</option>
+                <option value="Organization">{t("tool.metaTags.schemaOrganization")}</option>
+                <option value="Person">{t("tool.metaTags.schemaPerson")}</option>
+                <option value="Product">{t("tool.metaTags.schemaProduct")}</option>
+                <option value="LocalBusiness">{t("tool.metaTags.schemaLocalBusiness")}</option>
               </select>
             </div>
 
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Name
-              </label>
+                {t("contact.name")}</label>
               <input
                 type="text"
                 value={config.jsonLdName}
                 onChange={(e) => updateConfig('jsonLdName', e.target.value)}
-                placeholder={config.title || 'Your Site Name'}
+                placeholder={config.title || t("uiText.35b99844")}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
 
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Description
-              </label>
+                {t("tool.metaTags.description")}</label>
               <textarea
                 value={config.jsonLdDescription}
                 onChange={(e) => updateConfig('jsonLdDescription', e.target.value)}
                 rows={2}
-                placeholder={config.description || 'A description for search engines'}
+                placeholder={config.description || t("uiText.b9ea25dc")}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm resize-none"
               />
             </div>
 
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                Image
-              </label>
+                {t("uiText.590ca79a")}</label>
               <input
                 type="url"
                 value={config.jsonLdImage}

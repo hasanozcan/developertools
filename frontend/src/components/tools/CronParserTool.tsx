@@ -9,6 +9,7 @@ import {
   parseCronExpression,
   type CronDescriptionKey,
 } from '@/lib/cron';
+import { localizeUiText } from '@/lib/localizedText';
 
 const languageLocales: Record<Language, string> = {
   en: 'en-US',
@@ -168,7 +169,7 @@ export default function CronParserTool() {
             onClick={copyToClipboard}
             disabled={!expression}
             className="px-4 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors disabled:opacity-50"
-            title="Copy expression"
+            title={t("uiText.ad5b693e")}
           >
             {copied ? <Check className="w-5 h-5 text-green-600" /> : <Copy className="w-5 h-5" />}
           </button>
@@ -207,18 +208,18 @@ export default function CronParserTool() {
             {/* Minute */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Minute</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t("tool.cronParser.minute")}</label>
                 <select
                   value={builderMinute}
                   onChange={(e) => setBuilderMinute(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 >
-                  <option value="*">Every minute (*)</option>
-                  <option value="0">At minute 0</option>
-                  <option value="*/5">Every 5 minutes (*/5)</option>
-                  <option value="*/15">Every 15 minutes (*/15)</option>
-                  <option value="*/30">Every 30 minutes (*/30)</option>
-                  <option value="custom">Custom...</option>
+                  <option value="*">{t("uiText.69c26719")}</option>
+                  <option value="0">{t("uiText.e94de590")}</option>
+                  <option value="*/5">{t("uiText.7e888b5b")}</option>
+                  <option value="*/15">{t("uiText.02c5aab1")}</option>
+                  <option value="*/30">{t("uiText.05c7fc51")}</option>
+                  <option value="custom">{t("uiText.3905396c")}</option>
                 </select>
                 {builderMinute === 'custom' && (
                   <input
@@ -233,20 +234,20 @@ export default function CronParserTool() {
 
               {/* Hour */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Hour</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t("tool.cronParser.hour")}</label>
                 <select
                   value={builderHour}
                   onChange={(e) => setBuilderHour(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 >
-                  <option value="*">Every hour (*)</option>
-                  <option value="0">At hour 0 (midnight)</option>
-                  <option value="*/2">Every 2 hours (*/2)</option>
-                  <option value="*/6">Every 6 hours (*/6)</option>
-                  <option value="*/12">Every 12 hours (*/12)</option>
-                  <option value="9">At 9 AM</option>
-                  <option value="17">At 5 PM</option>
-                  <option value="custom">Custom...</option>
+                  <option value="*">{t("uiText.d9f112eb")}</option>
+                  <option value="0">{t("uiText.00c0d219")}</option>
+                  <option value="*/2">{t("uiText.932fa037")}</option>
+                  <option value="*/6">{t("uiText.b9782907")}</option>
+                  <option value="*/12">{t("uiText.c60017c3")}</option>
+                  <option value="9">{t("uiText.fd31d6af")}</option>
+                  <option value="17">{t("uiText.b38e6456")}</option>
+                  <option value="custom">{t("uiText.3905396c")}</option>
                 </select>
                 {builderHour === 'custom' && (
                   <input
@@ -261,17 +262,17 @@ export default function CronParserTool() {
 
               {/* Day of Month */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Day of Month</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t("tool.cronParser.dayOfMonth")}</label>
                 <select
                   value={builderDayMonth}
                   onChange={(e) => setBuilderDayMonth(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 >
-                  <option value="*">Every day (*)</option>
-                  <option value="1">1st of month</option>
-                  <option value="15">15th of month</option>
-                  <option value="1,15">1st and 15th</option>
-                  <option value="custom">Custom...</option>
+                  <option value="*">{t("uiText.c337c05f")}</option>
+                  <option value="1">{t("uiText.f4a7a0c2")}</option>
+                  <option value="15">{t("uiText.fd74370e")}</option>
+                  <option value="1,15">{t("uiText.f0b4d514")}</option>
+                  <option value="custom">{t("uiText.3905396c")}</option>
                 </select>
                 {builderDayMonth === 'custom' && (
                   <input
@@ -286,46 +287,46 @@ export default function CronParserTool() {
 
               {/* Month */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Month</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t("tool.cronParser.month")}</label>
                 <select
                   value={builderMonth}
                   onChange={(e) => setBuilderMonth(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 >
-                  <option value="*">Every month (*)</option>
-                  <option value="1">January</option>
-                  <option value="2">February</option>
-                  <option value="3">March</option>
-                  <option value="4">April</option>
-                  <option value="5">May</option>
-                  <option value="6">June</option>
-                  <option value="7">July</option>
-                  <option value="8">August</option>
-                  <option value="9">September</option>
-                  <option value="10">October</option>
-                  <option value="11">November</option>
-                  <option value="12">December</option>
+                  <option value="*">{t("uiText.6815705b")}</option>
+                  <option value="1">{t("uiText.9d2cfb7d")}</option>
+                  <option value="2">{t("uiText.fca77633")}</option>
+                  <option value="3">{t("uiText.c0846390")}</option>
+                  <option value="4">{t("uiText.98dbac97")}</option>
+                  <option value="5">{t("uiText.3ba7e226")}</option>
+                  <option value="6">{t("uiText.e920f785")}</option>
+                  <option value="7">{t("uiText.011ca01f")}</option>
+                  <option value="8">{t("uiText.5ddb609c")}</option>
+                  <option value="9">{t("uiText.c212b600")}</option>
+                  <option value="10">{t("uiText.ecf21807")}</option>
+                  <option value="11">{t("uiText.3ea53a3f")}</option>
+                  <option value="12">{t("uiText.662dcc9e")}</option>
                 </select>
               </div>
 
               {/* Day of Week */}
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Day of Week</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t("tool.cronParser.dayOfWeek")}</label>
                 <select
                   value={builderDayWeek}
                   onChange={(e) => setBuilderDayWeek(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 >
-                  <option value="*">Every day (*)</option>
-                  <option value="0">Sunday</option>
-                  <option value="1">Monday</option>
-                  <option value="2">Tuesday</option>
-                  <option value="3">Wednesday</option>
-                  <option value="4">Thursday</option>
-                  <option value="5">Friday</option>
-                  <option value="6">Saturday</option>
-                  <option value="1-5">Weekdays (Mon-Fri)</option>
-                  <option value="0,6">Weekends (Sat-Sun)</option>
+                  <option value="*">{t("uiText.c337c05f")}</option>
+                  <option value="0">{t("uiText.d0f065f9")}</option>
+                  <option value="1">{t("uiText.3a56e759")}</option>
+                  <option value="2">{t("uiText.fe18fbb0")}</option>
+                  <option value="3">{t("uiText.e8239b77")}</option>
+                  <option value="4">{t("uiText.99eb4fd7")}</option>
+                  <option value="5">{t("uiText.bc09cf52")}</option>
+                  <option value="6">{t("uiText.0e68b936")}</option>
+                  <option value="1-5">{t("uiText.9e0d2715")}</option>
+                  <option value="0,6">{t("uiText.25c6ce2d")}</option>
                 </select>
               </div>
             </div>
@@ -335,8 +336,7 @@ export default function CronParserTool() {
               onClick={generateFromBuilder}
               className="w-full px-4 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
             >
-              Generate Cron Expression
-            </button>
+              {t("tool.cronParser.generateCron")}</button>
           </div>
         </div>
       )}
@@ -345,7 +345,7 @@ export default function CronParserTool() {
       {error && (
         <div className="p-4 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg flex items-start gap-3">
           <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
-          <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
+          <p className="text-red-700 dark:text-red-300 text-sm">{localizeUiText(error, t)}</p>
         </div>
       )}
 
@@ -396,7 +396,7 @@ export default function CronParserTool() {
               className="p-3 text-left border border-gray-200 dark:border-gray-600 rounded-lg hover:border-primary-500 dark:hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-colors"
             >
               <div className="font-mono text-sm text-primary-600 dark:text-primary-400">{preset.expr}</div>
-              <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{preset.label}</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{localizeUiText(preset.label, t)}</div>
             </button>
           ))}
         </div>

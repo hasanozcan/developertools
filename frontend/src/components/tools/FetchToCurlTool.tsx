@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { Copy, Check, Terminal, RefreshCw, Code } from 'lucide-react';
 import { fetchToCurl } from '@/lib/fetchToCurl';
@@ -18,6 +19,7 @@ const SAMPLE_FETCH = `fetch('https://api.example.com/v1/users', {
 });`;
 
 export default function FetchToCurlTool() {
+  const { t } = useLanguage();
   const [fetchInput, setFetchInput] = useState(SAMPLE_FETCH);
   const [multiline, setMultiline] = useState(true);
   const [copied, setCopied] = useState(false);
@@ -49,27 +51,24 @@ export default function FetchToCurlTool() {
             onChange={(e) => setMultiline(e.target.checked)}
             className="rounded text-indigo-600 focus:ring-indigo-500"
           />
-          Multi-line output with backslashes (\)
-        </label>
+          {t("uiText.c92112fb")}</label>
 
         <button
           onClick={() => setFetchInput(SAMPLE_FETCH)}
           className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1"
         >
-          <RefreshCw className="h-3 w-3" /> Load Sample Fetch
-        </button>
+          <RefreshCw className="h-3 w-3" /> {t("uiText.e89542fd")}</button>
       </div>
 
       {/* Editor Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="flex flex-col space-y-2">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-            <Code className="h-3.5 w-3.5 text-indigo-500" /> JavaScript Fetch Snippet
-          </span>
+            <Code className="h-3.5 w-3.5 text-indigo-500" /> {t("uiText.3782173f")}</span>
           <textarea
             value={fetchInput}
             onChange={(e) => setFetchInput(e.target.value)}
-            placeholder="Paste your fetch('...') code or browser network snippet here..."
+            placeholder={t("uiText.8f3b8975")}
             rows={14}
             className="w-full rounded-2xl border border-slate-200 bg-white p-4 font-mono text-xs text-slate-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-white/10 dark:bg-slate-900 dark:text-slate-100 resize-y"
           />
@@ -78,22 +77,21 @@ export default function FetchToCurlTool() {
         <div className="flex flex-col space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-              <Terminal className="h-3.5 w-3.5 text-indigo-500" /> Equivalent cURL Command
-            </span>
+              <Terminal className="h-3.5 w-3.5 text-indigo-500" /> {t("uiText.a6da4774")}</span>
             {curlOutput && (
               <button
                 onClick={handleCopy}
                 className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
               >
                 {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-                {copied ? 'Copied' : 'Copy cURL'}
+                {copied ? t("uiText.8dc21305") : t("uiText.c4d723d6")}
               </button>
             )}
           </div>
           <textarea
             readOnly
             value={curlOutput}
-            placeholder="cURL command will appear here..."
+            placeholder={t("uiText.1bce6feb")}
             rows={14}
             className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 p-4 font-mono text-xs text-slate-900 shadow-sm focus:outline-none dark:border-white/10 dark:bg-slate-900/80 dark:text-indigo-200 resize-y"
           />

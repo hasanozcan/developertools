@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { formatEd25519Key } from '@/lib/ed25519SignVerify';
@@ -7,6 +8,7 @@ import { formatEd25519Key } from '@/lib/ed25519SignVerify';
 const SAMPLE = "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a";
 
 export default function Ed25519SignVerifyTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE);
   let output = '';
 
@@ -22,8 +24,8 @@ export default function Ed25519SignVerifyTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Ed25519 Hex Key (32 bytes)</label>
-            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.fec41acd")}</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -34,7 +36,7 @@ export default function Ed25519SignVerifyTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Sanitized 256-bit Public Key</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.e0a86869")}</label>
             <CopyButton text={output} />
           </div>
           <textarea

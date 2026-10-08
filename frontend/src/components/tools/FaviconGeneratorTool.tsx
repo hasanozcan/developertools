@@ -105,8 +105,7 @@ export default function FaviconGeneratorTool() {
                   className="w-full py-1.5 px-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:text-indigo-600 flex items-center justify-center gap-1 transition shadow-sm"
                 >
                   <Download className="w-3 h-3" />
-                  PNG
-                </button>
+                  {t("uiText.aceadefc")}</button>
               </div>
             ))}
           </div>
@@ -119,8 +118,7 @@ export default function FaviconGeneratorTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              HTML &lt;head&gt; Favicon Tags
-            </span>
+              {t("uiText.61327619")}</span>
             <button
               onClick={() => copyText(htmlTags, setCopiedTags)}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
@@ -148,7 +146,7 @@ export default function FaviconGeneratorTool() {
                 type="text"
                 value={appName}
                 onChange={(e) => setAppName(e.target.value)}
-                placeholder="App Name"
+                placeholder={t("uiText.9b2b97df")}
                 className="px-2 py-0.5 text-xs rounded border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
               />
             </div>

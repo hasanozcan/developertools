@@ -555,7 +555,7 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
           heading: 'Syntax and boundaries',
           bullets: [
             'Use an empty string for the document root and / for an object member whose name is empty.',
-            'Encode ~ as ~0 and / as ~1 inside a token; decoding happens in that order as RFC 6901 requires.',
+            'Encode ~ as ~0 and / as ~1 inside a token. Decode ~1 to / first, then ~0 to ~, as RFC 6901 requires.',
             'Array indexes are canonical non-negative decimal integers. The special - token is useful for JSON Patch append operations but does not identify an existing value.',
             'The tool evaluates JSON Pointer syntax only; it does not implement JSONPath filters, JSON Patch operations, URI fragment decoding, or schema validation.',
           ],

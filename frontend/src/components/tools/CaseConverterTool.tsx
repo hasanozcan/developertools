@@ -106,8 +106,7 @@ export default function CaseConverterTool() {
           onClick={loadSample}
           className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
         >
-          Load Sample
-        </button>
+          {t("common.loadSample")}</button>
       </div>
 
       {/* Input */}
@@ -117,8 +116,7 @@ export default function CaseConverterTool() {
             htmlFor="case-converter-input"
             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
-            Input Text
-          </label>
+            {t("tool.binaryEncoder.inputText")}</label>
           {isUpdating ? (
             <span role="status" className="text-xs text-gray-500 dark:text-gray-400">
               {t('common.updating')}
@@ -129,7 +127,7 @@ export default function CaseConverterTool() {
           id="case-converter-input"
           value={input}
           onChange={setInput}
-          placeholder="Enter text to convert..."
+          placeholder={t("tool.caseConverter.inputPlaceholder")}
           language="text"
           minHeight="100px"
           maxLength={250_000}
@@ -139,8 +137,7 @@ export default function CaseConverterTool() {
       {/* Selected Case Output */}
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Convert to:
-          <select
+          {t("uiText.2f45eb41")}<select
             value={selectedCase}
             onChange={(e) => setSelectedCase(e.target.value as CaseType)}
             className="ml-2 border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
@@ -154,7 +151,7 @@ export default function CaseConverterTool() {
         </label>
         <div className="flex items-center gap-2 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
           <code className="flex-1 font-mono text-sm break-all text-gray-800 dark:text-gray-200">
-            {converted || 'Converted text will appear here...'}
+            {converted || t("uiText.1aae1821")}
           </code>
           {converted && <CopyButton text={converted} />}
         </div>
@@ -164,8 +161,7 @@ export default function CaseConverterTool() {
       {deferredInput ? (
         <div>
           <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-            All Case Conversions
-          </h3>
+            {t("uiText.8b5a97b1")}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {(Object.keys(caseNames) as CaseType[]).map((caseType) => (
               <div

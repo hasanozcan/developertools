@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { parseJsonToGrid, gridToJson, gridToCsv } from '@/lib/jsonCsvGridEditor';
@@ -11,6 +12,7 @@ const SAMPLE_JSON = JSON.stringify([
 ], null, 2);
 
 export default function JsonCsvGridEditorTool() {
+  const { t } = useLanguage();
   const [jsonInput, setJsonInput] = useState(SAMPLE_JSON);
   const grid = parseJsonToGrid(jsonInput);
   const csvOutput = gridToCsv(grid.headers, grid.rows);
@@ -19,7 +21,7 @@ export default function JsonCsvGridEditorTool() {
     <div className="space-y-6">
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Interactive Spreadsheet Data Grid</label>
+          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.e9ca8b51")}</label>
           <div className="flex gap-2">
             <CopyButton text={csvOutput} />
             <CopyButton text={jsonInput} />

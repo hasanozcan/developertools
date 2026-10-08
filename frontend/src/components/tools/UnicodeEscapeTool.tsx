@@ -4,6 +4,7 @@ import { useCallback, useState } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { useLanguage } from '@/context/LanguageContext';
 import { decodeUnicode, encodeUnicode } from '@/lib/unicodeEscape';
+import { localizeUiText } from '@/lib/localizedText';
 
 type Mode = 'encode' | 'decode';
 
@@ -104,8 +105,7 @@ export default function UnicodeEscapeTool() {
             onChange={(event) => setEncodeAscii(event.target.checked)}
             className="rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-primary-600"
           />
-          Encode ASCII characters too
-        </label>
+          {t("uiText.71fdbc6e")}</label>
       )}
 
       {error && (
@@ -113,7 +113,7 @@ export default function UnicodeEscapeTool() {
           role="alert"
           className="p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-300"
         >
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -128,8 +128,8 @@ export default function UnicodeEscapeTool() {
             language="text"
             placeholder={
               mode === 'encode'
-                ? 'Enter plain text to convert into Unicode escape sequences...'
-                : 'Enter escaped text like \\u0041 or \\u{1F680}...'
+                ? t("uiText.68094f2a")
+                : t("uiText.97dc31d5")
             }
             minHeight="220px"
           />
@@ -144,7 +144,7 @@ export default function UnicodeEscapeTool() {
             onChange={() => {}}
             readOnly
             language="text"
-            placeholder="Result will appear here..."
+            placeholder={t("tool.htmlEntity.resultPlaceholder")}
             minHeight="220px"
           />
         </div>
@@ -152,9 +152,8 @@ export default function UnicodeEscapeTool() {
 
       <div className="text-sm text-gray-500 dark:text-gray-400 space-y-1">
         <p>
-          Supports <code>\uXXXX</code>, <code>\u{'{XXXXXX}'}</code>, and <code>\xXX</code> patterns.
-        </p>
-        <p>Use this tool for JavaScript strings, JSON payloads, and escaped log messages.</p>
+          {t("uiText.d793a721")}<code>\uXXXX</code>, <code>\u{'{XXXXXX}'}</code>{t("uiText.aa26483a") + ' '}<code>\xXX</code> {t("uiText.bb5e2980")}</p>
+        <p>{t("uiText.4a554c39")}</p>
       </div>
     </div>
   );

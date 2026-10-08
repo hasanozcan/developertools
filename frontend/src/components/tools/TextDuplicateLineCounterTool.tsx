@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { countDuplicateLines } from '@/lib/textDuplicateLineCounter';
@@ -7,6 +8,7 @@ import { countDuplicateLines } from '@/lib/textDuplicateLineCounter';
 const SAMPLE = "server1\nserver2\nserver1\nserver3\nserver1";
 
 export default function TextDuplicateLineCounterTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE);
   let output = '';
 
@@ -22,8 +24,8 @@ export default function TextDuplicateLineCounterTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Line Delimited List</label>
-            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.ad054d90")}</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -34,7 +36,7 @@ export default function TextDuplicateLineCounterTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Duplicate Frequency Table</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.425d0e10")}</label>
             <CopyButton text={output} />
           </div>
           <textarea

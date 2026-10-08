@@ -248,14 +248,14 @@ export default function ToolPageWrapper({
 
       {/* Header */}
       <div className="surface-card mb-8 flex items-start justify-between gap-4 rounded-3xl p-6 sm:p-8">
-        <div>
+        <div className="min-w-0 flex-1">
           <span className="eyebrow mb-3">{translatedCategoryName}</span>
-          <h1 className="mb-2 text-3xl font-extrabold tracking-tight text-gray-950 dark:text-white sm:text-4xl">
+          <h1 className="mb-2 break-words text-3xl font-extrabold tracking-tight text-gray-950 dark:text-white sm:text-4xl">
             {toolName}
           </h1>
           <p className="max-w-3xl leading-7 text-gray-600 dark:text-gray-300">{toolDescription}</p>
         </div>
-        <FavoriteButton toolSlug={toolSlug} />
+        <FavoriteButton toolSlug={toolSlug} className="shrink-0" />
       </div>
 
       {/* Main Content with Sidebar */}
@@ -340,8 +340,7 @@ export default function ToolPageWrapper({
 
                   <span className="hidden md:inline-flex items-center text-xs text-slate-500 dark:text-slate-400">
                     <kbd className="rounded border border-slate-300 bg-slate-200/90 px-1.5 py-0.5 text-[10px] font-mono font-semibold text-slate-800 mr-1.5 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100">
-                      ESC
-                    </kbd>
+                      {t("uiText.ea50bade")}</kbd>
                     {t('exitZenMode') || 'to exit'}
                   </span>
                   <button
@@ -461,7 +460,7 @@ export default function ToolPageWrapper({
           {topicCollections.length > 0 && (
             <section className="mb-8" data-topic-collections="true">
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-                {translateOr('toolPage.topicCollections', seoCopy.topicCollectionsHeading)}
+                {seoCopy.topicCollectionsHeading}
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {topicCollections.map((collection) => (

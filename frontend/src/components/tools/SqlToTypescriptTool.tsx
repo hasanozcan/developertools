@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { FileCode, Copy, Check } from 'lucide-react';
 import { sqlTableToTypeScript } from '@/lib/sqlToTypescript';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE_SQL = `CREATE TABLE users (
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -49,12 +50,12 @@ export default function SqlToTypescriptTool() {
         </div>
 
         <div className="flex items-center gap-2">
-          <label className="text-xs font-bold text-slate-500">Interface Override:</label>
+          <label className="text-xs font-bold text-slate-500">{t("uiText.331ef38e")}</label>
           <input
             type="text"
             value={interfaceName}
             onChange={(e) => setInterfaceName(e.target.value)}
-            placeholder="CustomInterfaceName"
+            placeholder={t("uiText.68f22926")}
             className="px-2.5 py-1 text-xs font-mono rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 w-44"
           />
         </div>
@@ -62,7 +63,7 @@ export default function SqlToTypescriptTool() {
 
       {error && (
         <div className="p-4 rounded-xl border border-red-200 bg-red-50 text-xs text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-300">
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -70,7 +71,7 @@ export default function SqlToTypescriptTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">SQL Schema (CREATE TABLE)</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.5011ced9")}</span>
             <button
               onClick={() => setSqlInput(SAMPLE_SQL)}
               className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-semibold"
@@ -88,7 +89,7 @@ export default function SqlToTypescriptTool() {
 
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">TypeScript Interface</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.20086c2d")}</span>
             {tsCode && (
               <button
                 onClick={handleCopy}

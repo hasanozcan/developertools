@@ -7,6 +7,7 @@ import { getGuideLinkCopy } from '@/lib/guideLinkCopy';
 import { Download, RefreshCw, Trash2 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { formatUuid, generateUuidV4, generateUuidV7, type UuidVersion } from '@/lib/uuid';
+import { localizeUiText } from '@/lib/localizedText';
 
 const MAX_UUID_COUNT = 1000;
 
@@ -88,8 +89,8 @@ export default function UuidGeneratorTool({ presetVersion }: { presetVersion?: U
               }}
               className="border border-gray-300 dark:border-gray-600 rounded px-2 py-1 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
             >
-              <option value="v4">UUID v4</option>
-              <option value="v7">UUID v7</option>
+              <option value="v4">{t("uiText.e6fb8e3c")}</option>
+              <option value="v7">{t("uiText.e9fb92f5")}</option>
             </select>
           </div>
         )}
@@ -181,7 +182,7 @@ export default function UuidGeneratorTool({ presetVersion }: { presetVersion?: U
 
       {error && (
         <p role="alert" className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-300">
-          {error}
+          {localizeUiText(error, t)}
         </p>
       )}
 
@@ -191,7 +192,7 @@ export default function UuidGeneratorTool({ presetVersion }: { presetVersion?: U
           <textarea
             readOnly
             value={allUuids}
-            aria-label="Generated UUIDs"
+            aria-label={t("uiText.db928ade")}
             rows={Math.min(16, Math.max(4, uuids.length))}
             className="w-full resize-y rounded border border-gray-200 bg-white p-3 font-mono text-sm text-gray-800 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200"
           />

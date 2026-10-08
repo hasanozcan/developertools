@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { convertHtmlTable } from '@/lib/htmlTableConverter';
 import { Copy, Check } from 'lucide-react';
 
 export default function HtmlTableConverterTool() {
+  const { t } = useLanguage();
   const [html, setHtml] = useState('<table>\n  <tr><th>Language</th><th>Popularity</th></tr>\n  <tr><td>TypeScript</td><td>Very High</td></tr>\n  <tr><td>Rust</td><td>High</td></tr>\n</table>');
   const [outputType, setOutputType] = useState<'markdown' | 'csv' | 'json'>('markdown');
   const [copied, setCopied] = useState(false);
@@ -15,7 +17,7 @@ export default function HtmlTableConverterTool() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="inline-flex rounded-xl bg-slate-100 p-1 dark:bg-slate-800">
-          <button onClick={() => setOutputType('markdown')} className={`rounded-lg px-3 py-1 text-xs font-semibold ${outputType === 'markdown' ? 'bg-indigo-600 text-white' : ''}`}>Markdown</button>
+          <button onClick={() => setOutputType('markdown')} className={`rounded-lg px-3 py-1 text-xs font-semibold ${outputType === 'markdown' ? 'bg-indigo-600 text-white' : ''}`}>{t("uiText.f651116c")}</button>
           <button onClick={() => setOutputType('csv')} className={`rounded-lg px-3 py-1 text-xs font-semibold ${outputType === 'csv' ? 'bg-indigo-600 text-white' : ''}`}>CSV</button>
           <button onClick={() => setOutputType('json')} className={`rounded-lg px-3 py-1 text-xs font-semibold ${outputType === 'json' ? 'bg-indigo-600 text-white' : ''}`}>JSON</button>
         </div>
@@ -24,7 +26,7 @@ export default function HtmlTableConverterTool() {
           className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md transition hover:bg-indigo-500"
         >
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          <span>{copied ? 'Copied' : 'Copy Output'}</span>
+          <span>{copied ? t("uiText.8dc21305") : t("uiText.aa881981")}</span>
         </button>
       </div>
 

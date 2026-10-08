@@ -1,10 +1,12 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { Music, Download, Scissors } from 'lucide-react';
 import { formatAudioDuration, calculateTrimmedSamples } from '@/lib/audioConverter';
 
 export default function AudioConverterTool() {
+  const { t } = useLanguage();
   const [duration, setDuration] = useState(124.5);
   const [startTime, setStartTime] = useState(10.0);
   const [endTime, setEndTime] = useState(60.0);
@@ -20,36 +22,35 @@ export default function AudioConverterTool() {
             <Music className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-base font-semibold text-slate-900 dark:text-white">Audio Format Converter & Trimmer</h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">Convert between WAV, MP3, and OGG formats with precise sample trimming</p>
+            <h3 className="text-base font-semibold text-slate-900 dark:text-white">{t("uiText.c6554a52")}</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">{t("uiText.ae538e58")}</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <div>
-            <label className="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">Trim Start Time: {formatAudioDuration(startTime)}</label>
+            <label className="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">{t("uiText.9e84aac8") + ' '}{formatAudioDuration(startTime)}</label>
             <input type="number" min="0" max={duration} step="0.5" value={startTime} onChange={(e) => setStartTime(Number(e.target.value))} className="w-full rounded-xl border border-slate-200 bg-white p-2 text-xs dark:border-slate-700 dark:bg-slate-800" />
           </div>
           <div>
-            <label className="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">Trim End Time: {formatAudioDuration(endTime)}</label>
+            <label className="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">{t("uiText.27b756c1") + ' '}{formatAudioDuration(endTime)}</label>
             <input type="number" min="0" max={duration} step="0.5" value={endTime} onChange={(e) => setEndTime(Number(e.target.value))} className="w-full rounded-xl border border-slate-200 bg-white p-2 text-xs dark:border-slate-700 dark:bg-slate-800" />
           </div>
           <div>
-            <label className="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">Target Output Format</label>
+            <label className="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">{t("uiText.f8c3eab8")}</label>
             <select value={outputFormat} onChange={(e) => setOutputFormat(e.target.value as any)} className="w-full rounded-xl border border-slate-200 bg-white p-2 text-xs dark:border-slate-700 dark:bg-slate-800">
-              <option value="wav">WAV (PCM Uncompressed)</option>
-              <option value="mp3">MP3 (Compressed Audio)</option>
-              <option value="ogg">OGG (Vorbis Open Audio)</option>
+              <option value="wav">{t("uiText.01360b3e")}</option>
+              <option value="mp3">{t("uiText.207884a1")}</option>
+              <option value="ogg">{t("uiText.9b47deea")}</option>
             </select>
           </div>
         </div>
 
         <div className="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-between">
           <span className="text-xs text-slate-600 dark:text-slate-300">
-            Duration: <strong>{(endTime - startTime).toFixed(1)}s</strong> ({sampleCalc.numSamples} samples)
-          </span>
+            {t("uiText.0cb80f35")}<strong>{(endTime - startTime).toFixed(1)}s</strong> ({sampleCalc.numSamples} {t("uiText.a651738f")}</span>
           <button onClick={() => alert('Audio converted and downloaded as ' + outputFormat.toUpperCase())} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-500 transition">
-            <Download className="w-4 h-4" /> Export {outputFormat.toUpperCase()}
+            <Download className="w-4 h-4" /> {' ' + t("uiText.e86349d3") + ' '}{outputFormat.toUpperCase()}
           </button>
         </div>
       </div>

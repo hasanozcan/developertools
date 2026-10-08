@@ -1,3 +1,4 @@
+import { LanguageProvider } from '@/context/LanguageContext';
 import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -49,7 +50,7 @@ describe('HmacGeneratorTool async operations', () => {
       .mockReturnValueOnce(staleOperation.promise)
       .mockReturnValueOnce(currentOperation.promise);
 
-    render(<HmacGeneratorTool />);
+    render(<LanguageProvider><HmacGeneratorTool /></LanguageProvider>);
     fillRequiredFields();
 
     fireEvent.click(screen.getByRole('button', { name: 'Generate HMAC' }));
@@ -82,7 +83,7 @@ describe('HmacGeneratorTool async operations', () => {
       .mockReturnValueOnce(staleOperation.promise)
       .mockReturnValueOnce(currentOperation.promise);
 
-    render(<HmacGeneratorTool />);
+    render(<LanguageProvider><HmacGeneratorTool /></LanguageProvider>);
     fillRequiredFields();
     fireEvent.change(screen.getByLabelText('Signature to verify'), {
       target: { value: 'signature' },

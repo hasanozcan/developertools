@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useId } from 'react';
 import Image from 'next/image';
 import { ChevronDown } from 'lucide-react';
 import { useLanguage, Language, languageNames, languageFlags, languageFlagUrls } from '@/context/LanguageContext';
+import { interpolateText } from '@/lib/localizedText';
 
 function FlagIcon({ lang }: { lang: Language }) {
   const emojiFallback = languageFlags[lang];
@@ -66,7 +67,7 @@ export default function LanguageSelector() {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-1.5 p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
         title={t('common.selectLanguage') || 'Select Language'}
-        aria-label={`${t('common.selectLanguage') || 'Select language'}. Current: ${languageNames[language]}`}
+        aria-label={interpolateText(t('common.currentLanguage'), { selection: t('common.selectLanguage'), language: languageNames[language] })}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-controls={listboxId}

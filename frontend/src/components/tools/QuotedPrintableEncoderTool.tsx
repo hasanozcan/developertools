@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { Copy, Check, ArrowDownUp } from 'lucide-react';
 import { encodeQuotedPrintable, decodeQuotedPrintable } from '@/lib/quotedPrintableEncoder';
 
 export default function QuotedPrintableEncoderTool() {
+  const { t } = useLanguage();
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
   const [input, setInput] = useState('Hello World! Café & Résumé = Great');
   const [copied, setCopied] = useState(false);
@@ -24,19 +26,19 @@ export default function QuotedPrintableEncoderTool() {
           className="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium"
         >
           <ArrowDownUp className="w-4 h-4" />
-          Mode: {mode === 'encode' ? 'Encode to Quoted-Printable' : 'Decode to Plain Text'}
+          {t("uiText.2c856198")}{mode === 'encode' ? t("uiText.daf5aefe") : t("uiText.891d3567")}
         </button>
       </div>
       <div className="space-y-2">
-        <label className="text-xs text-muted-foreground font-medium">Input ({mode === 'encode' ? 'Plain Text' : 'Quoted-Printable'})</label>
+        <label className="text-xs text-muted-foreground font-medium">{t("uiText.5973596b")}{mode === 'encode' ? t("tool.binaryEncoder.plainText") : t("uiText.d1aa1b97")})</label>
         <textarea value={input} onChange={(e) => setInput(e.target.value)} rows={5} className="w-full p-3 rounded-lg border border-border bg-card font-mono text-sm" />
       </div>
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-muted-foreground">Output Result</label>
+          <label className="text-sm font-medium text-muted-foreground">{t("uiText.fad3f715")}</label>
           <button onClick={() => { navigator.clipboard.writeText(result); setCopied(true); setTimeout(() => setCopied(false), 2000); }} className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-secondary">
             {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-            {copied ? 'Copied' : 'Copy'}
+            {copied ? t("uiText.8dc21305") : t("common.copy")}
           </button>
         </div>
         <textarea readOnly value={result} rows={5} className="w-full rounded-xl border border-border bg-muted/30 p-4 font-mono text-sm" />

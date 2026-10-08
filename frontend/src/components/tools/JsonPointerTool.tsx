@@ -1,9 +1,11 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import { useMemo, useState } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import CopyButton from '@/components/common/CopyButton';
 import { evaluateJsonPointer } from '@/lib/jsonPointer';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE =
   '{\n  "users": [\n    { "id": 1, "profile": { "display/name": "Ada" } },\n    { "id": 2, "profile": { "display/name": "Linus" } }\n  ]\n}';
@@ -14,6 +16,7 @@ function serialize(value: unknown): string {
 }
 
 export default function JsonPointerTool() {
+  const { t } = useLanguage();
   const [document, setDocument] = useState(SAMPLE);
   const [pointer, setPointer] = useState('/users/0/profile/display~1name');
 
@@ -36,8 +39,7 @@ export default function JsonPointerTool() {
           htmlFor="json-pointer"
           className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
         >
-          JSON Pointer
-        </label>
+          {t("uiText.ded38f06")}</label>
         <input
           id="json-pointer"
           value={pointer}
@@ -47,9 +49,7 @@ export default function JsonPointerTool() {
           className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-sm text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
         <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-          Use ~1 for a slash and ~0 for a tilde inside an object member name. An empty pointer
-          selects the whole document.
-        </p>
+          {t("uiText.4869e18b")}</p>
       </div>
 
       {result.error && (
@@ -57,22 +57,20 @@ export default function JsonPointerTool() {
           role="alert"
           className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/30 dark:text-red-300"
         >
-          {result.error}
+          {localizeUiText(result.error, t)}
         </div>
       )}
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div>
           <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-            JSON document
-          </label>
+            {t("tool.jsonpath.documentLabel")}</label>
           <CodeEditor value={document} onChange={setDocument} language="json" minHeight="280px" />
         </div>
         <div>
           <div className="mb-2 flex items-center justify-between gap-3">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Resolved value
-            </label>
+              {t("uiText.0a019d14")}</label>
             <CopyButton text={result.output} />
           </div>
           <CodeEditor
@@ -82,7 +80,7 @@ export default function JsonPointerTool() {
             showCopy={false}
             language="json"
             minHeight="280px"
-            placeholder="The selected value appears here."
+            placeholder={t("uiText.6aac48a2")}
           />
         </div>
       </div>

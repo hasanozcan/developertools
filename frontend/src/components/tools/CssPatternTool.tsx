@@ -62,15 +62,14 @@ export default function CssPatternTool() {
         className="rounded-3xl p-16 flex items-center justify-center min-h-[260px] border border-slate-300 dark:border-white/10 shadow-inner"
       >
         <div className="px-6 py-3 rounded-xl bg-white/90 dark:bg-slate-900/90 backdrop-blur border border-slate-200 dark:border-white/10 text-xs font-bold text-slate-900 dark:text-white shadow-lg">
-          Live Pattern Canvas
-        </div>
+          {t("uiText.063e741f")}</div>
       </div>
 
       {/* Configuration Controls */}
       <div className="surface-card rounded-2xl p-6 space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Background Color</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.ac01b156")}</label>
             <div className="flex items-center gap-2">
               <input
                 type="color"
@@ -88,7 +87,7 @@ export default function CssPatternTool() {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Pattern Color</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.5aece54a")}</label>
             <div className="flex items-center gap-2">
               <input
                 type="color"
@@ -107,7 +106,7 @@ export default function CssPatternTool() {
 
           <div>
             <div className="flex justify-between text-xs font-semibold mb-1">
-              <span>Grid / Step Size ({options.size}px)</span>
+              <span>{t("uiText.30651e83")}{options.size}{t("uiText.326b8794")}</span>
             </div>
             <input
               type="range"
@@ -122,7 +121,7 @@ export default function CssPatternTool() {
           {options.type === 'dots' && (
             <div>
               <div className="flex justify-between text-xs font-semibold mb-1">
-                <span>Dot Radius ({options.dotRadius}px)</span>
+                <span>{t("uiText.7f609c6e")}{options.dotRadius}{t("uiText.326b8794")}</span>
               </div>
               <input
                 type="range"
@@ -140,7 +139,7 @@ export default function CssPatternTool() {
       {/* Generated CSS Box */}
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Pattern CSS Code</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.a38f807f")}</span>
           <button
             onClick={handleCopy}
             className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

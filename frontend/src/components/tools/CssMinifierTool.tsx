@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Minimize2, Copy, Check, FileText, Trash2, Info } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { minifyStylesheet } from '@/lib/codeMinifiers';
+import { localizeUiText } from '@/lib/localizedText';
 
 interface MinifyStats {
   original: number;
@@ -188,7 +189,7 @@ export default function CssMinifierTool() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           rows={12}
-          placeholder="Paste your CSS here..."
+          placeholder={t("tool.cssMinifier.inputPlaceholder")}
           className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
         />
         <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
@@ -221,7 +222,7 @@ export default function CssMinifierTool() {
           role="alert"
           className="p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-300"
         >
-          {error}
+          {localizeUiText(error, t)}
         </div>
       ) : null}
 

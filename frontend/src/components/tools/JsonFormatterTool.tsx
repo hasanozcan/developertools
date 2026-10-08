@@ -121,8 +121,7 @@ export default function JsonFormatterTool() {
             <Play className="w-4 h-4 fill-white" />
             <span>{t('common.format') || 'Format'} JSON</span>
             <kbd className="hidden md:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-indigo-700/80 text-indigo-100 rounded">
-              Ctrl+↵
-            </kbd>
+              {t("uiText.1afbc1d8")}</kbd>
           </button>
 
           <button
@@ -160,9 +159,9 @@ export default function JsonFormatterTool() {
               onChange={(e) => setIndentSize(Number(e.target.value))}
               className="rounded-lg border border-slate-300 bg-white px-2 py-1 text-xs font-medium text-slate-800 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200"
             >
-              <option value={2}>2 spaces</option>
-              <option value={4}>4 spaces</option>
-              <option value={1}>1 tab</option>
+              <option value={2}>{t("uiText.906f8f38")}</option>
+              <option value={4}>{t("uiText.c568c68e")}</option>
+              <option value={1}>{t("uiText.14b63203")}</option>
             </select>
           </div>
         </div>
@@ -188,7 +187,7 @@ export default function JsonFormatterTool() {
                 <div className="font-semibold">
                   {parsedError.line ? (
                     <span>
-                      Line {parsedError.line}, Column {parsedError.column || 1}: {parsedError.message}
+                      {t("uiText.9808f547")}{parsedError.line}{t("uiText.f14a825b") + ' '}{parsedError.column || 1}: {parsedError.message}
                     </span>
                   ) : (
                     <span>{parsedError.message}</span>

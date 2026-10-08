@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { Network, Copy, Check } from 'lucide-react';
 import { calculateIpv6Subnet } from '@/lib/ipv6Subnet';
 import { useLanguage } from '@/context/LanguageContext';
+import { interpolateText } from '@/lib/localizedText';
 
 export default function Ipv6SubnetTool() {
   const { t } = useLanguage();
@@ -34,25 +35,25 @@ export default function Ipv6SubnetTool() {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="sm:col-span-2">
-            <label className="text-xs font-bold text-slate-500 block mb-1">IPv6 Address</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.48842fd8")}</label>
             <input
               type="text"
               value={ipInput}
               onChange={(e) => setIpInput(e.target.value)}
-              placeholder="2001:db8::1"
+              placeholder={t("uiText.3aefc9c7")}
               className="w-full px-3.5 py-2 text-xs font-mono rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900"
             />
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Prefix Length (/{prefix})</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.c9ab4a24")}{prefix})</label>
             <select
               value={prefix}
               onChange={(e) => setPrefix(parseInt(e.target.value, 10))}
               className="w-full px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900"
             >
               {[32, 48, 56, 64, 96, 112, 120, 124, 126, 127, 128].map((p) => (
-                <option key={p} value={p}>/{p} ({p === 64 ? 'Standard Subnet' : p === 48 ? 'Site Prefix' : `${p} bits`})</option>
+                <option key={p} value={p}>/{p} ({p === 64 ? t('uiText.bb55c5cd') : p === 48 ? t('tool.ipv6.sitePrefix') : interpolateText(t('tool.ipv6.prefixBits'), { count: p })})</option>
               ))}
             </select>
           </div>
@@ -62,7 +63,7 @@ export default function Ipv6SubnetTool() {
       {/* Subnet Details Grid */}
       <div className="surface-card rounded-2xl p-6 space-y-4">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">IPv6 Subnet Breakdown</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.bc3390b2")}</span>
           <button
             onClick={handleCopy}
             className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
@@ -74,22 +75,22 @@ export default function Ipv6SubnetTool() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
           <div className="p-3.5 rounded-xl border border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-slate-900 space-y-1">
-            <span className="text-[11px] text-slate-400 block">Expanded IPv6 (128-bit Full)</span>
+            <span className="text-[11px] text-slate-400 block">{t("uiText.ddaaf854")}</span>
             <span className="font-bold text-slate-900 dark:text-white break-all">{subnet.expandedIp}</span>
           </div>
 
           <div className="p-3.5 rounded-xl border border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-slate-900 space-y-1">
-            <span className="text-[11px] text-slate-400 block">Compressed IPv6 (RFC 5952)</span>
+            <span className="text-[11px] text-slate-400 block">{t("uiText.af74c106")}</span>
             <span className="font-bold text-indigo-600 dark:text-indigo-400 break-all">{subnet.compressedIp}</span>
           </div>
 
           <div className="p-3.5 rounded-xl border border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-slate-900 space-y-1">
-            <span className="text-[11px] text-slate-400 block">Network Prefix / CIDR</span>
+            <span className="text-[11px] text-slate-400 block">{t("uiText.178989d0")}</span>
             <span className="font-bold text-emerald-600 dark:text-emerald-400">{subnet.networkPrefix}</span>
           </div>
 
           <div className="p-3.5 rounded-xl border border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-slate-900 space-y-1">
-            <span className="text-[11px] text-slate-400 block">Address Type</span>
+            <span className="text-[11px] text-slate-400 block">{t("uiText.83c6b361")}</span>
             <span className="font-bold text-purple-600 dark:text-purple-400">{subnet.type}</span>
           </div>
         </div>

@@ -1,12 +1,15 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { convertHtmlToJsxTailwind } from '@/lib/htmlToJsxTailwind';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE = "<div class=\"p-4 bg-white rounded-lg\">\n  <!-- Header Section -->\n  <input type=\"text\" class=\"border p-2\">\n  <img src=\"avatar.png\">\n</div>";
 
 export default function HtmlToJsxTailwindTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE);
   let output = '';
   let error = '';
@@ -22,8 +25,8 @@ export default function HtmlToJsxTailwindTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Raw HTML</label>
-            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.ff1da2ce")}</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -34,12 +37,12 @@ export default function HtmlToJsxTailwindTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">React JSX with Tailwind</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.cfedd041")}</label>
             <CopyButton text={output} />
           </div>
           {error ? (
             <div className="rounded-2xl border border-red-200 bg-red-50 p-4 font-mono text-xs text-red-600 dark:border-red-900/50 dark:bg-red-950/50 dark:text-red-400">
-              {error}
+              {localizeUiText(error, t)}
             </div>
           ) : (
             <textarea

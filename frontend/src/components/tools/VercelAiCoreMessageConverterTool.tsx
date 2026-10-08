@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { convertToVercelCoreMessages } from '@/lib/vercelAiCoreMessageConverter';
 import { Copy, Check } from 'lucide-react';
 
 export default function VercelAiCoreMessageConverterTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState('User: Hello!\nAssistant: Hi there! How can I help you today?\nUser: Write a poem about code.');
   const [copied, setCopied] = useState(false);
   const result = convertToVercelCoreMessages(input);
@@ -16,7 +18,7 @@ export default function VercelAiCoreMessageConverterTool() {
           className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md transition hover:bg-indigo-500"
         >
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          <span>{copied ? 'Copied' : 'Copy Vercel AI Code'}</span>
+          <span>{copied ? t("uiText.8dc21305") : t("uiText.f38ef74c")}</span>
         </button>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

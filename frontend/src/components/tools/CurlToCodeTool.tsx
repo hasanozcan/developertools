@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { Copy, Check, Terminal, Code2 } from 'lucide-react';
 import { parseCurlCommand, generateCodeFromCurl, type TargetLanguage } from '@/lib/curlToCode';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE_CURL = `curl -X POST https://api.example.com/v1/auth/login \\
   -H "Content-Type: application/json" \\
@@ -76,8 +77,7 @@ export default function CurlToCodeTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-              <Terminal className="w-3.5 h-3.5 text-indigo-500" /> cURL Command
-            </span>
+              <Terminal className="w-3.5 h-3.5 text-indigo-500" /> {t("uiText.131c2e4e")}</span>
             <button
               onClick={() => setCurlInput(SAMPLE_CURL)}
               className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-medium"
@@ -90,7 +90,7 @@ export default function CurlToCodeTool() {
             onChange={(e) => setCurlInput(e.target.value)}
             rows={14}
             className="w-full flex-1 rounded-xl border border-slate-200 bg-white p-4 font-mono text-xs text-slate-900 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-white/10 dark:bg-slate-900 dark:text-slate-100 resize-y"
-            placeholder="curl -X POST https://..."
+            placeholder={t("uiText.3d8b3945")}
           />
         </div>
 
@@ -98,8 +98,7 @@ export default function CurlToCodeTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Generated Code Output
-            </span>
+              {t("uiText.f732e088")}</span>
             {code && (
               <button
                 onClick={handleCopy}
@@ -113,7 +112,7 @@ export default function CurlToCodeTool() {
 
           {error ? (
             <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-xs text-red-600 dark:border-red-800/40 dark:bg-red-900/20 dark:text-red-300">
-              {error}
+              {localizeUiText(error, t)}
             </div>
           ) : (
             <textarea

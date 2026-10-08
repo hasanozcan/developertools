@@ -100,7 +100,7 @@ export default function CssFlexboxGeneratorTool() {
               onChange={(e) => setDirection(e.target.value as FlexDirection)}
               className="w-full px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
             >
-              <option value="row">row (default)</option>
+              <option value="row">{t("uiText.49b0d4af")}</option>
               <option value="row-reverse">row-reverse</option>
               <option value="column">column</option>
               <option value="column-reverse">column-reverse</option>
@@ -178,8 +178,7 @@ export default function CssFlexboxGeneratorTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Pure CSS
-            </span>
+              {t("uiText.ed10047c")}</span>
             <button
               onClick={() => copyText(css, setCopiedCss)}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
@@ -200,8 +199,7 @@ export default function CssFlexboxGeneratorTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Tailwind CSS Classes
-            </span>
+              {t("uiText.5ff098ce")}</span>
             <button
               onClick={() => copyText(tailwind, setCopiedTailwind)}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

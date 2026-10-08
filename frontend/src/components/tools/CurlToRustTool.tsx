@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { curlToRust } from '@/lib/curlToRust';
 import { Copy, Check } from 'lucide-react';
 
 export default function CurlToRustTool() {
+  const { t } = useLanguage();
   const [curl, setCurl] = useState('curl https://api.github.com/users -H "Accept: application/json"');
   const [copied, setCopied] = useState(false);
   const code = curlToRust(curl);
@@ -16,7 +18,7 @@ export default function CurlToRustTool() {
           className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md transition hover:bg-indigo-500"
         >
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          <span>{copied ? 'Copied' : 'Copy Rust Code'}</span>
+          <span>{copied ? t("uiText.8dc21305") : t("uiText.c35a3a13")}</span>
         </button>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

@@ -66,7 +66,7 @@ grape`);
           }`}
         >
           {order === 'asc' ? <ArrowUpAZ className="w-4 h-4" /> : <ArrowDownAZ className="w-4 h-4" />}
-          {order === 'asc' ? 'A-Z (Ascending)' : 'Z-A (Descending)'}
+          {order === 'asc' ? t("uiText.5f7641c2") : t("uiText.b735678c")}
         </button>
 
         <label className="flex items-center gap-2 cursor-pointer">
@@ -76,7 +76,7 @@ grape`);
             onChange={(e) => setCaseSensitive(e.target.checked)}
             className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
           />
-          <span className="text-sm text-gray-700 dark:text-gray-300">Case Sensitive</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">{t("tool.removeDuplicates.caseSensitive")}</span>
         </label>
 
         <button
@@ -84,8 +84,7 @@ grape`);
           onClick={loadSample}
           className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
         >
-          Load Sample
-        </button>
+          {t("common.loadSample")}</button>
       </div>
 
       {/* Input/Output */}
@@ -95,13 +94,12 @@ grape`);
             htmlFor="sort-lines-input"
             className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
           >
-            Input Lines
-          </label>
+            {t("uiText.0c710e98")}</label>
           <CodeEditor
             id="sort-lines-input"
             value={input}
             onChange={setInput}
-            placeholder="Enter lines to sort (one per line)..."
+            placeholder={t("uiText.c543cd99")}
             language="text"
             minHeight="250px"
             maxLength={250_000}
@@ -113,7 +111,7 @@ grape`);
               htmlFor="sort-lines-output"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Sorted Lines ({order === 'asc' ? 'A-Z' : 'Z-A'})
+              {t("uiText.87842403")}{order === 'asc' ? 'A-Z' : 'Z-A'})
             </label>
             {isUpdating ? (
               <span role="status" className="text-xs text-gray-500 dark:text-gray-400">
@@ -136,7 +134,7 @@ grape`);
 
       {/* Info */}
       <div className="text-sm text-gray-500 dark:text-gray-400">
-        <p>Sorting is performed line by line. Empty lines are preserved in the output.</p>
+        <p>{t("uiText.eb8f986b")}</p>
       </div>
     </div>
   );

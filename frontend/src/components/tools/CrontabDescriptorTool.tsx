@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { Calendar, Clock, Copy, Check } from 'lucide-react';
 import { describeCron } from '@/lib/crontabDescriptor';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 export default function CrontabDescriptorTool() {
   const { t } = useLanguage();
@@ -59,7 +60,7 @@ export default function CrontabDescriptorTool() {
                     : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-white/10 hover:bg-slate-50'
                 }`}
               >
-                {p.label}
+                {localizeUiText(p.label, t)}
               </button>
             ))}
           </div>
@@ -71,7 +72,7 @@ export default function CrontabDescriptorTool() {
         <div className="p-3 rounded-full bg-indigo-600 text-white shadow-md">
           <Clock className="w-6 h-6" />
         </div>
-        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Natural Language Meaning</span>
+        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">{t("uiText.265f86ef")}</span>
         <h2 className="text-xl font-black text-slate-900 dark:text-white max-w-lg">
           &quot;{description}&quot;
         </h2>
@@ -80,7 +81,7 @@ export default function CrontabDescriptorTool() {
           className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/10 text-xs font-semibold text-slate-700 dark:text-slate-200 shadow-sm hover:bg-slate-50"
         >
           {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-          <span>{copied ? 'Copied' : 'Copy Description'}</span>
+          <span>{copied ? t("uiText.8dc21305") : t("uiText.1b91c6c6")}</span>
         </button>
       </div>
     </div>

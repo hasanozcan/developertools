@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useEffect, useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { generateJsonSchema } from '@/lib/jsonToJsonSchema';
@@ -15,6 +16,7 @@ const SAMPLE_DATA = JSON.stringify({
 }, null, 2);
 
 export default function JsonToJsonSchemaTool() {
+  const { t } = useLanguage();
   const [jsonInput, setJsonInput] = useState(SAMPLE_DATA);
   const schemaOutput = generateJsonSchema(jsonInput, '2020-12');
 
@@ -38,8 +40,8 @@ export default function JsonToJsonSchemaTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">JSON Payload</label>
-            <button onClick={() => setJsonInput(SAMPLE_DATA)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.30549c29")}</label>
+            <button onClick={() => setJsonInput(SAMPLE_DATA)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={jsonInput}
@@ -50,7 +52,7 @@ export default function JsonToJsonSchemaTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Generated JSON Schema (2020-12)</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.5062f748")}</label>
             <CopyButton text={schemaOutput} />
           </div>
           <pre className="h-72 overflow-auto rounded-2xl border border-slate-200 bg-slate-900 p-3 font-mono text-xs text-sky-400 dark:border-slate-700">

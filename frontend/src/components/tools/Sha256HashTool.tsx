@@ -196,8 +196,7 @@ export default function Sha256HashTool() {
           className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors shadow-sm"
         >
           <Sparkles className="w-3 h-3" />
-          About DevsTools ↗
-        </Link>
+          {t("uiText.fa222c74")}</Link>
       </div>
 
       <section aria-labelledby="sha256-text-heading" className="space-y-4">
@@ -333,7 +332,7 @@ export default function Sha256HashTool() {
                 {hashingFile
                   ? t('tool.sha256Hash.hashingFile')
                   : isDragging
-                    ? 'Drop file here to compute SHA-256...'
+                    ? t("uiText.827c6358")
                     : t('tool.sha256Hash.uploadFile')}
               </span>
             </button>
@@ -420,40 +419,37 @@ export default function Sha256HashTool() {
       {/* Direct Related Crypto Tools Grid */}
       <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
         <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3">
-          Popular Cryptographic & Hashing Tools
-        </h3>
+          {t("uiText.e4937a28")}</h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
           <Link
             href="/tools/crypto/md5-hash"
             className="flex flex-col p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           >
-            <span className="font-semibold text-xs text-gray-900 dark:text-white">MD5 Hash</span>
-            <span className="text-[11px] text-gray-500 dark:text-gray-400">128-bit checksum</span>
+            <span className="font-semibold text-xs text-gray-900 dark:text-white">{t("tool.md5Hash.md5Hash")}</span>
+            <span className="text-[11px] text-gray-500 dark:text-gray-400">{t("uiText.d72874bf")}</span>
           </Link>
           <Link
             href="/tools/crypto/sha512-hash"
             className="flex flex-col p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           >
             <span className="font-semibold text-xs text-gray-900 dark:text-white">
-              SHA-512 Hash
-            </span>
-            <span className="text-[11px] text-gray-500 dark:text-gray-400">512-bit digest</span>
+              {t("uiText.6d1f7f38")}</span>
+            <span className="text-[11px] text-gray-500 dark:text-gray-400">{t("uiText.29736d5f")}</span>
           </Link>
           <Link
             href="/tools/crypto/hmac-generator"
             className="flex flex-col p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           >
             <span className="font-semibold text-xs text-gray-900 dark:text-white">
-              HMAC Generator
-            </span>
-            <span className="text-[11px] text-gray-500 dark:text-gray-400">Keyed signature</span>
+              {t("uiText.62cddcb3")}</span>
+            <span className="text-[11px] text-gray-500 dark:text-gray-400">{t("uiText.f4d3f95b")}</span>
           </Link>
           <Link
             href="/tools/crypto/bcrypt-generator"
             className="flex flex-col p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           >
-            <span className="font-semibold text-xs text-gray-900 dark:text-white">Bcrypt Hash</span>
-            <span className="text-[11px] text-gray-500 dark:text-gray-400">Password hashing</span>
+            <span className="font-semibold text-xs text-gray-900 dark:text-white">{t("uiText.5d38faf9")}</span>
+            <span className="text-[11px] text-gray-500 dark:text-gray-400">{t("uiText.a47cc2f0")}</span>
           </Link>
         </div>
       </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { extractUuidV7Date } from '@/lib/uuidV7TimestampExtractor';
@@ -7,6 +8,7 @@ import { extractUuidV7Date } from '@/lib/uuidV7TimestampExtractor';
 const SAMPLE = "0188e6a1-9a74-7800-8480-e37452d3a39e";
 
 export default function UuidV7TimestampExtractorTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE);
   let output = '';
 
@@ -22,8 +24,8 @@ export default function UuidV7TimestampExtractorTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">UUIDv7 String</label>
-            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.82785616")}</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -34,7 +36,7 @@ export default function UuidV7TimestampExtractorTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Extracted UTC Timestamp Date</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.1ec0ca43")}</label>
             <CopyButton text={output} />
           </div>
           <textarea

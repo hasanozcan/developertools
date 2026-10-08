@@ -10,6 +10,7 @@ import { getLocalTrendingToolSlugs, TOOL_USAGE_UPDATED_EVENT } from '@/lib/toolP
 import { buildToolPath } from '@/lib/toolRoutes';
 
 export default function TrendingTools() {
+  const { t } = useLanguage();
   const { language } = useLanguage();
   const [slugs, setSlugs] = useState<string[]>([]);
 
@@ -34,7 +35,7 @@ export default function TrendingTools() {
     <section className="mb-10" aria-labelledby="trending-for-you-heading">
       <div className="mb-4 flex items-center gap-2">
         <Flame className="h-5 w-5 text-amber-500" />
-        <h2 id="trending-for-you-heading" className="text-xl font-bold text-slate-950 dark:text-white">Trending for you</h2>
+        <h2 id="trending-for-you-heading" className="text-xl font-bold text-slate-950 dark:text-white">{t("uiText.73df988c")}</h2>
       </div>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {tools.map((tool) => {
@@ -52,7 +53,7 @@ export default function TrendingTools() {
           );
         })}
       </div>
-      <p className="mt-2 text-[11px] text-slate-400 dark:text-slate-500">Based only on tool opens stored on this device.</p>
+      <p className="mt-2 text-[11px] text-slate-400 dark:text-slate-500">{t("uiText.f1c3aaa2")}</p>
     </section>
   );
 }

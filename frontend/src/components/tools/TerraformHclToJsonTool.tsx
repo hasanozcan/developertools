@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { convertHclToJson } from '@/lib/terraformHclToJson';
 import { Copy, Check } from 'lucide-react';
 
 export default function TerraformHclToJsonTool() {
+  const { t } = useLanguage();
   const [hcl, setHcl] = useState(`resource "aws_s3_bucket" "b" {
   bucket = "my-tf-test-bucket"
   acl    = "private"
@@ -19,7 +21,7 @@ export default function TerraformHclToJsonTool() {
           className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md transition hover:bg-indigo-500"
         >
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          <span>{copied ? 'Copied' : 'Copy Terraform JSON'}</span>
+          <span>{copied ? t("uiText.8dc21305") : t("uiText.0fe3887e")}</span>
         </button>
       </div>
 

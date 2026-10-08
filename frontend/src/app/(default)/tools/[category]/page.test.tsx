@@ -105,8 +105,8 @@ describe('CategoryPage', () => {
     ).length;
     expect(items.length).toBe(indexableCount);
     expect(items.length).toBeGreaterThan(0);
-    // Non-indexable tools stay visible in the grid but are left out of JSON-LD.
-    expect(items.length).toBeLessThan(cardLinks.length);
+    // The completed locale now covers every tool visible in this category.
+    expect(items.length).toBe(cardLinks.length);
     // Only indexable tools, all under /tr, positions renumbered contiguously.
     items.forEach((item, index) => {
       expect(item.url).toMatch(/^https:\/\/devstools\.app\/tr\/tools\//);

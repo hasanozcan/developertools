@@ -3,6 +3,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 type ParsedUrlResult = {
   href: string;
@@ -103,8 +104,7 @@ export default function UrlParserTool() {
           onClick={parseUrl}
           className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium"
         >
-          Parse URL
-        </button>
+          {t("uiText.7a4d7b1d")}</button>
         <button
           onClick={loadSample}
           className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
@@ -121,33 +121,31 @@ export default function UrlParserTool() {
 
       {error && (
         <div className="p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-300">
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          URL Input
-        </label>
+          {t("uiText.17a4f0ce")}</label>
         <CodeEditor
           value={input}
           onChange={setInput}
           language="text"
-          placeholder="Enter a full URL or hostname/path..."
+          placeholder={t("uiText.4bf91508")}
           minHeight="140px"
         />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Parsed Output (JSON)
-        </label>
+          {t("uiText.ab59bc4e")}</label>
         <CodeEditor
           value={resultJson}
           onChange={() => {}}
           readOnly
           language="json"
-          placeholder="Parsed URL result will appear here..."
+          placeholder={t("uiText.82527b87")}
           minHeight="260px"
         />
       </div>

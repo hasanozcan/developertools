@@ -1,10 +1,12 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { generateStoredProcedure } from '@/lib/sqlStoredProcedureGenerator';
 
 export default function SqlStoredProcedureGeneratorTool() {
+  const { t } = useLanguage();
   const [val, setVal] = useState('');
   let output = '';
   try {
@@ -18,7 +20,7 @@ export default function SqlStoredProcedureGeneratorTool() {
     <div className="space-y-6">
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">SQL Stored Procedure Template</label>
+          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.4dce803f")}</label>
           <CopyButton text={output} />
         </div>
         <textarea

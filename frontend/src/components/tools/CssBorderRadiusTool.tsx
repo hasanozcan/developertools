@@ -58,7 +58,7 @@ export default function CssBorderRadiusTool() {
           style={{ borderRadius: value }}
           className="w-56 h-56 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 shadow-2xl flex items-center justify-center text-white font-black text-sm transition-all duration-200 select-none transform hover:scale-105"
         >
-          <span>Live Shape</span>
+          <span>{t("uiText.a907a1fe")}</span>
         </div>
       </div>
 
@@ -95,11 +95,11 @@ export default function CssBorderRadiusTool() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Horizontal Radii */}
           <div className="space-y-4 p-4 rounded-xl border border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-slate-900/30">
-            <h4 className="text-xs font-bold uppercase text-slate-500 tracking-wider">Horizontal Radii (X-Axis)</h4>
+            <h4 className="text-xs font-bold uppercase text-slate-500 tracking-wider">{t("uiText.bede5875")}</h4>
 
             <div>
               <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                <span>Top-Left (H)</span>
+                <span>{t("uiText.1a90fde5")}</span>
                 <span className="font-mono">{radii.topLeftH}{radii.unit}</span>
               </div>
               <input
@@ -114,7 +114,7 @@ export default function CssBorderRadiusTool() {
 
             <div>
               <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                <span>Top-Right (H)</span>
+                <span>{t("uiText.7e9a2d8c")}</span>
                 <span className="font-mono">{radii.topRightH}{radii.unit}</span>
               </div>
               <input
@@ -129,7 +129,7 @@ export default function CssBorderRadiusTool() {
 
             <div>
               <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                <span>Bottom-Right (H)</span>
+                <span>{t("uiText.3a4eca0a")}</span>
                 <span className="font-mono">{radii.bottomRightH}{radii.unit}</span>
               </div>
               <input
@@ -144,7 +144,7 @@ export default function CssBorderRadiusTool() {
 
             <div>
               <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                <span>Bottom-Left (H)</span>
+                <span>{t("uiText.bc1d8f8b")}</span>
                 <span className="font-mono">{radii.bottomLeftH}{radii.unit}</span>
               </div>
               <input
@@ -160,11 +160,11 @@ export default function CssBorderRadiusTool() {
 
           {/* Vertical Radii */}
           <div className="space-y-4 p-4 rounded-xl border border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-slate-900/30">
-            <h4 className="text-xs font-bold uppercase text-slate-500 tracking-wider">Vertical Radii (Y-Axis)</h4>
+            <h4 className="text-xs font-bold uppercase text-slate-500 tracking-wider">{t("uiText.4b8806f4")}</h4>
 
             <div>
               <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                <span>Top-Left (V)</span>
+                <span>{t("uiText.965a141f")}</span>
                 <span className="font-mono">{radii.topLeftV}{radii.unit}</span>
               </div>
               <input
@@ -179,7 +179,7 @@ export default function CssBorderRadiusTool() {
 
             <div>
               <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                <span>Top-Right (V)</span>
+                <span>{t("uiText.1a4fee6e")}</span>
                 <span className="font-mono">{radii.topRightV}{radii.unit}</span>
               </div>
               <input
@@ -194,7 +194,7 @@ export default function CssBorderRadiusTool() {
 
             <div>
               <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                <span>Bottom-Right (V)</span>
+                <span>{t("uiText.4e0e4230")}</span>
                 <span className="font-mono">{radii.bottomRightV}{radii.unit}</span>
               </div>
               <input
@@ -209,7 +209,7 @@ export default function CssBorderRadiusTool() {
 
             <div>
               <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                <span>Bottom-Left (V)</span>
+                <span>{t("uiText.e06769e9")}</span>
                 <span className="font-mono">{radii.bottomLeftV}{radii.unit}</span>
               </div>
               <input
@@ -229,8 +229,7 @@ export default function CssBorderRadiusTool() {
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            CSS border-radius Property
-          </span>
+            {t("uiText.030467d8")}</span>
           <button
             onClick={handleCopy}
             className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

@@ -76,8 +76,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
           onClick={loadSample}
           className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
         >
-          Load Sample
-        </button>
+          {t("common.loadSample")}</button>
       </div>
 
       {/* Input */}
@@ -87,8 +86,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
             htmlFor="word-counter-input"
             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
-            Enter Your Text
-          </label>
+            {t("uiText.558f5fcb")}</label>
           {isUpdating ? (
             <span role="status" className="text-xs text-gray-500 dark:text-gray-400">
               {t('common.updating')}
@@ -99,7 +97,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
           id="word-counter-input"
           value={input}
           onChange={setInput}
-          placeholder="Type or paste your text here to count words, characters, lines, sentences, and paragraphs..."
+          placeholder={t("uiText.65c90895")}
           language="text"
           minHeight="200px"
           maxLength={250_000}
@@ -115,39 +113,38 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor i
       >
         <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
           <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{stats.words}</div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Words</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">{t("tool.loremIpsum.words")}</div>
         </div>
         <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
           <div className="text-2xl font-bold text-green-600 dark:text-green-400">{stats.characters}</div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Characters</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">{t("tool.wordCounter.characters")}</div>
         </div>
         <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
           <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">{stats.charactersNoSpaces}</div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Chars (no spaces)</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">{t("uiText.093f12c7")}</div>
         </div>
         <div className="p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg border border-orange-200 dark:border-orange-800">
           <div className="text-2xl font-bold text-orange-600 dark:text-orange-400">{stats.lines}</div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Lines</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">{t("uiText.8a1a00dc")}</div>
         </div>
         <div className="p-4 bg-pink-50 dark:bg-pink-900/20 rounded-lg border border-pink-200 dark:border-pink-800">
           <div className="text-2xl font-bold text-pink-600 dark:text-pink-400">{stats.sentences}</div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Sentences</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">{t("tool.loremIpsum.sentences")}</div>
         </div>
         <div className="p-4 bg-cyan-50 dark:bg-cyan-900/20 rounded-lg border border-cyan-200 dark:border-cyan-800">
           <div className="text-2xl font-bold text-cyan-600 dark:text-cyan-400">{stats.paragraphs}</div>
-          <div className="text-sm text-gray-600 dark:text-gray-400">Paragraphs</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">{t("tool.loremIpsum.paragraphs")}</div>
         </div>
         <div className="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800 col-span-2 sm:col-span-1">
           <div className="text-2xl font-bold text-amber-600 dark:text-amber-400">{stats.readingTime}</div>
           <div className="text-sm text-gray-600 dark:text-gray-400">
-            {stats.readingTime === 1 ? 'minute' : 'minutes'} read
-          </div>
+            {stats.readingTime === 1 ? t("uiText.38e70f69") : t("uiText.adbcc5ee")} {t("uiText.cedfa3c5")}</div>
         </div>
       </div>
 
       {/* Reading Time Info */}
       <div className="text-sm text-gray-500 dark:text-gray-400">
-        <p>Reading time is calculated based on an average reading speed of 200 words per minute.</p>
+        <p>{t("uiText.116580c2")}</p>
       </div>
     </div>
   );

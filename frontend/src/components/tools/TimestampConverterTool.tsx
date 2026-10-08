@@ -81,7 +81,7 @@ export default function TimestampConverterTool() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <span className="text-xs text-gray-500 dark:text-gray-400">Unix Timestamp</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{t("tool.timestampConverter.unixTimestamp")}</span>
             <div className="flex items-center gap-2">
               <code className="font-mono text-lg text-gray-900 dark:text-white">
                 {currentTime ?? '-'}
@@ -90,7 +90,7 @@ export default function TimestampConverterTool() {
             </div>
           </div>
           <div>
-            <span className="text-xs text-gray-500 dark:text-gray-400">Date/Time</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{t("uiText.921754e3")}</span>
             <div className="font-mono text-lg text-gray-900 dark:text-white">
               {currentDate ? currentDate.toLocaleString() : '-'}
             </div>

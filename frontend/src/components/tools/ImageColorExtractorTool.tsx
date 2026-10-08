@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useRef } from 'react';
 import { Upload, Copy, Check, Palette, Pipette } from 'lucide-react';
 import {
@@ -11,6 +12,7 @@ import {
 } from '@/lib/imageColorExtractor';
 
 export default function ImageColorExtractorTool() {
+  const { t } = useLanguage();
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [colors, setColors] = useState<ExtractedColor[]>([]);
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
@@ -89,25 +91,21 @@ export default function ImageColorExtractorTool() {
           </div>
           <div className="space-y-1">
             <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200">
-              Upload an Image to Extract Color Palette
-            </h3>
+              {t("uiText.cc752246")}</h3>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              Auto-extracts dominant colors with HEX, RGB, HSL codes and interactive pixel eyedropper.
-            </p>
+              {t("uiText.c33620f6")}</p>
           </div>
         </div>
       ) : (
         <div className="space-y-6">
           <div className="flex justify-between items-center p-4 rounded-2xl bg-slate-50/80 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5">
             <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
-              Click anywhere on the image to inspect and pick exact pixel colors.
-            </span>
+              {t("uiText.0dd87d73")}</span>
             <button
               onClick={() => fileInputRef.current?.click()}
               className="px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
             >
-              Upload New Image
-            </button>
+              {t("uiText.1a76d4db")}</button>
             <input
               ref={fileInputRef}
               type="file"
@@ -149,7 +147,7 @@ export default function ImageColorExtractorTool() {
                     className="font-mono text-[10px] opacity-80"
                     style={{ color: c.textColor }}
                   >
-                    rgb({c.rgb.r}, {c.rgb.g}, {c.rgb.b})
+                    {t("uiText.0e06893c")}{c.rgb.r}, {c.rgb.g}, {c.rgb.b})
                   </p>
                 </div>
               </div>
@@ -165,7 +163,7 @@ export default function ImageColorExtractorTool() {
                   style={{ backgroundColor: pickedColor }}
                 />
                 <div>
-                  <span className="text-[11px] text-slate-500 dark:text-slate-400">Eyedropper Picked Color:</span>
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400">{t("uiText.9504eed1")}</span>
                   <p className="font-mono font-bold text-xs text-slate-900 dark:text-white uppercase">
                     {pickedColor}
                   </p>
@@ -175,8 +173,7 @@ export default function ImageColorExtractorTool() {
                   className="ml-auto flex items-center gap-1 text-xs text-indigo-600 dark:text-indigo-400 font-semibold hover:underline"
                 >
                   {copiedHex === pickedColor ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-                  Copy
-                </button>
+                  {t("common.copy")}</button>
               </div>
             )}
 

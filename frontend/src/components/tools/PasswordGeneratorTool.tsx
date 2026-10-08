@@ -12,6 +12,7 @@ import {
   MIN_PASSPHRASE_WORDS,
   secureRandomInt,
 } from '@/lib/passwordSecurity';
+import { localizeUiText } from '@/lib/localizedText';
 
 const LOWERCASE = 'abcdefghijklmnopqrstuvwxyz';
 const UPPERCASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -279,7 +280,7 @@ export default function PasswordGeneratorTool() {
               {t('tool.passwordGenerator.strength')}:
             </span>
             <span className={`font-medium ${strength.color.replace('bg-', 'text-')}`}>
-              ~{entropyBits.toFixed(0)} bits · {strength.label}
+              ~{entropyBits.toFixed(0)} {' ' + t("uiText.8a88b9c4") + ' '}{localizeUiText(strength.label, t)}
             </span>
           </div>
           <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
@@ -327,8 +328,7 @@ export default function PasswordGeneratorTool() {
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            Random Characters
-          </button>
+            {t("uiText.b2b2cbc6")}</button>
           <button
             onClick={() => {
               setUsePassphrase(true);
@@ -339,8 +339,7 @@ export default function PasswordGeneratorTool() {
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            Passphrase (Words)
-          </button>
+            {t("uiText.f314b009")}</button>
         </div>
       </div>
 

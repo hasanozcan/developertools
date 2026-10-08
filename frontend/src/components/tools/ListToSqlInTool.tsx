@@ -57,21 +57,21 @@ export default function ListToSqlInTool() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Quote Type */}
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Quote Style</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.30600a26")}</label>
             <select
               value={quoteType}
               onChange={(e) => setQuoteType(e.target.value as QuoteType)}
               className="w-full px-3 py-1.5 text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
             >
-              <option value="single">Single Quotes (&apos;item&apos;)</option>
-              <option value="double">Double Quotes (&quot;item&quot;)</option>
-              <option value="none">No Quotes (Numbers / IDs)</option>
+              <option value="single">{t("uiText.a8f269fc")}</option>
+              <option value="double">{t("uiText.d25fa667")}</option>
+              <option value="none">{t("uiText.017270d3")}</option>
             </select>
           </div>
 
           {/* Separator */}
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Separator</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("tool.slugGenerator.separator")}</label>
             <input
               type="text"
               value={separator}
@@ -82,7 +82,7 @@ export default function ListToSqlInTool() {
 
           {/* Prefix */}
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Prefix</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.d054d9e9")}</label>
             <input
               type="text"
               value={prefix}
@@ -93,7 +93,7 @@ export default function ListToSqlInTool() {
 
           {/* Suffix */}
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Suffix</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.311dba6c")}</label>
             <input
               type="text"
               value={suffix}
@@ -112,7 +112,7 @@ export default function ListToSqlInTool() {
               onChange={(e) => setRemoveDuplicates(e.target.checked)}
               className="rounded accent-indigo-600"
             />
-            <span>Remove Duplicates (Distinct)</span>
+            <span>{t("uiText.0b9a8420")}</span>
           </label>
           <label className="flex items-center gap-2 cursor-pointer">
             <input
@@ -121,7 +121,7 @@ export default function ListToSqlInTool() {
               onChange={(e) => setTrimItems(e.target.checked)}
               className="rounded accent-indigo-600"
             />
-            <span>Trim Whitespace</span>
+            <span>{t("uiText.e570d6da")}</span>
           </label>
         </div>
       </div>
@@ -132,8 +132,7 @@ export default function ListToSqlInTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Raw List (Newlines or Commas)
-            </span>
+              {t("uiText.3a335a40")}</span>
             <button
               onClick={() => setInput(SAMPLE_LIST)}
               className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-semibold"
@@ -146,7 +145,7 @@ export default function ListToSqlInTool() {
             onChange={(e) => setInput(e.target.value)}
             rows={12}
             className="w-full flex-1 rounded-xl border border-slate-200 bg-white p-4 font-mono text-xs text-slate-900 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-white/10 dark:bg-slate-900 dark:text-slate-100 resize-y"
-            placeholder="Paste your items here, one per line..."
+            placeholder={t("uiText.7efddb0a")}
           />
         </div>
 
@@ -154,8 +153,7 @@ export default function ListToSqlInTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Formatted SQL Clause
-            </span>
+              {t("uiText.81aaa594")}</span>
             {sqlOutput && (
               <button
                 onClick={handleCopy}
@@ -171,7 +169,7 @@ export default function ListToSqlInTool() {
             value={sqlOutput}
             rows={12}
             className="w-full flex-1 rounded-xl border border-slate-200 bg-slate-50/80 p-4 font-mono text-xs text-slate-900 shadow-inner focus:outline-none dark:border-white/10 dark:bg-slate-900/80 dark:text-emerald-400 resize-y"
-            placeholder="SQL clause will appear here..."
+            placeholder={t("uiText.ae1d1f9d")}
           />
         </div>
       </div>

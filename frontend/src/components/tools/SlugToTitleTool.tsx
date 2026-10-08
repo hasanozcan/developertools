@@ -40,7 +40,7 @@ export default function SlugToTitleTool() {
           type="text"
           value={slug}
           onChange={(e) => setSlug(e.target.value)}
-          placeholder="my-cool-blog-post_name"
+          placeholder={t("uiText.1a169df7")}
           className="w-full px-4 py-3 text-sm font-mono rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900"
         />
       </div>
@@ -49,7 +49,7 @@ export default function SlugToTitleTool() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="surface-card rounded-2xl p-5 border border-slate-200 dark:border-white/5 space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase text-slate-400">Title Case (Article Headline)</span>
+            <span className="text-xs font-bold uppercase text-slate-400">{t("uiText.1fa1a750")}</span>
             <button
               onClick={() => handleCopy(titleCase, 'title')}
               className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500"
@@ -62,7 +62,7 @@ export default function SlugToTitleTool() {
 
         <div className="surface-card rounded-2xl p-5 border border-slate-200 dark:border-white/5 space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase text-slate-400">Sentence Case</span>
+            <span className="text-xs font-bold uppercase text-slate-400">{t("tool.caseConverter.sentenceCase")}</span>
             <button
               onClick={() => handleCopy(sentenceCase, 'sentence')}
               className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500"
@@ -75,7 +75,7 @@ export default function SlugToTitleTool() {
 
         <div className="surface-card rounded-2xl p-5 border border-slate-200 dark:border-white/5 space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase text-slate-400">PascalCase (React Component / Class)</span>
+            <span className="text-xs font-bold uppercase text-slate-400">{t("uiText.9a9e2851")}</span>
             <button
               onClick={() => handleCopy(pascalCase, 'pascal')}
               className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500"
@@ -88,7 +88,7 @@ export default function SlugToTitleTool() {
 
         <div className="surface-card rounded-2xl p-5 border border-slate-200 dark:border-white/5 space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase text-slate-400">camelCase (Variable / Function)</span>
+            <span className="text-xs font-bold uppercase text-slate-400">{t("uiText.2f537b0f")}</span>
             <button
               onClick={() => handleCopy(camelCase, 'camel')}
               className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500"

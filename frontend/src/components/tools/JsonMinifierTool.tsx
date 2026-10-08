@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { Minimize2, Copy, Check } from 'lucide-react';
 import { minifyJson } from '@/lib/jsonMinifier';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE_JSON = `{
   "app": "DeveloperTools",
@@ -57,18 +58,17 @@ export default function JsonMinifierTool() {
 
         {minified && (
           <div className="flex items-center gap-3 text-xs font-mono">
-            <span className="text-slate-400">Original: {jsonInput.length} B</span>
-            <span className="text-emerald-500 font-bold">Minified: {minified.length} B</span>
+            <span className="text-slate-400">{t("uiText.3e94ca78") + ' '}{jsonInput.length} B</span>
+            <span className="text-emerald-500 font-bold">{t("uiText.6abfdff4") + ' '}{minified.length} B</span>
             <span className="px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 font-bold">
-              {compressionRate}% smaller
-            </span>
+              {compressionRate}{t("uiText.668809cc")}</span>
           </div>
         )}
       </div>
 
       {error && (
         <div className="p-4 rounded-xl border border-red-200 bg-red-50 text-xs text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-300">
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -76,7 +76,7 @@ export default function JsonMinifierTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Uncompressed / Formatted JSON</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.0b002428")}</span>
             <button
               onClick={() => setJsonInput(SAMPLE_JSON)}
               className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-semibold"
@@ -94,7 +94,7 @@ export default function JsonMinifierTool() {
 
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Minified Single-Line JSON</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.a7373763")}</span>
             {minified && (
               <button
                 onClick={handleCopy}

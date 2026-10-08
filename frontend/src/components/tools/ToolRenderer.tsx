@@ -1,4 +1,5 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import dynamic from 'next/dynamic';
 import type { ComponentType } from 'react';
 import { isToolSlug, type ToolSlug } from '@/lib/api';
@@ -1975,11 +1976,11 @@ const toolComponents: Record<ToolSlug, ComponentType> = {
 export const toolComponentSlugs = Object.keys(toolComponents) as ToolSlug[];
 
 export default function ToolRenderer({ toolSlug }: { toolSlug: string }) {
+  const { t } = useLanguage();
   if (!isToolSlug(toolSlug)) {
     return (
       <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/30 dark:text-red-300">
-        Tool component not found.
-      </div>
+        {t("uiText.eeb497f1")}</div>
     );
   }
 

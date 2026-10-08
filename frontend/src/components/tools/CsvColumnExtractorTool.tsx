@@ -75,7 +75,7 @@ export default function CsvColumnExtractorTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Source CSV File</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.cfde30c6")}</span>
             <button
               onClick={() => {
                 setCsvInput(SAMPLE_CSV);
@@ -96,7 +96,7 @@ export default function CsvColumnExtractorTool() {
 
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Extracted Columns Output</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.9e4b3e71")}</span>
             <button
               onClick={handleCopy}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

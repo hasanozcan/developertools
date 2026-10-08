@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { ShieldCheck, ArrowLeftRight, Copy, Check } from 'lucide-react';
 import { base32Encode, base32Decode } from '@/lib/base32Encoder';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE_TEXT = 'Hello World!';
 
@@ -59,20 +60,18 @@ export default function Base32EncoderTool() {
             onClick={handleEncode}
             className="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-sm transition"
           >
-            Encode to Base32
-          </button>
+            {t("uiText.d66dc164")}</button>
           <button
             onClick={handleDecode}
             className="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 text-xs font-bold hover:bg-slate-50 transition"
           >
-            Decode to Plain Text
-          </button>
+            {t("uiText.891d3567")}</button>
         </div>
       </div>
 
       {error && (
         <div className="p-4 rounded-xl border border-red-200 bg-red-50 text-xs text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-300">
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -80,7 +79,7 @@ export default function Base32EncoderTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Plain Text Input</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.fb9f754e")}</span>
             <button
               onClick={() => {
                 setPlainInput(SAMPLE_TEXT);
@@ -101,7 +100,7 @@ export default function Base32EncoderTool() {
 
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Base32 Encoded Output</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.f8db09e4")}</span>
             {base32Input && (
               <button
                 onClick={handleCopyBase32}

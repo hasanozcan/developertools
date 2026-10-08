@@ -73,8 +73,7 @@ export default function RsaKeyPairGeneratorTool() {
                   : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              RSA
-            </button>
+              {t("uiText.84b694a9")}</button>
             <button
               onClick={() => setAlgoType('ECDSA')}
               className={`px-3 py-1 text-xs font-semibold rounded-lg transition ${
@@ -83,8 +82,7 @@ export default function RsaKeyPairGeneratorTool() {
                   : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              ECDSA
-            </button>
+              {t("uiText.f43c2c47")}</button>
           </div>
 
           {algoType === 'RSA' ? (
@@ -95,9 +93,9 @@ export default function RsaKeyPairGeneratorTool() {
                 onChange={(e) => setRsaBits(parseInt(e.target.value, 10) as any)}
                 className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-900 shadow-sm focus:outline-none dark:border-white/10 dark:bg-slate-900 dark:text-white"
               >
-                <option value={2048}>2048-bit (Standard)</option>
-                <option value={3072}>3072-bit (Secure)</option>
-                <option value={4096}>4096-bit (Ultra-Secure)</option>
+                <option value={2048}>{t("uiText.fcab965b")}</option>
+                <option value={3072}>{t("uiText.25120ccb")}</option>
+                <option value={4096}>{t("uiText.a369494b")}</option>
               </select>
             </div>
           ) : (
@@ -108,9 +106,9 @@ export default function RsaKeyPairGeneratorTool() {
                 onChange={(e) => setEcdsaCurve(e.target.value as any)}
                 className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-900 shadow-sm focus:outline-none dark:border-white/10 dark:bg-slate-900 dark:text-white"
               >
-                <option value="P-256">NIST P-256 (secp256r1)</option>
-                <option value="P-384">NIST P-384 (secp384r1)</option>
-                <option value="P-521">NIST P-521 (secp521r1)</option>
+                <option value="P-256">{t("uiText.b2287417")}</option>
+                <option value="P-384">{t("uiText.d84d4acb")}</option>
+                <option value="P-521">{t("uiText.60b98471")}</option>
               </select>
             </div>
           )}
@@ -139,8 +137,7 @@ export default function RsaKeyPairGeneratorTool() {
           <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                Public Key (SPKI PEM)
-              </span>
+                {t("uiText.11169049")}</span>
               <div className="flex items-center gap-1.5">
                 <button
                   onClick={() => copyPem(keyPair.publicKeyPem, 'public')}
@@ -152,7 +149,7 @@ export default function RsaKeyPairGeneratorTool() {
                 <button
                   onClick={() => downloadPem(keyPair.publicKeyPem, `${algoType.toLowerCase()}_public_key.pem`)}
                   className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition"
-                  title="Download PEM"
+                  title={t("uiText.393972c3")}
                 >
                   <Download className="w-3.5 h-3.5" />
                 </button>
@@ -170,8 +167,7 @@ export default function RsaKeyPairGeneratorTool() {
           <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-red-500 dark:text-red-400">
-                Private Key (PKCS#8 PEM)
-              </span>
+                {t("uiText.b54dec80")}</span>
               <div className="flex items-center gap-1.5">
                 <button
                   onClick={() => copyPem(keyPair.privateKeyPem, 'private')}
@@ -183,7 +179,7 @@ export default function RsaKeyPairGeneratorTool() {
                 <button
                   onClick={() => downloadPem(keyPair.privateKeyPem, `${algoType.toLowerCase()}_private_key.pem`)}
                   className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition"
-                  title="Download PEM"
+                  title={t("uiText.393972c3")}
                 >
                   <Download className="w-3.5 h-3.5" />
                 </button>

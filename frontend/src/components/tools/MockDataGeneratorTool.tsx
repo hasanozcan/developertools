@@ -72,8 +72,7 @@ export default function MockDataGeneratorTool() {
             >
               {[1, 3, 5, 10, 25, 50, 100].map((num) => (
                 <option key={num} value={num}>
-                  {num} items
-                </option>
+                  {num} {t("uiText.3a79338f")}</option>
               ))}
             </select>
           </div>
@@ -92,8 +91,7 @@ export default function MockDataGeneratorTool() {
       <div className="surface-card rounded-2xl p-6 space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            Generated JSON Output ({count} records)
-          </span>
+            {t("uiText.3dc0944d")}{count} {t("uiText.819d2bcc")}</span>
           <div className="flex items-center gap-2">
             <button
               onClick={handleCopy}

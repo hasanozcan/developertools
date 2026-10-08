@@ -44,42 +44,42 @@ export default function MacAddressTool() {
 
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Separator Format</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.b8e44ec7")}</label>
             <select
               value={format}
               onChange={(e) => setFormat(e.target.value as MacFormat)}
               className="w-full px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900"
             >
-              <option value="colon">Colon (00:1A:2B:3C:4D:5E)</option>
-              <option value="hyphen">Hyphen (00-1A-2B-3C-4D-5E)</option>
-              <option value="cisco">Cisco Dot (001a.2b3c.4d5e)</option>
-              <option value="none">No Separator (001A2B3C4D5E)</option>
+              <option value="colon">{t("uiText.4931b07b")}</option>
+              <option value="hyphen">{t("uiText.d15c08a9")}</option>
+              <option value="cisco">{t("uiText.08e62b48")}</option>
+              <option value="none">{t("uiText.41449ad6")}</option>
             </select>
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Letter Case</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.90f8b9cb")}</label>
             <select
               value={caseType}
               onChange={(e) => setCaseType(e.target.value as 'upper' | 'lower')}
               className="w-full px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900"
             >
-              <option value="upper">UPPERCASE (00:1A:...)</option>
-              <option value="lower">lowercase (00:1a:...)</option>
+              <option value="upper">{t("uiText.1d8b4390")}</option>
+              <option value="lower">{t("uiText.c42ba0d5")}</option>
             </select>
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Quantity</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("tool.uuidGenerator.quantity")}</label>
             <select
               value={count}
               onChange={(e) => setCount(parseInt(e.target.value, 10))}
               className="w-full px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900"
             >
-              <option value="1">1 Address</option>
-              <option value="5">5 Addresses</option>
-              <option value="10">10 Addresses</option>
-              <option value="25">25 Addresses</option>
+              <option value="1">{t("uiText.beeae034")}</option>
+              <option value="5">{t("uiText.49c9b7d4")}</option>
+              <option value="10">{t("uiText.c154ce78")}</option>
+              <option value="25">{t("uiText.352f4864")}</option>
             </select>
           </div>
 
@@ -89,7 +89,7 @@ export default function MacAddressTool() {
               className="w-full py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-sm transition flex items-center justify-center gap-1.5"
             >
               <RefreshCw className="w-3.5 h-3.5" />
-              <span>Regenerate</span>
+              <span>{t("tool.qrCode.regenerate")}</span>
             </button>
           </div>
         </div>
@@ -99,8 +99,7 @@ export default function MacAddressTool() {
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-            Generated MAC Address List
-          </span>
+            {t("uiText.64d65cb3")}</span>
           <button
             onClick={handleCopy}
             className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

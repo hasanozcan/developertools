@@ -8,6 +8,7 @@ import {
   type TimingFunction,
 } from '@/lib/cssAnimation';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 export default function CssAnimationGeneratorTool() {
   const { t } = useLanguage();
@@ -64,7 +65,7 @@ export default function CssAnimationGeneratorTool() {
                   : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-white/10 hover:bg-slate-50'
               }`}
             >
-              {a.label}
+              {localizeUiText(a.label, t)}
             </button>
           ))}
         </div>
@@ -95,7 +96,7 @@ export default function CssAnimationGeneratorTool() {
           {/* Duration */}
           <div>
             <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-              <span>Duration</span>
+              <span>{t("uiText.d4c7492d")}</span>
               <span className="font-mono">{duration}s</span>
             </div>
             <input
@@ -112,7 +113,7 @@ export default function CssAnimationGeneratorTool() {
           {/* Delay */}
           <div>
             <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-              <span>Delay</span>
+              <span>{t("uiText.20cc7478")}</span>
               <span className="font-mono">{delay}s</span>
             </div>
             <input
@@ -128,7 +129,7 @@ export default function CssAnimationGeneratorTool() {
 
           {/* Timing Function */}
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Timing Function</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.cb092539")}</label>
             <select
               value={timingFunction}
               onChange={(e) => setTimingFunction(e.target.value as TimingFunction)}
@@ -144,16 +145,16 @@ export default function CssAnimationGeneratorTool() {
 
           {/* Iteration Count */}
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Iterations</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.c165368d")}</label>
             <select
               value={iterationCount}
               onChange={(e) => setIterationCount(e.target.value)}
               className="w-full px-3 py-1.5 text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
             >
               <option value="infinite">infinite</option>
-              <option value="1">1 time</option>
-              <option value="2">2 times</option>
-              <option value="3">3 times</option>
+              <option value="1">{t("uiText.87602115")}</option>
+              <option value="2">{t("uiText.58adb157")}</option>
+              <option value="3">{t("uiText.576d1184")}</option>
             </select>
           </div>
         </div>
@@ -163,8 +164,7 @@ export default function CssAnimationGeneratorTool() {
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            CSS Keyframes & Class Code
-          </span>
+            {t("uiText.41c2c468")}</span>
           <button
             onClick={handleCopy}
             className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { Copy, Check, Sliders, Type, RefreshCw } from 'lucide-react';
 import { calculateCssClamp } from '@/lib/cssHelpers';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 export default function CssClampTool() {
   const { t } = useLanguage();
@@ -53,8 +54,7 @@ export default function CssClampTool() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-5 rounded-3xl bg-slate-50/80 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5">
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-            Min Viewport (px)
-          </label>
+            {t("uiText.52c024ee")}</label>
           <input
             type="number"
             value={minWidth}
@@ -65,8 +65,7 @@ export default function CssClampTool() {
 
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-            Max Viewport (px)
-          </label>
+            {t("uiText.a1e52240")}</label>
           <input
             type="number"
             value={maxWidth}
@@ -77,8 +76,7 @@ export default function CssClampTool() {
 
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-            Min Value (px)
-          </label>
+            {t("uiText.4b49bd29")}</label>
           <input
             type="number"
             value={minValue}
@@ -89,8 +87,7 @@ export default function CssClampTool() {
 
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-            Max Value (px)
-          </label>
+            {t("uiText.9e3b2843")}</label>
           <input
             type="number"
             value={maxValue}
@@ -103,39 +100,36 @@ export default function CssClampTool() {
       {/* Output Cards */}
       {error ? (
         <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-xs text-red-600 dark:border-red-800/40 dark:bg-red-900/20 dark:text-red-300">
-          {error}
+          {localizeUiText(error, t)}
         </div>
       ) : (
         <div className="space-y-4">
           <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-900">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                CSS Property Value
-              </span>
+                {t("uiText.c8e337a8")}</span>
               <button
                 onClick={() => handleCopy(`font-size: ${clampCss};`)}
                 className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
               >
                 {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-                {copied ? 'Copied' : 'Copy CSS'}
+                {copied ? t("uiText.8dc21305") : t("uiText.9b2af91b")}
               </button>
             </div>
             <div className="rounded-2xl bg-slate-50 p-4 font-mono text-sm text-indigo-600 dark:bg-slate-800 dark:text-indigo-300 select-all">
-              font-size: {clampCss};
+              {t("uiText.a644052c")}{clampCss};
             </div>
           </div>
 
           <div className="rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-900">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                Tailwind CSS Class
-              </span>
+                {t("uiText.94af31d6")}</span>
               <button
                 onClick={() => handleCopy(tailwindClass)}
                 className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700 transition hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300"
               >
-                <Copy className="h-3.5 w-3.5" /> Copy Class
-              </button>
+                <Copy className="h-3.5 w-3.5" /> {t("uiText.a48ffbb4")}</button>
             </div>
             <div className="rounded-2xl bg-slate-50 p-4 font-mono text-xs text-slate-700 dark:bg-slate-800 dark:text-slate-300 select-all">
               {tailwindClass}
@@ -150,11 +144,10 @@ export default function CssClampTool() {
           <div className="flex items-center gap-2">
             <Sliders className="h-4 w-4 text-indigo-500" />
             <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-              Interactive Viewport Simulator
-            </span>
+              {t("uiText.6ee8ed6d")}</span>
           </div>
           <span className="text-xs font-mono font-semibold text-indigo-600 dark:text-indigo-400">
-            Viewport: {previewWidth}px ➔ Computed: {currentCalculatedPx}px
+            {t("uiText.1703d29b")}{previewWidth}{t("uiText.b588d516") + ' '}{currentCalculatedPx}px
           </span>
         </div>
 
@@ -172,10 +165,9 @@ export default function CssClampTool() {
             style={{ fontSize: `${currentCalculatedPx}px` }}
             className="font-bold tracking-tight text-slate-900 dark:text-white transition-all duration-75 leading-tight"
           >
-            The quick brown fox jumps over the lazy dog.
-          </p>
+            {t("uiText.ecaf981a")}</p>
           <p className="text-xs text-slate-400 mt-2 font-mono">
-            Dynamic fluid typography in action at screen width {previewWidth}px
+            {t("uiText.a84885fb")}{previewWidth}px
           </p>
         </div>
       </div>

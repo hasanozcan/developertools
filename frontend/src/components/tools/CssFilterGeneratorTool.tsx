@@ -29,13 +29,13 @@ export default function CssFilterGeneratorTool() {
       {/* Live Visual Filter Preview Sandbox */}
       <div className="surface-card rounded-3xl p-6 flex flex-col items-center justify-center min-h-[300px] border border-slate-200/80 dark:border-white/5 space-y-4">
         <div className="flex items-center justify-between w-full">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Live Visual Image Filter Preview</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.efec8a22")}</span>
           <button
             onClick={() => setFilters(DEFAULT_FILTER_VALUES)}
             className="inline-flex items-center gap-1 text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-semibold"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span>Reset All Filters</span>
+            <span>{t("uiText.3a66baf8")}</span>
           </button>
         </div>
 
@@ -43,7 +43,7 @@ export default function CssFilterGeneratorTool() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&h=500&fit=crop"
-            alt="Filter test subject"
+            alt={t("uiText.33bb170d")}
             style={{ filter: filterString }}
             className="w-full h-full object-cover transition-all duration-150"
           />
@@ -210,8 +210,7 @@ export default function CssFilterGeneratorTool() {
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            Generated CSS Code
-          </span>
+            {t("uiText.a2fe5f3e")}</span>
           <button
             onClick={handleCopy}
             className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

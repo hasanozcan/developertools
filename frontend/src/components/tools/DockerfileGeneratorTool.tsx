@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { Copy, Check, Download, Layers } from 'lucide-react';
 import { generateDockerfile, type ProjectType } from '@/lib/dockerfileTemplates';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 export default function DockerfileGeneratorTool() {
   const { t } = useLanguage();
@@ -92,7 +93,7 @@ export default function DockerfileGeneratorTool() {
                     : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-white/10 dark:bg-slate-900 dark:text-slate-200'
                 }`}
               >
-                {p.label}
+                {localizeUiText(p.label, t)}
               </button>
             ))}
           </div>
@@ -126,16 +127,15 @@ export default function DockerfileGeneratorTool() {
           {projectType === 'node' && (
             <div>
               <label className="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-1.5">
-                Package Manager
-              </label>
+                {t("uiText.3a493a70")}</label>
               <select
                 value={packageManager}
                 onChange={(e) => setPackageManager(e.target.value as any)}
                 className="w-full px-3 py-1.5 text-xs rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
-                <option value="npm">npm (Standard)</option>
-                <option value="pnpm">pnpm (Fast &amp; Isolated)</option>
-                <option value="yarn">Yarn (Classic)</option>
+                <option value="npm">{t("uiText.1c07301e")}</option>
+                <option value="pnpm">{t("uiText.31483332")}</option>
+                <option value="yarn">{t("uiText.190af99c")}</option>
               </select>
             </div>
           )}
@@ -148,8 +148,7 @@ export default function DockerfileGeneratorTool() {
           <div className="flex items-center gap-2">
             <Layers className="w-4 h-4 text-indigo-500" />
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Generated Dockerfile (Production Multi-stage)
-            </span>
+              {t("uiText.79a6f214")}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <button
@@ -162,7 +161,7 @@ export default function DockerfileGeneratorTool() {
             <button
               onClick={handleDownload}
               className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition"
-              title="Download Dockerfile"
+              title={t("uiText.2d4d4dc5")}
             >
               <Download className="w-3.5 h-3.5" />
             </button>

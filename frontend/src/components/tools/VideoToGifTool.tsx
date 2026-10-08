@@ -1,11 +1,13 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { Copy, Download, Film, Sparkles, Sliders } from 'lucide-react';
 import CopyButton from '@/components/common/CopyButton';
 import { calculateGifDimensions, estimateGifFrameCount, estimateGifFileSize, formatFileSize } from '@/lib/videoToGif';
 
 export default function VideoToGifTool() {
+  const { t } = useLanguage();
   const [fps, setFps] = useState(10);
   const [targetWidth, setTargetWidth] = useState(480);
   const [quality, setQuality] = useState(7);
@@ -24,44 +26,43 @@ export default function VideoToGifTool() {
             <Film className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-base font-semibold text-slate-900 dark:text-white">Video to GIF Configuration</h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">Client-side high quality GIF synthesis with resolution & FPS control</p>
+            <h3 className="text-base font-semibold text-slate-900 dark:text-white">{t("uiText.eb662619")}</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">{t("uiText.ae773f65")}</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <div>
-            <label className="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">Frame Rate (FPS): {fps}</label>
+            <label className="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">{t("uiText.54b50e20") + ' '}{fps}</label>
             <input type="range" min="5" max="30" value={fps} onChange={(e) => setFps(Number(e.target.value))} className="w-full accent-indigo-600" />
           </div>
           <div>
-            <label className="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">Output Width: {targetWidth}px</label>
+            <label className="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">{t("uiText.f7b8fc86") + ' '}{targetWidth}px</label>
             <select value={targetWidth} onChange={(e) => setTargetWidth(Number(e.target.value))} className="w-full rounded-xl border border-slate-200 bg-white p-2 text-xs dark:border-slate-700 dark:bg-slate-800">
-              <option value={320}>320px (Compact)</option>
-              <option value={480}>480px (Standard)</option>
-              <option value={640}>640px (High Quality)</option>
-              <option value={800}>800px (HD)</option>
+              <option value={320}>{t("uiText.afca6604")}</option>
+              <option value={480}>{t("uiText.f16d60c1")}</option>
+              <option value={640}>{t("uiText.2d1e624f")}</option>
+              <option value={800}>{t("uiText.4498655e")}</option>
             </select>
           </div>
           <div>
-            <label className="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">Clip Duration: {duration}s</label>
+            <label className="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">{t("uiText.0fe27231") + ' '}{duration}s</label>
             <input type="number" min="1" max="60" value={duration} onChange={(e) => setDuration(Number(e.target.value))} className="w-full rounded-xl border border-slate-200 bg-white p-2 text-xs dark:border-slate-700 dark:bg-slate-800" />
           </div>
           <div>
-            <label className="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">Quality Preset: {quality}/10</label>
+            <label className="block text-xs font-semibold mb-1.5 text-slate-700 dark:text-slate-300">{t("uiText.4dd6d1e9") + ' '}{quality}/10</label>
             <input type="range" min="1" max="10" value={quality} onChange={(e) => setQuality(Number(e.target.value))} className="w-full accent-indigo-600" />
           </div>
         </div>
 
         <div className="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-4 text-xs">
-            <span>Dimensions: <strong>{dims.width} x {dims.height}px</strong></span>
-            <span>Frames: <strong>{frameCount} frames</strong></span>
-            <span>Est. Size: <strong>{formatFileSize(estimatedSize)}</strong></span>
+            <span>{t("uiText.19f9275e") + ' '}<strong>{dims.width} x {dims.height}px</strong></span>
+            <span>{t("uiText.86d657cf") + ' '}<strong>{frameCount} {' ' + t("uiText.7b71324f")}</strong></span>
+            <span>{t("uiText.2ac6692e") + ' '}<strong>{formatFileSize(estimatedSize)}</strong></span>
           </div>
           <button onClick={() => alert('Client-side GIF generated successfully!')} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-500 transition">
-            <Download className="w-4 h-4" /> Convert to GIF
-          </button>
+            <Download className="w-4 h-4" /> {t("uiText.676b768b")}</button>
         </div>
       </div>
     </div>

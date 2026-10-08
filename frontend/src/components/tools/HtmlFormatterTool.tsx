@@ -151,15 +151,15 @@ export default function HtmlFormatterTool() {
       {/* Controls */}
       <div className="flex flex-wrap items-center gap-4">
         <label className="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
-          <span>Indent:</span>
+          <span>{t("uiText.4c8f8233")}</span>
           <select
             value={indentSize}
             onChange={(e) => setIndentSize(Number(e.target.value))}
             className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
           >
-            <option value={2}>2 spaces</option>
-            <option value={4}>4 spaces</option>
-            <option value={8}>8 spaces</option>
+            <option value={2}>{t("uiText.906f8f38")}</option>
+            <option value={4}>{t("uiText.c568c68e")}</option>
+            <option value={8}>{t("uiText.9ad2d0a2")}</option>
           </select>
         </label>
 
@@ -167,22 +167,18 @@ export default function HtmlFormatterTool() {
           onClick={loadSample}
           className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
         >
-          Load Sample
-        </button>
+          {t("common.loadSample")}</button>
       </div>
 
       {/* Stats */}
       {input && (
         <div className="flex flex-wrap gap-4 text-sm">
           <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full">
-            {stats.lines} lines
-          </span>
+            {stats.lines} {t("common.lines")}</span>
           <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300 rounded-full">
-            Original: {stats.originalSize} chars
-          </span>
+            {t("uiText.3e94ca78")}{stats.originalSize} {t("uiText.5da9662a")}</span>
           <span className="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 rounded-full">
-            Formatted: {stats.formattedSize} chars
-          </span>
+            {t("uiText.40cf663b")}{stats.formattedSize} {t("uiText.5da9662a")}</span>
         </div>
       )}
 
@@ -190,20 +186,18 @@ export default function HtmlFormatterTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            HTML Input
-          </label>
+            {t("tool.htmlFormatter.input")}</label>
           <CodeEditor
             value={input}
             onChange={setInput}
-            placeholder="Enter HTML code to format..."
+            placeholder={t("uiText.a0cc4dc7")}
             language="html"
             minHeight="300px"
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Formatted HTML
-          </label>
+            {t("tool.htmlFormatter.output")}</label>
           <div className="relative">
             <CodeEditor
               value={formatted}

@@ -50,8 +50,7 @@ export default function MarkdownTableToCsvTool() {
             onClick={handleDownloadCsv}
             className="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-sm transition"
           >
-            Download .csv File
-          </button>
+            {t("uiText.d9de18b5")}</button>
         </div>
       </div>
 
@@ -59,7 +58,7 @@ export default function MarkdownTableToCsvTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">GitHub Markdown Table</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.bc9299a3")}</span>
             <button
               onClick={() => setMdInput(SAMPLE_MD)}
               className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-semibold"
@@ -77,7 +76,7 @@ export default function MarkdownTableToCsvTool() {
 
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">CSV Formatted Output</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.1c279508")}</span>
             <button
               onClick={handleCopy}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

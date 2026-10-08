@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import { useEffect, useState, type FormEvent } from 'react';
 import { AlertTriangle, CheckCircle2, FileJson2, Play, Trash2, XCircle } from 'lucide-react';
 import {
@@ -40,6 +41,7 @@ const issueHeadings: Record<JsonSchemaValidationErrorSource, string> = {
 };
 
 export default function JsonSchemaValidatorTool() {
+  const { t } = useLanguage();
   const [documentSource, setDocumentSource] = useState('');
   const [schemaSource, setSchemaSource] = useState('');
   const [result, setResult] = useState<JsonSchemaValidationResult | null>(null);
@@ -93,16 +95,11 @@ export default function JsonSchemaValidatorTool() {
           id="json-schema-validator-heading"
           className="text-xl font-bold text-gray-900 dark:text-white"
         >
-          JSON Schema Validator
-        </h2>
+          {t("toolName.json-schema-validator")}</h2>
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
-          Validate a JSON document against a JSON Schema in your browser. Validation uses Ajv v8 and
-          reports every matching schema error.
-        </p>
+          {t("uiText.063fba9b")}</p>
         <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
-          Numbers use JavaScript precision; integers outside the safe range can be rounded while
-          parsing.
-        </p>
+          {t("uiText.66933d20")}</p>
       </div>
 
       <form onSubmit={runValidation} noValidate>
@@ -112,24 +109,21 @@ export default function JsonSchemaValidatorTool() {
             className="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2 font-medium text-white transition-colors hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
           >
             <Play aria-hidden="true" className="h-4 w-4" />
-            Validate
-          </button>
+            {t("common.validate")}</button>
           <button
             type="button"
             onClick={loadSample}
             className="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
           >
             <FileJson2 aria-hidden="true" className="h-4 w-4" />
-            Load failing sample
-          </button>
+            {t("uiText.c8e1acb9")}</button>
           <button
             type="button"
             onClick={clear}
             className="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
           >
             <Trash2 aria-hidden="true" className="h-4 w-4" />
-            Clear
-          </button>
+            {t("common.clear")}</button>
         </div>
 
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
@@ -138,14 +132,12 @@ export default function JsonSchemaValidatorTool() {
               htmlFor="json-schema-document"
               className="text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              JSON document
-            </label>
+              {t("tool.jsonpath.documentLabel")}</label>
             <p
               id="json-schema-document-help"
               className="mt-1 text-xs text-gray-500 dark:text-gray-400"
             >
-              The JSON value to validate (up to 1,000,000 characters).
-            </p>
+              {t("uiText.e9adf71e")}</p>
             <textarea
               id="json-schema-document"
               value={documentSource}
@@ -163,14 +155,12 @@ export default function JsonSchemaValidatorTool() {
               htmlFor="json-schema-schema"
               className="text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              JSON Schema
-            </label>
+              {t("uiText.b3b1a59a")}</label>
             <p
               id="json-schema-schema-help"
               className="mt-1 text-xs text-gray-500 dark:text-gray-400"
             >
-              The schema used to validate the document (up to 250,000 characters).
-            </p>
+              {t("uiText.08d798ef")}</p>
             <textarea
               id="json-schema-schema"
               value={schemaSource}
@@ -193,10 +183,9 @@ export default function JsonSchemaValidatorTool() {
         >
           <CheckCircle2 aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0" />
           <div>
-            <h3 className="font-semibold">Document is valid</h3>
+            <h3 className="font-semibold">{t("uiText.e7ea043e")}</h3>
             <p className="mt-1 text-sm">
-              The JSON document satisfies every recognized rule in the schema.
-            </p>
+              {t("uiText.0ad4148a")}</p>
           </div>
         </div>
       )}
@@ -207,10 +196,9 @@ export default function JsonSchemaValidatorTool() {
           aria-live="polite"
           className="mt-5 rounded-lg border border-amber-200 bg-amber-50 p-4 text-amber-900 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-200"
         >
-          <h3 className="font-semibold">Schema warnings</h3>
+          <h3 className="font-semibold">{t("uiText.c26c5ee7")}</h3>
           <p className="mt-1 text-sm">
-            Ajv ignored extension keywords it does not recognize. Review them for misspellings.
-          </p>
+            {t("uiText.8f33ef21")}</p>
           <ul className="mt-2 list-disc space-y-1 pl-5 font-mono text-xs">
             {result.warnings.map((warning) => (
               <li key={warning} className="break-words">
@@ -242,15 +230,15 @@ export default function JsonSchemaValidatorTool() {
           <div className="flex items-start gap-3 text-red-800 dark:text-red-200">
             <XCircle aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0" />
             <div>
-              <h3 className="font-semibold">Document is invalid</h3>
+              <h3 className="font-semibold">{t("uiText.a6f7bbcf")}</h3>
               <p className="mt-1 text-sm">
-                Found {result.errors.length} schema{' '}
-                {result.errors.length === 1 ? 'error' : 'errors'}.
+                {t("uiText.0abaed3f")}{result.errors.length} {' ' + t("uiText.527d0336")}{' '}
+                {result.errors.length === 1 ? t("uiText.21918751") : t("uiText.fa17ba86")}.
               </p>
             </div>
           </div>
 
-          <ol aria-label="Schema validation errors" className="mt-4 space-y-3">
+          <ol aria-label={t("uiText.f7574688")} className="mt-4 space-y-3">
             {result.errors.map((error, index) => (
               <li
                 key={`${error.instancePath}-${error.schemaPath}-${error.keyword}-${index}`}
@@ -260,25 +248,25 @@ export default function JsonSchemaValidatorTool() {
                   {index + 1}. {error.message}
                 </p>
                 <dl className="mt-3 grid gap-2 text-xs sm:grid-cols-[7rem_1fr]">
-                  <dt className="font-semibold text-gray-600 dark:text-gray-400">Instance path</dt>
+                  <dt className="font-semibold text-gray-600 dark:text-gray-400">{t("uiText.c3d29dbd")}</dt>
                   <dd className="min-w-0 break-all font-mono text-gray-900 dark:text-gray-100">
-                    {error.instancePath || '(root)'}
+                    {error.instancePath || t("uiText.1d151a16")}
                   </dd>
-                  <dt className="font-semibold text-gray-600 dark:text-gray-400">Schema path</dt>
+                  <dt className="font-semibold text-gray-600 dark:text-gray-400">{t("uiText.acafa2a1")}</dt>
                   <dd className="min-w-0 break-all font-mono text-gray-900 dark:text-gray-100">
                     {error.schemaPath}
                   </dd>
-                  <dt className="font-semibold text-gray-600 dark:text-gray-400">Keyword</dt>
+                  <dt className="font-semibold text-gray-600 dark:text-gray-400">{t("uiText.cde1c7a4")}</dt>
                   <dd className="min-w-0 break-all font-mono text-gray-900 dark:text-gray-100">
                     {error.keyword}
                   </dd>
-                  <dt className="font-semibold text-gray-600 dark:text-gray-400">Message</dt>
+                  <dt className="font-semibold text-gray-600 dark:text-gray-400">{t("contact.message")}</dt>
                   <dd className="min-w-0 break-words text-gray-900 dark:text-gray-100">
                     {error.message}
                   </dd>
                   {Object.keys(error.params).length > 0 && (
                     <>
-                      <dt className="font-semibold text-gray-600 dark:text-gray-400">Details</dt>
+                      <dt className="font-semibold text-gray-600 dark:text-gray-400">{t("uiText.0ec24245")}</dt>
                       <dd className="min-w-0 break-all font-mono text-gray-900 dark:text-gray-100">
                         {JSON.stringify(error.params)}
                       </dd>

@@ -71,12 +71,12 @@ export default function RobotsTxtGeneratorTool() {
               <div key={ruleIdx} className="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-slate-900/50 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-slate-700 dark:text-slate-200">
-                    User-agent: <code className="text-indigo-600 dark:text-indigo-400">{rule.userAgent}</code>
+                    {t("uiText.b3d7ca5c")}<code className="text-indigo-600 dark:text-indigo-400">{rule.userAgent}</code>
                   </span>
                 </div>
 
                 <div>
-                  <label className="text-[11px] font-bold text-slate-500 uppercase block mb-1">Disallow Paths:</label>
+                  <label className="text-[11px] font-bold text-slate-500 uppercase block mb-1">{t("uiText.9f298ed2")}</label>
                   <div className="space-y-1.5">
                     {rule.disallow.map((d, dIdx) => (
                       <div key={dIdx} className="flex items-center gap-1.5">
@@ -99,8 +99,7 @@ export default function RobotsTxtGeneratorTool() {
                       onClick={() => addDisallow(ruleIdx)}
                       className="text-xs text-indigo-600 dark:text-indigo-400 font-semibold inline-flex items-center gap-1 mt-1 hover:underline"
                     >
-                      <Plus className="w-3 h-3" /> Add Disallow Path
-                    </button>
+                      <Plus className="w-3 h-3" /> {t("uiText.6db3496c")}</button>
                   </div>
                 </div>
               </div>
@@ -109,8 +108,7 @@ export default function RobotsTxtGeneratorTool() {
 
           <div className="pt-2 border-t border-slate-100 dark:border-white/5 space-y-2">
             <label className="text-xs font-bold uppercase tracking-wider text-slate-500 block">
-              Sitemap URL
-            </label>
+              {t("uiText.b7cb0789")}</label>
             <input
               type="text"
               value={sitemaps[0] || ''}
@@ -125,8 +123,7 @@ export default function RobotsTxtGeneratorTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Generated robots.txt File
-            </span>
+              {t("uiText.1c166759")}</span>
             <div className="flex items-center gap-1.5">
               <button
                 onClick={handleCopy}
@@ -138,7 +135,7 @@ export default function RobotsTxtGeneratorTool() {
               <button
                 onClick={handleDownload}
                 className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition"
-                title="Download robots.txt"
+                title={t("uiText.9a845380")}
               >
                 <Download className="w-3.5 h-3.5" />
               </button>

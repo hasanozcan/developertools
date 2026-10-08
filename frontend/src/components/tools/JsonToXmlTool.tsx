@@ -1,8 +1,10 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { Copy, Check, RefreshCw, FileCode } from 'lucide-react';
 import { jsonToXml } from '@/lib/jsonToXml';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE_JSON = JSON.stringify(
   {
@@ -31,6 +33,7 @@ const SAMPLE_JSON = JSON.stringify(
 );
 
 export default function JsonToXmlTool() {
+  const { t } = useLanguage();
   const [jsonInput, setJsonInput] = useState(SAMPLE_JSON);
   const [rootName, setRootName] = useState('root');
   const [itemName, setItemName] = useState('item');
@@ -67,8 +70,7 @@ export default function JsonToXmlTool() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 rounded-2xl bg-slate-50/80 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5">
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-            Root Tag Name
-          </label>
+            {t("uiText.4d21694c")}</label>
           <input
             type="text"
             value={rootName}
@@ -79,8 +81,7 @@ export default function JsonToXmlTool() {
 
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-            Array Item Tag Name
-          </label>
+            {t("uiText.853fd960")}</label>
           <input
             type="text"
             value={itemName}
@@ -91,8 +92,7 @@ export default function JsonToXmlTool() {
 
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-            Attribute Prefix
-          </label>
+            {t("uiText.f6dca441")}</label>
           <input
             type="text"
             value={attributePrefix}
@@ -109,8 +109,7 @@ export default function JsonToXmlTool() {
               onChange={(e) => setIncludeDeclaration(e.target.checked)}
               className="rounded text-indigo-600 focus:ring-indigo-500"
             />
-            XML Declaration (&lt;?xml...&gt;)
-          </label>
+            {t("uiText.0e2eba7f")}</label>
         </div>
       </div>
 
@@ -119,14 +118,12 @@ export default function JsonToXmlTool() {
         <div className="flex flex-col space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              JSON Input
-            </span>
+              {t("tool.jsonCsv.jsonInput")}</span>
             <button
               onClick={() => setJsonInput(SAMPLE_JSON)}
               className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1"
             >
-              <RefreshCw className="h-3 w-3" /> Load Sample
-            </button>
+              <RefreshCw className="h-3 w-3" /> {t("common.loadSample")}</button>
           </div>
           <textarea
             value={jsonInput}
@@ -139,27 +136,26 @@ export default function JsonToXmlTool() {
         <div className="flex flex-col space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-              <FileCode className="h-3.5 w-3.5 text-indigo-500" /> XML Output
-            </span>
+              <FileCode className="h-3.5 w-3.5 text-indigo-500" /> {t("uiText.a5296603")}</span>
             {xmlOutput && (
               <button
                 onClick={handleCopy}
                 className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
               >
                 {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-                {copied ? 'Copied' : 'Copy XML'}
+                {copied ? t("uiText.8dc21305") : t("uiText.ebf2c97d")}
               </button>
             )}
           </div>
           {error ? (
             <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-xs text-red-600 dark:border-red-800/40 dark:bg-red-900/20 dark:text-red-300">
-              {error}
+              {localizeUiText(error, t)}
             </div>
           ) : (
             <textarea
               readOnly
               value={xmlOutput}
-              placeholder="XML will appear here..."
+              placeholder={t("uiText.0b13cfa3")}
               rows={15}
               className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 p-4 font-mono text-xs text-slate-900 shadow-sm focus:outline-none dark:border-white/10 dark:bg-slate-900/80 dark:text-indigo-200 resize-y"
             />

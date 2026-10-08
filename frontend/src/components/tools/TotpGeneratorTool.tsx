@@ -56,8 +56,7 @@ export default function TotpGeneratorTool() {
       {/* Main Display: 6-Digit Code & Countdown */}
       <div className="surface-card rounded-3xl p-8 flex flex-col items-center justify-center text-center space-y-4 shadow-sm border border-slate-200/80 dark:border-white/5">
         <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-          Live 2FA / TOTP Security Code
-        </span>
+          {t("uiText.b9983241")}</span>
         <div className="flex items-center gap-3">
           <div className="font-mono text-4xl sm:text-5xl font-black tracking-widest text-indigo-600 dark:text-indigo-400 bg-indigo-50/50 dark:bg-indigo-950/40 px-6 py-3 rounded-2xl border border-indigo-100 dark:border-indigo-900/40 shadow-inner">
             {currentCode.slice(0, 3)} {currentCode.slice(3)}
@@ -65,7 +64,7 @@ export default function TotpGeneratorTool() {
           <button
             onClick={() => copyText(currentCode, setCopiedCode)}
             className="p-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-500/20 transition active:scale-95"
-            title="Copy 6-Digit Code"
+            title={t("uiText.ea2fc5e3")}
           >
             {copiedCode ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
           </button>
@@ -74,7 +73,7 @@ export default function TotpGeneratorTool() {
         {/* 30-Second Countdown Bar */}
         <div className="w-full max-w-xs space-y-1.5 pt-2">
           <div className="flex justify-between text-xs font-semibold text-slate-500">
-            <span>Next code in:</span>
+            <span>{t("uiText.19c11862")}</span>
             <span className="font-mono font-bold text-indigo-600 dark:text-indigo-400">{remaining}s</span>
           </div>
           <div className="w-full h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
@@ -94,14 +93,12 @@ export default function TotpGeneratorTool() {
           <div className="sm:col-span-1">
             <div className="flex items-center justify-between mb-1.5">
               <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                Base32 Secret Key
-              </label>
+                {t("uiText.ea7e32c8")}</label>
               <button
                 onClick={regenerateSecret}
                 className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center gap-1 font-semibold"
               >
-                <RefreshCw className="w-3 h-3" /> New Key
-              </button>
+                <RefreshCw className="w-3 h-3" /> {t("uiText.c058a09a")}</button>
             </div>
             <div className="relative">
               <input
@@ -115,8 +112,7 @@ export default function TotpGeneratorTool() {
 
           <div>
             <label className="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-1.5">
-              Issuer Name
-            </label>
+              {t("uiText.14ab2429")}</label>
             <input
               type="text"
               value={issuer}
@@ -127,8 +123,7 @@ export default function TotpGeneratorTool() {
 
           <div>
             <label className="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-1.5">
-              Account Email / Label
-            </label>
+              {t("uiText.8411178b")}</label>
             <input
               type="text"
               value={account}
@@ -142,7 +137,7 @@ export default function TotpGeneratorTool() {
         <div className="pt-2 border-t border-slate-100 dark:border-white/5 space-y-1.5">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-              otpauth:// URI (for QR &amp; Authenticator Apps)
+              {t('tool.totp.uriLabel')}
             </span>
             <button
               onClick={() => copyText(otpauthUri, setCopiedSecret)}

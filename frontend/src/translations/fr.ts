@@ -1,9 +1,8 @@
+import { frCompletion } from './completion/fr';
 import { frUi } from './ui/fr';
-import { enhancedToolFallbacks, enhancedToolTranslations } from './enhancedTools';
+import { enhancedToolTranslations } from './enhancedTools';
 
 export const fr = {
-  // English placeholders first so hand-written keys below take precedence.
-  ...enhancedToolFallbacks.fr,
   ...frUi,
   // Tool Names
   'toolName.json-formatter': 'Formateur JSON',
@@ -160,4 +159,5 @@ export const fr = {
   'toolDesc.bcrypt-generator':
     'Générez des hachages bcrypt salés et vérifiez localement des mots de passe de test.',
   ...enhancedToolTranslations.fr,
+  ...frCompletion,
 };

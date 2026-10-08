@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { calculateK8sPodQos } from '@/lib/k8sResourceCalculator';
 import { Copy, Check } from 'lucide-react';
 
 export default function K8sResourceCalculatorTool() {
+  const { t } = useLanguage();
   const [cpuReq, setCpuReq] = useState(250);
   const [cpuLim, setCpuLim] = useState(500);
   const [memReq, setMemReq] = useState(256);
@@ -16,19 +18,19 @@ export default function K8sResourceCalculatorTool() {
     <div className="space-y-6">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div>
-          <label className="text-xs font-semibold text-slate-500">CPU Request (m)</label>
+          <label className="text-xs font-semibold text-slate-500">{t("uiText.dac6b49e")}</label>
           <input type="number" value={cpuReq} onChange={(e) => setCpuReq(parseInt(e.target.value, 10) || 0)} className="w-full rounded-xl border border-slate-200 p-2 text-xs dark:border-white/10 dark:bg-slate-950" />
         </div>
         <div>
-          <label className="text-xs font-semibold text-slate-500">CPU Limit (m)</label>
+          <label className="text-xs font-semibold text-slate-500">{t("uiText.4e77fde0")}</label>
           <input type="number" value={cpuLim} onChange={(e) => setCpuLim(parseInt(e.target.value, 10) || 0)} className="w-full rounded-xl border border-slate-200 p-2 text-xs dark:border-white/10 dark:bg-slate-950" />
         </div>
         <div>
-          <label className="text-xs font-semibold text-slate-500">RAM Request (Mi)</label>
+          <label className="text-xs font-semibold text-slate-500">{t("uiText.89124363")}</label>
           <input type="number" value={memReq} onChange={(e) => setMemReq(parseInt(e.target.value, 10) || 0)} className="w-full rounded-xl border border-slate-200 p-2 text-xs dark:border-white/10 dark:bg-slate-950" />
         </div>
         <div>
-          <label className="text-xs font-semibold text-slate-500">RAM Limit (Mi)</label>
+          <label className="text-xs font-semibold text-slate-500">{t("uiText.3049a0d9")}</label>
           <input type="number" value={memLim} onChange={(e) => setMemLim(parseInt(e.target.value, 10) || 0)} className="w-full rounded-xl border border-slate-200 p-2 text-xs dark:border-white/10 dark:bg-slate-950" />
         </div>
       </div>

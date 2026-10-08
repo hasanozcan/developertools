@@ -5,6 +5,7 @@ import CodeEditor from '@/components/common/CodeEditor';
 import { ArrowDownUp } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { numberToRoman, parseRomanNumberInput, romanToNumber } from '@/lib/romanNumerals';
+import { localizeUiText } from '@/lib/localizedText';
 
 type ConversionMode = 'toRoman' | 'toNumber';
 
@@ -98,8 +99,7 @@ export default function RomanNumeralConverterTool() {
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            Number → Roman
-          </button>
+            {t("uiText.5d5ab0a7")}</button>
           <button
             onClick={() => handleModeChange('toNumber')}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
@@ -108,14 +108,13 @@ export default function RomanNumeralConverterTool() {
                 : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600'
             }`}
           >
-            Roman → Number
-          </button>
+            {t("uiText.3441ef75")}</button>
         </div>
 
         <button
           onClick={swapMode}
           className="p-2 text-gray-500 dark:text-gray-400 hover:text-primary-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-          title="Swap input/output"
+          title={t("tool.yamlJson.swap")}
         >
           <ArrowDownUp className="w-5 h-5" />
         </button>
@@ -124,14 +123,13 @@ export default function RomanNumeralConverterTool() {
           onClick={loadSample}
           className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
         >
-          Load Sample
-        </button>
+          {t("common.loadSample")}</button>
       </div>
 
       {/* Error */}
       {error && (
         <div className="p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-300">
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -139,15 +137,15 @@ export default function RomanNumeralConverterTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            {mode === 'toRoman' ? 'Number (1-3999)' : 'Roman Numeral'}
+            {mode === 'toRoman' ? t("uiText.827c1967") : t("tool.romanNumeralConverter.romanNumeral")}
           </label>
           <CodeEditor
             value={input}
             onChange={handleInputChange}
             placeholder={
               mode === 'toRoman'
-                ? 'Enter a number (e.g., 2024)...'
-                : 'Enter Roman numeral (e.g., MMXXIV)...'
+                ? t("uiText.964ddfe2")
+                : t("uiText.185489a2")
             }
             language="text"
             minHeight="100px"
@@ -155,7 +153,7 @@ export default function RomanNumeralConverterTool() {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            {mode === 'toRoman' ? 'Roman Numeral' : 'Number'}
+            {mode === 'toRoman' ? t("tool.romanNumeralConverter.romanNumeral") : t("tool.romanNumeralConverter.number")}
           </label>
           <div className="relative">
             <CodeEditor
@@ -172,8 +170,7 @@ export default function RomanNumeralConverterTool() {
       {/* Reference Table */}
       <div>
         <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
-          Quick Reference
-        </h3>
+          {t("tool.regexTester.quickReference")}</h3>
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-2">
           {referenceTable.map(({ number, roman }) => (
             <div
@@ -190,9 +187,7 @@ export default function RomanNumeralConverterTool() {
       {/* Info */}
       <div className="text-sm text-gray-500 dark:text-gray-400">
         <p>
-          Roman numerals can represent numbers from 1 to 3999. The system uses additive notation (VI
-          = 5 + 1 = 6) and subtractive notation (IV = 5 - 1 = 4) for specific combinations.
-        </p>
+          {t("uiText.843754c5")}</p>
       </div>
     </div>
   );

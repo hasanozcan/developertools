@@ -1,9 +1,8 @@
 import { zhUi } from './ui/zh';
-import { enhancedToolFallbacks, enhancedToolTranslations } from './enhancedTools';
+import { enhancedToolTranslations } from './enhancedTools';
+import { zhToolCompletion } from './completion/zh';
 
 export const zh = {
-  // English placeholders first so hand-written keys below take precedence.
-  ...enhancedToolFallbacks.zh,
   ...zhUi,
   // Tool Names
   'toolName.json-formatter': 'JSON 格式化工具',
@@ -115,7 +114,7 @@ export const zh = {
   'toolDesc.xml-formatter': '用适当的缩进格式化和美化 XML 代码。',
   'toolDesc.sha512-hash': '从文本生成 SHA512 哈希用于完整性检查。',
   'toolDesc.roman-numeral-converter': '数字与罗马数字之间的转换。',
-  'toolDesc.number-base-converter': '在十进制、二进制、十六进��和八进制之间转换数字。',
+  'toolDesc.number-base-converter': '在十进制、二进制、十六进制和八进制之间转换数字。',
   'toolDesc.unicode-escape': '将普通文本编码为 Unicode 转义序列，或将转义文本解码。',
   'toolDesc.json-string-escape': '对 JSON 字符串内容进行转义和反转义。',
   'toolDesc.url-parser': '将 URL 解析为协议、主机、路径、哈希和查询参数。',
@@ -132,4 +131,5 @@ export const zh = {
   'toolName.bcrypt-generator': 'Bcrypt 生成与验证器',
   'toolDesc.bcrypt-generator': '在本地生成带盐的 bcrypt 哈希并验证测试密码。',
   ...enhancedToolTranslations.zh,
+  ...zhToolCompletion,
 };

@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { chunkJsonArray } from '@/lib/jsonArraySplitterChunker';
 
 export default function JsonArraySplitterChunkerTool() {
+  const { t } = useLanguage();
   const [text, setText] = useState('[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]');
   const [size, setSize] = useState('3');
   let output = '';
@@ -21,7 +23,7 @@ export default function JsonArraySplitterChunkerTool() {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <label className="text-xs font-semibold">Chunk Size: {size}</label>
+        <label className="text-xs font-semibold">{t("uiText.18000f47") + ' '}{size}</label>
         <input type="number" value={size} onChange={(e) => setSize(e.target.value)} className="w-32 rounded-xl border p-2 text-xs dark:border-slate-700 dark:bg-slate-800" />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

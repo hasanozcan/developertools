@@ -281,8 +281,7 @@ export default function Md5HashTool() {
       {/* File Upload Section */}
       <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Hash a File
-        </label>
+          {t("uiText.46818f34")}</label>
         
         {file ? (
           <div className="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-800">
@@ -296,7 +295,7 @@ export default function Md5HashTool() {
             <button
               onClick={removeFile}
               className="p-2 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-lg transition-colors"
-              title="Remove file"
+              title={t("tool.sha256Hash.removeFile")}
             >
               <X className="w-5 h-5" />
             </button>
@@ -315,7 +314,7 @@ export default function Md5HashTool() {
             >
               <Upload className="w-5 h-5 text-gray-500 dark:text-gray-400" />
               <span className="text-gray-600 dark:text-gray-400">
-                {hashingFile ? 'Hashing file...' : 'Click to upload a file'}
+                {hashingFile ? t("tool.sha256Hash.hashingFile") : t("uiText.c1e01668")}
               </span>
             </button>
           </div>
@@ -324,7 +323,7 @@ export default function Md5HashTool() {
         {fileHash && (
           <div className="mt-3">
             <div className="flex items-center justify-between mb-2">
-              <label className="text-sm text-gray-600 dark:text-gray-400">File MD5 Hash:</label>
+              <label className="text-sm text-gray-600 dark:text-gray-400">{t("uiText.c40ab431")}</label>
               <CopyButton text={fileHash} />
             </div>
             <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600">
@@ -342,7 +341,7 @@ export default function Md5HashTool() {
         <CodeEditor
           value={input}
           onChange={handleInputChange}
-          placeholder="Enter text to generate MD5 hash..."
+          placeholder={t("uiText.c5dff306")}
           language="text"
           minHeight="150px"
         />
@@ -353,7 +352,7 @@ export default function Md5HashTool() {
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t('tool.md5Hash.md5Hash')}</label>
         <div className="flex items-center gap-2 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
           <code className="flex-1 font-mono text-sm break-all text-gray-800 dark:text-gray-200">
-            {hash || 'Hash will appear here...'}
+            {hash || t("tool.sha256Hash.outputPlaceholder")}
           </code>
           {hash && <CopyButton text={hash} />}
         </div>

@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useEffect } from 'react';
 import { generateBip39SeedPhrase } from '@/lib/bip39SeedPhraseGenerator';
 import { Copy, Check, RefreshCw } from 'lucide-react';
 
 export default function Bip39SeedPhraseGeneratorTool() {
+  const { t } = useLanguage();
   const [count, setCount] = useState<12 | 24>(12);
   const [phrase, setPhrase] = useState<{ words: string[]; mnemonic: string }>({ words: [], mnemonic: '' });
   const [copied, setCopied] = useState(false);
@@ -20,16 +22,15 @@ export default function Bip39SeedPhraseGeneratorTool() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div className="inline-flex rounded-xl bg-slate-100 p-1 dark:bg-slate-800">
-          <button onClick={() => { setCount(12); gen(12); }} className={`rounded-lg px-3 py-1 text-xs font-semibold ${count === 12 ? 'bg-indigo-600 text-white' : ''}`}>12 Words</button>
-          <button onClick={() => { setCount(24); gen(24); }} className={`rounded-lg px-3 py-1 text-xs font-semibold ${count === 24 ? 'bg-indigo-600 text-white' : ''}`}>24 Words</button>
+          <button onClick={() => { setCount(12); gen(12); }} className={`rounded-lg px-3 py-1 text-xs font-semibold ${count === 12 ? 'bg-indigo-600 text-white' : ''}`}>{t("uiText.0ae8702b")}</button>
+          <button onClick={() => { setCount(24); gen(24); }} className={`rounded-lg px-3 py-1 text-xs font-semibold ${count === 24 ? 'bg-indigo-600 text-white' : ''}`}>{t("uiText.e94540fe")}</button>
         </div>
         <div className="flex gap-2">
           <button onClick={() => gen()} className="inline-flex items-center gap-1 text-xs font-semibold rounded-xl bg-slate-100 p-2 dark:bg-slate-800">
             <RefreshCw className="h-4 w-4" />
           </button>
           <button onClick={() => { navigator.clipboard.writeText(phrase.mnemonic); setCopied(true); setTimeout(() => setCopied(false), 2000); }} className="inline-flex items-center gap-1 text-xs font-semibold bg-indigo-600 text-white px-3 py-1.5 rounded-xl">
-            {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />} Copy Phrase
-          </button>
+            {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />} {t("uiText.324963d1")}</button>
         </div>
       </div>
 

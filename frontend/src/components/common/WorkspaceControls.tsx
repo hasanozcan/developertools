@@ -1,10 +1,12 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import { useRef } from 'react';
 import { Download, FolderPlus, Plus, Upload } from 'lucide-react';
 import { useWorkspace } from '@/context/WorkspaceContext';
 
 export default function WorkspaceControls({ toolSlug }: { toolSlug: string }) {
+  const { t } = useLanguage();
   const {
     ready,
     workspaces,
@@ -32,7 +34,7 @@ export default function WorkspaceControls({ toolSlug }: { toolSlug: string }) {
       inert={pending}
     >
       <select
-        aria-label="Active workspace"
+        aria-label={t("uiText.ade5309e")}
         disabled={pending}
         value={activeWorkspace.id}
         onChange={(event) => setActiveWorkspaceId(event.target.value)}
@@ -55,14 +57,14 @@ export default function WorkspaceControls({ toolSlug }: { toolSlug: string }) {
         }`}
       >
         <FolderPlus className="h-3.5 w-3.5" />
-        {saved ? 'Saved' : 'Add to workspace'}
+        {saved ? t("uiText.8a6979e4") : t("uiText.094aa274")}
       </button>
       <button
         type="button"
         onClick={createWorkspace}
         disabled={pending}
-        title="Create workspace"
-        aria-label="Create workspace"
+        title={t("uiText.9122069c")}
+        aria-label={t("uiText.9122069c")}
         className="rounded-xl border border-slate-200 bg-white p-1.5 text-slate-500 hover:text-indigo-600 dark:border-white/10 dark:bg-slate-900 dark:text-slate-300"
       >
         <Plus className="h-3.5 w-3.5" />
@@ -71,8 +73,8 @@ export default function WorkspaceControls({ toolSlug }: { toolSlug: string }) {
         type="button"
         onClick={exportActiveWorkspace}
         disabled={pending}
-        title="Export workspace"
-        aria-label="Export workspace"
+        title={t("uiText.a391dd3a")}
+        aria-label={t("uiText.a391dd3a")}
         className="rounded-xl border border-slate-200 bg-white p-1.5 text-slate-500 hover:text-indigo-600 dark:border-white/10 dark:bg-slate-900 dark:text-slate-300"
       >
         <Download className="h-3.5 w-3.5" />
@@ -92,8 +94,8 @@ export default function WorkspaceControls({ toolSlug }: { toolSlug: string }) {
         type="button"
         onClick={() => importRef.current?.click()}
         disabled={pending}
-        title="Import workspace"
-        aria-label="Import workspace"
+        title={t("uiText.4428f659")}
+        aria-label={t("uiText.4428f659")}
         className="rounded-xl border border-slate-200 bg-white p-1.5 text-slate-500 hover:text-indigo-600 dark:border-white/10 dark:bg-slate-900 dark:text-slate-300"
       >
         <Upload className="h-3.5 w-3.5" />

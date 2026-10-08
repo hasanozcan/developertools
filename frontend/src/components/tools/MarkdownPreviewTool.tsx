@@ -341,9 +341,9 @@ ${html}
               {t('tool.markdownPreview.emphasis')}
             </h4>
             <div className="text-xs font-mono text-gray-600 dark:text-gray-400 space-y-1">
-              <div>**bold** or __bold__</div>
-              <div>*italic* or _italic_</div>
-              <div>~~strikethrough~~</div>
+              <div>{t("uiText.01765b36")}</div>
+              <div>{t("uiText.52489e84")}</div>
+              <div>{t("uiText.84b93ab8")}</div>
             </div>
           </div>
           <div className="space-y-2">
@@ -351,9 +351,9 @@ ${html}
               {t('tool.markdownPreview.lists')}
             </h4>
             <div className="text-xs font-mono text-gray-600 dark:text-gray-400 space-y-1">
-              <div>- Unordered item</div>
-              <div>1. Ordered item</div>
-              <div>- [x] Task done</div>
+              <div>{t("uiText.a8ecffd3")}</div>
+              <div>{t("uiText.b7ff7a6a")}</div>
+              <div>{t("uiText.a12f1515")}</div>
             </div>
           </div>
           <div className="space-y-2">
@@ -361,8 +361,8 @@ ${html}
               {t('tool.markdownPreview.linksImages')}
             </h4>
             <div className="text-xs font-mono text-gray-600 dark:text-gray-400 space-y-1">
-              <div>[link text](url)</div>
-              <div>![alt text](image-url)</div>
+              <div>{t('tool.markdownPreview.linkExample')}</div>
+              <div>{t("uiText.ac2425b6")}</div>
             </div>
           </div>
           <div className="space-y-2">
@@ -370,9 +370,9 @@ ${html}
               {t('tool.markdownPreview.codeBlocks')}
             </h4>
             <div className="text-xs font-mono text-gray-600 dark:text-gray-400 space-y-1">
-              <div>\`inline code\`</div>
-              <div>\`\`\`language</div>
-              <div>code block</div>
+              <div>{t("uiText.bf086321")}</div>
+              <div>{t("uiText.e63efb57")}</div>
+              <div>{t("uiText.ee6e7175")}</div>
               <div>\`\`\`</div>
             </div>
           </div>
@@ -381,9 +381,9 @@ ${html}
               {t('tool.markdownPreview.tables')} &amp; {t('tool.markdownPreview.other')}
             </h4>
             <div className="text-xs font-mono text-gray-600 dark:text-gray-400 space-y-1">
-              <div>\| Col 1 \| Col 2 \|</div>
-              <div>&gt; Blockquote</div>
-              <div>--- Horizontal rule</div>
+              <div>{t("uiText.de6e4cf8")}</div>
+              <div>{t("uiText.b8976288")}</div>
+              <div>{t('tool.markdownPreview.horizontalRuleExample')}</div>
             </div>
           </div>
         </div>

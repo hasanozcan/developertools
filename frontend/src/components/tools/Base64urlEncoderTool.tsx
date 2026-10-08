@@ -1,4 +1,5 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useMemo, useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import {
@@ -7,6 +8,7 @@ import {
   decodeBase64Url,
   encodeBase64Url,
 } from '@/lib/base64urlEncoder';
+import { localizeUiText } from '@/lib/localizedText';
 
 type Mode = 'encode' | 'decode' | 'to-url' | 'to-standard';
 
@@ -42,6 +44,7 @@ const MODES: { id: Mode; label: string; inputLabel: string; outputLabel: string;
 ];
 
 export default function Base64urlEncoderTool() {
+  const { t } = useLanguage();
   const [mode, setMode] = useState<Mode>('encode');
   const [input, setInput] = useState(MODES[0].sample);
   const active = MODES.find((entry) => entry.id === mode) ?? MODES[0];
@@ -65,7 +68,7 @@ export default function Base64urlEncoderTool() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap gap-2" role="group" aria-label="Conversion mode">
+      <div className="flex flex-wrap gap-2" role="group" aria-label={t("uiText.4cfda598")}>
         {MODES.map((entry) => (
           <button
             key={entry.id}
@@ -81,13 +84,13 @@ export default function Base64urlEncoderTool() {
                 : 'border-slate-300 text-slate-700 hover:bg-slate-100 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800'
             }`}
           >
-            {entry.label}
+            {localizeUiText(entry.label, t)}
           </button>
         ))}
       </div>
       <div className="space-y-2">
         <label htmlFor="base64url-input" className="text-sm font-medium text-muted-foreground">
-          {active.inputLabel}
+          {localizeUiText(active.inputLabel, t)}
         </label>
         <textarea
           id="base64url-input"
@@ -100,13 +103,13 @@ export default function Base64urlEncoderTool() {
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <label htmlFor="base64url-output" className="text-sm font-medium text-muted-foreground">
-            {active.outputLabel}
+            {localizeUiText(active.outputLabel, t)}
           </label>
           <CopyButton text={output} />
         </div>
         {error && (
           <div role="alert" className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/30 dark:text-red-300">
-            {error}
+            {localizeUiText(error, t)}
           </div>
         )}
         <textarea

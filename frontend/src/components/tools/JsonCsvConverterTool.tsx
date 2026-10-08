@@ -5,6 +5,7 @@ import CodeEditor from '@/components/common/CodeEditor';
 import { Copy, Check, Download, Eye } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { csvToJson, generateCsvPreview } from '@/lib/csv';
+import { localizeUiText } from '@/lib/localizedText';
 
 interface JsonToCsvOptions {
   delimiter: string;
@@ -263,7 +264,7 @@ export default function JsonCsvConverterTool() {
           >
             <option value=",">{t('tool.jsonCsv.comma')} (,)</option>
             <option value=";">{t('tool.jsonCsv.semicolon')} (;)</option>
-            <option value="\t">TSV ({t('common.tab')})</option>
+            <option value="\t">{t("uiText.ac3ea53a")}{t('common.tab')})</option>
             <option value="|">{t('tool.jsonCsv.pipe')} (|)</option>
           </select>
         </div>
@@ -346,7 +347,7 @@ export default function JsonCsvConverterTool() {
       {/* Error */}
       {error && (
         <div className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 px-4 py-2 rounded-lg">
-          Error: {error}
+          {t("uiText.32edd391")}{localizeUiText(error, t)}
         </div>
       )}
 
@@ -360,7 +361,7 @@ export default function JsonCsvConverterTool() {
             value={input}
             onChange={setInput}
             placeholder={
-              mode === 'jsonToCsv' ? '[{"name": "John", "age": 30}]' : 'name,age\nJohn,30'
+              mode === 'jsonToCsv' ? '[{"name": "John", "age": 30}]' : t("uiText.12c9d335")
             }
             language={mode === 'jsonToCsv' ? 'json' : 'text'}
           />
@@ -384,8 +385,7 @@ export default function JsonCsvConverterTool() {
         <div className="border border-gray-200 dark:border-gray-600 rounded-lg overflow-hidden">
           <div className="bg-gray-50 dark:bg-gray-700 px-4 py-3 border-b border-gray-200 dark:border-gray-600 flex items-center justify-between">
             <span className="font-medium text-gray-700 dark:text-gray-300">
-              CSV Preview (First 5 rows)
-            </span>
+              {t("uiText.71ea0030")}</span>
             <button
               onClick={() => setShowPreview(false)}
               className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"

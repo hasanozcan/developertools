@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { Copy, Check, FileCode, Trash2 } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { publishToolOutput, readTransferredInput } from '@/lib/toolWorkflow';
+import { localizeUiText } from '@/lib/localizedText';
 
 export interface TypeOptions {
   rootName: string;
@@ -584,7 +585,7 @@ export default function JsonToTypescriptTool() {
       {/* Error */}
       {error && (
         <div className="p-4 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-lg text-sm">
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -630,22 +631,16 @@ export default function JsonToTypescriptTool() {
       {/* Features Info */}
       <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
         <p className="font-medium text-blue-900 dark:text-blue-300 mb-2">
-          Smart Type Detection Features:
-        </p>
+          {t("uiText.1bbc6926")}</p>
         <ul className="text-sm text-blue-800 dark:text-blue-300 space-y-1">
           <li>
-            ✓ <strong>Extract Nested:</strong> Creates separate interfaces for nested objects
-          </li>
+            ✓ <strong>{t("uiText.f08117fd")}</strong> {t("uiText.ff350299")}</li>
           <li>
-            ✓ <strong>Detect Unions:</strong> Creates union types for mixed arrays (e.g., string |
-            null)
-          </li>
+            ✓ <strong>{t("uiText.f8d444f0")}</strong> {t("uiText.e108824d")}</li>
           <li>
-            ✓ <strong>JSDoc Comments:</strong> Adds documentation comments for properties
-          </li>
+            ✓ <strong>{t("uiText.19deab8c")}</strong> {t("uiText.d9a71d19")}</li>
           <li>
-            ✓ <strong>Type Detection:</strong> Recognizes Date strings from ISO format
-          </li>
+            ✓ <strong>{t("uiText.0b5e14a4")}</strong> {t("uiText.e155000a")}</li>
         </ul>
       </div>
     </div>

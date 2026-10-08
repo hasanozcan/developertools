@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { Copy, Check, Database, RefreshCw } from 'lucide-react';
 import { convertJsonToSql, type SqlDialect } from '@/lib/jsonToSql';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE_JSON = JSON.stringify(
   [
@@ -71,8 +72,7 @@ export default function JsonToSqlTool() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 rounded-2xl bg-slate-50/80 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5">
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-            Table Name
-          </label>
+            {t("uiText.e5ac6eae")}</label>
           <input
             type="text"
             value={tableName}
@@ -83,8 +83,7 @@ export default function JsonToSqlTool() {
 
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-            SQL Dialect
-          </label>
+            {t("tool.sqlFormatter.dialect")}</label>
           <select
             value={dialect}
             onChange={(e) => setDialect(e.target.value as SqlDialect)}
@@ -93,7 +92,7 @@ export default function JsonToSqlTool() {
             <option value="postgresql">PostgreSQL</option>
             <option value="mysql">MySQL</option>
             <option value="sqlite">SQLite</option>
-            <option value="sqlserver">Microsoft SQL Server</option>
+            <option value="sqlserver">{t("uiText.5372965a")}</option>
           </select>
         </div>
 
@@ -105,8 +104,7 @@ export default function JsonToSqlTool() {
               onChange={(e) => setGenerateCreateTable(e.target.checked)}
               className="rounded text-indigo-600"
             />
-            CREATE TABLE
-          </label>
+            {t("uiText.a7a4c6d9")}</label>
           <label className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 cursor-pointer">
             <input
               type="checkbox"
@@ -114,8 +112,7 @@ export default function JsonToSqlTool() {
               onChange={(e) => setGenerateInsert(e.target.checked)}
               className="rounded text-indigo-600"
             />
-            INSERT statements
-          </label>
+            {t("uiText.42f98162")}</label>
         </div>
 
         <div className="flex flex-col justify-center space-y-1 text-xs">
@@ -126,8 +123,7 @@ export default function JsonToSqlTool() {
               onChange={(e) => setBatchInsert(e.target.checked)}
               className="rounded text-indigo-600"
             />
-            Batch Inserts
-          </label>
+            {t("uiText.d9fcaa5d")}</label>
           <label className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 cursor-pointer">
             <input
               type="checkbox"
@@ -135,8 +131,7 @@ export default function JsonToSqlTool() {
               onChange={(e) => setQuoteIdentifiers(e.target.checked)}
               className="rounded text-indigo-600"
             />
-            Quote Column Names
-          </label>
+            {t("uiText.6c067e3f")}</label>
         </div>
       </div>
 
@@ -145,14 +140,12 @@ export default function JsonToSqlTool() {
         <div className="flex flex-col space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              JSON Input (Object or Array)
-            </span>
+              {t("uiText.2e602b4b")}</span>
             <button
               onClick={() => setJsonInput(SAMPLE_JSON)}
               className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1"
             >
-              <RefreshCw className="h-3 w-3" /> Load Sample
-            </button>
+              <RefreshCw className="h-3 w-3" /> {t("common.loadSample")}</button>
           </div>
           <textarea
             value={jsonInput}
@@ -165,28 +158,27 @@ export default function JsonToSqlTool() {
         <div className="flex flex-col space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-              <Database className="h-3.5 w-3.5 text-indigo-500" /> Generated SQL Queries
-            </span>
+              <Database className="h-3.5 w-3.5 text-indigo-500" /> {t("uiText.5937077a")}</span>
             {sqlOutput && (
               <button
                 onClick={handleCopy}
                 className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
               >
                 {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-                {copied ? 'Copied' : 'Copy SQL'}
+                {copied ? t("uiText.8dc21305") : t("uiText.741cdfc8")}
               </button>
             )}
           </div>
 
           {error ? (
             <div className="rounded-2xl border border-red-200 bg-red-50 p-4 text-xs text-red-600 dark:border-red-800/40 dark:bg-red-900/20 dark:text-red-300">
-              {error}
+              {localizeUiText(error, t)}
             </div>
           ) : (
             <textarea
               readOnly
               value={sqlOutput}
-              placeholder="SQL statements will appear here..."
+              placeholder={t("uiText.fd8b7b16")}
               rows={14}
               className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 p-4 font-mono text-xs text-slate-900 shadow-sm focus:outline-none dark:border-white/10 dark:bg-slate-900/80 dark:text-indigo-200 resize-y"
             />

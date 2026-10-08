@@ -266,7 +266,7 @@ export default function ColorConverterTool() {
 
             {/* Analogous */}
             <div>
-              <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Analogous</h4>
+              <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">{t("tool.colorConverter.paletteAnalogous")}</h4>
               <div className="flex gap-4 justify-center">
                 {palette.analogous.map((color) => (
                   <ColorSwatch key={color.hex} hex={color.hex} name={color.name} />
@@ -276,7 +276,7 @@ export default function ColorConverterTool() {
 
             {/* Triadic */}
             <div>
-              <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Triadic</h4>
+              <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">{t("tool.colorConverter.paletteTriadic")}</h4>
               <div className="flex gap-4 justify-center">
                 {palette.triadic.map((color) => (
                   <ColorSwatch key={color.hex} hex={color.hex} name={color.name} />
@@ -286,7 +286,7 @@ export default function ColorConverterTool() {
 
             {/* Split Complementary */}
             <div>
-              <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Split Complementary</h4>
+              <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">{t("tool.colorConverter.paletteSplitComplementary")}</h4>
               <div className="flex gap-4 justify-center">
                 {palette.splitComplementary.map((color) => (
                   <ColorSwatch key={color.hex} hex={color.hex} name={color.name} />
@@ -316,7 +316,7 @@ export default function ColorConverterTool() {
 
       {/* HEX Input */}
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">HEX</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t("tool.colorConverter.hex")}</label>
         <div className="flex gap-2">
           <input
             type="text"
@@ -337,7 +337,7 @@ export default function ColorConverterTool() {
 
       {/* RGB Input */}
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">RGB</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t("tool.colorConverter.rgb")}</label>
         <div className="flex gap-2">
           <div className="flex-1 grid grid-cols-3 gap-2">
             <div>
@@ -387,7 +387,7 @@ export default function ColorConverterTool() {
 
       {/* HSL Input */}
       <div className="space-y-2">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">HSL</label>
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t("tool.colorConverter.hsl")}</label>
         <div className="flex gap-2">
           <div className="flex-1 grid grid-cols-3 gap-2">
             <div>

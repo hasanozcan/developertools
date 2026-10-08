@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { analyzeCacheControl } from '@/lib/httpCacheControlTester';
@@ -7,6 +8,7 @@ import { analyzeCacheControl } from '@/lib/httpCacheControlTester';
 const SAMPLE = "public, max-age=31536000, immutable";
 
 export default function HttpCacheControlTesterTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE);
   let output = '';
 
@@ -22,8 +24,8 @@ export default function HttpCacheControlTesterTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Cache-Control Header Value</label>
-            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.e8547bc3")}</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -34,7 +36,7 @@ export default function HttpCacheControlTesterTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Cache Directive Analysis</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.d10c9106")}</label>
             <CopyButton text={output} />
           </div>
           <textarea

@@ -1,3 +1,4 @@
+import { LanguageProvider } from '@/context/LanguageContext';
 import { render, screen } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
@@ -9,9 +10,9 @@ const controlCount = 5; // workspace select + add, create, export, import button
 describe('WorkspaceControls', () => {
   it('server-renders an inert placeholder with the same controls instead of nothing', () => {
     const html = renderToString(
-      <WorkspaceProvider>
+      <LanguageProvider><WorkspaceProvider>
         <WorkspaceControls toolSlug="json-formatter" />
-      </WorkspaceProvider>,
+      </WorkspaceProvider></LanguageProvider>,
     );
     const container = document.createElement('div');
     container.innerHTML = html;
@@ -28,9 +29,9 @@ describe('WorkspaceControls', () => {
 
   it('keeps the same controls and enables them once workspaces are loaded', async () => {
     const { container } = render(
-      <WorkspaceProvider>
+      <LanguageProvider><WorkspaceProvider>
         <WorkspaceControls toolSlug="json-formatter" />
-      </WorkspaceProvider>,
+      </WorkspaceProvider></LanguageProvider>,
     );
 
     const select = await screen.findByRole('combobox', { name: 'Active workspace' });

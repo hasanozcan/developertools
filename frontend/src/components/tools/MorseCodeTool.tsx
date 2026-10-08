@@ -75,20 +75,18 @@ export default function MorseCodeTool() {
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold shadow-sm transition"
           >
             <Volume2 className="w-3.5 h-3.5" />
-            <span>Play Audio</span>
+            <span>{t("uiText.7e5e9ead")}</span>
           </button>
           <button
             onClick={handleTextToMorse}
             className="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-sm transition"
           >
-            Text → Morse
-          </button>
+            {t("uiText.8164941e")}</button>
           <button
             onClick={handleMorseToText}
             className="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 text-xs font-bold hover:bg-slate-50 transition"
           >
-            Morse → Text
-          </button>
+            {t("uiText.d6d1250e")}</button>
         </div>
       </div>
 
@@ -96,7 +94,7 @@ export default function MorseCodeTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Plain Text Input</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.fb9f754e")}</span>
             <button
               onClick={() => {
                 setTextInput(SAMPLE_TEXT);
@@ -117,7 +115,7 @@ export default function MorseCodeTool() {
 
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Morse Code (. and -)</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.a53d5aa9")}</span>
             {morseInput && (
               <button
                 onClick={handleCopyMorse}

@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useRef } from 'react';
 import { Upload, Download, FileText, ArrowUp, ArrowDown, Trash2, Combine, CheckCircle2 } from 'lucide-react';
 import { PDFDocument } from 'pdf-lib';
@@ -7,6 +8,7 @@ import { reorderPdfList, type PdfFileItem } from '@/lib/pdfMerger';
 import { formatFileSize } from '@/lib/imageCompressor';
 
 export default function PdfMergerTool() {
+  const { t } = useLanguage();
   const [files, setFiles] = useState<PdfFileItem[]>([]);
   const [isMerging, setIsMerging] = useState(false);
   const [mergedUrl, setMergedUrl] = useState<string | null>(null);
@@ -113,11 +115,9 @@ export default function PdfMergerTool() {
         </div>
         <div>
           <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200">
-            Click to Upload or Drag & Drop PDF Files
-          </h3>
+            {t("uiText.3fe9db76")}</h3>
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            Combine multiple PDF files into one. 100% private, runs entirely inside your browser.
-          </p>
+            {t("uiText.1f34ea3f")}</p>
         </div>
       </div>
 
@@ -126,14 +126,13 @@ export default function PdfMergerTool() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Files to Merge ({files.length})
+              {t("uiText.25a8d2d9")}{files.length})
             </span>
             <button
               onClick={() => setFiles([])}
               className="text-xs text-red-500 hover:underline"
             >
-              Clear All
-            </button>
+              {t("uiText.de7f94e5")}</button>
           </div>
 
           <div className="space-y-2">
@@ -151,7 +150,7 @@ export default function PdfMergerTool() {
                       {index + 1}. {file.name}
                     </p>
                     <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                      {file.pageCount} {file.pageCount === 1 ? 'page' : 'pages'} • {formatFileSize(file.size)}
+                      {file.pageCount} {file.pageCount === 1 ? t("uiText.815dfa76") : t("uiText.abf095df")} • {formatFileSize(file.size)}
                     </p>
                   </div>
                 </div>
@@ -161,7 +160,7 @@ export default function PdfMergerTool() {
                     disabled={index === 0}
                     onClick={() => moveUp(index)}
                     className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30"
-                    title="Move Up"
+                    title={t("uiText.e6875021")}
                   >
                     <ArrowUp className="h-4 w-4" />
                   </button>
@@ -169,14 +168,14 @@ export default function PdfMergerTool() {
                     disabled={index === files.length - 1}
                     onClick={() => moveDown(index)}
                     className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30"
-                    title="Move Down"
+                    title={t("uiText.ab5bae88")}
                   >
                     <ArrowDown className="h-4 w-4" />
                   </button>
                   <button
                     onClick={() => removeFile(file.id)}
                     className="p-1.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"
-                    title="Remove"
+                    title={t("uiText.21a5901d")}
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -188,7 +187,7 @@ export default function PdfMergerTool() {
           {/* Action Footer */}
           <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-slate-50/80 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5">
             <span className="text-xs text-slate-600 dark:text-slate-400">
-              Total Pages: {files.reduce((acc, f) => acc + (f.pageCount || 1), 0)}
+              {t("uiText.8baeb255")}{files.reduce((acc, f) => acc + (f.pageCount || 1), 0)}
             </span>
 
             <div className="flex items-center gap-3">
@@ -198,7 +197,7 @@ export default function PdfMergerTool() {
                 className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-500 transition shadow-sm disabled:opacity-50"
               >
                 <Combine className="h-4 w-4" />
-                {isMerging ? 'Merging PDFs...' : 'Merge All PDFs'}
+                {isMerging ? t("uiText.d58ef773") : t("uiText.50e98a03")}
               </button>
 
               {mergedUrl && (
@@ -206,8 +205,7 @@ export default function PdfMergerTool() {
                   onClick={handleDownload}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-500 transition shadow-sm"
                 >
-                  <Download className="h-4 w-4" /> Download Merged PDF
-                </button>
+                  <Download className="h-4 w-4" /> {t("uiText.4a47c785")}</button>
               )}
             </div>
           </div>

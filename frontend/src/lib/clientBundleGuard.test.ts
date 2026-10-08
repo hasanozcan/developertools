@@ -10,9 +10,12 @@ const SRC = path.resolve(__dirname, '..');
 const FORBIDDEN = [
   'lib/i18nRouting',
   'lib/toolText',
+  'lib/localizedToolPageCopy',
   'translations/index',
   'translations/enhancedTools',
+  'translations/intentionalEnglish',
   ...['en', 'tr', 'de', 'es', 'fr', 'ru', 'zh'].map((locale) => `translations/${locale}`),
+  ...['tr', 'de', 'es', 'fr', 'ru', 'zh'].map((locale) => `translations/pageCopy/${locale}`),
 ];
 
 function walk(dir: string, files: string[] = []): string[] {

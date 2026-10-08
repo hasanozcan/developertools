@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { validateBech32Address } from '@/lib/bitcoinBech32AddressEncoder';
@@ -7,6 +8,7 @@ import { validateBech32Address } from '@/lib/bitcoinBech32AddressEncoder';
 const SAMPLE = "bc1qw508d6qejxtdg4y5r3zarvary0c5xw7kv8f3t4";
 
 export default function BitcoinBech32AddressEncoderTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE);
   let output = '';
 
@@ -22,8 +24,8 @@ export default function BitcoinBech32AddressEncoderTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Bitcoin Address (bc1...)</label>
-            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.30d6e21c")}</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -34,7 +36,7 @@ export default function BitcoinBech32AddressEncoderTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Bech32 Validation Status</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.99dc9b45")}</label>
             <CopyButton text={output} />
           </div>
           <textarea

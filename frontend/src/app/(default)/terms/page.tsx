@@ -46,8 +46,7 @@ export default function TermsPage() {
         
         <div className="prose prose-gray dark:prose-invert max-w-none">
           <p className="text-gray-600 dark:text-gray-300 mb-6">
-            {t('terms.lastUpdated')}: December 1, 2025
-          </p>
+            {t('terms.lastUpdated')}{t("uiText.1438431c")}</p>
 
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">{t('terms.acceptance')}</h2>

@@ -10,6 +10,7 @@ import {
   setCspDirective,
   type CspDirective,
 } from '@/lib/contentSecurityPolicy';
+import { localizeUiText } from '@/lib/localizedText';
 
 const presets = [
   {
@@ -153,7 +154,7 @@ export default function CspBuilderTool() {
               id="csp-values"
               value={directiveValues}
               onChange={(event) => setDirectiveValues(event.target.value)}
-              placeholder="'self' https://cdn.example.com"
+              placeholder={t("uiText.66979c08")}
               spellCheck={false}
               className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
             />
@@ -168,7 +169,7 @@ export default function CspBuilderTool() {
         </div>
         <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">{t('tool.csp.valuesHint')}</p>
         {builderError && (
-          <p className="mt-2 text-sm text-red-600 dark:text-red-300">{builderError}</p>
+          <p className="mt-2 text-sm text-red-600 dark:text-red-300">{localizeUiText(builderError, t)}</p>
         )}
       </div>
 
@@ -177,7 +178,7 @@ export default function CspBuilderTool() {
           role="alert"
           className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/30 dark:text-red-300"
         >
-          {result.error}
+          {localizeUiText(result.error, t)}
         </div>
       )}
 

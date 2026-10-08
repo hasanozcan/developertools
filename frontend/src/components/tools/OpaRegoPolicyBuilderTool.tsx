@@ -1,10 +1,12 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { generateOpaRegoPolicy } from '@/lib/opaRegoPolicyBuilder';
 
 export default function OpaRegoPolicyBuilderTool() {
+  const { t } = useLanguage();
   const [val, setVal] = useState('');
   let output = '';
   try {
@@ -18,7 +20,7 @@ export default function OpaRegoPolicyBuilderTool() {
     <div className="space-y-6">
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">OPA Rego Policy Document</label>
+          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.1fedc8e3")}</label>
           <CopyButton text={output} />
         </div>
         <textarea

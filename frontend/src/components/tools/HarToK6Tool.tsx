@@ -1,10 +1,12 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useEffect, useState, useMemo } from 'react';
 import { Copy, Check } from 'lucide-react';
 import { convertHarToK6Script } from '@/lib/harToK6';
 import { readTransferredInput } from '@/lib/toolWorkflow';
 
 export default function HarToK6Tool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState("{\\n  \"log\": { \"entries\": [{ \"request\": { \"method\": \"GET\", \"url\": \"https://api.test.com\" } }] }\\n}");
   const [copied, setCopied] = useState(false);
 
@@ -30,7 +32,7 @@ export default function HarToK6Tool() {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <label className="text-sm font-medium text-muted-foreground">Input</label>
+        <label className="text-sm font-medium text-muted-foreground">{t("common.input")}</label>
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -40,13 +42,13 @@ export default function HarToK6Tool() {
       </div>
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-muted-foreground">Output</label>
+          <label className="text-sm font-medium text-muted-foreground">{t("common.output")}</label>
           <button
             onClick={handleCopy}
             className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-secondary hover:bg-secondary/80 transition-colors"
           >
             {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-            {copied ? 'Copied' : 'Copy'}
+            {copied ? t("uiText.8dc21305") : t("common.copy")}
           </button>
         </div>
         <textarea

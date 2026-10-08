@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { Copy, Check, Ratio, MoveHorizontal } from 'lucide-react';
 import { calculateAspectRatio } from '@/lib/aspectRatio';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 export default function AspectRatioCalculatorTool() {
   const { t } = useLanguage();
@@ -49,7 +50,7 @@ export default function AspectRatioCalculatorTool() {
               onClick={() => applyPreset(p.w, p.h)}
               className="px-3 py-1 text-xs rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 transition font-semibold"
             >
-              {p.label}
+              {localizeUiText(p.label, t)}
             </button>
           ))}
         </div>
@@ -68,7 +69,7 @@ export default function AspectRatioCalculatorTool() {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-bold text-slate-500 block mb-1">Width (px)</label>
+              <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.919814e2")}</label>
               <input
                 type="number"
                 value={width}
@@ -77,7 +78,7 @@ export default function AspectRatioCalculatorTool() {
               />
             </div>
             <div>
-              <label className="text-xs font-bold text-slate-500 block mb-1">Height (px)</label>
+              <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.266287b1")}</label>
               <input
                 type="number"
                 value={height}
@@ -90,8 +91,7 @@ export default function AspectRatioCalculatorTool() {
           {/* Simplified Ratio Badge */}
           <div className="p-4 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/40 flex items-center justify-between">
             <span className="text-xs font-bold text-slate-600 dark:text-slate-300">
-              Simplified Ratio (W:H)
-            </span>
+              {t("uiText.0a7aed32")}</span>
             <span className="font-mono text-xl font-black text-indigo-600 dark:text-indigo-400">
               {result.ratioString}
             </span>
@@ -109,7 +109,7 @@ export default function AspectRatioCalculatorTool() {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-bold text-slate-500 block mb-1">New Width (px)</label>
+              <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.37d43894")}</label>
               <input
                 type="number"
                 value={newWidth}
@@ -118,7 +118,7 @@ export default function AspectRatioCalculatorTool() {
               />
             </div>
             <div>
-              <label className="text-xs font-bold text-slate-500 block mb-1">Calculated Height (px)</label>
+              <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.43669a3f")}</label>
               <input
                 type="number"
                 readOnly

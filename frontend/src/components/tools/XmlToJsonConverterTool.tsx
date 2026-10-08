@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Copy, Check, ArrowRightLeft, Download, FileCode } from 'lucide-react';
 import { xmlToJson, jsonToXml } from '@/lib/xmlToJson';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE_XML = `<?xml version="1.0" encoding="UTF-8"?>
 <catalog>
@@ -82,7 +83,7 @@ export default function XmlToJsonConverterTool() {
         <div className="flex items-center gap-2">
           <FileCode className="w-5 h-5 text-indigo-500" />
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-            {mode === 'xmlToJson' ? 'XML ➔ JSON Converter' : 'JSON ➔ XML Converter'}
+            {mode === 'xmlToJson' ? t("uiText.68a813e4") : t("uiText.408bae9a")}
           </span>
         </div>
 
@@ -92,7 +93,7 @@ export default function XmlToJsonConverterTool() {
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 transition"
           >
             <ArrowRightLeft className="w-3.5 h-3.5" />
-            {mode === 'xmlToJson' ? 'Switch to JSON ➔ XML' : 'Switch to XML ➔ JSON'}
+            {mode === 'xmlToJson' ? t("uiText.302f1af1") : t("uiText.68cc4757")}
           </button>
           <button
             onClick={handleConvert}
@@ -105,7 +106,7 @@ export default function XmlToJsonConverterTool() {
 
       {error && (
         <div className="p-4 rounded-xl border border-red-200 bg-red-50 text-xs text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-300">
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -115,7 +116,7 @@ export default function XmlToJsonConverterTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              {mode === 'xmlToJson' ? 'Input XML' : 'Input JSON'}
+              {mode === 'xmlToJson' ? t("uiText.dde95a8a") : t("uiText.ecd520ff")}
             </span>
             <button
               onClick={() => {
@@ -140,7 +141,7 @@ export default function XmlToJsonConverterTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              {mode === 'xmlToJson' ? 'Output JSON' : 'Output XML'}
+              {mode === 'xmlToJson' ? t("uiText.08a686ce") : t("uiText.1bd7d1bd")}
             </span>
             {output && (
               <div className="flex items-center gap-1.5">
@@ -154,7 +155,7 @@ export default function XmlToJsonConverterTool() {
                 <button
                   onClick={handleDownload}
                   className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition"
-                  title="Download converted file"
+                  title={t("uiText.754e0a43")}
                 >
                   <Download className="w-3.5 h-3.5" />
                 </button>
@@ -166,7 +167,7 @@ export default function XmlToJsonConverterTool() {
             value={output}
             rows={14}
             className="w-full flex-1 rounded-xl border border-slate-200 bg-slate-50/80 p-4 font-mono text-xs text-slate-900 shadow-inner focus:outline-none dark:border-white/10 dark:bg-slate-900/80 dark:text-indigo-300 resize-y"
-            placeholder="Click Convert to see output here..."
+            placeholder={t("uiText.5f46af9b")}
           />
         </div>
       </div>

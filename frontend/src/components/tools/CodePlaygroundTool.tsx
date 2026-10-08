@@ -1,10 +1,12 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo, useEffect } from 'react';
 import { Play, RotateCcw, Download, Layout, Smartphone, Monitor, Tablet } from 'lucide-react';
 import { buildSandboxDocument, PLAYGROUND_TEMPLATES } from '@/lib/codePlayground';
 
 export default function CodePlaygroundTool() {
+  const { t } = useLanguage();
   const [activeTemplate, setActiveTemplate] = useState('vanilla');
   const [html, setHtml] = useState(PLAYGROUND_TEMPLATES[0].html);
   const [css, setCss] = useState(PLAYGROUND_TEMPLATES[0].css);
@@ -59,7 +61,7 @@ export default function CodePlaygroundTool() {
       {/* Controls & Presets */}
       <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-slate-50/80 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5">
         <div className="flex items-center gap-3">
-          <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Preset:</span>
+          <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.9f50a94c")}</span>
           {PLAYGROUND_TEMPLATES.map((tmpl) => (
             <button
               key={tmpl.id}
@@ -81,21 +83,21 @@ export default function CodePlaygroundTool() {
             <button
               onClick={() => setViewport('desktop')}
               className={`p-1.5 rounded-lg ${viewport === 'desktop' ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-300' : 'text-slate-400'}`}
-              title="Desktop View"
+              title={t("uiText.14616554")}
             >
               <Monitor className="h-3.5 w-3.5" />
             </button>
             <button
               onClick={() => setViewport('tablet')}
               className={`p-1.5 rounded-lg ${viewport === 'tablet' ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-300' : 'text-slate-400'}`}
-              title="Tablet View"
+              title={t("uiText.ab73e566")}
             >
               <Tablet className="h-3.5 w-3.5" />
             </button>
             <button
               onClick={() => setViewport('mobile')}
               className={`p-1.5 rounded-lg ${viewport === 'mobile' ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-300' : 'text-slate-400'}`}
-              title="Mobile View"
+              title={t("uiText.f374d9a8")}
             >
               <Smartphone className="h-3.5 w-3.5" />
             </button>
@@ -105,8 +107,7 @@ export default function CodePlaygroundTool() {
             onClick={handleDownload}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-400/10 text-xs font-semibold text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100 transition"
           >
-            <Download className="h-3.5 w-3.5" /> Export HTML
-          </button>
+            <Download className="h-3.5 w-3.5" /> {t("tool.markdownPreview.exportHtml")}</button>
         </div>
       </div>
 
@@ -176,7 +177,7 @@ export default function CodePlaygroundTool() {
               }`}
             >
               <iframe
-                title="Live Sandbox Preview"
+                title={t("uiText.9937cfd0")}
                 srcDoc={sandboxDoc}
                 sandbox="allow-scripts allow-modals"
                 className="w-full h-full min-h-[380px] border-0"
@@ -187,16 +188,15 @@ export default function CodePlaygroundTool() {
           {/* Console Logs Footer */}
           <div className="rounded-2xl border border-slate-200 bg-slate-900 text-slate-200 p-3 max-h-36 overflow-y-auto font-mono text-[11px] shadow-sm">
             <div className="flex items-center justify-between text-slate-400 pb-1 border-b border-slate-800 mb-1 font-sans text-xs">
-              <span>Sandbox Console Log</span>
+              <span>{t("uiText.b056fc1f")}</span>
               <button
                 onClick={() => setLogs([])}
                 className="hover:text-white"
               >
-                Clear
-              </button>
+                {t("common.clear")}</button>
             </div>
             {logs.length === 0 ? (
-              <span className="text-slate-500 italic">No console logs emitted yet.</span>
+              <span className="text-slate-500 italic">{t("uiText.7c33016e")}</span>
             ) : (
               logs.map((log) => (
                 <div

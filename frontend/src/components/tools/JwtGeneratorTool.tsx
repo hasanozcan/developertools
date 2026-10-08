@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { KeyRound, Copy, Check, RefreshCw, ShieldCheck } from 'lucide-react';
 import { generateJwtToken } from '@/lib/jwtGenerator';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 export default function JwtGeneratorTool() {
   const { t } = useLanguage();
@@ -72,26 +73,26 @@ export default function JwtGeneratorTool() {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Algorithm</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.9945210a")}</label>
             <select
               value={algorithm}
               onChange={(e) => setAlgorithm(e.target.value as typeof algorithm)}
               className="w-full px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
             >
-              <option value="HS256">HMAC-SHA256 (HS256)</option>
-              <option value="HS384">HMAC-SHA384 (HS384)</option>
-              <option value="HS512">HMAC-SHA512 (HS512)</option>
+              <option value="HS256">{t("uiText.2c2c19e3")}</option>
+              <option value="HS384">{t("uiText.32b729e7")}</option>
+              <option value="HS512">{t("uiText.2b8b428d")}</option>
             </select>
           </div>
 
           <div className="sm:col-span-2">
-            <label className="text-xs font-bold text-slate-500 block mb-1">Secret Key (HMAC Secret)</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.0f1f2d7e")}</label>
             <input
               type="text"
               value={secret}
               onChange={(e) => setSecret(e.target.value)}
               className="w-full px-3.5 py-2 text-xs font-mono rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
-              placeholder="Enter signing secret"
+              placeholder={t("uiText.b2eaae5a")}
             />
           </div>
         </div>
@@ -99,7 +100,7 @@ export default function JwtGeneratorTool() {
 
       {error && (
         <div className="p-4 rounded-xl border border-red-200 bg-red-50 text-xs text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-300">
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -109,8 +110,7 @@ export default function JwtGeneratorTool() {
         <div className="space-y-4">
           <div className="surface-card rounded-2xl p-4 space-y-2">
             <span className="text-xs font-bold uppercase tracking-wider text-pink-500 block">
-              1. Header (Algorithm & Token Type)
-            </span>
+              {t("uiText.d3d8e2e0")}</span>
             <textarea
               value={headerJson}
               onChange={(e) => setHeaderJson(e.target.value)}
@@ -122,14 +122,12 @@ export default function JwtGeneratorTool() {
           <div className="surface-card rounded-2xl p-4 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-purple-500">
-                2. Payload (Claims & Data)
-              </span>
+                {t("uiText.0f411e6b")}</span>
               <button
                 onClick={handleAddExp}
                 className="text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
               >
-                + Add exp (1h)
-              </button>
+                {t("uiText.5060719a")}</button>
             </div>
             <textarea
               value={payloadJson}
@@ -147,8 +145,7 @@ export default function JwtGeneratorTool() {
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-emerald-500" />
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  Signed Encoded JWT Token
-                </span>
+                  {t("uiText.bd9b1dbb")}</span>
               </div>
               {generatedToken && (
                 <button
@@ -170,9 +167,9 @@ export default function JwtGeneratorTool() {
           </div>
 
           <div className="flex items-center gap-3 text-[11px] text-slate-400 font-mono">
-            <span className="text-pink-400 font-bold">Header</span>.
-            <span className="text-purple-400 font-bold">Payload</span>.
-            <span className="text-cyan-400 font-bold">Signature</span>
+            <span className="text-pink-400 font-bold">{t("tool.jwtDecoder.header")}</span>.
+            <span className="text-purple-400 font-bold">{t("tool.jwtDecoder.payload")}</span>.
+            <span className="text-cyan-400 font-bold">{t("tool.jwtDecoder.signature")}</span>
           </div>
         </div>
       </div>

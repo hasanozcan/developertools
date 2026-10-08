@@ -69,7 +69,7 @@ export default function HtpasswdGeneratorTool() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              placeholder="admin"
+              placeholder={t("uiText.34c83614")}
             />
           </div>
 
@@ -82,7 +82,7 @@ export default function HtpasswdGeneratorTool() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              placeholder="password"
+              placeholder={t("uiText.364b5f18")}
             />
           </div>
 
@@ -95,9 +95,9 @@ export default function HtpasswdGeneratorTool() {
               onChange={(e) => setAlgorithm(e.target.value as HtpasswdAlgorithm)}
               className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              <option value="bcrypt">Bcrypt ($2y$ - Recommended)</option>
-              <option value="sha1">SHA-1 ({'{SHA}'} - Apache / Nginx standard)</option>
-              <option value="plaintext">Plaintext (Testing only)</option>
+              <option value="bcrypt">{t("uiText.b4bb9ac3")}</option>
+              <option value="sha1">{t("uiText.5b951ee3")}{'{SHA}'} {' ' + t("uiText.6a9e96e7")}</option>
+              <option value="plaintext">{t("uiText.cdb38f05")}</option>
             </select>
           </div>
         </div>
@@ -108,9 +108,7 @@ export default function HtpasswdGeneratorTool() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <KeyRound className="w-4 h-4 text-indigo-500" />
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              .htpasswd Output Line
-            </span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{t("tool.htpasswd.outputLabel")}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <button
@@ -125,7 +123,7 @@ export default function HtpasswdGeneratorTool() {
               onClick={handleDownload}
               disabled={!htpasswdLine || loading}
               className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition disabled:opacity-50"
-              title="Download .htpasswd"
+              title={t("uiText.22073f45")}
             >
               <Download className="w-3.5 h-3.5" />
             </button>

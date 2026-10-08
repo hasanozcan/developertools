@@ -80,7 +80,7 @@ export default function CssTextShadowTool() {
           }}
           className="font-black tracking-tight text-center select-none transition-all duration-200"
         >
-          {sampleText || 'Text Shadow Preview'}
+          {sampleText || t("uiText.d4206b4a")}
         </span>
       </div>
 
@@ -88,7 +88,7 @@ export default function CssTextShadowTool() {
       <div className="surface-card rounded-2xl p-6 space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Preview Text</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.2710612e")}</label>
             <input
               type="text"
               value={sampleText}
@@ -99,7 +99,7 @@ export default function CssTextShadowTool() {
 
           <div>
             <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-              <span>Font Size</span>
+              <span>{t("common.fontSize")}</span>
               <span className="font-mono">{fontSize}px</span>
             </div>
             <input
@@ -113,7 +113,7 @@ export default function CssTextShadowTool() {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Text Color</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.328fc54d")}</label>
             <div className="flex items-center gap-2">
               <input
                 type="color"
@@ -157,7 +157,7 @@ export default function CssTextShadowTool() {
               className="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 grid grid-cols-1 sm:grid-cols-5 gap-3 items-center"
             >
               <div>
-                <span className="text-[11px] font-bold text-slate-400 block">X Offset</span>
+                <span className="text-[11px] font-bold text-slate-400 block">{t("uiText.50bfb72a")}</span>
                 <input
                   type="number"
                   value={layer.x}
@@ -167,7 +167,7 @@ export default function CssTextShadowTool() {
               </div>
 
               <div>
-                <span className="text-[11px] font-bold text-slate-400 block">Y Offset</span>
+                <span className="text-[11px] font-bold text-slate-400 block">{t("uiText.23f08c47")}</span>
                 <input
                   type="number"
                   value={layer.y}
@@ -177,7 +177,7 @@ export default function CssTextShadowTool() {
               </div>
 
               <div>
-                <span className="text-[11px] font-bold text-slate-400 block">Blur (px)</span>
+                <span className="text-[11px] font-bold text-slate-400 block">{t("uiText.8fa8c123")}</span>
                 <input
                   type="number"
                   min="0"
@@ -188,7 +188,7 @@ export default function CssTextShadowTool() {
               </div>
 
               <div>
-                <span className="text-[11px] font-bold text-slate-400 block">Shadow Color</span>
+                <span className="text-[11px] font-bold text-slate-400 block">{t("uiText.662d99b2")}</span>
                 <input
                   type="text"
                   value={layer.color}
@@ -201,7 +201,7 @@ export default function CssTextShadowTool() {
                 <button
                   onClick={() => removeLayer(idx)}
                   className="p-1.5 text-slate-400 hover:text-red-500 rounded-lg"
-                  title="Remove layer"
+                  title={t("uiText.64ab0068")}
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -215,8 +215,7 @@ export default function CssTextShadowTool() {
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            CSS text-shadow Property
-          </span>
+            {t("uiText.2ee4ccbf")}</span>
           <button
             onClick={handleCopy}
             className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

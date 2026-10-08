@@ -1,10 +1,12 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { Copy, Check, Shapes } from 'lucide-react';
 import { generateCssTriangle, TriangleDirection } from '@/lib/cssTriangleBubbleGenerator';
 
 export default function CssTriangleBubbleGeneratorTool() {
+  const { t } = useLanguage();
   const [type, setType] = useState<'triangle' | 'bubble'>('triangle');
   const [direction, setDirection] = useState<TriangleDirection>('top');
   const [size, setSize] = useState<number>(16);
@@ -33,25 +35,23 @@ export default function CssTriangleBubbleGeneratorTool() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="p-4 rounded-xl border border-border bg-card space-y-4">
           <div>
-            <label className="text-xs font-semibold text-muted-foreground block mb-2">Shape Mode</label>
+            <label className="text-xs font-semibold text-muted-foreground block mb-2">{t("uiText.d24dabd9")}</label>
             <div className="btn-group w-full grid grid-cols-2">
               <button
                 className={`btn btn-sm ${type === 'triangle' ? 'btn-primary' : 'btn-outline'}`}
                 onClick={() => setType('triangle')}
               >
-                CSS Triangle
-              </button>
+                {t("uiText.e5cb8bb4")}</button>
               <button
                 className={`btn btn-sm ${type === 'bubble' ? 'btn-primary' : 'btn-outline'}`}
                 onClick={() => setType('bubble')}
               >
-                Speech Bubble
-              </button>
+                {t("uiText.58323a9f")}</button>
             </div>
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-muted-foreground block mb-2">Arrow Direction</label>
+            <label className="text-xs font-semibold text-muted-foreground block mb-2">{t("uiText.056d8c87")}</label>
             <div className="grid grid-cols-4 gap-1">
               {(['top', 'right', 'bottom', 'left'] as TriangleDirection[]).map((dir) => (
                 <button
@@ -67,8 +67,7 @@ export default function CssTriangleBubbleGeneratorTool() {
 
           <div>
             <label className="text-xs font-semibold text-muted-foreground block mb-1">
-              Arrow Size ({size}px)
-            </label>
+              {t("uiText.cfd6fbab")}{size}{t("uiText.326b8794")}</label>
             <input
               type="range"
               min="6"
@@ -80,7 +79,7 @@ export default function CssTriangleBubbleGeneratorTool() {
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-muted-foreground block mb-1">Color</label>
+            <label className="text-xs font-semibold text-muted-foreground block mb-1">{t("uiText.e5b43cf8")}</label>
             <div className="flex items-center gap-2">
               <input
                 type="color"
@@ -106,10 +105,10 @@ export default function CssTriangleBubbleGeneratorTool() {
 
           <div className="relative space-y-2">
             <div className="flex justify-between items-center">
-              <label className="text-xs font-medium text-muted-foreground">Generated CSS Code:</label>
+              <label className="text-xs font-medium text-muted-foreground">{t("uiText.9a6f934c")}</label>
               <button onClick={handleCopy} className="btn btn-primary btn-xs gap-1">
                 {copied ? <Check className="w-3.5 h-3.5 text-success" /> : <Copy className="w-3.5 h-3.5" />}
-                {copied ? 'Copied' : 'Copy CSS'}
+                {copied ? t("uiText.8dc21305") : t("uiText.9b2af91b")}
               </button>
             </div>
             <textarea

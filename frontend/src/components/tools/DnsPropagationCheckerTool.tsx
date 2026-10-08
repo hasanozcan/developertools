@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { checkDnsPropagation } from '@/lib/dnsPropagationChecker';
 import { Globe, CheckCircle2 } from 'lucide-react';
 
 export default function DnsPropagationCheckerTool() {
+  const { t } = useLanguage();
   const [domain, setDomain] = useState('devstools.app');
   const [ip, setIp] = useState('76.76.21.21');
   const results = checkDnsPropagation(domain, ip);
@@ -11,8 +13,8 @@ export default function DnsPropagationCheckerTool() {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div><label className="text-xs font-semibold text-slate-500">Domain Name</label><input value={domain} onChange={(e) => setDomain(e.target.value)} className="w-full rounded-xl border border-slate-200 p-2 text-xs dark:border-white/10 dark:bg-slate-950" /></div>
-        <div><label className="text-xs font-semibold text-slate-500">Expected A-Record IP</label><input value={ip} onChange={(e) => setIp(e.target.value)} className="w-full rounded-xl border border-slate-200 p-2 text-xs dark:border-white/10 dark:bg-slate-950" /></div>
+        <div><label className="text-xs font-semibold text-slate-500">{t("uiText.ebf72648")}</label><input value={domain} onChange={(e) => setDomain(e.target.value)} className="w-full rounded-xl border border-slate-200 p-2 text-xs dark:border-white/10 dark:bg-slate-950" /></div>
+        <div><label className="text-xs font-semibold text-slate-500">{t("uiText.d8143ce9")}</label><input value={ip} onChange={(e) => setIp(e.target.value)} className="w-full rounded-xl border border-slate-200 p-2 text-xs dark:border-white/10 dark:bg-slate-950" /></div>
       </div>
 
       <div className="divide-y divide-slate-100 rounded-2xl border border-slate-200 bg-white p-2 dark:divide-white/10 dark:border-white/10 dark:bg-slate-900">

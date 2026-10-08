@@ -1,10 +1,13 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { Clock, Calendar, Globe } from 'lucide-react';
 import { translateCronSchedule } from '@/lib/crontabScheduleTranslator';
+import { localizeUiText } from '@/lib/localizedText';
 
 export default function CrontabScheduleTranslatorTool() {
+  const { t } = useLanguage();
   const [expression, setExpression] = useState('*/15 0 1,15 * 1-5');
 
   const result = useMemo(() => {
@@ -23,8 +26,7 @@ export default function CrontabScheduleTranslatorTool() {
     <div className="space-y-6">
       <div className="space-y-2">
         <label className="block text-sm font-medium text-muted-foreground">
-          Enter Cron Expression (5 fields):
-        </label>
+          {t("uiText.c35191a0")}</label>
         <div className="flex gap-2">
           <input
             type="text"
@@ -41,7 +43,7 @@ export default function CrontabScheduleTranslatorTool() {
               onClick={() => setExpression(p.expr)}
               className="btn btn-ghost btn-xs border border-border text-xs"
             >
-              {p.label}
+              {localizeUiText(p.label, t)}
             </button>
           ))}
         </div>
@@ -50,15 +52,13 @@ export default function CrontabScheduleTranslatorTool() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="p-4 rounded-xl border border-primary/30 bg-primary/5 space-y-1">
           <div className="flex items-center gap-2 text-primary font-semibold text-xs uppercase tracking-wider">
-            <Globe className="w-4 h-4" /> English Description
-          </div>
+            <Globe className="w-4 h-4" /> {t("uiText.1ab92885")}</div>
           <p className="text-sm font-medium text-foreground pt-1">{result.humanReadable.en}</p>
         </div>
 
         <div className="p-4 rounded-xl border border-primary/30 bg-primary/5 space-y-1">
           <div className="flex items-center gap-2 text-primary font-semibold text-xs uppercase tracking-wider">
-            <Globe className="w-4 h-4" /> Türkçe Açıklama
-          </div>
+            <Globe className="w-4 h-4" /> {t("uiText.abceb483")}</div>
           <p className="text-sm font-medium text-foreground pt-1">{result.humanReadable.tr}</p>
         </div>
       </div>
@@ -66,15 +66,14 @@ export default function CrontabScheduleTranslatorTool() {
       {result.isValid && (
         <div className="space-y-3">
           <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-            <Calendar className="w-4 h-4" /> Next 5 Scheduled Executions
-          </h3>
+            <Calendar className="w-4 h-4" /> {t("uiText.f95bf857")}</h3>
           <div className="space-y-1">
             {result.nextOccurrences.map((occ, idx) => (
               <div
                 key={idx}
                 className="p-3 rounded-lg border border-border bg-card/60 flex items-center justify-between text-xs font-mono"
               >
-                <span className="text-muted-foreground">Execution #{idx + 1}</span>
+                <span className="text-muted-foreground">{t("uiText.a00aa704")}{idx + 1}</span>
                 <span className="font-semibold text-primary">{occ}</span>
               </div>
             ))}

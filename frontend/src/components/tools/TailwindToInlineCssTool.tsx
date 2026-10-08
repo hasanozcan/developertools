@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { convertTailwindToInlineCss } from '@/lib/tailwindToInlineCss';
@@ -10,6 +11,7 @@ const SAMPLE_TAILWIND = `<div class="p-6 bg-white rounded-lg text-center font-bo
 </div>`;
 
 export default function TailwindToInlineCssTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE_TAILWIND);
   const output = convertTailwindToInlineCss(input);
 
@@ -18,8 +20,8 @@ export default function TailwindToInlineCssTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">HTML with Tailwind Classes</label>
-            <button onClick={() => setInput(SAMPLE_TAILWIND)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.fcc14d64")}</label>
+            <button onClick={() => setInput(SAMPLE_TAILWIND)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -30,7 +32,7 @@ export default function TailwindToInlineCssTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Inlined HTML for Email & CMS</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.97d9df65")}</label>
             <CopyButton text={output} />
           </div>
           <textarea

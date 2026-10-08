@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { Code2, Copy, Check } from 'lucide-react';
 import { jsonToOpenAIFunctionSchema } from '@/lib/openaiFunctionSchema';
 
 export default function OpenaiFunctionSchemaTool() {
+  const { t } = useLanguage();
   const [jsonInput, setJsonInput] = useState('{\n  "location": "San Francisco, CA",\n  "temperature_unit": "celsius",\n  "days": 5\n}');
   const [functionName, setFunctionName] = useState('get_weather_forecast');
   const [description, setDescription] = useState('Retrieve weather forecast data for a specified location');
@@ -27,19 +29,19 @@ export default function OpenaiFunctionSchemaTool() {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="surface-card rounded-2xl p-5 space-y-3">
-          <h3 className="font-bold text-slate-900 dark:text-white text-sm">Function Parameters (JSON)</h3>
+          <h3 className="font-bold text-slate-900 dark:text-white text-sm">{t("uiText.c59a7338")}</h3>
           <input
             type="text"
             value={functionName}
             onChange={(e) => setFunctionName(e.target.value)}
-            placeholder="Function Name"
+            placeholder={t("uiText.78f50ff0")}
             className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-mono dark:border-white/10 dark:bg-slate-900 dark:text-slate-100"
           />
           <input
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Function Description"
+            placeholder={t("uiText.94080fef")}
             className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs dark:border-white/10 dark:bg-slate-900 dark:text-slate-100"
           />
           <textarea
@@ -51,10 +53,10 @@ export default function OpenaiFunctionSchemaTool() {
         </div>
         <div className="surface-card rounded-2xl p-5 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="font-bold text-slate-900 dark:text-white text-sm">OpenAI Tool Schema</h3>
+            <h3 className="font-bold text-slate-900 dark:text-white text-sm">{t("uiText.c18290b2")}</h3>
             <button onClick={handleCopy} className="inline-flex items-center gap-1.5 text-xs text-indigo-600 dark:text-indigo-400 font-semibold">
               {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-              {copied ? 'Copied' : 'Copy Schema'}
+              {copied ? t("uiText.8dc21305") : t("uiText.c8f1ebe7")}
             </button>
           </div>
           <textarea

@@ -1,10 +1,12 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { generateDockerfile } from '@/lib/dockerfileAiGenerator';
 
 export default function DockerfileAiGeneratorTool() {
+  const { t } = useLanguage();
   const [val, setVal] = useState('');
   let output = '';
   try {
@@ -18,7 +20,7 @@ export default function DockerfileAiGeneratorTool() {
     <div className="space-y-6">
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Production Multi-Stage Dockerfile</label>
+          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.b282d0aa")}</label>
           <CopyButton text={output} />
         </div>
         <textarea

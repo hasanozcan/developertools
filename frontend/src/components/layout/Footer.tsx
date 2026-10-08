@@ -92,18 +92,15 @@ export default function Footer() {
             </p>
             <p className="max-w-xs text-sm leading-6 text-slate-500 dark:text-slate-400">
               <Link href="/collections" className="hover:text-primary-600 dark:hover:text-primary-400">
-                Collections
-              </Link>
+                {t("uiText.9ae6a966")}</Link>
               <span className="px-2" aria-hidden="true">
                 ·
               </span>
               <Link href="/for" className="hover:text-primary-600 dark:hover:text-primary-400">
-                Tools by role
-              </Link>
+                {t("uiText.ac6d3237")}</Link>
               <span className="px-2" aria-hidden="true">·</span>
               <Link href="/guides" hrefLang="en" className="hover:text-primary-600 dark:hover:text-primary-400">
-                Guides (English)
-              </Link>
+                {t("uiText.e4c8a27b")}</Link>
             </p>
           </div>
 
@@ -173,7 +170,7 @@ export default function Footer() {
 
         <div className="mt-10 border-t border-slate-200/70 pt-7 text-center text-sm text-slate-500 dark:border-white/10 dark:text-slate-400">
           <p>
-            &copy; {new Date().getFullYear()} Developer Tools.{' '}
+            {t("uiText.2ba51521")}{new Date().getFullYear()} {' ' + t("uiText.a6fb1028")}{' '}
             {t('footer.copyright').replace('© {year} Developer Tools. ', '')}
           </p>
         </div>

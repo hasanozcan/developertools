@@ -254,7 +254,7 @@ export default function CodeEditor({
       <input
         ref={fileInputRef}
         type="file"
-        aria-label="Upload file"
+        aria-label={t("uiText.8d273f62")}
         onChange={handleFileUpload}
         className="hidden"
       />

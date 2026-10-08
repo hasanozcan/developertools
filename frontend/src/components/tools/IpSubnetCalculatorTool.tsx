@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { Network, Copy, Check } from 'lucide-react';
 import { calculateSubnet } from '@/lib/ipSubnet';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 export default function IpSubnetCalculatorTool() {
   const { t } = useLanguage();
@@ -43,7 +44,7 @@ Class: ${result.ipClass}`;
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="sm:col-span-2">
-            <label className="text-xs font-bold text-slate-500 block mb-1">IPv4 Address</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.c2bfac12")}</label>
             <input
               type="text"
               value={ip}
@@ -54,7 +55,7 @@ Class: ${result.ipClass}`;
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Subnet Prefix (CIDR / Mask)</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.436a79b8")}</label>
             <select
               value={cidr}
               onChange={(e) => setCidr(parseInt(e.target.value, 10))}
@@ -74,8 +75,7 @@ Class: ${result.ipClass}`;
       <div className="surface-card rounded-2xl p-6 space-y-4">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            Subnet Calculation Results
-          </span>
+            {t("uiText.8caafeab")}</span>
           <button
             onClick={handleCopySummary}
             className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
@@ -100,7 +100,7 @@ Class: ${result.ipClass}`;
               key={item.label}
               className="p-4 rounded-xl border border-slate-200/80 dark:border-white/5 bg-slate-50 dark:bg-slate-900/60 space-y-1"
             >
-              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">{item.label}</span>
+              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block">{localizeUiText(item.label, t)}</span>
               <span className={`font-mono text-sm font-black ${item.color} truncate block`}>{item.val}</span>
             </div>
           ))}
@@ -108,14 +108,14 @@ Class: ${result.ipClass}`;
 
         {/* Binary Breakdown */}
         <div className="pt-4 border-t border-slate-100 dark:border-white/5 space-y-2">
-          <span className="text-xs font-bold text-slate-500 block">Binary IP & Mask Representations</span>
+          <span className="text-xs font-bold text-slate-500 block">{t("uiText.ccae10fb")}</span>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
             <div className="p-3 rounded-xl bg-slate-900 text-cyan-300">
-              <span className="text-slate-500 block text-[10px] uppercase">IP Binary:</span>
+              <span className="text-slate-500 block text-[10px] uppercase">{t("uiText.30076141")}</span>
               <span>{result.binaryIp}</span>
             </div>
             <div className="p-3 rounded-xl bg-slate-900 text-emerald-300">
-              <span className="text-slate-500 block text-[10px] uppercase">Mask Binary:</span>
+              <span className="text-slate-500 block text-[10px] uppercase">{t("uiText.c8e63284")}</span>
               <span>{result.binaryMask}</span>
             </div>
           </div>

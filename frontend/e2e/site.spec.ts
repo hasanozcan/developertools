@@ -1,6 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import { toolCatalog } from '../src/lib/api';
+import { translations } from '../src/translations';
 
 test('every canonical tool route responds successfully', async ({ request }) => {
   expect(toolCatalog.length).toBe(490);
@@ -193,10 +194,9 @@ test('localized collections keep localized metadata and tool links', async ({ pa
   await page.goto('/tr/collections/api-debugging');
 
   await expect(page.getByRole('heading', { level: 1, name: /API Hata Ayıklama/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /cURL to Postman/i })).toHaveAttribute(
-    'href',
-    '/tr/tools/converters/curl-to-postman',
-  );
+  await expect(
+    page.getByRole('link', { name: translations.tr['toolName.curl-to-postman'] }),
+  ).toHaveAttribute('href', '/tr/tools/converters/curl-to-postman');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     'href',
     'https://devstools.app/tr/collections/api-debugging',
@@ -311,7 +311,9 @@ test('header navigation dropdown in Turkish renders with solid background', asyn
   await page.setViewportSize({ width: 1280, height: 800 });
 
   // Hover over Kodlayıcılar
-  const kodlayicilarLink = page.getByLabel('Primary navigation').getByRole('link', { name: /kodlayıcılar/i });
+  const kodlayicilarLink = page
+    .getByLabel(translations.tr['uiText.6fba33cd'])
+    .getByRole('link', { name: /kodlayıcılar/i });
   await kodlayicilarLink.hover();
   await page.waitForTimeout(300);
 

@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { Copy, Check, Clock, Calendar, Play } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 export default function CronGeneratorTool() {
   const { t } = useLanguage();
@@ -114,8 +115,7 @@ export default function CronGeneratorTool() {
         {tab === 'minutes' && (
           <div className="space-y-4">
             <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">
-              Run every N minutes:
-            </label>
+              {t("uiText.1cf756c0")}</label>
             <div className="flex flex-wrap gap-2">
               {[1, 5, 10, 15, 20, 30, 45].map((mins) => (
                 <button
@@ -127,7 +127,7 @@ export default function CronGeneratorTool() {
                       : 'border-slate-200 text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800'
                   }`}
                 >
-                  Every {mins} min{mins > 1 ? 's' : ''}
+                  {t("uiText.db4979a4")}{mins} {' ' + t("uiText.c98f4557")}{mins > 1 ? 's' : ''}
                 </button>
               ))}
             </div>
@@ -138,8 +138,7 @@ export default function CronGeneratorTool() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Every N hours:
-              </label>
+                {t("uiText.bc8ac169")}</label>
               <input
                 type="number"
                 min={1}
@@ -151,8 +150,7 @@ export default function CronGeneratorTool() {
             </div>
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                At minute past the hour (0-59):
-              </label>
+                {t("uiText.7d1aab21")}</label>
               <input
                 type="number"
                 min={0}
@@ -169,8 +167,7 @@ export default function CronGeneratorTool() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Hour of Day (0-23):
-              </label>
+                {t("uiText.b4836d1d")}</label>
               <input
                 type="number"
                 min={0}
@@ -182,8 +179,7 @@ export default function CronGeneratorTool() {
             </div>
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Minute (0-59):
-              </label>
+                {t("uiText.0db82307")}</label>
               <input
                 type="number"
                 min={0}
@@ -200,8 +196,7 @@ export default function CronGeneratorTool() {
           <div className="space-y-4">
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                Days of Week:
-              </label>
+                {t("uiText.73f29c3d")}</label>
               <div className="flex flex-wrap gap-2">
                 {daysOfWeek.map((day) => (
                   <button
@@ -213,7 +208,7 @@ export default function CronGeneratorTool() {
                         : 'border-slate-200 text-slate-700 dark:border-slate-700 dark:text-slate-300'
                     }`}
                   >
-                    {day.label}
+                    {localizeUiText(day.label, t)}
                   </button>
                 ))}
               </div>
@@ -221,8 +216,7 @@ export default function CronGeneratorTool() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  Hour (0-23):
-                </label>
+                  {t("uiText.60daed48")}</label>
                 <input
                   type="number"
                   min={0}
@@ -234,8 +228,7 @@ export default function CronGeneratorTool() {
               </div>
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  Minute (0-59):
-                </label>
+                  {t("uiText.0db82307")}</label>
                 <input
                   type="number"
                   min={0}
@@ -253,8 +246,7 @@ export default function CronGeneratorTool() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Day of Month (1-31):
-              </label>
+                {t("uiText.51405aad")}</label>
               <input
                 type="number"
                 min={1}
@@ -266,8 +258,7 @@ export default function CronGeneratorTool() {
             </div>
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Hour (0-23):
-              </label>
+                {t("uiText.60daed48")}</label>
               <input
                 type="number"
                 min={0}
@@ -279,8 +270,7 @@ export default function CronGeneratorTool() {
             </div>
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Minute (0-59):
-              </label>
+                {t("uiText.0db82307")}</label>
               <input
                 type="number"
                 min={0}
@@ -298,14 +288,13 @@ export default function CronGeneratorTool() {
       <div className="rounded-3xl border border-slate-200/80 bg-slate-50/80 p-6 dark:border-white/10 dark:bg-slate-900/60">
         <div className="flex items-center justify-between mb-3">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            Generated Cron Expression
-          </span>
+            {t("uiText.483eedb4")}</span>
           <button
             onClick={handleCopy}
             className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500"
           >
             {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-            {copied ? 'Copied' : 'Copy Expression'}
+            {copied ? t("uiText.8dc21305") : t("uiText.1c8bd55e")}
           </button>
         </div>
 

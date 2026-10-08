@@ -5,6 +5,7 @@ import { Braces, FileText, Trash2 } from 'lucide-react';
 import CopyButton from '@/components/common/CopyButton';
 import { useLanguage } from '@/context/LanguageContext';
 import { generateZodSchema } from '@/lib/jsonToZod';
+import { localizeUiText } from '@/lib/localizedText';
 
 const MAX_INPUT_LENGTH = 500_000;
 
@@ -157,7 +158,7 @@ export default function JsonToZodTool() {
           role="alert"
           className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-300"
         >
-          {error}
+          {localizeUiText(error, t)}
         </p>
       )}
 

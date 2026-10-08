@@ -66,7 +66,7 @@ fig`);
             onChange={(e) => setCaseSensitive(e.target.checked)}
             className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
           />
-          <span className="text-sm text-gray-700 dark:text-gray-300">Case Sensitive</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">{t("tool.removeDuplicates.caseSensitive")}</span>
         </label>
 
         <label className="flex items-center gap-2 cursor-pointer">
@@ -76,7 +76,7 @@ fig`);
             onChange={(e) => setTrimWhitespace(e.target.checked)}
             className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
           />
-          <span className="text-sm text-gray-700 dark:text-gray-300">Trim Whitespace</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">{t("uiText.e570d6da")}</span>
         </label>
 
         <button
@@ -84,8 +84,7 @@ fig`);
           onClick={loadSample}
           className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
         >
-          Load Sample
-        </button>
+          {t("common.loadSample")}</button>
       </div>
 
       {/* Stats */}
@@ -95,15 +94,12 @@ fig`);
           className={`flex flex-wrap gap-4 text-sm ${isUpdating ? 'opacity-70' : 'opacity-100'}`}
         >
           <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full">
-            Original: {stats.original} lines
-          </span>
+            {t("uiText.3e94ca78")}{stats.original} {t("common.lines")}</span>
           <span className="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 rounded-full">
-            Unique: {stats.unique} lines
-          </span>
+            {t("uiText.019b1b34")}{stats.unique} {t("common.lines")}</span>
           {stats.duplicates > 0 ? (
             <span className="px-3 py-1 bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-300 rounded-full">
-              Removed: {stats.duplicates} duplicates
-            </span>
+              {t("uiText.90b39053")}{stats.duplicates} {t("uiText.3279a17f")}</span>
           ) : null}
         </div>
       ) : null}
@@ -115,13 +111,12 @@ fig`);
             htmlFor="remove-duplicates-input"
             className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
           >
-            Input Text
-          </label>
+            {t("tool.binaryEncoder.inputText")}</label>
           <CodeEditor
             id="remove-duplicates-input"
             value={input}
             onChange={setInput}
-            placeholder="Enter text with duplicate lines..."
+            placeholder={t("tool.removeDuplicates.inputPlaceholder")}
             language="text"
             minHeight="250px"
             maxLength={250_000}
@@ -133,8 +128,7 @@ fig`);
               htmlFor="remove-duplicates-output"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Result (Unique Lines)
-            </label>
+              {t("uiText.0014becb")}</label>
             {isUpdating ? (
               <span role="status" className="text-xs text-gray-500 dark:text-gray-400">
                 {t('common.updating')}

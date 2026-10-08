@@ -361,8 +361,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
             </button>
           )}
           <kbd className="ml-2 hidden sm:inline-flex items-center rounded-lg border border-slate-300 bg-slate-200/90 px-2 py-0.5 text-[11px] font-semibold text-slate-800 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100">
-            ESC
-          </kbd>
+            {t("uiText.ea50bade")}</kbd>
         </div>
 
         {/* Category Filter Chips */}

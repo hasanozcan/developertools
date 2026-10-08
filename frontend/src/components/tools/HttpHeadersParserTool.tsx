@@ -3,6 +3,7 @@
 import { useCallback, useState } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 type Mode = 'parse' | 'build';
 
@@ -114,8 +115,7 @@ export default function HttpHeadersParserTool() {
                 : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300'
             }`}
           >
-            Parse
-          </button>
+            {t("uiText.16b02e8c")}</button>
           <button
             onClick={() => setMode('build')}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
@@ -124,8 +124,7 @@ export default function HttpHeadersParserTool() {
                 : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300'
             }`}
           >
-            Build
-          </button>
+            {t("uiText.95967543")}</button>
         </div>
         <button
           onClick={handleConvert}
@@ -149,7 +148,7 @@ export default function HttpHeadersParserTool() {
 
       {error && (
         <div className="p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-300">
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -162,7 +161,7 @@ export default function HttpHeadersParserTool() {
             value={input}
             onChange={setInput}
             language={mode === 'parse' ? 'text' : 'json'}
-            placeholder={mode === 'parse' ? 'Enter raw headers...' : 'Enter headers as JSON object...'}
+            placeholder={mode === 'parse' ? t("uiText.4fd872dd") : t("uiText.166afce2")}
             minHeight="220px"
           />
         </div>
@@ -176,7 +175,7 @@ export default function HttpHeadersParserTool() {
             onChange={() => {}}
             readOnly
             language={mode === 'parse' ? 'json' : 'text'}
-            placeholder="Result will appear here..."
+            placeholder={t("tool.htmlEntity.resultPlaceholder")}
             minHeight="220px"
           />
         </div>

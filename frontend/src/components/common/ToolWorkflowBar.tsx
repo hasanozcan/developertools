@@ -14,6 +14,7 @@ import {
 } from '@/lib/toolWorkflow';
 
 export default function ToolWorkflowBar({ toolSlug }: { toolSlug: string }) {
+  const { t } = useLanguage();
   const { language } = useLanguage();
   const [output, setOutput] = useState<ToolOutputDetail | null>(null);
   const [copied, setCopied] = useState(false);
@@ -52,7 +53,7 @@ export default function ToolWorkflowBar({ toolSlug }: { toolSlug: string }) {
       <div className="flex flex-wrap items-center gap-2">
         <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-700 dark:text-indigo-300">
           <GitBranch className="h-3.5 w-3.5" />
-          {output ? 'Send output to' : 'Continue workflow'}
+          {output ? t("uiText.17a22e6d") : t("uiText.43fe01d9")}
         </span>
         {targets.map((target) => (
           <a
@@ -77,14 +78,13 @@ export default function ToolWorkflowBar({ toolSlug }: { toolSlug: string }) {
             className="ml-auto inline-flex items-center gap-1 rounded-xl px-2.5 py-1.5 text-xs font-medium text-indigo-700 hover:bg-indigo-100 dark:text-indigo-300 dark:hover:bg-indigo-950/50"
           >
             {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-            {copied ? 'Copied' : 'Share result'}
+            {copied ? t("uiText.8dc21305") : t("uiText.decbadd1")}
           </button>
         )}
       </div>
       {!output && (
         <p className="mt-2 text-[11px] text-slate-500 dark:text-slate-400">
-          Run this tool first to transfer its result automatically to the next step.
-        </p>
+          {t("uiText.aa63eb07")}</p>
       )}
     </div>
   );

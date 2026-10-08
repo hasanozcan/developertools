@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { Copy, Check, Plus, Trash2, Globe, Tag } from 'lucide-react';
 import {
@@ -10,6 +11,7 @@ import {
 } from '@/lib/schemaOrgGenerator';
 
 export default function SchemaOrgGeneratorTool() {
+  const { t } = useLanguage();
   const [type, setType] = useState<SchemaType>('FAQPage');
   const [copied, setCopied] = useState(false);
 
@@ -94,7 +96,7 @@ export default function SchemaOrgGeneratorTool() {
     <div className="space-y-6">
       {/* Schema Type Selector */}
       <div className="flex flex-wrap items-center gap-3 p-4 rounded-2xl bg-slate-50/80 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5">
-        <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">Schema Type:</span>
+        <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.6cc9dc98")}</span>
         {(['FAQPage', 'Article', 'Product', 'Organization'] as SchemaType[]).map((t) => (
           <button
             key={t}
@@ -114,15 +116,14 @@ export default function SchemaOrgGeneratorTool() {
         {/* Visual Form Inputs */}
         <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-900">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-            <Tag className="h-3.5 w-3.5 text-indigo-500" /> {type} Configuration
-          </span>
+            <Tag className="h-3.5 w-3.5 text-indigo-500" /> {type} {t("uiText.1a5ee459")}</span>
 
           {type === 'FAQPage' && (
             <div className="space-y-4">
               {faqs.map((faq, idx) => (
                 <div key={idx} className="p-3 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40 space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-slate-600 dark:text-slate-400">Question #{idx + 1}</span>
+                    <span className="text-xs font-bold text-slate-600 dark:text-slate-400">{t("uiText.362a2bf4")}{idx + 1}</span>
                     {faqs.length > 1 && (
                       <button
                         onClick={() => removeFaq(idx)}
@@ -134,13 +135,13 @@ export default function SchemaOrgGeneratorTool() {
                   </div>
                   <input
                     type="text"
-                    placeholder="e.g. How does this work?"
+                    placeholder={t("uiText.0279103c")}
                     value={faq.question}
                     onChange={(e) => updateFaq(idx, 'question', e.target.value)}
                     className="w-full rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                   />
                   <textarea
-                    placeholder="Answer details..."
+                    placeholder={t("uiText.f3743e51")}
                     value={faq.answer}
                     onChange={(e) => updateFaq(idx, 'answer', e.target.value)}
                     rows={2}
@@ -152,15 +153,14 @@ export default function SchemaOrgGeneratorTool() {
                 onClick={addFaq}
                 className="w-full flex items-center justify-center gap-1.5 py-2 rounded-xl border border-dashed border-indigo-300 dark:border-indigo-800 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 transition"
               >
-                <Plus className="h-3.5 w-3.5" /> Add Another FAQ Item
-              </button>
+                <Plus className="h-3.5 w-3.5" /> {t("uiText.64f0b46a")}</button>
             </div>
           )}
 
           {type === 'Article' && (
             <div className="space-y-3 text-xs">
               <div>
-                <label className="block font-semibold mb-1">Headline</label>
+                <label className="block font-semibold mb-1">{t("uiText.d2527669")}</label>
                 <input
                   type="text"
                   value={headline}
@@ -169,7 +169,7 @@ export default function SchemaOrgGeneratorTool() {
                 />
               </div>
               <div>
-                <label className="block font-semibold mb-1">Author Name</label>
+                <label className="block font-semibold mb-1">{t("uiText.01d25509")}</label>
                 <input
                   type="text"
                   value={authorName}
@@ -178,7 +178,7 @@ export default function SchemaOrgGeneratorTool() {
                 />
               </div>
               <div>
-                <label className="block font-semibold mb-1">Publisher</label>
+                <label className="block font-semibold mb-1">{t("uiText.0bc8ed1f")}</label>
                 <input
                   type="text"
                   value={publisherName}
@@ -187,7 +187,7 @@ export default function SchemaOrgGeneratorTool() {
                 />
               </div>
               <div>
-                <label className="block font-semibold mb-1">Date Published</label>
+                <label className="block font-semibold mb-1">{t("uiText.52f861eb")}</label>
                 <input
                   type="date"
                   value={datePublished}
@@ -201,7 +201,7 @@ export default function SchemaOrgGeneratorTool() {
           {type === 'Product' && (
             <div className="space-y-3 text-xs">
               <div>
-                <label className="block font-semibold mb-1">Product Name</label>
+                <label className="block font-semibold mb-1">{t("uiText.98ffe9df")}</label>
                 <input
                   type="text"
                   value={productName}
@@ -211,7 +211,7 @@ export default function SchemaOrgGeneratorTool() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold mb-1">Brand</label>
+                  <label className="block font-semibold mb-1">{t("uiText.6d1c7e96")}</label>
                   <input
                     type="text"
                     value={brand}
@@ -220,7 +220,7 @@ export default function SchemaOrgGeneratorTool() {
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold mb-1">Price</label>
+                  <label className="block font-semibold mb-1">{t("uiText.dd3ec7ca")}</label>
                   <input
                     type="text"
                     value={price}
@@ -237,14 +237,13 @@ export default function SchemaOrgGeneratorTool() {
         <div className="flex flex-col space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-              <Globe className="h-3.5 w-3.5 text-indigo-500" /> JSON-LD Script Tag
-            </span>
+              <Globe className="h-3.5 w-3.5 text-indigo-500" /> {t("uiText.1a5c8d35")}</span>
             <button
               onClick={handleCopy}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
             >
               {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-              {copied ? 'Copied' : 'Copy Script'}
+              {copied ? t("uiText.8dc21305") : t("uiText.af0ee1f7")}
             </button>
           </div>
           <textarea

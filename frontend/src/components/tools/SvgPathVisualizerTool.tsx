@@ -24,15 +24,14 @@ export default function SvgPathVisualizerTool() {
         {/* Visual SVG Sandbox */}
         <div className="surface-card rounded-2xl p-6 flex flex-col items-center justify-center space-y-4 bg-slate-900 border border-white/5 min-h-[300px]">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-400 self-start">
-            SVG Vector Path Sandbox
-          </span>
+            {t("uiText.788ae914")}</span>
 
           <svg viewBox="0 0 400 250" className="w-full max-w-[360px] h-48 border border-white/10 rounded-xl bg-slate-950 shadow-inner">
             <path d={cleanPath} fill={fillColor} stroke={strokeColor} strokeWidth={strokeWidth} />
           </svg>
 
           <div className="flex items-center gap-4 text-xs font-mono text-slate-400">
-            <span>{commands.length} Commands Parsed</span>
+            <span>{commands.length} {' ' + t("uiText.2f5f0aac")}</span>
           </div>
         </div>
 
@@ -59,13 +58,13 @@ export default function SvgPathVisualizerTool() {
               onChange={(e) => setPathInput(e.target.value)}
               rows={4}
               className="w-full rounded-xl border border-slate-200 bg-white p-3 font-mono text-xs text-slate-900 shadow-inner focus:outline-none dark:border-white/10 dark:bg-slate-900 dark:text-slate-100 resize-y"
-              placeholder="Paste path d attribute (e.g. M10 80 Q 95 10 180 80...)"
+              placeholder={t("uiText.00bfd8f3")}
             />
           </div>
 
           <div className="grid grid-cols-3 gap-3 pt-3 border-t border-slate-100 dark:border-white/5">
             <div>
-              <label className="text-[11px] font-bold text-slate-500 block mb-1">Stroke Color</label>
+              <label className="text-[11px] font-bold text-slate-500 block mb-1">{t("uiText.7bd4299e")}</label>
               <div className="flex items-center gap-1.5">
                 <input
                   type="color"
@@ -83,7 +82,7 @@ export default function SvgPathVisualizerTool() {
             </div>
 
             <div>
-              <label className="text-[11px] font-bold text-slate-500 block mb-1">Fill Color</label>
+              <label className="text-[11px] font-bold text-slate-500 block mb-1">{t("uiText.ec1c628f")}</label>
               <div className="flex items-center gap-1.5">
                 <input
                   type="color"
@@ -101,7 +100,7 @@ export default function SvgPathVisualizerTool() {
             </div>
 
             <div>
-              <label className="text-[11px] font-bold text-slate-500 block mb-1">Stroke Width ({strokeWidth}px)</label>
+              <label className="text-[11px] font-bold text-slate-500 block mb-1">{t("uiText.93e98fc1")}{strokeWidth}{t("uiText.326b8794")}</label>
               <input
                 type="range"
                 min="1"
@@ -118,15 +117,14 @@ export default function SvgPathVisualizerTool() {
       {/* Parsed Commands Table */}
       <div className="surface-card rounded-2xl p-6 space-y-3">
         <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-          Parsed Path Segments & Coordinates
-        </span>
+          {t("uiText.d9d0d19a")}</span>
         <div className="max-h-48 overflow-y-auto rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900">
           <table className="w-full text-left text-xs font-mono">
             <thead className="bg-slate-50 dark:bg-slate-800 text-slate-500">
               <tr>
                 <th className="p-2.5">#</th>
-                <th className="p-2.5">Command</th>
-                <th className="p-2.5">Parameters</th>
+                <th className="p-2.5">{t("uiText.c67c8f52")}</th>
+                <th className="p-2.5">{t("uiText.fd7f93f9")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-white/5">
@@ -134,7 +132,7 @@ export default function SvgPathVisualizerTool() {
                 <tr key={i}>
                   <td className="p-2.5 text-slate-400">{i + 1}</td>
                   <td className="p-2.5 font-bold text-indigo-600 dark:text-indigo-400">{cmd.type}</td>
-                  <td className="p-2.5 text-slate-700 dark:text-slate-200">{cmd.params.join(', ') || '(none)'}</td>
+                  <td className="p-2.5 text-slate-700 dark:text-slate-200">{cmd.params.join(', ') || t("uiText.90458a20")}</td>
                 </tr>
               ))}
             </tbody>

@@ -48,14 +48,13 @@ export default function CssGlassmorphismTool() {
         >
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-amber-300" />
-            <h4 className="font-bold text-lg text-white drop-shadow">Glassmorphism Card</h4>
+            <h4 className="font-bold text-lg text-white drop-shadow">{t("uiText.bd32e5cc")}</h4>
           </div>
           <p className="text-xs text-white/90 leading-relaxed drop-shadow-sm">
-            Frosted glass CSS generator with real-time backdrop blur, transparency, and glowing borders.
-          </p>
+            {t("uiText.e066dd78")}</p>
           <div className="pt-2 flex items-center justify-between">
-            <span className="text-[11px] font-semibold text-white/80">Blur: {blur}px</span>
-            <span className="text-[11px] font-semibold text-white/80">Opacity: {Math.round(opacity * 100)}%</span>
+            <span className="text-[11px] font-semibold text-white/80">{t("uiText.73dfeda6") + ' '}{blur}px</span>
+            <span className="text-[11px] font-semibold text-white/80">{t("uiText.e6d3aa74") + ' '}{Math.round(opacity * 100)}%</span>
           </div>
         </div>
       </div>
@@ -179,8 +178,7 @@ export default function CssGlassmorphismTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Vanilla CSS
-            </span>
+              {t("uiText.e4f56367")}</span>
             <button
               onClick={() => copyText(result.css, setCopiedCss)}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
@@ -201,8 +199,7 @@ export default function CssGlassmorphismTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Tailwind CSS Utility Classes
-            </span>
+              {t("uiText.dd53b2ce")}</span>
             <button
               onClick={() => copyText(result.tailwind, setCopiedTailwind)}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

@@ -1,10 +1,12 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { generateIsometricCss } from '@/lib/cssIsometricGridGenerator';
 
 export default function CssIsometricGridGeneratorTool() {
+  const { t } = useLanguage();
   const [val, setVal] = useState('');
   let output = '';
   try {
@@ -18,7 +20,7 @@ export default function CssIsometricGridGeneratorTool() {
     <div className="space-y-6">
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">CSS Isometric 3D Transform</label>
+          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.4b1c99f0")}</label>
           <CopyButton text={output} />
         </div>
         <textarea

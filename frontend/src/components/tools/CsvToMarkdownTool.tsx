@@ -84,8 +84,7 @@ export default function CsvToMarkdownTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              CSV / TSV Input
-            </span>
+              {t("uiText.6ae61473")}</span>
             <button
               onClick={handleCopyCsv}
               className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1 font-medium"
@@ -99,7 +98,7 @@ export default function CsvToMarkdownTool() {
             onChange={(e) => setCsvInput(e.target.value)}
             rows={14}
             className="w-full flex-1 rounded-xl border border-slate-200 bg-white p-4 font-mono text-xs text-slate-900 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-white/10 dark:bg-slate-900 dark:text-slate-100 resize-y"
-            placeholder="col1, col2, col3..."
+            placeholder={t("uiText.91ac84df")}
           />
         </div>
 
@@ -107,8 +106,7 @@ export default function CsvToMarkdownTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              GitHub Markdown Table
-            </span>
+              {t("uiText.bc9299a3")}</span>
             <button
               onClick={handleCopyMd}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
@@ -122,7 +120,7 @@ export default function CsvToMarkdownTool() {
             value={markdownOutput}
             rows={14}
             className="w-full flex-1 rounded-xl border border-slate-200 bg-slate-50/80 p-4 font-mono text-xs text-slate-900 shadow-inner focus:outline-none dark:border-white/10 dark:bg-slate-900/80 dark:text-indigo-200 resize-y"
-            placeholder="| Col 1 | Col 2 |..."
+            placeholder={t("uiText.dbe490b0")}
           />
         </div>
       </div>

@@ -9,6 +9,7 @@ import { getToolHreflangAlternates } from '@/lib/i18nRouting';
 import { getLocalizedPath, getLocalizedToolMeta, type Language } from '@/lib/i18nRouting';
 import { getWorkflowTargets } from '@/lib/toolManifest';
 import { getCollectionsForTool, getLocalizedCollection } from '@/lib/toolCollections';
+import { localizeToolPageCopy } from '@/lib/localizedToolPageCopy';
 import {
   buildSupplementalToolFaqs,
   buildSupplementalToolSections,
@@ -194,12 +195,16 @@ export default async function ToolPage({
         href: `/collections/${collection.slug}`,
       };
     });
+  const localizedPageCopy = await localizeToolPageCopy({
+    faqs: removeTemplatedDefinitionFaq(tool.faqs, tool.name, [tool.description, tool.longDescription]),
+    answerSections: tool.answerSections,
+  }, locale);
   const effectiveFaqs = mergeToolFaqs(
-    removeTemplatedDefinitionFaq(tool.faqs, tool.name, [tool.description, tool.longDescription]),
+    localizedPageCopy.faqs,
     buildSupplementalToolFaqs(localizedTool.name, locale),
   );
   const effectiveAnswerSections = [
-    ...(tool.answerSections || []),
+    ...(localizedPageCopy.answerSections || []),
     ...buildSupplementalToolSections(
       toolSlug,
       localizedTool.name,

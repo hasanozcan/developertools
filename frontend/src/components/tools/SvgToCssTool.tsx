@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { svgToCss } from '@/lib/svgToCss';
 import { Copy, Check } from 'lucide-react';
 
 export default function SvgToCssTool() {
+  const { t } = useLanguage();
   const [svg, setSvg] = useState('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>');
   const [copied, setCopied] = useState(false);
   const result = svgToCss(svg);
@@ -16,7 +18,7 @@ export default function SvgToCssTool() {
           className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md transition hover:bg-indigo-500"
         >
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          <span>{copied ? 'Copied' : 'Copy CSS Background'}</span>
+          <span>{copied ? t("uiText.8dc21305") : t("uiText.563ea4a1")}</span>
         </button>
       </div>
 

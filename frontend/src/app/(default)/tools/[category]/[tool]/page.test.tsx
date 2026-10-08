@@ -142,16 +142,15 @@ describe('ToolPage structured data', () => {
     expect(questions).toContain('What is JSON?');
   });
 
-  it('passes the enhancedTools translation to the wrapper so the H1 matches the title', async () => {
-    // The tr translation dict only carries an English placeholder for this tool.
-    const turkishName = enhancedTools['openapi-to-postman'].name.tr;
+  it('passes the winning dictionary translation to the wrapper when enhancedTools has older copy', async () => {
+    const turkishName = translations.tr['toolName.openapi-to-postman'];
     expect(turkishName).toBeTruthy();
     expect(turkishName).not.toBe(enhancedTools['openapi-to-postman'].name.en);
 
     const { byType, wrapperProps } = await renderToolPage('tr', 'openapi-to-postman', 'converters');
     expect(wrapperProps.localizedName).toBe(turkishName);
     expect(wrapperProps.localizedDescription).toBe(
-      enhancedTools['openapi-to-postman'].description.tr,
+      translations.tr['toolDesc.openapi-to-postman'],
     );
     expect(byType('WebApplication').name).toBe(turkishName);
     expect(byType('BreadcrumbList').itemListElement[2].name).toBe(turkishName);

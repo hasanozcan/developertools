@@ -1,8 +1,10 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { simulateDnsLookup } from '@/lib/dnsLookupSimulator';
 
 export default function DnsLookupSimulatorTool() {
+  const { t } = useLanguage();
   const [domain, setDomain] = useState('devstools.app');
   const records = useMemo(() => simulateDnsLookup(domain), [domain]);
 
@@ -15,7 +17,7 @@ export default function DnsLookupSimulatorTool() {
             <div key={idx} className="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl flex justify-between font-mono text-xs">
               <span className="font-bold text-indigo-600">{r.type}</span>
               <span>{r.value}</span>
-              <span className="text-slate-400">TTL {r.ttl}s</span>
+              <span className="text-slate-400">{t("uiText.3f67ed7b") + ' '}{r.ttl}s</span>
             </div>
           ))}
         </div>

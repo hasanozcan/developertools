@@ -201,10 +201,10 @@ export default function LoremIpsumTool() {
       {/* Statistics */}
       {output && (
         <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400">
-          <span>Words: <strong className="text-gray-900 dark:text-white">{output.split(/\s+/).filter(Boolean).length}</strong></span>
-          <span>Characters: <strong className="text-gray-900 dark:text-white">{output.length}</strong></span>
-          <span>Sentences: <strong className="text-gray-900 dark:text-white">{(output.match(/[.!?]+/g) || []).length}</strong></span>
-          <span>Paragraphs: <strong className="text-gray-900 dark:text-white">{output.split(/\n\n+/).filter(Boolean).length}</strong></span>
+          <span>{t("tool.loremIpsum.wordsLabel") + ' '}<strong className="text-gray-900 dark:text-white">{output.split(/\s+/).filter(Boolean).length}</strong></span>
+          <span>{t("tool.loremIpsum.charactersLabel") + ' '}<strong className="text-gray-900 dark:text-white">{output.length}</strong></span>
+          <span>{t("tool.loremIpsum.sentencesLabel") + ' '}<strong className="text-gray-900 dark:text-white">{(output.match(/[.!?]+/g) || []).length}</strong></span>
+          <span>{t("tool.loremIpsum.paragraphsLabel") + ' '}<strong className="text-gray-900 dark:text-white">{output.split(/\n\n+/).filter(Boolean).length}</strong></span>
         </div>
       )}
     </div>

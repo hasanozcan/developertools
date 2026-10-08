@@ -4,6 +4,7 @@ import { useCallback, useDeferredValue, useMemo, useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { useLanguage } from '@/context/LanguageContext';
 import { analyzeOpenApi, type OpenApiAnalysis } from '@/lib/openApi';
+import { localizeUiText } from '@/lib/localizedText';
 
 const MAX_INPUT_LENGTH = 1_000_000;
 const SAMPLE = `openapi: 3.1.0
@@ -121,7 +122,7 @@ export default function OpenApiValidatorTool() {
           maxLength={MAX_INPUT_LENGTH}
           rows={20}
           spellCheck={false}
-          placeholder={'openapi: 3.1.0\ninfo:\n  title: Example API\n  version: 1.0.0\npaths: {}'}
+          placeholder={t("uiText.3dd8f04a")}
           className="w-full resize-y rounded-lg border border-gray-300 bg-white px-4 py-3 font-mono text-sm text-gray-900 placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
         />
         <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
@@ -143,7 +144,7 @@ export default function OpenApiValidatorTool() {
           role="alert"
           className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-300"
         >
-          {error}
+          {localizeUiText(error, t)}
         </p>
       ) : null}
 

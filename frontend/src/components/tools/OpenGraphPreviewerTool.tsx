@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { Copy, Check, Share2, Globe } from 'lucide-react';
 import { generateOpenGraphMetaTags, parseDomain, type OpenGraphData } from '@/lib/openGraphPreview';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 export default function OpenGraphPreviewerTool() {
   const { t } = useLanguage();
@@ -45,7 +46,7 @@ export default function OpenGraphPreviewerTool() {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Page Title (og:title)</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.ec07940d")}</label>
             <input
               type="text"
               value={ogData.title}
@@ -55,7 +56,7 @@ export default function OpenGraphPreviewerTool() {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Description (og:description)</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.af21c4ce")}</label>
             <textarea
               value={ogData.description}
               onChange={(e) => setOgData({ ...ogData, description: e.target.value })}
@@ -65,7 +66,7 @@ export default function OpenGraphPreviewerTool() {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Canonical URL (og:url)</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.2f857174")}</label>
             <input
               type="text"
               value={ogData.url}
@@ -75,7 +76,7 @@ export default function OpenGraphPreviewerTool() {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Image URL (og:image / 1200x630)</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.2c99fb82")}</label>
             <input
               type="text"
               value={ogData.imageUrl}
@@ -86,7 +87,7 @@ export default function OpenGraphPreviewerTool() {
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-bold text-slate-500 block mb-1">Site Name</label>
+              <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.6efffcb1")}</label>
               <input
                 type="text"
                 value={ogData.siteName}
@@ -95,7 +96,7 @@ export default function OpenGraphPreviewerTool() {
               />
             </div>
             <div>
-              <label className="text-xs font-bold text-slate-500 block mb-1">Twitter Handle</label>
+              <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.c01144a2")}</label>
               <input
                 type="text"
                 value={ogData.twitterHandle}
@@ -110,7 +111,7 @@ export default function OpenGraphPreviewerTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-4">
           {/* Platform Tab Buttons */}
           <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/5 pb-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Live Card Simulator</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.b4b0e6fd")}</span>
             <div className="flex items-center gap-1.5">
               {[
                 { id: 'twitter', label: 'Twitter / X' },
@@ -127,7 +128,7 @@ export default function OpenGraphPreviewerTool() {
                       : 'text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800'
                   }`}
                 >
-                  {p.label}
+                  {localizeUiText(p.label, t)}
                 </button>
               ))}
             </div>
@@ -141,7 +142,7 @@ export default function OpenGraphPreviewerTool() {
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
                     src={ogData.imageUrl}
-                    alt="Open Graph preview"
+                    alt={t("uiText.79d9cbcd")}
                     className="w-full h-48 object-cover border-b border-slate-100 dark:border-white/5"
                   />
                 )}
@@ -174,8 +175,7 @@ export default function OpenGraphPreviewerTool() {
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            Generated HTML Meta Tags Code
-          </span>
+            {t("uiText.238df7d6")}</span>
           <button
             onClick={handleCopy}
             className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

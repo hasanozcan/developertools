@@ -3,6 +3,7 @@
 import { useCallback, useState } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 type Mode = 'parse' | 'build';
 
@@ -141,8 +142,7 @@ export default function QueryStringParserTool() {
                 : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300'
             }`}
           >
-            Parse
-          </button>
+            {t("uiText.16b02e8c")}</button>
           <button
             onClick={() => setMode('build')}
             className={`px-4 py-2 text-sm font-medium transition-colors ${
@@ -151,8 +151,7 @@ export default function QueryStringParserTool() {
                 : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300'
             }`}
           >
-            Build
-          </button>
+            {t("uiText.95967543")}</button>
         </div>
         <button
           onClick={handleConvert}
@@ -182,13 +181,12 @@ export default function QueryStringParserTool() {
             onChange={(event) => setPrependQuestionMark(event.target.checked)}
             className="rounded border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-primary-600"
           />
-          Prepend question mark (?)
-        </label>
+          {t("uiText.9b1e0072")}</label>
       )}
 
       {error && (
         <div className="p-3 bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 rounded-lg text-sm text-red-700 dark:text-red-300">
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -203,8 +201,8 @@ export default function QueryStringParserTool() {
             language={mode === 'build' ? 'json' : 'text'}
             placeholder={
               mode === 'parse'
-                ? 'Enter URL or query string...'
-                : 'Enter JSON object to build query string...'
+                ? t("uiText.838eb3c0")
+                : t("uiText.41284c20")
             }
             minHeight="220px"
           />
@@ -219,7 +217,7 @@ export default function QueryStringParserTool() {
             onChange={() => {}}
             readOnly
             language={mode === 'parse' ? 'json' : 'text'}
-            placeholder="Result will appear here..."
+            placeholder={t("tool.htmlEntity.resultPlaceholder")}
             minHeight="220px"
           />
         </div>

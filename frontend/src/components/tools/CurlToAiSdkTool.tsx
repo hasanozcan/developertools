@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { curlToAiSdk } from '@/lib/curlToAiSdk';
 import { Copy, Check, Sparkles } from 'lucide-react';
 
 export default function CurlToAiSdkTool() {
+  const { t } = useLanguage();
   const [curl, setCurl] = useState('curl https://api.openai.com/v1/chat/completions -H "Authorization: Bearer $OPENAI_API_KEY" -H "Content-Type: application/json" -d "{\"model\":\"gpt-4o\",\"messages\":[{\"role\":\"user\",\"content\":\"Hello AI!\"}]}"');
   const [sdk, setSdk] = useState<'openai' | 'anthropic'>('openai');
   const [copied, setCopied] = useState(false);
@@ -14,20 +16,18 @@ export default function CurlToAiSdkTool() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-2">
-          <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Target SDK:</label>
+          <label className="text-sm font-medium text-slate-700 dark:text-slate-300">{t("uiText.47325e02")}</label>
           <div className="inline-flex rounded-xl bg-slate-100 p-1 dark:bg-slate-800">
             <button
               onClick={() => setSdk('openai')}
               className={`rounded-lg px-3 py-1 text-xs font-semibold ${sdk === 'openai' ? 'bg-indigo-600 text-white' : 'text-slate-600 dark:text-slate-400'}`}
             >
-              OpenAI SDK
-            </button>
+              {t("uiText.61afdcbf")}</button>
             <button
               onClick={() => setSdk('anthropic')}
               className={`rounded-lg px-3 py-1 text-xs font-semibold ${sdk === 'anthropic' ? 'bg-indigo-600 text-white' : 'text-slate-600 dark:text-slate-400'}`}
             >
-              Anthropic Claude SDK
-            </button>
+              {t("uiText.ce2e7ed7")}</button>
           </div>
         </div>
         <button
@@ -35,7 +35,7 @@ export default function CurlToAiSdkTool() {
           className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md transition hover:bg-indigo-500"
         >
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          <span>{copied ? 'Copied' : 'Copy SDK Code'}</span>
+          <span>{copied ? t("uiText.8dc21305") : t("uiText.a0f14235")}</span>
         </button>
       </div>
 

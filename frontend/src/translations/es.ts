@@ -1,9 +1,8 @@
 import { esUi } from './ui/es';
-import { enhancedToolFallbacks, enhancedToolTranslations } from './enhancedTools';
+import { enhancedToolTranslations } from './enhancedTools';
+import { esCompletion } from './completion/es';
 
 export const es = {
-  // English placeholders first so hand-written keys below take precedence.
-  ...enhancedToolFallbacks.es,
   ...esUi,
   // Tool Names
   'toolName.json-formatter': 'Formateador JSON',
@@ -15,15 +14,15 @@ export const es = {
   'toolName.json-csv': 'Conversor JSON a CSV',
   'toolName.base64': 'Codificador/Decodificador Base64',
   'toolName.url-encoder': 'Codificador/Decodificador URL',
-  'toolName.jwt-decoder': 'Decodificador JWT',
-  'toolName.html-entity': 'Codificador/Decodificador HTML Entity',
+  'toolName.jwt-decoder': 'Decodificador, firmador y verificador JWT',
+  'toolName.html-entity': 'Codificador y decodificador de entidades HTML',
   'toolName.uuid-generator': 'Generador UUID',
   'toolName.password-generator': 'Generador de Contraseñas',
   'toolName.lorem-ipsum': 'Generador Lorem Ipsum',
   'toolName.qr-code': 'Generador de Código QR',
   'toolName.slug-generator': 'Generador de Slug',
-  'toolName.md5-hash': 'Generador de Hash MD5',
-  'toolName.sha256-hash': 'Generador de Hash SHA256',
+  'toolName.md5-hash': 'Generador de hashes MD5',
+  'toolName.sha256-hash': 'Generador de hashes SHA-256 y comprobador de archivos',
   'toolName.regex-tester': 'Probador de Regex',
   'toolName.text-diff': 'Herramienta de Comparación de Texto',
   'toolName.markdown-preview': 'Vista Previa de Markdown',
@@ -37,7 +36,7 @@ export const es = {
   'toolName.yaml-json': 'Conversor YAML ↔ JSON',
   'toolName.image-to-base64': 'Imagen a Base64',
   'toolName.css-gradient': 'Generador de Gradientes CSS',
-  'toolName.meta-tags': 'Generador de Meta Tags',
+  'toolName.meta-tags': 'Generador de metaetiquetas',
   'toolName.case-converter': 'Conversor de Mayúsculas/Minúsculas',
   'toolName.word-counter': 'Contador de Palabras',
   'toolName.remove-duplicates': 'Eliminar Duplicados',
@@ -50,11 +49,11 @@ export const es = {
   'toolName.sha512-hash': 'Generador de Hash SHA512',
   'toolName.roman-numeral-converter': 'Conversor de Números Romanos',
   'toolName.number-base-converter': 'Conversor de Base Numérica',
-  'toolName.unicode-escape': 'Codificador/Decodificador Unicode Escape',
+  'toolName.unicode-escape': 'Codificador y decodificador de escapes Unicode',
   'toolName.json-string-escape': 'Escape de Cadenas JSON',
   'toolName.url-parser': 'Analizador de URL',
-  'toolName.query-string-parser': 'Analizador de Query String',
-  'toolName.regex-escape': 'Escape de Regex',
+  'toolName.query-string-parser': 'Analizador de cadenas de consulta',
+  'toolName.regex-escape': 'Escape de expresiones regulares',
   'toolName.http-headers-parser': 'Analizador de Cabeceras HTTP',
   'toolName.http-status-codes': 'Códigos de Estado HTTP',
   'toolName.user-agent-parser': 'Analizador de User-Agent',
@@ -63,7 +62,7 @@ export const es = {
   'toolName.cache-control': 'Analizador y generador de Cache-Control',
   'toolName.jsonpath-tester': 'Probador de JSONPath',
   'toolName.csp-builder': 'Generador y analizador de cabeceras CSP',
-  'toolName.curl-to-fetch': 'Generador cURL y conversor a Fetch',
+  'toolName.curl-to-fetch': 'Conversor de cURL a Fetch y generador de solicitudes',
   // Tool Descriptions
   'toolDesc.json-formatter': 'Formatea, valida y limpia JSON con resaltado de sintaxis.',
   'toolDesc.json-validator':
@@ -84,13 +83,14 @@ export const es = {
   'toolDesc.csp-builder':
     'Crea, normaliza y revisa cabeceras Content Security Policy en busca de problemas de seguridad habituales.',
   'toolDesc.curl-to-fetch':
-    'Crea solicitudes cURL o convierte entradas cURL compatibles a JavaScript Fetch sin ejecutar comandos.',
+    'Convierte comandos cURL compatibles en código JavaScript fetch sin enviar solicitudes o crea fragmentos cURL y Fetch a partir de los campos de una solicitud.',
   'toolDesc.json-csv': 'Convierte arreglos JSON a CSV y archivos CSV de vuelta a JSON.',
   'toolDesc.base64': 'Codifica texto a Base64 o decodifica cadenas Base64 a texto.',
   'toolDesc.url-encoder': 'Codifica o decodifica cadenas y parámetros de URL de forma segura.',
   'toolDesc.jwt-decoder':
-    'Decodifica tokens JWT e inspecciona encabezados y payload en el cliente.',
-  'toolDesc.html-entity': 'Codifica caracteres especiales a entidades HTML o decodifícalos.',
+    'Decodifica JWT y firma o verifica tokens HS256, HS384 y HS512 localmente.',
+  'toolDesc.html-entity':
+    'Codifica caracteres especiales como entidades HTML o decodifícalos de vuelta.',
   'toolDesc.uuid-generator':
     'Genera identificadores UUID v4 o v7 basados en tiempo, formatea lotes y expórtalos localmente.',
   'toolDesc.password-generator':
@@ -99,8 +99,10 @@ export const es = {
   'toolDesc.qr-code': 'Crea códigos QR desde texto o URLs para compartir rápido.',
   'toolDesc.slug-generator':
     'Convierte títulos en slugs limpios y amigables con SEO con transliteración.',
-  'toolDesc.md5-hash': 'Genera hashes MD5 desde texto para checksums rápidos.',
-  'toolDesc.sha256-hash': 'Genera hashes SHA256 desde texto para verificaciones de integridad.',
+  'toolDesc.md5-hash':
+    'Genera hashes MD5 a partir de texto para obtener sumas de comprobación rápidas.',
+  'toolDesc.sha256-hash':
+    'Calcula el hash SHA-256 de texto UTF-8 o un archivo local y compara el resumen del archivo con una suma de comprobación esperada de 64 caracteres de una fuente de confianza.',
   'toolDesc.regex-tester': 'Prueba expresiones regulares con coincidencia en vivo y resaltados.',
   'toolDesc.text-diff': 'Compara dos textos lado a lado y resalta diferencias.',
   'toolDesc.markdown-preview': 'Escribe Markdown y previsualiza el HTML renderizado al instante.',
@@ -108,13 +110,14 @@ export const es = {
   'toolDesc.color-converter': 'Convierte colores entre formatos HEX, RGB y HSL.',
   'toolDesc.sql-formatter': 'Formatea consultas SQL con la indentación y capitalización correctas.',
   'toolDesc.css-minifier': 'Minimiza CSS eliminando espacios, comentarios y extras.',
-  'toolDesc.js-minifier': 'Minimiza JavaScript quitando espacios, comentarios y bloat.',
+  'toolDesc.js-minifier':
+    'Minifica JavaScript eliminando espacios, comentarios y contenido innecesario.',
   'toolDesc.cron-parser': 'Analiza expresiones cron y explica sus horarios.',
   'toolDesc.json-to-typescript': 'Genera interfaces o tipos TypeScript a partir de ejemplos JSON.',
   'toolDesc.yaml-json': 'Convierte YAML a JSON y JSON de vuelta a YAML.',
   'toolDesc.image-to-base64': 'Convierte imágenes a URIs de datos Base64 para incrustar.',
   'toolDesc.css-gradient': 'Diseña gradientes CSS y copia el código generado.',
-  'toolDesc.meta-tags': 'Genera meta etiquetas SEO, Open Graph y Twitter Card.',
+  'toolDesc.meta-tags': 'Genera metaetiquetas de SEO, Open Graph y Twitter Card.',
   'toolDesc.case-converter':
     'Convierte texto entre mayúsculas, minúsculas, título, camelCase y más.',
   'toolDesc.word-counter':
@@ -130,13 +133,13 @@ export const es = {
   'toolDesc.roman-numeral-converter': 'Convierte números a números romanos y viceversa.',
   'toolDesc.number-base-converter': 'Convierte números entre decimal, binario, hex y octal.',
   'toolDesc.unicode-escape':
-    'Codifica texto plano a secuencias Unicode escape o decodifica texto escapado.',
+    'Codifica texto plano en secuencias de escape Unicode o decodifica texto escapado.',
   'toolDesc.json-string-escape': 'Escapa y desescapa contenido de cadenas JSON.',
   'toolDesc.url-parser': 'Analiza URL en protocolo, host, ruta, hash y parámetros de consulta.',
   'toolDesc.query-string-parser':
-    'Analiza query strings a JSON y construye query strings desde JSON.',
+    'Analiza cadenas de consulta para convertirlas en JSON y crea cadenas de consulta a partir de JSON.',
   'toolDesc.regex-escape':
-    'Escapa o desescapa texto para usarlo con seguridad en expresiones regulares.',
+    'Escapa o desescapa texto para usarlo de forma segura en expresiones regulares.',
   'toolDesc.http-headers-parser':
     'Analiza cabeceras HTTP en bruto a JSON y construye cabeceras desde JSON.',
   'toolDesc.http-status-codes': 'Busca y consulta códigos de estado de respuesta HTTP comunes.',
@@ -153,4 +156,5 @@ export const es = {
   'toolDesc.bcrypt-generator':
     'Genera hashes bcrypt con sal y verifica contraseñas de prueba localmente.',
   ...enhancedToolTranslations.es,
+  ...esCompletion,
 };

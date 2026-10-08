@@ -1,8 +1,10 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { chunkDocument } from '@/lib/ragChunkingVisualizer';
 
 export default function RagChunkingVisualizerTool() {
+  const { t } = useLanguage();
   const [text, setText] = useState('Retrieval-Augmented Generation (RAG) splits long unstructured documents into smaller semantic chunks with overlapping token windows for high-accuracy embedding search in vector databases.');
   const [chunkSize, setChunkSize] = useState(80);
   const [overlap, setOverlap] = useState(20);
@@ -19,19 +21,19 @@ export default function RagChunkingVisualizerTool() {
       />
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="text-xs text-muted-foreground">Chunk Size (chars): {chunkSize}</label>
+          <label className="text-xs text-muted-foreground">{t("uiText.65ca74e7") + ' '}{chunkSize}</label>
           <input type="range" min="30" max="200" value={chunkSize} onChange={(e) => setChunkSize(Number(e.target.value))} className="w-full" />
         </div>
         <div>
-          <label className="text-xs text-muted-foreground">Overlap (chars): {overlap}</label>
+          <label className="text-xs text-muted-foreground">{t("uiText.1dc219e2") + ' '}{overlap}</label>
           <input type="range" min="0" max="60" value={overlap} onChange={(e) => setOverlap(Number(e.target.value))} className="w-full" />
         </div>
       </div>
       <div className="space-y-3">
-        <div className="text-sm font-semibold">Generated Chunks ({chunks.length})</div>
+        <div className="text-sm font-semibold">{t("uiText.e0618fb8")}{chunks.length})</div>
         {chunks.map((c) => (
           <div key={c.index} className="p-3 rounded-lg border border-border bg-card font-mono text-xs">
-            <div className="text-primary font-bold mb-1">Chunk #{c.index + 1} ({c.charStart}-{c.charEnd})</div>
+            <div className="text-primary font-bold mb-1">{t("uiText.759a331f")}{c.index + 1} ({c.charStart}-{c.charEnd})</div>
             <div>{c.text}</div>
           </div>
         ))}

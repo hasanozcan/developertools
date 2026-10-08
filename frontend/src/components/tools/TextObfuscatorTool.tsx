@@ -4,11 +4,12 @@ import React, { useState, useMemo } from 'react';
 import { EyeOff, Sparkles, Copy, Check } from 'lucide-react';
 import { detectAndRemoveInvisibleChars } from '@/lib/textObfuscator';
 import { useLanguage } from '@/context/LanguageContext';
+import { translateCount } from '@/lib/localizedText';
 
 const SAMPLE_TEXT = 'This\u200B text\u200C contains hidden\uFEFF zero-width spaces\u200E!';
 
 export default function TextObfuscatorTool() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [inputText, setInputText] = useState(SAMPLE_TEXT);
   const [copied, setCopied] = useState(false);
 
@@ -37,7 +38,7 @@ export default function TextObfuscatorTool() {
               ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300'
               : 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300'
           }`}>
-            {report.totalInvisible > 0 ? `${report.totalInvisible} Hidden Characters Found` : 'Text is Clean'}
+            {report.totalInvisible > 0 ? translateCount(t, language, 'tool.textObfuscator.hiddenCount', report.totalInvisible) : t('uiText.357c6ee7')}
           </span>
         </div>
       </div>
@@ -46,7 +47,7 @@ export default function TextObfuscatorTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Input Text (With Hidden Characters)</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.d7f642d5")}</span>
             <button
               onClick={() => setInputText(SAMPLE_TEXT)}
               className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-semibold"
@@ -64,7 +65,7 @@ export default function TextObfuscatorTool() {
 
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Sanitized & Cleaned Text</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.d15c84c7")}</span>
             <button
               onClick={handleCopy}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
@@ -84,22 +85,22 @@ export default function TextObfuscatorTool() {
 
       {/* Detection Counts Breakdown */}
       <div className="surface-card rounded-2xl p-6 space-y-3">
-        <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Detected Character Breakdown</span>
+        <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.bb47c47f")}</span>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
           <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900">
-            <span className="text-slate-400 block text-[11px]">Zero-Width Spaces (\u200B)</span>
+            <span className="text-slate-400 block text-[11px]">{t("uiText.3372048d")}</span>
             <span className="font-bold text-slate-900 dark:text-white text-base">{report.zeroWidthSpaces}</span>
           </div>
           <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900">
-            <span className="text-slate-400 block text-[11px]">Non-Joiners (\u200C)</span>
+            <span className="text-slate-400 block text-[11px]">{t("uiText.b1372184")}</span>
             <span className="font-bold text-slate-900 dark:text-white text-base">{report.zeroWidthNonJoiners}</span>
           </div>
           <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900">
-            <span className="text-slate-400 block text-[11px]">Joiners (\u200D)</span>
+            <span className="text-slate-400 block text-[11px]">{t("uiText.fd581d55")}</span>
             <span className="font-bold text-slate-900 dark:text-white text-base">{report.zeroWidthJoiners}</span>
           </div>
           <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900">
-            <span className="text-slate-400 block text-[11px]">LTR / RTL Marks</span>
+            <span className="text-slate-400 block text-[11px]">{t("uiText.5c17eb58")}</span>
             <span className="font-bold text-slate-900 dark:text-white text-base">{report.leftToRightMarks + report.rightToLeftMarks}</span>
           </div>
         </div>

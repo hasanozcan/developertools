@@ -99,8 +99,7 @@ export default function CssBlobGeneratorTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              CSS border-radius
-            </span>
+              {t("uiText.54ddc377")}</span>
             <button
               onClick={() => copyText(result.css, setCopiedCss)}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
@@ -121,8 +120,7 @@ export default function CssBlobGeneratorTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Raw SVG Vector Code
-            </span>
+              {t("uiText.99ce42e3")}</span>
             <button
               onClick={() => copyText(result.svgCode, setCopiedSvg)}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

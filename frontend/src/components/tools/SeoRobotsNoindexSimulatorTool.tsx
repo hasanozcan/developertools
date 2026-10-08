@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { evaluateRobotsDirective } from '@/lib/seoRobotsNoindexSimulator';
@@ -7,6 +8,7 @@ import { evaluateRobotsDirective } from '@/lib/seoRobotsNoindexSimulator';
 const SAMPLE = "noindex, follow";
 
 export default function SeoRobotsNoindexSimulatorTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE);
   let output = '';
 
@@ -22,8 +24,8 @@ export default function SeoRobotsNoindexSimulatorTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Robots Meta Directive</label>
-            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.0dc67658")}</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -34,7 +36,7 @@ export default function SeoRobotsNoindexSimulatorTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Indexing & Crawling Permissions</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.051deb58")}</label>
             <CopyButton text={output} />
           </div>
           <textarea

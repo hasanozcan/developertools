@@ -2,18 +2,10 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import UnicodeEscapeTool from './UnicodeEscapeTool';
 
-vi.mock('@/context/LanguageContext', () => ({
-  useLanguage: () => ({
-    t: (key: string) => {
-      const labels: Record<string, string> = {
-        'common.encode': 'Encode',
-        'common.decode': 'Decode',
-        'common.convert': 'Convert',
-      };
-      return labels[key] ?? key;
-    },
-  }),
-}));
+vi.mock('@/context/LanguageContext', async () => {
+  const { enUi } = await import('@/translations/ui/en');
+  return { useLanguage: () => ({ language: 'en', t: (key: string) => enUi[key] ?? '' }) };
+});
 
 vi.mock('@/components/common/CodeEditor', () => ({
   default: ({

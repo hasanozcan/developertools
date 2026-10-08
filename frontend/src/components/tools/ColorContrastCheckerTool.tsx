@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { analyzeColorContrast } from '@/lib/colorContrast';
+import { interpolateText } from '@/lib/localizedText';
 
 interface PassBadgeProps {
   label: string;
@@ -64,7 +65,7 @@ export default function ColorContrastCheckerTool() {
           type="color"
           value={/^#[\dA-Fa-f]{6}$/u.test(value) ? value : '#000000'}
           onChange={(event) => onChange(event.target.value.toUpperCase())}
-          aria-label={`${label} picker`}
+          aria-label={interpolateText(t('tool.contrast.colorPicker'), { label })}
           className="h-11 w-14 cursor-pointer rounded-lg border border-gray-300 bg-white p-1 dark:border-gray-600 dark:bg-gray-800"
         />
         <input

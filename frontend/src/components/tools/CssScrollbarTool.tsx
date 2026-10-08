@@ -27,7 +27,7 @@ export default function CssScrollbarTool() {
       {/* Live Scrollable Sandbox */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="surface-card rounded-2xl p-6 space-y-3">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Live Custom Scrollbar Preview</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.f6d13b68")}</span>
 
           <div
             style={{
@@ -37,12 +37,10 @@ export default function CssScrollbarTool() {
             className="h-64 overflow-y-auto p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900 space-y-3"
           >
             <p className="text-xs text-slate-600 dark:text-slate-300">
-              Scroll down inside this box to test the custom scrollbar behavior!
-            </p>
+              {t("uiText.c76852f3")}</p>
             {Array.from({ length: 12 }).map((_, i) => (
               <div key={i} className="p-3 rounded-lg bg-white dark:bg-slate-800 text-xs shadow-sm font-mono text-slate-500">
-                Item row #{i + 1} - DeveloperTools scrollbar generator test container.
-              </div>
+                {t("uiText.150ac1fb")}{i + 1} {t("uiText.5c5d4bf5")}</div>
             ))}
           </div>
         </div>
@@ -58,7 +56,7 @@ export default function CssScrollbarTool() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-bold text-slate-500 block mb-1">Thumb Color</label>
+              <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.67d31efc")}</label>
               <div className="flex items-center gap-2">
                 <input
                   type="color"
@@ -76,7 +74,7 @@ export default function CssScrollbarTool() {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-500 block mb-1">Hover Color</label>
+              <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.3a28c186")}</label>
               <div className="flex items-center gap-2">
                 <input
                   type="color"
@@ -94,7 +92,7 @@ export default function CssScrollbarTool() {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-500 block mb-1">Track Color</label>
+              <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.cf5598bb")}</label>
               <div className="flex items-center gap-2">
                 <input
                   type="color"
@@ -113,7 +111,7 @@ export default function CssScrollbarTool() {
 
             <div>
               <div className="flex justify-between text-xs font-semibold mb-1">
-                <span>Width ({options.width}px)</span>
+                <span>{t("uiText.9e3da3ff")}{options.width}{t("uiText.326b8794")}</span>
               </div>
               <input
                 type="range"
@@ -131,7 +129,7 @@ export default function CssScrollbarTool() {
       {/* Generated CSS Box */}
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Scrollbar CSS Code</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.6ab0692f")}</span>
           <button
             onClick={handleCopy}
             className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

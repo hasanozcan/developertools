@@ -44,7 +44,7 @@ export default function ColorPaletteTool() {
             className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-300 text-xs font-semibold hover:bg-indigo-100"
           >
             {copiedShade === 9999 ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-            <span>Copy Full JS Config</span>
+            <span>{t("uiText.6af73c36")}</span>
           </button>
         </div>
 

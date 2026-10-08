@@ -1,10 +1,12 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { buildOpenAiToolDefinition } from '@/lib/llmFunctionCallingBuilder';
 
 export default function LlmFunctionCallingBuilderTool() {
+  const { t } = useLanguage();
   const [fnName, setFnName] = useState('search_database');
   const [fnDesc, setFnDesc] = useState('Search vector database with semantic query and filters');
 
@@ -25,18 +27,18 @@ export default function LlmFunctionCallingBuilderTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Function Name</label>
+            <label className="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">{t("uiText.78f50ff0")}</label>
             <input type="text" value={fnName} onChange={(e) => setFnName(e.target.value)} className="w-full rounded-xl border p-2 text-xs font-mono dark:border-slate-700 dark:bg-slate-800" />
           </div>
           <div>
-            <label className="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Description</label>
+            <label className="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">{t("tool.metaTags.description")}</label>
             <input type="text" value={fnDesc} onChange={(e) => setFnDesc(e.target.value)} className="w-full rounded-xl border p-2 text-xs dark:border-slate-700 dark:bg-slate-800" />
           </div>
         </div>
 
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">OpenAI & Anthropic Tool JSON Schema</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.47a4b768")}</label>
             <CopyButton text={output} />
           </div>
           <pre className="h-64 overflow-auto rounded-2xl border border-slate-200 bg-slate-900 p-3 font-mono text-xs text-amber-400 dark:border-slate-700">

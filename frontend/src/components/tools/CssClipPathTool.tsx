@@ -69,7 +69,7 @@ export default function CssClipPathTool() {
           }}
           className="w-64 h-64 shadow-2xl transition-all duration-200 flex items-center justify-center text-white font-black text-xs uppercase tracking-widest select-none"
         >
-          <span>CSS Clip Path</span>
+          <span>{t("uiText.295e2591")}</span>
         </div>
       </div>
 
@@ -82,7 +82,7 @@ export default function CssClipPathTool() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {points.map((p, i) => (
             <div key={i} className="p-3.5 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 space-y-2">
-              <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 block">Point #{i + 1}</span>
+              <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 block">{t("uiText.425a55a0")}{i + 1}</span>
               <div>
                 <div className="flex justify-between text-[11px] text-slate-400">
                   <span>X:</span>
@@ -119,7 +119,7 @@ export default function CssClipPathTool() {
       {/* Generated CSS Box */}
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Clip-Path CSS Code</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.77d1bdf7")}</span>
           <button
             onClick={handleCopy}
             className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

@@ -1,10 +1,12 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { generateCotPrompt } from '@/lib/cotChainOfThoughtPromptBuilder';
 
 export default function CotChainOfThoughtPromptBuilderTool() {
+  const { t } = useLanguage();
   const [val, setVal] = useState('');
   let output = '';
   try {
@@ -18,7 +20,7 @@ export default function CotChainOfThoughtPromptBuilderTool() {
     <div className="space-y-6">
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Chain-of-Thought (CoT) Prompt Scaffold</label>
+          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.221144ed")}</label>
           <CopyButton text={output} />
         </div>
         <textarea

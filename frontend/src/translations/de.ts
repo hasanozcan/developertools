@@ -1,9 +1,8 @@
 import { deUi } from './ui/de';
-import { enhancedToolFallbacks, enhancedToolTranslations } from './enhancedTools';
+import { deCompletion } from './completion/de';
+import { enhancedToolTranslations } from './enhancedTools';
 
 export const de = {
-  // English placeholders first so hand-written keys below take precedence.
-  ...enhancedToolFallbacks.de,
   ...deUi,
   // Tool Names
   'toolName.json-formatter': 'JSON-Formatierer',
@@ -153,4 +152,5 @@ export const de = {
   'toolName.bcrypt-generator': 'Bcrypt-Generator und -Prüfer',
   'toolDesc.bcrypt-generator': 'Gesalzene Bcrypt-Hashes erzeugen und Testpasswörter lokal prüfen.',
   ...enhancedToolTranslations.de,
+  ...deCompletion,
 };

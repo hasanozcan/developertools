@@ -13,6 +13,7 @@ import {
   type HmacJwtAlgorithm,
   type JwtVerificationResult,
 } from '@/lib/jwt';
+import { localizeUiText } from '@/lib/localizedText';
 
 const MAX_TOKEN_LENGTH = 100_000;
 const SAMPLE_TOKEN =
@@ -194,7 +195,7 @@ export default function JwtDecoderTool() {
           maxLength={MAX_TOKEN_LENGTH}
           rows={5}
           spellCheck={false}
-          placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          placeholder={t("uiText.404a0270")}
           className={editorClass}
         />
       </div>
@@ -204,7 +205,7 @@ export default function JwtDecoderTool() {
           role="alert"
           className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-300"
         >
-          {decodeError}
+          {localizeUiText(decodeError, t)}
         </p>
       ) : null}
 
@@ -369,7 +370,7 @@ export default function JwtDecoderTool() {
               {t('tool.jwtDecoder.signature')}
             </h2>
             <code className="block break-all rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-900 dark:border-red-800 dark:bg-red-950/30 dark:text-red-200">
-              {decoded.signature || '(empty)'}
+              {decoded.signature || t("tool.regexTester.empty")}
             </code>
           </div>
         </div>
@@ -444,7 +445,7 @@ export default function JwtDecoderTool() {
               role="alert"
               className="rounded-lg bg-red-50 p-4 text-sm text-red-700 dark:bg-red-950/30 dark:text-red-300"
             >
-              {signError}
+              {localizeUiText(signError, t)}
             </p>
           ) : null}
           {signStatus ? (

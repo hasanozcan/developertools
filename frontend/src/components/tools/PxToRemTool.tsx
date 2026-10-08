@@ -73,8 +73,7 @@ export default function PxToRemTool() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="surface-card rounded-2xl p-6 space-y-4">
           <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            Pixels (PX)
-          </label>
+            {t("uiText.f7d0965f")}</label>
           <div className="relative">
             <input
               type="number"
@@ -90,8 +89,7 @@ export default function PxToRemTool() {
 
         <div className="surface-card rounded-2xl p-6 space-y-4">
           <label className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            Root EM (REM)
-          </label>
+            {t("uiText.0ae880ae")}</label>
           <div className="relative">
             <input
               type="number"
@@ -123,7 +121,7 @@ export default function PxToRemTool() {
               <button
                 onClick={() => copyValue(value, key)}
                 className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition"
-                title="Copy"
+                title={t("common.copy")}
               >
                 {copiedKey === key ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
               </button>

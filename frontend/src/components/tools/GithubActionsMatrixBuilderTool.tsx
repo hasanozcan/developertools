@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { Copy, Check } from 'lucide-react';
 import { generateGithubActionsMatrixYaml } from '@/lib/githubActionsMatrixBuilder';
 
 export default function GithubActionsMatrixBuilderTool() {
+  const { t } = useLanguage();
   const [workflowName, setWorkflowName] = useState('CI Matrix Build');
   const [osList, setOsList] = useState('ubuntu-latest, macos-latest, windows-latest');
   const [nodeVersions, setNodeVersions] = useState('18.x, 20.x, 22.x');
@@ -21,15 +23,15 @@ export default function GithubActionsMatrixBuilderTool() {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label className="text-xs text-muted-foreground">Workflow Name</label>
+          <label className="text-xs text-muted-foreground">{t("uiText.5f11de7b")}</label>
           <input value={workflowName} onChange={(e) => setWorkflowName(e.target.value)} className="w-full p-2 rounded-lg border border-border bg-card text-sm" />
         </div>
         <div>
-          <label className="text-xs text-muted-foreground">OS Runners (comma separated)</label>
+          <label className="text-xs text-muted-foreground">{t("uiText.71fe961b")}</label>
           <input value={osList} onChange={(e) => setOsList(e.target.value)} className="w-full p-2 rounded-lg border border-border bg-card text-sm" />
         </div>
         <div>
-          <label className="text-xs text-muted-foreground">Node.js Versions</label>
+          <label className="text-xs text-muted-foreground">{t("uiText.90af80ff")}</label>
           <input value={nodeVersions} onChange={(e) => setNodeVersions(e.target.value)} className="w-full p-2 rounded-lg border border-border bg-card text-sm" />
         </div>
       </div>
@@ -38,7 +40,7 @@ export default function GithubActionsMatrixBuilderTool() {
           <label className="text-sm font-medium text-muted-foreground">.github/workflows/ci.yml</label>
           <button onClick={() => { navigator.clipboard.writeText(yaml); setCopied(true); setTimeout(() => setCopied(false), 2000); }} className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-secondary">
             {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-            {copied ? 'Copied' : 'Copy'}
+            {copied ? t("uiText.8dc21305") : t("common.copy")}
           </button>
         </div>
         <textarea readOnly value={yaml} rows={10} className="w-full rounded-xl border border-border bg-muted/30 p-4 font-mono text-sm" />

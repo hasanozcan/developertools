@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText, translateCount } from '@/lib/localizedText';
 
 type StatusCategory = '1xx' | '2xx' | '3xx' | '4xx' | '5xx';
 
@@ -57,7 +58,7 @@ const categoryLabels: Record<StatusCategory | 'all', string> = {
 };
 
 export default function HttpStatusCodesTool() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState<StatusCategory | 'all'>('all');
   const translatedCategory = t('common.category');
@@ -82,12 +83,12 @@ export default function HttpStatusCodesTool() {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Search</label>
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{t("search")}</label>
           <input
             type="text"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Find by code, title, or description..."
+            placeholder={t("uiText.f939bea5")}
             className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
           />
         </div>
@@ -102,7 +103,7 @@ export default function HttpStatusCodesTool() {
           >
             {Object.entries(categoryLabels).map(([value, label]) => (
               <option key={value} value={value}>
-                {label}
+                {localizeUiText(label, t)}
               </option>
             ))}
           </select>
@@ -110,17 +111,17 @@ export default function HttpStatusCodesTool() {
       </div>
 
       <div className="text-sm text-gray-500 dark:text-gray-400">
-        Showing {filtered.length} result{filtered.length === 1 ? '' : 's'}
+        {translateCount(t, language, 'tool.httpStatus.resultCount', filtered.length)}
       </div>
 
       <div className="overflow-x-auto border border-gray-200 dark:border-gray-700 rounded-lg">
         <table className="w-full text-sm">
           <thead className="bg-gray-50 dark:bg-gray-800">
             <tr>
-              <th className="px-4 py-3 text-left text-gray-700 dark:text-gray-300">Code</th>
-              <th className="px-4 py-3 text-left text-gray-700 dark:text-gray-300">Status</th>
-              <th className="px-4 py-3 text-left text-gray-700 dark:text-gray-300">Description</th>
-              <th className="px-4 py-3 text-left text-gray-700 dark:text-gray-300">Copy</th>
+              <th className="px-4 py-3 text-left text-gray-700 dark:text-gray-300">{t("uiText.795db914")}</th>
+              <th className="px-4 py-3 text-left text-gray-700 dark:text-gray-300">{t("uiText.005ef20f")}</th>
+              <th className="px-4 py-3 text-left text-gray-700 dark:text-gray-300">{t("tool.metaTags.description")}</th>
+              <th className="px-4 py-3 text-left text-gray-700 dark:text-gray-300">{t("common.copy")}</th>
             </tr>
           </thead>
           <tbody>
@@ -128,7 +129,7 @@ export default function HttpStatusCodesTool() {
               <tr key={status.code} className="border-t border-gray-200 dark:border-gray-700">
                 <td className="px-4 py-3 font-mono text-gray-900 dark:text-white">{status.code}</td>
                 <td className="px-4 py-3 text-gray-900 dark:text-white">{status.label}</td>
-                <td className="px-4 py-3 text-gray-600 dark:text-gray-300">{status.description}</td>
+                <td className="px-4 py-3 text-gray-600 dark:text-gray-300">{localizeUiText(status.description, t)}</td>
                 <td className="px-4 py-3">
                   <CopyButton text={`${status.code} ${status.label}`} className="text-xs px-2 py-1" />
                 </td>

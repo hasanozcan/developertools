@@ -5,6 +5,7 @@ import { ArrowLeftRight, FileText, Trash2 } from 'lucide-react';
 import CopyButton from '@/components/common/CopyButton';
 import { useLanguage } from '@/context/LanguageContext';
 import { convertDotEnvToJson, convertJsonToDotEnv } from '@/lib/dotEnv';
+import { localizeUiText } from '@/lib/localizedText';
 
 type ConversionMode = 'envToJson' | 'jsonToEnv';
 
@@ -121,8 +122,7 @@ export default function EnvJsonConverterTool() {
                 : 'bg-white text-gray-700 hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
             }`}
           >
-            JSON → .env
-          </button>
+            {t("uiText.602d4a7a")}</button>
         </div>
 
         {mode === 'envToJson' && (
@@ -185,7 +185,7 @@ export default function EnvJsonConverterTool() {
           role="alert"
           className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-300"
         >
-          {error}
+          {localizeUiText(error, t)}
         </p>
       )}
 
@@ -222,7 +222,7 @@ export default function EnvJsonConverterTool() {
             rows={18}
             spellCheck={false}
             placeholder={
-              mode === 'envToJson' ? 'APP_NAME="Example API"\nPORT=3000' : '{"PORT": 3000}'
+              mode === 'envToJson' ? t("uiText.32439ad0") : '{"PORT": 3000}'
             }
             className="w-full resize-y rounded-lg border border-gray-300 bg-white px-4 py-3 font-mono text-sm text-gray-900 placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
           />

@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { generateLangGraphState } from '@/lib/langgraphStateGenerator';
 import { Copy, Check } from 'lucide-react';
 
 export default function LanggraphStateGeneratorTool() {
+  const { t } = useLanguage();
   const [graphName, setGraphName] = useState('Agent');
   const [lang, setLang] = useState<'python' | 'typescript'>('python');
   const [copied, setCopied] = useState(false);
@@ -21,7 +23,7 @@ export default function LanggraphStateGeneratorTool() {
           <input
             value={graphName}
             onChange={(e) => setGraphName(e.target.value)}
-            placeholder="Graph Name"
+            placeholder={t("uiText.1b87eb86")}
             className="rounded-xl border border-slate-200 px-3 py-1.5 text-xs dark:border-white/10 dark:bg-slate-950"
           />
           <div className="inline-flex rounded-xl bg-slate-100 p-1 dark:bg-slate-800">
@@ -34,7 +36,7 @@ export default function LanggraphStateGeneratorTool() {
           className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md transition hover:bg-indigo-500"
         >
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          <span>{copied ? 'Copied' : 'Copy LangGraph Code'}</span>
+          <span>{copied ? t("uiText.8dc21305") : t("uiText.40cb9329")}</span>
         </button>
       </div>
 

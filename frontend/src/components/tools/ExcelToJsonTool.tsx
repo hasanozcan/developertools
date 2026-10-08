@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo, useRef } from 'react';
 import { Upload, Copy, Check, FileSpreadsheet, RefreshCw, Download } from 'lucide-react';
 import { excelTextToJson } from '@/lib/excelToJson';
@@ -11,6 +12,7 @@ const SAMPLE_CSV = `id,name,role,department,salary,active
 104,"David Lee",DevOps Specialist,Infrastructure,138000,true`;
 
 export default function ExcelToJsonTool() {
+  const { t } = useLanguage();
   const [tableInput, setTableInput] = useState(SAMPLE_CSV);
   const [parseNumbers, setParseNumbers] = useState(true);
   const [parseBooleans, setParseBooleans] = useState(true);
@@ -74,8 +76,7 @@ export default function ExcelToJsonTool() {
               onChange={(e) => setParseNumbers(e.target.checked)}
               className="rounded text-indigo-600 focus:ring-indigo-500"
             />
-            Parse Numbers
-          </label>
+            {t("uiText.fe1e3ad2")}</label>
           <label className="flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
             <input
               type="checkbox"
@@ -83,8 +84,7 @@ export default function ExcelToJsonTool() {
               onChange={(e) => setParseBooleans(e.target.checked)}
               className="rounded text-indigo-600 focus:ring-indigo-500"
             />
-            Parse Booleans
-          </label>
+            {t("uiText.d94ee149")}</label>
           <label className="flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
             <input
               type="checkbox"
@@ -92,8 +92,7 @@ export default function ExcelToJsonTool() {
               onChange={(e) => setTrimValues(e.target.checked)}
               className="rounded text-indigo-600 focus:ring-indigo-500"
             />
-            Trim Values
-          </label>
+            {t("uiText.24df8e61")}</label>
         </div>
 
         <div className="flex items-center gap-2">
@@ -101,8 +100,7 @@ export default function ExcelToJsonTool() {
             onClick={() => fileInputRef.current?.click()}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
           >
-            <Upload className="h-3.5 w-3.5" /> Upload CSV/TSV
-          </button>
+            <Upload className="h-3.5 w-3.5" /> {t("uiText.f68d2d4e")}</button>
           <input
             ref={fileInputRef}
             type="file"
@@ -115,8 +113,7 @@ export default function ExcelToJsonTool() {
             onClick={() => setTableInput(SAMPLE_CSV)}
             className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1"
           >
-            <RefreshCw className="h-3 w-3" /> Load Sample
-          </button>
+            <RefreshCw className="h-3 w-3" /> {t("common.loadSample")}</button>
         </div>
       </div>
 
@@ -124,12 +121,11 @@ export default function ExcelToJsonTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="flex flex-col space-y-2">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-            <FileSpreadsheet className="h-3.5 w-3.5 text-indigo-500" /> Excel / CSV / TSV Input (Paste from Spreadsheet)
-          </span>
+            <FileSpreadsheet className="h-3.5 w-3.5 text-indigo-500" /> {t("uiText.ce6aa1c1")}</span>
           <textarea
             value={tableInput}
             onChange={(e) => setTableInput(e.target.value)}
-            placeholder="Paste cells directly from Excel, Google Sheets, or CSV file..."
+            placeholder={t("uiText.91990168")}
             rows={15}
             className="w-full rounded-2xl border border-slate-200 bg-white p-4 font-mono text-xs text-slate-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-white/10 dark:bg-slate-900 dark:text-slate-100 resize-y"
           />
@@ -138,28 +134,26 @@ export default function ExcelToJsonTool() {
         <div className="flex flex-col space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Generated JSON
-            </span>
+              {t("uiText.20a622c0")}</span>
             <div className="flex items-center gap-2">
               <button
                 onClick={handleDownload}
                 className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 px-2.5 py-1 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition"
               >
-                <Download className="h-3.5 w-3.5" /> Download .json
-              </button>
+                <Download className="h-3.5 w-3.5" /> {t("uiText.e1146cad")}</button>
               <button
                 onClick={handleCopy}
                 className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
               >
                 {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-                {copied ? 'Copied' : 'Copy JSON'}
+                {copied ? t("uiText.8dc21305") : t("uiText.e595bc8e")}
               </button>
             </div>
           </div>
           <textarea
             readOnly
             value={jsonOutput}
-            placeholder="JSON output will appear here..."
+            placeholder={t("uiText.80b8b90d")}
             rows={15}
             className="w-full rounded-2xl border border-slate-200 bg-slate-50/80 p-4 font-mono text-xs text-slate-900 shadow-sm focus:outline-none dark:border-white/10 dark:bg-slate-900/80 dark:text-indigo-200 resize-y"
           />

@@ -100,7 +100,7 @@ export default function HtmlMinifierTool() {
             onChange={(e) => setRemoveComments(e.target.checked)}
             className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
           />
-          <span className="text-sm text-gray-700 dark:text-gray-300">Remove Comments</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">{t("tool.cssMinifier.removeComments")}</span>
         </label>
 
         <label className="flex items-center gap-2 cursor-pointer">
@@ -110,29 +110,26 @@ export default function HtmlMinifierTool() {
             onChange={(e) => setCollapseWhitespace(e.target.checked)}
             className="w-4 h-4 text-primary-600 border-gray-300 dark:border-gray-600 rounded focus:ring-primary-500 bg-white dark:bg-gray-700"
           />
-          <span className="text-sm text-gray-700 dark:text-gray-300">Collapse Whitespace</span>
+          <span className="text-sm text-gray-700 dark:text-gray-300">{t("tool.htmlMinifier.collapseWhitespace")}</span>
         </label>
 
         <button
           onClick={loadSample}
           className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
         >
-          Load Sample
-        </button>
+          {t("common.loadSample")}</button>
       </div>
 
       {/* Stats */}
       {input && (
         <div className="flex flex-wrap gap-4 text-sm">
           <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full">
-            Original: {stats.originalSize} chars
-          </span>
+            {t("uiText.3e94ca78")}{stats.originalSize} {t("uiText.5da9662a")}</span>
           <span className="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 rounded-full">
-            Minified: {stats.minifiedSize} chars
-          </span>
+            {t("uiText.6abfdff4")}{stats.minifiedSize} {t("uiText.5da9662a")}</span>
           {stats.saved > 0 && (
             <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300 rounded-full">
-              Saved: {stats.saved} chars ({stats.percentage}%)
+              {t("uiText.c20ad87a")}{stats.saved} {' ' + t("uiText.452f5f22")}{stats.percentage}%)
             </span>
           )}
         </div>
@@ -142,20 +139,18 @@ export default function HtmlMinifierTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            HTML Input
-          </label>
+            {t("tool.htmlFormatter.input")}</label>
           <CodeEditor
             value={input}
             onChange={setInput}
-            placeholder="Enter HTML code to minify..."
+            placeholder={t("uiText.06a6a71c")}
             language="html"
             minHeight="300px"
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Minified HTML
-          </label>
+            {t("uiText.c3270b2f")}</label>
           <div className="relative">
             <CodeEditor
               value={minified}

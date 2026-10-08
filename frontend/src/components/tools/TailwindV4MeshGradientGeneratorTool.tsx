@@ -1,10 +1,12 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { generateMeshGradient } from '@/lib/tailwindV4MeshGradientGenerator';
 
 export default function TailwindV4MeshGradientGeneratorTool() {
+  const { t } = useLanguage();
   const [val, setVal] = useState('');
   let output = '';
   try {
@@ -18,7 +20,7 @@ export default function TailwindV4MeshGradientGeneratorTool() {
     <div className="space-y-6">
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">CSS Mesh Radial Gradient</label>
+          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.6ab00f44")}</label>
           <CopyButton text={output} />
         </div>
         <textarea

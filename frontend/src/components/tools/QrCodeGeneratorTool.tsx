@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { QrCode, Download, Copy, Check, RefreshCw, Palette } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import QRCode from 'qrcode';
+import { localizeUiText } from '@/lib/localizedText';
 
 interface QrOptions {
   size: number;
@@ -166,7 +167,7 @@ export default function QrCodeGeneratorTool() {
           value={text}
           onChange={(e) => setText(e.target.value)}
           rows={4}
-          placeholder="Enter text, URL, or data to encode..."
+          placeholder={t("uiText.6394aeed")}
           className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg font-mono text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
         />
         <div className="mt-2 flex items-center justify-between">
@@ -194,7 +195,7 @@ export default function QrCodeGeneratorTool() {
               onClick={() => setText(preset.value)}
               className="px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg hover:border-primary-500 dark:hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/30 text-gray-700 dark:text-gray-300 transition-colors"
             >
-              {preset.label}
+              {localizeUiText(preset.label, t)}
             </button>
           ))}
         </div>
@@ -234,10 +235,10 @@ export default function QrCodeGeneratorTool() {
             onChange={(e) => setOptions({ ...options, errorCorrection: e.target.value as QrOptions['errorCorrection'] })}
             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500"
           >
-            <option value="L">Low (7%)</option>
-            <option value="M">Medium (15%)</option>
-            <option value="Q">Quartile (25%)</option>
-            <option value="H">High (30%)</option>
+            <option value="L">{t("uiText.61804184")}</option>
+            <option value="M">{t("uiText.149de8aa")}</option>
+            <option value="Q">{t("uiText.c589311f")}</option>
+            <option value="H">{t("uiText.f492e348")}</option>
           </select>
         </div>
 
@@ -325,7 +326,7 @@ export default function QrCodeGeneratorTool() {
           ) : qrDataUrl ? (
             <Image
               src={qrDataUrl} 
-              alt="QR Code" 
+              alt={t("uiText.3a4015a3")}
               width={options.size > 400 ? 400 : options.size}
               height={options.size > 400 ? 400 : options.size}
               unoptimized
@@ -386,27 +387,27 @@ export default function QrCodeGeneratorTool() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
           <div className="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600">
-            <div className="font-medium text-gray-900 dark:text-white text-sm mb-1">URL</div>
+            <div className="font-medium text-gray-900 dark:text-white text-sm mb-1">{t("tool.regexTester.patternUrl")}</div>
             <code className="text-xs text-gray-600 dark:text-gray-400">https://example.com</code>
           </div>
           <div className="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600">
-            <div className="font-medium text-gray-900 dark:text-white text-sm mb-1">Email</div>
+            <div className="font-medium text-gray-900 dark:text-white text-sm mb-1">{t("contact.email")}</div>
             <code className="text-xs text-gray-600 dark:text-gray-400">mailto:email@example.com</code>
           </div>
           <div className="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600">
-            <div className="font-medium text-gray-900 dark:text-white text-sm mb-1">Phone</div>
+            <div className="font-medium text-gray-900 dark:text-white text-sm mb-1">{t("uiText.4930944f")}</div>
             <code className="text-xs text-gray-600 dark:text-gray-400">tel:+1234567890</code>
           </div>
           <div className="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600">
-            <div className="font-medium text-gray-900 dark:text-white text-sm mb-1">SMS</div>
+            <div className="font-medium text-gray-900 dark:text-white text-sm mb-1">{t("uiText.5e152baa")}</div>
             <code className="text-xs text-gray-600 dark:text-gray-400">sms:+123?body=Hello</code>
           </div>
           <div className="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600">
-            <div className="font-medium text-gray-900 dark:text-white text-sm mb-1">WiFi</div>
+            <div className="font-medium text-gray-900 dark:text-white text-sm mb-1">{t("uiText.87a46248")}</div>
             <code className="text-xs text-gray-600 dark:text-gray-400">WIFI:T:WPA;S:SSID;P:pass;;</code>
           </div>
           <div className="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600">
-            <div className="font-medium text-gray-900 dark:text-white text-sm mb-1">vCard</div>
+            <div className="font-medium text-gray-900 dark:text-white text-sm mb-1">{t("uiText.0441412b")}</div>
             <code className="text-xs text-gray-600 dark:text-gray-400">BEGIN:VCARD...</code>
           </div>
         </div>

@@ -6,6 +6,7 @@ import CopyButton from '@/components/common/CopyButton';
 import { useLanguage } from '@/context/LanguageContext';
 import { parseUserAgent } from '@/lib/userAgentParser';
 import type { ParsedUserAgent } from '@/lib/userAgentParser';
+import { localizeUiText } from '@/lib/localizedText';
 
 const sampleAgents = [
   {
@@ -74,8 +75,7 @@ export default function UserAgentParserTool() {
           onClick={useMyUserAgent}
           className="rounded-lg bg-primary-600 px-3 py-2 text-sm font-medium text-white hover:bg-primary-700"
         >
-          Use my User-Agent
-        </button>
+          {t("uiText.390e8681")}</button>
         {sampleAgents.map((sample) => (
           <button
             type="button"
@@ -83,7 +83,7 @@ export default function UserAgentParserTool() {
             onClick={() => setInput(sample.value)}
             className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
           >
-            {sample.label}
+            {localizeUiText(sample.label, t)}
           </button>
         ))}
         <button
@@ -100,8 +100,7 @@ export default function UserAgentParserTool() {
             onChange={(event) => setBatchMode(event.target.checked)}
             className="rounded border-gray-300 text-primary-600 dark:border-gray-600"
           />
-          Parse one User-Agent per line
-        </label>
+          {t("uiText.e4e9adce")}</label>
       </div>
 
       {parsed && (
@@ -112,7 +111,7 @@ export default function UserAgentParserTool() {
               className="rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-700 dark:bg-gray-900/50"
             >
               <dt className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                {item.label}
+                {localizeUiText(item.label, t)}
               </dt>
               <dd className="mt-1 break-words text-sm text-gray-900 dark:text-white">
                 {item.value}
@@ -125,14 +124,13 @@ export default function UserAgentParserTool() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <div>
           <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-            User-Agent input
-          </label>
+            {t("uiText.11ce00be")}</label>
           <CodeEditor
             value={input}
             onChange={setInput}
             language="text"
             placeholder={
-              batchMode ? 'Paste one User-Agent string per line...' : 'Paste a User-Agent string...'
+              batchMode ? t("uiText.d8c2a1d7") : t("uiText.cf5fd0a3")
             }
             minHeight="260px"
           />
@@ -141,8 +139,7 @@ export default function UserAgentParserTool() {
         <div>
           <div className="mb-2 flex items-center justify-between">
             <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              Parsed JSON
-            </label>
+              {t("uiText.3e507daa")}</label>
             <CopyButton text={output} />
           </div>
           <CodeEditor
@@ -151,17 +148,14 @@ export default function UserAgentParserTool() {
             readOnly
             showCopy={false}
             language="json"
-            placeholder="Parsed browser, OS, engine, device, CPU, and bot fields appear here..."
+            placeholder={t("uiText.771841f6")}
             minHeight="260px"
           />
         </div>
       </div>
 
       <p className="text-sm text-gray-500 dark:text-gray-400">
-        Parsing is heuristic because User-Agent strings are self-reported and often reduced or
-        intentionally compatible with other browsers. Use feature detection or Client Hints when you
-        control the application.
-      </p>
+        {t("uiText.cb4e0332")}</p>
     </div>
   );
 }

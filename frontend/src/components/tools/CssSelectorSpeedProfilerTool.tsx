@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { calculateSpecificity } from '@/lib/cssSelectorSpeedProfiler';
@@ -7,6 +8,7 @@ import { calculateSpecificity } from '@/lib/cssSelectorSpeedProfiler';
 const SAMPLE = "#header .nav-item a.active";
 
 export default function CssSelectorSpeedProfilerTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE);
   let output = '';
 
@@ -22,8 +24,8 @@ export default function CssSelectorSpeedProfilerTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">CSS Selector String</label>
-            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.7e56fa7a")}</label>
+            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -34,7 +36,7 @@ export default function CssSelectorSpeedProfilerTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Specificity Score [ID, Class, Element]</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.8b28db98")}</label>
             <CopyButton text={output} />
           </div>
           <textarea

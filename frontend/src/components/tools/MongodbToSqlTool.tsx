@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { mongodbToSql } from '@/lib/mongodbToSql';
 import { Copy, Check } from 'lucide-react';
 
 export default function MongodbToSqlTool() {
+  const { t } = useLanguage();
   const [query, setQuery] = useState('{"status":"active","age":{"$gte":18}}');
   const [collection, setCollection] = useState('users');
   const [copied, setCopied] = useState(false);
@@ -14,7 +16,7 @@ export default function MongodbToSqlTool() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-2">
-          <label className="text-xs font-semibold text-slate-500">Collection:</label>
+          <label className="text-xs font-semibold text-slate-500">{t("uiText.63e652d1")}</label>
           <input value={collection} onChange={(e) => setCollection(e.target.value)} className="rounded-xl border border-slate-200 p-1.5 text-xs dark:border-white/10 dark:bg-slate-950" />
         </div>
         <button
@@ -22,7 +24,7 @@ export default function MongodbToSqlTool() {
           className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md transition hover:bg-indigo-500"
         >
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          <span>{copied ? 'Copied' : 'Copy SQL'}</span>
+          <span>{copied ? t("uiText.8dc21305") : t("uiText.741cdfc8")}</span>
         </button>
       </div>
 

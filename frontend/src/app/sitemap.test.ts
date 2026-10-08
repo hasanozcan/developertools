@@ -77,8 +77,8 @@ describe('sitemap', () => {
         if (!urls.has(url)) excluded += 1;
       }
     }
-    // The catalog is far from fully translated, so some pages must be excluded.
-    expect(excluded).toBeGreaterThan(0);
+    // All supported catalog locales now have reviewed names and descriptions.
+    expect(excluded).toBe(0);
   });
 
   it('never references an excluded URL from hreflang alternates', () => {

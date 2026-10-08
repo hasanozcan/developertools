@@ -44,11 +44,10 @@ export default function SqlMinifierTool() {
         </div>
 
         <div className="flex items-center gap-3 text-xs font-mono">
-          <span className="text-slate-400">Original: {sqlInput.length} B</span>
-          <span className="text-emerald-500 font-bold">Minified: {minifiedSql.length} B</span>
+          <span className="text-slate-400">{t("uiText.3e94ca78") + ' '}{sqlInput.length} B</span>
+          <span className="text-emerald-500 font-bold">{t("uiText.6abfdff4") + ' '}{minifiedSql.length} B</span>
           <span className="px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 font-bold">
-            {compressionRate}% smaller
-          </span>
+            {compressionRate}{t("uiText.668809cc")}</span>
         </div>
       </div>
 
@@ -56,7 +55,7 @@ export default function SqlMinifierTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Raw SQL Query</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.b1b11dbd")}</span>
             <button
               onClick={() => setSqlInput(SAMPLE_SQL)}
               className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-semibold"
@@ -69,13 +68,13 @@ export default function SqlMinifierTool() {
             onChange={(e) => setSqlInput(e.target.value)}
             rows={12}
             className="w-full flex-1 rounded-xl border border-slate-200 bg-white p-4 font-mono text-xs text-slate-900 shadow-inner focus:outline-none dark:border-white/10 dark:bg-slate-900 dark:text-slate-100 resize-y"
-            placeholder="SELECT * FROM table..."
+            placeholder={t("uiText.34c947a5")}
           />
         </div>
 
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Minified Single-Line SQL</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.2355087f")}</span>
             <button
               onClick={handleCopy}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

@@ -50,8 +50,7 @@ export default function SqlToJsonTool() {
         <div className="flex items-center gap-2">
           <Database className="w-4 h-4 text-indigo-500" />
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-            SQL INSERT ➔ JSON Converter
-          </span>
+            {t("uiText.07710f6a")}</span>
         </div>
         <button
           onClick={() => setSqlInput(SAMPLE_SQL)}
@@ -66,14 +65,13 @@ export default function SqlToJsonTool() {
         {/* SQL Input */}
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            SQL Query / Dump
-          </span>
+            {t("uiText.a9836e6c")}</span>
           <textarea
             value={sqlInput}
             onChange={(e) => setSqlInput(e.target.value)}
             rows={14}
             className="w-full flex-1 rounded-xl border border-slate-200 bg-white p-4 font-mono text-xs text-slate-900 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-white/10 dark:bg-slate-900 dark:text-slate-100 resize-y"
-            placeholder="INSERT INTO table (col1, col2) VALUES (1, 'val');"
+            placeholder={t("uiText.cfd7f7d4")}
           />
         </div>
 
@@ -81,8 +79,7 @@ export default function SqlToJsonTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Parsed JSON Array
-            </span>
+              {t("uiText.b1e9a0e7")}</span>
             {jsonOutput && (
               <div className="flex items-center gap-1.5">
                 <button
@@ -95,7 +92,7 @@ export default function SqlToJsonTool() {
                 <button
                   onClick={handleDownload}
                   className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition"
-                  title="Download JSON"
+                  title={t("uiText.41fa1c79")}
                 >
                   <Download className="w-3.5 h-3.5" />
                 </button>

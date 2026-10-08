@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { convertDockerComposeToK8s } from '@/lib/dockerComposeToK8s';
@@ -17,6 +18,7 @@ services:
 `;
 
 export default function DockerComposeToK8sTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE_COMPOSE);
   const output = convertDockerComposeToK8s(input);
 
@@ -34,7 +36,7 @@ export default function DockerComposeToK8sTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Kubernetes Deployment & Service YAML</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.990221d8")}</label>
             <CopyButton text={output} />
           </div>
           <pre className="h-64 overflow-auto rounded-2xl border border-slate-200 bg-slate-900 p-3 font-mono text-xs text-purple-400 dark:border-slate-700">

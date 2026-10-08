@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { generateSystemdUnit } from '@/lib/systemdTimerGenerator';
 import { Copy, Check } from 'lucide-react';
 
 export default function SystemdTimerGeneratorTool() {
+  const { t } = useLanguage();
   const [serviceName, setServiceName] = useState('app-backup');
   const [desc, setDesc] = useState('Daily Database and Storage Backup');
   const [execPath, setExecPath] = useState('/opt/scripts/backup.sh');
@@ -16,19 +18,19 @@ export default function SystemdTimerGeneratorTool() {
     <div className="space-y-6">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div>
-          <label className="text-xs font-semibold text-slate-500">Service Name</label>
+          <label className="text-xs font-semibold text-slate-500">{t("uiText.43d76ac7")}</label>
           <input value={serviceName} onChange={(e) => setServiceName(e.target.value)} className="w-full rounded-xl border border-slate-200 p-2 text-xs dark:border-white/10 dark:bg-slate-950" />
         </div>
         <div>
-          <label className="text-xs font-semibold text-slate-500">Description</label>
+          <label className="text-xs font-semibold text-slate-500">{t("tool.metaTags.description")}</label>
           <input value={desc} onChange={(e) => setDesc(e.target.value)} className="w-full rounded-xl border border-slate-200 p-2 text-xs dark:border-white/10 dark:bg-slate-950" />
         </div>
         <div>
-          <label className="text-xs font-semibold text-slate-500">ExecStart Script</label>
+          <label className="text-xs font-semibold text-slate-500">{t("uiText.963d0e13")}</label>
           <input value={execPath} onChange={(e) => setExecPath(e.target.value)} className="w-full rounded-xl border border-slate-200 p-2 text-xs dark:border-white/10 dark:bg-slate-950" />
         </div>
         <div>
-          <label className="text-xs font-semibold text-slate-500">OnCalendar</label>
+          <label className="text-xs font-semibold text-slate-500">{t("uiText.3fa55ac6")}</label>
           <input value={sched} onChange={(e) => setSched(e.target.value)} className="w-full rounded-xl border border-slate-200 p-2 text-xs dark:border-white/10 dark:bg-slate-950" />
         </div>
       </div>

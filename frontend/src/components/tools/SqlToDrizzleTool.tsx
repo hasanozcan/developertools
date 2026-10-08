@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { sqlToDrizzle } from '@/lib/sqlToDrizzle';
 import { Copy, Check } from 'lucide-react';
 
 export default function SqlToDrizzleTool() {
+  const { t } = useLanguage();
   const [sql, setSql] = useState(`CREATE TABLE accounts (
   id SERIAL PRIMARY KEY,
   username VARCHAR(100) NOT NULL,
@@ -20,7 +22,7 @@ export default function SqlToDrizzleTool() {
           className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md transition hover:bg-indigo-500"
         >
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          <span>{copied ? 'Copied' : 'Copy Drizzle Schema'}</span>
+          <span>{copied ? t("uiText.8dc21305") : t("uiText.e861d739")}</span>
         </button>
       </div>
 

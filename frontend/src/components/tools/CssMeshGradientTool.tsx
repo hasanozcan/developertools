@@ -52,8 +52,7 @@ export default function CssMeshGradientTool() {
       {/* Live Mesh Canvas Preview */}
       <div className="surface-card rounded-3xl p-6 flex flex-col space-y-3 border border-slate-200/80 dark:border-white/5">
         <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-          Live Mesh & Aura Gradient Preview
-        </span>
+          {t("uiText.cf41416f")}</span>
 
         <div
           style={{
@@ -79,14 +78,14 @@ export default function CssMeshGradientTool() {
             className="inline-flex items-center gap-1 px-3 py-1 rounded-xl bg-indigo-50 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-300 text-xs font-semibold hover:bg-indigo-100 disabled:opacity-40"
           >
             <Plus className="w-3.5 h-3.5" />
-            <span>Add Color Point</span>
+            <span>{t("uiText.f75f2dd5")}</span>
           </button>
         </div>
 
         {/* Global Settings */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-4 border-b border-slate-100 dark:border-white/5">
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">Canvas Base Color</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.31f3ac7d")}</label>
             <div className="flex items-center gap-2">
               <input
                 type="color"
@@ -105,7 +104,7 @@ export default function CssMeshGradientTool() {
 
           <div>
             <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-              <span>Blur Aura Radius</span>
+              <span>{t("uiText.43654c3f")}</span>
               <span className="font-mono">{options.blur}px</span>
             </div>
             <input
@@ -143,7 +142,7 @@ export default function CssMeshGradientTool() {
 
               <div>
                 <div className="flex justify-between text-[11px] font-bold text-slate-400 mb-0.5">
-                  <span>X Position</span>
+                  <span>{t("uiText.9ab2516a")}</span>
                   <span>{point.x}%</span>
                 </div>
                 <input
@@ -158,7 +157,7 @@ export default function CssMeshGradientTool() {
 
               <div>
                 <div className="flex justify-between text-[11px] font-bold text-slate-400 mb-0.5">
-                  <span>Y Position</span>
+                  <span>{t("uiText.4428a05f")}</span>
                   <span>{point.y}%</span>
                 </div>
                 <input
@@ -189,8 +188,7 @@ export default function CssMeshGradientTool() {
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            CSS Mesh Gradient Code
-          </span>
+            {t("uiText.fcb4fa80")}</span>
           <button
             onClick={handleCopy}
             className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

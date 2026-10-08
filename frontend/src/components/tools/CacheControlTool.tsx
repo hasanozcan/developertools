@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import { useMemo, useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import {
@@ -17,6 +18,7 @@ const presets: Record<string, string> = {
 };
 
 export default function CacheControlTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(presets['Shared cache']);
   const parsed = useMemo(() => {
     try {
@@ -44,8 +46,7 @@ export default function CacheControlTool() {
           htmlFor="cache-control"
           className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
         >
-          Cache-Control header value
-        </label>
+          {t("uiText.0cd25083")}</label>
         <textarea
           id="cache-control"
           value={input}
@@ -86,12 +87,11 @@ export default function CacheControlTool() {
       <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/70">
         <div className="mb-2 flex items-center justify-between gap-3">
           <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-            Normalized header
-          </span>
+            {t("uiText.46fc558d")}</span>
           <CopyButton text={parsed.normalized} />
         </div>
         <code className="block break-words text-sm text-gray-900 dark:text-white">
-          {parsed.normalized || 'Enter a valid header value.'}
+          {parsed.normalized || t("uiText.ec59bff6")}
         </code>
       </div>
 
@@ -100,8 +100,8 @@ export default function CacheControlTool() {
           <table className="w-full text-sm">
             <thead className="bg-gray-50 text-left text-gray-600 dark:bg-gray-800 dark:text-gray-300">
               <tr>
-                <th className="px-4 py-3">Directive</th>
-                <th className="px-4 py-3">Value</th>
+                <th className="px-4 py-3">{t("tool.csp.directive")}</th>
+                <th className="px-4 py-3">{t("uiText.d147f96a")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -121,9 +121,7 @@ export default function CacheControlTool() {
       )}
 
       <p className="text-sm text-gray-500 dark:text-gray-400">
-        This tool checks header syntax and common conflicts. It cannot predict browser, CDN,
-        reverse-proxy, or framework cache behavior.
-      </p>
+        {t("uiText.d5b8dd4b")}</p>
     </div>
   );
 }

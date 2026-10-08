@@ -1,8 +1,10 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { parsePostgresExplainJson } from '@/lib/postgresExplainVisualizer';
 
 export default function PostgresExplainVisualizerTool() {
+  const { t } = useLanguage();
   const [json, setJson] = useState(`[
   {
     "Plan": {
@@ -33,8 +35,8 @@ export default function PostgresExplainVisualizerTool() {
         <div className="space-y-3 rounded-2xl border border-slate-200 bg-slate-900 p-4 font-mono text-xs text-emerald-400">
           {result.nodes.map((node, i) => (
             <div key={i} className="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
-              <p className="font-bold text-sm text-cyan-300">{node.nodeType} on {node.relationName || 'Query'}</p>
-              <p className="text-slate-400 mt-1">Cost: {node.totalCost} | Time: {node.actualTotalTime || 'N/A'}ms</p>
+              <p className="font-bold text-sm text-cyan-300">{node.nodeType} {' ' + t("uiText.61342fd0") + ' '}{node.relationName || t("uiText.9e89e783")}</p>
+              <p className="text-slate-400 mt-1">{t("uiText.f0e08746") + ' '}{node.totalCost} {' ' + t("uiText.005c3dc6") + ' '}{node.actualTotalTime || 'N/A'}ms</p>
             </div>
           ))}
         </div>

@@ -1,8 +1,10 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import { useMemo, useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { formatChmod, parseChmod, type ChmodPermissions } from '@/lib/chmod';
+import { localizeUiText } from '@/lib/localizedText';
 
 const classes = [
   { key: 'owner', label: 'Owner' },
@@ -16,6 +18,7 @@ const bits = [
 ] as const;
 
 export default function ChmodCalculatorTool() {
+  const { t } = useLanguage();
   const [permissions, setPermissions] = useState<ChmodPermissions>(() => parseChmod('755'));
   const [octalInput, setOctalInput] = useState('755');
   const [error, setError] = useState('');
@@ -46,8 +49,7 @@ export default function ChmodCalculatorTool() {
             htmlFor="chmod-octal"
             className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
-            Octal mode
-          </label>
+            {t("uiText.a41c0437")}</label>
           <input
             id="chmod-octal"
             value={octalInput}
@@ -74,7 +76,7 @@ export default function ChmodCalculatorTool() {
           role="alert"
           className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/30 dark:text-red-300"
         >
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -82,13 +84,13 @@ export default function ChmodCalculatorTool() {
         <table className="w-full min-w-[34rem] text-sm">
           <thead className="bg-gray-50 text-left text-gray-600 dark:bg-gray-800 dark:text-gray-300">
             <tr>
-              <th className="px-4 py-3">Class</th>
+              <th className="px-4 py-3">{t("uiText.50f97d9f")}</th>
               {bits.map(({ label }) => (
                 <th key={label} className="px-4 py-3">
                   {label}
                 </th>
               ))}
-              <th className="px-4 py-3">Value</th>
+              <th className="px-4 py-3">{t("uiText.d147f96a")}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">

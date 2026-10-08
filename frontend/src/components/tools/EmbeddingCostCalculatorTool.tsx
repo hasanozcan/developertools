@@ -1,8 +1,10 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { calculateEmbeddingCost, EMBEDDING_MODELS } from '@/lib/embeddingCostCalculator';
 
 export default function EmbeddingCostCalculatorTool() {
+  const { t } = useLanguage();
   const [tokens, setTokens] = useState<number>(5000000);
   const [modelId, setModelId] = useState<string>('text-embedding-3-small');
 
@@ -12,7 +14,7 @@ export default function EmbeddingCostCalculatorTool() {
     <div className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="text-xs font-semibold text-slate-500 uppercase">Token Count</label>
+          <label className="text-xs font-semibold text-slate-500 uppercase">{t("uiText.64eaa2e5")}</label>
           <input
             type="number"
             value={tokens}
@@ -21,14 +23,14 @@ export default function EmbeddingCostCalculatorTool() {
           />
         </div>
         <div>
-          <label className="text-xs font-semibold text-slate-500 uppercase">Embedding Model</label>
+          <label className="text-xs font-semibold text-slate-500 uppercase">{t("uiText.dc622763")}</label>
           <select
             value={modelId}
             onChange={(e) => setModelId(e.target.value)}
             className="w-full rounded-2xl border border-slate-200 p-3 text-sm font-semibold dark:border-white/10 dark:bg-slate-950"
           >
             {EMBEDDING_MODELS.map(m => (
-              <option key={m.id} value={m.id}>{m.name} (${m.pricePerMillionTokens}/1M tokens)</option>
+              <option key={m.id} value={m.id}>{m.name} (${m.pricePerMillionTokens}{t("tool.embeddingCost.tokenUnit")}</option>
             ))}
           </select>
         </div>
@@ -36,15 +38,15 @@ export default function EmbeddingCostCalculatorTool() {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="rounded-2xl border border-indigo-100 bg-indigo-50/50 p-4 dark:border-indigo-900/30 dark:bg-indigo-950/20 text-center">
-          <span className="text-xs font-semibold text-slate-500">Estimated Cost</span>
+          <span className="text-xs font-semibold text-slate-500">{t("uiText.73b07cd2")}</span>
           <p className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">${result.estimatedCostUsd.toFixed(4)}</p>
         </div>
         <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-900 text-center">
-          <span className="text-xs font-semibold text-slate-500">Vector Dimensions</span>
-          <p className="text-2xl font-bold text-slate-800 dark:text-slate-200">{result.dimensions} dims</p>
+          <span className="text-xs font-semibold text-slate-500">{t("uiText.35e97b8f")}</span>
+          <p className="text-2xl font-bold text-slate-800 dark:text-slate-200">{result.dimensions} {' ' + t("uiText.551fb27e")}</p>
         </div>
         <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-900 text-center">
-          <span className="text-xs font-semibold text-slate-500">Vector Memory (RAM)</span>
+          <span className="text-xs font-semibold text-slate-500">{t("uiText.4910c492")}</span>
           <p className="text-2xl font-bold text-slate-800 dark:text-slate-200">{result.vectorStorageKb} KB</p>
         </div>
       </div>

@@ -50,7 +50,7 @@ export default function HtmlToJsxTool() {
               onChange={(e) => setWrapComponent(e.target.checked)}
               className="rounded accent-indigo-600"
             />
-            <span>Wrap in React Function Component</span>
+            <span>{t("uiText.e4877e42")}</span>
           </label>
 
           {wrapComponent && (
@@ -58,7 +58,7 @@ export default function HtmlToJsxTool() {
               type="text"
               value={componentName}
               onChange={(e) => setComponentName(e.target.value)}
-              placeholder="ComponentName"
+              placeholder={t("uiText.00495923")}
               className="px-2.5 py-1 text-xs font-mono rounded-lg border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 w-36"
             />
           )}
@@ -69,7 +69,7 @@ export default function HtmlToJsxTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">HTML Input</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("tool.htmlFormatter.input")}</span>
             <button
               onClick={() => setHtmlInput(SAMPLE_HTML)}
               className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-semibold"
@@ -82,13 +82,13 @@ export default function HtmlToJsxTool() {
             onChange={(e) => setHtmlInput(e.target.value)}
             rows={14}
             className="w-full flex-1 rounded-xl border border-slate-200 bg-white p-4 font-mono text-xs text-slate-900 shadow-inner focus:outline-none dark:border-white/10 dark:bg-slate-900 dark:text-slate-100 resize-y"
-            placeholder="Paste your HTML template here..."
+            placeholder={t("uiText.e2432642")}
           />
         </div>
 
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">JSX / React Code</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{t("uiText.cc242311")}</span>
             <button
               onClick={handleCopy}
               className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

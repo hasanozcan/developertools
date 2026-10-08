@@ -98,8 +98,7 @@ export default function SvgOptimizerTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Raw SVG Code
-            </span>
+              {t("uiText.d9c9d7bc")}</span>
             <button
               onClick={() => setInputSvg(SAMPLE_SVG)}
               className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-medium"
@@ -119,14 +118,13 @@ export default function SvgOptimizerTool() {
         {/* Optimized Output */}
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5" /> Minified &amp; Cleaned SVG
-          </span>
+            <Sparkles className="w-3.5 h-3.5" /> {t("uiText.c185f212")}</span>
           <textarea
             readOnly
             value={result.optimizedSvg}
             rows={12}
             className="w-full flex-1 rounded-xl border border-slate-200 bg-slate-50/80 p-4 font-mono text-xs text-slate-900 shadow-inner focus:outline-none dark:border-white/10 dark:bg-slate-900/80 dark:text-indigo-200 resize-y"
-            placeholder="Clean SVG will appear here..."
+            placeholder={t("uiText.fa965ffd")}
           />
         </div>
       </div>

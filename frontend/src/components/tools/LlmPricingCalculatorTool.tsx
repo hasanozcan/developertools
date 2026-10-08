@@ -1,10 +1,12 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { DollarSign, Cpu, Layers } from 'lucide-react';
 import { calculateModelCosts } from '@/lib/llmPricingCalculator';
 
 export default function LlmPricingCalculatorTool() {
+  const { t } = useLanguage();
   const [promptTokens, setPromptTokens] = useState<number>(2000);
   const [completionTokens, setCompletionTokens] = useState<number>(800);
   const [requestsPerDay, setRequestsPerDay] = useState<number>(500);
@@ -27,8 +29,7 @@ export default function LlmPricingCalculatorTool() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 p-5 rounded-2xl bg-slate-50/80 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5">
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-            Prompt Tokens / Req
-          </label>
+            {t("uiText.ac1c990a")}</label>
           <input
             type="number"
             min={0}
@@ -41,8 +42,7 @@ export default function LlmPricingCalculatorTool() {
 
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-            Completion Tokens / Req
-          </label>
+            {t("uiText.43e0feae")}</label>
           <input
             type="number"
             min={0}
@@ -55,8 +55,7 @@ export default function LlmPricingCalculatorTool() {
 
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-            Daily Requests
-          </label>
+            {t("uiText.d233224c")}</label>
           <input
             type="number"
             min={1}
@@ -69,7 +68,7 @@ export default function LlmPricingCalculatorTool() {
 
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-            Cached Prompt ({cachedPromptPercentage}%)
+            {t("uiText.e13b6527")}{cachedPromptPercentage}%)
           </label>
           <input
             type="range"
@@ -89,8 +88,7 @@ export default function LlmPricingCalculatorTool() {
               onChange={(e) => setIsBatchMode(e.target.checked)}
               className="rounded text-indigo-600 focus:ring-indigo-500"
             />
-            Batch API (50% Off)
-          </label>
+            {t("uiText.32de18fb")}</label>
         </div>
       </div>
 
@@ -99,14 +97,13 @@ export default function LlmPricingCalculatorTool() {
         <table className="w-full text-left text-xs">
           <thead className="bg-slate-50/80 border-b border-slate-200/80 dark:bg-slate-950/40 dark:border-white/5 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">
             <tr>
-              <th className="py-3.5 px-4">Model & Provider</th>
-              <th className="py-3.5 px-4">Input / 1M</th>
-              <th className="py-3.5 px-4">Output / 1M</th>
-              <th className="py-3.5 px-4">Cost / Request</th>
-              <th className="py-3.5 px-4">Cost / 1K Req</th>
+              <th className="py-3.5 px-4">{t("uiText.aa85c385")}</th>
+              <th className="py-3.5 px-4">{t("uiText.43511950")}</th>
+              <th className="py-3.5 px-4">{t("uiText.bf9d57c9")}</th>
+              <th className="py-3.5 px-4">{t("uiText.46e43360")}</th>
+              <th className="py-3.5 px-4">{t("uiText.15e9f2a7")}</th>
               <th className="py-3.5 px-4 font-black text-indigo-600 dark:text-indigo-400">
-                Monthly Est. (30d)
-              </th>
+                {t("uiText.25ba9a70")}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">

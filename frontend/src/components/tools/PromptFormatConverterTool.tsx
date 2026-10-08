@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { ArrowRightLeft, Copy, Check } from 'lucide-react';
 import { parsePromptToMessages, formatMessages, PromptFormat } from '@/lib/promptFormatConverter';
 
 export default function PromptFormatConverterTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState('System: You are an expert AI developer.\n\nHuman: How do I optimize Next.js?\n\nAssistant: Use Server Components and image optimization.');
   const [format, setFormat] = useState<PromptFormat>('chatml');
   const [copied, setCopied] = useState(false);
@@ -23,7 +25,7 @@ export default function PromptFormatConverterTool() {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="surface-card rounded-2xl p-5 space-y-3">
-          <h3 className="font-bold text-sm text-slate-900 dark:text-white">Raw Prompt Input</h3>
+          <h3 className="font-bold text-sm text-slate-900 dark:text-white">{t("uiText.3bac3dd1")}</h3>
           <textarea
             rows={12}
             value={input}
@@ -38,14 +40,14 @@ export default function PromptFormatConverterTool() {
               onChange={(e) => setFormat(e.target.value as PromptFormat)}
               className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-800 dark:border-white/10 dark:bg-slate-900 dark:text-slate-200"
             >
-              <option value="chatml">ChatML Format</option>
-              <option value="llama3">Llama 3 Format</option>
-              <option value="anthropic">Anthropic Format</option>
-              <option value="json">JSON Messages Format</option>
+              <option value="chatml">{t("uiText.cc60679d")}</option>
+              <option value="llama3">{t("uiText.fd8f2596")}</option>
+              <option value="anthropic">{t("uiText.489fc8c6")}</option>
+              <option value="json">{t("uiText.d4b92484")}</option>
             </select>
             <button onClick={handleCopy} className="inline-flex items-center gap-1.5 text-xs text-indigo-600 dark:text-indigo-400 font-semibold">
               {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-              {copied ? 'Copied' : 'Copy'}
+              {copied ? t("uiText.8dc21305") : t("common.copy")}
             </button>
           </div>
           <textarea

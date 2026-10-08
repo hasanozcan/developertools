@@ -8,6 +8,7 @@ import {
   calculateIpv4Subnet,
   type Ipv4SubnetResult,
 } from '@/lib/cidrCalculator';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE_ADDRESS = '192.168.1.130';
 const SAMPLE_PREFIX = '/26';
@@ -180,7 +181,7 @@ export default function CidrCalculatorTool() {
               id="cidr-prefix-or-netmask"
               value={prefixOrNetmask}
               onChange={(event) => updatePrefixOrNetmask(event.target.value)}
-              placeholder="/24 or 255.255.255.0"
+                placeholder={t('tool.cidr.prefixPlaceholder')}
               autoComplete="off"
               spellCheck={false}
               className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-gray-900 outline-none transition-colors focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
@@ -220,7 +221,7 @@ export default function CidrCalculatorTool() {
           role="alert"
           className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/30 dark:text-red-300"
         >
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -240,7 +241,7 @@ export default function CidrCalculatorTool() {
                 className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900/60"
               >
                 <dt className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                  {row.label}
+                  {localizeUiText(row.label, t)}
                 </dt>
                 <dd className="mt-1 break-all font-mono text-sm font-semibold text-gray-900 dark:text-white">
                   {row.value}

@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import { convertPostmanToCurl } from '@/lib/postmanToCurl';
@@ -20,6 +21,7 @@ const SAMPLE_POSTMAN = JSON.stringify({
 }, null, 2);
 
 export default function PostmanToCurlTool() {
+  const { t } = useLanguage();
   const [input, setInput] = useState(SAMPLE_POSTMAN);
   const output = convertPostmanToCurl(input);
 
@@ -28,8 +30,8 @@ export default function PostmanToCurlTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Postman Collection v2.1 JSON</label>
-            <button onClick={() => setInput(SAMPLE_POSTMAN)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">Load Sample</button>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.c4cf9f2a")}</label>
+            <button onClick={() => setInput(SAMPLE_POSTMAN)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
           </div>
           <textarea
             value={input}
@@ -41,7 +43,7 @@ export default function PostmanToCurlTool() {
 
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">cURL Terminal Commands</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.e6ad444d")}</label>
             <CopyButton text={output} />
           </div>
           <pre className="h-72 overflow-auto rounded-2xl border border-slate-200 bg-slate-900 p-3 font-mono text-xs text-cyan-400 dark:border-slate-700">

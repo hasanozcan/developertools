@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import { useMemo, useState } from 'react';
 import CopyButton from '@/components/common/CopyButton';
 import {
@@ -7,6 +8,7 @@ import {
   EncodingWorkbenchFormat,
   EncodingWorkbenchMode,
 } from '@/lib/encodingWorkbench';
+import { localizeUiText, interpolateText } from '@/lib/localizedText';
 
 const formats: Array<{
   value: EncodingWorkbenchFormat;
@@ -37,6 +39,7 @@ const formats: Array<{
 ];
 
 export default function EncodingWorkbench() {
+  const { t } = useLanguage();
   const [format, setFormat] = useState<EncodingWorkbenchFormat>('base64');
   const [mode, setMode] = useState<EncodingWorkbenchMode>('encode');
   const [input, setInput] = useState('');
@@ -67,25 +70,21 @@ export default function EncodingWorkbench() {
           id="encoding-workbench-heading"
           className="text-xl font-bold text-gray-900 dark:text-white"
         >
-          Encoder online workbench
-        </h2>
+          {t("uiText.94dcfabf")}</h2>
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
-          Encode or decode UTF-8 text as Base64, a URL component, hexadecimal bytes, binary bytes,
-          or JSON string content. Conversion runs in this browser.
-        </p>
+          {t("uiText.08e89a05")}</p>
       </div>
 
       <div className="mb-5 flex flex-wrap items-end gap-3">
         <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-          Format
-          <select
+          {t("common.format")}<select
             value={format}
             onChange={(event) => setFormat(event.target.value as EncodingWorkbenchFormat)}
             className="mt-1 block rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
           >
             {formats.map((item) => (
               <option key={item.value} value={item.value}>
-                {item.label}
+                {localizeUiText(item.label, t)}
               </option>
             ))}
           </select>
@@ -104,7 +103,7 @@ export default function EncodingWorkbench() {
                   : 'bg-white text-gray-700 hover:bg-gray-50 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
               }`}
             >
-              {item}
+              {t(item === 'encode' ? 'common.encode' : 'common.decode')}
             </button>
           ))}
         </div>
@@ -114,8 +113,7 @@ export default function EncodingWorkbench() {
           onClick={swapDirection}
           className="rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
         >
-          Swap direction
-        </button>
+          {t("uiText.8e75a8af")}</button>
         <button
           type="button"
           onClick={() =>
@@ -123,25 +121,22 @@ export default function EncodingWorkbench() {
           }
           className="rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
         >
-          Load sample
-        </button>
+          {t("uiText.fdd0b941")}</button>
         <button
           type="button"
           onClick={() => setInput('')}
           className="rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
         >
-          Clear
-        </button>
+          {t("common.clear")}</button>
       </div>
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
         <label className="text-sm font-medium text-gray-700 dark:text-gray-300">
-          Input
-          <textarea
+          {t("common.input")}<textarea
             value={input}
             onChange={(event) => setInput(event.target.value)}
             spellCheck={false}
-            placeholder={`${mode === 'encode' ? 'Text to encode' : `${selectedFormat.label} to decode`}...`}
+            placeholder={mode === 'encode' ? t('tool.encoding.encodePlaceholder') : interpolateText(t('tool.encoding.decodePlaceholder'), { format: localizeUiText(selectedFormat.label, t) })}
             className="mt-2 min-h-48 w-full resize-y rounded-lg border border-gray-300 bg-white p-3 font-mono text-sm text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:border-gray-600 dark:bg-gray-900 dark:text-white dark:focus:ring-primary-800"
           />
         </label>
@@ -152,8 +147,7 @@ export default function EncodingWorkbench() {
               htmlFor="encoding-workbench-output"
               className="text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Output
-            </label>
+              {t("common.output")}</label>
             <CopyButton text={conversion.output} />
           </div>
           <textarea
@@ -161,12 +155,12 @@ export default function EncodingWorkbench() {
             value={conversion.output}
             readOnly
             spellCheck={false}
-            placeholder="Converted output appears here..."
+            placeholder={t("uiText.ca610638")}
             className="mt-2 min-h-48 w-full resize-y rounded-lg border border-gray-300 bg-gray-50 p-3 font-mono text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
           />
           {conversion.error && (
             <p role="alert" className="mt-2 text-sm text-red-600 dark:text-red-400">
-              {conversion.error}
+              {localizeUiText(conversion.error, t)}
             </p>
           )}
         </div>

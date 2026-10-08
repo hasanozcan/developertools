@@ -61,7 +61,7 @@ export default function Base64ToImageTool() {
             onChange={(e) => setBase64Input(e.target.value)}
             rows={14}
             className="w-full flex-1 rounded-xl border border-slate-200 bg-white p-4 font-mono text-xs text-slate-900 shadow-inner focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-white/10 dark:bg-slate-900 dark:text-slate-100 resize-y break-all"
-            placeholder="Paste data:image/png;base64,... or raw base64 string"
+            placeholder={t("uiText.34af50cc")}
           />
         </div>
 
@@ -69,12 +69,10 @@ export default function Base64ToImageTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col justify-between space-y-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Decoded Image Preview
-            </span>
+              {t("uiText.6f0f8bcc")}</span>
             {decoded && (
               <span className="text-[11px] font-mono font-bold text-indigo-600 dark:text-indigo-400">
-                {decoded.mimeType} (~{decoded.approxSizeKb} KB)
-              </span>
+                {decoded.mimeType} (~{decoded.approxSizeKb} {t("uiText.14ba3f63")}</span>
             )}
           </div>
 
@@ -84,13 +82,13 @@ export default function Base64ToImageTool() {
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={decoded.dataUrl}
-                alt="Decoded result"
+                alt={t("uiText.5d0f7fca")}
                 className="max-h-56 max-w-full rounded-lg shadow-md object-contain"
               />
             ) : (
               <div className="text-center text-slate-400 text-xs">
                 <Sparkles className="w-6 h-6 mx-auto mb-2 opacity-50" />
-                <span>Paste a valid Base64 image string to view preview</span>
+                <span>{t("uiText.aae762f0")}</span>
               </div>
             )}
           </div>

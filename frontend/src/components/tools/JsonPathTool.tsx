@@ -5,6 +5,7 @@ import CodeEditor from '@/components/common/CodeEditor';
 import CopyButton from '@/components/common/CopyButton';
 import { useLanguage } from '@/context/LanguageContext';
 import { evaluateJsonPath } from '@/lib/jsonPath';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE =
   '{\n  "store": {\n    "book": [\n      { "title": "The Pragmatic Programmer", "price": 8.95 },\n      { "title": "Clean Code", "price": 12.5 }\n    ],\n    "bicycle": { "color": "red", "price": 19.95 }\n  }\n}';
@@ -39,7 +40,7 @@ export default function JsonPathTool() {
           id="json-path"
           value={path}
           onChange={(event) => setPath(event.target.value)}
-          placeholder="$.store.book[*].title"
+          placeholder={t("uiText.8f498025")}
           spellCheck={false}
           className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-sm text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
         />
@@ -53,7 +54,7 @@ export default function JsonPathTool() {
           role="alert"
           className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-900/30 dark:text-red-300"
         >
-          {result.error}
+          {localizeUiText(result.error, t)}
         </div>
       )}
 

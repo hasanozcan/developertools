@@ -1,6 +1,8 @@
 // Client-bundled UI strings for the 'ru' locale (everything except toolName.* / toolDesc.*).
 // Tool names and descriptions stay in ../ru.ts (they come from enhancedTools and are ~1 MB
 // together), so client code can load this small dictionary without the tool catalog text.
+import { ruUiCompletion } from './completion/ru';
+
 export const ruUi: Record<string, string> = {
   'meta.freeOnlineTool': 'Бесплатный онлайн-инструмент',
   // Header
@@ -120,7 +122,7 @@ export const ruUi: Record<string, string> = {
   // Common
   'common.home': 'Главная',
   'common.copy': 'Копировать',
-  'common.copied': '��копировано!',
+  'common.copied': 'Скопировано!',
   'common.clear': 'Очистить',
   'common.reset': 'Сброс',
   'common.download': 'Скачать',
@@ -164,7 +166,7 @@ export const ruUi: Record<string, string> = {
   'common.selectLanguage': "Выбрать язык",
   'common.undo': "Отменить",
   'common.dragDropHint': "Перетащите файл сюда, чтобы вставить содержимое",
-  'common.fontSize': "Размер шрифta",
+  'common.fontSize': "Размер шрифта",
   'common.wrap': "Перенос строк",
   'common.uploadFile': "Загрузить файл",
   'common.cleared': 'Содержимое очищено.',
@@ -373,7 +375,7 @@ export const ruUi: Record<string, string> = {
   'tool.sha512Hash.generateHash': 'Сгенерировать хеш',
   'tool.sha512Hash.sha512Hash': 'SHA512 хеш',
   'tool.sha512Hash.infoText':
-    'SHA512 создаёт 512-битное (64-байтное) хеш-значение, ��ыраженное как 128-символьное шестнадцатеричное число.',
+    'SHA512 создаёт 512-битное (64-байтное) хеш-значение, выраженное как 128-символьное шестнадцатеричное число.',
   'tool.caseConverter': 'Конвертер регистра',
   'tool.caseConverter.desc':
     'Конвертация текста между разными регистрами (верхний, нижний, заголовочный и т.д.)',
@@ -412,7 +414,7 @@ export const ruUi: Record<string, string> = {
   'tool.removeDuplicates.outputText': 'Выходной текст',
   'tool.removeDuplicates.duplicatesRemoved': 'дубликатов удалено',
   'tool.removeDuplicates.uniqueLines': 'уникальных строк',
-  'tool.sortLines': 'Сорт��ровка строк',
+  'tool.sortLines': 'Сортировка строк',
   'tool.sortLines.desc': 'Сортировка строк текста по алфавиту или численно',
   'tool.sortLines.inputPlaceholder': 'Введите строки для сортировки...',
   'tool.sortLines.ascending': 'По возрастанию (А-Я)',
@@ -685,7 +687,7 @@ export const ruUi: Record<string, string> = {
   'tool.yamlJson': 'Конвертер YAML ↔ JSON',
   'tool.yamlJson.desc': 'Преобразование между форматами YAML и JSON',
   'tool.yamlJson.indent': 'Отступ',
-  'tool.yamlJson.swap': 'П��менять ввод/вывод',
+  'tool.yamlJson.swap': 'Поменять ввод/вывод',
   'tool.yamlJson.invalidYaml': 'Неверный ввод YAML',
   'tool.yamlJson.invalidJson': 'Неверный ввод JSON',
   'tool.yamlJson.outputPlaceholder': 'Преобразованный вывод появится здесь...',
@@ -1388,4 +1390,5 @@ export const ruUi: Record<string, string> = {
     'Код обрабатывает текст и байты выбранного файла в браузере и не загружает их для этого расчёта.',
   'tool.sha256Hash.fileMemoryHelp':
     'Выберите локальный файл и сравните хеш с доверенной контрольной суммой. Файлы читаются в память браузера. Большие файлы могут исчерпать память; используйте локальный терминал или пример Python с чтением блоками из руководства.',
+  ...ruUiCompletion,
 };

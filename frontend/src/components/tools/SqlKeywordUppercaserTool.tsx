@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { uppercaseSqlKeywords } from '@/lib/sqlKeywordUppercaser';
 import { Copy, Check } from 'lucide-react';
 
 export default function SqlKeywordUppercaserTool() {
+  const { t } = useLanguage();
   const [sql, setSql] = useState('select id, email from users where active = true order by created_at desc limit 20;');
   const [copied, setCopied] = useState(false);
   const formatted = uppercaseSqlKeywords(sql);
@@ -16,7 +18,7 @@ export default function SqlKeywordUppercaserTool() {
           className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md transition hover:bg-indigo-500"
         >
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          <span>{copied ? 'Copied' : 'Copy Formatted SQL'}</span>
+          <span>{copied ? t("uiText.8dc21305") : t("uiText.0748ac44")}</span>
         </button>
       </div>
 

@@ -1,10 +1,20 @@
 import { expect, test } from '@playwright/test';
+import { trUi } from '../src/translations/ui/tr';
+import { deUi } from '../src/translations/ui/de';
+import { interpolateText } from '../src/lib/localizedText';
+
+function languageLabel(dictionary: Record<string, string>, language: string) {
+  return interpolateText(dictionary['common.currentLanguage'], {
+    selection: dictionary['common.selectLanguage'],
+    language,
+  });
+}
 
 test('locale survives category, tool, search and footer navigation', async ({ page, request }) => {
   await page.goto('/tr');
   await expect(page.locator('html')).toHaveAttribute('lang', 'tr');
   await page
-    .getByRole('navigation', { name: 'Primary navigation' })
+    .getByRole('navigation', { name: trUi['uiText.6fba33cd'] })
     .getByRole('link', { name: 'Kodlayıcılar', exact: true })
     .click();
   await expect(page).toHaveURL(/\/tr\/tools\/encoding$/);
@@ -14,7 +24,9 @@ test('locale survives category, tool, search and footer navigation', async ({ pa
   await expect(page.locator('html')).toHaveAttribute('lang', 'tr');
 
   await page.locator('button[aria-controls="tool-search-results"]').click();
-  await page.locator('input[role="combobox"][aria-controls="tool-search-results"]').fill('json formatter');
+  await page
+    .locator('input[role="combobox"][aria-controls="tool-search-results"]')
+    .fill('json formatter');
   await page
     .getByRole('option', { name: /JSON Biçimlendirici/i })
     .first()
@@ -24,11 +36,11 @@ test('locale survives category, tool, search and footer navigation', async ({ pa
   await expect(page).toHaveURL(/\/tr\/contact$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'tr');
 
-  await page.getByRole('button', { name: /Current: Türkçe/ }).click();
+  await page.getByRole('button', { name: languageLabel(trUi, 'Türkçe'), exact: true }).click();
   await page.getByRole('option', { name: 'Deutsch', exact: true }).click();
   await expect(page).toHaveURL(/\/de\/contact$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'de');
-  await page.getByRole('button', { name: /Current: Deutsch/ }).click();
+  await page.getByRole('button', { name: languageLabel(deUi, 'Deutsch'), exact: true }).click();
   await page.getByRole('option', { name: 'English', exact: true }).click();
   await expect(page).toHaveURL(/\/contact$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');

@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { Copy, Check } from 'lucide-react';
 import { generateTailwindV4OklchPalette } from '@/lib/tailwindV4ColorPalette';
 
 export default function TailwindV4ColorPaletteTool() {
+  const { t } = useLanguage();
   const [hue, setHue] = useState(260);
   const [copied, setCopied] = useState(false);
 
@@ -13,7 +15,7 @@ export default function TailwindV4ColorPaletteTool() {
   return (
     <div className="space-y-6">
       <div>
-        <label className="text-xs text-muted-foreground">Base OKLCH Hue Angle: {hue}°</label>
+        <label className="text-xs text-muted-foreground">{t("uiText.ec392e92") + ' '}{hue}°</label>
         <input type="range" min="0" max="360" value={hue} onChange={(e) => setHue(Number(e.target.value))} className="w-full" />
       </div>
       <div className="grid grid-cols-2 md:grid-cols-6 gap-2">
@@ -27,10 +29,10 @@ export default function TailwindV4ColorPaletteTool() {
       </div>
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-muted-foreground">JSON Color Map</label>
+          <label className="text-sm font-medium text-muted-foreground">{t("uiText.ae61f5da")}</label>
           <button onClick={() => { navigator.clipboard.writeText(css); setCopied(true); setTimeout(() => setCopied(false), 2000); }} className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-secondary">
             {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-            {copied ? 'Copied' : 'Copy'}
+            {copied ? t("uiText.8dc21305") : t("common.copy")}
           </button>
         </div>
         <textarea readOnly value={css} rows={6} className="w-full rounded-xl border border-border bg-muted/30 p-4 font-mono text-sm" />

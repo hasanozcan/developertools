@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { RootDocument, rootMetadata } from './_shell/RootDocument';
 import EnDictionary from '@/translations/client/en';
-import NotFoundContent, { notFoundMetadata } from './_shell/NotFoundContent';
+import NotFoundContent from './_shell/NotFoundContent';
+import { notFoundMetadata } from './_shell/notFoundMetadata';
 
 // With separate root layouts (app/(default), app/[locale], app/about, app/contact) there
 // is no single layout to compose the 404 for unmatched URLs from, so this renders the

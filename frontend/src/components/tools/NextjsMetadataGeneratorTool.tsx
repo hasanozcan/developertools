@@ -1,9 +1,11 @@
 'use client';
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { generateNextjsMetadata } from '@/lib/nextjsMetadataGenerator';
 import { Copy, Check } from 'lucide-react';
 
 export default function NextjsMetadataGeneratorTool() {
+  const { t } = useLanguage();
   const [title, setTitle] = useState('My Awesome App');
   const [desc, setDesc] = useState('Build high-performance web applications with Next.js 16');
   const [url, setUrl] = useState('https://example.com');
@@ -20,27 +22,27 @@ export default function NextjsMetadataGeneratorTool() {
           className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md transition hover:bg-indigo-500"
         >
           {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          <span>{copied ? 'Copied' : 'Copy Metadata Code'}</span>
+          <span>{copied ? t("uiText.8dc21305") : t("uiText.e6ef9fb2")}</span>
         </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="space-y-3">
           <div>
-            <label className="text-xs font-semibold text-slate-500">Page Title</label>
+            <label className="text-xs font-semibold text-slate-500">{t("tool.metaTags.pageTitle")}</label>
             <input value={title} onChange={(e) => setTitle(e.target.value)} className="w-full rounded-xl border border-slate-200 p-2 text-xs dark:border-white/10 dark:bg-slate-950" />
           </div>
           <div>
-            <label className="text-xs font-semibold text-slate-500">Description</label>
+            <label className="text-xs font-semibold text-slate-500">{t("tool.metaTags.description")}</label>
             <textarea value={desc} onChange={(e) => setDesc(e.target.value)} rows={3} className="w-full rounded-xl border border-slate-200 p-2 text-xs dark:border-white/10 dark:bg-slate-950" />
           </div>
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <label className="text-xs font-semibold text-slate-500">Canonical URL</label>
+              <label className="text-xs font-semibold text-slate-500">{t("tool.metaTags.canonical")}</label>
               <input value={url} onChange={(e) => setUrl(e.target.value)} className="w-full rounded-xl border border-slate-200 p-2 text-xs dark:border-white/10 dark:bg-slate-950" />
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-500">Site Name</label>
+              <label className="text-xs font-semibold text-slate-500">{t("uiText.6efffcb1")}</label>
               <input value={siteName} onChange={(e) => setSiteName(e.target.value)} className="w-full rounded-xl border border-slate-200 p-2 text-xs dark:border-white/10 dark:bg-slate-950" />
             </div>
           </div>

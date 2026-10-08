@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { Copy, Check, Triangle, Sliders } from 'lucide-react';
 import { generateCssTriangle, type TriangleDirection } from '@/lib/cssTriangle';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 export default function CssTriangleGeneratorTool() {
   const { t } = useLanguage();
@@ -54,7 +55,7 @@ export default function CssTriangleGeneratorTool() {
                   : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-white/10 hover:bg-slate-50'
               }`}
             >
-              {d.label}
+              {localizeUiText(d.label, t)}
             </button>
           ))}
         </div>
@@ -78,7 +79,7 @@ export default function CssTriangleGeneratorTool() {
           {/* Width */}
           <div>
             <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-              <span>Width</span>
+              <span>{t("uiText.3b42dfbf")}</span>
               <span className="font-mono">{width}px</span>
             </div>
             <input
@@ -94,7 +95,7 @@ export default function CssTriangleGeneratorTool() {
           {/* Height */}
           <div>
             <div className="flex justify-between text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-              <span>Height</span>
+              <span>{t("uiText.1bd13562")}</span>
               <span className="font-mono">{height}px</span>
             </div>
             <input
@@ -110,8 +111,7 @@ export default function CssTriangleGeneratorTool() {
           {/* Color */}
           <div>
             <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">
-              Triangle Color
-            </label>
+              {t("uiText.7dbd0e0e")}</label>
             <div className="flex items-center gap-2">
               <input
                 type="color"
@@ -134,8 +134,7 @@ export default function CssTriangleGeneratorTool() {
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            Pure CSS Triangle Code
-          </span>
+            {t("uiText.9f51b0a5")}</span>
           <button
             onClick={handleCopy}
             className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"

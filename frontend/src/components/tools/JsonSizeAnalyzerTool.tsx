@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { HardDrive, Activity, Layers, Hash } from 'lucide-react';
 import { analyzeJsonSize, type JsonSizeMetrics } from '@/lib/jsonSizeAnalyzer';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 const SAMPLE_JSON = `{
   "api_version": "v2.1",
@@ -64,13 +65,13 @@ export default function JsonSizeAnalyzerTool() {
           onChange={(e) => setJsonInput(e.target.value)}
           rows={8}
           className="w-full rounded-xl border border-slate-200 bg-white p-4 font-mono text-xs text-slate-900 shadow-inner focus:outline-none dark:border-white/10 dark:bg-slate-900 dark:text-slate-100 resize-y"
-          placeholder="Paste large JSON string to analyze..."
+          placeholder={t("uiText.e03c040d")}
         />
       </div>
 
       {error && (
         <div className="p-4 rounded-xl border border-red-200 bg-red-50 text-xs text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-300">
-          {error}
+          {localizeUiText(error, t)}
         </div>
       )}
 
@@ -79,37 +80,36 @@ export default function JsonSizeAnalyzerTool() {
         <div className="space-y-4">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="surface-card rounded-2xl p-5 border border-indigo-200 dark:border-indigo-900/40 bg-indigo-50/40 dark:bg-indigo-950/20">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">Raw Size</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">{t("uiText.064ea902")}</span>
               <span className="text-2xl font-black font-mono text-indigo-600 dark:text-indigo-400">
-                {metrics.rawBytes.toLocaleString()} <span className="text-xs font-normal">Bytes</span>
+                {metrics.rawBytes.toLocaleString()} <span className="text-xs font-normal">{t("uiText.37ac52a4")}</span>
               </span>
               <span className="text-[11px] text-slate-400 block mt-1">{(metrics.rawBytes / 1024).toFixed(2)} KB</span>
             </div>
 
             <div className="surface-card rounded-2xl p-5 border border-slate-200/80 dark:border-white/5">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">Minified Size</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">{t("tool.cssMinifier.minifiedSize")}</span>
               <span className="text-2xl font-black font-mono text-slate-900 dark:text-white">
-                {metrics.minifiedBytes.toLocaleString()} <span className="text-xs font-normal">Bytes</span>
+                {metrics.minifiedBytes.toLocaleString()} <span className="text-xs font-normal">{t("uiText.37ac52a4")}</span>
               </span>
               <span className="text-[11px] text-emerald-500 font-bold block mt-1">
-                {Math.round((1 - metrics.minifiedBytes / (metrics.rawBytes || 1)) * 100)}% reduction
-              </span>
+                {Math.round((1 - metrics.minifiedBytes / (metrics.rawBytes || 1)) * 100)}{t("uiText.b869a651")}</span>
             </div>
 
             <div className="surface-card rounded-2xl p-5 border border-slate-200/80 dark:border-white/5">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">Keys & Objects</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">{t("uiText.e3a7b2bf")}</span>
               <span className="text-2xl font-black font-mono text-slate-900 dark:text-white">
-                {metrics.totalKeys} <span className="text-xs font-normal text-slate-400">keys</span>
+                {metrics.totalKeys} <span className="text-xs font-normal text-slate-400">{t("uiText.f94a08cd")}</span>
               </span>
-              <span className="text-[11px] text-slate-400 block mt-1">{metrics.totalObjects} objects, {metrics.totalArrays} arrays</span>
+              <span className="text-[11px] text-slate-400 block mt-1">{metrics.totalObjects} {' ' + t("uiText.f6e4cfc5") + ' '}{metrics.totalArrays} {' ' + t("uiText.1e98dccf")}</span>
             </div>
 
             <div className="surface-card rounded-2xl p-5 border border-slate-200/80 dark:border-white/5">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">Max Nesting Depth</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-1">{t("uiText.fad662aa")}</span>
               <span className="text-2xl font-black font-mono text-purple-600 dark:text-purple-400">
-                {metrics.maxDepth} <span className="text-xs font-normal text-slate-400">levels</span>
+                {metrics.maxDepth} <span className="text-xs font-normal text-slate-400">{t("uiText.a147b6ea")}</span>
               </span>
-              <span className="text-[11px] text-slate-400 block mt-1">{metrics.nullCount} null fields</span>
+              <span className="text-[11px] text-slate-400 block mt-1">{metrics.nullCount} {' ' + t("uiText.f10ebc39")}</span>
             </div>
           </div>
         </div>

@@ -1,10 +1,12 @@
 'use client';
 
+import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { Copy, Check, Code2 } from 'lucide-react';
 import { convertGraphqlToZod } from '@/lib/graphqlSchemaToZod';
 
 export default function GraphqlSchemaToZodTool() {
+  const { t } = useLanguage();
   const [sdlInput, setSdlInput] = useState(
     `enum Role {\n  ADMIN\n  USER\n  GUEST\n}\n\ntype User {\n  id: ID!\n  name: String!\n  email: String\n  age: Int\n  roles: [Role!]!\n}`
   );
@@ -30,27 +32,25 @@ export default function GraphqlSchemaToZodTool() {
       <div className="flex justify-end">
         <button onClick={handleCopy} className="btn btn-primary btn-sm gap-2">
           {copied ? <Check className="w-4 h-4 text-success" /> : <Copy className="w-4 h-4" />}
-          {copied ? 'Copied' : 'Copy TypeScript Zod Schema'}
+          {copied ? t("uiText.8dc21305") : t("uiText.c75df9e5")}
         </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <label className="block text-sm font-medium text-muted-foreground">
-            GraphQL SDL (Schema Definition Language):
-          </label>
+            {t("uiText.0b86547a")}</label>
           <textarea
             value={sdlInput}
             onChange={(e) => setSdlInput(e.target.value)}
-            placeholder="type User { ... }"
+            placeholder={t("uiText.72622c84")}
             className="textarea textarea-bordered w-full h-96 font-mono text-xs leading-relaxed"
           />
         </div>
 
         <div className="space-y-2">
           <label className="block text-sm font-medium text-muted-foreground">
-            Generated Zod TypeScript Schema & Types:
-          </label>
+            {t("uiText.9d43b2a0")}</label>
           <textarea
             readOnly
             value={zodOutput}
