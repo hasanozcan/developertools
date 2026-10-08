@@ -14,7 +14,8 @@ import {
 } from '@/lib/curlRequest';
 
 const METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
-const SAMPLE_CURL = [
+const SAMPLE_GET = "curl 'https://api.example.com/v1/items?limit=10'";
+const SAMPLE_JSON_POST = [
   'curl --request POST \\',
   "  --url 'https://api.example.com/v1/items?limit=10' \\",
   "  --header 'Content-Type: application/json' \\",
@@ -44,7 +45,7 @@ export default function CurlRequestTool() {
   const [followRedirects, setFollowRedirects] = useState(true);
   const [compressed, setCompressed] = useState(true);
   const [redactSensitiveHeaders, setRedactSensitiveHeaders] = useState(true);
-  const [pastedCurl, setPastedCurl] = useState(SAMPLE_CURL);
+  const [pastedCurl, setPastedCurl] = useState(SAMPLE_GET);
   const [parsedRequest, setParsedRequest] = useState<ParsedCurlRequest | null>(null);
   const [converterError, setConverterError] = useState<string | null>(null);
 
@@ -107,7 +108,7 @@ export default function CurlRequestTool() {
       setConverterError(null);
     } catch {
       setParsedRequest(null);
-      setConverterError(t('tool.curl.error'));
+      setConverterError(t('tool.curl.converterError'));
     }
   };
 
@@ -140,7 +141,96 @@ export default function CurlRequestTool() {
         </div>
       )}
 
-      <section className="space-y-5" aria-labelledby="curl-builder-heading">
+      <section className="space-y-5" aria-labelledby="curl-converter-heading">
+        <div>
+          <h2
+            id="curl-converter-heading"
+            className="text-xl font-semibold text-gray-900 dark:text-white"
+          >
+            {t('tool.curl.converterTitle')}
+          </h2>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            {t('tool.curl.converterDescription')}
+          </p>
+        </div>
+        <CodeEditor
+          ariaLabel={t('tool.curl.pastePlaceholder')}
+          onRun={convertPastedCurl}
+          value={pastedCurl}
+          onChange={(value) => {
+            setPastedCurl(value);
+            setParsedRequest(null);
+            setConverterError(null);
+          }}
+          language="bash"
+          placeholder={t('tool.curl.pastePlaceholder')}
+          minHeight="220px"
+        />
+        <div className="flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={convertPastedCurl}
+            className="rounded-lg bg-primary-600 px-4 py-2 font-medium text-white hover:bg-primary-700"
+          >
+            {t('tool.curl.convert')}
+          </button>
+          {[
+            { label: 'GET', command: SAMPLE_GET },
+            { label: 'JSON POST', command: SAMPLE_JSON_POST },
+          ].map(({ label, command }) => (
+            <button
+              key={label}
+              type="button"
+              onClick={() => {
+                setPastedCurl(command);
+                setParsedRequest(null);
+                setConverterError(null);
+              }}
+              className="rounded-lg border border-gray-300 px-4 py-2 font-medium text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+            >
+              {t('common.loadSample')}: {label}
+            </button>
+          ))}
+          <button
+            type="button"
+            onClick={() => {
+              setPastedCurl('');
+              setParsedRequest(null);
+              setConverterError(null);
+            }}
+            className="rounded-lg border border-gray-300 px-4 py-2 font-medium text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+          >
+            {t('common.clear')}
+          </button>
+        </div>
+        {converterError && (
+          <div
+            role="alert"
+            className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-300"
+          >
+            {converterError}
+          </div>
+        )}
+        <div>
+          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+            {t('tool.curl.convertedFetch')}
+          </label>
+          <CodeEditor
+            ariaLabel={t('tool.curl.convertedFetch')}
+            value={convertedFetch}
+            onChange={() => {}}
+            readOnly
+            language="javascript"
+            placeholder={t('tool.curl.convertedPlaceholder')}
+            minHeight="260px"
+          />
+        </div>
+      </section>
+
+      <section
+        className="space-y-5 border-t border-gray-200 pt-8 dark:border-gray-700"
+        aria-labelledby="curl-builder-heading"
+      >
         <div>
           <h2
             id="curl-builder-heading"
@@ -352,86 +442,6 @@ export default function CurlRequestTool() {
               minHeight="280px"
             />
           </div>
-        </div>
-      </section>
-
-      <section
-        className="space-y-5 border-t border-gray-200 pt-8 dark:border-gray-700"
-        aria-labelledby="curl-converter-heading"
-      >
-        <div>
-          <h2
-            id="curl-converter-heading"
-            className="text-xl font-semibold text-gray-900 dark:text-white"
-          >
-            {t('tool.curl.converterTitle')}
-          </h2>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            {t('tool.curl.converterDescription')}
-          </p>
-        </div>
-        <CodeEditor
-          value={pastedCurl}
-          onChange={(value) => {
-            setPastedCurl(value);
-            setParsedRequest(null);
-            setConverterError(null);
-          }}
-          language="bash"
-          placeholder={t('tool.curl.pastePlaceholder')}
-          minHeight="220px"
-        />
-        <div className="flex flex-wrap gap-3">
-          <button
-            type="button"
-            onClick={convertPastedCurl}
-            className="rounded-lg bg-primary-600 px-4 py-2 font-medium text-white hover:bg-primary-700"
-          >
-            {t('tool.curl.convert')}
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setPastedCurl(SAMPLE_CURL);
-              setParsedRequest(null);
-              setConverterError(null);
-            }}
-            className="rounded-lg border border-gray-300 px-4 py-2 font-medium text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
-          >
-            {t('common.loadSample')}
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setPastedCurl('');
-              setParsedRequest(null);
-              setConverterError(null);
-            }}
-            className="rounded-lg border border-gray-300 px-4 py-2 font-medium text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
-          >
-            {t('common.clear')}
-          </button>
-        </div>
-        {converterError && (
-          <div
-            role="alert"
-            className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-300"
-          >
-            {converterError}
-          </div>
-        )}
-        <div>
-          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
-            {t('tool.curl.convertedFetch')}
-          </label>
-          <CodeEditor
-            value={convertedFetch}
-            onChange={() => {}}
-            readOnly
-            language="javascript"
-            placeholder={t('tool.curl.convertedPlaceholder')}
-            minHeight="260px"
-          />
         </div>
       </section>
     </div>

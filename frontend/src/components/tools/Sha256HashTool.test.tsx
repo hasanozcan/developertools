@@ -9,6 +9,8 @@ vi.mock('@/context/LanguageContext', () => ({
     t: (key: string) => {
       const labels: Record<string, string> = {
         'tool.sha256Hash.hashFile': 'Hash a file',
+        'tool.sha256Hash.textHash': 'Hash UTF-8 text',
+        'tool.sha256Hash.fileMemoryHelp': 'Files are read into browser memory. Use a local terminal for large downloads.',
         'tool.sha256Hash.removeFile': 'Remove file',
         'tool.sha256Hash.hashingFile': 'Hashing file...',
         'tool.sha256Hash.uploadFile': 'Click to upload a file',
@@ -55,6 +57,19 @@ afterAll(() => {
 });
 
 describe('Sha256HashTool file checksum verification', () => {
+  it('loads the documented abc text sample before the separate file task and shows memory guidance', async () => {
+    const { container } = render(<Sha256HashTool />);
+    const textHeading = screen.getByRole('heading', { name: 'Hash UTF-8 text' });
+    const fileHeading = screen.getByRole('heading', { name: 'Hash a file' });
+    expect(textHeading.compareDocumentPosition(fileHeading) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(container.querySelectorAll('textarea')).toHaveLength(1);
+    expect(container.querySelectorAll('input[type="file"]')).toHaveLength(1);
+    expect(screen.getByText(/Files are read into browser memory/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'common.loadSample' }));
+    expect(screen.getByDisplayValue('abc')).toBeInTheDocument();
+    await waitFor(() => expect(container.querySelector('code')).toHaveTextContent('ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'));
+  });
+
   it('reports matching, mismatching, and malformed expected checksums', async () => {
     const { container } = render(<Sha256HashTool />);
     const fileInput = container.querySelector<HTMLInputElement>('input[type="file"]');

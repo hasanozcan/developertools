@@ -21,7 +21,6 @@ export const en = {
   'toolName.qr-code': 'QR Code Generator',
   'toolName.slug-generator': 'Slug Generator',
   'toolName.md5-hash': 'MD5 Hash Generator',
-  'toolName.sha256-hash': 'SHA256 Hash Generator',
   'toolName.regex-tester': 'Regex Tester',
   'toolName.text-diff': 'Text Diff Tool',
   'toolName.markdown-preview': 'Markdown Preview',
@@ -61,7 +60,6 @@ export const en = {
   'toolName.cache-control': 'Cache-Control Parser & Builder',
   'toolName.jsonpath-tester': 'JSONPath Tester',
   'toolName.csp-builder': 'CSP Header Builder & Analyzer',
-  'toolName.curl-to-fetch': 'cURL Builder & Fetch Converter',
   // Tool Descriptions
   'toolDesc.json-formatter': 'Format, validate, and clean JSON with syntax highlighting.',
   'toolDesc.json-validator': 'Check JSON syntax errors and get precise error locations instantly.',
@@ -79,8 +77,6 @@ export const en = {
     'Query JSON with paths, wildcards, slices, and recursive descent without evaluating scripts.',
   'toolDesc.csp-builder':
     'Build, normalize, and inspect Content Security Policy headers for common security gaps.',
-  'toolDesc.curl-to-fetch':
-    'Build cURL requests or convert supported cURL input to JavaScript fetch without running commands.',
   'toolDesc.json-csv': 'Convert JSON arrays to CSV and CSV files back to JSON.',
   'toolDesc.base64': 'Encode text to Base64 or decode Base64 strings back to text.',
   'toolDesc.url-encoder': 'Safely encode or decode URL strings and query params.',
@@ -94,7 +90,6 @@ export const en = {
   'toolDesc.qr-code': 'Create QR codes from text or URLs for quick sharing.',
   'toolDesc.slug-generator': 'Convert titles into clean, SEO-friendly slugs with transliteration.',
   'toolDesc.md5-hash': 'Generate MD5 hashes from text for quick checksums.',
-  'toolDesc.sha256-hash': 'Generate SHA256 hashes from text for integrity checks.',
   'toolDesc.regex-tester': 'Test regular expressions with live matching and highlights.',
   'toolDesc.text-diff': 'Compare two texts side by side and highlight differences.',
   'toolDesc.markdown-preview': 'Write Markdown and preview the rendered HTML instantly.',
@@ -143,4 +138,14 @@ export const en = {
   'toolName.bcrypt-generator': 'Bcrypt Generator & Verifier',
   'toolDesc.bcrypt-generator': 'Generate salted bcrypt hashes and verify test passwords locally.',
   ...enhancedToolTranslations.en,
+  // These English page introductions must win over the older enhanced catalog copy.
+  'toolName.curl-to-fetch': 'cURL to Fetch Converter & Request Builder',
+  'toolDesc.curl-to-fetch':
+    'Convert supported cURL commands to JavaScript fetch code without sending a request, or build cURL and Fetch snippets from request fields.',
+  'toolName.sha256-hash': 'SHA-256 Hash Generator & File Checksum Checker',
+  'toolDesc.sha256-hash':
+    'Hash UTF-8 text or a local file with SHA-256, then compare the file digest with a trusted 64-character expected checksum.',
+  'toolName.file-checksum-comparator': 'File Checksum Calculator & Comparator',
+  'toolDesc.file-checksum-comparator':
+    'Calculate MD5, CRC32, SHA-1, SHA-256, SHA-384 and SHA-512 checksums for text or a local file and compare a trusted expected hash.',
 };

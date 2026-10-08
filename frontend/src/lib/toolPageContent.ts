@@ -3842,20 +3842,33 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
       ]
     },
     'file-checksum-comparator': {
-      name: 'Multi-Hash File Checksum & Comparator',
+      name: 'File Checksum Calculator & Comparator',
       metadataTitle: 'File Checksum Calculator & Hash Comparator',
-      description: 'Calculate and verify MD5, SHA-1, SHA-256, SHA-512, and CRC32 checksums for any file or text string.',
-      longDescription: 'Free client-side multi-hash checksum calculator. Drop any file or paste text to compute MD5, SHA-1, SHA-256, and SHA-512 hashes simultaneously and verify integrity against an expected hash.',
+      description: 'Calculate MD5, CRC32, SHA-1, SHA-256, SHA-384 and SHA-512 checksums for text or a local file. Compare a complete expected hash from a trusted source.',
+      longDescription: 'Calculate six checksums for UTF-8 text or selected local file bytes and compare a trusted expected hash. Files are read into browser memory; use a local terminal checksum tool for large files.',
       keywords: ['file checksum calculator', 'compare file hash', 'sha256 file checksum', 'md5 file verifier'],
       faqs: [
-        { question: 'How do I verify a downloaded file checksum?', answer: 'Drop your file into the tool and paste the author\'s expected hash into the comparator box.' },
-        { question: 'Is my file uploaded to a server?', answer: 'No, all cryptographic hashing runs 100% locally in your browser using the Web Crypto API.' }
+        { question: 'How do I verify a downloaded file checksum?', answer: 'Select the file and paste the complete expected checksum from the publisher or another trusted independent source. Wait for hashing to finish, then review the match or mismatch result.' },
+        { question: 'Is my file uploaded to a server?', answer: 'Selected files are read locally into browser memory and are not uploaded for this calculation. SHA-1, SHA-256, SHA-384 and SHA-512 use Web Crypto; MD5 and CRC32 use JavaScript implementations.' },
+        { question: 'Does a matching checksum mean the file is safe or authentic?', answer: 'A match means the computed checksum agrees with the expected value. It does not establish that the file is harmless or authenticate its publisher. Obtain the expected checksum from a trusted independent source. MD5 and SHA-1 are collision-broken, and CRC32 is not cryptographic; prefer SHA-256 for integrity checks.' },
+        { question: 'Can I hash very large files in the browser?', answer: 'The selected file is read into memory in full. Available memory and device performance limit practical file size. For large downloads, use a local terminal checksum tool or the chunked Python example in the SHA-256 verification guide.' },
+      ],
+      answerSections: [
+        {
+          heading: 'Reproduce an abc checksum comparison',
+          paragraphs: [
+            'Choose Load abc example to hash exactly the three UTF-8 bytes abc, without spaces or a trailing newline. You can also select a local text file containing exactly those bytes.',
+            'The SHA-256 checksum is ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad. Paste that complete value into the expected checksum field to see a match. Change one hexadecimal digit to see a mismatch after hashing finishes.',
+            'The same input produces MD5 900150983cd24fb0d6963f7d28e17f72 and CRC32 352441c2. Results also include SHA-1, SHA-384 and SHA-512. A newline or another encoding changes the bytes and their checksums.',
+          ],
+        },
       ],
       howToUseSteps: [
-        'Drop any file or enter text into the input field.',
-        'Optionally paste the expected checksum to compare.',
-        'Review computed hashes and copy with one click.'
-      ]
+        'Select a local file or enter UTF-8 text; use a local terminal for files too large for browser memory.',
+        'Optionally paste a complete expected checksum from a trusted independent source.',
+        'Wait for hashing to finish, then review the six computed checksums and the comparison result.',
+        'Investigate a mismatch; a match alone does not establish harmlessness or publisher authenticity.',
+      ],
     },
     'uuid-v5-generator': {
       name: 'UUID v5 (SHA-1 Namespace) Generator',
@@ -4298,7 +4311,7 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
       ],
     },
     'sha256-hash': {
-      name: 'SHA256 Hash Generator',
+      name: 'SHA-256 Hash Generator & File Checksum Checker',
       metadataTitle: 'SHA-256 Hash Generator & File Checksum Checker',
       description:
         'Generate SHA-256 hashes from text or files and verify a trusted checksum locally in your browser. Includes working JavaScript and Python examples.',
@@ -10925,7 +10938,7 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
       ],
     },
     'curl-to-fetch': {
-      name: 'cURL Builder & Fetch Converter',
+      name: 'cURL to Fetch Converter & Request Builder',
       metadataTitle: 'cURL to Fetch Converter & Request Builder Online',
       description:
         'Convert supported cURL commands to JavaScript Fetch, or build quoted cURL and Fetch requests from method, URL, headers, query, and body input. Nothing is executed.',

@@ -115,7 +115,10 @@ const categoryNames = Object.fromEntries(
   categoryCatalog.map((category) => [category.slug, category.name]),
 ) as Record<string, string>;
 
-export default async function ToolPage({ params, locale = 'en' }: PageProps & { locale?: Language }) {
+export default async function ToolPage({
+  params,
+  locale = 'en',
+}: PageProps & { locale?: Language }) {
   const { category, tool: toolSlug } = await params;
   const categoryTools = tools[category];
   const tool = categoryTools?.[toolSlug];
@@ -138,6 +141,16 @@ export default async function ToolPage({ params, locale = 'en' }: PageProps & { 
   const ogImageUrl = `${siteUrl}/tools/${canonicalCategory}/${toolSlug}/opengraph-image`;
   const seoCopy = getToolSeoCopy(locale);
   const localeTranslations = translations[locale] ?? translations.en;
+  // The client dictionary omits page descriptions. Pass only these approved
+  // English introductions from the winning server dictionary; SEO metadata stays separate.
+  const englishIntroduction =
+    locale === 'en' &&
+    ['curl-to-fetch', 'sha256-hash', 'file-checksum-comparator'].includes(toolSlug)
+      ? {
+          name: localeTranslations[`toolName.${toolSlug}`],
+          description: localeTranslations[`toolDesc.${toolSlug}`],
+        }
+      : undefined;
   const homeName = locale === 'en' ? 'Home' : localeTranslations['nav.home'] || 'Home';
   const categoryName =
     locale === 'en'
@@ -146,14 +159,12 @@ export default async function ToolPage({ params, locale = 'en' }: PageProps & { 
   const toAbsoluteLocalizedUrl = (path: string) => `${siteUrl}${getLocalizedPath(path, locale)}`;
   const sources = getToolSources(toolSlug).filter(
     (source) =>
-      source.url !== canonicalUrl && source.url !== `${siteUrl}/tools/${canonicalCategory}/${toolSlug}`,
+      source.url !== canonicalUrl &&
+      source.url !== `${siteUrl}/tools/${canonicalCategory}/${toolSlug}`,
   );
   const toolDetail = await getToolBySlug(toolSlug);
   const localizedTool = getLocalizedToolMeta(toolSlug, locale, tool.name, tool.description);
-  const relatedCandidates = [
-    ...getWorkflowTargets(toolSlug),
-    ...(toolDetail?.relatedTools || []),
-  ];
+  const relatedCandidates = [...getWorkflowTargets(toolSlug), ...(toolDetail?.relatedTools || [])];
   const relatedBySlug = new Map<string, (typeof relatedCandidates)[number]>();
   for (const relatedTool of relatedCandidates) {
     if (relatedTool.slug !== toolSlug && !relatedBySlug.has(relatedTool.slug)) {
@@ -173,14 +184,16 @@ export default async function ToolPage({ params, locale = 'en' }: PageProps & { 
       href: buildToolPath(relatedTool.categorySlug, relatedTool.slug),
     };
   });
-  const topicCollections = getCollectionsForTool(toolSlug).slice(0, 3).map((collection) => {
-    const localizedCollection = getLocalizedCollection(collection, locale);
-    return {
-      name: localizedCollection.shortTitle,
-      description: localizedCollection.description,
-      href: `/collections/${collection.slug}`,
-    };
-  });
+  const topicCollections = getCollectionsForTool(toolSlug)
+    .slice(0, 3)
+    .map((collection) => {
+      const localizedCollection = getLocalizedCollection(collection, locale);
+      return {
+        name: localizedCollection.shortTitle,
+        description: localizedCollection.description,
+        href: `/collections/${collection.slug}`,
+      };
+    });
   const effectiveFaqs = mergeToolFaqs(
     removeTemplatedDefinitionFaq(tool.faqs, tool.name, [tool.description, tool.longDescription]),
     buildSupplementalToolFaqs(localizedTool.name, locale),
@@ -335,8 +348,10 @@ export default async function ToolPage({ params, locale = 'en' }: PageProps & { 
         toolSlug={toolSlug}
         category={category}
         categoryName={categoryNames[category] || category}
-        defaultName={localizedTool.name}
-        defaultDescription={localizedTool.description || tool.longDescription}
+        defaultName={englishIntroduction?.name || localizedTool.name}
+        defaultDescription={
+          englishIntroduction?.description || localizedTool.description || tool.longDescription
+        }
         // Same resolution as the <title>/JSON-LD: the client `t()` only reads the
         // translation dict, which can hold an English placeholder for tools
         // whose real translation lives in enhancedTools.

@@ -430,15 +430,15 @@ export const enUi: Record<string, string> = {
   'tool.sha256Hash.sha256Hash': 'SHA256 Hash',
   'tool.sha256Hash.infoText':
     'SHA256 produces a 256-bit (32-byte) hash value, expressed as a 64-character hexadecimal number.',
-  'tool.sha256Hash.hashFile': 'Hash File',
+  'tool.sha256Hash.hashFile': 'Check a local file checksum',
   'tool.sha256Hash.dropFile': 'Drop file here or click to upload',
   'tool.sha256Hash.file': 'File: {name}',
   'tool.sha256Hash.size': 'Size: {size}',
-  'tool.sha256Hash.textHash': 'Text Hash',
+  'tool.sha256Hash.textHash': 'Hash UTF-8 text',
   'tool.sha256Hash.fileHash': 'File Hash',
   'tool.sha256Hash.removeFile': 'Remove file',
   'tool.sha256Hash.hashingFile': 'Hashing file...',
-  'tool.sha256Hash.uploadFile': 'Click to upload a file',
+  'tool.sha256Hash.uploadFile': 'Select or drop a local file',
   'tool.sha256Hash.outputPlaceholder': 'Hash will appear here...',
   'tool.sha256Hash.fileError':
     'Could not read or hash this file. Try again or choose another file.',
@@ -1008,7 +1008,7 @@ export const enUi: Record<string, string> = {
   'tool.curl.outputPlaceholder': 'Valid request output appears here...',
   'tool.curl.converterTitle': 'Paste cURL → Fetch',
   'tool.curl.converterDescription':
-    'Supports request, header, data, URL, location, and compressed flags. Shell substitutions and file-backed inputs are rejected.',
+    'Paste one curl or curl.exe command with an HTTP(S) URL. Supported options: -X/--request, -H/--header, -d/--data, --data-raw, --data-binary, --url, -L/--location and --compressed. The converter generates code without sending a request.',
   'tool.curl.pastePlaceholder': 'Paste a cURL command...',
   'tool.curl.convert': 'Convert to Fetch',
   'tool.curl.convertedFetch': 'Converted Fetch',
@@ -1368,7 +1368,7 @@ export const enUi: Record<string, string> = {
   'toolName.query-string-parser': 'Query String Parser',
   'toolName.regex-escape': 'Regex Escape',
   'toolName.regex-tester': 'Regex Tester',
-  'toolName.sha256-hash': 'SHA256 Hash',
+  'toolName.sha256-hash': 'SHA-256 Hash Generator & File Checksum Checker',
   'toolName.slug-generator': 'Slug Generator',
   'toolName.sql-formatter': 'SQL Formatter',
   'toolName.svg-minifier': 'SVG Optimizer & Minifier',
@@ -1381,4 +1381,11 @@ export const enUi: Record<string, string> = {
   'toolName.user-agent-parser': 'User Agent Parser Online',
   'toolName.uuid-generator': 'UUID v4 & v7 Generator',
   'toolName.yaml-json': 'YAML to JSON',
+  'tool.curl.converterError':
+    'Cannot convert this command. Use one HTTP(S) URL and supported request, header, data, location or compressed flags. Remove unsupported options such as --user or --form, file references such as @payload.json, and shell variables, substitutions or pipelines. Close all quotes and use a backslash before each continued line.',
+  'tool.sha256Hash.localTitle': 'Local hashing:',
+  'tool.sha256Hash.localDescription':
+    'The hashing code processes text and selected file bytes in your browser; it does not upload them for this calculation.',
+  'tool.sha256Hash.fileMemoryHelp':
+    'Select a local file and compare its digest with a trusted expected checksum. Files are read into browser memory. Large files can exhaust memory; use a local terminal or the chunked Python example in the guide for large downloads.',
 };

@@ -1339,4 +1339,11 @@ export const zhUi: Record<string, string> = {
   'toolName.user-agent-parser': 'User-Agent 解析器',
   'toolName.uuid-generator': 'UUID 生成器',
   'toolName.yaml-json': 'YAML ↔ JSON 转换器',
+  'tool.curl.converterError':
+    '无法转换此命令。请使用一个 HTTP(S) URL 以及受支持的 request、header、data、location 或 compressed 选项。移除 --user、--form、@payload.json 等文件引用以及 shell 变量、替换和管道。闭合引号，并在每个续行换行符前使用反斜杠。',
+  'tool.sha256Hash.localTitle': '本地哈希计算：',
+  'tool.sha256Hash.localDescription':
+    '哈希代码在浏览器中处理文本和所选文件的字节，不会为了此计算上传它们。',
+  'tool.sha256Hash.fileMemoryHelp':
+    '选择本地文件，并将其摘要与可信的预期校验和进行比较。文件会读入浏览器内存。大文件可能耗尽内存；请使用本地终端或指南中分块读取的 Python 示例。',
 };

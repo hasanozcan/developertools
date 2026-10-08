@@ -5,6 +5,7 @@ import { expect, test } from '@playwright/test';
 const V7 = /^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 const guideCases = [
   ['tools/crypto/sha256-hash', 'verify-sha256-file-checksum'],
+  ['tools/crypto/file-checksum-comparator', 'verify-sha256-file-checksum'],
   ['tools/encoding/unicode-escape', 'decode-unicode-escapes'],
   ['tools/generators/uuid-generator', 'uuid-v4-vs-v7'],
   ['tools/generators/uuid-v7-generator', 'uuid-v4-vs-v7'],
@@ -138,6 +139,7 @@ test('SHA-256 explains irreversibility first and compares a trusted file checksu
   await expect(explanation).toContainText('trusted expected checksum');
   const tool = page.locator('[data-tool-slot]');
   await tool
+    .getByRole('region', { name: 'Check a local file checksum' })
     .locator('input[type="file"]')
     .first()
     .setInputFiles({
@@ -146,7 +148,7 @@ test('SHA-256 explains irreversibility first and compares a trusted file checksu
       buffer: Buffer.from('abc'),
     });
   const digest = 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad';
-  await expect(tool.locator('code').first()).toHaveText(digest);
+  await expect(tool.getByRole('region', { name: 'Check a local file checksum' }).locator('code')).toHaveText(digest);
   await tool.getByLabel('Expected SHA-256 checksum').fill(digest.toUpperCase());
   await expect(tool).toContainText('Checksum matches this file.');
   await tool.getByLabel('Expected SHA-256 checksum').fill('0'.repeat(64));

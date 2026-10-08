@@ -1395,4 +1395,11 @@ export const frUi: Record<string, string> = {
   'toolName.user-agent-parser': 'Analyseur User-Agent',
   'toolName.uuid-generator': 'Générateur UUID',
   'toolName.yaml-json': 'Convertisseur YAML ↔ JSON',
+  'tool.curl.converterError':
+    'Impossible de convertir cette commande. Utilisez une URL HTTP(S) et les options request, header, data, location ou compressed prises en charge. Retirez --user, --form, les références comme @payload.json et les variables, substitutions ou pipelines du shell. Fermez les guillemets et placez une barre oblique inverse avant chaque retour à la ligne continué.',
+  'tool.sha256Hash.localTitle': 'Hachage local :',
+  'tool.sha256Hash.localDescription':
+    'Le code traite le texte et les octets du fichier sélectionné dans le navigateur ; il ne les téléverse pas pour ce calcul.',
+  'tool.sha256Hash.fileMemoryHelp':
+    'Sélectionnez un fichier local et comparez son empreinte à une somme de contrôle fiable. Les fichiers sont lus en mémoire dans le navigateur. Les gros fichiers peuvent épuiser la mémoire ; utilisez un terminal local ou l’exemple Python par blocs du guide.',
 };

@@ -1391,4 +1391,11 @@ export const trUi: Record<string, string> = {
   'toolName.user-agent-parser': 'User-Agent Ayrıştırıcı',
   'toolName.uuid-generator': 'UUID Oluşturucu',
   'toolName.yaml-json': 'YAML ↔ JSON Dönüştürücü',
+  'tool.curl.converterError':
+    'Komut dönüştürülemedi. Tek bir HTTP(S) URL ve desteklenen request, header, data, location veya compressed seçeneklerini kullanın. --user, --form, @payload.json gibi dosya başvurularını ve kabuk değişkenlerini, ikamelerini veya boru hatlarını kaldırın. Tırnakları kapatın ve devam eden her satırdan önce ters eğik çizgi kullanın.',
+  'tool.sha256Hash.localTitle': 'Yerel hash hesaplama:',
+  'tool.sha256Hash.localDescription':
+    'Hash kodu metni ve seçilen dosya baytlarını tarayıcınızda işler; bu hesaplama için yüklemez.',
+  'tool.sha256Hash.fileMemoryHelp':
+    'Yerel dosyayı seçip özetini güvenilir bir beklenen sağlama toplamıyla karşılaştırın. Dosyalar tarayıcı belleğine okunur. Büyük dosyalar belleği tüketebilir; büyük indirmelerde yerel terminali veya rehberdeki parçalı Python örneğini kullanın.',
 };

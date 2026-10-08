@@ -7,7 +7,7 @@ type Algorithm = (typeof algorithms)[number];
 type Digests = Record<Algorithm, string>;
 
 const success = 'Perfect Match! Computed checksum matches the expected hash.';
-const mismatch = 'No matching hash algorithm found yet for this input.';
+const mismatch = 'Checksum mismatch: none of the computed hashes matches the expected checksum.';
 
 // Independent native oracles: no application checksum code is imported.
 function digests(data: Buffer): Digests {

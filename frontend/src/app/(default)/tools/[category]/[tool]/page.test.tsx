@@ -6,6 +6,7 @@ vi.mock('@/components/tools/ToolRenderer', () => ({ default: () => null }));
 
 import ToolPage from './page';
 import { enhancedTools } from '@/translations/enhancedTools';
+import { translations } from '@/translations';
 import type { ToolSeoSection } from '@/lib/toolSeoContent';
 
 type Props = {
@@ -32,6 +33,19 @@ async function renderToolPage(locale: 'en' | 'tr', tool = 'json-formatter', cate
 }
 
 describe('ToolPage structured data', () => {
+  it.each([
+    ['curl-to-fetch', 'utilities'],
+    ['sha256-hash', 'crypto'],
+    ['file-checksum-comparator', 'crypto'],
+  ])('passes the winning English %s introduction even when the client UI dictionary omits it', async (slug, category) => {
+    const { wrapperProps, byType } = await renderToolPage('en', slug, category);
+    expect(wrapperProps.defaultName).toBe(translations.en[`toolName.${slug}`]);
+    expect(wrapperProps.defaultDescription).toBe(translations.en[`toolDesc.${slug}`]);
+    expect(byType('WebApplication').name).toBe(wrapperProps.defaultName);
+    expect(wrapperProps.localizedName).toBeUndefined();
+    expect(wrapperProps.localizedDescription).toBeUndefined();
+  });
+
   it('leads SHA-256 with the irreversible-hash explanation and keeps a single existing decode FAQ', async () => {
     const { byType, wrapperProps } = await renderToolPage('en', 'sha256-hash', 'crypto');
     const firstAnswer = (wrapperProps.answerSections as ToolSeoSection[])[0].paragraphs!.join(' ');
@@ -42,6 +56,7 @@ describe('ToolPage structured data', () => {
 
   it.each([
     ['sha256-hash', 'crypto', 'verify-sha256-file-checksum'],
+    ['file-checksum-comparator', 'crypto', 'verify-sha256-file-checksum'],
     ['unicode-escape', 'encoding', 'decode-unicode-escapes'],
     ['uuid-generator', 'generators', 'uuid-v4-vs-v7'],
     ['uuid-v7-generator', 'generators', 'uuid-v4-vs-v7'],

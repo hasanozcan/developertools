@@ -1397,4 +1397,11 @@ export const esUi: Record<string, string> = {
   'toolName.user-agent-parser': 'Analizador de User-Agent',
   'toolName.uuid-generator': 'Generador UUID',
   'toolName.yaml-json': 'Conversor YAML ↔ JSON',
+  'tool.curl.converterError':
+    'No se puede convertir este comando. Use una URL HTTP(S) y opciones request, header, data, location o compressed compatibles. Elimine --user, --form, referencias a archivos como @payload.json y variables, sustituciones o tuberías de shell. Cierre las comillas y use una barra inversa antes de cada salto de línea continuado.',
+  'tool.sha256Hash.localTitle': 'Cálculo local:',
+  'tool.sha256Hash.localDescription':
+    'El código procesa el texto y los bytes del archivo seleccionado en su navegador; no los sube para este cálculo.',
+  'tool.sha256Hash.fileMemoryHelp':
+    'Seleccione un archivo local y compare su hash con una suma de verificación de confianza. Los archivos se leen en la memoria del navegador. Los archivos grandes pueden agotarla; use un terminal local o el ejemplo de Python por bloques de la guía.',
 };

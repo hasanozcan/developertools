@@ -1397,4 +1397,11 @@ export const deUi: Record<string, string> = {
   'toolName.user-agent-parser': 'User-Agent-Parser',
   'toolName.uuid-generator': 'UUID Generator',
   'toolName.yaml-json': 'YAML ↔ JSON Konverter',
+  'tool.curl.converterError':
+    'Dieser Befehl kann nicht konvertiert werden. Verwenden Sie eine HTTP(S)-URL und unterstützte request-, header-, data-, location- oder compressed-Optionen. Entfernen Sie --user, --form, Dateiverweise wie @payload.json sowie Shell-Variablen, Ersetzungen und Pipelines. Schließen Sie alle Anführungszeichen und setzen Sie vor jeden fortgesetzten Zeilenumbruch einen Backslash.',
+  'tool.sha256Hash.localTitle': 'Lokale Hash-Berechnung:',
+  'tool.sha256Hash.localDescription':
+    'Der Hash-Code verarbeitet Text und ausgewählte Dateibytes im Browser und lädt sie für diese Berechnung nicht hoch.',
+  'tool.sha256Hash.fileMemoryHelp':
+    'Wählen Sie eine lokale Datei und vergleichen Sie ihren Hash mit einer vertrauenswürdigen Prüfsumme. Dateien werden in den Browserspeicher gelesen. Große Dateien können den Speicher erschöpfen; verwenden Sie ein lokales Terminal oder das blockweise Python-Beispiel im Leitfaden.',
 };

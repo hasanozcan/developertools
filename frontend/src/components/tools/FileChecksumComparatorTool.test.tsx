@@ -175,12 +175,17 @@ describe('FileChecksumComparatorTool source changes', () => {
     const view = await readyControlledTool();
     const bytes = encoder.encode('abc');
     selectFile(view.file, 'pending.bin', bytes);
+    expect(screen.getByRole('status')).toHaveTextContent('Reading and hashing the selected file...');
+    expect(screen.queryByText(/Checksum mismatch:/)).not.toBeInTheDocument();
     await completeRead(view.readers[0], bytes);
     const fileDigest = view.pending[1];
     fireEvent.change(view.expected, { target: { value: md5(defaultText) } });
     fireEvent.change(view.expected, { target: { value: ` ${md5(bytes).toUpperCase()} ` } });
     expect(hashes(view.container)).toEqual([]);
     expect(screen.queryByText(/Perfect Match!/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Checksum mismatch:/)).not.toBeInTheDocument();
+    expect(screen.queryByText('Mismatch', { exact: true })).not.toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent('Comparison will appear when hashing finishes.');
     expect(view.pending).toHaveLength(2);
     await finishDigest(fileDigest);
     await waitFor(() => expect(screen.getByText(/Perfect Match!/)).toBeInTheDocument());
@@ -341,6 +346,19 @@ describe('FileChecksumComparatorTool source changes', () => {
 });
 
 describe('FileChecksumComparatorTool', () => {
+  it('loads exactly abc and allows the same example to be selected again without clearing results', async () => {
+    const { container } = render(<FileChecksumComparatorTool />);
+    fireEvent.click(screen.getByRole('button', { name: 'Load abc example' }));
+    expect(screen.getByLabelText('Input Mode (Text or File)')).toHaveValue('abc');
+    const digest = createHash('sha256').update('abc').digest('hex');
+    await waitFor(() => expect(screen.getByLabelText('SHA-256 checksum')).toHaveValue(digest));
+    const originalHashes = hashes(container);
+    expect(originalHashes).toHaveLength(6);
+    fireEvent.click(screen.getByRole('button', { name: 'Load abc example' }));
+    expect(hashes(container)).toEqual(originalHashes);
+    expect(screen.queryByText('Hashing UTF-8 text...')).not.toBeInTheDocument();
+  });
+
   it('preserves file hashes when the expected checksum is pasted, changed and cleared', async () => {
     const calculate = vi.spyOn(checksumLibrary, 'calculateAllChecksums');
     const { container } = render(<FileChecksumComparatorTool />);
@@ -366,11 +384,11 @@ describe('FileChecksumComparatorTool', () => {
       expect(hashes()).toEqual(originalHashes);
     }
     fireEvent.change(expected, { target: { value: '0'.repeat(64) } });
-    await waitFor(() => expect(screen.getByText(/No matching hash/)).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText(/Checksum mismatch:/)).toBeInTheDocument());
     expect(hashes()).toEqual(originalHashes);
     expect(calculate).toHaveBeenCalledTimes(calculations);
     fireEvent.change(expected, { target: { value: '' } });
-    await waitFor(() => expect(screen.queryByText(/No matching hash/)).not.toBeInTheDocument());
+    await waitFor(() => expect(screen.queryByText(/Checksum mismatch:/)).not.toBeInTheDocument());
     expect(hashes()).toEqual(originalHashes);
   });
 });
