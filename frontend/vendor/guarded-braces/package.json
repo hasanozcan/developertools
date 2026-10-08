@@ -1,0 +1,29 @@
+{
+  "name": "@devstools/guarded-braces",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Internal braces 3.0.3 source backport with bounded parser and AST traversal",
+  "license": "MIT",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "lib",
+    "LICENSE",
+    "PATCH-NOTES.txt",
+    "UPSTREAM.json",
+    "PATCH-INTEGRITY.json",
+    "REVIEW.txt"
+  ],
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "dependencies": {
+    "fill-range": "7.1.1"
+  },
+  "devstoolsUpstream": {
+    "name": "braces",
+    "version": "3.0.3",
+    "source": "https://github.com/micromatch/braces/tree/3.0.3",
+    "advisory": "https://github.com/advisories/GHSA-vfj7-8cjw-p6xm"
+  }
+}

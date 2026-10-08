@@ -1,0 +1,36 @@
+Independent local review, 2026-10-08
+
+A separate local Codex reviewer examined the upstream-derived implementation,
+the final eight runtime modules in PATCH-INTEGRITY.json, licensing/provenance,
+and the actual installed dependency mapping. The review cleared the source
+and mapping with no open findings for GHSA-vfj7-8cjw-p6xm / CVE-2026-93687.
+This is an automated independent code review, not an upstream maintainer
+release or an external certification.
+
+The reviewer independently verified 82 maintained source tests, 56 additional
+boundary/AST/passive-option checks, 9 create-dispatch/cycle checks, and 7
+integrity/provenance/line-ending controls. Across 412164 API comparisons of
+11449 patterns, no previously successful output changed and no supported
+input gained a rejection. Primitive-option compatibility also passed.
+
+Review found and resolved passive numeric-coercion bypasses in AST counters
+and range/regex options, a NaN maxLength bypass, caller-controlled create
+length coercion, and an intermediate valid-pattern rejection. Child cycles,
+deep caller-created ASTs, parser cleanup, scheduled-visit bounds, and foreign
+parent chains were examined. Every reviewed runtime hash matches the tracked
+manifest, with LF normalization for cross-platform checkouts.
+
+After clean npm ci, root braces, chokidar 3.6.0, and micromatch 4.0.8 resolved
+to this private package. No registry braces copy remained. All 668 unrelated
+lock entries, including all 42 Linux entries, retained their exact metadata.
+Installed glob, watcher, Next root-directory settings, and lint behavior
+passed; all 425 configured lint rules remained unchanged. CSS stayed exactly
+130322 bytes, SHA-256:
+f75a58533c99c5130c0400b5c19c37a3e968af92d0bcd457d280e7f16b11ffc5
+
+The audit gate retains its original thresholds and adds verification of all
+installed consumer paths, reviewed source bytes, original MIT license, and
+adversarial behavior. Registry signatures do not cover this private source;
+its identity, upstream advisory, and maintenance responsibility remain
+explicit. See UPSTREAM.json and PATCH-NOTES.txt. Complete project checks and
+deployment verification remain release requirements beyond this review.

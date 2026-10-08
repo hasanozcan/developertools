@@ -1,0 +1,14 @@
+{
+  "algorithm": "sha256-normalized-lf",
+  "advisory": "GHSA-vfj7-8cjw-p6xm",
+  "sha256": {
+    "index.js": "e6edd7a92e328d5b77a72c3f6f558ec701f84c67a92f2445459a8d4b325306aa",
+    "lib/compile.js": "d1c204ed1c44792396e345bf7b2f740705667051c9acfdab80d85f6217d2b20a",
+    "lib/constants.js": "c18ac5adb57308f1ce42a28552da3a31f5d83709743ebd9a636336813a744d4b",
+    "lib/expand.js": "fbb9617095b39058d73a028b3d9204ae8f24070935d8497e917b55ee5b30411d",
+    "lib/guard.js": "00399cee8a07cf8a2f3518ad414a13a5eb13aa55eea25cf612df44c4a18adf25",
+    "lib/parse.js": "15d2a0a60256d9c12b6265d408a927c911edc179beb9ccd101c1f75fee84b7ba",
+    "lib/stringify.js": "2b44658f3677101b2144469ef0df23c990322a1ebe60d389bb3c98e4eb905700",
+    "lib/utils.js": "b5a7596aa67730412b3c029ef09e84e6b67b8e445cffd35d1d295549c89066c7"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "sourcePackage": "braces",
+  "sourceVersion": "3.0.3",
+  "sourceRepository": "https://github.com/micromatch/braces/tree/3.0.3",
+  "resolved": "https://registry.npmjs.org/braces/-/braces-3.0.3.tgz",
+  "integrity": "sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==",
+  "license": "MIT",
+  "advisory": {
+    "id": "GHSA-vfj7-8cjw-p6xm",
+    "cve": "CVE-2026-93687",
+    "url": "https://github.com/advisories/GHSA-vfj7-8cjw-p6xm",
+    "affectedUpstreamVersions": "<=3.0.3",
+    "upstreamPatchedVersion": null,
+    "checkedOn": "2026-10-08",
+    "localMitigation": "Bound parser nesting and preflight recursive AST walks; resolve expansion ancestors from the active traversal."
+  },
+  "sourceFiles": [
+    {
+      "file": "index.js",
+      "sha256": "332ea07c7b006361aad12aa994ca75dc1db8e8382b884909e2f38f10b85c88a4"
+    },
+    {
+      "file": "LICENSE",
+      "sha256": "35bdd8a44339719441900fb50fbefc5e2dca1ca662cbaed7a687de842c8b70f2"
+    },
+    {
+      "file": "lib/compile.js",
+      "sha256": "dc98f22eee3d511785d92a00758d5f0d48efed5f5813bdecc2de430c529b5c9f"
+    },
+    {
+      "file": "lib/constants.js",
+      "sha256": "c18ac5adb57308f1ce42a28552da3a31f5d83709743ebd9a636336813a744d4b"
+    },
+    {
+      "file": "lib/expand.js",
+      "sha256": "41ccc196ebfa7b7781a634e721eb744e4e7bcb54cba427a7e3d6806a1b9e58f7"
+    },
+    {
+      "file": "lib/parse.js",
+      "sha256": "e572166565f15fa6ad9865ae49d678218e32aabfd1b3720f6d0d43d39800d310"
+    },
+    {
+      "file": "lib/stringify.js",
+      "sha256": "379f22d77bfa1478341ccd49c5e4267464aabcbba03558bab332aac23fc6f23a"
+    },
+    {
+      "file": "lib/utils.js",
+      "sha256": "b5a7596aa67730412b3c029ef09e84e6b67b8e445cffd35d1d295549c89066c7"
+    }
+  ]
+}

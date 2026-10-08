@@ -1,0 +1,603 @@
+{
+  "upstream": "braces@3.0.3",
+  "cases": [
+    {
+      "pattern": "",
+      "options": {},
+      "compiled": "",
+      "expanded": [],
+      "stringified": ""
+    },
+    {
+      "pattern": "",
+      "options": {
+        "keepEscaping": true
+      },
+      "compiled": "",
+      "expanded": [],
+      "stringified": ""
+    },
+    {
+      "pattern": "",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "",
+      "expanded": [],
+      "stringified": ""
+    },
+    {
+      "pattern": "abc",
+      "options": {},
+      "compiled": "abc",
+      "expanded": ["abc"],
+      "stringified": "abc"
+    },
+    {
+      "pattern": "abc",
+      "options": {
+        "keepEscaping": true
+      },
+      "compiled": "abc",
+      "expanded": ["abc"],
+      "stringified": "abc"
+    },
+    {
+      "pattern": "abc",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "abc",
+      "expanded": ["abc"],
+      "stringified": "abc"
+    },
+    {
+      "pattern": "{a,b}",
+      "options": {},
+      "compiled": "(a|b)",
+      "expanded": ["a", "b"],
+      "stringified": "{a,b}"
+    },
+    {
+      "pattern": "{a,b}",
+      "options": {
+        "keepEscaping": true
+      },
+      "compiled": "(a|b)",
+      "expanded": ["a", "b"],
+      "stringified": "{a,b}"
+    },
+    {
+      "pattern": "{a,b}",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "(a|b)",
+      "expanded": ["a", "b"],
+      "stringified": "{a,b}"
+    },
+    {
+      "pattern": "src/{app,components}/**/*.{js,ts,tsx,mdx}",
+      "options": {},
+      "compiled": "src/(app|components)/**/*.(js|ts|tsx|mdx)",
+      "expanded": [
+        "src/app/**/*.js",
+        "src/app/**/*.ts",
+        "src/app/**/*.tsx",
+        "src/app/**/*.mdx",
+        "src/components/**/*.js",
+        "src/components/**/*.ts",
+        "src/components/**/*.tsx",
+        "src/components/**/*.mdx"
+      ],
+      "stringified": "src/{app,components}/**/*.{js,ts,tsx,mdx}"
+    },
+    {
+      "pattern": "src/{app,components}/**/*.{js,ts,tsx,mdx}",
+      "options": {
+        "keepEscaping": true
+      },
+      "compiled": "src/(app|components)/**/*.(js|ts|tsx|mdx)",
+      "expanded": [
+        "src/app/**/*.js",
+        "src/app/**/*.ts",
+        "src/app/**/*.tsx",
+        "src/app/**/*.mdx",
+        "src/components/**/*.js",
+        "src/components/**/*.ts",
+        "src/components/**/*.tsx",
+        "src/components/**/*.mdx"
+      ],
+      "stringified": "src/{app,components}/**/*.{js,ts,tsx,mdx}"
+    },
+    {
+      "pattern": "src/{app,components}/**/*.{js,ts,tsx,mdx}",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "src/(app|components)/**/*.(js|ts|tsx|mdx)",
+      "expanded": [
+        "src/app/**/*.js",
+        "src/app/**/*.ts",
+        "src/app/**/*.tsx",
+        "src/app/**/*.mdx",
+        "src/components/**/*.js",
+        "src/components/**/*.ts",
+        "src/components/**/*.tsx",
+        "src/components/**/*.mdx"
+      ],
+      "stringified": "src/{app,components}/**/*.{js,ts,tsx,mdx}"
+    },
+    {
+      "pattern": "src/{a,{b,c}}/file-{1..3}.ts",
+      "options": {},
+      "compiled": "src/(a|(b|c))/file-([1-3]).ts",
+      "expanded": [
+        "src/a/file-1.ts",
+        "src/a/file-2.ts",
+        "src/a/file-3.ts",
+        "src/b/file-1.ts",
+        "src/b/file-2.ts",
+        "src/b/file-3.ts",
+        "src/c/file-1.ts",
+        "src/c/file-2.ts",
+        "src/c/file-3.ts"
+      ],
+      "stringified": "src/{a,{b,c}}/file-{1..3}.ts"
+    },
+    {
+      "pattern": "src/{a,{b,c}}/file-{1..3}.ts",
+      "options": {
+        "keepEscaping": true
+      },
+      "compiled": "src/(a|(b|c))/file-([1-3]).ts",
+      "expanded": [
+        "src/a/file-1.ts",
+        "src/a/file-2.ts",
+        "src/a/file-3.ts",
+        "src/b/file-1.ts",
+        "src/b/file-2.ts",
+        "src/b/file-3.ts",
+        "src/c/file-1.ts",
+        "src/c/file-2.ts",
+        "src/c/file-3.ts"
+      ],
+      "stringified": "src/{a,{b,c}}/file-{1..3}.ts"
+    },
+    {
+      "pattern": "src/{a,{b,c}}/file-{1..3}.ts",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "src/(a|(b|c))/file-([1-3]).ts",
+      "expanded": [
+        "src/a/file-1.ts",
+        "src/a/file-2.ts",
+        "src/a/file-3.ts",
+        "src/b/file-1.ts",
+        "src/b/file-2.ts",
+        "src/b/file-3.ts",
+        "src/c/file-1.ts",
+        "src/c/file-2.ts",
+        "src/c/file-3.ts"
+      ],
+      "stringified": "src/{a,{b,c}}/file-{1..3}.ts"
+    },
+    {
+      "pattern": "{01..03}",
+      "options": {},
+      "compiled": "(0[1-3])",
+      "expanded": ["01", "02", "03"],
+      "stringified": "{01..03}"
+    },
+    {
+      "pattern": "{01..03}",
+      "options": {
+        "keepEscaping": true
+      },
+      "compiled": "(0[1-3])",
+      "expanded": ["01", "02", "03"],
+      "stringified": "{01..03}"
+    },
+    {
+      "pattern": "{01..03}",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "(0[1-3])",
+      "expanded": ["01", "02", "03"],
+      "stringified": "{01..03}"
+    },
+    {
+      "pattern": "{a..e..2}",
+      "options": {},
+      "compiled": "(a|c|e)",
+      "expanded": ["a", "c", "e"],
+      "stringified": "{a..e..2}"
+    },
+    {
+      "pattern": "{a..e..2}",
+      "options": {
+        "keepEscaping": true
+      },
+      "compiled": "(a|c|e)",
+      "expanded": ["a", "c", "e"],
+      "stringified": "{a..e..2}"
+    },
+    {
+      "pattern": "{a..e..2}",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "(a|c|e)",
+      "expanded": ["a", "c", "e"],
+      "stringified": "{a..e..2}"
+    },
+    {
+      "pattern": "file-{5..1..2}",
+      "options": {},
+      "compiled": "file-(1|3|5)",
+      "expanded": ["file-5", "file-3", "file-1"],
+      "stringified": "file-{5..1..2}"
+    },
+    {
+      "pattern": "file-{5..1..2}",
+      "options": {
+        "keepEscaping": true
+      },
+      "compiled": "file-(1|3|5)",
+      "expanded": ["file-5", "file-3", "file-1"],
+      "stringified": "file-{5..1..2}"
+    },
+    {
+      "pattern": "file-{5..1..2}",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "file-(1|3|5)",
+      "expanded": ["file-5", "file-3", "file-1"],
+      "stringified": "file-{5..1..2}"
+    },
+    {
+      "pattern": "{a,,b,a}",
+      "options": {},
+      "compiled": "(a|b|a)",
+      "expanded": ["a", "", "b", "a"],
+      "stringified": "{a,,b,a}"
+    },
+    {
+      "pattern": "{a,,b,a}",
+      "options": {
+        "keepEscaping": true
+      },
+      "compiled": "(a|b|a)",
+      "expanded": ["a", "", "b", "a"],
+      "stringified": "{a,,b,a}"
+    },
+    {
+      "pattern": "{a,,b,a}",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "(a|b|a)",
+      "expanded": ["a", "b"],
+      "stringified": "{a,,b,a}"
+    },
+    {
+      "pattern": "foo{bar",
+      "options": {},
+      "compiled": "foo{bar",
+      "expanded": ["foo{bar"],
+      "stringified": "foo{bar"
+    },
+    {
+      "pattern": "foo{bar",
+      "options": {
+        "keepEscaping": true
+      },
+      "compiled": "foo{bar",
+      "expanded": ["foo{bar"],
+      "stringified": "foo{bar"
+    },
+    {
+      "pattern": "foo{bar",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "foo{bar",
+      "expanded": ["foo{bar"],
+      "stringified": "foo{bar"
+    },
+    {
+      "pattern": "foo(bar",
+      "options": {},
+      "compiled": "foo(bar",
+      "expanded": ["foo(bar"],
+      "stringified": "foo(bar"
+    },
+    {
+      "pattern": "foo(bar",
+      "options": {
+        "keepEscaping": true
+      },
+      "compiled": "foo(bar",
+      "expanded": ["foo(bar"],
+      "stringified": "foo(bar"
+    },
+    {
+      "pattern": "foo(bar",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "foo(bar",
+      "expanded": ["foo(bar"],
+      "stringified": "foo(bar"
+    },
+    {
+      "pattern": "[{}]{a,b}",
+      "options": {},
+      "compiled": "[{}](a|b)",
+      "expanded": ["[{}]a", "[{}]b"],
+      "stringified": "[{}]{a,b}"
+    },
+    {
+      "pattern": "[{}]{a,b}",
+      "options": {
+        "keepEscaping": true
+      },
+      "compiled": "[{}](a|b)",
+      "expanded": ["[{}]a", "[{}]b"],
+      "stringified": "[{}]{a,b}"
+    },
+    {
+      "pattern": "[{}]{a,b}",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "[{}](a|b)",
+      "expanded": ["[{}]a", "[{}]b"],
+      "stringified": "[{}]{a,b}"
+    },
+    {
+      "pattern": "\\{literal\\}/{a,b}",
+      "options": {},
+      "compiled": "{literal}/(a|b)",
+      "expanded": ["{literal}/a", "{literal}/b"],
+      "stringified": "{literal}/{a,b}"
+    },
+    {
+      "pattern": "\\{literal\\}/{a,b}",
+      "options": {
+        "keepEscaping": true
+      },
+      "compiled": "\\{literal\\}/(a|b)",
+      "expanded": ["\\{literal\\}/a", "\\{literal\\}/b"],
+      "stringified": "\\{literal\\}/{a,b}"
+    },
+    {
+      "pattern": "\\{literal\\}/{a,b}",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "{literal}/(a|b)",
+      "expanded": ["{literal}/a", "{literal}/b"],
+      "stringified": "{literal}/{a,b}"
+    },
+    {
+      "pattern": "C:/project/{src,lib}/**/*.{ts,tsx}",
+      "options": {},
+      "compiled": "C:/project/(src|lib)/**/*.(ts|tsx)",
+      "expanded": [
+        "C:/project/src/**/*.ts",
+        "C:/project/src/**/*.tsx",
+        "C:/project/lib/**/*.ts",
+        "C:/project/lib/**/*.tsx"
+      ],
+      "stringified": "C:/project/{src,lib}/**/*.{ts,tsx}"
+    },
+    {
+      "pattern": "C:/project/{src,lib}/**/*.{ts,tsx}",
+      "options": {
+        "keepEscaping": true
+      },
+      "compiled": "C:/project/(src|lib)/**/*.(ts|tsx)",
+      "expanded": [
+        "C:/project/src/**/*.ts",
+        "C:/project/src/**/*.tsx",
+        "C:/project/lib/**/*.ts",
+        "C:/project/lib/**/*.tsx"
+      ],
+      "stringified": "C:/project/{src,lib}/**/*.{ts,tsx}"
+    },
+    {
+      "pattern": "C:/project/{src,lib}/**/*.{ts,tsx}",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "C:/project/(src|lib)/**/*.(ts|tsx)",
+      "expanded": [
+        "C:/project/src/**/*.ts",
+        "C:/project/src/**/*.tsx",
+        "C:/project/lib/**/*.ts",
+        "C:/project/lib/**/*.tsx"
+      ],
+      "stringified": "C:/project/{src,lib}/**/*.{ts,tsx}"
+    },
+    {
+      "pattern": "{hello,\"quoted,word\"}",
+      "options": {},
+      "compiled": "(hello|quoted,word)",
+      "expanded": ["hello", "quoted,word"],
+      "stringified": "{hello,quoted,word}"
+    },
+    {
+      "pattern": "{hello,\"quoted,word\"}",
+      "options": {
+        "keepEscaping": true
+      },
+      "compiled": "(hello|quoted,word)",
+      "expanded": ["hello", "quoted,word"],
+      "stringified": "{hello,quoted,word}"
+    },
+    {
+      "pattern": "{hello,\"quoted,word\"}",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "(hello|quoted,word)",
+      "expanded": ["hello", "quoted,word"],
+      "stringified": "{hello,quoted,word}"
+    },
+    {
+      "pattern": "${a,b}",
+      "options": {},
+      "compiled": "${a,b}",
+      "expanded": ["${a,b}"],
+      "stringified": "${a,b}"
+    },
+    {
+      "pattern": "${a,b}",
+      "options": {
+        "keepEscaping": true
+      },
+      "compiled": "${a,b}",
+      "expanded": ["${a,b}"],
+      "stringified": "${a,b}"
+    },
+    {
+      "pattern": "${a,b}",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "${a,b}",
+      "expanded": ["${a,b}"],
+      "stringified": "${a,b}"
+    },
+    {
+      "pattern": "{a,{b,{c,d}}}",
+      "options": {},
+      "compiled": "(a|(b|(c|d)))",
+      "expanded": ["a", "b", "c", "d"],
+      "stringified": "{a,{b,{c,d}}}"
+    },
+    {
+      "pattern": "{a,{b,{c,d}}}",
+      "options": {
+        "keepEscaping": true
+      },
+      "compiled": "(a|(b|(c|d)))",
+      "expanded": ["a", "b", "c", "d"],
+      "stringified": "{a,{b,{c,d}}}"
+    },
+    {
+      "pattern": "{a,{b,{c,d}}}",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "(a|(b|(c|d)))",
+      "expanded": ["a", "b", "c", "d"],
+      "stringified": "{a,{b,{c,d}}}"
+    },
+    {
+      "pattern": "{a,(b,c)}",
+      "options": {},
+      "compiled": "(a|(b|c))",
+      "expanded": ["a", "(b,c)"],
+      "stringified": "{a,(b,c)}"
+    },
+    {
+      "pattern": "{a,(b,c)}",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "(a|(b|c))",
+      "expanded": ["a", "(b,c)"],
+      "stringified": "{a,(b,c)}"
+    },
+    {
+      "pattern": "{a,(b,c)}",
+      "options": {
+        "keepQuotes": true,
+        "keepEscaping": true,
+        "escapeInvalid": true
+      },
+      "compiled": "(a|(b|c))",
+      "expanded": ["a", "(b,c)"],
+      "stringified": "{a,(b,c)}"
+    },
+    {
+      "pattern": "{a,(b,c),d}",
+      "options": {},
+      "compiled": "(a|(b|c)|d)",
+      "expanded": ["a", "(b,c)", "d"],
+      "stringified": "{a,(b,c),d}"
+    },
+    {
+      "pattern": "{a,(b,c),d}",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "(a|(b|c)|d)",
+      "expanded": ["a", "(b,c)", "d"],
+      "stringified": "{a,(b,c),d}"
+    },
+    {
+      "pattern": "{a,(b,c),d}",
+      "options": {
+        "keepQuotes": true,
+        "keepEscaping": true,
+        "escapeInvalid": true
+      },
+      "compiled": "(a|(b|c)|d)",
+      "expanded": ["a", "(b,c)", "d"],
+      "stringified": "{a,(b,c),d}"
+    },
+    {
+      "pattern": "{a,(b,{c,d})}",
+      "options": {},
+      "compiled": "(a|(b|(c|d)))",
+      "expanded": ["a", "(b,c)", "(b,d)"],
+      "stringified": "{a,(b,{c,d})}"
+    },
+    {
+      "pattern": "{a,(b,{c,d})}",
+      "options": {
+        "noempty": true,
+        "nodupes": true
+      },
+      "compiled": "(a|(b|(c|d)))",
+      "expanded": ["a", "(b,c)", "(b,d)"],
+      "stringified": "{a,(b,{c,d})}"
+    },
+    {
+      "pattern": "{a,(b,{c,d})}",
+      "options": {
+        "keepQuotes": true,
+        "keepEscaping": true,
+        "escapeInvalid": true
+      },
+      "compiled": "(a|(b|(c|d)))",
+      "expanded": ["a", "(b,c)", "(b,d)"],
+      "stringified": "{a,(b,{c,d})}"
+    }
+  ]
+}
