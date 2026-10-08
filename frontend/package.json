@@ -39,11 +39,11 @@
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
     "csso": "^5.0.5",
-    "dompurify": "^3.4.13",
+    "dompurify": "^3.4.16",
     "js-yaml": "^5.3.0",
     "lucide-react": "^0.400.0",
     "marked": "^12.0.0",
-    "next": "^16.3.6",
+    "next": "16.3.8",
     "nodemailer": "^10.0.13",
     "pdf-lib": "^1.17.1",
     "qrcode": "^1.5.3",
@@ -83,6 +83,12 @@
   "overrides": {
     "next": {
       "postcss": "8.5.26"
+    },
+    "tailwindcss": {
+      "postcss-selector-parser": "7.1.6"
+    },
+    "postcss-nested": {
+      "postcss-selector-parser": "7.1.6"
     }
   }
 }
