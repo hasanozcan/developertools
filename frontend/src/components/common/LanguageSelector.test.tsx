@@ -11,6 +11,23 @@ vi.mock('next/navigation', () => ({
 }));
 
 describe('LanguageSelector flags', () => {
+  it('returns option focus to the open selector on Escape when another selector is mounted', () => {
+    render(
+      <LanguageProvider initialLocale="en">
+        <LanguageSelector />
+        <LanguageSelector />
+      </LanguageProvider>,
+    );
+    const triggers = screen.getAllByRole('button', { name: /current: english/i });
+    fireEvent.click(triggers[1]);
+    const option = screen.getByRole('option', { name: /Français/ });
+    option.focus();
+    expect(option).toHaveFocus();
+    fireEvent.keyDown(option, { key: 'Escape' });
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+    expect(triggers[1]).toHaveFocus();
+  });
+
   it('points every flag at a small self-hosted SVG', () => {
     for (const url of Object.values(languageFlagUrls)) {
       expect(url).toMatch(/^\/flags\/[a-z]{2}\.svg$/);

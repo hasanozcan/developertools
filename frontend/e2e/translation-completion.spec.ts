@@ -16,6 +16,7 @@ import { zhPageCopy } from '../src/translations/pageCopy/zh';
 import { interpolateText, textTranslationKey } from '../src/lib/localizedText';
 import { toolPageContent } from '../src/lib/toolPageContent';
 import { removeTemplatedDefinitionFaq } from '../src/lib/toolSeoContent';
+import { languageNames } from '../src/context/LanguageContext';
 
 const dictionaries = { en: enUi, tr: trUi, de: deUi, es: esUi, fr: frUi, ru: ruUi, zh: zhUi };
 const pages = {
@@ -48,6 +49,63 @@ test.beforeEach(async ({ context, baseURL }) => {
   await context.route('**/*', (route) =>
     new URL(route.request().url()).origin === origin ? route.continue() : route.abort(),
   );
+});
+
+test('mobile menu changes language by keyboard and preserves the current tool', async ({
+  page,
+}) => {
+  for (const viewport of [
+    { width: 320, height: 568 },
+    { width: 390, height: 640 },
+  ]) {
+    await page.setViewportSize(viewport);
+    for (const locale of locales) {
+      const start = locale === 'en' ? 'tr' : 'en';
+      const path = '/tools/utilities/curl-to-fetch';
+      await page.goto(localPath(start, path));
+      const menuButton = page.locator('button[aria-controls="mobile-navigation"]');
+      await menuButton.focus();
+      await page.keyboard.press('Enter');
+      const navigation = page.locator('#mobile-navigation');
+      await expect(navigation).toBeVisible();
+      const languageButton = navigation.locator('button[aria-haspopup="listbox"]');
+      await expect(languageButton).toBeVisible();
+      await languageButton.focus();
+      await page.keyboard.press('Enter');
+      await expect(navigation.getByRole('listbox')).toBeVisible();
+      await expect(navigation.getByRole('option').last()).toBeInViewport({ ratio: 1 });
+      await page.keyboard.press('Tab');
+      await expect(navigation.getByRole('option').first()).toBeFocused();
+      await page.keyboard.press('Escape');
+      await expect(navigation.getByRole('listbox')).toHaveCount(0);
+      await expect(languageButton).toBeFocused();
+      await page.keyboard.press('Enter');
+      for (let i = 0; i <= locales.indexOf(locale); i++) await page.keyboard.press('Tab');
+      await expect(
+        navigation.getByRole('option').filter({ hasText: languageNames[locale] }),
+      ).toBeFocused();
+      await page.keyboard.press('Enter');
+      await expect(page).toHaveURL(localPath(locale, path));
+      await expect(page.locator('html')).toHaveAttribute('lang', locale);
+      await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+        translations[locale]['toolName.curl-to-fetch'],
+      );
+      await page.locator('button[aria-controls="mobile-navigation"]').focus();
+      await page.keyboard.press('Enter');
+      await expect(
+        page.locator('#mobile-navigation button[aria-haspopup="listbox"]'),
+      ).toHaveAttribute(
+        'aria-label',
+        interpolateText(dictionaries[locale]['common.currentLanguage'], {
+          selection: dictionaries[locale]['common.selectLanguage'],
+          language: languageNames[locale],
+        }),
+      );
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+        true,
+      );
+    }
+  }
 });
 
 for (const locale of locales) {

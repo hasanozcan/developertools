@@ -570,6 +570,12 @@ export default function Header() {
             id="mobile-navigation"
             className="md:hidden py-4 border-t border-gray-100 dark:border-gray-700"
           >
+            <div className="mb-3 flex items-center justify-between gap-3 border-b border-gray-100 pb-3 dark:border-gray-700">
+              <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                {t('common.selectLanguage')}
+              </span>
+              <LanguageSelector />
+            </div>
             {navigation.map((item, index) => (
               <div
                 key={item.name}

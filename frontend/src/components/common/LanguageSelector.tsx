@@ -33,6 +33,7 @@ export default function LanguageSelector() {
   const [isOpen, setIsOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const listboxId = useId();
 
   useEffect(() => {
@@ -42,8 +43,9 @@ export default function LanguageSelector() {
       }
     }
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') {
+      if (event.key === 'Escape' && isOpen) {
         setIsOpen(false);
+        triggerRef.current?.focus();
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
@@ -52,7 +54,7 @@ export default function LanguageSelector() {
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [isOpen]);
 
   const handleLanguageChange = (lang: Language) => {
     setLanguage(lang);
@@ -64,6 +66,7 @@ export default function LanguageSelector() {
   return (
     <div className="relative" ref={dropdownRef}>
       <button
+        ref={triggerRef}
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-1.5 p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
         title={t('common.selectLanguage') || 'Select Language'}
