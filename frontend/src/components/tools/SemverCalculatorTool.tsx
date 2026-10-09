@@ -61,7 +61,7 @@ export default function SemverCalculatorTool() {
           <div className="flex items-center gap-2 text-xs font-bold">
             {isMatch ? <CheckCircle className="w-4 h-4 text-emerald-600" /> : <XCircle className="w-4 h-4 text-red-600" />}
             <span>
-              {t("tool.uuidGenerator.version")}<code className="font-mono bg-white/60 dark:bg-black/30 px-1.5 py-0.5 rounded">{version}</code> {isMatch ? t("uiText.46131b1a") : t("uiText.d86419b0")} {' ' + t("tool.cronParser.rangeValue") + ' '}<code className="font-mono bg-white/60 dark:bg-black/30 px-1.5 py-0.5 rounded">{testRange}</code>
+              {t("tool.uuidGenerator.version")} <code className="font-mono bg-white/60 dark:bg-black/30 px-1.5 py-0.5 rounded">{version}</code> {isMatch ? t("uiText.46131b1a") : t("uiText.d86419b0")} {' ' + t("tool.cronParser.rangeValue") + ' '}<code className="font-mono bg-white/60 dark:bg-black/30 px-1.5 py-0.5 rounded">{testRange}</code>
             </span>
           </div>
         </div>

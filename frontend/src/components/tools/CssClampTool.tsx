@@ -117,7 +117,7 @@ export default function CssClampTool() {
               </button>
             </div>
             <div className="rounded-2xl bg-slate-50 p-4 font-mono text-sm text-indigo-600 dark:bg-slate-800 dark:text-indigo-300 select-all">
-              {t("uiText.a644052c")}{clampCss};
+              {t("uiText.a644052c")} {clampCss};
             </div>
           </div>
 
@@ -147,7 +147,7 @@ export default function CssClampTool() {
               {t("uiText.6ee8ed6d")}</span>
           </div>
           <span className="text-xs font-mono font-semibold text-indigo-600 dark:text-indigo-400">
-            {t("uiText.1703d29b")}{previewWidth}{t("uiText.b588d516") + ' '}{currentCalculatedPx}px
+            {t("uiText.1703d29b")} {previewWidth}{t("uiText.b588d516") + ' '}{currentCalculatedPx}px
           </span>
         </div>
 
@@ -167,7 +167,7 @@ export default function CssClampTool() {
           >
             {t("uiText.ecaf981a")}</p>
           <p className="text-xs text-slate-400 mt-2 font-mono">
-            {t("uiText.a84885fb")}{previewWidth}px
+            {t("uiText.a84885fb")} {previewWidth}px
           </p>
         </div>
       </div>

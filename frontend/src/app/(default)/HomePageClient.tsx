@@ -795,7 +795,17 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
               {hasMore && (
                 <div className="mt-10 flex flex-col items-center justify-center gap-3">
                   <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">
-                    {interpolateText(t('home.showingTools'), { shown: displayedGridTools.length, total: filteredTools.length })}
+                    {t('home.showingTools')
+                      .split(/(\{shown\})/)
+                      .map((part, index) =>
+                        part === '{shown}' ? (
+                          <span key={index} className="text-indigo-600 dark:text-indigo-400 font-bold">
+                            {displayedGridTools.length}
+                          </span>
+                        ) : (
+                          interpolateText(part, { total: filteredTools.length })
+                        ),
+                      )}
                   </div>
                   <div className="flex gap-2">
                     <button
@@ -809,7 +819,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
                       onClick={() => setVisibleCount(filteredTools.length)}
                       className="inline-flex items-center gap-1.5 rounded-2xl border border-slate-200/80 bg-white/80 px-4 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200"
                     >
-                      <span>{t("uiText.1740cf15")}</span>
+                      <span>{interpolateText(t('home.showAll'), { count: filteredTools.length })}</span>
                     </button>
                   </div>
                 </div>

@@ -408,7 +408,7 @@ export const intentionalEnglish: Readonly<
     },
     {
       key: 'uiText.2ba51521',
-      value: '&copy;',
+      value: '©',
       reason:
         'Çalıştırılabilir/parçalı kod, örnek veri, tanımlayıcı veya test girdisi; örneği ve beklenen çıktıyı değiştirmemek için korunur.',
     },
@@ -1923,7 +1923,7 @@ export const intentionalEnglish: Readonly<
     },
     {
       key: 'uiText.2ba51521',
-      value: '&copy;',
+      value: '©',
       reason: 'HTML copyright entity must remain literal.',
     },
     {
@@ -3548,7 +3548,7 @@ export const intentionalEnglish: Readonly<
     },
     {
       key: 'uiText.2ba51521',
-      value: '&copy;',
+      value: '©',
       reason: 'Literal HTML character reference for the copyright symbol.',
     },
     {
@@ -5133,7 +5133,7 @@ export const intentionalEnglish: Readonly<
     },
     {
       key: 'uiText.2ba51521',
-      value: '&copy;',
+      value: '©',
       reason:
         'Technical identifier, protocol/schema keyword, product/API name, code/data sample, keyboard shortcut, unit, or conventional abbreviation preserved exactly.',
     },
@@ -6596,7 +6596,7 @@ export const intentionalEnglish: Readonly<
     },
     {
       key: 'uiText.2ba51521',
-      value: '&copy;',
+      value: '©',
       reason: 'Literal HTML copyright entity from the source, preserved exactly.',
     },
     {
@@ -7739,6 +7739,12 @@ export const intentionalEnglish: Readonly<
         'Literal API member, directive, property, header, media type, or code fragment; preserve exact syntax.',
     },
     {
+      key: 'uiText.11e991fd',
+      value: 'Devs',
+      reason:
+        'Site identity: the copyright name Developer Tools and the two Devs / Tools logo fragments retain the brand spelling.',
+    },
+    {
       key: 'uiText.128fef66',
       value: 'Top-K:',
       reason:
@@ -7894,7 +7900,7 @@ export const intentionalEnglish: Readonly<
     },
     {
       key: 'uiText.2ba51521',
-      value: '&copy;',
+      value: '©',
       reason:
         'Standard product, library, protocol, acronym, or data-format name; retain canonical naming so the selected technology remains recognizable.',
     },
@@ -8356,6 +8362,12 @@ export const intentionalEnglish: Readonly<
       value: 'summary_large_image',
       reason:
         'Canonical enum/token value emitted by generated JSON, XML, metadata, or schema; retain the interoperable value.',
+    },
+    {
+      key: 'uiText.950196fc',
+      value: 'Tools',
+      reason:
+        'Site identity: the copyright name Developer Tools and the two Devs / Tools logo fragments retain the brand spelling.',
     },
     {
       key: 'uiText.95bbea8b',

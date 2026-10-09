@@ -268,7 +268,7 @@ export default function ImagesToPdfTool() {
           {/* Action Footer */}
           <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-slate-50/80 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5">
             <span className="text-xs text-slate-600 dark:text-slate-400">
-              {t("uiText.4cb981a5")}{images.length}
+              {t("uiText.4cb981a5")} {images.length}
             </span>
 
             <div className="flex items-center gap-3">

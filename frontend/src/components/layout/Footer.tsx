@@ -170,7 +170,7 @@ export default function Footer() {
 
         <div className="mt-10 border-t border-slate-200/70 pt-7 text-center text-sm text-slate-500 dark:border-white/10 dark:text-slate-400">
           <p>
-            {t("uiText.2ba51521")}{new Date().getFullYear()} {' ' + t("uiText.a6fb1028")}{' '}
+            {t("uiText.2ba51521")} {new Date().getFullYear()} {' ' + t("uiText.a6fb1028")}{' '}
             {t('footer.copyright').replace('© {year} Developer Tools. ', '')}
           </p>
         </div>

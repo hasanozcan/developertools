@@ -52,7 +52,7 @@ export default function PdfToImageTool() {
 
         <div className="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-between">
           <span className="text-xs text-slate-600 dark:text-slate-300">
-            {t("tool.regexTester.selected")}<strong>{selectedPages.length}</strong> {' ' + t("uiText.42ba2ee2")}{selectedPages.join(', ')}]
+            {t("tool.regexTester.selected")} <strong>{selectedPages.length}</strong> {' ' + t("uiText.42ba2ee2")}{selectedPages.join(', ')}]
           </span>
           <button onClick={() => alert('Converted ' + selectedPages.length + ' pages to ' + format.toUpperCase())} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-500 transition">
             <Download className="w-4 h-4" /> {t("uiText.3911ddeb")}</button>

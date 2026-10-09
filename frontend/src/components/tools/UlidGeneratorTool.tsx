@@ -90,7 +90,7 @@ export default function UlidGeneratorTool() {
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            {t("uiText.a16a96e2")}{type.toUpperCase()} {t("uiText.8d2937a1")}</span>
+            {t("uiText.a16a96e2")} {type.toUpperCase()} {t("uiText.8d2937a1")}</span>
           <button
             onClick={handleCopy}
             className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 dark:bg-indigo-400/10 dark:text-indigo-300"
@@ -109,7 +109,7 @@ export default function UlidGeneratorTool() {
 
         {firstDecoded && (
           <div className="text-xs text-slate-500 dark:text-slate-400 font-mono pt-1">
-            {t("uiText.548bd640")}<span className="text-indigo-600 dark:text-indigo-400 font-bold">{firstDecoded.toISOString()}</span> ({firstDecoded.toLocaleString()})
+            {t("uiText.548bd640")} <span className="text-indigo-600 dark:text-indigo-400 font-bold">{firstDecoded.toISOString()}</span> ({firstDecoded.toLocaleString()})
           </div>
         )}
       </div>

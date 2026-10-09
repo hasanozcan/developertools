@@ -84,7 +84,7 @@ export default function HttpSecurityHeadersAnalyzerTool() {
                 <p className="text-xs text-muted-foreground">{check.recommendation}</p>
                 {check.value && (
                   <p className="text-xs font-mono text-primary/90 truncate max-w-xl">
-                    {t("uiText.c44d78f0")}{check.value}
+                    {t("uiText.c44d78f0")} {check.value}
                   </p>
                 )}
               </div>
@@ -94,7 +94,7 @@ export default function HttpSecurityHeadersAnalyzerTool() {
                 rel="noreferrer"
                 className="btn btn-ghost btn-xs gap-1 text-primary self-start md:self-auto"
               >
-                {t("uiText.8fcacbf2")}<ExternalLink className="w-3 h-3" />
+                {t("uiText.8fcacbf2")} <ExternalLink className="w-3 h-3" />
               </a>
             </div>
           ))}

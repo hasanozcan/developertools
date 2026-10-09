@@ -273,7 +273,7 @@ export default function JsonValidatorTool() {
                   {localizeUiText(result.error, t)}
                   {result.errorPosition && (
                     <span className="block mt-1">
-                      {t("uiText.9808f547")}{result.errorPosition.line}{t("uiText.f14a825b") + ' '}{result.errorPosition.column}
+                      {t("uiText.9808f547")} {result.errorPosition.line}{t("uiText.f14a825b") + ' '}{result.errorPosition.column}
                     </span>
                   )}
                 </p>

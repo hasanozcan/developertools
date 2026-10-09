@@ -347,7 +347,7 @@ export default function JsonCsvConverterTool() {
       {/* Error */}
       {error && (
         <div className="text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 px-4 py-2 rounded-lg">
-          {t("uiText.32edd391")}{localizeUiText(error, t)}
+          {t("uiText.32edd391")} {localizeUiText(error, t)}
         </div>
       )}
 

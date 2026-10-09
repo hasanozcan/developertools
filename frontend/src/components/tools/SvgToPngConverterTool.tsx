@@ -189,7 +189,7 @@ export default function SvgToPngConverterTool() {
               <>
                 <Download className="w-4 h-4" />
                 <span>
-                  {t("uiText.f115afce")}{format === 'image/png' ? t("uiText.aceadefc") : format === 'image/jpeg' ? 'JPEG' : 'WebP'} (
+                  {t("uiText.f115afce")} {format === 'image/png' ? t("uiText.aceadefc") : format === 'image/jpeg' ? 'JPEG' : 'WebP'} (
                   {scale}x)
                 </span>
               </>

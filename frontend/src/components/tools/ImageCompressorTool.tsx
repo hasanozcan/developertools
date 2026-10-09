@@ -128,7 +128,7 @@ export default function ImageCompressorTool() {
             <div>
               <div className="flex justify-between items-center mb-1">
                 <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
-                  {t("uiText.5619a6b4")}{quality}%
+                  {t("uiText.5619a6b4")} {quality}%
                 </label>
               </div>
               <input

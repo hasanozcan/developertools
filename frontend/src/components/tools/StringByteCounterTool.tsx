@@ -117,7 +117,7 @@ export default function StringByteCounterTool() {
 
           <div className="sm:col-span-2 p-4 rounded-xl border bg-slate-50 dark:bg-slate-900/50 flex items-center justify-between">
             <span className="text-xs font-bold text-slate-600 dark:text-slate-300">
-              {t("uiText.c34f9769")}{stats.utf8Bytes} / {varcharLimit} {t("uiText.842d9eb9")}</span>
+              {t("uiText.c34f9769")} {stats.utf8Bytes} / {varcharLimit} {t("uiText.842d9eb9")}</span>
             <span
               className={`font-mono text-xs font-black px-3 py-1 rounded-lg ${
                 isVarcharExceeded

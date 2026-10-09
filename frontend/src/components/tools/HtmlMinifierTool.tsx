@@ -124,12 +124,12 @@ export default function HtmlMinifierTool() {
       {input && (
         <div className="flex flex-wrap gap-4 text-sm">
           <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full">
-            {t("uiText.3e94ca78")}{stats.originalSize} {t("uiText.5da9662a")}</span>
+            {t("uiText.3e94ca78")} {stats.originalSize} {t("uiText.5da9662a")}</span>
           <span className="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 rounded-full">
-            {t("uiText.6abfdff4")}{stats.minifiedSize} {t("uiText.5da9662a")}</span>
+            {t("uiText.6abfdff4")} {stats.minifiedSize} {t("uiText.5da9662a")}</span>
           {stats.saved > 0 && (
             <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300 rounded-full">
-              {t("uiText.c20ad87a")}{stats.saved} {' ' + t("uiText.452f5f22")}{stats.percentage}%)
+              {t("uiText.c20ad87a")} {stats.saved} {' ' + t("uiText.452f5f22")}{stats.percentage}%)
             </span>
           )}
         </div>

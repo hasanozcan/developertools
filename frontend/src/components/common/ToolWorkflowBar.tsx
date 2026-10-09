@@ -14,8 +14,7 @@ import {
 } from '@/lib/toolWorkflow';
 
 export default function ToolWorkflowBar({ toolSlug }: { toolSlug: string }) {
-  const { t } = useLanguage();
-  const { language } = useLanguage();
+  const { t, language } = useLanguage();
   const [output, setOutput] = useState<ToolOutputDetail | null>(null);
   const [copied, setCopied] = useState(false);
   const manifest = getToolManifest(toolSlug);

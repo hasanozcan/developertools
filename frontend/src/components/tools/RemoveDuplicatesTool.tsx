@@ -94,12 +94,12 @@ fig`);
           className={`flex flex-wrap gap-4 text-sm ${isUpdating ? 'opacity-70' : 'opacity-100'}`}
         >
           <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full">
-            {t("uiText.3e94ca78")}{stats.original} {t("common.lines")}</span>
+            {t("uiText.3e94ca78")} {stats.original} {t("common.lines")}</span>
           <span className="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 rounded-full">
-            {t("uiText.019b1b34")}{stats.unique} {t("common.lines")}</span>
+            {t("uiText.019b1b34")} {stats.unique} {t("common.lines")}</span>
           {stats.duplicates > 0 ? (
             <span className="px-3 py-1 bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-300 rounded-full">
-              {t("uiText.90b39053")}{stats.duplicates} {t("uiText.3279a17f")}</span>
+              {t("uiText.90b39053")} {stats.duplicates} {t("uiText.3279a17f")}</span>
           ) : null}
         </div>
       ) : null}

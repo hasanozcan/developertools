@@ -17,7 +17,7 @@ export default function PercentageGrowthCalculatorTool() {
           <input type="number" value={b} onChange={(e) => setB(Number(e.target.value))} className="rounded-xl border p-2 text-xs" />
         </div>
         <div className="p-4 bg-indigo-500/10 rounded-xl text-center font-bold text-lg text-indigo-600">
-          {t("uiText.9afcfbb4")}{res.formatted}
+          {t("uiText.9afcfbb4")} {res.formatted}
         </div>
       </div>
     </div>

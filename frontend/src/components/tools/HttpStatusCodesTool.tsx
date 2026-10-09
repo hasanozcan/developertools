@@ -73,11 +73,12 @@ export default function HttpStatusCodesTool() {
         normalized.length === 0 ||
         String(status.code).includes(normalized) ||
         status.label.toLowerCase().includes(normalized) ||
-        status.description.toLowerCase().includes(normalized);
+        status.description.toLowerCase().includes(normalized) ||
+        localizeUiText(status.description, t).toLowerCase().includes(normalized);
 
       return categoryMatch && searchMatch;
     });
-  }, [category, search]);
+  }, [category, search, t]);
 
   return (
     <div className="space-y-6">

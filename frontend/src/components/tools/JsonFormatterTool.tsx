@@ -187,7 +187,7 @@ export default function JsonFormatterTool() {
                 <div className="font-semibold">
                   {parsedError.line ? (
                     <span>
-                      {t("uiText.9808f547")}{parsedError.line}{t("uiText.f14a825b") + ' '}{parsedError.column || 1}: {parsedError.message}
+                      {t("uiText.9808f547")} {parsedError.line}{t("uiText.f14a825b") + ' '}{parsedError.column || 1}: {parsedError.message}
                     </span>
                   ) : (
                     <span>{parsedError.message}</span>

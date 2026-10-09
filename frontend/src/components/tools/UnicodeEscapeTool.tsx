@@ -8,6 +8,13 @@ import { localizeUiText } from '@/lib/localizedText';
 
 type Mode = 'encode' | 'decode';
 
+// The translated sentence places these literals itself, so word order follows the locale.
+const ESCAPE_PATTERNS = new Map([
+  ['{unicode}', '\\uXXXX'],
+  ['{braced}', '\\u{XXXXXX}'],
+  ['{hex}', '\\xXX'],
+]);
+
 export default function UnicodeEscapeTool() {
   const { t } = useLanguage();
   const [mode, setMode] = useState<Mode>('decode');
@@ -152,7 +159,13 @@ export default function UnicodeEscapeTool() {
 
       <div className="text-sm text-gray-500 dark:text-gray-400 space-y-1">
         <p>
-          {t("uiText.d793a721")}<code>\uXXXX</code>, <code>\u{'{XXXXXX}'}</code>{t("uiText.aa26483a") + ' '}<code>\xXX</code> {t("uiText.bb5e2980")}</p>
+          {t('tool.unicodeEscape.supports')
+            .split(/(\{unicode\}|\{braced\}|\{hex\})/)
+            .map((part, index) => {
+              const pattern = ESCAPE_PATTERNS.get(part);
+              return pattern ? <code key={index}>{pattern}</code> : part;
+            })}
+        </p>
         <p>{t("uiText.4a554c39")}</p>
       </div>
     </div>

@@ -2,7 +2,11 @@
 
 import React, { useState, useMemo } from 'react';
 import { Clock, ArrowRightLeft, Calendar } from 'lucide-react';
-import { calculateDateDifference, convertTimeUnits } from '@/lib/timeDuration';
+import {
+  calculateDateDifference,
+  convertTimeUnits,
+  formatDurationForLocale,
+} from '@/lib/timeDuration';
 import { useLanguage } from '@/context/LanguageContext';
 import { localizeUiText } from '@/lib/localizedText';
 
@@ -22,17 +26,9 @@ export default function TimeDurationCalculatorTool() {
     return convertTimeUnits(unitValue, fromUnit);
   }, [unitValue, fromUnit]);
 
-  const humanReadable = dateDiff.humanReadable === 'Invalid dates'
-    ? t('tool.duration.invalidDates')
-    : language === 'en'
-      ? dateDiff.humanReadable
-      : new Intl.ListFormat(language, { type: 'unit', style: 'long' }).format(
-          Object.entries(dateDiff.breakdown)
-            .filter(([unit, value]) => value > 0 || (unit === 'seconds' && dateDiff.totalSeconds === 0))
-            .map(([unit, value]) => new Intl.NumberFormat(language, {
-              style: 'unit', unit: unit.slice(0, -1), unitDisplay: 'long',
-            }).format(value)),
-        );
+  const humanReadable = dateDiff.valid
+    ? formatDurationForLocale(dateDiff, language)
+    : t('tool.duration.invalidDates');
 
   return (
     <div className="space-y-6">

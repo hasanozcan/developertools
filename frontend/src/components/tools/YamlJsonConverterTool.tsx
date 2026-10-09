@@ -265,7 +265,7 @@ service:
           <div>{localizeUiText(error, t)}</div>
           {errorLine && (
             <div className="mt-2 text-xs text-red-500 dark:text-red-400">
-              {t("tool.jsonValidator.errorAtLine")}{errorLine}
+              {t("tool.jsonValidator.errorAtLine")} {errorLine}
             </div>
           )}
         </div>

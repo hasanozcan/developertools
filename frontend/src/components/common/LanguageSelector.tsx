@@ -63,8 +63,28 @@ export default function LanguageSelector() {
 
   const languages: Language[] = ['en', 'tr', 'de', 'es', 'fr', 'ru', 'zh'];
 
+  // Arrow keys, Home and End move between options; Tab still reaches each option too.
+  const handleNavigationKey = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    if (!isOpen) {
+      setIsOpen(true);
+      return;
+    }
+    const options = Array.from(
+      dropdownRef.current?.querySelectorAll<HTMLElement>('[role="option"]') ?? [],
+    );
+    if (options.length === 0) return;
+    const current = options.indexOf(document.activeElement as HTMLElement);
+    let next = 0;
+    if (event.key === 'End') next = options.length - 1;
+    else if (event.key === 'ArrowDown') next = (current + 1) % options.length;
+    else if (event.key === 'ArrowUp') next = current <= 0 ? options.length - 1 : current - 1;
+    options[next].focus();
+  };
+
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative" ref={dropdownRef} onKeyDown={handleNavigationKey}>
       <button
         ref={triggerRef}
         onClick={() => setIsOpen(!isOpen)}

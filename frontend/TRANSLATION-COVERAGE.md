@@ -11,8 +11,8 @@ Uzun açıklama sözlükleri sunucuda kalır; istemci etkin dilin arayüzünü y
 
 ## Envanter
 
-- Ortak etkin sözlük 2.215 anahtardan **4.813 anahtara** çıktı: her dil için
-  **2.598 yeni anahtar**. Türkçe ve Almancadaki önceden var olan iki ek URL
+- Ortak etkin sözlük 2.215 anahtardan **4.811 anahtara** çıktı: her dil için
+  **2.596 yeni anahtar**. Türkçe ve Almancadaki önceden var olan iki ek URL
   kodlayıcı anahtarı korundu.
 - Kaynakta kullanılan fakat yedi sözlükte de bulunmayan **143 anahtarın
   1.001 dil/anahtar değeri** tamamlandı. Başlangıç etkin sözlüklerinde boş değer
@@ -30,19 +30,32 @@ Uzun açıklama sözlükleri sunucuda kalır; istemci etkin dilin arayüzünü y
 
 | Dil | Etkin sözlük | İstemci arayüzü |     SSS/açıklama | İncelenmiş İngilizceyle aynı değer |
 | --- | -----------: | --------------: | ---------------: | ---------------------------------: |
-| en  |        4.813 |           3.880 | İngilizce kaynak |                                  — |
-| tr  |        4.815 |           3.882 |            1.422 |                                232 |
-| de  |        4.815 |           3.882 |            1.422 |                                331 |
-| es  |        4.813 |           3.880 |            1.422 |                                255 |
-| fr  |        4.813 |           3.880 |            1.422 |                                276 |
-| ru  |        4.813 |           3.880 |            1.422 |                                229 |
-| zh  |        4.813 |           3.880 |            1.422 |                                212 |
+| en  |        4.811 |           3.878 | İngilizce kaynak |                                  — |
+| tr  |        4.813 |           3.880 |            1.422 |                                232 |
+| de  |        4.813 |           3.880 |            1.422 |                                331 |
+| es  |        4.811 |           3.878 |            1.422 |                                255 |
+| fr  |        4.811 |           3.878 |            1.422 |                                276 |
+| ru  |        4.811 |           3.878 |            1.422 |                                229 |
+| zh  |        4.811 |           3.878 |            1.422 |                                214 |
 
-İngilizceyle aynı kalan 1.535 değer; protokol, marka, teknik tanımlayıcı, birim,
+İngilizceyle aynı kalan 1.537 değer; protokol, marka, teknik tanımlayıcı, birim,
 kod veya işlevsel örnek gibi gerekçelerle tek tek incelendi. Tam anahtar, değer
 ve gerekçe `src/translations/intentionalEnglish.ts` içinde kayıtlıdır. Kapsam
 testi yeni bir İngilizce metnin bu listenin dışına sızmasını engeller. Araç
 metadata'sında veya çevrilen uzun açıklamalarda İngilizceyle aynı metin yoktur.
+
+## İnceleme sonrası düzeltmeler
+
+- Sözlüğe taşınan metinlerde etiket ile sonraki değer/öğe arasındaki boşluk kayboluyordu
+  (ör. `Quality:75%`); boşluklar geri eklendi.
+- `&copy;` ve `&ge;` HTML varlıkları sözlükte ham metin olarak kalıyordu; gerçek
+  karakterlerle (© ve ≥) değiştirildi.
+- UnicodeEscape açıklaması tek bir yer tutuculu cümle oldu; sözcük sırası dile göre
+  belirlenir. "Show All (500)" sabit sayısı gerçek sonuç sayısıyla değiştirildi.
+- Çince başlıktaki DevsTools marka parçaları (Devs / Tools) çevrilmeden korunur.
+- HTTP durum kodları araması görünen yerelleştirilmiş açıklamayı da kapsar.
+- `src/translations/renderedText.test.ts` varlık, boşluk ve istemci sözlüğü
+  anahtarlarını denetler.
 
 ## Davranış ve inceleme
 

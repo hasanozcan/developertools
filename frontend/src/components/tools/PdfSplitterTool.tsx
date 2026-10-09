@@ -106,7 +106,7 @@ export default function PdfSplitterTool() {
               <div>
                 <p className="text-xs font-bold text-slate-900 dark:text-slate-100">{file.name}</p>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                  {t("uiText.8baeb255")}{pageCount} • {formatFileSize(file.size)}
+                  {t("uiText.8baeb255")} {pageCount} • {formatFileSize(file.size)}
                 </p>
               </div>
             </div>

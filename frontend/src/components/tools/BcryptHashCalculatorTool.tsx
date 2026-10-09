@@ -99,10 +99,10 @@ export default function BcryptHashCalculatorTool() {
               <div className="space-y-1">
                 <span className="text-success font-semibold">{t("uiText.14c4bb16")}</span>
                 <div className="font-mono text-muted-foreground">
-                  {t("uiText.b8066377")}<span className="text-foreground">${hashInspection.version}</span> {' ' + t("uiText.cef1284a") + ' '}<span className="text-foreground">{hashInspection.cost}</span>
+                  {t("uiText.b8066377")} <span className="text-foreground">${hashInspection.version}</span> {' ' + t("uiText.cef1284a") + ' '}<span className="text-foreground">{hashInspection.cost}</span>
                 </div>
                 <div className="font-mono text-muted-foreground truncate">
-                  {t("uiText.a37d85b9")}<span className="text-foreground">{hashInspection.salt}</span>
+                  {t("uiText.a37d85b9")} <span className="text-foreground">{hashInspection.salt}</span>
                 </div>
               </div>
             ) : (

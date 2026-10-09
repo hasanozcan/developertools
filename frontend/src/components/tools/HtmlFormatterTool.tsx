@@ -176,9 +176,9 @@ export default function HtmlFormatterTool() {
           <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full">
             {stats.lines} {t("common.lines")}</span>
           <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300 rounded-full">
-            {t("uiText.3e94ca78")}{stats.originalSize} {t("uiText.5da9662a")}</span>
+            {t("uiText.3e94ca78")} {stats.originalSize} {t("uiText.5da9662a")}</span>
           <span className="px-3 py-1 bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 rounded-full">
-            {t("uiText.40cf663b")}{stats.formattedSize} {t("uiText.5da9662a")}</span>
+            {t("uiText.40cf663b")} {stats.formattedSize} {t("uiText.5da9662a")}</span>
         </div>
       )}
 

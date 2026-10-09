@@ -71,7 +71,7 @@ export default function RobotsTxtGeneratorTool() {
               <div key={ruleIdx} className="p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-slate-900/50 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-slate-700 dark:text-slate-200">
-                    {t("uiText.b3d7ca5c")}<code className="text-indigo-600 dark:text-indigo-400">{rule.userAgent}</code>
+                    {t("uiText.b3d7ca5c")} <code className="text-indigo-600 dark:text-indigo-400">{rule.userAgent}</code>
                   </span>
                 </div>
 

@@ -48,7 +48,7 @@ export default function AudioConverterTool() {
 
         <div className="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-between">
           <span className="text-xs text-slate-600 dark:text-slate-300">
-            {t("uiText.0cb80f35")}<strong>{(endTime - startTime).toFixed(1)}s</strong> ({sampleCalc.numSamples} {t("uiText.a651738f")}</span>
+            {t("uiText.0cb80f35")} <strong>{(endTime - startTime).toFixed(1)}s</strong> ({sampleCalc.numSamples} {t("uiText.a651738f")}</span>
           <button onClick={() => alert('Audio converted and downloaded as ' + outputFormat.toUpperCase())} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-500 transition">
             <Download className="w-4 h-4" /> {' ' + t("uiText.e86349d3") + ' '}{outputFormat.toUpperCase()}
           </button>

@@ -28,6 +28,30 @@ describe('LanguageSelector flags', () => {
     expect(triggers[1]).toHaveFocus();
   });
 
+  it('moves between options with the arrow keys, Home and End', () => {
+    render(
+      <LanguageProvider initialLocale="en">
+        <LanguageSelector />
+      </LanguageProvider>,
+    );
+    const trigger = screen.getByRole('button', { name: /current: english/i });
+    fireEvent.keyDown(trigger, { key: 'ArrowDown' });
+    expect(screen.getByRole('listbox')).toBeInTheDocument();
+    const options = screen.getAllByRole('option');
+    fireEvent.keyDown(trigger, { key: 'ArrowDown' });
+    expect(options[0]).toHaveFocus();
+    fireEvent.keyDown(options[0], { key: 'ArrowDown' });
+    expect(options[1]).toHaveFocus();
+    fireEvent.keyDown(options[1], { key: 'ArrowUp' });
+    expect(options[0]).toHaveFocus();
+    fireEvent.keyDown(options[0], { key: 'ArrowUp' });
+    expect(options[options.length - 1]).toHaveFocus();
+    fireEvent.keyDown(options[options.length - 1], { key: 'Home' });
+    expect(options[0]).toHaveFocus();
+    fireEvent.keyDown(options[0], { key: 'End' });
+    expect(options[options.length - 1]).toHaveFocus();
+  });
+
   it('points every flag at a small self-hosted SVG', () => {
     for (const url of Object.values(languageFlagUrls)) {
       expect(url).toMatch(/^\/flags\/[a-z]{2}\.svg$/);

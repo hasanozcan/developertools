@@ -133,7 +133,7 @@ export default function ImageConverterTool() {
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                {t("uiText.5619a6b4")}{quality}%
+                {t("uiText.5619a6b4")} {quality}%
               </label>
               <input
                 type="range"

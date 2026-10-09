@@ -17,7 +17,7 @@ export default function BandwidthCalculatorTool() {
           <input type="number" placeholder={t("uiText.03472a71")} value={speed} onChange={(e) => setSpeed(Number(e.target.value))} className="rounded-xl border p-2 text-xs" />
         </div>
         <div className="p-4 bg-emerald-500/10 rounded-xl text-center font-bold text-lg text-emerald-600">
-          {t("uiText.686fa199")}{res.formattedTime}
+          {t("uiText.686fa199")} {res.formattedTime}
         </div>
       </div>
     </div>

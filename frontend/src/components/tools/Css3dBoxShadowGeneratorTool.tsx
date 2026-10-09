@@ -28,7 +28,7 @@ export default function Css3dBoxShadowGeneratorTool() {
         <div className="p-4 rounded-xl border border-border bg-card space-y-4">
           <div>
             <label className="text-xs font-semibold text-muted-foreground block mb-1">
-              {t("uiText.44f943f8")}{elevation} / 24
+              {t("uiText.44f943f8")} {elevation} / 24
             </label>
             <input
               type="range"
@@ -42,7 +42,7 @@ export default function Css3dBoxShadowGeneratorTool() {
 
           <div>
             <label className="text-xs font-semibold text-muted-foreground block mb-1">
-              {t("uiText.27ee3016")}{(opacity * 100).toFixed(0)}%
+              {t("uiText.27ee3016")} {(opacity * 100).toFixed(0)}%
             </label>
             <input
               type="range"
@@ -76,7 +76,7 @@ export default function Css3dBoxShadowGeneratorTool() {
                 boxShadow: shadowCss.replace('box-shadow: ', '').replace(';', ''),
               }}
             >
-              {t("uiText.1059d6e4")}{elevation} {t("uiText.0855387f")}</div>
+              {t("uiText.1059d6e4")} {elevation} {t("uiText.0855387f")}</div>
           </div>
 
           <div className="space-y-2">

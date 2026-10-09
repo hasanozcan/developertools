@@ -195,7 +195,7 @@ export default function DmarcGeneratorTool() {
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-800 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                {t("uiText.53aa3572")}{spfRecord.host})
+                {t("uiText.53aa3572")} {spfRecord.host})
               </span>
               <button
                 onClick={() => handleCopy(spfRecord.record)}
@@ -247,7 +247,7 @@ export default function DmarcGeneratorTool() {
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-800 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                {t("uiText.53aa3572")}{dmarcRecord.host})
+                {t("uiText.53aa3572")} {dmarcRecord.host})
               </span>
               <button
                 onClick={() => handleCopy(dmarcRecord.record)}

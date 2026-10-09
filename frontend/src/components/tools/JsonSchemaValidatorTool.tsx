@@ -232,7 +232,7 @@ export default function JsonSchemaValidatorTool() {
             <div>
               <h3 className="font-semibold">{t("uiText.a6f7bbcf")}</h3>
               <p className="mt-1 text-sm">
-                {t("uiText.0abaed3f")}{result.errors.length} {' ' + t("uiText.527d0336")}{' '}
+                {t("uiText.0abaed3f")} {result.errors.length} {' ' + t("uiText.527d0336")}{' '}
                 {result.errors.length === 1 ? t("uiText.21918751") : t("uiText.fa17ba86")}.
               </p>
             </div>

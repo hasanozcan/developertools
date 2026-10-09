@@ -61,7 +61,7 @@ export default function KeyCodeInfoTool() {
         </div>
 
         <span className="text-sm font-bold text-slate-700 dark:text-slate-300">
-          {t("uiText.172ac002")}<code className="text-indigo-600 dark:text-indigo-400">{keyInfo.key}</code> {' ' + t("uiText.5be6d356")}{' '}
+          {t("uiText.172ac002")} <code className="text-indigo-600 dark:text-indigo-400">{keyInfo.key}</code> {' ' + t("uiText.5be6d356")}{' '}
           <code className="text-indigo-600 dark:text-indigo-400">{keyInfo.code}</code>
         </span>
       </div>

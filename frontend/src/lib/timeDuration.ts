@@ -11,6 +11,8 @@ export interface TimeDifferenceResult {
     seconds: number;
   };
   humanReadable: string;
+  /** False when either date could not be parsed. */
+  valid: boolean;
 }
 
 export function calculateDateDifference(startDate: Date | string | number, endDate: Date | string | number): TimeDifferenceResult {
@@ -26,6 +28,7 @@ export function calculateDateDifference(startDate: Date | string | number, endDa
       totalDays: 0,
       breakdown: { days: 0, hours: 0, minutes: 0, seconds: 0 },
       humanReadable: 'Invalid dates',
+      valid: false,
     };
   }
 
@@ -54,7 +57,23 @@ export function calculateDateDifference(startDate: Date | string | number, endDa
     totalDays,
     breakdown: { days, hours, minutes, seconds },
     humanReadable: parts.join(', '),
+    valid: true,
   };
+}
+
+/** English text comes from the result; other locales are formatted with Intl so word order follows the locale. */
+export function formatDurationForLocale(result: TimeDifferenceResult, locale: string): string {
+  if (locale === 'en') return result.humanReadable;
+  const parts = Object.entries(result.breakdown)
+    .filter(([unit, value]) => value > 0 || (unit === 'seconds' && result.totalSeconds === 0))
+    .map(([unit, value]) =>
+      new Intl.NumberFormat(locale, {
+        style: 'unit',
+        unit: unit.slice(0, -1),
+        unitDisplay: 'long',
+      }).format(value),
+    );
+  return new Intl.ListFormat(locale, { type: 'unit', style: 'long' }).format(parts);
 }
 
 export function convertTimeUnits(value: number, fromUnit: 'ms' | 's' | 'min' | 'h' | 'd'): Record<string, number> {

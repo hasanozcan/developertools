@@ -26,7 +26,7 @@ export default function QuotedPrintableEncoderTool() {
           className="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium"
         >
           <ArrowDownUp className="w-4 h-4" />
-          {t("uiText.2c856198")}{mode === 'encode' ? t("uiText.daf5aefe") : t("uiText.891d3567")}
+          {t("uiText.2c856198")} {mode === 'encode' ? t("uiText.daf5aefe") : t("uiText.891d3567")}
         </button>
       </div>
       <div className="space-y-2">

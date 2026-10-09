@@ -145,7 +145,7 @@ export default function Bip39GeneratorTool() {
               <>
                 <AlertCircle className="h-4 w-4 shrink-0" />
                 <span>
-                  {t("uiText.bf008f59")}{validation.invalidWords.length > 0 && interpolateText(t('tool.bip39.unrecognizedWords'), { words: validation.invalidWords.join(', ') })}
+                  {t("uiText.bf008f59")} {validation.invalidWords.length > 0 && interpolateText(t('tool.bip39.unrecognizedWords'), { words: validation.invalidWords.join(', ') })}
                 </span>
               </>
             )}

@@ -10,8 +10,7 @@ import { getLocalTrendingToolSlugs, TOOL_USAGE_UPDATED_EVENT } from '@/lib/toolP
 import { buildToolPath } from '@/lib/toolRoutes';
 
 export default function TrendingTools() {
-  const { t } = useLanguage();
-  const { language } = useLanguage();
+  const { t, language } = useLanguage();
   const [slugs, setSlugs] = useState<string[]>([]);
 
   useEffect(() => {
