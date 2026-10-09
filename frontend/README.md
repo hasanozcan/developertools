@@ -107,6 +107,19 @@ The optional bottom placements require two genuine, distinct AdSense display-uni
 
 Missing, malformed or colliding bottom IDs leave that placement hidden; no other unit is used as a fallback. Keep them empty until their actual IDs are known. These `NEXT_PUBLIC_` values are embedded at build time, so changing them requires a new build. This code does not create ad units or change AdSense experiments.
 
+#### More placements and formats
+
+Two further placements are hidden until they have their own unit id, so nothing changes in production until you create the units in the AdSense console and set the variables:
+
+- `NEXT_PUBLIC_ADSENSE_TOOL_INCONTENT_SLOT`: `tool-in-content`, one unit after the first answer section below the tool. It is hidden from the `lg` breakpoint up, where the sticky sidebar unit already sits next to the content; on phones and tablets that sidebar unit comes after all the content.
+- `NEXT_PUBLIC_ADSENSE_CATEGORY_INFEED_SLOT`: `category-<slug>-infeed`, an in-feed card after every 12th tool card on category pages (never after the last one). It must differ from the category top banner id.
+
+Both reject ids already used by another placement on the page, like the bottom slots.
+
+`NEXT_PUBLIC_ADSENSE_SIDEBAR_FORMAT` and `NEXT_PUBLIC_ADSENSE_POST_TOOL_FORMAT` choose the `data-ad-format` of the tool sidebar (default `vertical`) and post-tool banner (default `horizontal`). `auto` lets Google fill the unit with rectangles and half-page sizes as well; compare fill and revenue per placement before keeping it. Unknown values are ignored. Whether a format other than the unit's own is served depends on the unit type in the console.
+
+`NEXT_PUBLIC_ADSENSE_HOME_INFEED_SLOT`, `NEXT_PUBLIC_ADSENSE_HOME_AFTER_TOOLS_SLOT`, `NEXT_PUBLIC_ADSENSE_HOME_BEFORE_SEO_SLOT` and `NEXT_PUBLIC_ADSENSE_CATEGORY_TOP_SLOT` override the unit ids of the home and category placements. They default to the ids those placements already used (`1733348098` is shared by the home in-feed, home after-tools and category top banners; `7781534087` by the home bottom banner and the tool post-result banner), so separate units are needed to tell the placements apart in AdSense reports.
+
 ## Build
 
 ```bash

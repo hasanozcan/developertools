@@ -1,11 +1,16 @@
 import type { ReactElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { isToolLocaleIndexable, type Language } from '@/lib/i18nRouting';
 import { translations } from '@/translations';
 
 vi.mock('@/components/common/AdSense', () => ({ default: () => null }));
+vi.mock('@/components/common/InFeedAdCard', () => ({
+  default: ({ slot, placement }: { slot: string; placement: string }) => (
+    <div data-infeed-ad="true" data-slot={slot} data-placement={placement} />
+  ),
+}));
 vi.mock('@/components/tools/EncodingWorkbench', () => ({ default: () => null }));
 
 import CategoryPage from './page';
@@ -151,5 +156,43 @@ describe('CategoryPage', () => {
     });
     expect(metadata.description).toBe(translations.tr['categoryPage.description.converters']);
     expect(metadata.alternates?.canonical).toBe(`${SITE}/tr/tools/converters`);
+  });
+});
+
+describe('CategoryPage in-feed ads', () => {
+  const cards = (doc: Document) => [
+    ...doc.querySelectorAll('[data-topic-interface="true"] > *'),
+  ];
+
+  afterEach(() => vi.unstubAllEnvs());
+
+  it('adds none until the category list has its own AdSense unit', async () => {
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_CATEGORY_INFEED_SLOT', '');
+    const { doc } = await renderCategoryPage('en', 'converters');
+    expect(doc.querySelectorAll('[data-infeed-ad]')).toHaveLength(0);
+  });
+
+  it('places one after every twelfth tool card and never at the very end', async () => {
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_CATEGORY_INFEED_SLOT', '5555555555');
+    const { doc } = await renderCategoryPage('en', 'converters');
+    const items = cards(doc);
+    const ads = items.filter((item) => item.hasAttribute('data-infeed-ad'));
+    const toolCards = items.length - ads.length;
+
+    expect(toolCards).toBeGreaterThan(24);
+    expect(ads).toHaveLength(Math.floor((toolCards - 1) / 12));
+    ads.forEach((ad, index) => {
+      expect(items.indexOf(ad)).toBe((index + 1) * 13 - 1);
+      expect(ad.getAttribute('data-slot')).toBe('5555555555');
+      expect(ad.getAttribute('data-placement')).toBe('category-converters-infeed');
+    });
+    expect(items[items.length - 1].hasAttribute('data-infeed-ad')).toBe(false);
+  });
+
+  it('rejects an id that the top banner already uses', async () => {
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_CATEGORY_TOP_SLOT', '4444444444');
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_CATEGORY_INFEED_SLOT', '4444444444');
+    const { doc } = await renderCategoryPage('en', 'converters');
+    expect(doc.querySelectorAll('[data-infeed-ad]')).toHaveLength(0);
   });
 });

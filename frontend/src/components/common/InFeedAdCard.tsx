@@ -3,6 +3,7 @@
 import { useLanguage } from '@/context/LanguageContext';
 import React from 'react';
 import AdSense from './AdSense';
+import { DEFAULT_ADSENSE_INFEED_SLOT } from '@/lib/adsenseSlots';
 
 interface InFeedAdCardProps {
   className?: string;
@@ -12,7 +13,7 @@ interface InFeedAdCardProps {
 
 export default function InFeedAdCard({
   className = '',
-  slot = '1733348098',
+  slot = DEFAULT_ADSENSE_INFEED_SLOT,
   placement = 'home-infeed',
 }: InFeedAdCardProps) {
   const { t } = useLanguage();

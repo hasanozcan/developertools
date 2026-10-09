@@ -62,6 +62,15 @@ import {
   type Language,
 } from '@/lib/i18nRouting';
 import { translations } from '@/translations';
+import {
+  DEFAULT_ADSENSE_CATEGORY_TOP_SLOT,
+  resolveAdSenseSlot,
+  resolveDistinctAdSenseSlot,
+} from '@/lib/adsenseSlots';
+
+// In-feed ads between tool cards. They stay hidden until the category list has its own
+// AdSense unit id (distinct from the top banner), like the other optional placements.
+const CATEGORY_INFEED_INTERVAL = 12;
 import { resolveTitle } from '@/lib/toolTitle';
 
 /** Looks up a UI string for `locale` (English fallback) and fills `{placeholders}`. */
@@ -733,6 +742,14 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
   }
 
   const Icon = category.icon;
+  const categoryTopSlot = resolveAdSenseSlot(
+    process.env.NEXT_PUBLIC_ADSENSE_CATEGORY_TOP_SLOT,
+    DEFAULT_ADSENSE_CATEGORY_TOP_SLOT,
+  );
+  const categoryInFeedSlot = resolveDistinctAdSenseSlot(
+    process.env.NEXT_PUBLIC_ADSENSE_CATEGORY_INFEED_SLOT,
+    [categoryTopSlot],
+  );
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
   const isDefaultLocale = locale === DEFAULT_LOCALE;
   const localizePath = (path: string) => getLocalizedPath(path, locale);
@@ -958,8 +975,9 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
 
         {/* Ad Banner */}
         <AdSense
-          slot="1733348098"
+          slot={categoryTopSlot}
           format="horizontal"
+          placement={`category-${categorySlug}-top`}
           className="min-h-[90px] rounded-lg mb-8"
         />
 
@@ -976,23 +994,34 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
             data-topic-interface="true"
             data-related-tools="true"
           >
-            {allCategoryTools.map((tool) => {
+            {allCategoryTools.map((tool, index) => {
               const ToolIcon = toolIcons[tool.slug] || Wand2;
+              const showInFeed =
+                Boolean(categoryInFeedSlot) &&
+                (index + 1) % CATEGORY_INFEED_INTERVAL === 0 &&
+                index < allCategoryTools.length - 1;
               return (
-                <Link
-                  key={tool.slug}
-                  href={tool.href}
-                  className="interactive-card group rounded-3xl p-6"
-                >
-                  <h3 className="font-semibold text-lg text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 flex items-center justify-between mb-2">
-                    <span className="flex items-center gap-2">
-                      <ToolIcon className="w-5 h-5 text-primary-500" />
-                      {tool.name}
-                    </span>
-                    <ChevronRight className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </h3>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">{tool.description}</p>
-                </Link>
+                <Fragment key={tool.slug}>
+                  <Link
+                    href={tool.href}
+                    className="interactive-card group rounded-3xl p-6"
+                  >
+                    <h3 className="font-semibold text-lg text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 flex items-center justify-between mb-2">
+                      <span className="flex items-center gap-2">
+                        <ToolIcon className="w-5 h-5 text-primary-500" />
+                        {tool.name}
+                      </span>
+                      <ChevronRight className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </h3>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm">{tool.description}</p>
+                  </Link>
+                  {showInFeed && categoryInFeedSlot && (
+                    <InFeedAdCard
+                      slot={categoryInFeedSlot}
+                      placement={`category-${categorySlug}-infeed`}
+                    />
+                  )}
+                </Fragment>
               );
             })}
           </div>

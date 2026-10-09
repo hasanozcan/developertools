@@ -70,6 +70,27 @@ import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
 import { getLocalizedPath } from '@/lib/localeRouting';
 import { interpolateText, translateCount } from '@/lib/localizedText';
 import { serializeJsonForHtmlScript } from '@/lib/scriptSafeJson';
+import {
+  DEFAULT_ADSENSE_HOME_AFTER_TOOLS_SLOT,
+  DEFAULT_ADSENSE_HOME_BEFORE_SEO_SLOT,
+  DEFAULT_ADSENSE_INFEED_SLOT,
+  resolveAdSenseSlot,
+} from '@/lib/adsenseSlots';
+
+// Defaults are the ids these placements already used; set the variables to give each
+// placement its own AdSense unit.
+const HOME_INFEED_SLOT = resolveAdSenseSlot(
+  process.env.NEXT_PUBLIC_ADSENSE_HOME_INFEED_SLOT,
+  DEFAULT_ADSENSE_INFEED_SLOT,
+);
+const HOME_AFTER_TOOLS_SLOT = resolveAdSenseSlot(
+  process.env.NEXT_PUBLIC_ADSENSE_HOME_AFTER_TOOLS_SLOT,
+  DEFAULT_ADSENSE_HOME_AFTER_TOOLS_SLOT,
+);
+const HOME_BEFORE_SEO_SLOT = resolveAdSenseSlot(
+  process.env.NEXT_PUBLIC_ADSENSE_HOME_BEFORE_SEO_SLOT,
+  DEFAULT_ADSENSE_HOME_BEFORE_SEO_SLOT,
+);
 
 const categorySlugs = [
   'json',
@@ -784,7 +805,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
                         </div>
                       </Link>
                       {showInFeed && (
-                        <InFeedAdCard key={`infeed-search-${tool.slug}-${index}`} placement="home-search-infeed" />
+                        <InFeedAdCard key={`infeed-search-${tool.slug}-${index}`} slot={HOME_INFEED_SLOT} placement="home-search-infeed" />
                       )}
                     </React.Fragment>
                   );
@@ -914,7 +935,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
                               </div>
                             </Link>
                             {showInFeed && (
-                              <InFeedAdCard key={`infeed-${group.slug}-${index}`} placement={`home-${group.slug}-infeed`} />
+                              <InFeedAdCard key={`infeed-${group.slug}-${index}`} slot={HOME_INFEED_SLOT} placement={`home-${group.slug}-infeed`} />
                             )}
                           </React.Fragment>
                         );
@@ -929,7 +950,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
 
         {/* Ad Banner - After Popular Tools */}
         <AdSense
-          slot="1733348098"
+          slot={HOME_AFTER_TOOLS_SLOT}
           format="horizontal"
           placement="home-after-tools"
           className="min-h-[90px] rounded-lg mb-12"
@@ -972,7 +993,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
 
         {/* Ad Banner - Bottom */}
         <AdSense
-          slot="7781534087"
+          slot={HOME_BEFORE_SEO_SLOT}
           format="horizontal"
           placement="home-before-seo"
           className="min-h-[90px] rounded-lg mb-12"

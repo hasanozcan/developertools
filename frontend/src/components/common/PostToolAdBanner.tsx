@@ -3,6 +3,7 @@
 import { useLanguage } from '@/context/LanguageContext';
 import React from 'react';
 import AdSense from './AdSense';
+import type { AdSenseFormat } from '@/lib/adsenseSlots';
 
 interface PostToolAdBannerProps {
   className?: string;
@@ -13,12 +14,15 @@ interface PostToolAdBannerProps {
    */
   slot: string;
   placement?: string;
+  /** `horizontal` keeps the banner shape; `auto` also allows rectangles when the unit supports them. */
+  format?: AdSenseFormat;
 }
 
 export default function PostToolAdBanner({
   className = '',
   slot,
   placement = 'tool-post-result',
+  format = 'horizontal',
 }: PostToolAdBannerProps) {
   const { t } = useLanguage();
   return (
@@ -33,7 +37,7 @@ export default function PostToolAdBanner({
       <div className="flex justify-center items-center w-full min-h-[90px]">
         <AdSense
           slot={slot}
-          format="horizontal"
+          format={format}
           responsive={true}
           placement={placement}
           className="w-full max-w-4xl min-h-[90px]"

@@ -1,11 +1,18 @@
 import { describe, expect, it } from 'vitest';
 import {
+  DEFAULT_ADSENSE_CATEGORY_INFEED_SLOT,
+  DEFAULT_ADSENSE_CATEGORY_TOP_SLOT,
   DEFAULT_ADSENSE_FOOTER_SLOT,
+  DEFAULT_ADSENSE_HOME_AFTER_TOOLS_SLOT,
+  DEFAULT_ADSENSE_HOME_BEFORE_SEO_SLOT,
+  DEFAULT_ADSENSE_INFEED_SLOT,
+  DEFAULT_ADSENSE_TOOL_INCONTENT_SLOT,
   DEFAULT_ADSENSE_TOOL_BOTTOM_SLOT,
   DEFAULT_ADSENSE_TOOL_SIDEBAR_SLOT,
   DEFAULT_ADSENSE_TOOL_ZEN_BOTTOM_SLOT,
   DEFAULT_ADSENSE_TOOL_ZEN_LEFT_SLOT,
   DEFAULT_ADSENSE_TOOL_ZEN_RIGHT_SLOT,
+  resolveAdSenseFormat,
   resolveAdSenseSlot,
   resolveDistinctAdSenseSlot,
 } from './adsenseSlots';
@@ -77,5 +84,37 @@ describe('tool page ad slot defaults', () => {
     expect(DEFAULT_ADSENSE_TOOL_ZEN_BOTTOM_SLOT).toBe('');
     expect(resolveDistinctAdSenseSlot(DEFAULT_ADSENSE_TOOL_BOTTOM_SLOT, [])).toBeUndefined();
     expect(resolveDistinctAdSenseSlot(DEFAULT_ADSENSE_TOOL_ZEN_BOTTOM_SLOT, [])).toBeUndefined();
+  });
+});
+
+describe('resolveAdSenseFormat', () => {
+  it('accepts every format the AdSense component supports', () => {
+    for (const format of ['auto', 'fluid', 'rectangle', 'vertical', 'horizontal'] as const) {
+      expect(resolveAdSenseFormat(format, 'auto')).toBe(format);
+    }
+  });
+
+  it('ignores case and surrounding spaces', () => {
+    expect(resolveAdSenseFormat('  Rectangle ', 'auto')).toBe('rectangle');
+  });
+
+  it('keeps the placement format when the value is missing or unknown', () => {
+    expect(resolveAdSenseFormat(undefined, 'vertical')).toBe('vertical');
+    expect(resolveAdSenseFormat('', 'horizontal')).toBe('horizontal');
+    expect(resolveAdSenseFormat('banner-728x90', 'horizontal')).toBe('horizontal');
+  });
+});
+
+describe('placement defaults', () => {
+  it('keep the ids these placements already used', () => {
+    expect(DEFAULT_ADSENSE_INFEED_SLOT).toBe('1733348098');
+    expect(DEFAULT_ADSENSE_HOME_AFTER_TOOLS_SLOT).toBe('1733348098');
+    expect(DEFAULT_ADSENSE_CATEGORY_TOP_SLOT).toBe('1733348098');
+    expect(DEFAULT_ADSENSE_HOME_BEFORE_SEO_SLOT).toBe(DEFAULT_ADSENSE_FOOTER_SLOT);
+  });
+
+  it('leave the new optional placements hidden until a unit id is configured', () => {
+    expect(DEFAULT_ADSENSE_CATEGORY_INFEED_SLOT).toBe('');
+    expect(DEFAULT_ADSENSE_TOOL_INCONTENT_SLOT).toBe('');
   });
 });

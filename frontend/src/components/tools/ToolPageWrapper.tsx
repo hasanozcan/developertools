@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useSyncExternalStore } from 'react';
+import { Fragment, useState, useEffect, useSyncExternalStore } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { useTheme } from '@/context/ThemeContext';
 import FavoriteButton from '@/components/common/FavoriteButton';
@@ -17,6 +17,7 @@ import {
   DEFAULT_ADSENSE_TOOL_SIDEBAR_SLOT,
   DEFAULT_ADSENSE_TOOL_ZEN_LEFT_SLOT,
   DEFAULT_ADSENSE_TOOL_ZEN_RIGHT_SLOT,
+  resolveAdSenseFormat,
   resolveAdSenseSlot,
   resolveDistinctAdSenseSlot,
 } from '@/lib/adsenseSlots';
@@ -137,6 +138,17 @@ export default function ToolPageWrapper({
     process.env.NEXT_PUBLIC_ADSENSE_TOOL_ZEN_BOTTOM_SLOT,
     [...usedSlots, bottomSlot],
   );
+  // Small screens only show the post-tool banner above the long answer content and the
+  // sidebar unit below all of it, so one more unit in the middle of that content gets the
+  // most use there. It stays hidden until it has an id of its own.
+  const inContentSlot = resolveDistinctAdSenseSlot(
+    process.env.NEXT_PUBLIC_ADSENSE_TOOL_INCONTENT_SLOT,
+    [...usedSlots, bottomSlot, zenBottomSlot],
+  );
+  // Formats can be changed per deployment to compare fill and revenue in AdSense reports.
+  const sidebarFormat = resolveAdSenseFormat(process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_FORMAT, 'vertical');
+  const postToolFormat = resolveAdSenseFormat(process.env.NEXT_PUBLIC_ADSENSE_POST_TOOL_FORMAT, 'horizontal');
+  const contentSections = answerSections.slice(1);
 
   // Lock body scroll and handle ESC key when in Zen Mode
   useEffect(() => {
@@ -414,10 +426,30 @@ export default function ToolPageWrapper({
           )}
 
           {/* High-Impact Post-Tool Result Banner */}
-          <PostToolAdBanner slot={postResultSlot} className="mb-8" />
+          <PostToolAdBanner slot={postResultSlot} format={postToolFormat} className="mb-8" />
 
           {/* Supporting server-readable answer content for search and AI retrieval. */}
-          {answerSections.slice(1).map((section) => renderAnswerSection(section))}
+          {contentSections.map((section, index) => (
+            <Fragment key={section.heading}>
+              {renderAnswerSection(section)}
+              {index === 0 && inContentSlot && (
+                <PostToolAdBanner
+                  slot={inContentSlot}
+                  format="auto"
+                  placement="tool-in-content"
+                  className="lg:hidden"
+                />
+              )}
+            </Fragment>
+          ))}
+          {contentSections.length === 0 && inContentSlot && (
+            <PostToolAdBanner
+              slot={inContentSlot}
+              format="auto"
+              placement="tool-in-content"
+              className="lg:hidden"
+            />
+          )}
 
           {/* Contextual internal links keep each tool connected to its topic cluster. */}
           <section className="mb-8" data-related-tools="true">
@@ -554,7 +586,7 @@ export default function ToolPageWrapper({
           <div className="sticky top-24">
             <AdSense
               slot={sidebarSlot}
-              format="vertical"
+              format={sidebarFormat}
               immediate={isDesktopSidebar}
               placement="tool-sidebar"
               className="min-h-[300px] rounded-lg"

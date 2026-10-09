@@ -40,8 +40,23 @@ vi.mock('@/components/common/QuickAccessBar', () => ({ default: () => null }));
 vi.mock('@/components/common/ToolWorkflowBar', () => ({ default: () => null }));
 vi.mock('@/components/common/WorkspaceControls', () => ({ default: () => null }));
 vi.mock('@/components/common/PostToolAdBanner', () => ({
-  default: ({ slot }: { slot: string }) => (
-    <div data-testid="ad-tool-post-result" data-slot={slot} />
+  default: ({
+    slot,
+    placement = 'tool-post-result',
+    format = 'horizontal',
+    className,
+  }: {
+    slot: string;
+    placement?: string;
+    format?: string;
+    className?: string;
+  }) => (
+    <div
+      data-testid={`ad-${placement}`}
+      data-slot={slot}
+      data-format={format}
+      className={className}
+    />
   ),
 }));
 vi.mock('@/components/common/LocalizedLink', () => ({
@@ -75,7 +90,10 @@ vi.mock('@/components/common/AdSense', () => ({
   ),
 }));
 
-function renderToolPage(relatedGuides: { name: string; description: string; href: string }[] = []) {
+function renderToolPage(
+  relatedGuides: { name: string; description: string; href: string }[] = [],
+  answerSections: { heading: string; paragraphs?: string[] }[] = [],
+) {
   return render(
     <ToolPageWrapper
       toolSlug="json-formatter"
@@ -85,7 +103,7 @@ function renderToolPage(relatedGuides: { name: string; description: string; href
       defaultDescription="Format JSON"
       faqs={[]}
       sources={[]}
-      answerSections={[]}
+      answerSections={answerSections}
       relatedTools={[]}
       topicCollections={[]}
       relatedGuides={relatedGuides}
@@ -382,5 +400,79 @@ describe('ToolPageWrapper localized tool name', () => {
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
       'OpenAPI to Postman Collection Generator',
     );
+  });
+});
+
+describe('ToolPageWrapper extra placements', () => {
+  const sections = [
+    { heading: 'Intro section', paragraphs: ['Intro'] },
+    { heading: 'Second section', paragraphs: ['Second'] },
+    { heading: 'Third section', paragraphs: ['Third'] },
+  ];
+  const position = (a: Element, b: Element) => a.compareDocumentPosition(b);
+
+  beforeEach(() => {
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_FOOTER_SLOT', '');
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT', '');
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_LEFT_SLOT', '');
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_RIGHT_SLOT', '');
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_TOOL_BOTTOM_SLOT', '');
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_TOOL_ZEN_BOTTOM_SLOT', '');
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_TOOL_INCONTENT_SLOT', '');
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_SIDEBAR_FORMAT', '');
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_POST_TOOL_FORMAT', '');
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it('keeps the in-content ad hidden until it has an id of its own', () => {
+    renderToolPage([], sections);
+    expect(screen.queryByTestId('ad-tool-in-content')).not.toBeInTheDocument();
+  });
+
+  it('places it between the first and second sections below the tool, for small screens only', () => {
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_TOOL_INCONTENT_SLOT', ' 5550001111 ');
+    renderToolPage([], sections);
+
+    const ad = screen.getByTestId('ad-tool-in-content');
+    expect(ad).toHaveAttribute('data-slot', '5550001111');
+    expect(ad).toHaveAttribute('data-format', 'auto');
+    expect(ad).toHaveClass('lg:hidden');
+    expect(position(screen.getByTestId('ad-tool-post-result'), ad) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(position(screen.getByText('Second section'), ad) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(position(ad, screen.getByText('Third section')) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('still shows it when only the intro section exists', () => {
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_TOOL_INCONTENT_SLOT', '5550001111');
+    renderToolPage([], sections.slice(0, 1));
+    expect(screen.getAllByTestId('ad-tool-in-content')).toHaveLength(1);
+  });
+
+  it.each([
+    ['NEXT_PUBLIC_ADSENSE_SIDEBAR_SLOT'],
+    ['NEXT_PUBLIC_ADSENSE_FOOTER_SLOT'],
+    ['NEXT_PUBLIC_ADSENSE_TOOL_BOTTOM_SLOT'],
+  ])('rejects a slot that %s already uses', (key) => {
+    vi.stubEnv(key, '5550002222');
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_TOOL_INCONTENT_SLOT', '5550002222');
+    renderToolPage([], sections);
+    expect(screen.queryByTestId('ad-tool-in-content')).not.toBeInTheDocument();
+  });
+
+  it('keeps the current formats unless a format is configured', () => {
+    renderToolPage([], sections);
+    expect(screen.getByTestId('ad-tool-sidebar')).toHaveAttribute('data-format', 'vertical');
+    expect(screen.getByTestId('ad-tool-post-result')).toHaveAttribute('data-format', 'horizontal');
+  });
+
+  it('uses configured formats and ignores unknown ones', () => {
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_SIDEBAR_FORMAT', 'auto');
+    vi.stubEnv('NEXT_PUBLIC_ADSENSE_POST_TOOL_FORMAT', 'banner-300');
+    renderToolPage([], sections);
+    expect(screen.getByTestId('ad-tool-sidebar')).toHaveAttribute('data-format', 'auto');
+    expect(screen.getByTestId('ad-tool-post-result')).toHaveAttribute('data-format', 'horizontal');
   });
 });
