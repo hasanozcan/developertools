@@ -16,6 +16,13 @@ const FORBIDDEN = [
   'translations/intentionalEnglish',
   ...['en', 'tr', 'de', 'es', 'fr', 'ru', 'zh'].map((locale) => `translations/${locale}`),
   ...['tr', 'de', 'es', 'fr', 'ru', 'zh'].map((locale) => `translations/pageCopy/${locale}`),
+  // The full dictionaries hold every tool's strings; clients get ui/core plus their tool's own.
+  'translations/toolDictionaryKeys',
+  'lib/toolUiDictionary',
+  ...['en', 'tr', 'de', 'es', 'fr', 'ru', 'zh'].flatMap((locale) => [
+    `translations/ui/${locale}`,
+    `translations/ui/completion/${locale}`,
+  ]),
 ];
 
 function walk(dir: string, files: string[] = []): string[] {

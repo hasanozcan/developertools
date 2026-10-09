@@ -7,7 +7,9 @@ Başlangıç commit'i: `90c68375ab90de0b78d661b2bcc271b010c8565f`.
 araç adları, açıklamaları, arayüz metinleri, erişilebilir etiketler, hata iletileri,
 sayaçlar, sayfalardaki SSS ve açıklama bölümleri birlikte incelendi. Etkin sözlük
 önceliği, sayfa başlıkları, listeler ve arama sonuçları aynı çeviriyi kullanır.
-Uzun açıklama sözlükleri sunucuda kalır; istemci etkin dilin arayüzünü yükler.
+Uzun açıklama sözlükleri sunucuda kalır; istemci yalnızca etkin dilin ortak arayüz
+metinlerini yükler, bir aracın kendi metinleri o aracın sayfasıyla gelir
+(aşağıdaki "Araç sayfası metinleri" bölümüne bakın).
 
 ## Envanter
 
@@ -28,7 +30,7 @@ Uzun açıklama sözlükleri sunucuda kalır; istemci etkin dilin arayüzünü y
   Sayaçlar dilin `Intl.PluralRules` kategorileri ve adlandırılmış yer tutucularla
   çalışır.
 
-| Dil | Etkin sözlük | İstemci arayüzü |     SSS/açıklama | İncelenmiş İngilizceyle aynı değer |
+| Dil | Etkin sözlük | Tam arayüz sözlüğü |     SSS/açıklama | İncelenmiş İngilizceyle aynı değer |
 | --- | -----------: | --------------: | ---------------: | ---------------------------------: |
 | en  |        4.811 |           3.878 | İngilizce kaynak |                                  — |
 | tr  |        4.813 |           3.880 |            1.422 |                                232 |
@@ -56,6 +58,26 @@ metadata'sında veya çevrilen uzun açıklamalarda İngilizceyle aynı metin yo
 - HTTP durum kodları araması görünen yerelleştirilmiş açıklamayı da kapsar.
 - `src/translations/renderedText.test.ts` varlık, boşluk ve istemci sözlüğü
   anahtarlarını denetler.
+
+## Araç sayfası metinleri
+
+Tam arayüz sözlüğü (3.878 anahtar) her sayfaya gönderilirse tarayıcıya sayfa başına
+~50 KB (gzip) ek JavaScript iner ve AdSense betiği hidrasyondan sonra yüklendiği için
+reklam isteği gecikir. Bu yüzden anahtarlar ikiye ayrıldı:
+
+- **Ortak (775 anahtar):** başlık, altbilgi, ana sayfa, ortak bileşenler, ve hiçbir
+  kaynak dosyada geçmeyen ya da dinamik üretilen anahtarlar. Her sayfa bunu yükler
+  (`src/translations/ui/core/<dil>.ts`).
+- **Araca özel (3.103 anahtar):** yalnızca araç dosyalarında ve onların yalnızca
+  araçlar tarafından kullanılan yardımcılarında geçen anahtarlar. Sunucudaki araç
+  sayfası bunları seçer (`src/lib/toolUiDictionary.ts`) ve `ToolDictionaryProvider`
+  ile yalnızca o aracın alt ağacına verir.
+
+Bir anahtar ancak yalnızca araç dosyalarından erişiliyorsa araca özel olur; emin
+olunamayan her anahtar ortak kalır, yani eksik bir referans metni boşaltmaz. Dağılım
+`scripts/uiDictionaryAnalysis.mjs` ile hesaplanır. Sözlükleri ya da araç bileşenlerini
+değiştirdikten sonra `npm run i18n:split` çalıştırılmalıdır; `splitDictionaries.test.ts`
+üretilen dosyalar eskiyse başarısız olur.
 
 ## Davranış ve inceleme
 

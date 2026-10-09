@@ -20,6 +20,7 @@
     "test:watch": "vitest",
     "test:e2e": "cross-env PLAYWRIGHT_USE_PRODUCTION_SERVER=true playwright test",
     "test:e2e:headed": "cross-env PLAYWRIGHT_USE_PRODUCTION_SERVER=true playwright test --headed",
+    "i18n:split": "node scripts/split-ui-dictionaries.mjs",
     "audit:seo": "node scripts/seo-geo-audit.mjs",
     "submit:indexnow": "node scripts/submit-indexnow.mjs",
     "analyze": "cross-env ANALYZE=true next build --webpack",

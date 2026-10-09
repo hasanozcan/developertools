@@ -89,6 +89,21 @@ export function ToolTextProvider({ text, children }: { text: Dictionary; childre
   return <ToolTextContext.Provider value={text}>{children}</ToolTextContext.Provider>;
 }
 
+// Strings only one tool's components read. The server tool page selects them (see
+// src/lib/toolUiDictionary.ts) so the shared client dictionary stays small on every page.
+const ToolDictionaryContext = createContext<Dictionary | null>(null);
+
+/** Adds the active tool's own strings on top of the shared dictionary for its subtree. */
+export function ToolDictionaryProvider({
+  dictionary,
+  children,
+}: {
+  dictionary: Dictionary;
+  children: ReactNode;
+}) {
+  return <ToolDictionaryContext.Provider value={dictionary}>{children}</ToolDictionaryContext.Provider>;
+}
+
 function isToolTextKey(key: string): boolean {
   return key.startsWith('toolName.') || key.startsWith('toolDesc.');
 }
@@ -158,20 +173,21 @@ export function LanguageProvider({
 export function useLanguage() {
   const context = useContext(LanguageContext);
   const toolText = useContext(ToolTextContext);
+  const toolDictionary = useContext(ToolDictionaryContext);
   const tWithToolText = useMemo(() => {
-    if (!context || !toolText) return null;
+    if (!context || (!toolText && !toolDictionary)) return null;
     const baseT = context.t;
     return {
       ...context,
       t: (key: string): string => {
-        if (isToolTextKey(key)) {
+        if (toolText && isToolTextKey(key)) {
           const text = toolText[key];
           if (text) return text;
         }
-        return baseT(key);
+        return baseT(key) || toolDictionary?.[key] || '';
       },
     };
-  }, [context, toolText]);
+  }, [context, toolText, toolDictionary]);
 
   if (context === undefined) {
     throw new Error('useLanguage must be used within a LanguageProvider');

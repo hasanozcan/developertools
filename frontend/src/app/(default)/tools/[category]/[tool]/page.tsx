@@ -10,6 +10,8 @@ import { getLocalizedPath, getLocalizedToolMeta, type Language } from '@/lib/i18
 import { getWorkflowTargets } from '@/lib/toolManifest';
 import { getCollectionsForTool, getLocalizedCollection } from '@/lib/toolCollections';
 import { localizeToolPageCopy } from '@/lib/localizedToolPageCopy';
+import { getToolUiDictionary } from '@/lib/toolUiDictionary';
+import { ToolDictionaryProvider } from '@/context/LanguageContext';
 import {
   buildSupplementalToolFaqs,
   buildSupplementalToolSections,
@@ -199,6 +201,8 @@ export default async function ToolPage({
     faqs: removeTemplatedDefinitionFaq(tool.faqs, tool.name, [tool.description, tool.longDescription]),
     answerSections: tool.answerSections,
   }, locale);
+  // This tool's own UI strings travel with its page, not with the shared client dictionary.
+  const toolUiDictionary = await getToolUiDictionary(locale, toolSlug);
   const effectiveFaqs = mergeToolFaqs(
     localizedPageCopy.faqs,
     buildSupplementalToolFaqs(localizedTool.name, locale),
@@ -374,7 +378,9 @@ export default async function ToolPage({
         }))}
         howToUseSteps={effectiveHowToUseSteps}
       >
-        <ToolRenderer toolSlug={toolSlug} />
+        <ToolDictionaryProvider dictionary={toolUiDictionary}>
+          <ToolRenderer toolSlug={toolSlug} />
+        </ToolDictionaryProvider>
       </ToolPageWrapper>
     </div>
   );
