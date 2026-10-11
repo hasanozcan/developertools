@@ -238,8 +238,7 @@ const tools: Record<string, readonly [string, string]> = {
     'OpenAI ve Llama BPE modelleri için token ayrımını ve renklendirilmiş metin bölümlerini görüntüleyin.',
   ],
   'claude-token-counter': [
-    'Claude Token ve Maliyet Hesaplayıcı',
-    'Claude 3.5 Sonnet, Haiku ve Opus modelleri için token sayısını ve maliyetleri hesaplayın.',
+    "Claude Token ve Maliyet Tahmini", "Claude giriş tokenlarını yerel olarak tahmin edin, model sürümünü seçin; giriş, beklenen çıktı ve toplam API maliyetini ayrı hesaplayın.",
   ],
   'deepseek-token-counter': [
     'DeepSeek Token ve Maliyet Hesaplayıcı',

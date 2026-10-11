@@ -378,8 +378,8 @@
   {
     "id": 48,
     "slug": "claude-token-counter",
-    "name": "Claude Token & Cost Calculator",
-    "shortDescription": "Calculate token counts and pricing for Claude 3.5 Sonnet, Haiku, and Opus models.",
+    "name": "Claude Token & Cost Estimator",
+    "shortDescription": "Estimate Claude input tokens locally, select a model version, and budget separate input, expected output and total API costs.",
     "categorySlug": "utilities",
     "categoryName": "Utility Online"
   },

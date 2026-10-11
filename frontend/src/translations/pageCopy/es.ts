@@ -2220,4 +2220,14 @@ export const esPageCopy: Record<string, string> = {
   'pageText.d3c9a849': '¿Por qué es importante SPF para los correos de un dominio?',
   'pageText.61b98659':
     'SPF (Sender Policy Framework) impide que quienes envían spam manden correos no autorizados suplantando tu dominio, protegiendo su reputación y la entrega de tus mensajes.',
+  "pageText.85f1624a": "¿Cuenta esta herramienta los tokens reales de Claude?",
+  "pageText.ca1d0dbb": "Solo aproximación local: ceil(longitud UTF-16 / 3.8), no es un recuento de Anthropic. El código, los idiomas, los emojis y los tokenizadores pueden diferir mucho. Elegir un modelo solo cambia los precios. Excluye instrucciones del sistema, historial, herramientas, imágenes y PDF. No se envía texto a una API.",
+  "pageText.f2dd7eb0": "¿Cómo se calculan los costes?",
+  "pageText.db5b1df7": "Coste de entrada = tokens de entrada aproximados × tarifa de entrada / 1.000.000. Coste de salida = tokens de salida esperados × tarifa de salida / 1.000.000. Total = entrada + salida. La facturación usa el consumo de la respuesta de la API.",
+  "pageText.17d2397c": "El ejemplo repite 100 veces una frase de 38 caracteres: 3.800 unidades UTF-16 / 3.8 = 1.000 tokens de entrada estimados. Con 500 tokens de salida esperados, Sonnet 5.5 cuesta $0.002 de entrada + $0.005 de salida = $0.007 en total. Es un ejemplo aritmético, no un recuento medido.",
+  "pageText.2bf9e5e3": "Límites del tokenizador y los precios",
+  "pageText.8ad848dc": "Claude 4.7 y posteriores usan un tokenizador nuevo; Anthropic indica aproximadamente un 30 % más de tokens que en modelos anteriores, según el contenido. Esta aproximación fija no modela esa diferencia. Usa el endpoint oficial de recuento específico del modelo en tu propia integración para mejorar la estimación; el consumo y los cargos finales pueden variar.",
+  "pageText.9e7e32e6": "Elige una versión del modelo e introduce el presupuesto de tokens de salida esperados.",
+  "pageText.b3578c9c": "Pega el texto y revisa los tokens de entrada aproximados, los costes separados y el total.",
+  "pageText.2bd36988": "Carga el ejemplo o restablece el texto vacío, la salida a cero y el modelo predeterminado.",
 };

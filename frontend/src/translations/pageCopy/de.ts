@@ -1421,5 +1421,15 @@ export const dePageCopy: Record<string, string> = {
   "pageText.58ddddc2": "Aus welchen Feldern besteht ein fünfteiliger Cron-Ausdruck?",
   "pageText.09710cdd": "Minute (0–59), Stunde (0–23), Tag des Monats (1–31), Monat (1–12) und Wochentag (0–6, Sonntag = 0).",
   "pageText.d3c9a849": "Warum ist SPF für Domain-E-Mails wichtig?",
-  "pageText.61b98659": "SPF (Sender Policy Framework) verhindert, dass Spammer unautorisierte E-Mails mit gefälschtem Domainnamen versenden, und schützt damit den Ruf Ihrer Domain und die Zustellbarkeit Ihrer E-Mails."
+  "pageText.61b98659": "SPF (Sender Policy Framework) verhindert, dass Spammer unautorisierte E-Mails mit gefälschtem Domainnamen versenden, und schützt damit den Ruf Ihrer Domain und die Zustellbarkeit Ihrer E-Mails.",
+  "pageText.85f1624a": "Zählt dieses Tool tatsächliche Claude-Tokens?",
+  "pageText.ca1d0dbb": "Nur lokale Näherung: ceil(UTF-16-Länge / 3.8), keine Anthropic-Tokenzählung. Code, Sprachen, Emoji und Modell-Tokenizer können stark abweichen. Die Modellauswahl ändert nur die Preise. Systemprompts, Verlauf, Tools, Bilder und PDFs sind ausgeschlossen. Kein Text wird an eine API gesendet.",
+  "pageText.f2dd7eb0": "Wie werden die Kosten berechnet?",
+  "pageText.db5b1df7": "Eingabekosten = ungefähre Eingabetokens × Eingabepreis / 1.000.000. Ausgabekosten = erwartete Ausgabetokens × Ausgabepreis / 1.000.000. Gesamt = Eingabe + Ausgabe. Die Abrechnung verwendet die Nutzung in der API-Antwort.",
+  "pageText.17d2397c": "Das Beispiel wiederholt einen Satz mit 38 Zeichen 100-mal: 3.800 UTF-16-Einheiten / 3.8 = 1.000 geschätzte Eingabetokens. Mit 500 erwarteten Ausgabetokens kostet Sonnet 5.5 $0.002 Eingabe + $0.005 Ausgabe = $0.007 insgesamt. Dies ist ein Rechenbeispiel, keine gemessene Tokenzählung.",
+  "pageText.2bf9e5e3": "Tokenizer- und Preisgrenzen",
+  "pageText.8ad848dc": "Claude 4.7 und spätere Modelle nutzen einen neueren Tokenizer; Anthropic nennt je nach Inhalt ungefähr 30 % mehr Tokens als bei früheren Modellen. Diese feste Näherung bildet den Unterschied nicht ab. Nutzen Sie den offiziellen modellspezifischen Zählendpunkt in Ihrer eigenen Integration für eine bessere Eingabeschätzung; tatsächliche Nutzung und Gebühren können abweichen.",
+  "pageText.9e7e32e6": "Modellversion wählen und das erwartete Ausgabetoken-Budget eingeben.",
+  "pageText.b3578c9c": "Eingabetext einfügen und ungefähre Eingabetokens, getrennte Kosten und Gesamtkosten prüfen.",
+  "pageText.2bd36988": "Rechenbeispiel laden oder auf leeren Text, null Ausgabetokens und das Standardmodell zurücksetzen.",
 };

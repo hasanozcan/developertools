@@ -1434,5 +1434,25 @@ export const frUi: Record<string, string> = {
     'Sélectionnez un fichier local et comparez son empreinte à une somme de contrôle fiable. Les fichiers sont lus en mémoire dans le navigateur. Les gros fichiers peuvent épuiser la mémoire ; utilisez un terminal local ou l’exemple Python par blocs du guide.',
   // Keep client navigation labels identical to the final catalog labels.
 
+  // Claude local estimate and cost budget.
+  "claude.model": "Modèle / version",
+  "claude.outputTokens": "Tokens de sortie attendus",
+  "claude.inputText": "Texte d’entrée",
+  "claude.placeholder": "Collez du texte pour une estimation locale…",
+  "claude.inputTokens": "Tokens d’entrée approximatifs",
+  "claude.inputCost": "Coût d’entrée estimé (USD)",
+  "claude.outputCost": "Coût de sortie attendu (USD)",
+  "claude.totalCost": "Coût total estimé (USD)",
+  "claude.rates": "Entrée / sortie en USD par million de tokens",
+  "claude.example": "Charger un exemple estimé à 1 000 tokens",
+  "claude.reset": "Réinitialiser",
+  "claude.sources": "Sources officielles, vérifiées le",
+  "claude.pricing": "Tarifs de l’API",
+  "claude.tokenGuide": "Guide de comptage des tokens",
+  "claude.outputHelp": "Saisissez un entier de 0 à 128 000. Incluez les tokens de réflexion attendus ; il s’agit d’un budget, pas d’une sortie générée.",
+  "claude.invalidOutput": "Saisissez un entier de 0 à 128 000 sans signe, décimales ni exposant.",
+  "claude.approximation": "Approximation locale uniquement : ceil(longueur UTF-16 / 3.8), sans comptage Anthropic. Le code, les langues, les emojis et les tokeniseurs peuvent varier fortement. Le modèle choisi change uniquement les tarifs. Instructions système, historique, outils, images et PDF exclus. Aucun texte n’est envoyé à une API.",
+  "claude.pricingScope": "Tarifs standard de Claude API en USD uniquement. Cache, remises par lots, frais d’outils, suppléments régionaux et taxes exclus. Haiku 5.5 applique des tarifs d’entrée ET de sortie supérieurs au-delà de 100 000 tokens d’entrée ; l’estimation peut franchir ce seuil différemment de l’usage réel.",
+  "claude.unicodeExample": "Charger un exemple de code / Unicode",
   ...frUiCompletion,
 };

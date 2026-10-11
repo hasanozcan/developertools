@@ -387,8 +387,7 @@ const tools: readonly (readonly [string, string, string])[] = [
   ],
   [
     'claude-token-counter',
-    'Calculadora de tokens y costes de Claude',
-    'Calcula el número de tokens y los precios de los modelos Claude 3.5 Sonnet, Haiku y Opus.',
+    "Estimador de tokens y costes de Claude", "Estima tokens de entrada de Claude localmente, elige una versión del modelo y calcula por separado entrada, salida esperada y coste total de la API.",
   ],
   [
     'deepseek-token-counter',
