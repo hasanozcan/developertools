@@ -2244,4 +2244,14 @@ export const frPageCopy: Record<string, string> = {
   'pageText.d3c9a849': "Pourquoi SPF est-il important pour les courriels d'un domaine ?",
   'pageText.61b98659':
     "SPF (Sender Policy Framework) empêche les expéditeurs de courriels indésirables d'envoyer des messages non autorisés usurpant votre domaine, protégeant sa réputation et la bonne livraison de ses courriels.",
+  "pageText.85f1624a": "Cet outil compte-t-il les véritables tokens Claude ?",
+  "pageText.ca1d0dbb": "Approximation locale uniquement : ceil(longueur UTF-16 / 3.8), sans comptage Anthropic. Le code, les langues, les emojis et les tokeniseurs peuvent varier fortement. Le modèle choisi change uniquement les tarifs. Instructions système, historique, outils, images et PDF exclus. Aucun texte n’est envoyé à une API.",
+  "pageText.f2dd7eb0": "Comment les coûts sont-ils calculés ?",
+  "pageText.db5b1df7": "Coût d’entrée = tokens d’entrée approximatifs × tarif d’entrée / 1 000 000. Coût de sortie = tokens de sortie attendus × tarif de sortie / 1 000 000. Total = entrée + sortie. La facturation utilise l’usage indiqué dans la réponse API.",
+  "pageText.17d2397c": "L’exemple répète 100 fois une phrase de 38 caractères : 3 800 unités UTF-16 / 3.8 = 1 000 tokens d’entrée estimés. Avec 500 tokens de sortie attendus, Sonnet 5.5 coûte $0.002 en entrée + $0.005 en sortie = $0.007 au total. C’est un exemple arithmétique, pas un comptage mesuré.",
+  "pageText.2bf9e5e3": "Limites du tokeniseur et des tarifs",
+  "pageText.8ad848dc": "Claude 4.7 et les modèles suivants utilisent un tokeniseur plus récent ; Anthropic indique environ 30 % de tokens supplémentaires, selon le contenu. Cette approximation fixe ne représente pas cette différence. Utilisez le point de terminaison officiel propre au modèle dans votre intégration pour mieux estimer l’entrée ; l’usage et les frais finaux peuvent varier.",
+  "pageText.9e7e32e6": "Choisissez une version du modèle et saisissez le budget de tokens de sortie attendus.",
+  "pageText.b3578c9c": "Collez le texte et vérifiez les tokens d’entrée approximatifs, les coûts séparés et le total.",
+  "pageText.2bd36988": "Chargez l’exemple ou réinitialisez le texte vide, la sortie à zéro et le modèle par défaut.",
 };

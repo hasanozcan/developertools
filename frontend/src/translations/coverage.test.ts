@@ -75,7 +75,9 @@ describe('translation runtime coverage', () => {
   });
 
   it('allows identical English interface text only at reviewed exact keys and values', () => {
-    for (const locale of locales.filter((locale): locale is Exclude<Language, 'en'> => locale !== 'en')) {
+    for (const locale of locales.filter(
+      (locale): locale is Exclude<Language, 'en'> => locale !== 'en',
+    )) {
       const reviewed = intentionalEnglish[locale];
       expect(new Set(reviewed.map((entry) => entry.key)).size).toBe(reviewed.length);
       expect(reviewed.every((entry) => entry.reason.trim().length > 0)).toBe(true);
@@ -149,15 +151,17 @@ describe('translation runtime coverage', () => {
       const missing = new Set<string>();
       const expectedKeys = new Set<string>();
       for (const tools of Object.values(toolPageContent)) {
-        for (const tool of Object.values(tools)) {
+        for (const [toolSlug, tool] of Object.entries(tools)) {
           const content = {
             faqs: removeTemplatedDefinitionFaq(tool.faqs, tool.name, [
               tool.description,
               tool.longDescription,
             ]),
             answerSections: tool.answerSections,
+            howToUseSteps: toolSlug === 'claude-token-counter' ? tool.howToUseSteps : undefined,
           };
           const text = [
+            ...(content.howToUseSteps || []),
             ...content.faqs.flatMap((faq) => [faq.question, faq.answer]),
             ...(content.answerSections?.flatMap((section) => [
               section.heading,

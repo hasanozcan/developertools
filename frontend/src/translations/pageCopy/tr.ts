@@ -2209,4 +2209,14 @@ export const trPageCopy: Record<string, string> = {
   'pageText.d3c9a849': 'SPF, alan adı e-postaları için neden önemlidir?',
   'pageText.61b98659':
     'SPF (Sender Policy Framework), istenmeyen posta gönderenlerin alan adınızı taklit eden yetkisiz e-postalar göndermesini önleyerek alan adı itibarınızı ve e-posta teslim edilebilirliğini korur.',
+  "pageText.85f1624a": "Bu araç gerçek Claude tokenlarını sayar mı?",
+  "pageText.ca1d0dbb": "Yalnız yerel yaklaşım: ceil(UTF-16 uzunluğu / 3.8); Anthropic token sayımı değildir. Kod, diller, emoji ve model tokenizerları büyük farklar yaratabilir. Model seçimi yalnız fiyatları değiştirir. Sistem istemi, geçmiş, araçlar, görseller ve PDF dosyaları dahil değildir. Metin API’ye gönderilmez.",
+  "pageText.f2dd7eb0": "Maliyetler nasıl hesaplanır?",
+  "pageText.db5b1df7": "Giriş maliyeti = yaklaşık giriş tokenı × giriş fiyatı / 1.000.000. Çıktı maliyeti = beklenen çıktı tokenı × çıktı fiyatı / 1.000.000. Toplam = giriş + çıktı maliyeti. Gerçek faturalandırma API yanıtındaki kullanıma dayanır.",
+  "pageText.17d2397c": "Örnek, 38 karakterlik cümleyi 100 kez tekrarlar: 3.800 UTF-16 birimi / 3.8 = 1.000 tahmini giriş tokenı. 500 beklenen çıktı tokenıyla Sonnet 5.5 maliyeti $0.002 giriş + $0.005 çıktı = $0.007 toplamdır. Bu, ölçülmüş token sayımı değil, aritmetik örneğidir.",
+  "pageText.2bf9e5e3": "Tokenizer ve fiyat sınırları",
+  "pageText.8ad848dc": "Claude 4.7 ve sonrası daha yeni tokenizer kullanır; Anthropic, içeriğe göre önceki modellere kıyasla yaklaşık %30 daha fazla token bildirir. Bu sabit yaklaşım farkı modellemez. Daha iyi giriş tahmini için kendi entegrasyonunuzda resmî, modele özel token sayımı uç noktasını kullanın; son kullanım ve ücretler farklı olabilir.",
+  "pageText.9e7e32e6": "Model sürümünü seçin ve beklenen çıktı token bütçesini girin.",
+  "pageText.b3578c9c": "Giriş metnini yapıştırın; yaklaşık giriş tokenlarını, ayrı maliyetleri ve toplamı inceleyin.",
+  "pageText.2bd36988": "Hesap örneğini yükleyin veya boş metne, sıfır çıktıya ve varsayılan modele sıfırlayın.",
 };

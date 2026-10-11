@@ -58,7 +58,7 @@ const toolRows: ReadonlyArray<readonly [string, string, string]> = [
   ['rag-chunking-visualizer', 'RAG 语义分块可视化工具', '使用自定义 Token 大小和重叠滑动窗口，可视化文档文本分块。'],
   ['mcp-inspector', '模型上下文协议（MCP）检查器', '验证并检查 MCP JSON-RPC 2.0 请求、响应和通知载荷。'],
   ['tiktoken-visualizer', 'Tiktoken BPE 分词可视化工具', '可视化展示 OpenAI 和 Llama BPE 模型的 Token 分解及彩色分段。'],
-  ['claude-token-counter', 'Claude Token 与费用计算器', '计算 Claude 3.5 Sonnet、Haiku 和 Opus 模型的 Token 数量与费用。'],
+  ['claude-token-counter', "Claude Token 与费用估算器", "本地估算 Claude 输入 token，选择模型版本，分别计算输入、预期输出及 API 总费用。"],
   ['deepseek-token-counter', 'DeepSeek Token 与费用计算器', '计算 DeepSeek V3 和 DeepSeek R1 模型的准确 BPE Token 数量及 API 推理费用。'],
   ['px-to-rem', 'PX 转 REM 与 EM 转换器', '将像素尺寸转换为 REM、EM、VW、VH 等 CSS 单位。'],
   ['mock-data-generator', '模拟 JSON 数据生成器', '为用户、商品和订单生成接近实际数据的模拟 JSON 数据集。'],

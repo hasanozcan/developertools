@@ -193,8 +193,8 @@ export const toolSources: Record<string, ToolSource[]> = {
     { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
   ],
   'claude-token-counter': [
-    { name: 'Claude Token & Cost Calculator Reference', url: 'https://devstools.app/tools/utilities/claude-token-counter' },
-    { name: 'Developer Documentation', url: 'https://developer.mozilla.org' },
+    { name: 'Anthropic token counting guide', url: 'https://platform.claude.com/docs/en/build-with-claude/token-counting' },
+    { name: 'Claude API pricing', url: 'https://platform.claude.com/docs/en/about-claude/pricing' },
   ],
   'deepseek-token-counter': [
     { name: 'DeepSeek Token & Cost Calculator Reference', url: 'https://devstools.app/tools/utilities/deepseek-token-counter' },

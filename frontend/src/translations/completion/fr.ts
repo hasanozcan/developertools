@@ -171,9 +171,9 @@ export const frCompletion: Record<string, string> = {
   'toolName.tiktoken-visualizer': 'Visualiseur de tokenisation BPE Tiktoken',
   'toolDesc.tiktoken-visualizer':
     'Visualisez les jetons et leur segmentation colorée pour les modèles BPE OpenAI et Llama.',
-  'toolName.claude-token-counter': 'Calculateur de jetons et de coûts Claude',
+  'toolName.claude-token-counter': "Estimation des tokens et coûts Claude",
   'toolDesc.claude-token-counter':
-    'Calculez le nombre de jetons et les tarifs des modèles Claude 3.5 Sonnet, Haiku et Opus.',
+    "Estimez localement les tokens d’entrée Claude, choisissez une version et calculez séparément les coûts d’entrée, de sortie attendue et le total API.",
   'toolName.deepseek-token-counter': 'Calculateur de jetons et de coûts DeepSeek',
   'toolDesc.deepseek-token-counter':
     "Calculez le nombre exact de jetons BPE et les coûts d'inférence API des modèles DeepSeek V3 et R1.",

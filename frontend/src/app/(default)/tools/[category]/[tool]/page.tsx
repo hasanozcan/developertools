@@ -200,6 +200,8 @@ export default async function ToolPage({
   const localizedPageCopy = await localizeToolPageCopy({
     faqs: removeTemplatedDefinitionFaq(tool.faqs, tool.name, [tool.description, tool.longDescription]),
     answerSections: tool.answerSections,
+    // Claude's reviewed steps have translations and describe its actual controls.
+    howToUseSteps: toolSlug === 'claude-token-counter' ? tool.howToUseSteps : undefined,
   }, locale);
   // This tool's own UI strings travel with its page, not with the shared client dictionary.
   const toolUiDictionary = await getToolUiDictionary(locale, toolSlug);
@@ -216,8 +218,7 @@ export default async function ToolPage({
       locale,
     ),
   ];
-  // Tool-specific steps are English-only; localized pages use the translated
-  // generic steps so the visible list and HowTo JSON-LD match the page language.
+  // Tools without reviewed translated steps use the locale's generic steps.
   const localizedGenericSteps =
     locale === 'en'
       ? undefined
@@ -226,13 +227,13 @@ export default async function ToolPage({
           .map((step) => step.replace(/^\d+\.\s*/, '').trim())
           .filter(Boolean);
   const effectiveHowToUseSteps =
-    localizedGenericSteps && localizedGenericSteps.length > 0
+    localizedPageCopy.howToUseSteps ?? (localizedGenericSteps && localizedGenericSteps.length > 0
       ? localizedGenericSteps
       : tool.howToUseSteps || [
           'Enter or paste representative input into the tool.',
           'Adjust the available options for the result you need.',
           'Run the tool, review the output, and copy or continue to a related workflow step.',
-        ];
+        ]);
 
   // FAQ structured data for SEO
   const faqStructuredData = {

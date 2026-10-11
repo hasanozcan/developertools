@@ -9846,19 +9846,20 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
       ]
     },
     'claude-token-counter': {
-      name: 'Claude Token & Cost Calculator',
-      metadataTitle: 'Claude Token & Cost Calculator Online',
-      description: 'Calculate token counts and pricing for Claude 3.5 Sonnet, Haiku, and Opus models.',
-      longDescription: 'Calculate token counts and pricing for Claude 3.5 Sonnet, Haiku, and Opus models.',
-      keywords: ['claude-token-counter', 'utilities', 'developer tool'],
+      name: "Claude Token & Cost Estimator",
+      metadataTitle: 'Claude Token & Cost Estimator Online',
+      description: "Estimate Claude input tokens locally, select a model version, and budget separate input, expected output and total API costs.",
+      longDescription: "Estimate Claude input tokens locally, select a model version, and budget separate input, expected output and total API costs.",
+      keywords: ['claude token estimate', 'Claude API cost', 'input output token pricing'],
       faqs: [
-        { question: 'What is Claude Token & Cost Calculator?', answer: 'Calculate token counts and pricing for Claude 3.5 Sonnet, Haiku, and Opus models.' },
-        { question: 'Is my data private?', answer: 'Yes, 100% client-side execution in your browser.' }
+        { question: "Does this tool count actual Claude tokens?", answer: "Local approximation only: ceil(UTF-16 length / 3.8), not an Anthropic token count. Code, languages, emoji and model tokenizers can differ greatly. Model selection changes prices only. System prompts, history, tools, images and PDFs are excluded. No text is sent to an API." },
+        { question: "How are costs calculated?", answer: "Input cost = approximate input tokens × input rate / 1,000,000. Output cost = expected output tokens × output rate / 1,000,000. Total = input cost + output cost. Actual billing uses the API response usage." },
       ],
-      howToUseSteps: [
-        'Enter or paste your input.',
-        'Review the result and copy with one click.'
-      ]
+      answerSections: [
+        { heading: "Worked example", paragraphs: ["The sample repeats a 38-character sentence 100 times: 3,800 UTF-16 units / 3.8 = 1,000 estimated input tokens. With 500 expected output tokens, Sonnet 5.5 costs $0.002 input + $0.005 output = $0.007 total. This is an arithmetic example, not a measured token count."] },
+        { heading: "Tokenizer and pricing limits", paragraphs: ["Claude 4.7 and later use a newer tokenizer; Anthropic reports roughly 30% more tokens than earlier models, depending on content. This fixed heuristic does not model that difference. Use the official model-specific token counting endpoint in your own integration for a better input estimate; final usage and charges can differ."] },
+      ],
+      howToUseSteps: ["Select a model version and enter your expected output token budget.", "Paste the input text and review the approximate input tokens, separate costs and total.", "Load the worked example or reset to empty text, zero output and the default model."],
     },
     'deepseek-token-counter': {
       name: 'DeepSeek Token & Cost Calculator',

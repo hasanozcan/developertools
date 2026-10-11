@@ -217,7 +217,7 @@ export const toolDictionaryKeys: Readonly<Record<string, readonly string[]>> = {
   "cron-timezone-converter": ["uiText.36297bab"],
   "matrix-calculator": ["uiText.62cca55d","uiText.a436104d"],
   "deepseek-token-counter": ["tool.loremIpsum.words","uiText.42ff3e73","uiText.54ecfa27","uiText.8b7fdfeb","uiText.e06b9625"],
-  "claude-token-counter": ["uiText.75470c81","uiText.42ff3e73","uiText.9abd7aaa","uiText.ad808fab","uiText.c0a6d52f"],
+  "claude-token-counter": ["claude.model","claude.outputTokens","claude.inputText","claude.placeholder","claude.inputTokens","claude.inputCost","claude.outputCost","claude.totalCost","claude.rates","claude.example","claude.reset","claude.sources","claude.pricing","claude.tokenGuide","claude.outputHelp","claude.invalidOutput","claude.approximation","claude.pricingScope","claude.unicodeExample"],
   "tiktoken-visualizer": ["uiText.bc5e650d","tool.tiktoken.tokenId"],
   "mcp-inspector": ["uiText.0a377624","uiText.61a58c50","uiText.ca77496f","uiText.a56e15da","uiText.e116f8f5","uiText.b23febde"],
   "rag-chunking-visualizer": ["uiText.65ca74e7","uiText.1dc219e2","uiText.e0618fb8","uiText.759a331f"],

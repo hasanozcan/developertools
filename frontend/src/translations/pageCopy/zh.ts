@@ -1421,5 +1421,15 @@ export const zhPageCopy: Record<string,string> = {
   "pageText.58ddddc2": "五部分 cron 表达式由哪些字段组成？",
   "pageText.09710cdd": "分钟（0–59）、小时（0–23）、月内日期（1–31）、月份（1–12）和星期（0–6，星期日 = 0）。",
   "pageText.d3c9a849": "为什么 SPF 对域名邮件很重要？",
-  "pageText.61b98659": "SPF（Sender Policy Framework，发件人策略框架）防止垃圾邮件发送者伪造域名发送未经授权的邮件，保护域名声誉和邮件送达率。"
+  "pageText.61b98659": "SPF（Sender Policy Framework，发件人策略框架）防止垃圾邮件发送者伪造域名发送未经授权的邮件，保护域名声誉和邮件送达率。",
+  "pageText.85f1624a": "此工具是否计算真实的 Claude token？",
+  "pageText.ca1d0dbb": "仅为本地近似值：ceil(UTF-16 长度 / 3.8)，并非 Anthropic token 计数。代码、语言、表情符号和模型分词器可能产生很大差异。模型选择仅更改价格。不包含系统提示、历史记录、工具、图像和 PDF。文本不会发送到 API。",
+  "pageText.f2dd7eb0": "费用如何计算？",
+  "pageText.db5b1df7": "输入费用 = 估算输入 token × 输入价格 / 1,000,000。输出费用 = 预期输出 token × 输出价格 / 1,000,000。总费用 = 输入 + 输出。实际计费使用 API 响应中的用量。",
+  "pageText.17d2397c": "示例将一个 38 字符的句子重复 100 次：3,800 个 UTF-16 单位 / 3.8 = 估算 1,000 个输入 token。预期输出为 500 token 时，Sonnet 5.5 的输入费用为 $0.002，输出费用为 $0.005，总费用为 $0.007。这是算术示例，并非实测 token 数。",
+  "pageText.2bf9e5e3": "分词器及价格限制",
+  "pageText.8ad848dc": "Claude 4.7 及后续模型使用较新的分词器；Anthropic 表示，相比旧模型，token 数约增加 30%，具体取决于内容。本工具的固定估算未模拟该差异。请在自己的集成中使用官方针对所选模型的计数端点，以获得更好的输入估算；最终用量和费用仍可能不同。",
+  "pageText.9e7e32e6": "选择模型版本并输入预期输出 token 预算。",
+  "pageText.b3578c9c": "粘贴输入文本，查看估算输入 token、各项费用和总费用。",
+  "pageText.2bd36988": "载入计算示例，或重置为空文本、零输出和默认模型。",
 };

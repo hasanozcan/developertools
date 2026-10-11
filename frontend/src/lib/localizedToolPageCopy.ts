@@ -4,7 +4,7 @@ import type { ToolPageContent } from './toolPageContent';
 import { textTranslationKey } from './localizedText';
 
 type PageCopy = Readonly<Record<string, string>>;
-type LocalizedContent = Pick<ToolPageContent, 'faqs' | 'answerSections'>;
+type LocalizedContent = Pick<ToolPageContent, 'faqs' | 'answerSections' | 'howToUseSteps'>;
 
 // Long-form copy stays on the server; only the requested locale is loaded.
 const loaders = {
@@ -45,5 +45,6 @@ export async function localizeToolPageCopy(
       paragraphs: section.paragraphs?.map(translate),
       bullets: section.bullets?.map(translate),
     })),
+    howToUseSteps: content.howToUseSteps?.map(translate),
   };
 }
