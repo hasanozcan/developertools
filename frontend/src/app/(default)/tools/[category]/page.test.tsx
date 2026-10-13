@@ -46,6 +46,15 @@ async function renderCategoryPage(locale: Language, category: string) {
 }
 
 describe('CategoryPage', () => {
+  it.each(['en', 'tr', 'de', 'es', 'fr', 'ru', 'zh'] as Language[])(
+    'omits an unverified Encoding revision date in %s',
+    async (locale) => {
+      const { byType } = await renderCategoryPage(locale, 'encoding');
+      expect(byType('CollectionPage')).not.toHaveProperty('dateModified');
+      expect(byType('WebApplication')).not.toHaveProperty('dateModified');
+    },
+  );
+
   it('keeps English output on the default locale', async () => {
     const { doc, byType } = await renderCategoryPage('en', 'converters');
 

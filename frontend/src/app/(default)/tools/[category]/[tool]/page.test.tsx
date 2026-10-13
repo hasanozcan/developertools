@@ -100,6 +100,7 @@ describe('ToolPage structured data', () => {
     expect(app.url).toBe('https://devstools.app/tr/tools/json/json-formatter');
     // The OG image route only exists under the unprefixed path.
     expect(app.image).toBe('https://devstools.app/tools/json/json-formatter/opengraph-image');
+    expect(app).not.toHaveProperty('screenshot');
 
     const related = byType('ItemList');
     expect(related.itemListElement.length).toBeGreaterThan(0);
@@ -120,6 +121,13 @@ describe('ToolPage structured data', () => {
       /Do I need to install|What should I do with the result/,
     );
     expect(JSON.stringify(jsonLd)).not.toContain('"name":"Home"');
+  });
+
+  it('keeps the OG image without claiming it is an application screenshot', async () => {
+    const { byType } = await renderToolPage('en');
+    const app = byType('WebApplication');
+    expect(app.image).toBe('https://devstools.app/tools/json/json-formatter/opengraph-image');
+    expect(app).not.toHaveProperty('screenshot');
   });
 
   it('serializes JSON-LD safely for inline script elements', async () => {

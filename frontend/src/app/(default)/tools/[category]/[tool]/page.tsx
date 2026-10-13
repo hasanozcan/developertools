@@ -285,7 +285,6 @@ export default async function ToolPage({
     description: localizedTool.description,
     inLanguage: locale,
     image: ogImageUrl,
-    screenshot: ogImageUrl,
     applicationCategory: 'DeveloperApplication',
     operatingSystem: 'Any',
     isAccessibleForFree: true,

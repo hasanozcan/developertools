@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import { toolCatalog } from '../src/lib/api';
 import { translations } from '../src/translations';
 
@@ -447,7 +447,8 @@ test('all tools render interactive interface with zero browser errors', async ({
     await expect(heading).toBeVisible();
 
     // Verify interactive tool interface container
-    const toolInterface = page.locator('[data-tool-interface="true"]');
+    // Some tools add their own interface marker inside the shared wrapper.
+    const toolInterface = page.locator('[data-tool-interface="true"]').first();
     await expect(toolInterface).toBeVisible();
 
     // Verify interactive controls (button, input, textarea, select, or canvas) exist inside the interface

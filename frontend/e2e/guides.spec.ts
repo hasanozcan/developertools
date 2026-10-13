@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import { developerGuides } from '../src/lib/developerGuides';
 
 test('guides are discoverable, server-rendered, and connected to their tools', async ({

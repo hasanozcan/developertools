@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { crc32 } from 'node:zlib';
-import { expect, test, type Locator, type Page } from '@playwright/test';
+import { expect, test, type Locator, type Page } from './fixtures';
 
 const algorithms = ['SHA-256', 'MD5', 'CRC32', 'SHA-1', 'SHA-384', 'SHA-512'] as const;
 type Algorithm = (typeof algorithms)[number];

@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import { translations, type Language } from '../src/translations';
 import { enUi } from '../src/translations/ui/en';
 import { trUi } from '../src/translations/ui/tr';
