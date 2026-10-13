@@ -387,6 +387,7 @@ export default function Header() {
                       <Link
                         key={tool.slug}
                         href={buildToolPath(tool.category, tool.slug)}
+                        prefetch={false}
                         className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-indigo-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
                       >
                         {tool.name}
@@ -396,6 +397,7 @@ export default function Header() {
                       <div className="border-t border-slate-100 dark:border-slate-800 mt-1.5 pt-1.5">
                         <Link
                           href={item.href}
+                          prefetch={false}
                           className="block px-4 py-2 text-sm text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-slate-800 font-semibold"
                         >
                           {t('nav.viewAll')}
