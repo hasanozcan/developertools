@@ -211,7 +211,8 @@ for (const locale of locales) {
     await expect(checksum.getByRole('status')).toContainText(ui['uiText.d53946be']);
     await expect(sha256).toHaveValue(abcSha256);
 
-    await page.goto(localPath(locale, '/tools/crypto/translation-test-missing-tool'));
+    const missingToolResponse = await page.goto(localPath(locale, '/tools/crypto/translation-test-missing-tool'));
+    expect(missingToolResponse?.status()).toBe(404);
     const notFound = page.getByRole('main');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(ui['notFound.title']);
     await expect(
