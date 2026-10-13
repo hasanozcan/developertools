@@ -7,6 +7,21 @@ async function structuredData(page: Page) {
     .evaluateAll((scripts) => scripts.map((script) => JSON.parse(script.textContent || '{}')));
 }
 
+test('blocks Vercel measurement requests before any page navigation', async ({ page }) => {
+  await page.goto('/');
+  for (const path of ['/_vercel/insights/script.js', '/_vercel/speed-insights/script.js']) {
+    const result = await page.evaluate(async (url) => {
+      try {
+        await fetch(url);
+        return 'sent';
+      } catch {
+        return 'blocked';
+      }
+    }, path);
+    expect(result).toBe('blocked');
+  }
+});
+
 for (const [device, viewport] of [
   ['desktop', { width: 1440, height: 900 }],
   ['mobile', { width: 390, height: 844 }],
