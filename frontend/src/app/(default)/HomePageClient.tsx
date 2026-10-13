@@ -374,8 +374,8 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
   const collectionPageStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'DevsTools - Free Online Developer Tools',
-    description: `${toolCatalog.length} free online developer tools: JSON formatter, Base64 encoder, UUID generator, hash generators, regex tester, QR code & more. No registration, 100% client-side.`,
+    name: t('home.title'),
+    description: t('home.subtitle'),
     '@id': `${pageUrl}#collectionpage`,
     url: pageUrl,
     inLanguage: language,

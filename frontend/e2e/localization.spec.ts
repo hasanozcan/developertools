@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 import { trUi } from '../src/translations/ui/tr';
 import { deUi } from '../src/translations/ui/de';
 import { interpolateText } from '../src/lib/localizedText';

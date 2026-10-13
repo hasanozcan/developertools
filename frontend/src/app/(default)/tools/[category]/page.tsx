@@ -824,7 +824,6 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
     ...(isDefaultLocale ? {} : { inLanguage: locale }),
     // The OG image route only exists under the unprefixed path.
     image: `${siteUrl}/tools/${categorySlug}/opengraph-image`,
-    ...(categorySlug === 'encoding' ? { dateModified: '2026-07-11' } : {}),
     about: {
       '@type': 'Thing',
       name: categoryName,
@@ -866,7 +865,6 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
           applicationCategory: 'DeveloperApplication',
           operatingSystem: 'Any',
           isAccessibleForFree: true,
-          dateModified: '2026-07-11',
           citation: sources.map((source) => source.url),
           offers: {
             '@type': 'Offer',

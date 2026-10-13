@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test } from '@playwright/test';
+import { expect, test } from './fixtures';
 
 const route = '/tools/utilities/claude-token-counter';
 test.beforeEach(async ({ context, baseURL }) => {
