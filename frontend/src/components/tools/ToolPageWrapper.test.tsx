@@ -120,11 +120,13 @@ describe('ToolPageWrapper contextual guides', () => {
 
   it('keeps a compact localized guide next to the tool controls and links to the English guide', () => {
     mockLanguage = 'tr';
-    renderToolPage([{
-      name: 'How to Decode Unicode Escapes in Text and JSON',
-      description: 'Decode escaped text.',
-      href: '/guides/decode-unicode-escapes',
-    }]);
+    renderToolPage([
+      {
+        name: 'How to Decode Unicode Escapes in Text and JSON',
+        description: 'Decode escaped text.',
+        href: '/guides/decode-unicode-escapes',
+      },
+    ]);
     const nav = screen.getByRole('navigation', { name: 'Pratik rehberler' });
     expect(nav.closest('[data-tool-interface]')).not.toBeNull();
     expect(nav.querySelector('a')).toHaveTextContent('Unicode kaçışlarını çözme (İngilizce)');
@@ -163,6 +165,7 @@ describe('ToolPageWrapper full screen ads', () => {
 
     expect(screen.queryByTestId('ad-tool-zen-left')).not.toBeInTheDocument();
     expect(screen.getByTestId('ad-tool-bottom')).toHaveAttribute('data-slot', '9876543210');
+    expect(screen.getByTestId('ad-tool-bottom')).toHaveAttribute('data-format', 'auto');
 
     fireEvent.click(screen.getByRole('button', { name: 'Full Screen' }));
 
@@ -440,9 +443,15 @@ describe('ToolPageWrapper extra placements', () => {
     expect(ad).toHaveAttribute('data-slot', '5550001111');
     expect(ad).toHaveAttribute('data-format', 'auto');
     expect(ad).toHaveClass('lg:hidden');
-    expect(position(screen.getByTestId('ad-tool-post-result'), ad) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(position(screen.getByText('Second section'), ad) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(position(ad, screen.getByText('Third section')) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(
+      position(screen.getByTestId('ad-tool-post-result'), ad) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      position(screen.getByText('Second section'), ad) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      position(ad, screen.getByText('Third section')) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
   });
 
   it('still shows it when only the intro section exists', () => {

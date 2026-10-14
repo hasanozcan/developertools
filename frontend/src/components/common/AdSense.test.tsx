@@ -302,6 +302,27 @@ describe('AdSense', () => {
     expect(container.querySelector('[data-testid="ad-fallback"]')).toBeNull();
   });
 
+  it('counts an optimized no-fill as unfilled without requesting the slot again', async () => {
+    const { container } = render(<AdSense slot="123" immediate placement="tool-bottom" />);
+    const ad = container.querySelector('ins.adsbygoogle');
+    expect(window.adsbygoogle).toHaveLength(1);
+
+    await act(async () => {
+      ad?.setAttribute('data-ad-status', 'unfill-optimized');
+      await Promise.resolve();
+    });
+
+    expect(trackProductEventMock).toHaveBeenCalledWith(
+      'ad_slot_unfilled',
+      expect.objectContaining({
+        placement: 'tool-bottom',
+        slot: '123',
+        ad_status: 'unfill-optimized',
+      }),
+    );
+    expect(window.adsbygoogle).toHaveLength(1);
+  });
+
   it('waits for a visible width even for immediate slots, then requests only once', () => {
     availableWidth = 0;
     const { container } = render(<AdSense slot="123" immediate />);

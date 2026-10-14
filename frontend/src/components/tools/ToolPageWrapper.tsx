@@ -146,8 +146,18 @@ export default function ToolPageWrapper({
     [...usedSlots, bottomSlot, zenBottomSlot],
   );
   // Formats can be changed per deployment to compare fill and revenue in AdSense reports.
-  const sidebarFormat = resolveAdSenseFormat(process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_FORMAT, 'vertical');
-  const postToolFormat = resolveAdSenseFormat(process.env.NEXT_PUBLIC_ADSENSE_POST_TOOL_FORMAT, 'horizontal');
+  const sidebarFormat = resolveAdSenseFormat(
+    process.env.NEXT_PUBLIC_ADSENSE_SIDEBAR_FORMAT,
+    'vertical',
+  );
+  const postToolFormat = resolveAdSenseFormat(
+    process.env.NEXT_PUBLIC_ADSENSE_POST_TOOL_FORMAT,
+    'horizontal',
+  );
+  const bottomFormat = resolveAdSenseFormat(
+    process.env.NEXT_PUBLIC_ADSENSE_TOOL_BOTTOM_FORMAT,
+    'auto',
+  );
   const contentSections = answerSections.slice(1);
 
   // Lock body scroll and handle ESC key when in Zen Mode
@@ -197,10 +207,7 @@ export default function ToolPageWrapper({
 
   const howToUseSteps = customHowToUseSteps || t('toolPage.howToUseSteps').split('\n');
 
-  const renderAnswerSection = (
-    section: ToolSeoSection,
-    answerFirst = false,
-  ) => (
+  const renderAnswerSection = (section: ToolSeoSection, answerFirst = false) => (
     <section
       key={section.heading}
       className="mb-8"
@@ -211,9 +218,8 @@ export default function ToolPageWrapper({
         {section.paragraphs?.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
-        {language === 'en' && section.codeExamples?.map((example) => (
-          <CodeExample key={example.title} {...example} />
-        ))}
+        {language === 'en' &&
+          section.codeExamples?.map((example) => <CodeExample key={example.title} {...example} />)}
         {section.bullets && (
           <ul className="list-disc pl-6 space-y-2">
             {section.bullets.map((bullet) => (
@@ -352,7 +358,8 @@ export default function ToolPageWrapper({
 
                   <span className="hidden md:inline-flex items-center text-xs text-slate-500 dark:text-slate-400">
                     <kbd className="rounded border border-slate-300 bg-slate-200/90 px-1.5 py-0.5 text-[10px] font-mono font-semibold text-slate-800 mr-1.5 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100">
-                      {t("uiText.ea50bade")}</kbd>
+                      {t('uiText.ea50bade')}
+                    </kbd>
                     {t('exitZenMode') || 'to exit'}
                   </span>
                   <button
@@ -599,7 +606,7 @@ export default function ToolPageWrapper({
       {bottomSlot && (
         <AdSense
           slot={bottomSlot}
-          format="horizontal"
+          format={bottomFormat}
           placement="tool-bottom"
           className="min-h-[90px] rounded-lg mt-8"
         />

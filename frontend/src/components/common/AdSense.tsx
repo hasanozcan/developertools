@@ -89,7 +89,7 @@ function AdSenseSlot({
     const reportAdStatus = () => {
       if (reportedAdStatus) return;
       const status = slotElement.getAttribute('data-ad-status');
-      if (status !== 'filled' && status !== 'unfilled') return;
+      if (status !== 'filled' && status !== 'unfilled' && status !== 'unfill-optimized') return;
       reportedAdStatus = true;
       const pathname = window.location.pathname;
       const toolMatch = /^\/(?:[a-z]{2}\/)?tools\/([^/]+)\/([^/]+)/.exec(pathname);
@@ -98,6 +98,7 @@ function AdSenseSlot({
         placement,
         format,
         slot,
+        ad_status: status,
         page_type: toolMatch
           ? 'tool'
           : collectionMatch
