@@ -183,6 +183,21 @@ describe('ToolPageWrapper full screen ads', () => {
     await waitFor(() => expect(screen.getByTestId('ad-tool-zen-left')).toBeInTheDocument());
   });
 
+  it('renders the bottom unit once after related tools and before the long reference content', () => {
+    renderToolPage();
+
+    const bottomAd = screen.getByTestId('ad-tool-bottom');
+    const relatedTools = document.querySelector('[data-related-tools="true"]')!;
+    const howToUse = screen.getByRole('heading', { name: 'How to use JSON Formatter' });
+    expect(screen.getAllByTestId('ad-tool-bottom')).toHaveLength(1);
+    expect(
+      relatedTools.compareDocumentPosition(bottomAd) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      bottomAd.compareDocumentPosition(howToUse) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
+
   it.each([undefined, 'not-a-slot', '1234x'])(
     'hides both bottom placements with invalid slot %s',
     async (slot) => {

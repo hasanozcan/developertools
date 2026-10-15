@@ -496,6 +496,16 @@ export default function ToolPageWrapper({
             </div>
           </section>
 
+          {/* Keep the existing bottom unit near the tool result, after related content. */}
+          {bottomSlot && (
+            <AdSense
+              slot={bottomSlot}
+              format={bottomFormat}
+              placement="tool-bottom"
+              className="min-h-[90px] rounded-lg mb-8"
+            />
+          )}
+
           {topicCollections.length > 0 && (
             <section className="mb-8" data-topic-collections="true">
               <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
@@ -601,16 +611,6 @@ export default function ToolPageWrapper({
           </div>
         </div>
       </div>
-
-      {/* Ad Banner - Bottom. Requires its own configured slot for reporting. */}
-      {bottomSlot && (
-        <AdSense
-          slot={bottomSlot}
-          format={bottomFormat}
-          placement="tool-bottom"
-          className="min-h-[90px] rounded-lg mt-8"
-        />
-      )}
     </>
   );
 }
