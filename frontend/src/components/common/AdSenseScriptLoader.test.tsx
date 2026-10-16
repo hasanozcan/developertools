@@ -4,6 +4,10 @@ import AdSenseScriptLoader, { ADSENSE_SCRIPT_READY_EVENT } from './AdSenseScript
 import { NON_PRODUCTION_AD_ORIGINS, setBrowserUrl } from '@/test/browserLocation';
 
 const originalUrl = window.location.href;
+const loaderSelector =
+  'script[src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-123"]';
+const anyAdSenseScriptSelector =
+  'script[src^="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client="]';
 
 const { trackProductEventMock } = vi.hoisted(() => ({
   trackProductEventMock: vi.fn(),
@@ -23,9 +27,7 @@ describe('AdSenseScriptLoader', () => {
   afterEach(() => {
     setBrowserUrl(originalUrl);
     vi.useRealTimers();
-    document
-      .querySelectorAll('script[data-devstools-adsense-loader="true"]')
-      .forEach((script) => script.remove());
+    document.querySelectorAll(anyAdSenseScriptSelector).forEach((script) => script.remove());
   });
 
   it.each(NON_PRODUCTION_AD_ORIGINS)(
@@ -37,20 +39,20 @@ describe('AdSenseScriptLoader', () => {
         window.dispatchEvent(new Event('online'));
         await vi.advanceTimersByTimeAsync(10_000);
       });
-      expect(document.querySelector('script[data-devstools-adsense-loader="true"]')).toBeNull();
+      expect(document.querySelector(loaderSelector)).toBeNull();
       expect(trackProductEventMock).not.toHaveBeenCalled();
     },
   );
 
   it('rechecks the origin before a scheduled retry or online recovery', async () => {
     render(<AdSenseScriptLoader clientId="ca-pub-123" />);
-    fireEvent.error(document.querySelector('script[data-devstools-adsense-loader="true"]')!);
+    fireEvent.error(document.querySelector(loaderSelector)!);
     setBrowserUrl('https://developertools-git-test.vercel.app');
     await act(async () => {
       await vi.advanceTimersByTimeAsync(1500);
       window.dispatchEvent(new Event('online'));
     });
-    expect(document.querySelector('script[data-devstools-adsense-loader="true"]')).toBeNull();
+    expect(document.querySelector(loaderSelector)).toBeNull();
   });
 
   it('retries a failed script load and announces readiness after recovery', async () => {
@@ -58,10 +60,9 @@ describe('AdSenseScriptLoader', () => {
     window.addEventListener(ADSENSE_SCRIPT_READY_EVENT, ready);
     render(<AdSenseScriptLoader clientId="ca-pub-123" />);
 
-    const first = document.querySelector<HTMLScriptElement>(
-      'script[data-devstools-adsense-loader="true"]',
-    );
-    expect(first).toHaveAttribute('data-attempt', '1');
+    const first = document.querySelector<HTMLScriptElement>(loaderSelector);
+    expect(first).not.toHaveAttribute('data-devstools-adsense-loader');
+    expect(first).not.toHaveAttribute('data-attempt');
     fireEvent.error(first!);
 
     expect(trackProductEventMock).toHaveBeenCalledWith('adsense_script_load_failed', {
@@ -72,11 +73,10 @@ describe('AdSenseScriptLoader', () => {
       await vi.advanceTimersByTimeAsync(1500);
     });
 
-    const second = document.querySelector<HTMLScriptElement>(
-      'script[data-devstools-adsense-loader="true"]',
-    );
+    const second = document.querySelector<HTMLScriptElement>(loaderSelector);
     expect(second).not.toBe(first);
-    expect(second).toHaveAttribute('data-attempt', '2');
+    expect(second).not.toHaveAttribute('data-devstools-adsense-loader');
+    expect(second).not.toHaveAttribute('data-attempt');
     fireEvent.load(second!);
 
     expect(ready).toHaveBeenCalledTimes(1);
@@ -86,15 +86,16 @@ describe('AdSenseScriptLoader', () => {
 
   it('restarts the retry cycle when connectivity returns', async () => {
     render(<AdSenseScriptLoader clientId="ca-pub-123" />);
-    fireEvent.error(document.querySelector('script[data-devstools-adsense-loader="true"]')!);
+    const first = document.querySelector(loaderSelector);
+    fireEvent.error(first!);
 
     await act(async () => {
       window.dispatchEvent(new Event('online'));
     });
 
-    expect(document.querySelector('script[data-devstools-adsense-loader="true"]')).toHaveAttribute(
-      'data-attempt',
-      '1',
-    );
+    const restarted = document.querySelector(loaderSelector);
+    expect(restarted).not.toBe(first);
+    fireEvent.load(restarted!);
+    expect(trackProductEventMock).toHaveBeenLastCalledWith('adsense_script_loaded', { attempt: 1 });
   });
 });

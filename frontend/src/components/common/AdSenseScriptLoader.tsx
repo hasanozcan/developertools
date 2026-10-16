@@ -6,7 +6,17 @@ import { isAdSenseAllowedInBrowser } from '@/lib/adsense';
 
 const MAX_SCRIPT_ATTEMPTS = 3;
 const RETRY_DELAYS_MS = [1500, 5000] as const;
-const SCRIPT_SELECTOR = 'script[data-devstools-adsense-loader="true"]';
+
+type AdSenseScriptState = {
+  attempt: number;
+  loaded: boolean;
+};
+
+const scriptStates = new WeakMap<HTMLScriptElement, AdSenseScriptState>();
+
+function findAdSenseScript(src: string) {
+  return Array.from(document.scripts).find((script) => script.src === src) ?? null;
+}
 
 export const ADSENSE_SCRIPT_READY_EVENT = 'devstools:adsense-script-ready';
 
@@ -36,10 +46,14 @@ export default function AdSenseScriptLoader({ clientId }: { clientId: string }) 
 
     const handleLoad = () => {
       if (!observedScript || disposed) return;
-      observedScript.dataset.loaded = 'true';
-      const loadedAttempt = Number(observedScript.dataset.attempt || attempt || 1);
+      const state = scriptStates.get(observedScript) ?? {
+        attempt: Math.max(attempt, 1),
+        loaded: false,
+      };
+      state.loaded = true;
+      scriptStates.set(observedScript, state);
       detachScriptListeners();
-      announceReady(loadedAttempt);
+      announceReady(state.attempt);
     };
 
     const scheduleRetry = () => {
@@ -54,8 +68,9 @@ export default function AdSenseScriptLoader({ clientId }: { clientId: string }) 
     const handleError = () => {
       if (!observedScript || disposed) return;
       const failedScript = observedScript;
-      const failedAttempt = Number(failedScript.dataset.attempt || attempt || 1);
+      const failedAttempt = scriptStates.get(failedScript)?.attempt ?? Math.max(attempt, 1);
       detachScriptListeners();
+      scriptStates.delete(failedScript);
       failedScript.remove();
       trackProductEvent('adsense_script_load_failed', { attempt: failedAttempt });
       scheduleRetry();
@@ -71,13 +86,14 @@ export default function AdSenseScriptLoader({ clientId }: { clientId: string }) 
     function loadScript() {
       if (disposed || !isAdSenseAllowedInBrowser()) return;
 
-      const existing = document.querySelector<HTMLScriptElement>(SCRIPT_SELECTOR);
+      const existing = findAdSenseScript(src);
       if (existing) {
-        if (existing.dataset.loaded === 'true') {
+        const state = scriptStates.get(existing);
+        if (state?.loaded) {
           announceReady();
           return;
         }
-        attempt = Math.max(attempt, Number(existing.dataset.attempt || 1));
+        attempt = Math.max(attempt, state?.attempt ?? 1);
         observe(existing);
         return;
       }
@@ -89,20 +105,22 @@ export default function AdSenseScriptLoader({ clientId }: { clientId: string }) 
       script.async = true;
       script.src = src;
       script.crossOrigin = 'anonymous';
-      script.dataset.devstoolsAdsenseLoader = 'true';
-      script.dataset.attempt = String(attempt);
+      scriptStates.set(script, { attempt, loaded: false });
       observe(script);
       document.head.appendChild(script);
     }
 
     const retryWhenOnline = () => {
       if (disposed || !isAdSenseAllowedInBrowser()) return;
-      const existing = document.querySelector<HTMLScriptElement>(SCRIPT_SELECTOR);
-      if (existing?.dataset.loaded === 'true') return;
+      const existing = findAdSenseScript(src);
+      if (existing && scriptStates.get(existing)?.loaded) return;
       if (retryTimer !== undefined) window.clearTimeout(retryTimer);
       retryTimer = undefined;
       attempt = 0;
-      existing?.remove();
+      if (existing) {
+        scriptStates.delete(existing);
+        existing.remove();
+      }
       detachScriptListeners();
       loadScript();
     };

@@ -26,7 +26,8 @@ vi.mock('next/script', () => ({
 }));
 
 const originalUrl = window.location.href;
-const loaderSelector = 'script[data-devstools-adsense-loader="true"]';
+const loaderSelector =
+  'script[src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-123"]';
 
 beforeEach(() => {
   setBrowserUrl('https://devstools.app/tools/json/json-formatter');
