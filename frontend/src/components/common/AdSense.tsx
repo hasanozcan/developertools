@@ -59,58 +59,26 @@ function AdSenseSlot({
   const adRef = useRef<HTMLElement | null>(null);
   const pushedRequestRef = useRef(false);
   const requestInFlightRef = useRef(false);
+  const requestAttemptsRef = useRef(0);
+  const reportedAdStatusRef = useRef(false);
   const [hasRequestedAd, setHasRequestedAd] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
     const slotElement = adRef.current;
-    if (!container || !slotElement || pushedRequestRef.current) return;
+    if (!container || !slotElement || pushedRequestRef.current || requestAttemptsRef.current >= 3)
+      return;
 
     let isNearViewport = immediate || typeof IntersectionObserver === 'undefined';
     let intersectionObserver: IntersectionObserver | undefined;
     let resizeObserver: ResizeObserver | undefined;
-    let adStatusObserver: MutationObserver | undefined;
-    let reportedAdStatus = false;
     let requestRetryTimer: number | undefined;
-    let requestAttempts = 0;
 
     const disconnectRequestObservers = () => {
       intersectionObserver?.disconnect();
       resizeObserver?.disconnect();
       window.removeEventListener('resize', requestAd);
-    };
-
-    const disconnect = () => {
-      disconnectRequestObservers();
-      adStatusObserver?.disconnect();
       if (requestRetryTimer !== undefined) window.clearTimeout(requestRetryTimer);
-    };
-
-    const reportAdStatus = () => {
-      if (reportedAdStatus) return;
-      const status = slotElement.getAttribute('data-ad-status');
-      if (status !== 'filled' && status !== 'unfilled' && status !== 'unfill-optimized') return;
-      reportedAdStatus = true;
-      const pathname = window.location.pathname;
-      const toolMatch = /^\/(?:[a-z]{2}\/)?tools\/([^/]+)\/([^/]+)/.exec(pathname);
-      const collectionMatch = /^\/(?:[a-z]{2}\/)?collections(?:\/([^/]+))?(?:\/|$)/.exec(pathname);
-      trackProductEvent(status === 'filled' ? 'ad_slot_filled' : 'ad_slot_unfilled', {
-        placement,
-        format,
-        slot,
-        ad_status: status,
-        page_type: toolMatch
-          ? 'tool'
-          : collectionMatch
-            ? 'collection'
-            : pathname === '/'
-              ? 'home'
-              : 'other',
-        category: toolMatch?.[1],
-        tool: toolMatch?.[2],
-        collection: collectionMatch?.[1],
-      });
-      adStatusObserver?.disconnect();
     };
 
     function requestAd() {
@@ -118,6 +86,7 @@ function AdSenseSlot({
         !isAdSenseAllowedInBrowser() ||
         pushedRequestRef.current ||
         requestInFlightRef.current ||
+        requestAttemptsRef.current >= 3 ||
         !isNearViewport ||
         !slotElement?.isConnected
       )
@@ -126,7 +95,7 @@ function AdSenseSlot({
       if (slotElement.getBoundingClientRect().width <= 0) return;
 
       requestInFlightRef.current = true;
-      requestAttempts += 1;
+      requestAttemptsRef.current += 1;
       // The Google queue scans all adsbygoogle elements. Keep hidden/lazy slots
       // out of that shared queue until their own placement is ready.
       slotElement.classList.add('adsbygoogle');
@@ -143,7 +112,7 @@ function AdSenseSlot({
           placement,
           format,
           slot,
-          attempt: requestAttempts,
+          attempt: requestAttemptsRef.current,
           page_type: toolMatch
             ? 'tool'
             : collectionMatch
@@ -155,21 +124,13 @@ function AdSenseSlot({
           tool: toolMatch?.[2],
           collection: collectionMatch?.[1],
         });
-        if (typeof MutationObserver !== 'undefined') {
-          adStatusObserver = new MutationObserver(reportAdStatus);
-          adStatusObserver.observe(slotElement, {
-            attributes: true,
-            attributeFilter: ['data-ad-status'],
-          });
-          reportAdStatus();
-        }
       } catch (error) {
         requestInFlightRef.current = false;
         trackProductEvent('ad_slot_request_failed', {
           placement,
           format,
           slot,
-          attempt: requestAttempts,
+          attempt: requestAttemptsRef.current,
           error: error instanceof Error ? error.name : 'unknown',
         });
         console.error('AdSense error:', error);
@@ -185,9 +146,15 @@ function AdSenseSlot({
         }
 
         slotElement.classList.remove('adsbygoogle');
-        if (requestAttempts < 3) {
-          requestRetryTimer = window.setTimeout(requestAd, requestAttempts === 1 ? 500 : 1500);
+        if (requestAttemptsRef.current >= 3) {
+          disconnectRequestObservers();
+          return;
         }
+        if (requestRetryTimer !== undefined) window.clearTimeout(requestRetryTimer);
+        requestRetryTimer = window.setTimeout(
+          requestAd,
+          requestAttemptsRef.current === 1 ? 500 : 1500,
+        );
       }
     }
 
@@ -210,8 +177,51 @@ function AdSenseSlot({
     }
 
     requestAd();
-    return disconnect;
+    return disconnectRequestObservers;
   }, [format, immediate, placement, slot]);
+
+  useEffect(() => {
+    const slotElement = adRef.current;
+    if (!hasRequestedAd || !slotElement || reportedAdStatusRef.current) return;
+
+    let adStatusObserver: MutationObserver | undefined;
+    const reportAdStatus = () => {
+      if (reportedAdStatusRef.current) return;
+      const status = slotElement.getAttribute('data-ad-status');
+      if (status !== 'filled' && status !== 'unfilled' && status !== 'unfill-optimized') return;
+      reportedAdStatusRef.current = true;
+      const pathname = window.location.pathname;
+      const toolMatch = /^\/(?:[a-z]{2}\/)?tools\/([^/]+)\/([^/]+)/.exec(pathname);
+      const collectionMatch = /^\/(?:[a-z]{2}\/)?collections(?:\/([^/]+))?(?:\/|$)/.exec(pathname);
+      trackProductEvent(status === 'filled' ? 'ad_slot_filled' : 'ad_slot_unfilled', {
+        placement,
+        format,
+        slot,
+        ad_status: status,
+        page_type: toolMatch
+          ? 'tool'
+          : collectionMatch
+            ? 'collection'
+            : pathname === '/'
+              ? 'home'
+              : 'other',
+        category: toolMatch?.[1],
+        tool: toolMatch?.[2],
+        collection: collectionMatch?.[1],
+      });
+      adStatusObserver?.disconnect();
+    };
+
+    if (typeof MutationObserver !== 'undefined') {
+      adStatusObserver = new MutationObserver(reportAdStatus);
+      adStatusObserver.observe(slotElement, {
+        attributes: true,
+        attributeFilter: ['data-ad-status'],
+      });
+      reportAdStatus();
+    }
+    return () => adStatusObserver?.disconnect();
+  }, [format, hasRequestedAd, placement, slot]);
 
   return (
     <div
