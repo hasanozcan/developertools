@@ -106,6 +106,7 @@ describe('AdSense', () => {
 
   afterEach(() => {
     setBrowserUrl(originalUrl);
+    vi.useRealTimers();
     vi.restoreAllMocks();
     vi.unstubAllEnvs();
     vi.unstubAllGlobals();
@@ -286,6 +287,84 @@ describe('AdSense', () => {
     );
     vi.useRealTimers();
   });
+
+  it('stops all retry triggers after three synchronous push failures', async () => {
+    vi.useFakeTimers();
+    const queue: unknown[] = [];
+    const push = vi.spyOn(queue, 'push').mockImplementation(() => {
+      throw new Error('mock push failure');
+    });
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    window.adsbygoogle = queue;
+
+    render(<AdSense slot="123" placement="tool-bottom" />);
+    revealObservedAds();
+    resizeAdContainers();
+    revealObservedAds();
+    resizeAdContainers();
+    revealObservedAds();
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(5000);
+    });
+
+    expect(push).toHaveBeenCalledTimes(3);
+    expect(
+      trackProductEventMock.mock.calls
+        .filter(([name]) => name === 'ad_slot_request_failed')
+        .map(([, data]) => data.attempt),
+    ).toEqual([1, 2, 3]);
+    vi.useRealTimers();
+  });
+
+  it('keeps the three-attempt limit when immediate changes before a request succeeds', async () => {
+    vi.useFakeTimers();
+    const queue: unknown[] = [];
+    const push = vi.spyOn(queue, 'push').mockImplementation(() => {
+      throw new Error('mock push failure');
+    });
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    window.adsbygoogle = queue;
+
+    const { rerender } = render(<AdSense slot="123" placement="tool-sidebar" />);
+    revealObservedAds();
+    resizeAdContainers();
+    rerender(<AdSense slot="123" placement="tool-sidebar" immediate />);
+    resizeAdContainers();
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(5000);
+    });
+
+    expect(push).toHaveBeenCalledTimes(3);
+    expect(
+      trackProductEventMock.mock.calls
+        .filter(([name]) => name === 'ad_slot_request_failed')
+        .map(([, data]) => data.attempt),
+    ).toEqual([1, 2, 3]);
+    vi.useRealTimers();
+  });
+
+  it.each(['filled', 'unfilled'] as const)(
+    'keeps %s telemetry after an immediate placement becomes lazy',
+    async (status) => {
+      const { container, rerender } = render(
+        <AdSense slot="123" placement="tool-sidebar" immediate />,
+      );
+      const ad = container.querySelector('ins');
+      expect(window.adsbygoogle).toHaveLength(1);
+
+      rerender(<AdSense slot="123" placement="tool-sidebar" immediate={false} />);
+      await act(async () => {
+        ad?.setAttribute('data-ad-status', status);
+        await Promise.resolve();
+      });
+      rerender(<AdSense slot="123" placement="tool-sidebar" immediate />);
+
+      expect(window.adsbygoogle).toHaveLength(1);
+      expect(
+        trackProductEventMock.mock.calls.filter(([name]) => name === `ad_slot_${status}`),
+      ).toHaveLength(1);
+    },
+  );
 
   it('never replaces an unfilled Google slot with a site advertisement', async () => {
     const { container } = render(<AdSense slot="123" />);
