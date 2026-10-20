@@ -19,6 +19,11 @@ const HIGH_INTENT_TOOLS: ReadonlyArray<readonly [category: string, slug: string]
   ['text', 'case-converter'],
   ['text', 'word-counter'],
   ['text', 'text-diff'],
+  ['utilities', 'user-agent-parser'],
+  ['encoding', 'hex-encoder'],
+  ['converters', 'query-string-parser'],
+  ['text', 'regex-escape'],
+  ['crypto', 'hmac-generator'],
 ];
 
 function countWords(text: string): number {

@@ -2230,4 +2230,182 @@ export const esPageCopy: Record<string, string> = {
   "pageText.9e7e32e6": "Elige una versión del modelo e introduce el presupuesto de tokens de salida esperados.",
   "pageText.b3578c9c": "Pega el texto y revisa los tokens de entrada aproximados, los costes separados y el total.",
   "pageText.2bd36988": "Carga el ejemplo o restablece el texto vacío, la salida a cero y el modelo predeterminado.",
+  'pageText.cd670e44': '¿Cómo decodifico hex de nuevo a texto?',
+  'pageText.e566d0af':
+    'Seleccione Decodificar (hexadecimal → texto) y pegue los bytes en la entrada. Los espacios, los saltos de línea y un único 0x inicial se eliminan antes de decodificar, de modo que 48 65 6c 6c 6f, 0x48656c6c6f y 48656C6C6F se decodifican como Hello. Los bytes deben formar texto UTF-8 válido.',
+  'pageText.052ddd88': '¿Por qué mi entrada hexadecimal muestra un error?',
+  'pageText.b31966b0':
+    'La decodificación necesita un número par de dígitos hexadecimales (0-9, a-f) después de eliminar los espacios en blanco y un 0x inicial, y los bytes deben ser UTF-8 válido. No se aceptan prefijos por byte como 0x48 0x69, separadores como comas ni formas de escape como \\x48.',
+  'pageText.c613a32a': '¿La codificación hexadecimal es lo mismo que el cifrado?',
+  'pageText.44b4c490':
+    'No. La codificación hexadecimal es una notación reversible para bytes y no proporciona confidencialidad, porque cualquiera puede decodificarla con la misma regla. Use una herramienta o biblioteca de cifrado de confianza cuando los datos deban permanecer confidenciales.',
+  'pageText.c649406e': '¿Qué hace este codificador y decodificador hexadecimal?',
+  'pageText.e375a62e':
+    'Esta herramienta convierte texto a hexadecimal, la notación en base 16 de sus bytes UTF-8, y decodifica el hexadecimal de vuelta a texto. Cada byte se representa con dos dígitos del 0 al 9 y de la a a la f. La salida está en minúsculas y hay un espacio entre bytes. El modo de una sola línea actualiza la salida mientras escribe, en ambas direcciones.',
+  'pageText.c3420d41':
+    'El hexadecimal describe bytes; no es cifrado, compresión ni hash. Cada byte produce exactamente dos caracteres hexadecimales, así que la forma hexadecimal ocupa el doble del número de bytes antes de añadir espacios. La RFC 4648, sección 8, define el alfabeto Base16 con letras mayúsculas A-F. Esta herramienta escribe a-f en minúsculas, la decodificación acepta ambas formas y ambas representan los mismos bytes.',
+  'pageText.e25e4d15':
+    'Hex: dos caracteres por byte, por lo que la salida es un 100 por ciento mayor que los bytes de entrada. Es habitual en hashes, valores de color y volcados de memoria.',
+  'pageText.7bc3a180':
+    'Base64 (RFC 4648, sección 4): cuatro caracteres por cada tres bytes, aproximadamente un 33 por ciento más, con letras, dígitos, más y barra.',
+  'pageText.6fd41ef2':
+    'Codificación porcentual de URL (RFC 3986, sección 2.1): los caracteres fuera del conjunto no reservado (es decir, distintos de letras, dígitos y - . _ ~) se escriben como %XX por cada byte UTF-8.',
+  'pageText.6a122b09':
+    'Las tres son representaciones reversibles de los mismos bytes. Ninguna ofrece por sí sola confidencialidad.',
+  'pageText.3e3c3194': 'Cómo se convierte el texto en bytes hexadecimales con UTF-8',
+  'pageText.cc0e6f5a':
+    'La codificación hexadecimal trabaja con bytes, así que la herramienta primero codifica el texto como UTF-8 (RFC 3629). Los caracteres ASCII usan un byte cada uno. El texto Hi son los bytes 0x48 y 0x69, que se muestran como 48 69. El texto de ejemplo Hello, World! produce 48 65 6c 6c 6f 2c 20 57 6f 72 6c 64 21.',
+  'pageText.3a9afe75':
+    'Los caracteres que no son ASCII ocupan más bytes. La letra é es U+00E9 y sus bytes UTF-8 son c3 a9, así que la salida es c3 a9. El signo del euro € se convierte en e2 82 ac, y el emoji 😀 en f0 9f 98 80. La salida muestra los bytes almacenados, no el punto de código; una codificación heredada como ISO-8859-1 guardaría é como e9.',
+  'pageText.3ae7d6b9': 'Decodificar hex: espacios, prefijos 0x, errores y modo por lotes',
+  'pageText.11433a3d':
+    'El modo de decodificación elimina todos los espacios en blanco y un 0x o 0X inicial de la entrada recortada. Las cadenas 48 69, 0x4869, 4869 y 0x 48 69 se decodifican todas como Hi, y un valor dividido en varias líneas se decodifica como una sola cadena. Tras esta limpieza, el número de dígitos debe ser par y cada carácter debe ser 0-9, a-f o A-F.',
+  'pageText.67e0fb35':
+    'Otras notaciones no se convierten. Un prefijo en cada byte falla, así que 0x48 0x69 se rechaza. Las comas, los dos puntos, los valores codificados en porcentaje como %48%69 y las formas de escape como \\x48 también generan un error. Elimine esos caracteres antes de decodificar.',
+  'pageText.bccd3aa8':
+    'Los bytes decodificados deben ser UTF-8 válido. El byte ff no puede aparecer en UTF-8 válido, así que ff devuelve un error en lugar de caracteres de reemplazo. El hexadecimal generado con otra codificación puede fallar por la misma razón.',
+  'pageText.2fe05423':
+    'El modo por lotes trata cada línea no vacía como una entrada independiente y conserva los resultados en orden. Pulse Convertir todo después de editar, porque las líneas por lotes no se convierten en cada pulsación de tecla. En el modo de decodificación por lotes, una línea no válida detiene todo el proceso y no se muestran resultados parciales; corrija esa línea y vuelva a convertir.',
+  'pageText.59cae193': '¿Cómo verifico una firma HMAC?',
+  'pageText.4cc657e0':
+    'Use los mismos bytes del mensaje, la misma clave secreta, el mismo algoritmo y el mismo formato de salida que el emisor. Pegue la firma recibida en «Firma para verificar» y seleccione «Verificar firma». La herramienta decodifica el valor hexadecimal o Base64 y lo comprueba con la operación de verificación HMAC de Web Crypto; si coincide, se muestra «La firma es válida».',
+  'pageText.dd5e1f43': '¿Se puede decodificar un HMAC para obtener el mensaje original?',
+  'pageText.a5c42953':
+    'No. Un HMAC es una etiqueta de longitud fija, no una copia codificada del mensaje, así que no puede decodificarse para recuperar el mensaje ni la clave secreta. Para probar un mensaje candidato, recalcule el HMAC con la misma clave secreta y compare el resultado. Una clave débil, sin embargo, puede adivinarse sin conexión a partir de un mensaje conocido y su etiqueta.',
+  'pageText.bb3e3019': '¿Puedo usar esta herramienta para comprobar firmas de webhooks?',
+  'pageText.27763dd3':
+    'Sí, para pruebas y depuración. Introduzca el cuerpo exacto de la petición sin procesar, el secreto de firma del webhook y el algoritmo y la codificación que documenta el proveedor. Quite prefijos como sha256= del valor de la cabecera e incluya cualquier marca de tiempo que firme el proveedor. La verificación en producción debe hacerse en su servidor.',
+  'pageText.f0beca46': 'Cómo verificar una firma HMAC paso a paso',
+  'pageText.54cb4204':
+    'La verificación repite el cálculo del emisor en su lado y compara el resultado con la firma recibida. Cada entrada debe coincidir exactamente, porque cambiar un solo byte del mensaje o de la clave produce una etiqueta totalmente distinta.',
+  'pageText.f0edf2bc':
+    'Ejemplo resuelto (RFC 4231, caso de prueba 1): la clave son veinte bytes 0x0b, el mensaje es el texto ASCII Hi There y HMAC-SHA-256 es b0344c61d8db38535ca8afceaf0bf12b881dc200c9833da726e9376c2e32cff7 en hexadecimal. En Node.js, crypto.createHmac(\'sha256\', Buffer.alloc(20, 0x0b)).update(\'Hi There\').digest(\'hex\') devuelve ese valor. El botón «Cargar ejemplo» rellena otro caso de prueba: la clave secreta key y el mensaje The quick brown fox jumps over the lazy dog, que produce f7bc83f430538424b13298e6aa6fb143ef4d59a14946175997479dbc2d1a3cd8.',
+  'pageText.cd26f731':
+    'Obtenga los bytes exactos del mensaje que firmó el emisor. En webhooks, use el cuerpo sin procesar de la petición, antes de analizar o volver a serializar el JSON.',
+  'pageText.7ca359f1':
+    'Use la clave secreta y la variante de SHA-2 que documenta el emisor, por ejemplo HMAC SHA-256.',
+  'pageText.f91b4b31':
+    'Seleccione el formato de salida que corresponda al valor recibido y pegue la firma sin el nombre de la cabecera ni prefijos.',
+  'pageText.0fea3ad4':
+    'Seleccione «Verificar firma». «La firma es válida» solo se aplica a las entradas exactas que probó.',
+  'pageText.474977c3': 'Verificar firmas de webhooks en el código del servidor',
+  'pageText.b8eadac9':
+    'El receptor del webhook debe recalcular el HMAC sobre el cuerpo sin procesar recibido, usando un secreto almacenado en el servidor, y compararlo con la cabecera de firma. Analice el JSON y ejecute los efectos secundarios solo después de que la comprobación de firma tenga éxito.',
+  'pageText.92aa01b7':
+    'crypto.timingSafeEqual compara dos búferes sin detenerse en el primer byte distinto. Lanza un error si los búferes tienen longitudes diferentes, por eso el ejemplo comprueba primero la longitud. Las cargas firmadas sin marca de tiempo pueden reenviarse por alguien que las haya capturado; por ello, compruebe también la marca de tiempo que incluya el proveedor, dentro de una tolerancia que usted defina.',
+  'pageText.bfb192c5':
+    'El ejemplo muestra true para el cuerpo original y false para un cuerpo modificado, un valor que no es hexadecimal y una clave secreta incorrecta.',
+  'pageText.67224f91': 'Firmas hexadecimales y Base64 y discrepancias habituales',
+  'pageText.5967c11a':
+    'La forma hexadecimal usa dos caracteres por byte: 64 caracteres para HMAC-SHA-256, 96 para HMAC-SHA-384 y 128 para HMAC-SHA-512.',
+  'pageText.feb9e01f':
+    'El Base64 estándar tiene 44, 64 y 88 caracteres para esos mismos tres algoritmos, y termina en relleno «=» cuando la longitud lo requiere.',
+  'pageText.b890654a':
+    'Se rechazan los valores Base64url con caracteres - y _, así como el Base64 al que le falta el relleno «=». Conviértalos primero a Base64 estándar o confirme el formato con el proveedor.',
+  'pageText.93315ba8':
+    'Elegir hexadecimal para un valor Base64 provoca un error de validación. Elegir Base64 para un valor hexadecimal puede decodificarse sin error y luego mostrar «La firma no coincide».',
+  'pageText.560b2c8d':
+    'Se acepta el hexadecimal en mayúsculas y se eliminan los espacios al principio y al final. Un valor truncado o copiado parcialmente no coincide.',
+  'pageText.b33036f6':
+    'La clave secreta se usa como caracteres de texto UTF-8. Si un proveedor muestra una clave con prefijo o codificada en Base64, consulte su documentación para conocer los bytes exactos de la clave, porque pegar la cadena mostrada produce un HMAC distinto.',
+  'pageText.89d64ef1': '¿Cómo uso texto escapado con new RegExp() en JavaScript?',
+  'pageText.f33cd507':
+    'Pase el fragmento escapado como primer argumento, por ejemplo new RegExp(escaped, \'g\'). El fragmento ya contiene las barras invertidas que necesita el motor de expresiones regulares, así que no lo escape una segunda vez. Añada los flags como segundo argumento.',
+  'pageText.50d8443d': '¿Por qué necesito barras invertidas dobles en una cadena de JavaScript?',
+  'pageText.1e36448e':
+    'Las barras invertidas dobles solo son necesarias cuando el fragmento se escribe dentro de un literal de cadena, porque el literal debe representar cada barra invertida. Un literal de expresión regular como /price \\(USD\\)/ acepta la salida de la herramienta sin cambios; la forma de cadena es \'price \\\\(USD\\\\)\'.',
+  'pageText.0929586a':
+    '¿Escapar hace que una expresión regular sea segura frente al retroceso catastrófico?',
+  'pageText.533ffd79':
+    'No. Escapar impide que el texto insertado añada operadores de expresiones regulares, pero los cuantificadores anidados o las alternativas que se solapan en otra parte del patrón pueden seguir causando retroceso catastrófico. Pruebe el patrón final con entradas largas y adversas.',
+  'pageText.064f3376': 'Escapar la entrada del usuario antes de crear un RegExp en JavaScript',
+  'pageText.134d1f6e':
+    'Cuando un término de búsqueda proviene de un usuario o de datos almacenados, escápelo antes de insertarlo en un patrón. Sin escapar, el $ de price: $5.00 (USD) se convierte en un ancla de fin de entrada y los paréntesis forman un grupo, así que el patrón no coincide con ese texto literal. El fragmento escapado es price: \\$5\\.00 \\(USD\\).',
+  'pageText.517d4b17':
+    'La salida también es válida con el flag u, porque cada barra invertida que añade la herramienta precede a un carácter de sintaxis de JavaScript o a una barra. El ejemplo siguiente repite el conjunto de escape de la herramienta y se ejecutó en Node.js.',
+  'pageText.6564a3e5': 'Barras invertidas dobles en literales de cadena de JavaScript',
+  'pageText.2e27ada3':
+    'La salida escapada es código fuente de expresión regular, no un valor de cadena de JavaScript. Un literal de expresión regular como /price \\(USD\\)/ acepta el fragmento exactamente como se muestra. Pasar el mismo fragmento a new RegExp() como literal de cadena requiere una capa adicional, porque el literal trata cada barra invertida como carácter de escape.',
+  'pageText.2f1d8576':
+    'Si no se duplican las barras invertidas, el literal de cadena las elimina. Por ejemplo, \'price \\(USD\\)\' se evalúa como price (USD), que el motor interpreta como un grupo que coincide con price USD en lugar del texto literal price (USD). Escrito como \'price \\\\(USD\\\\)\', el literal se evalúa como price \\(USD\\), el valor que necesita new RegExp().',
+  'pageText.9626d53e':
+    'Literal de expresión regular: pegue la salida de la herramienta sin cambios, por ejemplo /price \\(USD\\)/.',
+  'pageText.30ce9a9c':
+    'new RegExp() con un literal de cadena en el código: duplique cada barra invertida, por ejemplo new RegExp(\'price \\\\(USD\\\\)\').',
+  'pageText.22b6a3a6':
+    'Un valor leído de un campo de texto, un archivo o una API ya contiene barras invertidas simples y no necesita duplicarse.',
+  'pageText.880b3a0a': 'Insertar texto en una clase de caracteres con cuidado',
+  'pageText.082f1411':
+    'Dentro de corchetes como [...], un guion entre dos caracteres crea un rango. La herramienta escapa los corchetes, las barras invertidas y los acentos circunflejos, pero no escapa los guiones. Por eso, el texto literal a-z colocado dentro de una clase coincide con m, no con un guion.',
+  'pageText.25a1347a':
+    'Dentro de una clase, escape el guion usted mismo con una barra invertida, \\-, o colóquelo como primer o último carácter. Fuera de una clase, el guion no tiene un significado especial y la salida de la herramienta no necesita cambios.',
+  'pageText.ea25d380':
+    'Pruebe una clase de caracteres con un carácter del rango previsto y con un guion literal, por ejemplo con las cadenas m y -.',
+  'pageText.c50cedec':
+    'Los corchetes y acentos circunflejos escapados siguen siendo literales dentro de una clase, así que la salida de la herramienta para esos caracteres puede insertarse tal cual.',
+  'pageText.8a69c4c7': '¿Por qué un signo más se convierte en un espacio?',
+  'pageText.1229ccba':
+    'En las cadenas de consulta, el signo más significa un espacio, según las reglas application/x-www-form-urlencoded que usa URLSearchParams. Así, q=hello+world se analiza como "hello world". Para conservar un signo más literal, codifícalo como %2B.',
+  'pageText.08a2cd74': '¿Expande claves con corchetes como filter[name]?',
+  'pageText.b4a287b7':
+    'No. La notación con corchetes no se expande a objetos anidados. filter[name]=x se devuelve como una única clave llamada "filter[name]" con el valor "x", así que las estructuras anidadas deben construirse en tu propio código.',
+  'pageText.43cd94c8': '¿Se convierten los números y booleanos a tipos JSON al analizar?',
+  'pageText.71c76224':
+    'No. Cada valor analizado es una cadena, así que page=2 se convierte en "2" y flag=true en "true". El modo de construcción escribe números y booleanos como texto plano, por lo que aparecen sin cambios en la cadena de consulta.',
+  'pageText.87ef33b8': 'Cómo se estructura una cadena de consulta',
+  'pageText.e2689ace':
+    'Una cadena de consulta es la parte de una URL que empieza después del primer ? y termina antes de cualquier fragmento #. Contiene pares clave=valor separados por &, tal como define el componente de consulta de la RFC 3986, sección 3.4. Un par sin signo igual, como flag, se lee con una cadena vacía como valor.',
+  'pageText.51c55314':
+    'Cuando pegas una URL completa, la herramienta usa el analizador de URL del navegador y lee solo la parte de búsqueda, así que el esquema, el host, la ruta y el fragmento se ignoran. En una cadena de consulta sin URL, se usa el texto posterior al primer ? si existe; si no, toda la entrada se lee como consulta. En ambos casos se elimina el texto desde un #.',
+  'pageText.1dfaa2ef':
+    'Los pares se leen de izquierda a derecha y las claves aparecen en la salida JSON en el orden en que aparecen por primera vez.',
+  'pageText.a559ca09':
+    'Los valores se decodifican, así que %20 y + se convierten en espacios y %25 en un signo de porcentaje.',
+  'pageText.1b28c354':
+    'En una entrada sin URL, escribe un ? literal dentro de un valor como %3F, porque el primer ? se trata como el inicio de la consulta.',
+  'pageText.a47341ff': 'Una entrada vacía borra la salida y cualquier mensaje de error.',
+  'pageText.a12ce3f0': 'Claves repetidas, arrays y la salida JSON',
+  'pageText.ce640b2d':
+    'Una clave que aparece una vez se asigna a una única cadena JSON. Una clave que aparece dos o más veces se asigna a un array con sus valores, en el orden en que aparecen. Para la entrada ?q=hello%20world&tag=a&tag=b, el analizador devuelve {"q": "hello world", "tag": ["a", "b"]}.',
+  'pageText.91fa6392':
+    'Como el tipo de salida depende de cuántas veces aparece una clave, una clave que a veces es una cadena y a veces un array puede sorprender al código posterior. Si tu aplicación espera una lista, normaliza un valor único en un array antes de leerlo.',
+  'pageText.29c9b22a':
+    'El modo de construcción invierte este patrón. Cada elemento del array se convierte en su propio par clave=valor, así que {"tag": ["a", "b"]} genera tag=a&tag=b. Las claves aparecen en el orden en que se definen en el objeto JSON.',
+  'pageText.bd56b491': 'Codificación porcentual, signos más y límites de construcción',
+  'pageText.58e1d3ad':
+    'La codificación porcentual representa caracteres no seguros o reservados en una URL. Al analizar, %20 y + producen un espacio, y %2B produce un signo más literal. El modo de construcción usa URLSearchParams, que escribe los espacios como + y codifica caracteres como /, :, + y & dentro de los valores. Por ejemplo, {"q": "hello world", "sym": "a/b:c+d&e"} genera ?q=hello+world&sym=a%2Fb%3Ac%2Bd%26e.',
+  'pageText.31f35829':
+    'Los valores null se omiten, así que esas claves no aparecen en la cadena de consulta.',
+  'pageText.9460d901':
+    'Los objetos anidados se escriben como cadena JSON, así que {"filter": {"x": 1}} se convierte en filter=%7B%22x%22%3A1%7D.',
+  'pageText.86212f08':
+    'Los objetos dentro de arrays se convierten con String(), así que aparecen como [object Object]. Conviértelos en valores primitivos antes de construir.',
+  'pageText.8164015d':
+    'Solo se acepta un objeto JSON de nivel superior. Un array de nivel superior o un JSON mal formado muestra un error en lugar de una salida.',
+  'pageText.aa793126': '¿Cómo decodifico una cadena user agent?',
+  'pageText.a3e32a53':
+    'Pegue la cadena en la entrada de User-Agent o haga clic en «Usar mi User-Agent» para analizar este navegador. El resumen muestra los campos de navegador, sistema operativo, motor, dispositivo, CPU y bot, y «JSON analizado» muestra el resultado completo.',
+  'pageText.24ba7fa7': '¿Por qué un resultado muestra Unknown o Desktop?',
+  'pageText.40b2a6e9':
+    'Unknown significa que el conjunto de reglas no encontró un valor coincidente en esa cadena. Desktop es un tipo de dispositivo de respaldo que se usa cuando ningún token de dispositivo, móvil o bot coincide, así que un cliente que no es navegador, como curl/8.4.0, puede mostrar Desktop mientras su navegador y sistema operativo siguen en Unknown.',
+  'pageText.c8cef8b4': '¿Qué biblioteca de análisis usa esta herramienta?',
+  'pageText.0d71112b':
+    'La herramienta usa el paquete npm ua-parser-js, versión 1.0.41, que implementa el conjunto de reglas de UAParser.js. Otras compilaciones de ua-parser y versiones más nuevas pueden clasificar la misma cadena de forma distinta, así que compare resultados solo dentro de una misma versión del conjunto de reglas.',
+  'pageText.a769ccc6': 'Cómo leer una cadena user agent',
+  'pageText.ce34bf1e':
+    'Un valor User-Agent es una lista de tokens de producto escritos como nombre/versión, más comentarios entre paréntesis que normalmente describen la plataforma. Muchos navegadores también envían tokens de compatibilidad heredados, así que Mozilla/5.0 o AppleWebKit/537.36 por sí solos no identifican el producto. Varios tokens pueden nombrar un navegador: las cadenas de Edge también contienen tokens de Chrome y Safari, y el token Edg identifica a Edge.',
+  'pageText.0533402d':
+    'En el ejemplo de Edge en Windows, el analizador devuelve Edge 140.0.0.0 como navegador, Blink 140.0.0.0 como motor, Windows 10 como sistema operativo y amd64 como arquitectura de CPU a partir del token x64. El fabricante y el modelo del dispositivo siguen en Unknown porque la cadena no nombra ningún dispositivo.',
+  'pageText.82e5e48b': 'Qué significa cada campo analizado',
+  'pageText.5ae04232':
+    'El JSON analizado contiene raw, browser (name, version, major), engine, os, device (vendor, model, type), cpu (architecture) y bot (isBot, name). El valor raw es la entrada sin espacios sobrantes. En modo por lotes, la salida es un array con un objeto por cada línea no vacía.',
+  'pageText.bac628af':
+    'Googlebot en Android: se analizan Chrome 130 y un dispositivo móvil LG Nexus 5, pero bot.isBot es true, así que revise la marca de bot antes de tomar los campos del navegador como cliente.',
+  'pageText.20f547b6':
+    'GPTBot: el campo del navegador muestra WebKit 537.36, un token de motor, porque la cadena no nombra ningún navegador; bot.name sigue indicando GPTBot.',
+  'pageText.0f279c09': 'Por qué las cadenas user agent se reducen y qué las reemplaza',
+  'pageText.30c2004b':
+    'Los navegadores basados en Chromium reducen la cadena User-Agent para limitar la huella digital. En Windows 11 siguen enviando el token NT 10.0, así que el analizador muestra Windows 10, y el modelo de Android se sustituye por un marcador fijo. Por tanto, una cadena reducida no puede confirmar la versión exacta del sistema ni el modelo del dispositivo.',
+  'pageText.2ab3b633':
+    'User-Agent Client Hints ofrecen valores estructurados donde son compatibles. En los navegadores basados en Chromium, navigator.userAgentData expone las marcas y la plataforma, y getHighEntropyValues() puede solicitar architecture, model y platformVersion, lo que distingue Windows 11 de Windows 10. Los servidores reciben las cabeceras Sec-CH-UA de baja entropía y pueden pedir valores de alta entropía con Accept-CH. El soporte varía, así que use detección de características y trate los valores ausentes como desconocidos.',
 };

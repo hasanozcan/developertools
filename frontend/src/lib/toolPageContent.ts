@@ -1228,12 +1228,21 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
     },
     'hex-encoder': {
       name: 'HEX Encoder/Decoder',
-      metadataTitle: 'Hex Encoder & Decoder Online',
+      metadataTitle: 'Hex Encoder & Decoder Online: Text to Hex',
       description:
-        'Encode or decode text to/from hexadecimal. Free online HEX encoder and decoder.',
+        'Encode text to hex or decode hexadecimal back to UTF-8 text online. Accepts spaces, line breaks and a leading 0x. Runs locally in your browser.',
       longDescription:
-        'Free online HEX encoder and decoder. Convert text to hexadecimal encoding or decode hexadecimal strings back to plain text instantly.',
-      keywords: ['hex encoder', 'hex decoder', 'hexadecimal encoder', 'hex to text', 'text to hex'],
+        'Free online HEX encoder and decoder. Convert text to UTF-8 hexadecimal bytes or decode hex back to text, with batch mode for multiple lines. Conversion runs locally in your browser.',
+      keywords: [
+        'hex encoder',
+        'hex decoder',
+        'hex encode',
+        'hexadecimal encoder',
+        'hexadecimal encoding',
+        'text to hex',
+        'hex to text',
+        'hex encoder decoder',
+      ],
       faqs: [
         {
           question: 'What is hexadecimal encoding?',
@@ -1244,6 +1253,59 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
           answer:
             'Enter text in the input field and it will automatically be converted to hexadecimal. You can also paste hexadecimal to decode it back to text.',
         },
+        {
+          question: 'How do I decode hex back to text?',
+          answer:
+            'Select Decode (Hex → Text) and paste the bytes into the input. Spaces, line breaks, and one leading 0x are removed before decoding, so 48 65 6c 6c 6f, 0x48656c6c6f, and 48656C6C6F all decode to Hello. The bytes must form valid UTF-8 text.',
+        },
+        {
+          question: 'Why does my hex input show an error?',
+          answer:
+            'Decoding needs an even number of hexadecimal digits (0-9, a-f) after whitespace and one leading 0x are removed, and the bytes must be valid UTF-8. Per-byte prefixes such as 0x48 0x69, separators such as commas, and escape forms such as \\x48 are not accepted.',
+        },
+        {
+          question: 'Is hex encoding the same as encryption?',
+          answer:
+            'No. Hex encoding is a reversible notation for bytes and provides no secrecy, because anyone can decode it with the same rule. Use a vetted encryption tool or library when the data must stay confidential.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'What does this hex encoder and decoder do?',
+          paragraphs: [
+            'This tool converts text into hexadecimal, the base-16 notation of its UTF-8 bytes, and decodes hexadecimal back into text. Each byte becomes two digits from 0 to 9 and a to f. Encoded output is lowercase, with a space between bytes. Single-line mode updates the output as you type in either direction.',
+            'Hexadecimal describes bytes; it is not encryption, compression, or hashing. Every byte produces exactly two hex characters, so the hex form is twice the byte count before spaces are added. RFC 4648 section 8 defines the Base16 alphabet with uppercase letters A-F. This tool writes lowercase a-f, and decoding accepts both cases; both spellings represent the same bytes.',
+          ],
+          bullets: [
+            'Hex: two characters per byte, so the output is 100 percent larger than the input bytes. Common for hashes, color values, and memory dumps.',
+            'Base64 (RFC 4648 section 4): four characters for every three bytes, about 33 percent larger, using letters, digits, plus, and slash.',
+            'URL percent-encoding (RFC 3986 section 2.1): characters outside the unreserved set (letters, digits, - . _ ~) become %XX for each UTF-8 byte.',
+            'All three are reversible representations of the same bytes. None of them provides secrecy by itself.',
+          ],
+        },
+        {
+          heading: 'How text becomes hex bytes with UTF-8',
+          paragraphs: [
+            'Hex encoding works on bytes, so the tool first encodes text as UTF-8 (RFC 3629). ASCII characters use one byte each. The text Hi is the bytes 0x48 and 0x69, shown as 48 69. The sample text Hello, World! becomes 48 65 6c 6c 6f 2c 20 57 6f 72 6c 64 21.',
+            'Non-ASCII characters take more bytes. The letter é is U+00E9, and its UTF-8 bytes are c3 a9, so the output is c3 a9. The euro sign € becomes e2 82 ac, and the emoji 😀 becomes f0 9f 98 80. The output shows stored bytes, not the code point; a legacy encoding such as ISO-8859-1 would store é as e9 instead.',
+          ],
+        },
+        {
+          heading: 'Decoding hex: spaces, 0x prefixes, errors and batch mode',
+          paragraphs: [
+            'Decode mode removes all whitespace and one leading 0x or 0X from the trimmed input. The strings 48 69, 0x4869, 4869, and 0x 48 69 all decode to Hi, and a value split across lines decodes as one string. After this cleanup, the digit count must be even and every character must be 0-9, a-f, or A-F.',
+            'Other notations are not converted. A prefix on each byte fails, so 0x48 0x69 is rejected. Commas, colons, percent-encoded values such as %48%69, and escape forms such as \\x48 also produce an error. Remove those characters before decoding.',
+            'Decoded bytes must be valid UTF-8. The byte ff cannot appear in valid UTF-8, so ff returns an error rather than replacement characters. Hex created from another encoding can fail for the same reason.',
+            'Batch mode treats each non-empty line as its own input and keeps the results in order. Press Convert All after editing, because batch lines are not converted on every keystroke. In Decode batch mode, one invalid line stops the whole run and no partial results are shown, so fix that line and convert again.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Select Encode (Text → Hex) to convert text, or Decode (Hex → Text) to convert hex back to text.',
+        'Type or paste text into the Text Input field, or paste hex bytes into the Hex Input field, and read the converted result in the output panel.',
+        'Turn on Batch Mode to process one value per line, then select Convert All.',
+        'Use Load Sample to insert example input, or the swap button to move the output into the input and reverse the direction.',
+        'If input is rejected, read the error message, remove unsupported prefixes or separators, and convert again.',
       ],
     },
     'binary-encoder': {
@@ -4401,9 +4463,9 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
     },
     'hmac-generator': {
       name: 'HMAC Generator & Verifier',
-      metadataTitle: 'HMAC Generator & Verifier (SHA-256/384/512)',
+      metadataTitle: 'HMAC Generator & Checker (SHA-256/384/512)',
       description:
-        'Generate or verify HMAC-SHA-256, HMAC-SHA-384, and HMAC-SHA-512 signatures in hexadecimal or Base64, locally in your browser.',
+        'Generate or check HMAC-SHA-256, SHA-384, and SHA-512 signatures in hex or Base64 for webhook and API verification, computed in your browser.',
       longDescription:
         'Free online HMAC generator and verifier using the browser Web Crypto API. Authenticate a message with a shared secret and compare supplied signatures without uploading the message or key.',
       keywords: [
@@ -4413,6 +4475,8 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
         'hmac sha512',
         'webhook signature verifier',
         'message authentication code',
+        'hmac checker',
+        'verify hmac signature',
       ],
       faqs: [
         {
@@ -4429,6 +4493,21 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
           question: 'Which algorithms and output formats are supported?',
           answer:
             'The tool supports HMAC with SHA-256, SHA-384, or SHA-512 and displays or verifies signatures in hexadecimal or standard Base64.',
+        },
+        {
+          question: 'How do I verify an HMAC signature?',
+          answer:
+            'Use the same message bytes, secret, algorithm, and output format as the sender. Paste the received signature under Signature to verify and select Verify signature. The tool decodes the hexadecimal or Base64 value and checks it with the Web Crypto HMAC verify operation; a match shows Signature is valid.',
+        },
+        {
+          question: 'Can an HMAC be decoded back to the message?',
+          answer:
+            'No. An HMAC is a fixed-length tag, not an encoded copy of the message, so it cannot be decoded to recover the message or the secret. To test a candidate message, recompute the HMAC with the same secret and compare the output. A weak secret can still be guessed offline against a known message and tag.',
+        },
+        {
+          question: 'Can I use this tool to check webhook signatures?',
+          answer:
+            'Yes, for testing and debugging. Enter the exact raw request body, the webhook signing secret, and the algorithm and encoding the provider documents. Remove prefixes such as sha256= from the header value, and include any timestamp the provider signs. Production verification should run on your server.',
         },
       ],
       answerSections: [
@@ -4448,11 +4527,70 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
           ],
         },
         {
+          heading: 'How to verify an HMAC signature step by step',
+          paragraphs: [
+            "Verification repeats the sender's calculation on your side and compares the result with the signature you received. Every input must match exactly, because changing one byte of the message or secret produces an unrelated tag.",
+            "Worked example (RFC 4231, test case 1): the key is twenty bytes of 0x0b, the message is the ASCII text Hi There, and HMAC-SHA-256 is b0344c61d8db38535ca8afceaf0bf12b881dc200c9833da726e9376c2e32cff7 in hexadecimal. In Node.js, crypto.createHmac('sha256', Buffer.alloc(20, 0x0b)).update('Hi There').digest('hex') returns that value. The Load sample button fills another test case: the secret key key with the message The quick brown fox jumps over the lazy dog, which produces f7bc83f430538424b13298e6aa6fb143ef4d59a14946175997479dbc2d1a3cd8.",
+          ],
+          bullets: [
+            'Get the exact message bytes the sender signed. For webhooks, use the raw request body before any JSON parsing or re-serialization.',
+            'Use the secret and the SHA-2 variant the sender documents, such as HMAC SHA-256.',
+            'Select the output format that matches the received value, then paste the signature without any header name or prefix.',
+            'Select Verify signature. Signature is valid applies only to the exact inputs you tested.',
+          ],
+        },
+        {
+          heading: 'Verify webhook signatures in server code',
+          paragraphs: [
+            'A webhook receiver should recompute the HMAC over the raw body it received, using a secret stored on the server, and compare it with the signature header. Parse the JSON and run side effects only after the signature check passes.',
+            'crypto.timingSafeEqual compares two buffers without returning at the first differing byte. It throws when the buffers have different lengths, so the example checks length first. Signed payloads without a timestamp can be replayed by someone who captured them, so also check any timestamp the provider includes, within a tolerance you define.',
+            'The example prints true for the original body and false for a changed body, a non-hex value, and a wrong secret.',
+          ],
+          codeExamples: [
+            {
+              title: 'Verify an HMAC-SHA-256 webhook signature in Node.js',
+              language: 'JavaScript',
+              code: `const crypto = require('node:crypto');
+
+function verifyWebhookSignature(rawBody, secret, receivedHex) {
+  const expected = crypto.createHmac('sha256', secret).update(rawBody).digest();
+  const received = Buffer.from(receivedHex, 'hex');
+  // timingSafeEqual throws when the buffers differ in length, so compare lengths first.
+  return received.length === expected.length && crypto.timingSafeEqual(expected, received);
+}
+
+const body = '{"id":"evt_1","type":"invoice.paid"}';
+const signature = crypto.createHmac('sha256', 'test-secret').update(body).digest('hex');
+console.log(verifyWebhookSignature(body, 'test-secret', signature));
+console.log(verifyWebhookSignature(body + ' ', 'test-secret', signature));
+console.log(verifyWebhookSignature(body, 'test-secret', 'zz'));
+console.log(verifyWebhookSignature(body, 'wrong-secret', signature));`,
+            },
+          ],
+        },
+        {
+          heading: 'Hex vs Base64 signatures and common mismatches',
+          bullets: [
+            'Hexadecimal uses two characters per byte: 64 characters for HMAC-SHA-256, 96 for HMAC-SHA-384, and 128 for HMAC-SHA-512.',
+            'Standard Base64 is 44, 64, and 88 characters for the same three algorithms, with = padding at the end when a length requires it.',
+            "Base64url values with - and _ characters are rejected, and so is Base64 with missing = padding. Convert to standard Base64 or confirm the provider's format.",
+            'Choosing hexadecimal for a Base64 value fails with a validation error. Choosing Base64 for a hexadecimal value can decode without error and then show Signature does not match.',
+            'Uppercase hexadecimal is accepted and surrounding whitespace is trimmed. A truncated or partly copied value does not match.',
+            'The secret is used as its UTF-8 text characters. If a provider shows a prefixed or Base64-encoded secret, check its documentation for the exact key bytes, because pasting the displayed string produces a different HMAC.',
+          ],
+        },
+        {
           heading: 'Security boundary',
           paragraphs: [
             'HMAC requires a strong shared secret delivered and stored securely. This browser tool is useful for test data, but production secrets should remain in controlled application environments. HMAC authenticates data; it does not encrypt it and it is not a password-storage scheme. Signature checking is delegated to the browser Web Crypto API instead of comparing signature bytes in application JavaScript.',
           ],
         },
+      ],
+      howToUseSteps: [
+        'Under Algorithm, choose HMAC SHA-256, SHA-384, or SHA-512, and under Output format choose Hexadecimal or Base64.',
+        'Enter the exact message and the secret key. Use Show secret key to check the value before you generate.',
+        'Select Generate HMAC to create a signature, or paste a received signature under Signature to verify and select Verify signature.',
+        'Read the result: Signature is valid means the supplied value matches; Signature does not match means the message, secret, algorithm, or format differs. Any edit clears the previous result.',
       ],
     },
     'pkce-generator': {
@@ -5240,12 +5378,21 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
     },
     'regex-escape': {
       name: 'Regex Escape',
-      metadataTitle: 'Regex Escape Online – Literal Text to RegExp',
+      metadataTitle: 'Regex Escape Online – Escape Regex Special Characters',
       description:
-        'Escape JavaScript regular-expression metacharacters and literal slashes, or reverse only those supported escapes, entirely in your browser.',
+        'Escape regex special characters and slashes so text matches literally in a JavaScript RegExp, or unescape them back. Runs entirely in your browser.',
       longDescription:
-        'Free online regex escape tool. Convert literal text into a JavaScript-compatible pattern fragment without turning punctuation into unintended regex operators.',
-      keywords: ['regex escape', 'escape regex', 'unescape regex', 'regular expression escape'],
+        'Free online regex escape tool for JavaScript. Escape metacharacters and slashes in literal text so a RegExp treats them as ordinary characters, or unescape a fragment this tool produced.',
+      keywords: [
+        'regex escape',
+        'escape regex',
+        'regex escape online',
+        'escape regex online',
+        'regex escape tool',
+        'regular expression escape',
+        'javascript regex escape',
+        'unescape regex',
+      ],
       faqs: [
         {
           question: 'Why escape regex characters?',
@@ -5262,12 +5409,58 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
           answer:
             'No. Unescape reverses only the metacharacter and slash escapes produced by this tool. It deliberately preserves regex tokens and string escapes that could carry a different meaning.',
         },
+        {
+          question: 'How do I use escaped text with new RegExp() in JavaScript?',
+          answer:
+            "Pass the escaped fragment as the first argument, for example new RegExp(escaped, 'g'). The fragment already contains the backslashes the regex engine needs, so do not escape it a second time. Add flags as the second argument.",
+        },
+        {
+          question: 'Why do I need double backslashes in a JavaScript string?',
+          answer:
+            "Double backslashes are needed only when the fragment is written inside a string literal, because the literal must represent each backslash. A regex literal such as /price \\(USD\\)/ takes the tool output unchanged, while the string form is 'price \\\\(USD\\\\)'.",
+        },
+        {
+          question: 'Does escaping make a regular expression safe from catastrophic backtracking?',
+          answer:
+            'No. Escaping stops inserted text from adding regex operators, but nested quantifiers or overlapping alternatives elsewhere in the pattern can still cause catastrophic backtracking. Test the final pattern with long adversarial input.',
+        },
       ],
       answerSections: [
         {
           heading: 'What Regex Escape produces',
           paragraphs: [
             'The escape operation prefixes JavaScript regular-expression metacharacters with a backslash and also escapes / for convenient use inside a /pattern/ literal. For example, price (USD) + tax? becomes price \\(USD\\) \\+ tax\\?. The result is a pattern fragment; flags, anchors, capture groups, and the surrounding expression remain your responsibility.',
+          ],
+        },
+        {
+          heading: 'Escape user input before building a RegExp in JavaScript',
+          paragraphs: [
+            'When a search term comes from a user or from stored data, escape it before inserting it into a pattern. Without escaping, the $ in price: $5.00 (USD) becomes an end-of-input anchor and the parentheses form a group, so the pattern does not match that literal text. The escaped fragment is price: \\$5\\.00 \\(USD\\).',
+            "The output also stays valid with the u flag, because every backslash the tool adds precedes a JavaScript syntax character or a slash. The example below repeats the tool's escape set and was run in Node.js.",
+          ],
+          codeExamples: [
+            {
+              title: 'Match user text literally with new RegExp()',
+              language: 'JavaScript',
+              code: `const term = 'price: $5.00 (USD)';
+const escaped = term.replace(/[.*+?^\${}()|[\\]\\\\/]/g, '\\\\$&');
+console.log(escaped); // price: \\$5\\.00 \\(USD\\)
+const pattern = new RegExp(escaped, 'g');
+console.log('Total price: $5.00 (USD)'.match(pattern)); // [ 'price: $5.00 (USD)' ]
+console.log('price: 5000 (USD)'.match(pattern)); // null`,
+            },
+          ],
+        },
+        {
+          heading: 'Double backslashes in JavaScript string literals',
+          paragraphs: [
+            'The escaped output is regex source, not a JavaScript string value. A regular expression literal such as /price \\(USD\\)/ accepts the fragment exactly as shown. Passing the same fragment to new RegExp() as a string literal needs one extra layer, because the string literal treats each backslash as an escape character.',
+            "If the backslashes are not doubled, the string literal drops them. For example, 'price \\(USD\\)' evaluates to price (USD), which the regex engine reads as a group that matches price USD rather than the literal text price (USD). Written as 'price \\\\(USD\\\\)', the literal evaluates to price \\(USD\\), the value new RegExp() needs.",
+          ],
+          bullets: [
+            'Regex literal: paste the tool output unchanged, for example /price \\(USD\\)/.',
+            "new RegExp() with a string literal in source code: double each backslash, for example new RegExp('price \\\\(USD\\\\)').",
+            'A value read from an input box, file, or API already contains single backslashes and needs no extra doubling.',
           ],
         },
         {
@@ -5280,6 +5473,17 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
           ],
         },
         {
+          heading: 'Insert text into a character class with care',
+          paragraphs: [
+            'Inside brackets such as [...], a hyphen between two characters creates a range. The tool escapes brackets, backslashes, and carets, but it does not escape hyphens. Literal text such as a-z placed inside a class therefore matches m, not a hyphen.',
+            "Inside a class, escape the hyphen yourself with a backslash, \\-, or place it as the first or last character. Outside a class, a hyphen has no special meaning and the tool's output needs no change.",
+          ],
+          bullets: [
+            'Check a character class with one character from the intended range and one literal hyphen, for example the strings m and -.',
+            "Escaped brackets and carets remain literal inside a class, so the tool's output for those characters can be inserted as it is.",
+          ],
+        },
+        {
           heading: 'Unescape and privacy limits',
           paragraphs: [
             'Unescape is intentionally conservative: it removes a backslash only before punctuation handled by the escape operation. It does not parse a complete regular expression or convert tokens such as \\d, \\b, \\n, or Unicode escapes into text. Processing remains in the browser, while clipboard and destination-code handling remain outside the tool.',
@@ -5288,9 +5492,10 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
       ],
       howToUseSteps: [
         'Choose Escape for literal text or Unescape for a fragment previously produced by this tool.',
-        'Paste the text and select Convert.',
+        'Paste the text and select Convert. The output does not update while you type.',
         'Insert the escaped fragment into the intended JavaScript regular expression.',
         'Test the complete expression with representative and adversarial input before production use.',
+        'Select Load sample to fill the input with an example, or Clear to empty both panels.',
       ],
     },
     'text-diff': {
@@ -7270,11 +7475,21 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
     },
     'query-string-parser': {
       name: 'Query String Parser',
-      metadataTitle: 'Query String Parser Online – URL Params to JSON',
-      description: 'Parse query strings to JSON and build query strings from JSON.',
+      metadataTitle: 'Query String Parser Online – Parse URL Params to JSON',
+      description:
+        'Parse a URL or query string into JSON, or build a query string from JSON. Repeated keys become arrays, and + and %20 decode to spaces, all in your browser.',
       longDescription:
         'Free online query string parser and builder. Decode URL query parameters into structured JSON or generate query strings from JSON objects.',
-      keywords: ['query string parser', 'url parameters', 'parse query string', 'query builder'],
+      keywords: [
+        'query string parser',
+        'parse query string online',
+        'query string to json',
+        'query params to json',
+        'url params to json',
+        'json to query string',
+        'query parser online',
+        'url parameters',
+      ],
       faqs: [
         {
           question: 'Can I parse a full URL?',
@@ -7285,6 +7500,62 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
           question: 'Does it support repeated keys?',
           answer: 'Yes. Repeated keys are preserved as arrays when parsing.',
         },
+        {
+          question: 'Why does a plus sign turn into a space?',
+          answer:
+            'In query strings, a plus sign means a space, following the application/x-www-form-urlencoded rules that URLSearchParams uses. So q=hello+world parses as "hello world". To keep a literal plus sign, encode it as %2B.',
+        },
+        {
+          question: 'Does it expand bracket keys such as filter[name]?',
+          answer:
+            'No. Bracket notation is not expanded into nested objects. filter[name]=x is returned as one key named "filter[name]" with the value "x", so build nested structures in your own code.',
+        },
+        {
+          question: 'Are numbers and booleans converted to JSON types when parsing?',
+          answer:
+            'No. Every parsed value is a string, so page=2 becomes "2" and flag=true becomes "true". Build mode writes numbers and booleans as plain text, so they appear unchanged in the query string.',
+        },
+      ],
+      answerSections: [
+        {
+          heading: 'How a query string is structured',
+          paragraphs: [
+            'A query string is the part of a URL that starts after the first ? and ends before any # fragment. It contains key=value pairs separated by &, as defined for the query component in RFC 3986, section 3.4. A pair without an equals sign, such as flag, is read with an empty string as its value.',
+            "When you paste a full URL, the tool uses the browser's URL parser and reads only the search portion, so the scheme, host, path, and fragment are ignored. For a bare query string, the text after the first ? is used when one is present; otherwise the whole input is read as the query. Text from a # onward is removed in both cases.",
+          ],
+          bullets: [
+            'Pairs are read from left to right, and keys appear in the JSON output in the order they first occur.',
+            'Values are decoded, so %20 and + both become spaces and %25 becomes a percent sign.',
+            'In bare input, write a literal ? inside a value as %3F, because the first ? is treated as the start of the query.',
+            'An empty input clears the output and any error message.',
+          ],
+        },
+        {
+          heading: 'Repeated keys, arrays, and the JSON output',
+          paragraphs: [
+            'A key that appears once maps to a single JSON string. A key that appears two or more times maps to an array of its values, in the order they occur. For the input ?q=hello%20world&tag=a&tag=b, the parser returns {"q": "hello world", "tag": ["a", "b"]}.',
+            'Because the output type depends on how many times a key appears, a key that is sometimes a string and sometimes an array can surprise downstream code. If your application expects a list, normalize a single value into an array before reading it.',
+            'Build mode reverses this pattern. Each array item becomes its own key=value pair, so {"tag": ["a", "b"]} produces tag=a&tag=b. Keys and values appear in the order they are defined in the JSON object.',
+          ],
+        },
+        {
+          heading: 'Percent-encoding, plus signs, and build limits',
+          paragraphs: [
+            'Percent-encoding represents characters that are unsafe or reserved in a URL. When parsing, %20 and + both produce a space, and %2B produces a literal plus sign. Build mode uses URLSearchParams, which writes spaces as + and encodes characters such as /, :, +, and & inside values. For example, {"q": "hello world", "sym": "a/b:c+d&e"} builds to ?q=hello+world&sym=a%2Fb%3Ac%2Bd%26e.',
+          ],
+          bullets: [
+            'Null values are skipped, so those keys do not appear in the query string.',
+            'Nested objects are written as a JSON string, so {"filter": {"x": 1}} becomes filter=%7B%22x%22%3A1%7D.',
+            'Objects inside arrays are converted with String(), so they appear as [object Object]. Flatten them into primitive values before building.',
+            'Only a top-level JSON object is accepted. A top-level array or malformed JSON shows an error instead of output.',
+          ],
+        },
+      ],
+      howToUseSteps: [
+        'Choose Parse to turn a URL or query string into JSON, or choose Build to turn a JSON object into a query string.',
+        'Paste a full URL, such as https://example.com/products?page=2&tags=dev, or a bare query string into the input panel. In Build mode, paste a JSON object instead.',
+        'Select Convert, or select Load Sample to try an example. In Build mode, use the Prepend question mark (?) checkbox to add a leading ? to the result.',
+        'Review the output panel and copy the result. Confirm that repeated keys, plus signs, and nested values match what your application expects.',
       ],
     },
     'env-to-json': {
@@ -10647,17 +10918,19 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
     },
     'user-agent-parser': {
       name: 'User Agent Parser Online',
-      metadataTitle: 'User Agent Parser Online – Browser & OS',
+      metadataTitle: 'User Agent Parser Online & Decoder',
       description:
-        'Parse single or batch User-Agent strings into browser, version, OS, engine, device, CPU, and known bot signals locally in your browser.',
+        'Parse one or many User-Agent strings online into browser, version, OS, engine, device, CPU, and bot fields. Parsing runs locally in your browser.',
       longDescription:
-        'Online user-agent parser powered by the bundled UAParser.js 1.0.41 ruleset. Inspect one string or batch lines and extract browser/version, operating system, rendering engine, device vendor/model/type, CPU architecture, and known bot signals without a parsing API upload.',
+        'Free online user agent parser and decoder. Paste one User-Agent string, or enable batch mode for one per line, to read browser and version, operating system, rendering engine, device, CPU architecture, and known bot tokens. Parsing runs locally in your browser with the bundled UAParser.js 1.0.41 ruleset.',
       keywords: [
         'user agent parser online',
-        'online user agent parser',
+        'user agent parser',
+        'parse user agent',
+        'user agent decoder',
+        'user agent string parser',
         'ua parser online',
-        'browser detection',
-        'device detection',
+        'decode user agent string',
         'bot detection',
       ],
       faqs: [
@@ -10676,12 +10949,34 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
           answer:
             'Yes. Enable batch mode and paste one User-Agent string per line to receive a JSON array of parsed results.',
         },
+        {
+          question: 'How do I decode a user agent string?',
+          answer:
+            'Paste the string into the User-Agent input, or click Use my User-Agent to parse this browser. The summary lists browser, operating system, engine, device, CPU, and bot fields, and Parsed JSON shows the complete result.',
+        },
+        {
+          question: 'Why does a result show Unknown or Desktop?',
+          answer:
+            'Unknown means the ruleset found no matching value in that string. Desktop is a fallback device type used when no device, mobile, or bot token matches, so a non-browser client such as curl/8.4.0 can show Desktop while its browser and OS stay Unknown.',
+        },
+        {
+          question: 'Which parsing library does this tool use?',
+          answer:
+            'It runs the ua-parser-js npm package, version 1.0.41, which implements the UAParser.js ruleset. Other ua-parser builds and newer releases can classify the same string differently, so compare results only within one ruleset version.',
+        },
       ],
       answerSections: [
         {
           heading: 'What this online user-agent parser returns',
           paragraphs: [
             'Paste one user-agent string—or enable batch mode for one string per line—to parse browser name/version, operating system, rendering engine, device vendor/model/type, CPU architecture, and known bot signals. RFC 9110 defines User-Agent as a request field containing product identifiers and optional comments about the software originating a request. This tool reads those self-reported tokens; it does not contact the device or inspect the browser that submitted them.',
+          ],
+        },
+        {
+          heading: 'How to read a user agent string',
+          paragraphs: [
+            'A User-Agent value is a list of product tokens written as name/version, plus parenthesized comments that usually describe the platform. Many browsers also send legacy compatibility tokens, so Mozilla/5.0 or AppleWebKit/537.36 alone does not name the product. Several tokens can name a browser: Edge strings also contain Chrome and Safari tokens, and the Edg token identifies Edge.',
+            'In the Edge on Windows sample, the parser returns Edge 140.0.0.0 as the browser, Blink 140.0.0.0 as the engine, Windows 10 as the operating system, and amd64 as the CPU architecture from the x64 token. The device vendor and model stay Unknown because the string names no device.',
           ],
         },
         {
@@ -10694,9 +10989,26 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
           ],
         },
         {
+          heading: 'What each parsed field means',
+          paragraphs: [
+            'The parsed JSON contains raw, browser (name, version, major), engine, os, device (vendor, model, type), cpu (architecture), and bot (isBot, name). The raw value is the trimmed input. In batch mode, the output is an array with one object per non-empty line.',
+          ],
+          bullets: [
+            'Googlebot on Android: Chrome 130 and an LG Nexus 5 mobile device are parsed, but bot.isBot is true, so check the bot flag before reading the browser fields as the client.',
+            'GPTBot: the browser field reads WebKit 537.36, an engine token, because the string names no browser; bot.name still reports GPTBot.',
+          ],
+        },
+        {
           heading: 'Accuracy and limitations',
           paragraphs: [
             'Treat every result as a clue, not verified identity. User-agent strings can be changed or spoofed, compatibility tokens can name several browsers, and reduced strings may omit versions or device detail. Unknown values remain Unknown, while an unrecognized non-mobile string falls back to Desktop. Bot detection is also heuristic: an unlisted or disguised crawler can be missed, and an ordinary product name containing a crawler keyword can be flagged. Client Hints and capability detection can provide different or more useful signals when you control the application.',
+          ],
+        },
+        {
+          heading: 'Why user agent strings are reduced and what replaces them',
+          paragraphs: [
+            'Chromium-based browsers reduce the User-Agent string to limit fingerprinting. On Windows 11 they keep the NT 10.0 token, so the parser shows Windows 10, and the Android model is replaced by a fixed placeholder. A reduced string therefore cannot confirm the exact OS version or device model.',
+            'User-Agent Client Hints provide structured values where supported. In Chromium-based browsers, navigator.userAgentData exposes brands and platform, and getHighEntropyValues() can request architecture, model, and platformVersion, which separates Windows 11 from Windows 10. Servers receive low-entropy Sec-CH-UA headers and can request high-entropy values with Accept-CH. Support varies, so use feature detection and treat missing values as unknown.',
           ],
         },
         {
@@ -10705,6 +11017,12 @@ export const toolPageContent: Record<string, Record<string, ToolPageContent>> = 
             'Parsing happens in your browser as you type. The input is not sent to a parsing API, but user-agent values can contribute to fingerprinting when combined with other data. Avoid treating this output as authentication, authorization, fraud proof, or a substitute for capability detection.',
           ],
         },
+      ],
+      howToUseSteps: [
+        'Paste a User-Agent string into the User-Agent input, or click Use my User-Agent to parse this browser.',
+        'Load a sample such as Edge on Windows, Safari on iPhone, or Googlebot to compare the output.',
+        'Turn on Parse one User-Agent per line to parse a list; blank lines are skipped.',
+        'Check the summary for Unknown fields, then copy the Parsed JSON output for your records or tests.',
       ],
     },
     'cidr-calculator': {

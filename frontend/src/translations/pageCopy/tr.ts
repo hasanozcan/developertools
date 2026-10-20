@@ -2219,4 +2219,182 @@ export const trPageCopy: Record<string, string> = {
   "pageText.9e7e32e6": "Model sürümünü seçin ve beklenen çıktı token bütçesini girin.",
   "pageText.b3578c9c": "Giriş metnini yapıştırın; yaklaşık giriş tokenlarını, ayrı maliyetleri ve toplamı inceleyin.",
   "pageText.2bd36988": "Hesap örneğini yükleyin veya boş metne, sıfır çıktıya ve varsayılan modele sıfırlayın.",
+  'pageText.cd670e44': 'Onaltılık değeri tekrar metne nasıl çözerim?',
+  'pageText.e566d0af':
+    'Çöz (Onaltılık → Metin) seçeneğini seçin ve baytları girdiye yapıştırın. Kod çözmeden önce boşluklar, satır sonları ve baştaki tek bir 0x kaldırılır; bu nedenle 48 65 6c 6c 6f, 0x48656c6c6f ve 48656C6C6F değerlerinin tümü Hello olarak çözülür. Baytlar geçerli UTF-8 metni oluşturmalıdır.',
+  'pageText.052ddd88': 'Onaltılık girdim neden hata gösteriyor?',
+  'pageText.b31966b0':
+    'Kod çözme, boşluklar ve baştaki tek 0x kaldırıldıktan sonra çift sayıda onaltılık basamak (0-9, a-f) gerektirir ve baytlar geçerli UTF-8 olmalıdır. 0x48 0x69 gibi bayt başına önekler, virgül gibi ayraçlar ve \\x48 gibi kaçış biçimleri kabul edilmez.',
+  'pageText.c613a32a': 'Onaltılık kodlama şifrelemekle aynı şey mi?',
+  'pageText.44b4c490':
+    'Hayır. Onaltılık kodlama baytlar için geri çevrilebilir bir gösterimdir ve gizlilik sağlamaz, çünkü herkes aynı kuralla çözebilir. Verinin gizli kalması gerektiğinde güvenilir bir şifreleme aracı veya kütüphanesi kullanın.',
+  'pageText.c649406e': 'Bu onaltılık kodlayıcı ve çözücü ne yapar?',
+  'pageText.e375a62e':
+    'Bu araç metni, UTF-8 baytlarının 16 tabanındaki gösterimi olan onaltılık biçime dönüştürür ve onaltılık metni tekrar metne çevirir. Her bayt 0-9 ve a-f arasından iki basamakla gösterilir. Kodlanmış çıktı küçük harflidir ve baytlar arasında bir boşluk bulunur. Tek satır modu, her iki yönde de girdi yazarken çıktıyı günceller.',
+  'pageText.c3420d41':
+    'Onaltılık gösterim baytları tanımlar; şifreleme, sıkıştırma veya karma (hash) değildir. Her bayt tam olarak iki onaltılık karakter üretir, bu nedenle boşluklar eklenmeden önce onaltılık biçim bayt sayısının iki katıdır. RFC 4648 bölüm 8, Base16 alfabesini büyük harflerle A-F olarak tanımlar. Bu araç küçük harfli a-f yazar; çözme her iki harf biçimini de kabul eder ve iki yazım aynı baytları temsil eder.',
+  'pageText.e25e4d15':
+    'Hex: bayt başına iki karakter kullanır, bu nedenle çıktı girdi baytlarından yüzde 100 daha büyüktür. Karmalarda, renk değerlerinde ve bellek dökümlerinde yaygındır.',
+  'pageText.7bc3a180':
+    'Base64 (RFC 4648 bölüm 4): her üç bayt için dört karakter kullanır, yaklaşık yüzde 33 daha büyüktür ve harfler, rakamlar, artı ve eğik çizgi kullanır.',
+  'pageText.6fd41ef2':
+    'URL yüzde kodlaması (RFC 3986 bölüm 2.1): ayrılmamış karakterler dışındaki karakterler (yani harf, rakam ve - . _ ~ olmayanlar), her UTF-8 baytı için %XX biçiminde yazılır.',
+  'pageText.6a122b09':
+    'Üçü de aynı baytların geri çevrilebilir gösterimleridir. Hiçbiri tek başına gizlilik sağlamaz.',
+  'pageText.3e3c3194': 'UTF-8 ile metin onaltılık bayta nasıl dönüşür',
+  'pageText.cc0e6f5a':
+    'Onaltılık kodlama baytlar üzerinde çalıştığı için araç önce metni UTF-8 olarak kodlar (RFC 3629). ASCII karakterler her biri tek bayt kullanır. Hi metni 0x48 ve 0x69 baytlarıdır ve 48 69 olarak gösterilir. Örnek metin Hello, World! ise 48 65 6c 6c 6f 2c 20 57 6f 72 6c 64 21 olur.',
+  'pageText.3a9afe75':
+    'ASCII olmayan karakterler daha fazla bayt kullanır. é harfi U+00E9\'dur ve UTF-8 baytları c3 a9\'dur, bu nedenle çıktı c3 a9 olur. Euro işareti € e2 82 ac, 😀 emojisi ise f0 9f 98 80 olur. Çıktı kod noktasını değil, saklanan baytları gösterir; ISO-8859-1 gibi eski bir kodlama é harfini bunun yerine e9 olarak saklardı.',
+  'pageText.3ae7d6b9': 'Onaltılık çözme: boşluklar, 0x önekleri, hatalar ve toplu mod',
+  'pageText.11433a3d':
+    'Çözme modu, kırpılmış girdideki tüm boşlukları ve baştaki tek 0x veya 0X önekini kaldırır. 48 69, 0x4869, 4869 ve 0x 48 69 değerlerinin tümü Hi olarak çözülür; satırlara bölünmüş bir değer tek bir dize olarak çözülür. Bu temizlikten sonra basamak sayısı çift olmalı ve her karakter 0-9, a-f veya A-F olmalıdır.',
+  'pageText.67e0fb35':
+    'Diğer gösterimler dönüştürülmez. Her bayta eklenen önek başarısız olur; bu nedenle 0x48 0x69 reddedilir. Virgüller, iki nokta üst üste, %48%69 gibi yüzde kodlu değerler ve \\x48 gibi kaçış biçimleri de hata üretir. Çözmeden önce bu karakterleri kaldırın.',
+  'pageText.bccd3aa8':
+    'Çözülen baytlar geçerli UTF-8 olmalıdır. ff baytı geçerli UTF-8 içinde bulunamaz; bu nedenle ff, yer tutucu karakterler yerine bir hata döndürür. Başka bir kodlamadan üretilen onaltılık değerler aynı nedenle başarısız olabilir.',
+  'pageText.2fe05423':
+    'Toplu mod, boş olmayan her satırı ayrı bir girdi olarak işler ve sonuçları sırayla tutar. Düzenledikten sonra Tümünü Dönüştür düğmesine basın; toplu satırlar her tuş vuruşunda dönüştürülmez. Toplu kod çözme modunda tek bir geçersiz satır tüm işlemi durdurur ve kısmi sonuç gösterilmez; bu nedenle o satırı düzeltip tekrar dönüştürün.',
+  'pageText.59cae193': 'HMAC imzasını nasıl doğrularım?',
+  'pageText.4cc657e0':
+    'Gönderenle aynı mesaj baytlarını, gizli anahtarı, algoritmayı ve çıktı biçimini kullanın. Alınan imzayı Doğrulanacak imza alanına yapıştırıp İmzayı doğrula seçeneğini seçin. Araç onaltılık veya Base64 değerini çözer ve Web Crypto HMAC doğrulama işlemiyle denetler; eşleşme olursa İmza geçerli görüntülenir.',
+  'pageText.dd5e1f43': 'HMAC, mesaja geri çözülebilir mi?',
+  'pageText.a5c42953':
+    'Hayır. HMAC, mesajın şifrelenmiş bir kopyası değil, sabit uzunlukta bir etikettir; bu nedenle mesajı veya gizli anahtarı geri elde etmek için çözülemez. Aday bir mesajı test etmek için aynı gizli anahtarla HMAC\'i yeniden hesaplayın ve çıktıyı karşılaştırın. Zayıf bir gizli anahtar ise bilinen bir mesaj ve etiket üzerinden çevrimdışı tahmin edilebilir.',
+  'pageText.bb3e3019': 'Bu aracı webhook imzalarını kontrol etmek için kullanabilir miyim?',
+  'pageText.27763dd3':
+    'Evet, test ve hata ayıklama için. Tam ham istek gövdesini, webhook imzalama gizli anahtarını ve sağlayıcının belgelediği algoritma ile kodlamayı girin. Üst bilgi değerinden sha256= gibi önekleri kaldırın ve sağlayıcının imzaladığı zaman damgasını da dahil edin. Üretim doğrulaması sunucunuzda yapılmalıdır.',
+  'pageText.f0beca46': 'HMAC imzasını adım adım doğrulama',
+  'pageText.54cb4204':
+    'Doğrulama, gönderenin hesaplamasını sizin tarafınızda yeniden yapar ve sonucu aldığınız imzayla karşılaştırır. Her girdi tam olarak eşleşmelidir; mesajın veya gizli anahtarın tek bir baytının değişmesi tamamen farklı bir etiket üretir.',
+  'pageText.f0edf2bc':
+    'Çalışılmış örnek (RFC 4231, test durumu 1): anahtar yirmi bayt 0x0b değeridir, mesaj ASCII metni Hi There\'dir ve HMAC-SHA-256 onaltılık olarak b0344c61d8db38535ca8afceaf0bf12b881dc200c9833da726e9376c2e32cff7 değeridir. Node.js\'te crypto.createHmac(\'sha256\', Buffer.alloc(20, 0x0b)).update(\'Hi There\').digest(\'hex\') bu değeri döndürür. Örnek yükle düğmesi başka bir test durumunu doldurur: gizli anahtar olarak key ve mesaj olarak The quick brown fox jumps over the lazy dog; bu da f7bc83f430538424b13298e6aa6fb143ef4d59a14946175997479dbc2d1a3cd8 sonucunu verir.',
+  'pageText.cd26f731':
+    'Gönderenin imzaladığı tam mesaj baytlarını alın. Webhook\'lar için JSON ayrıştırması veya yeniden serileştirme yapılmadan önceki ham istek gövdesini kullanın.',
+  'pageText.7ca359f1':
+    'Gönderenin belgelediği gizli anahtarı ve SHA-2 varyantını kullanın; örneğin HMAC SHA-256.',
+  'pageText.f91b4b31':
+    'Alınan değerle eşleşen çıktı biçimini seçin, ardından imzayı üst bilgi adı veya öneki olmadan yapıştırın.',
+  'pageText.0fea3ad4':
+    'İmzayı doğrula seçeneğini seçin. İmza geçerli sonucu yalnızca test ettiğiniz tam girdiler için geçerlidir.',
+  'pageText.474977c3': 'Sunucu kodunda webhook imzalarını doğrulama',
+  'pageText.b8eadac9':
+    'Webhook alıcısı, aldığı ham gövde üzerinden HMAC\'i yeniden hesaplamalı, sunucuda saklanan gizli anahtarı kullanmalı ve sonucu imza başlığıyla karşılaştırmalıdır. JSON\'u yalnızca imza denetimi geçtikten sonra ayrıştırın ve yan etkileri ancak o zaman çalıştırın.',
+  'pageText.92aa01b7':
+    'crypto.timingSafeEqual, iki tamponu ilk farklı baytta durmadan karşılaştırır. Tamponların uzunlukları farklıysa hata verir; bu nedenle örnek önce uzunluğu denetler. Zaman damgası olmayan imzalı yükler, onları ele geçiren biri tarafından yeniden gönderilebilir; bu nedenle sağlayıcının eklediği zaman damgasını da sizin belirlediğiniz tolerans içinde denetleyin.',
+  'pageText.bfb192c5':
+    'Örnek, özgün gövde için true, değiştirilmiş gövde, onaltılık olmayan değer ve yanlış gizli anahtar için false yazdırır.',
+  'pageText.67224f91': 'Onaltılık ve Base64 imzalar ile yaygın uyuşmazlıklar',
+  'pageText.5967c11a':
+    'Onaltılık gösterim her bayt için iki karakter kullanır: HMAC-SHA-256 için 64 karakter, HMAC-SHA-384 için 96 ve HMAC-SHA-512 için 128 karakter.',
+  'pageText.feb9e01f':
+    'Standart Base64 aynı üç algoritma için 44, 64 ve 88 karakterdir; uzunluk gerektirdiğinde sonda = dolgu karakterleri bulunur.',
+  'pageText.b890654a':
+    'Değerleri - ve _ karakterleri içeren Base64url değerleri reddedilir; eksik = dolgusu içeren Base64 de reddedilir. Önce standart Base64\'e çevirin veya sağlayıcının biçimini doğrulayın.',
+  'pageText.93315ba8':
+    'Base64 değeri için onaltılık seçmek doğrulama hatasıyla sonuçlanır. Onaltılık bir değer için Base64 seçmek hatasız çözülebilir ve ardından İmza eşleşmiyor sonucunu gösterebilir.',
+  'pageText.560b2c8d':
+    'Büyük harfli onaltılık değerler kabul edilir ve çevresindeki boşluklar kırpılır. Kesilmiş veya kısmen kopyalanmış bir değer eşleşmez.',
+  'pageText.b33036f6':
+    'Gizli anahtar, UTF-8 metin karakterleri olarak kullanılır. Bir sağlayıcı önekli veya Base64 kodlu bir gizli anahtar gösteriyorsa, tam anahtar baytları için belgelerini kontrol edin; görüntülenen kodlu metni yapıştırmak farklı bir HMAC üretir.',
+  'pageText.89d64ef1': 'JavaScript\'te kaçışlı metni new RegExp() ile nasıl kullanırım?',
+  'pageText.f33cd507':
+    'Kaçışlı parçayı ilk argüman olarak geçirin, örneğin new RegExp(escaped, \'g\'). Parça zaten regex motorunun ihtiyaç duyduğu ters eğik çizgileri içerir, bu yüzden onu ikinci kez kaçışlamayın. Bayrakları ikinci argüman olarak ekleyin.',
+  'pageText.50d8443d': 'JavaScript dizesinde neden çift ters eğik çizgiye ihtiyaç duyulur?',
+  'pageText.1e36448e':
+    'Çift ters eğik çizgi yalnızca parça bir dize değişmezi içine yazıldığında gerekir, çünkü değişmezin her ters eğik çizgiyi temsil etmesi gerekir. /price \\(USD\\)/ gibi bir regex değişmezi araç çıktısını olduğu gibi kabul eder; dize biçimi ise \'price \\\\(USD\\\\)\' şeklindedir.',
+  'pageText.0929586a':
+    'Kaçış yapmak düzenli ifadeyi katastrofik geri izlemeye (catastrophic backtracking) karşı güvenli hale getirir mi?',
+  'pageText.533ffd79':
+    'Hayır. Kaçış, eklenen metnin regex işleçleri eklemesini engeller; ancak desenin başka yerlerindeki iç içe niceleyiciler veya çakışan alternatifler yine de katastrofik geri izlemeye yol açabilir. Nihai deseni uzun ve kötü niyetli girdilerle test edin.',
+  'pageText.064f3376': 'JavaScript\'te RegExp oluşturmadan önce kullanıcı girdisini kaçışlayın',
+  'pageText.134d1f6e':
+    'Arama terimi bir kullanıcıdan veya saklanan verilerden geliyorsa, desene eklemeden önce kaçışlayın. Kaçış yapılmazsa, price: $5.00 (USD) içindeki $ bir girdi sonu çapası olur ve parantezler bir grup oluşturur; bu durumda desen o gerçek metinle eşleşmez. Kaçışlı parça price: \\$5\\.00 \\(USD\\) şeklindedir.',
+  'pageText.517d4b17':
+    'Araç tarafından eklenen her ters eğik çizgi bir JavaScript sözdizimi karakterinden veya eğik çizgiden önce geldiği için çıktı u bayrağıyla da geçerli kalır. Aşağıdaki örnek aracın kaçış kümesini yeniden kullanır ve Node.js\'te çalıştırılmıştır.',
+  'pageText.6564a3e5': 'JavaScript dize değişmezlerinde çift ters eğik çizgi',
+  'pageText.2e27ada3':
+    'Kaçışlı çıktı bir JavaScript dize değeri değil, regex kaynağıdır. /price \\(USD\\)/ gibi bir düzenli ifade değişmezi parçayı gösterildiği gibi kabul eder. Aynı parçayı new RegExp()\'e dize değişmezi olarak vermek ek bir katman gerektirir, çünkü dize değişmezi her ters eğik çizgiyi bir kaçış karakteri olarak ele alır.',
+  'pageText.2f1d8576':
+    'Ters eğik çizgiler çift yazılmazsa dize değişmezi onları düşürür. Örneğin \'price \\(USD\\)\' değeri price (USD) olur; regex motoru bunu bir grup olarak okur ve tam price (USD) metni yerine price USD ile eşleşir. \'price \\\\(USD\\\\)\' olarak yazıldığında değişmez price \\(USD\\) değerini verir ve new RegExp() bu değeri bekler.',
+  'pageText.9626d53e':
+    'Regex değişmezi: araç çıktısını değiştirmeden yapıştırın, örneğin /price \\(USD\\)/.',
+  'pageText.30ce9a9c':
+    'Kaynak kodda dize değişmezi ile new RegExp(): her ters eğik çizgiyi çiftleyin, örneğin new RegExp(\'price \\\\(USD\\\\)\').',
+  'pageText.22b6a3a6':
+    'Bir giriş kutusundan, dosyadan veya API\'den okunan değer zaten tek ters eğik çizgi içerir ve ek çiftleme gerektirmez.',
+  'pageText.880b3a0a': 'Karakter sınıfına metin eklerken dikkatli olun',
+  'pageText.082f1411':
+    '[...] gibi köşeli parantezlerin içinde iki karakter arasındaki kısa çizgi bir aralık oluşturur. Araç köşeli parantezleri, ters eğik çizgileri ve şapkaları kaçışlar, ancak kısa çizgileri kaçışlamaz. Bu nedenle sınıf içine yerleştirilen a-z gibi gerçek metin, bir kısa çizgiyi değil m harfini eşleştirir.',
+  'pageText.25a1347a':
+    'Sınıf içinde kısa çizgiyi ters eğik çizgiyle kendiniz kaçışlayın, \\-, ya da ilk veya son karakter olarak yerleştirin. Sınıfın dışında kısa çizginin özel bir anlamı yoktur ve aracın çıktısında değişiklik gerekmez.',
+  'pageText.ea25d380':
+    'Karakter sınıfını hedef aralıktan bir karakter ve bir gerçek kısa çizgi ile test edin, örneğin m ve - dizeleriyle.',
+  'pageText.c50cedec':
+    'Kaçışlanmış köşeli parantezler ve şapkalar sınıf içinde gerçek karakter olarak kalır; bu nedenle bu karakterler için aracın çıktısı olduğu gibi eklenebilir.',
+  'pageText.8a69c4c7': 'Artı işareti neden boşluğa dönüşüyor?',
+  'pageText.1229ccba':
+    'Sorgu dizelerinde artı işareti boşluk anlamına gelir; bu, URLSearchParams\'ın kullandığı application/x-www-form-urlencoded kurallarıdır. Bu nedenle q=hello+world, "hello world" olarak ayrıştırılır. Gerçek bir artı işaretini korumak için %2B olarak kodlayın.',
+  'pageText.08a2cd74': 'filter[name] gibi köşeli parantezli anahtarları genişletiyor mu?',
+  'pageText.b4a287b7':
+    'Hayır. Köşeli parantez gösterimi iç içe nesnelere genişletilmez. filter[name]=x, "filter[name]" adlı tek bir anahtar ve "x" değeri olarak döndürülür; bu nedenle iç içe yapıları kendi kodunuzda oluşturun.',
+  'pageText.43cd94c8':
+    'Ayrıştırma sırasında sayılar ve boolean değerler JSON türlerine dönüştürülür mü?',
+  'pageText.71c76224':
+    'Hayır. Ayrıştırılan her değer bir dizedir; bu nedenle page=2 "2", flag=true ise "true" olur. Oluşturma modu sayıları ve boolean değerleri düz metin olarak yazar, bu yüzden sorgu dizesinde değişmeden görünürler.',
+  'pageText.87ef33b8': 'Sorgu dizesi nasıl yapılandırılır',
+  'pageText.e2689ace':
+    'Sorgu dizesi, bir URL\'de ilk ? işaretinden sonra başlayan ve varsa # parçasından önce biten bölümdür. RFC 3986, bölüm 3.4\'te tanımlandığı gibi, & ile ayrılmış key=value çiftlerinden oluşur. flag gibi eşittir işareti olmayan bir çift, değeri boş dize olarak okunur.',
+  'pageText.51c55314':
+    'Tam bir URL yapıştırdığınızda araç, tarayıcının URL ayrıştırıcısını kullanır ve yalnızca arama kısmını okur; şema, ana bilgisayar, yol ve parça yok sayılır. Çıplak bir sorgu dizesinde, ? mevcutsa ilk ?\'dan sonraki metin kullanılır; yoksa tüm girdi sorgu olarak okunur. Her iki durumda da # ve sonrasındaki metin kaldırılır.',
+  'pageText.1dfaa2ef':
+    'Çiftler soldan sağa okunur ve anahtarlar JSON çıktısında ilk göründükleri sırayla yer alır.',
+  'pageText.a559ca09':
+    'Değerler çözümlenir; bu nedenle %20 ve + ikisi de boşluğa, %25 ise yüzde işaretine dönüşür.',
+  'pageText.1b28c354':
+    'Çıplak girdide, değer içindeki gerçek bir ? işaretini %3F olarak yazın; çünkü ilk ? sorgunun başlangıcı olarak kabul edilir.',
+  'pageText.a47341ff': 'Boş girdi, çıktıyı ve varsa hata mesajını temizler.',
+  'pageText.a12ce3f0': 'Yinelenen anahtarlar, diziler ve JSON çıktısı',
+  'pageText.ce640b2d':
+    'Bir kez görünen anahtar tek bir JSON dizesine eşlenir. İki veya daha fazla görünen anahtar ise değerlerinin, geçtikleri sırayla bulunduğu bir diziye eşlenir. ?q=hello%20world&tag=a&tag=b girdisi için ayrıştırıcı {"q": "hello world", "tag": ["a", "b"]} döndürür.',
+  'pageText.91fa6392':
+    'Çıktı türü bir anahtarın kaç kez göründüğüne bağlı olduğundan, bazen dize bazen dizi olan bir anahtar alt akış kodunu şaşırtabilir. Uygulamanız bir liste bekliyorsa, okumadan önce tek bir değeri diziye dönüştürün.',
+  'pageText.29c9b22a':
+    'Oluşturma modu bu düzeni tersine çevirir. Her dizi öğesi kendi key=value çiftine dönüşür; bu nedenle {"tag": ["a", "b"]} girdisi tag=a&tag=b üretir. Anahtarlar JSON nesnesinde tanımlandıkları sırayla görünür.',
+  'pageText.bd56b491': 'Yüzde kodlaması, artı işaretleri ve oluşturma sınırları',
+  'pageText.58e1d3ad':
+    'Yüzde kodlaması, bir URL\'de güvensiz veya ayrılmış karakterleri temsil eder. Ayrıştırmada %20 ve + ikisi de boşluk üretir, %2B ise gerçek bir artı işareti üretir. Oluşturma modu URLSearchParams kullanır; boşlukları + olarak yazar ve değerlerin içindeki /, :, + ve & gibi karakterleri kodlar. Örneğin {"q": "hello world", "sym": "a/b:c+d&e"} girdisi ?q=hello+world&sym=a%2Fb%3Ac%2Bd%26e çıktısını üretir.',
+  'pageText.31f35829': 'Null değerler atlanır; bu nedenle bu anahtarlar sorgu dizesinde görünmez.',
+  'pageText.9460d901':
+    'İç içe nesneler JSON dizesi olarak yazılır; bu nedenle {"filter": {"x": 1}} girdisi filter=%7B%22x%22%3A1%7D olur.',
+  'pageText.86212f08':
+    'Dizilerin içindeki nesneler String() ile dönüştürülür; bu nedenle [object Object] olarak görünürler. Oluşturmadan önce bunları ilkel değerlere düzleştirin.',
+  'pageText.8164015d':
+    'Yalnızca en üst düzeyde bir JSON nesnesi kabul edilir. En üst düzeyde bir dizi veya hatalı JSON, çıktı yerine bir hata gösterir.',
+  'pageText.aa793126': 'User-Agent dizesi nasıl çözülür?',
+  'pageText.a3e32a53':
+    'Dizeyi User-Agent girdisine yapıştırın veya bu tarayıcıyı ayrıştırmak için "User-Agent Değerimi Kullan" düğmesine tıklayın. Özet tarayıcı, işletim sistemi, motor, cihaz, CPU ve bot alanlarını listeler; Ayrıştırılmış JSON ise tam sonucu gösterir.',
+  'pageText.24ba7fa7': 'Sonuçta neden Unknown veya Desktop görünüyor?',
+  'pageText.40b2a6e9':
+    'Unknown, kuralların bu dizede eşleşen bir değer bulamadığı anlamına gelir. Desktop, hiçbir cihaz, mobil veya bot belirteci eşleşmediğinde kullanılan yedek cihaz türüdür; bu nedenle curl/8.4.0 gibi tarayıcı olmayan bir istemci Desktop gösterebilir, tarayıcı ve işletim sistemi alanları ise Unknown kalır.',
+  'pageText.c8cef8b4': 'Bu araç hangi ayrıştırma kütüphanesini kullanır?',
+  'pageText.0d71112b':
+    'Araç, UAParser.js kural setini uygulayan ua-parser-js npm paketinin 1.0.41 sürümünü çalıştırır. Diğer ua-parser derlemeleri ve daha yeni sürümler aynı dizeyi farklı sınıflandırabilir; bu nedenle sonuçları yalnızca aynı kural sürümü içinde karşılaştırın.',
+  'pageText.a769ccc6': 'User-Agent dizesi nasıl okunur',
+  'pageText.ce34bf1e':
+    'Bir User-Agent değeri, ad/sürüm biçiminde yazılmış ürün belirteçlerinden ve genellikle platformu tanımlayan parantez içi açıklamalardan oluşan bir listedir. Birçok tarayıcı ayrıca eski uyumluluk belirteçleri gönderir; bu nedenle tek başına Mozilla/5.0 veya AppleWebKit/537.36 ürünü belirlemez. Birden fazla belirteç tarayıcıyı adlandırabilir: Edge dizeleri Chrome ve Safari belirteçleri de içerir, Edg belirteci ise Edge\'i tanımlar.',
+  'pageText.0533402d':
+    'Windows üzerindeki Edge örneğinde ayrıştırıcı tarayıcıyı Edge 140.0.0.0, motoru Blink 140.0.0.0, işletim sistemini Windows 10 ve x64 belirtecinden elde edilen CPU mimarisini amd64 olarak döndürür. Dizede cihaz bilgisi bulunmadığı için cihaz sağlayıcısı ve modeli Unknown kalır.',
+  'pageText.82e5e48b': 'Ayrıştırılmış alanların anlamı',
+  'pageText.5ae04232':
+    'Ayrıştırılmış JSON şu alanları içerir: raw, browser (name, version, major), engine, os, device (vendor, model, type), cpu (architecture) ve bot (isBot, name). raw değeri kırpılmış girdidir. Toplu modda çıktı, boş olmayan her satır için bir nesne içeren bir dizidir.',
+  'pageText.bac628af':
+    'Android üzerinde Googlebot: Chrome 130 ve LG Nexus 5 mobil cihaz ayrıştırılır, ancak bot.isBot değeri true olduğundan tarayıcı alanlarını istemci olarak okumadan önce bot işaretini kontrol edin.',
+  'pageText.20f547b6':
+    'GPTBot: tarayıcı alanı WebKit 537.36 değerini gösterir; bu, dizede tarayıcı belirteci olmadığı için okunan bir motor belirtecidir. bot.name alanı yine GPTBot değerini verir.',
+  'pageText.0f279c09': 'User-Agent dizeleri neden kısaltılır ve yerine ne kullanılır',
+  'pageText.30c2004b':
+    'Chromium tabanlı tarayıcılar, parmak izi çıkarmayı sınırlamak için User-Agent dizesini kısaltır. Windows 11\'de de NT 10.0 belirtecini korurlar; bu nedenle ayrıştırıcı Windows 10 gösterir ve Android modeli sabit bir yer tutucuyla değiştirilir. Kısaltılmış bir dize, tam işletim sistemi sürümünü veya cihaz modelini doğrulayamaz.',
+  'pageText.2ab3b633':
+    'User-Agent Client Hints, desteklenen yerlerde yapılandırılmış değerler sunar. Chromium tabanlı tarayıcılarda navigator.userAgentData markaları ve platformu sunar; getHighEntropyValues() ise architecture, model ve platformVersion değerlerini isteyebilir ve bu, Windows 11\'i Windows 10\'dan ayırır. Sunucular düşük ayrıntılı Sec-CH-UA başlıklarını alır ve Accept-CH ile yüksek ayrıntılı değerleri isteyebilir. Destek tarayıcıya göre değişir; bu nedenle özellik algılamasını kullanın ve eksik değerleri bilinmeyen kabul edin.',
 };

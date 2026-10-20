@@ -2254,4 +2254,184 @@ export const frPageCopy: Record<string, string> = {
   "pageText.9e7e32e6": "Choisissez une version du modèle et saisissez le budget de tokens de sortie attendus.",
   "pageText.b3578c9c": "Collez le texte et vérifiez les tokens d’entrée approximatifs, les coûts séparés et le total.",
   "pageText.2bd36988": "Chargez l’exemple ou réinitialisez le texte vide, la sortie à zéro et le modèle par défaut.",
+  'pageText.cd670e44': 'Comment décoder l\'hexadécimal en texte ?',
+  'pageText.e566d0af':
+    'Sélectionnez Décoder (hexadécimal → texte) et collez les octets dans l\'entrée. Les espaces, les sauts de ligne et un 0x initial sont supprimés avant le décodage ; ainsi 48 65 6c 6c 6f, 0x48656c6c6f et 48656C6C6F se décodent tous en Hello. Les octets doivent former un texte UTF-8 valide.',
+  'pageText.052ddd88': 'Pourquoi mon entrée hexadécimale affiche-t-elle une erreur ?',
+  'pageText.b31966b0':
+    'Le décodage exige un nombre pair de chiffres hexadécimaux (0-9, a-f) une fois les espaces et un 0x initial supprimés, et les octets doivent être de l\'UTF-8 valide. Les préfixes par octet comme 0x48 0x69, les séparateurs comme les virgules et les formes d\'échappement comme \\x48 ne sont pas acceptés.',
+  'pageText.c613a32a': 'L\'encodage hexadécimal est-il la même chose que le chiffrement ?',
+  'pageText.44b4c490':
+    'Non. L\'encodage hexadécimal est une notation réversible des octets et n\'apporte aucune confidentialité, puisque n\'importe qui peut le décoder avec la même règle. Utilisez un outil ou une bibliothèque de chiffrement éprouvé lorsque les données doivent rester confidentielles.',
+  'pageText.c649406e': 'À quoi servent cet encodeur et ce décodeur hexadécimal ?',
+  'pageText.e375a62e':
+    'Cet outil convertit du texte en hexadécimal, la notation en base 16 de ses octets UTF-8, et décode l\'hexadécimal en texte. Chaque octet est représenté par deux chiffres de 0 à 9 et de a à f. La sortie est en minuscules, avec un espace entre les octets. Le mode ligne unique met à jour la sortie pendant la saisie, dans les deux sens.',
+  'pageText.c3420d41':
+    'L\'hexadécimal décrit des octets ; ce n\'est ni un chiffrement, ni une compression, ni un hachage. Chaque octet produit exactement deux caractères hexadécimaux, de sorte que la forme hexadécimale fait le double du nombre d\'octets avant l\'ajout d\'espaces. La RFC 4648, section 8, définit l\'alphabet Base16 en majuscules A-F. Cet outil écrit a-f en minuscules ; le décodage accepte les deux casses, et les deux graphies représentent les mêmes octets.',
+  'pageText.e25e4d15':
+    'Hex : deux caractères par octet, donc la sortie est supérieure de 100 % aux octets d\'entrée. Courant pour les empreintes, les valeurs de couleur et les vidages mémoire.',
+  'pageText.7bc3a180':
+    'Base64 (RFC 4648, section 4) : quatre caractères pour trois octets, soit environ 33 % de plus, avec des lettres, des chiffres, le plus et la barre oblique.',
+  'pageText.6fd41ef2':
+    'Encodage en pourcentage d\'URL (RFC 3986, section 2.1) : les caractères hors de l\'ensemble non réservé (autres que lettres, chiffres et - . _ ~) sont écrits %XX pour chaque octet UTF-8.',
+  'pageText.6a122b09':
+    'Les trois sont des représentations réversibles des mêmes octets. Aucune ne garantit à elle seule la confidentialité.',
+  'pageText.3e3c3194': 'Comment le texte devient des octets hexadécimaux avec UTF-8',
+  'pageText.cc0e6f5a':
+    'L\'encodage hexadécimal travaille sur des octets : l\'outil encode donc d\'abord le texte en UTF-8 (RFC 3629). Les caractères ASCII utilisent chacun un octet. Le texte Hi correspond aux octets 0x48 et 0x69, affichés 48 69. Le texte d\'exemple Hello, World! donne 48 65 6c 6c 6f 2c 20 57 6f 72 6c 64 21.',
+  'pageText.3a9afe75':
+    'Les caractères non ASCII occupent davantage d\'octets. La lettre é est U+00E9 et ses octets UTF-8 sont c3 a9, donc la sortie est c3 a9. Le signe euro € devient e2 82 ac, et l\'emoji 😀 devient f0 9f 98 80. La sortie montre les octets stockés, pas le point de code ; un encodage ancien comme ISO-8859-1 stockerait é sous la forme e9.',
+  'pageText.3ae7d6b9': 'Décoder l\'hexadécimal : espaces, préfixes 0x, erreurs et mode par lots',
+  'pageText.11433a3d':
+    'Le mode décodage supprime tous les espaces et un 0x ou 0X initial de l\'entrée nettoyée. Les chaînes 48 69, 0x4869, 4869 et 0x 48 69 se décodent toutes en Hi, et une valeur répartie sur plusieurs lignes se décode comme une seule chaîne. Après ce nettoyage, le nombre de chiffres doit être pair et chaque caractère doit être 0-9, a-f ou A-F.',
+  'pageText.67e0fb35':
+    'Les autres notations ne sont pas converties. Un préfixe sur chaque octet provoque un échec, donc 0x48 0x69 est rejeté. Les virgules, les deux-points, les valeurs en pourcentage comme %48%69 et les formes d\'échappement comme \\x48 produisent aussi une erreur. Supprimez ces caractères avant de décoder.',
+  'pageText.bccd3aa8':
+    'Les octets décodés doivent être de l\'UTF-8 valide. L\'octet ff ne peut pas figurer dans de l\'UTF-8 valide ; ff renvoie donc une erreur au lieu de caractères de remplacement. Un hexadécimal issu d\'un autre encodage peut échouer pour la même raison.',
+  'pageText.2fe05423':
+    'Le mode par lots traite chaque ligne non vide comme une entrée distincte et conserve les résultats dans l\'ordre. Appuyez sur Tout convertir après modification, car les lignes par lots ne sont pas converties à chaque frappe. En mode de décodage par lots, une ligne invalide arrête tout le traitement et aucun résultat partiel n\'est affiché ; corrigez cette ligne et convertissez à nouveau.',
+  'pageText.59cae193': 'Comment vérifier une signature HMAC ?',
+  'pageText.4cc657e0':
+    'Utilisez les mêmes octets de message, la même clé secrète, le même algorithme et le même format de sortie que l\'émetteur. Collez la signature reçue dans « Signature à vérifier » et sélectionnez « Vérifier la signature ». L\'outil décode la valeur hexadécimale ou Base64 et la contrôle avec l\'opération de vérification HMAC de Web Crypto ; en cas de correspondance, « La signature est valide » s\'affiche.',
+  'pageText.dd5e1f43': 'Un HMAC peut-il être décodé pour retrouver le message ?',
+  'pageText.a5c42953':
+    'Non. Un HMAC est une empreinte de longueur fixe, et non une copie codée du message ; il ne peut donc pas être décodé pour retrouver le message ou la clé secrète. Pour tester un message candidat, recalculez le HMAC avec la même clé secrète et comparez le résultat. Une clé faible peut toutefois être devinée hors ligne à partir d\'un message connu et de son empreinte.',
+  'pageText.bb3e3019': 'Puis-je utiliser cet outil pour vérifier des signatures de webhooks ?',
+  'pageText.27763dd3':
+    'Oui, pour les tests et le débogage. Saisissez le corps brut exact de la requête, le secret de signature du webhook, ainsi que l\'algorithme et l\'encodage documentés par le fournisseur. Retirez les préfixes comme sha256= de la valeur d\'en-tête et incluez tout horodatage signé par le fournisseur. La vérification en production doit être effectuée sur votre serveur.',
+  'pageText.f0beca46': 'Vérifier une signature HMAC étape par étape',
+  'pageText.54cb4204':
+    'La vérification répète le calcul de l\'émetteur de votre côté et compare le résultat à la signature reçue. Chaque donnée doit correspondre exactement, car la modification d\'un seul octet du message ou de la clé produit une empreinte totalement différente.',
+  'pageText.f0edf2bc':
+    'Exemple travaillé (RFC 4231, cas de test 1) : la clé est constituée de vingt octets 0x0b, le message est le texte ASCII Hi There, et HMAC-SHA-256 vaut b0344c61d8db38535ca8afceaf0bf12b881dc200c9833da726e9376c2e32cff7 en hexadécimal. En Node.js, crypto.createHmac(\'sha256\', Buffer.alloc(20, 0x0b)).update(\'Hi There\').digest(\'hex\') renvoie cette valeur. Le bouton « Charger un exemple » remplit un autre cas : la clé secrète key et le message The quick brown fox jumps over the lazy dog, qui produit f7bc83f430538424b13298e6aa6fb143ef4d59a14946175997479dbc2d1a3cd8.',
+  'pageText.cd26f731':
+    'Récupérez les octets exacts du message signé par l\'émetteur. Pour les webhooks, utilisez le corps brut de la requête, avant tout parsing ou resérialisation du JSON.',
+  'pageText.7ca359f1':
+    'Utilisez la clé secrète et la variante SHA-2 documentées par l\'émetteur, par exemple HMAC SHA-256.',
+  'pageText.f91b4b31':
+    'Choisissez le format de sortie correspondant à la valeur reçue, puis collez la signature sans nom d\'en-tête ni préfixe.',
+  'pageText.0fea3ad4':
+    'Sélectionnez « Vérifier la signature ». « La signature est valide » ne vaut que pour les données exactes que vous avez testées.',
+  'pageText.474977c3': 'Vérifier les signatures de webhooks dans le code serveur',
+  'pageText.b8eadac9':
+    'Le récepteur d\'un webhook doit recalculer le HMAC sur le corps brut reçu, avec un secret stocké sur le serveur, puis le comparer à l\'en-tête de signature. N\'analysez le JSON et n\'exécutez les effets de bord qu\'après la réussite de la vérification de signature.',
+  'pageText.92aa01b7':
+    'crypto.timingSafeEqual compare deux tampons sans s\'arrêter au premier octet différent. Elle lève une erreur si les tampons n\'ont pas la même longueur ; l\'exemple vérifie donc d\'abord la longueur. Les charges signées sans horodatage peuvent être rejouées par quelqu\'un qui les a interceptées ; vérifiez donc aussi l\'horodatage fourni par le fournisseur, dans une tolérance que vous définissez.',
+  'pageText.bfb192c5':
+    'L\'exemple affiche true pour le corps d\'origine, et false pour un corps modifié, une valeur non hexadécimale et un mauvais secret.',
+  'pageText.67224f91': 'Signatures hexadécimales et Base64 et incohérences courantes',
+  'pageText.5967c11a':
+    'L\'hexadécimal utilise deux caractères par octet : 64 caractères pour HMAC-SHA-256, 96 pour HMAC-SHA-384 et 128 pour HMAC-SHA-512.',
+  'pageText.feb9e01f':
+    'Le Base64 standard compte 44, 64 et 88 caractères pour ces trois algorithmes, avec le remplissage « = » en fin de valeur lorsque la longueur l\'exige.',
+  'pageText.b890654a':
+    'Les valeurs Base64url contenant - et _ sont rejetées, de même qu\'un Base64 dont le remplissage « = » manque. Convertissez-les d\'abord en Base64 standard ou confirmez le format auprès du fournisseur.',
+  'pageText.93315ba8':
+    'Choisir l\'hexadécimal pour une valeur Base64 provoque une erreur de validation. Choisir Base64 pour une valeur hexadécimale peut se décoder sans erreur, puis afficher « La signature ne correspond pas ».',
+  'pageText.560b2c8d':
+    'L\'hexadécimal en majuscules est accepté et les espaces en début et fin de valeur sont supprimés. Une valeur tronquée ou partiellement copiée ne correspond pas.',
+  'pageText.b33036f6':
+    'La clé secrète est utilisée sous forme de caractères de texte UTF-8. Si un fournisseur affiche une clé préfixée ou encodée en Base64, consultez sa documentation pour connaître les octets exacts de la clé, car coller la chaîne affichée produit un HMAC différent.',
+  'pageText.89d64ef1': 'Comment utiliser un texte échappé avec new RegExp() en JavaScript ?',
+  'pageText.f33cd507':
+    'Transmettez le fragment échappé comme premier argument, par exemple new RegExp(escaped, \'g\'). Le fragment contient déjà les barres obliques inverses dont le moteur d\'expressions régulières a besoin ; ne l\'échappez donc pas une seconde fois. Ajoutez les indicateurs comme second argument.',
+  'pageText.50d8443d':
+    'Pourquoi faut-il des barres obliques inverses doubles dans une chaîne JavaScript ?',
+  'pageText.1e36448e':
+    'Les barres obliques inverses doubles ne sont nécessaires que lorsque le fragment est écrit dans un littéral de chaîne, car le littéral doit représenter chaque barre oblique inverse. Un littéral d\'expression régulière comme /price \\(USD\\)/ accepte la sortie de l\'outil telle quelle ; la forme chaîne est \'price \\\\(USD\\\\)\'.',
+  'pageText.0929586a':
+    'L\'échappement rend-il une expression régulière à l\'abri du backtracking catastrophique ?',
+  'pageText.533ffd79':
+    'Non. L\'échappement empêche le texte inséré d\'ajouter des opérateurs d\'expression régulière, mais des quantificateurs imbriqués ou des alternatives qui se chevauchent ailleurs dans le motif peuvent encore provoquer un backtracking catastrophique. Testez le motif final avec des entrées longues et hostiles.',
+  'pageText.064f3376': 'Échapper la saisie utilisateur avant de créer un RegExp en JavaScript',
+  'pageText.134d1f6e':
+    'Lorsqu\'un terme de recherche provient d\'un utilisateur ou de données stockées, échappez-le avant de l\'insérer dans un motif. Sans échappement, le $ de price: $5.00 (USD) devient une ancre de fin de saisie et les parenthèses forment un groupe ; le motif ne correspond alors plus à ce texte littéral. Le fragment échappé est price: \\$5\\.00 \\(USD\\).',
+  'pageText.517d4b17':
+    'La sortie reste aussi valide avec l\'indicateur u, car chaque barre oblique inverse ajoutée par l\'outil précède un caractère de syntaxe JavaScript ou une barre oblique. L\'exemple ci-dessous reprend le jeu de caractères échappés de l\'outil et a été exécuté dans Node.js.',
+  'pageText.6564a3e5': 'Barres obliques inverses doubles dans les littéraux de chaîne JavaScript',
+  'pageText.2e27ada3':
+    'La sortie échappée est du code source d\'expression régulière, et non une valeur de chaîne JavaScript. Un littéral d\'expression régulière comme /price \\(USD\\)/ accepte le fragment exactement tel qu\'il est affiché. Passer le même fragment à new RegExp() comme littéral de chaîne demande une couche supplémentaire, car le littéral traite chaque barre oblique inverse comme un caractère d\'échappement.',
+  'pageText.2f1d8576':
+    'Si les barres obliques inverses ne sont pas doublées, le littéral de chaîne les supprime. Par exemple, \'price \\(USD\\)\' vaut price (USD), que le moteur lit comme un groupe correspondant à price USD au lieu du texte littéral price (USD). Écrit \'price \\\\(USD\\\\)\', le littéral vaut price \\(USD\\), la valeur attendue par new RegExp().',
+  'pageText.9626d53e':
+    'Littéral d\'expression régulière : collez la sortie de l\'outil sans modification, par exemple /price \\(USD\\)/.',
+  'pageText.30ce9a9c':
+    'new RegExp() avec un littéral de chaîne dans le code source : doublez chaque barre oblique inverse, par exemple new RegExp(\'price \\\\(USD\\\\)\').',
+  'pageText.22b6a3a6':
+    'Une valeur lue depuis un champ de saisie, un fichier ou une API contient déjà des barres obliques inverses simples et n\'a pas besoin d\'être doublée.',
+  'pageText.880b3a0a': 'Insérer du texte dans une classe de caractères avec précaution',
+  'pageText.082f1411':
+    'Dans des crochets comme [...], un tiret entre deux caractères crée une plage. L\'outil échappe les crochets, les barres obliques inverses et les accents circonflexes, mais pas les tirets. Ainsi, le texte littéral a-z placé dans une classe correspond à m, et non à un tiret.',
+  'pageText.25a1347a':
+    'Dans une classe, échappez vous-même le tiret avec une barre oblique inverse, \\-, ou placez-le en premier ou en dernier caractère. Hors d\'une classe, le tiret n\'a pas de sens particulier et la sortie de l\'outil ne doit pas être modifiée.',
+  'pageText.ea25d380':
+    'Testez une classe de caractères avec un caractère de la plage visée et un tiret littéral, par exemple avec les chaînes m et -.',
+  'pageText.c50cedec':
+    'Les crochets et accents circonflexes échappés restent littéraux dans une classe ; la sortie de l\'outil pour ces caractères peut donc être insérée telle quelle.',
+  'pageText.8a69c4c7': 'Pourquoi un signe plus devient-il un espace ?',
+  'pageText.1229ccba':
+    'Dans les chaînes de requête, le signe plus représente un espace, selon les règles application/x-www-form-urlencoded utilisées par URLSearchParams. Ainsi, q=hello+world est analysé comme "hello world". Pour conserver un signe plus littéral, encodez-le en %2B.',
+  'pageText.08a2cd74': 'Développe-t-il les clés entre crochets comme filter[name] ?',
+  'pageText.b4a287b7':
+    'Non. La notation entre crochets n\'est pas développée en objets imbriqués. filter[name]=x est renvoyé sous une seule clé nommée "filter[name]" avec la valeur "x" ; il faut donc construire les structures imbriquées dans votre propre code.',
+  'pageText.43cd94c8':
+    'Les nombres et booléens sont-ils convertis en types JSON lors de l\'analyse ?',
+  'pageText.71c76224':
+    'Non. Chaque valeur analysée est une chaîne ; ainsi, page=2 devient "2" et flag=true devient "true". Le mode de construction écrit les nombres et booléens comme du texte brut, ils apparaissent donc sans modification dans la chaîne de requête.',
+  'pageText.87ef33b8': 'Structure d\'une chaîne de requête',
+  'pageText.e2689ace':
+    'Une chaîne de requête est la partie d\'une URL qui commence après le premier ? et se termine avant tout fragment #. Elle contient des paires clé=valeur séparées par &, comme défini pour le composant de requête dans la RFC 3986, section 3.4. Une paire sans signe égal, comme flag, est lue avec une chaîne vide comme valeur.',
+  'pageText.51c55314':
+    'Lorsque vous collez une URL complète, l\'outil utilise l\'analyseur d\'URL du navigateur et ne lit que la partie de recherche ; le schéma, l\'hôte, le chemin et le fragment sont ignorés. Pour une chaîne de requête seule, le texte après le premier ? est utilisé s\'il existe ; sinon, toute l\'entrée est lue comme requête. Dans les deux cas, le texte à partir d\'un # est supprimé.',
+  'pageText.1dfaa2ef':
+    'Les paires sont lues de gauche à droite, et les clés apparaissent dans la sortie JSON dans l\'ordre de leur première occurrence.',
+  'pageText.a559ca09':
+    'Les valeurs sont décodées : %20 et + deviennent tous deux des espaces, et %25 devient un signe de pourcentage.',
+  'pageText.1b28c354':
+    'Dans une entrée sans URL, écrivez un ? littéral dans une valeur sous la forme %3F, car le premier ? est traité comme le début de la requête.',
+  'pageText.a47341ff': 'Une entrée vide efface le résultat et tout message d\'erreur.',
+  'pageText.a12ce3f0': 'Clés répétées, tableaux et sortie JSON',
+  'pageText.ce640b2d':
+    'Une clé qui apparaît une fois correspond à une seule chaîne JSON. Une clé qui apparaît deux fois ou plus correspond à un tableau de ses valeurs, dans l\'ordre d\'apparition. Pour l\'entrée ?q=hello%20world&tag=a&tag=b, l\'analyseur renvoie {"q": "hello world", "tag": ["a", "b"]}.',
+  'pageText.91fa6392':
+    'Comme le type de sortie dépend du nombre d\'occurrences d\'une clé, une clé tantôt chaîne, tantôt tableau, peut surprendre le code en aval. Si votre application attend une liste, normalisez une valeur unique en tableau avant de la lire.',
+  'pageText.29c9b22a':
+    'Le mode de construction inverse ce schéma. Chaque élément de tableau devient sa propre paire clé=valeur ; ainsi {"tag": ["a", "b"]} produit tag=a&tag=b. Les clés apparaissent dans l\'ordre où elles sont définies dans l\'objet JSON.',
+  'pageText.bd56b491': 'Encodage en pourcentage, signes plus et limites de construction',
+  'pageText.58e1d3ad':
+    'L\'encodage en pourcentage représente les caractères non sûrs ou réservés dans une URL. À l\'analyse, %20 et + produisent tous deux un espace, et %2B produit un signe plus littéral. Le mode de construction utilise URLSearchParams, qui écrit les espaces sous la forme + et encode des caractères comme /, :, + et & dans les valeurs. Par exemple, {"q": "hello world", "sym": "a/b:c+d&e"} produit ?q=hello+world&sym=a%2Fb%3Ac%2Bd%26e.',
+  'pageText.31f35829':
+    'Les valeurs null sont ignorées ; ces clés n\'apparaissent donc pas dans la chaîne de requête.',
+  'pageText.9460d901':
+    'Les objets imbriqués sont écrits sous forme de chaîne JSON ; ainsi {"filter": {"x": 1}} devient filter=%7B%22x%22%3A1%7D.',
+  'pageText.86212f08':
+    'Les objets à l\'intérieur des tableaux sont convertis avec String(), ils apparaissent donc sous la forme [object Object]. Aplatissez-les en valeurs primitives avant la construction.',
+  'pageText.8164015d':
+    'Seul un objet JSON de niveau supérieur est accepté. Un tableau de niveau supérieur ou un JSON mal formé affiche une erreur au lieu d\'un résultat.',
+  'pageText.aa793126': 'Comment décoder une chaîne User-Agent ?',
+  'pageText.a3e32a53':
+    'Collez la chaîne dans l\'entrée User-Agent ou cliquez sur « Utiliser mon User-Agent » pour analyser ce navigateur. Le résumé affiche les champs navigateur, système d\'exploitation, moteur, appareil, CPU et bot, et « JSON analysé » présente le résultat complet.',
+  'pageText.24ba7fa7': 'Pourquoi un résultat affiche-t-il Unknown ou Desktop ?',
+  'pageText.40b2a6e9':
+    'Unknown signifie que le jeu de règles n\'a trouvé aucune valeur correspondante dans cette chaîne. Desktop est un type d\'appareil de repli utilisé lorsqu\'aucun jeton d\'appareil, mobile ou de bot ne correspond ; ainsi, un client qui n\'est pas un navigateur, comme curl/8.4.0, peut afficher Desktop alors que son navigateur et son système restent Unknown.',
+  'pageText.c8cef8b4': 'Quelle bibliothèque d\'analyse cet outil utilise-t-il ?',
+  'pageText.0d71112b':
+    'L\'outil utilise le paquet npm ua-parser-js, version 1.0.41, qui implémente le jeu de règles UAParser.js. D\'autres builds ua-parser et des versions plus récentes peuvent classer la même chaîne différemment ; ne comparez donc les résultats qu\'au sein d\'une même version de jeu de règles.',
+  'pageText.a769ccc6': 'Comment lire une chaîne User-Agent',
+  'pageText.ce34bf1e':
+    'Une valeur User-Agent est une liste de jetons produit écrits sous la forme nom/version, auxquels s\'ajoutent des commentaires entre parenthèses décrivant généralement la plateforme. Beaucoup de navigateurs envoient aussi d\'anciens jetons de compatibilité : Mozilla/5.0 ou AppleWebKit/537.36 ne désignent donc pas à eux seuls le produit. Plusieurs jetons peuvent nommer un navigateur : les chaînes Edge contiennent aussi des jetons Chrome et Safari, et le jeton Edg identifie Edge.',
+  'pageText.0533402d':
+    'Dans l\'exemple Edge sous Windows, l\'analyseur renvoie Edge 140.0.0.0 comme navigateur, Blink 140.0.0.0 comme moteur, Windows 10 comme système et amd64 comme architecture CPU, déduite du jeton x64. Le fabricant et le modèle de l\'appareil restent Unknown, car la chaîne ne nomme aucun appareil.',
+  'pageText.82e5e48b': 'Signification de chaque champ analysé',
+  'pageText.5ae04232':
+    'Le JSON analysé contient raw, browser (name, version, major), engine, os, device (vendor, model, type), cpu (architecture) et bot (isBot, name). La valeur raw correspond à l\'entrée sans espaces en début et en fin. En mode lot, la sortie est un tableau contenant un objet par ligne non vide.',
+  'pageText.bac628af':
+    'Googlebot sur Android : Chrome 130 et un appareil mobile LG Nexus 5 sont analysés, mais bot.isBot vaut true ; vérifiez donc l\'indicateur de bot avant de considérer les champs navigateur comme le client.',
+  'pageText.20f547b6':
+    'GPTBot : le champ navigateur affiche WebKit 537.36, un jeton de moteur, car la chaîne ne nomme aucun navigateur ; bot.name indique toujours GPTBot.',
+  'pageText.0f279c09': 'Pourquoi les chaînes User-Agent sont réduites et ce qui les remplace',
+  'pageText.30c2004b':
+    'Les navigateurs basés sur Chromium réduisent la chaîne User-Agent pour limiter le fingerprinting. Sous Windows 11, ils conservent le jeton NT 10.0, si bien l\'analyseur affiche Windows 10, et le modèle Android est remplacé par un espace réservé fixe. Une chaîne réduite ne peut donc pas confirmer la version exacte du système ni le modèle de l\'appareil.',
+  'pageText.2ab3b633':
+    'Les User-Agent Client Hints fournissent des valeurs structurées là où ils sont pris en charge. Dans les navigateurs basés sur Chromium, navigator.userAgentData expose les marques et la plateforme, et getHighEntropyValues() peut demander architecture, model et platformVersion, ce qui distingue Windows 11 de Windows 10. Les serveurs reçoivent les en-têtes Sec-CH-UA à faible entropie et peuvent demander des valeurs à forte entropie avec Accept-CH. La prise en charge varie : utilisez la détection de fonctionnalités et traitez les valeurs manquantes comme inconnues.',
 };
