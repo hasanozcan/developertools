@@ -2,14 +2,32 @@ const siteUrl = (process.env.SITE_URL || 'https://devstools.app').replace(/\/$/,
 const indexNowKey = process.env.INDEXNOW_KEY || 'ec4f7de85f644a96acfb2568d92feeaa';
 const keyLocation = `${siteUrl}/${indexNowKey}.txt`;
 
+const siteHost = new URL(siteUrl).hostname;
+
 const sitemapResponse = await fetch(`${siteUrl}/sitemap.xml`);
 if (!sitemapResponse.ok) {
   throw new Error(`Sitemap request failed with ${sitemapResponse.status}`);
 }
 
-const sitemapXml = await sitemapResponse.text();
+let sitemapXml = await sitemapResponse.text();
+if (sitemapXml.includes('<sitemapindex')) {
+  // /sitemap.xml is an index of per-locale sitemaps: read every same-host child.
+  const childUrls = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)]
+    .map((match) => new URL(match[1].trim(), siteUrl))
+    .filter((url) => url.hostname === siteHost);
+  const childXml = await Promise.all(
+    childUrls.map(async (url) => {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Child sitemap ${url} failed with ${response.status}`);
+      }
+      return response.text();
+    }),
+  );
+  sitemapXml = childXml.join('\n');
+}
+
 const urlList = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
-const siteHost = new URL(siteUrl).hostname;
 
 if (urlList.length === 0) {
   throw new Error('Sitemap contains no URLs');
@@ -37,14 +55,20 @@ const response = await fetch('https://api.indexnow.org/indexnow', {
 });
 
 const responseBody = await response.text();
-console.log(JSON.stringify({
-  submittedAt: new Date().toISOString(),
-  endpoint: 'https://api.indexnow.org/indexnow',
-  status: response.status,
-  urlCount: urlList.length,
-  keyLocation,
-  responseBody,
-}, null, 2));
+console.log(
+  JSON.stringify(
+    {
+      submittedAt: new Date().toISOString(),
+      endpoint: 'https://api.indexnow.org/indexnow',
+      status: response.status,
+      urlCount: urlList.length,
+      keyLocation,
+      responseBody,
+    },
+    null,
+    2,
+  ),
+);
 
 if (![200, 202].includes(response.status)) {
   process.exitCode = 1;

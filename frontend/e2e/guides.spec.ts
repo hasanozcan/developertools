@@ -6,7 +6,7 @@ test('guides are discoverable, server-rendered, and connected to their tools', a
   page,
   request,
 }) => {
-  const sitemap = await (await request.get('/sitemap.xml')).text();
+  const sitemap = await (await request.get('/sitemap/en.xml')).text();
   await page.goto('/');
   await expect(page.locator('[data-guide-cards="true"]')).toBeVisible();
   await page.getByRole('link', { name: 'All guides', exact: false }).click();

@@ -25,7 +25,8 @@ frontend/
 │   ├── app/                      # Next.js App Router
 │   │   ├── layout.tsx            # Ana layout
 │   │   ├── page.tsx              # Ana sayfa
-│   │   ├── sitemap.ts            # Dinamik sitemap
+│   │   ├── sitemap.ts            # Dil başına sitemap (/sitemap/<id>.xml)
+│   │   ├── sitemap-index/route.ts  # Sitemap index (/sitemap.xml rewrite)
 │   │   ├── robots.ts             # Robots.txt
 │   │   └── tools/
 │   │       ├── [category]/       # Kategori sayfaları
@@ -90,11 +91,22 @@ Collection reklamları için üç gerçek AdSense unit tanımlıdır ve birbirin
 - 10 geliştirici rolü landing page'i: `/for/[audience]` ve localized karşılıkları
 - Tool sayfalarında FAQ, HowTo, WebApplication, Breadcrumb ve related-tool structured data
 - Tool sayfalarında otomatik örnek kullanım içeriği, workflow bağlantıları ve topic collection iç linkleri
-- Dinamik sitemap.xml + canonical/hreflang ağı
+- Dil başına sitemap (sitemap index: `/sitemap.xml`) + canonical/hreflang ağı
 - Search Console CSV fırsat analizi: `/seo-opportunities` (`noindex`, tarayıcı içi analiz)
 - Robots.txt
 - Open Graph meta tags
 - Breadcrumb navigation
+
+### Sitemap yapısı
+
+`/sitemap.xml` tek bir URL listesi değil, bir **sitemap index** dosyasıdır. Her dil için ayrı bir alt sitemap listeler:
+
+- `/sitemap/en.xml`
+- `/sitemap/tr.xml`, `/sitemap/de.xml`, `/sitemap/es.xml`, `/sitemap/fr.xml`, `/sitemap/ru.xml`, `/sitemap/zh.xml`
+
+Bunun nedeni, Search Console'da indexleme kapsamını dil bazında ayrı ayrı görebilmektir. URL kümesi ve hreflang alternates değişmedi; tüm alt sitemap'lerin birleşimi önceki tek sitemap ile aynıdır.
+
+> Firewall veya bot koruması kuralları `/sitemap.xml`'i muaf tutuyorsa, aynı muafiyeti `/sitemap/` ile başlayan yollara da tanımlayın (GET ve HEAD izni). Aksi halde alt sitemap'ler engellenir.
 
 ### AdSense delivery and tool bottom slots
 

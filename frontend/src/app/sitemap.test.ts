@@ -2,28 +2,33 @@
 
 import { describe, expect, it } from 'vitest';
 import { categoryCatalog, toolCatalog } from '@/lib/api';
-import {
-  NON_DEFAULT_LOCALES,
-  SUPPORTED_LOCALES,
-  isToolLocaleIndexable,
-} from '@/lib/i18nRouting';
+import { NON_DEFAULT_LOCALES, SUPPORTED_LOCALES, isToolLocaleIndexable } from '@/lib/i18nRouting';
+import { SITEMAP_IDS } from '@/lib/sitemapIds';
 import { toolCollections } from '@/lib/toolCollections';
 import { developerAudiences } from '@/lib/developerAudiences';
 import { developerGuides } from '@/lib/developerGuides';
-import sitemap from './sitemap';
+import sitemap, { generateSitemaps } from './sitemap';
+import { GET as getSitemapIndex } from './sitemap-index/route';
 
 const BASE = 'https://devstools.app';
 
+async function sitemapFor(id: string) {
+  return sitemap({ id: Promise.resolve(id) });
+}
+
+// Union of every child sitemap: the full URL set the old single sitemap held.
+async function allEntries() {
+  const ids = await generateSitemaps();
+  const children = await Promise.all(ids.map(({ id }) => sitemapFor(id)));
+  return children.flat();
+}
+
 describe('sitemap', () => {
-  it('lists every canonical and indexable localized page with hreflang alternates and without unverifiable freshness hints', () => {
-    const entries = sitemap();
+  it('lists every canonical and indexable localized page with hreflang alternates and without unverifiable freshness hints', async () => {
+    const entries = await allEntries();
 
     const nonToolPagesPerLocale =
-      1 +
-      categoryCatalog.length +
-      4 +
-      1 + toolCollections.length +
-      1 + developerAudiences.length;
+      1 + categoryCatalog.length + 4 + 1 + toolCollections.length + 1 + developerAudiences.length;
     const indexableLocalizedTools = NON_DEFAULT_LOCALES.reduce(
       (sum, locale) =>
         sum + toolCatalog.filter((tool) => isToolLocaleIndexable(tool.slug, locale)).length,
@@ -33,7 +38,8 @@ describe('sitemap', () => {
       nonToolPagesPerLocale * SUPPORTED_LOCALES.length +
       toolCatalog.length +
       indexableLocalizedTools +
-      1 + developerGuides.length;
+      1 +
+      developerGuides.length;
 
     expect(entries).toHaveLength(expectedLength);
     expect(entries.every((entry) => !('lastModified' in entry))).toBe(true);
@@ -59,15 +65,15 @@ describe('sitemap', () => {
     }
   });
 
-  it('always includes every English tool page', () => {
-    const urls = new Set(sitemap().map((entry) => entry.url));
+  it('always includes every English tool page', async () => {
+    const urls = new Set((await allEntries()).map((entry) => entry.url));
     for (const tool of toolCatalog) {
       expect(urls.has(`${BASE}/tools/${tool.categorySlug}/${tool.slug}`)).toBe(true);
     }
   });
 
-  it('excludes locale×tool pages without a real translation', () => {
-    const urls = new Set(sitemap().map((entry) => entry.url));
+  it('excludes locale×tool pages without a real translation', async () => {
+    const urls = new Set((await allEntries()).map((entry) => entry.url));
 
     let excluded = 0;
     for (const locale of NON_DEFAULT_LOCALES) {
@@ -81,8 +87,8 @@ describe('sitemap', () => {
     expect(excluded).toBe(0);
   });
 
-  it('never references an excluded URL from hreflang alternates', () => {
-    const entries = sitemap();
+  it('never references an excluded URL from hreflang alternates', async () => {
+    const entries = await allEntries();
     // The origin root is equivalent with or without a trailing slash.
     const normalize = (url: string) => (url === `${BASE}/` ? BASE : url);
     const urls = new Set(entries.map((entry) => normalize(entry.url)));
@@ -102,5 +108,34 @@ describe('sitemap', () => {
       // Each tool entry must be part of its own hreflang cluster.
       expect(Object.values(languages)).toContain(entry.url);
     }
+  });
+
+  it('keeps each locale URL in its own child sitemap', async () => {
+    for (const id of SITEMAP_IDS) {
+      const entries = await sitemapFor(id);
+      expect(entries.length, id).toBeGreaterThan(0);
+      for (const entry of entries) {
+        const locale =
+          NON_DEFAULT_LOCALES.find(
+            (candidate) =>
+              entry.url === `${BASE}/${candidate}` || entry.url.startsWith(`${BASE}/${candidate}/`),
+          ) ?? 'en';
+        expect(locale, entry.url).toBe(id);
+      }
+    }
+  });
+
+  it('lists the per-locale children in the sitemap index and nothing else', async () => {
+    const response = await getSitemapIndex();
+    expect(response.headers.get('content-type')).toBe('application/xml');
+    const body = await response.text();
+
+    const locs = [...body.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+    expect(locs).toEqual(SITEMAP_IDS.map((id) => `${BASE}/sitemap/${id}.xml`));
+    expect(body).not.toContain('<url>');
+  });
+
+  it('returns no entries for an unknown sitemap id', async () => {
+    expect(await sitemapFor('xx')).toEqual([]);
   });
 });

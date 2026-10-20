@@ -4,12 +4,15 @@ import { toolCollections } from '@/lib/toolCollections';
 import { developerAudiences } from '@/lib/developerAudiences';
 import { developerGuides } from '@/lib/developerGuides';
 import {
+  DEFAULT_LOCALE,
   LOCALIZED_PAGES,
-  NON_DEFAULT_LOCALES,
+  type Language,
   getHreflangAlternates,
   getToolHreflangAlternates,
+  isNonDefaultLocale,
   isToolLocaleIndexable,
 } from '@/lib/i18nRouting';
+import { SITEMAP_IDS } from '@/lib/sitemapIds';
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
 
@@ -20,7 +23,21 @@ const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
 // Static pages
 const staticPages = LOCALIZED_PAGES;
 
-export default function sitemap(): MetadataRoute.Sitemap {
+// One child sitemap per locale, listed by the sitemap index at /sitemap.xml.
+export async function generateSitemaps() {
+  return SITEMAP_IDS.map((id) => ({ id }));
+}
+
+export default async function sitemap(props: {
+  id: Promise<string>;
+}): Promise<MetadataRoute.Sitemap> {
+  const id = await props.id;
+  if (id === DEFAULT_LOCALE) return englishEntries();
+  if (isNonDefaultLocale(id)) return localizedEntries(id);
+  return [];
+}
+
+function englishEntries(): MetadataRoute.Sitemap {
   // English canonical entries
   const englishHome = {
     url: BASE_URL,
@@ -74,60 +91,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ];
 
-  // Localized entries for non-default locales
-  const localizedEntries: MetadataRoute.Sitemap = NON_DEFAULT_LOCALES.flatMap((locale) => {
-    const home = {
-      url: `${BASE_URL}/${locale}`,
-      alternates: {
-        languages: getHreflangAlternates('/', BASE_URL),
-      },
-    };
-
-    const categories = categoryCatalog.map((category) => ({
-      url: `${BASE_URL}/${locale}/tools/${category.slug}`,
-      alternates: {
-        languages: getHreflangAlternates(`/tools/${category.slug}`, BASE_URL),
-      },
-    }));
-
-    // Untranslated locale×tool pages are noindex (canonical → English), so
-    // they are left out of the sitemap and out of every hreflang cluster.
-    const tools = toolCatalog
-      .filter((tool) => isToolLocaleIndexable(tool.slug, locale))
-      .map((tool) => ({
-        url: `${BASE_URL}/${locale}/tools/${tool.categorySlug}/${tool.slug}`,
-        alternates: {
-          languages: getToolHreflangAlternates(tool.slug, tool.categorySlug, BASE_URL),
-        },
-      }));
-
-    const pages = staticPages.map((page) => ({
-      url: `${BASE_URL}/${locale}/${page}`,
-      alternates: { languages: getHreflangAlternates(`/${page}`, BASE_URL) },
-    }));
-    const collections = [
-      {
-        url: `${BASE_URL}/${locale}/collections`,
-        alternates: { languages: getHreflangAlternates('/collections', BASE_URL) },
-      },
-      ...toolCollections.map((collection) => ({
-        url: `${BASE_URL}/${locale}/collections/${collection.slug}`,
-        alternates: { languages: getHreflangAlternates(`/collections/${collection.slug}`, BASE_URL) },
-      })),
-    ];
-    const audiences = [
-      {
-        url: `${BASE_URL}/${locale}/for`,
-        alternates: { languages: getHreflangAlternates('/for', BASE_URL) },
-      },
-      ...developerAudiences.map((audience) => ({
-        url: `${BASE_URL}/${locale}/for/${audience.slug}`,
-        alternates: { languages: getHreflangAlternates(`/for/${audience.slug}`, BASE_URL) },
-      })),
-    ];
-    return [home, ...categories, ...tools, ...pages, ...collections, ...audiences];
-  });
-
   return [
     englishHome,
     ...englishCategories,
@@ -137,6 +100,58 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...staticUrls,
     { url: `${BASE_URL}/guides` },
     ...developerGuides.map((guide) => ({ url: `${BASE_URL}/guides/${guide.slug}` })),
-    ...localizedEntries,
   ];
+}
+
+function localizedEntries(locale: Language): MetadataRoute.Sitemap {
+  const home = {
+    url: `${BASE_URL}/${locale}`,
+    alternates: {
+      languages: getHreflangAlternates('/', BASE_URL),
+    },
+  };
+
+  const categories = categoryCatalog.map((category) => ({
+    url: `${BASE_URL}/${locale}/tools/${category.slug}`,
+    alternates: {
+      languages: getHreflangAlternates(`/tools/${category.slug}`, BASE_URL),
+    },
+  }));
+
+  // Untranslated locale×tool pages are noindex (canonical → English), so
+  // they are left out of the sitemap and out of every hreflang cluster.
+  const tools = toolCatalog
+    .filter((tool) => isToolLocaleIndexable(tool.slug, locale))
+    .map((tool) => ({
+      url: `${BASE_URL}/${locale}/tools/${tool.categorySlug}/${tool.slug}`,
+      alternates: {
+        languages: getToolHreflangAlternates(tool.slug, tool.categorySlug, BASE_URL),
+      },
+    }));
+
+  const pages = staticPages.map((page) => ({
+    url: `${BASE_URL}/${locale}/${page}`,
+    alternates: { languages: getHreflangAlternates(`/${page}`, BASE_URL) },
+  }));
+  const collections = [
+    {
+      url: `${BASE_URL}/${locale}/collections`,
+      alternates: { languages: getHreflangAlternates('/collections', BASE_URL) },
+    },
+    ...toolCollections.map((collection) => ({
+      url: `${BASE_URL}/${locale}/collections/${collection.slug}`,
+      alternates: { languages: getHreflangAlternates(`/collections/${collection.slug}`, BASE_URL) },
+    })),
+  ];
+  const audiences = [
+    {
+      url: `${BASE_URL}/${locale}/for`,
+      alternates: { languages: getHreflangAlternates('/for', BASE_URL) },
+    },
+    ...developerAudiences.map((audience) => ({
+      url: `${BASE_URL}/${locale}/for/${audience.slug}`,
+      alternates: { languages: getHreflangAlternates(`/for/${audience.slug}`, BASE_URL) },
+    })),
+  ];
+  return [home, ...categories, ...tools, ...pages, ...collections, ...audiences];
 }

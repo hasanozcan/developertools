@@ -284,6 +284,26 @@ describe('SEO/GEO audit script', { timeout: 30_000 }, () => {
     ]);
   });
 
+  it('audits every child urlset when /sitemap.xml is a sitemap index', async () => {
+    const report = await auditSite((origin) => ({
+      '/': { body: html({ canonical: `${origin}/`, links: ['/tr'] }) },
+      '/tr': { body: html({ lang: 'tr', canonical: `${origin}/tr` }) },
+      '/sitemap.xml': {
+        type: 'application/xml',
+        body: `<sitemapindex>${['en', 'tr']
+          .map((id) => `<sitemap><loc>${origin}/sitemap/${id}.xml</loc></sitemap>`)
+          .join('')}</sitemapindex>`,
+      },
+      '/sitemap/en.xml': sitemap(origin, ['/']),
+      '/sitemap/tr.xml': sitemap(origin, ['/tr']),
+    }));
+    expect(report.summary.sitemapStatus).toBe(200);
+    expect(report.summary.sitemapUrls).toBe(2);
+    expect(findIssue(report, 'sitemap-unavailable')).toBeUndefined();
+    expect(findIssue(report, 'invalid-sitemap-url')).toBeUndefined();
+    expect(findIssue(report, 'sitemap-missing-indexable-pages')).toBeUndefined();
+  });
+
   it('runs as a CLI and exits with code 2 when high issues exist', async () => {
     const origin = await startSite(legacySite('wrong-canonical'));
     const result = await new Promise<{ code: number | null; stdout: string; stderr: string }>(

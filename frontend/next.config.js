@@ -68,6 +68,13 @@ const nextConfig = {
     // render app/global-not-found.tsx instead of a root-level not-found.tsx.
     globalNotFound: true,
   },
+  async rewrites() {
+    // /sitemap.xml is served by app/sitemap-index/route.ts. A route.ts at
+    // app/sitemap.xml conflicts with the generateSitemaps metadata route at build time.
+    return {
+      beforeFiles: [{ source: '/sitemap.xml', destination: '/sitemap-index' }],
+    };
+  },
   async headers() {
     return [
       {

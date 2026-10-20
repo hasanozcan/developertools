@@ -748,6 +748,26 @@ export function findLocalizedDuplicates(pages, pageByPath, ctx) {
 // Network
 // ---------------------------------------------------------------------------
 
+// /sitemap.xml may be a sitemap index pointing at per-locale urlsets. Fetch
+// each same-host child and concatenate them so the parsing below sees one
+// stream of <url> entries, exactly as for a single urlset.
+async function fetchSitemap(ctx) {
+  const index = await fetchText(ctx, '/sitemap.xml');
+  if (!index.text.includes('<sitemapindex')) return index;
+  const base = new URL(ctx.baseUrl);
+  const childUrls = [...index.text.matchAll(/<loc>([^<]+)<\/loc>/g)]
+    .map((match) => match[1].trim())
+    .filter((loc) => URL.canParse(loc, base))
+    .map((loc) => new URL(loc, base))
+    .filter((url) => url.host === base.host);
+  const children = await Promise.all(childUrls.map((url) => fetchText(ctx, url.href)));
+  return {
+    ...index,
+    status: children.find((child) => child.status !== 200)?.status ?? index.status,
+    text: children.map((child) => child.text).join('\n'),
+  };
+}
+
 async function fetchText(ctx, pagePath, options = {}) {
   let lastError;
   for (let attempt = 0; attempt < 2; attempt += 1) {
@@ -791,7 +811,7 @@ export async function runAudit(options = {}) {
   const np = (input) => normalizePath(input, ctx);
 
   const robotsResponse = await fetchText(ctx, '/robots.txt');
-  const sitemapResponse = await fetchText(ctx, '/sitemap.xml');
+  const sitemapResponse = await fetchSitemap(ctx);
   const sitemapUrls = [...sitemapResponse.text.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) =>
     match[1].trim(),
   );
