@@ -1,15 +1,11 @@
-export function simulateEd25519Keypair(): { publicKeyHex: string; privateKeyHex: string } {
-  const randomBytes = (len: number) => {
-    let s = '';
-    const hex = '0123456789abcdef';
-    for (let i = 0; i < len; i++) {
-      s += hex[Math.floor(Math.random() * 16)];
-    }
-    return s;
-  };
-
+export async function generateEd25519Keypair(): Promise<{ publicKeyHex: string; privateKeyHex: string }> {
+  const keys = await crypto.subtle.generateKey('Ed25519', true, ['sign', 'verify']);
+  const publicKey = new Uint8Array(await crypto.subtle.exportKey('raw', keys.publicKey));
+  const privateKey = await crypto.subtle.exportKey('jwk', keys.privateKey);
+  const seed = Uint8Array.from(atob(privateKey.d!.replace(/-/g, '+').replace(/_/g, '/') + '='), (char) => char.charCodeAt(0));
+  const hex = (bytes: Uint8Array) => '0x' + Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
   return {
-    publicKeyHex: '0x' + randomBytes(64),
-    privateKeyHex: '0x' + randomBytes(64),
+    publicKeyHex: hex(publicKey),
+    privateKeyHex: hex(seed),
   };
 }

@@ -4,11 +4,10 @@ export interface AesConfig {
 }
 
 export function formatAesKeyHex(bits: number): string {
-  const hexChars = '0123456789abcdef';
-  const len = bits / 4;
-  let out = '';
-  for (let i = 0; i < len; i++) {
-    out += hexChars[Math.floor(Math.random() * 16)];
+  if (bits !== 128 && bits !== 256) {
+    throw new RangeError('AES key size must be 128 or 256 bits');
   }
-  return out;
+  return Array.from(crypto.getRandomValues(new Uint8Array(bits / 8)), (byte) =>
+    byte.toString(16).padStart(2, '0'),
+  ).join('');
 }

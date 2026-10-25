@@ -2,11 +2,12 @@
 import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useEffect } from 'react';
 import { generateDicewarePassphrase } from '@/lib/passphraseWordlistGenerator';
+import { DEFAULT_PASSPHRASE_WORDS, MIN_PASSPHRASE_WORDS, MAX_PASSPHRASE_WORDS } from '@/lib/passwordSecurity';
 import { Copy, Check, RefreshCw } from 'lucide-react';
 
 export default function PassphraseWordlistGeneratorTool() {
   const { t } = useLanguage();
-  const [count, setCount] = useState(4);
+  const [count, setCount] = useState(DEFAULT_PASSPHRASE_WORDS);
   const [sep, setSep] = useState('-');
   const [pass, setPass] = useState('');
   const [copied, setCopied] = useState(false);
@@ -19,7 +20,7 @@ export default function PassphraseWordlistGeneratorTool() {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="text-xs font-semibold text-slate-500">{t("uiText.aee5fbc5") + ' '}{count}</label>
-          <input type="range" min="3" max="8" value={count} onChange={(e) => setCount(parseInt(e.target.value, 10))} className="w-full" />
+          <input type="range" min={MIN_PASSPHRASE_WORDS} max={MAX_PASSPHRASE_WORDS} value={count} onChange={(e) => setCount(parseInt(e.target.value, 10))} className="w-full" />
         </div>
         <div>
           <label className="text-xs font-semibold text-slate-500">{t("tool.slugGenerator.separator")}</label>

@@ -3,7 +3,8 @@
 import { useLanguage } from '@/context/LanguageContext';
 import React, { useState, useMemo } from 'react';
 import { Copy, Check, Lock, ShieldCheck } from 'lucide-react';
-import { generateBcryptMockHash, parseBcryptHash } from '@/lib/bcryptHashCalculator';
+import { generateBcryptHash, parseBcryptHash } from '@/lib/bcryptHashCalculator';
+import { BCRYPT_MAX_BROWSER_COST } from '@/lib/bcrypt';
 
 export default function BcryptHashCalculatorTool() {
   const { t } = useLanguage();
@@ -12,10 +13,22 @@ export default function BcryptHashCalculatorTool() {
   const [hashInput, setHashInput] = useState('');
   const [copied, setCopied] = useState(false);
 
-  const generatedHash = useMemo(() => {
-    if (!password) return '';
-    return generateBcryptMockHash(password, cost);
-  }, [password, cost]);
+  const [generatedHash, setGeneratedHash] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  const generate = async () => {
+    setBusy(true);
+    setGeneratedHash('');
+    setError('');
+    setCopied(false);
+    try {
+      setGeneratedHash(await generateBcryptHash(password, cost));
+    } catch (error) {
+      setError(error instanceof Error ? error.message : t('common.error'));
+    } finally {
+      setBusy(false);
+    }
+  };
 
   const hashInspection = useMemo(() => {
     if (!hashInput.trim()) return null;
@@ -40,7 +53,8 @@ export default function BcryptHashCalculatorTool() {
             <input
               type="text"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              disabled={busy}
+              onChange={(e) => { setPassword(e.target.value); setGeneratedHash(''); setError(''); setCopied(false); }}
               className="input input-bordered input-sm w-full font-mono text-xs"
             />
           </div>
@@ -52,18 +66,21 @@ export default function BcryptHashCalculatorTool() {
             <input
               type="range"
               min="4"
-              max="16"
+              max={BCRYPT_MAX_BROWSER_COST}
               value={cost}
-              onChange={(e) => setCost(parseInt(e.target.value, 10))}
+              disabled={busy}
+              onChange={(e) => { setCost(parseInt(e.target.value, 10)); setGeneratedHash(''); setCopied(false); }}
               className="range range-primary range-sm w-full"
             />
           </div>
         </div>
 
+        <button onClick={generate} disabled={busy || !password} className="btn btn-primary btn-xs disabled:opacity-50">{busy ? t('tool.bcrypt.generating') : t('common.generate')}</button>
+        {error && <p role="alert">{error}</p>}
         <div className="space-y-2">
           <div className="flex justify-between items-center">
             <label className="text-xs font-medium text-muted-foreground">{t("uiText.2a71d561")}</label>
-            <button onClick={handleCopy} className="btn btn-primary btn-xs gap-1">
+            <button onClick={handleCopy} disabled={!generatedHash || busy} className="btn btn-primary btn-xs gap-1">
               {copied ? <Check className="w-3.5 h-3.5 text-success" /> : <Copy className="w-3.5 h-3.5" />}
               {copied ? t("uiText.8dc21305") : t("uiText.78551acc")}
             </button>

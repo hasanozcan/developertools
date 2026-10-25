@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { Copy, Check, Download, RefreshCw, FileCode, ArrowDown } from 'lucide-react';
 import { minifySvg } from '@/lib/svgConverter';
+import SvgPreview from './SvgPreview';
 import { useLanguage } from '@/context/LanguageContext';
 
 const SAMPLE_BLOATED_SVG = `<?xml version="1.0" encoding="UTF-8"?>
@@ -130,8 +131,9 @@ export default function SvgMinifierTool() {
             {t("uiText.e5b7ae30")}</span>
           <div
             className="inline-flex items-center justify-center p-6 rounded-2xl bg-white dark:bg-slate-800 shadow-inner border border-slate-200/60 dark:border-white/10"
-            dangerouslySetInnerHTML={{ __html: minified }}
-          />
+          >
+            <SvgPreview svg={minified} alt={t("uiText.e5b7ae30")} />
+          </div>
         </div>
       )}
     </div>

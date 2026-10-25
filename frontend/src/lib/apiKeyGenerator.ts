@@ -1,3 +1,5 @@
+import { secureRandomInt } from './passwordSecurity';
+
 export interface ApiKeyOptions {
   prefix?: string;
   byteLength?: number;
@@ -6,15 +8,16 @@ export interface ApiKeyOptions {
 
 export function generateApiKey(options: ApiKeyOptions = {}): string {
   const { prefix = 'sk_live_', byteLength = 24, format = 'hex' } = options;
-  const charsHex = '0123456789abcdef';
-  const charsB62 = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-
-  let token = '';
-  const alphabet = format === 'base62' ? charsB62 : charsHex;
-
-  for (let i = 0; i < byteLength * 2; i++) {
-    token += alphabet[Math.floor(Math.random() * alphabet.length)];
+  if (!Number.isSafeInteger(byteLength) || byteLength < 1 || byteLength > 65_536) {
+    throw new RangeError('byteLength must be between 1 and 65536');
   }
-
-  return `${prefix}${token}`;
+  const charsB62 = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  if (format === 'base62') {
+    return prefix + Array.from({ length: byteLength * 2 }, () => charsB62[secureRandomInt(62)]).join('');
+  }
+  const bytes = crypto.getRandomValues(new Uint8Array(byteLength));
+  const token = format === 'base64'
+    ? btoa(String.fromCharCode(...bytes))
+    : Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+  return prefix + token;
 }

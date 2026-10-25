@@ -78,7 +78,7 @@ SOFTWARE.
 
 Project: https://github.com/ajv-validator/ajv-formats
 
-## fast-uri 3.1.3
+## fast-uri 3.1.9
 
 Copyright (c) 2011-2021 Gary Court
 Copyright (c) 2021-present The Fastify team
@@ -110,7 +110,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 Project: https://github.com/fastify/fast-uri
 
-## DOMPurify 3.4.12
+## DOMPurify 3.4.17
 
 Copyright Cure53 and other contributors.
 
@@ -133,3 +133,13 @@ License: https://opensource.org/license/mit
 Project: https://github.com/xyfir/wordlist/tree/main/packages/english-eff
 
 Word-list source: https://www.eff.org/dice
+
+## hash-wasm 4.12.0
+
+Copyright (c) 2020 Dani Biró
+
+Licensed under the MIT License. Used for browser-local Argon2id password hashing.
+
+License: https://github.com/Daninet/hash-wasm/blob/master/LICENSE
+
+Project: https://github.com/Daninet/hash-wasm

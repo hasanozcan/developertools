@@ -3,7 +3,7 @@ import { generateDicewarePassphrase } from './passphraseWordlistGenerator';
 
 describe('passphraseWordlistGenerator', () => {
   it('generates passphrase with custom separator', () => {
-    const p = generateDicewarePassphrase(4, '.');
-    expect(p.split('.')).toHaveLength(4);
+    const p = generateDicewarePassphrase(6, '.');
+    expect(p.split('.')).toHaveLength(6);
   });
 });

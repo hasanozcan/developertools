@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { Copy, Check, Download, Image as ImageIcon, Sliders } from 'lucide-react';
 import { generateSvgPlaceholder } from '@/lib/svgPlaceholder';
+import SvgPreview from './SvgPreview';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function SvgPlaceholderGeneratorTool() {
@@ -45,8 +46,9 @@ export default function SvgPlaceholderGeneratorTool() {
     <div className="space-y-6">
       {/* Live Preview Display */}
       <div className="surface-card rounded-3xl p-8 flex flex-col items-center justify-center min-h-[300px] border border-slate-200/80 dark:border-white/5 bg-slate-50/50 dark:bg-slate-900/50">
-        <div
-          dangerouslySetInnerHTML={{ __html: svg }}
+        <SvgPreview
+          svg={svg}
+          alt={customText || `${width} × ${height}`}
           className="max-w-full max-h-72 rounded-xl overflow-hidden shadow-lg"
         />
       </div>

@@ -4,7 +4,8 @@ import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react';
 import { Download, Image as ImageIcon, Sparkles } from 'lucide-react';
 import CopyButton from '@/components/common/CopyButton';
-import { parseSvgDimensions, calculateExportDimensions, sanitizeSvg } from '@/lib/svgToPng';
+import { parseSvgDimensions, calculateExportDimensions } from '@/lib/svgToPng';
+import SvgPreview from './SvgPreview';
 
 const SAMPLE_SVG = `<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
   <circle cx="100" cy="100" r="80" fill="#6366f1" />
@@ -55,7 +56,7 @@ export default function SvgToPngTool() {
         <div className="space-y-4">
           <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.44bdfc59")}</label>
           <div className="h-64 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-900/60 flex items-center justify-center p-4 overflow-hidden">
-            <div dangerouslySetInnerHTML={{ __html: sanitizeSvg(svgInput) }} />
+            <SvgPreview svg={svgInput} alt={t("uiText.44bdfc59")} />
           </div>
           <button onClick={() => alert('PNG downloaded at ' + exportDims.width + 'x' + exportDims.height + 'px')} className="w-full py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-500 transition inline-flex items-center justify-center gap-2">
             <Download className="w-4 h-4" /> {' ' + t("uiText.e70a9547")}{exportDims.width}x{exportDims.height})

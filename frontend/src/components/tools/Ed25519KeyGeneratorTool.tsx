@@ -1,23 +1,36 @@
 'use client';
 import { useLanguage } from '@/context/LanguageContext';
-import React, { useState } from 'react';
-import { Copy, Check, RefreshCw } from 'lucide-react';
-import { simulateEd25519Keypair } from '@/lib/ed25519KeyGenerator';
+import React, { useState, useEffect, useCallback } from 'react';
+import { RefreshCw } from 'lucide-react';
+import { generateEd25519Keypair } from '@/lib/ed25519KeyGenerator';
 
 export default function Ed25519KeyGeneratorTool() {
   const { t } = useLanguage();
-  const [keys, setKeys] = useState(() => simulateEd25519Keypair());
-  const [copied, setCopied] = useState(false);
-
-  const regenerate = () => setKeys(simulateEd25519Keypair());
+  const [keys, setKeys] = useState({ publicKeyHex: '', privateKeyHex: '' });
+  const [busy, setBusy] = useState(true);
+  const [error, setError] = useState('');
+  const regenerate = useCallback(async () => {
+    setBusy(true);
+    setError('');
+    setKeys({ publicKeyHex: '', privateKeyHex: '' });
+    try {
+      setKeys(await generateEd25519Keypair());
+    } catch {
+      setError('Ed25519 requires a browser with Web Crypto support and a secure connection.');
+    } finally {
+      setBusy(false);
+    }
+  }, []);
+  useEffect(() => { void regenerate(); }, [regenerate]);
 
   return (
     <div className="space-y-6">
       <div className="flex justify-end">
-        <button onClick={regenerate} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium">
+        <button onClick={regenerate} disabled={busy} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium disabled:opacity-50">
           <RefreshCw className="w-4 h-4" />
           {t("uiText.492c86cf")}</button>
       </div>
+      {error && <p role="alert">{error}</p>}
       <div className="space-y-4">
         <div className="p-4 rounded-xl border border-border bg-card space-y-2">
           <div className="text-xs text-muted-foreground font-semibold">{t("uiText.147ee05c")}</div>

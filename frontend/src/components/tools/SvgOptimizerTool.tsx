@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { Copy, Check, Download, Sparkles, Image as ImageIcon } from 'lucide-react';
 import { optimizeSvg, type SvgOptimizeResult } from '@/lib/svgOptimizer';
+import SvgPreview from './SvgPreview';
 import { useLanguage } from '@/context/LanguageContext';
 
 const SAMPLE_SVG = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" data-name="Layer 1">
@@ -138,8 +139,9 @@ export default function SvgOptimizerTool() {
           <div className="flex items-center justify-center p-8 rounded-xl border border-dashed border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-slate-900/50 min-h-[160px]">
             <div
               className="max-w-[200px] max-h-[200px] flex items-center justify-center"
-              dangerouslySetInnerHTML={{ __html: result.optimizedSvg }}
-            />
+            >
+              <SvgPreview svg={result.optimizedSvg} alt={t('tool.svg.preview')} />
+            </div>
           </div>
         </div>
       )}

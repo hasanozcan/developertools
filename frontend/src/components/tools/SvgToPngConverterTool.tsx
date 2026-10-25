@@ -3,6 +3,7 @@
 import React, { useState, useRef } from 'react';
 import { Download, Image as ImageIcon, Upload, RefreshCw } from 'lucide-react';
 import { sanitizeSvg, extractSvgDimensions, type RasterFormat } from '@/lib/svgToRaster';
+import SvgPreview from './SvgPreview';
 import { useLanguage } from '@/context/LanguageContext';
 
 const SAMPLE_SVG = `<svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
@@ -172,8 +173,9 @@ export default function SvgToPngConverterTool() {
 
           <div
             className="flex-1 flex items-center justify-center p-6 rounded-xl border border-dashed border-slate-200 dark:border-white/10 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:16px_16px] overflow-hidden min-h-[220px]"
-            dangerouslySetInnerHTML={{ __html: sanitizeSvg(svgInput) }}
-          />
+          >
+            <SvgPreview svg={svgInput} alt={t('tool.svg.preview')} />
+          </div>
 
           <button
             onClick={handleConvertAndDownload}

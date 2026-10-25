@@ -1,8 +1,5 @@
-const WORDS = ['correct', 'horse', 'battery', 'staple', 'rocket', 'galaxy', 'quantum', 'forest', 'shield', 'ocean', 'tiger', 'ember', 'beacon', 'prism'];
-export function generateDicewarePassphrase(wordCount: number = 4, separator: string = '-'): string {
-  const selected: string[] = [];
-  for (let i = 0; i < wordCount; i++) {
-    selected.push(WORDS[Math.floor(Math.random() * WORDS.length)]);
-  }
-  return selected.join(separator);
+import { DEFAULT_PASSPHRASE_WORDS, generateSecurePassphrase } from './passwordSecurity';
+
+export function generateDicewarePassphrase(wordCount = DEFAULT_PASSPHRASE_WORDS, separator = '-'): string {
+  return generateSecurePassphrase(wordCount, separator);
 }
