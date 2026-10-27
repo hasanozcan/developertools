@@ -179,10 +179,6 @@ export default function Md5HashTool() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const generateHash = useCallback(() => {
-    if (!input) {
-      setHash('');
-      return;
-    }
     const result = md5(input);
     setHash(uppercase ? result.toUpperCase() : result);
   }, [input, uppercase]);
