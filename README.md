@@ -19,7 +19,7 @@
 - 🧭 **48 Curated Collections:** Browse localized workflow clusters for API, JSON, security, frontend, DevOps, databases, AI/LLM, testing, media, networking, and more.
 - 👥 **Role Toolboxes:** Programmatic landing pages for API, frontend, backend, DevOps, security, data, AI, mobile, database, and QA engineers.
 - 🗂️ **Local Workspaces:** Group tools into named browser-local workspaces and export/import them as JSON.
-- 📈 **Ad Placement Telemetry:** Track requested, filled, and unfilled AdSense placements plus workflow-step engagement by page context.
+- 📈 **Ad Placement Telemetry:** Track queued, processed, filled, and unfilled AdSense placements plus workflow-step engagement by page context.
 - 🔎 **SEO Opportunity Analyzer:** Import a Search Console CSV locally to rank queries/pages in positions 4–20 by estimated click upside.
 - 🔥 **Personal Trending Tools:** Rank frequently and recently opened tools using only browser-local tool counters.
 - ⌨️ **CLI:** Run common JSON, Base64, SHA-256, UUID, and timestamp utilities from the terminal.

@@ -75,7 +75,7 @@ describe('detectContentBlocker', () => {
     expect(document.querySelector('.adsbox')).toBeNull();
   });
 
-  it('returns blocked when the AdSense script request explicitly fails and same-origin is reachable', async () => {
+  it('returns unknown when the AdSense script request fails but same-origin is reachable', async () => {
     const fetchImpl = vi.fn<typeof fetch>().mockImplementation(async (input) => {
       const url = String(input);
       if (url.includes('pagead2.googlesyndication.com')) {
@@ -87,7 +87,7 @@ describe('detectContentBlocker', () => {
 
     await expect(
       detectContentBlocker('ca-pub-123', { fetchImpl, runtimeProbeImpl, baitSettleMs: 0 }),
-    ).resolves.toBe('blocked');
+    ).resolves.toBe('unknown');
 
     expect(fetchImpl).toHaveBeenCalledTimes(2);
   });

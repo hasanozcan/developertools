@@ -60,6 +60,7 @@ function AdSenseSlot({
   const pushedRequestRef = useRef(false);
   const requestInFlightRef = useRef(false);
   const requestAttemptsRef = useRef(0);
+  const reportedProcessedRef = useRef(false);
   const reportedAdStatusRef = useRef(false);
   const [hasRequestedAd, setHasRequestedAd] = useState(false);
 
@@ -108,7 +109,7 @@ function AdSenseSlot({
         requestInFlightRef.current = false;
         setHasRequestedAd(true);
         disconnectRequestObservers();
-        trackProductEvent('ad_slot_requested', {
+        trackProductEvent('ad_slot_queued', {
           placement,
           format,
           slot,
@@ -126,7 +127,7 @@ function AdSenseSlot({
         });
       } catch (error) {
         requestInFlightRef.current = false;
-        trackProductEvent('ad_slot_request_failed', {
+        trackProductEvent('ad_slot_queue_failed', {
           placement,
           format,
           slot,
@@ -182,22 +183,26 @@ function AdSenseSlot({
 
   useEffect(() => {
     const slotElement = adRef.current;
-    if (!hasRequestedAd || !slotElement || reportedAdStatusRef.current) return;
+    if (!hasRequestedAd || !slotElement) return;
 
     let adStatusObserver: MutationObserver | undefined;
     const reportAdStatus = () => {
-      if (reportedAdStatusRef.current) return;
+      const processed = slotElement.getAttribute('data-adsbygoogle-status') === 'done';
       const status = slotElement.getAttribute('data-ad-status');
-      if (status !== 'filled' && status !== 'unfilled' && status !== 'unfill-optimized') return;
-      reportedAdStatusRef.current = true;
+      const hasFinalStatus =
+        status === 'filled' || status === 'unfilled' || status === 'unfill-optimized';
+      if (
+        (!processed || reportedProcessedRef.current) &&
+        (!hasFinalStatus || reportedAdStatusRef.current)
+      )
+        return;
       const pathname = window.location.pathname;
       const toolMatch = /^\/(?:[a-z]{2}\/)?tools\/([^/]+)\/([^/]+)/.exec(pathname);
       const collectionMatch = /^\/(?:[a-z]{2}\/)?collections(?:\/([^/]+))?(?:\/|$)/.exec(pathname);
-      trackProductEvent(status === 'filled' ? 'ad_slot_filled' : 'ad_slot_unfilled', {
+      const context = {
         placement,
         format,
         slot,
-        ad_status: status,
         page_type: toolMatch
           ? 'tool'
           : collectionMatch
@@ -208,15 +213,27 @@ function AdSenseSlot({
         category: toolMatch?.[1],
         tool: toolMatch?.[2],
         collection: collectionMatch?.[1],
-      });
-      adStatusObserver?.disconnect();
+      };
+      if (processed && !reportedProcessedRef.current) {
+        reportedProcessedRef.current = true;
+        trackProductEvent('ad_slot_processed', context);
+      }
+      if (hasFinalStatus && !reportedAdStatusRef.current) {
+        reportedAdStatusRef.current = true;
+        trackProductEvent(status === 'filled' ? 'ad_slot_filled' : 'ad_slot_unfilled', {
+          ...context,
+          ad_status: status,
+        });
+      }
+      if (reportedProcessedRef.current && reportedAdStatusRef.current)
+        adStatusObserver?.disconnect();
     };
 
     if (typeof MutationObserver !== 'undefined') {
       adStatusObserver = new MutationObserver(reportAdStatus);
       adStatusObserver.observe(slotElement, {
         attributes: true,
-        attributeFilter: ['data-ad-status'],
+        attributeFilter: ['data-adsbygoogle-status', 'data-ad-status'],
       });
       reportAdStatus();
     }

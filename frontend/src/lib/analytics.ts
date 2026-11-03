@@ -3,8 +3,9 @@ import { track } from '@vercel/analytics';
 export type ProductAnalyticsEvent =
   | 'adsense_script_loaded'
   | 'adsense_script_load_failed'
-  | 'ad_slot_request_failed'
-  | 'ad_slot_requested'
+  | 'ad_slot_queue_failed'
+  | 'ad_slot_queued'
+  | 'ad_slot_processed'
   | 'ad_slot_filled'
   | 'ad_slot_unfilled'
   | 'contact_submitted'

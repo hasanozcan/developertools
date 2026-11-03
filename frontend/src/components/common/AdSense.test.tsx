@@ -200,13 +200,13 @@ describe('AdSense', () => {
     expect(window.adsbygoogle).toHaveLength(2);
   });
 
-  it('records a placement-level ad request without changing the AdSense request', () => {
+  it('records a queued placement without claiming Google processed it', () => {
     render(<AdSense slot="123" placement="tool-sidebar" />);
 
     revealObservedAds();
 
     expect(window.adsbygoogle).toHaveLength(1);
-    expect(trackProductEventMock).toHaveBeenCalledWith('ad_slot_requested', {
+    expect(trackProductEventMock).toHaveBeenCalledWith('ad_slot_queued', {
       placement: 'tool-sidebar',
       format: 'auto',
       slot: '123',
@@ -216,6 +216,45 @@ describe('AdSense', () => {
       tool: 'json-formatter',
       collection: undefined,
     });
+    expect(trackProductEventMock).not.toHaveBeenCalledWith('ad_slot_processed', expect.anything());
+  });
+
+  it('records processing once when Google marks the queued slot done', async () => {
+    const { container } = render(<AdSense slot="123" immediate placement="tool-sidebar" />);
+    const ad = container.querySelector('ins');
+
+    await act(async () => {
+      ad?.setAttribute('data-adsbygoogle-status', 'done');
+      ad?.setAttribute('data-ad-status', 'filled');
+      await Promise.resolve();
+    });
+
+    expect(trackProductEventMock).toHaveBeenCalledWith(
+      'ad_slot_processed',
+      expect.objectContaining({ placement: 'tool-sidebar', slot: '123' }),
+    );
+    expect(
+      trackProductEventMock.mock.calls.filter(([name]) => name === 'ad_slot_processed'),
+    ).toHaveLength(1);
+    expect(trackProductEventMock).toHaveBeenCalledWith(
+      'ad_slot_filled',
+      expect.objectContaining({ placement: 'tool-sidebar', slot: '123' }),
+    );
+  });
+
+  it('records processing when Google marks the slot done during the push', () => {
+    window.adsbygoogle = [];
+    vi.spyOn(window.adsbygoogle, 'push').mockImplementation(() => {
+      document.querySelector('ins.adsbygoogle')?.setAttribute('data-adsbygoogle-status', 'done');
+      return 1;
+    });
+
+    render(<AdSense slot="123" immediate placement="tool-sidebar" />);
+
+    expect(trackProductEventMock).toHaveBeenCalledWith(
+      'ad_slot_processed',
+      expect.objectContaining({ placement: 'tool-sidebar', slot: '123' }),
+    );
   });
 
   it('classifies localized collection index ads as collection traffic', () => {
@@ -224,7 +263,7 @@ describe('AdSense', () => {
 
     revealObservedAds();
 
-    expect(trackProductEventMock).toHaveBeenCalledWith('ad_slot_requested', {
+    expect(trackProductEventMock).toHaveBeenCalledWith('ad_slot_queued', {
       placement: 'collections-index-top',
       format: 'auto',
       slot: '123',
@@ -274,7 +313,7 @@ describe('AdSense', () => {
     expect(push).toHaveBeenCalledTimes(2);
     expect(container.querySelector('ins.adsbygoogle')).not.toBeNull();
     expect(container.firstChild).toHaveAttribute('data-site-support-slot', 'true');
-    expect(trackProductEventMock).toHaveBeenCalledWith('ad_slot_request_failed', {
+    expect(trackProductEventMock).toHaveBeenCalledWith('ad_slot_queue_failed', {
       placement: 'tool-retry',
       format: 'auto',
       slot: '123',
@@ -282,7 +321,7 @@ describe('AdSense', () => {
       error: 'Error',
     });
     expect(trackProductEventMock).toHaveBeenCalledWith(
-      'ad_slot_requested',
+      'ad_slot_queued',
       expect.objectContaining({ placement: 'tool-retry', attempt: 2 }),
     );
     vi.useRealTimers();
@@ -310,7 +349,7 @@ describe('AdSense', () => {
     expect(push).toHaveBeenCalledTimes(3);
     expect(
       trackProductEventMock.mock.calls
-        .filter(([name]) => name === 'ad_slot_request_failed')
+        .filter(([name]) => name === 'ad_slot_queue_failed')
         .map(([, data]) => data.attempt),
     ).toEqual([1, 2, 3]);
     vi.useRealTimers();
@@ -337,7 +376,7 @@ describe('AdSense', () => {
     expect(push).toHaveBeenCalledTimes(3);
     expect(
       trackProductEventMock.mock.calls
-        .filter(([name]) => name === 'ad_slot_request_failed')
+        .filter(([name]) => name === 'ad_slot_queue_failed')
         .map(([, data]) => data.attempt),
     ).toEqual([1, 2, 3]);
     vi.useRealTimers();
