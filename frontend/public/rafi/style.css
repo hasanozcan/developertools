@@ -180,13 +180,24 @@ a:focus-visible {
   outline-offset: 4px;
 }
 .policy {
-  max-width: 850px;
+  max-width: 790px;
   margin: auto;
   padding: 65px 24px;
-  line-height: 1.7;
+  font-size: 17px;
+  line-height: 1.65;
 }
 .policy h1 {
   font-size: clamp(40px, 7vw, 65px);
+  line-height: 1.1;
+}
+.policy h2 {
+  margin-top: 2.2em;
+  font-size: 25px;
+  line-height: 1.25;
+}
+.policy a {
+  color: #793d25;
+  overflow-wrap: anywhere;
 }
 @media (max-width: 650px) {
   .hero {
