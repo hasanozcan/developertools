@@ -87,9 +87,6 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      // Rafı Düzenle sayfaları ozirvexlabs.com'a taşındı (Play'deki gizlilik ve hesap silme adresleri orada).
-      { source: '/rafi', destination: 'https://ozirvexlabs.com/rafi/', permanent: true },
-      { source: '/rafi/:path*', destination: 'https://ozirvexlabs.com/rafi/:path*', permanent: true },
       {
         source: '/:path*',
         has: [{ type: 'host', value: 'www.devstools.app' }],
