@@ -74,10 +74,6 @@ const nextConfig = {
     return {
       beforeFiles: [
         { source: '/sitemap.xml', destination: '/sitemap-index' },
-        ...['config', 'challenge', 'delete-google'].map((endpoint) => ({
-          source: `/rafi/account-api/${endpoint}`,
-          destination: `https://app-compress-auxiliary-microchip-tye97w-cc12f6-148-230-104-100.sslip.io/api/account/${endpoint}`,
-        })),
       ],
     };
   },
@@ -87,17 +83,13 @@ const nextConfig = {
         source: '/:path*',
         headers: securityHeaders,
       },
-      {
-        source: '/rafi/account-delete.html',
-        headers: [
-          { key: 'Content-Security-Policy', value: "default-src 'self'; script-src 'self' https://accounts.google.com/gsi/client; frame-src https://accounts.google.com/gsi/; connect-src 'self' https://accounts.google.com/gsi/; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; base-uri 'none'; object-src 'none'; frame-ancestors 'none'" },
-          { key: 'Referrer-Policy', value: 'no-referrer' },
-        ],
-      },
     ];
   },
   async redirects() {
     return [
+      // Rafı Düzenle sayfaları ozirvexlabs.com'a taşındı (Play'deki gizlilik ve hesap silme adresleri orada).
+      { source: '/rafi', destination: 'https://ozirvexlabs.com/rafi/', permanent: true },
+      { source: '/rafi/:path*', destination: 'https://ozirvexlabs.com/rafi/:path*', permanent: true },
       {
         source: '/:path*',
         has: [{ type: 'host', value: 'www.devstools.app' }],
