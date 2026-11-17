@@ -1137,6 +1137,8 @@ export const enUi: Record<string, string> = {
   'adblock.checking': 'Checking...',
   'adblock.retry': 'Check again',
   'adblock.reload': 'Reload page',
+  'adblock.softNote': 'Ads help keep DevsTools free. Please consider allowing ads for this site.',
+  'adblock.dismiss': 'Dismiss',
   'tool.env.modeLabel': 'Conversion direction',
   'tool.env.inferTypes': 'Infer booleans, numbers, and null',
   'tool.env.swap': 'Use the output as input in the other direction',

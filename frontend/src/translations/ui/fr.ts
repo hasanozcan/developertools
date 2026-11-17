@@ -1031,6 +1031,9 @@ export const frUi: Record<string, string> = {
   'adblock.checking': 'Vérification...',
   'adblock.retry': 'Vérifier à nouveau',
   'adblock.reload': 'Recharger la page',
+  'adblock.softNote':
+    'Les publicités aident à garder DevsTools gratuit. Merci d’envisager d’autoriser les publicités sur ce site.',
+  'adblock.dismiss': 'Fermer',
   'tool.env.modeLabel': 'Sens de conversion',
   'tool.env.inferTypes': 'Inférer les booléens, nombres et null',
   'tool.env.swap': 'Utiliser la sortie comme entrée dans l’autre sens',

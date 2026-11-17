@@ -805,6 +805,8 @@ export const zhUi: Record<string, string> = {
   'adblock.checking': '正在检测...',
   'adblock.retry': '再次检测',
   'adblock.reload': '刷新页面',
+  'adblock.softNote': '广告有助于保持 DevsTools 免费。请考虑将本站加入广告拦截白名单。',
+  'adblock.dismiss': '关闭',
   'tool.env.modeLabel': '转换方向',
   'tool.env.inferTypes': '推断布尔值、数字和 null',
   'tool.env.swap': '将输出作为反向转换的输入',

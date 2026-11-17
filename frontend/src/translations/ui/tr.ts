@@ -1152,6 +1152,9 @@ export const trUi: Record<string, string> = {
   'adblock.checking': 'Kontrol ediliyor...',
   'adblock.retry': 'Tekrar kontrol et',
   'adblock.reload': 'Sayfayı yenile',
+  'adblock.softNote':
+    "Reklamlar DevsTools'un ücretsiz kalmasına yardımcı olur. Lütfen bu site için reklamlara izin vermeyi düşünün.",
+  'adblock.dismiss': 'Kapat',
   'tool.env.modeLabel': 'Dönüştürme yönü',
   'tool.env.inferTypes': 'Boolean, sayı ve null türlerini çıkar',
   'tool.env.swap': 'Çıktıyı ters yönde giriş olarak kullan',

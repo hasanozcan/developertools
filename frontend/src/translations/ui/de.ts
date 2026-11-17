@@ -1103,6 +1103,9 @@ export const deUi: Record<string, string> = {
   'adblock.checking': 'Prüfe...',
   'adblock.retry': 'Erneut prüfen',
   'adblock.reload': 'Seite neu laden',
+  'adblock.softNote':
+    'Werbung hilft, DevsTools kostenlos zu halten. Bitte erwäge, Werbung für diese Seite zu erlauben.',
+  'adblock.dismiss': 'Schließen',
   'tool.env.modeLabel': 'Konvertierungsrichtung',
   'tool.env.inferTypes': 'Boolesche Werte, Zahlen und null ableiten',
   'tool.env.swap': 'Ausgabe als Eingabe in der Gegenrichtung verwenden',

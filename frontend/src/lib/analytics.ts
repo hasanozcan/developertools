@@ -1,6 +1,9 @@
 import { track } from '@vercel/analytics';
 
 export type ProductAnalyticsEvent =
+  | 'adblock_gate_shown'
+  | 'adblock_soft_banner_dismissed'
+  | 'adblock_soft_banner_shown'
   | 'adsense_script_loaded'
   | 'adsense_script_load_failed'
   | 'ad_slot_queue_failed'

@@ -1074,6 +1074,9 @@ export const esUi: Record<string, string> = {
   'adblock.checking': 'Comprobando...',
   'adblock.retry': 'Comprobar de nuevo',
   'adblock.reload': 'Recargar página',
+  'adblock.softNote':
+    'Los anuncios ayudan a mantener DevsTools gratis. Por favor, considera permitir los anuncios en este sitio.',
+  'adblock.dismiss': 'Cerrar',
   'tool.env.modeLabel': 'Dirección de conversión',
   'tool.env.inferTypes': 'Inferir booleanos, números y null',
   'tool.env.swap': 'Usar la salida como entrada en la dirección opuesta',

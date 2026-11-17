@@ -971,6 +971,9 @@ export const ruUi: Record<string, string> = {
   'adblock.checking': 'Проверка...',
   'adblock.retry': 'Проверить снова',
   'adblock.reload': 'Перезагрузить страницу',
+  'adblock.softNote':
+    'Реклама помогает сохранять DevsTools бесплатным. Пожалуйста, разрешите рекламу на этом сайте.',
+  'adblock.dismiss': 'Закрыть',
   'tool.env.modeLabel': 'Направление преобразования',
   'tool.env.inferTypes': 'Определять логические значения, числа и null',
   'tool.env.swap': 'Использовать результат как ввод для обратного преобразования',
