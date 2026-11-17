@@ -1,7 +1,7 @@
 'use client';
 
 import { useLanguage } from '@/context/LanguageContext';
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Play, RotateCcw, Download, Layout, Smartphone, Monitor, Tablet } from 'lucide-react';
 import { buildSandboxDocument, PLAYGROUND_TEMPLATES } from '@/lib/codePlayground';
 
@@ -15,6 +15,7 @@ export default function CodePlaygroundTool() {
   const [viewport, setViewport] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [includeTailwind, setIncludeTailwind] = useState(false);
   const [logs, setLogs] = useState<{ type: string; message: string; id: number }[]>([]);
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
   const handleTemplateChange = (templateId: string) => {
     const template = PLAYGROUND_TEMPLATES.find((t) => t.id === templateId);
@@ -30,10 +31,19 @@ export default function CodePlaygroundTool() {
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
-      if (event.data && event.data.source === 'devstools-sandbox') {
+      if (
+        iframeRef.current?.contentWindow &&
+        event.source === iframeRef.current.contentWindow &&
+        event.data &&
+        typeof event.data === 'object' &&
+        event.data.source === 'devstools-sandbox' &&
+        typeof event.data.message === 'string'
+      ) {
+        const logType =
+          event.data.type === 'error' || event.data.type === 'warn' ? event.data.type : 'log';
         setLogs((prev) => [
           ...prev.slice(-40),
-          { type: event.data.type, message: event.data.message, id: Date.now() + Math.random() },
+          { type: logType, message: event.data.message, id: Date.now() + Math.random() },
         ]);
       }
     };
@@ -177,6 +187,7 @@ export default function CodePlaygroundTool() {
               }`}
             >
               <iframe
+                ref={iframeRef}
                 title={t("uiText.9937cfd0")}
                 srcDoc={sandboxDoc}
                 sandbox="allow-scripts allow-modals"

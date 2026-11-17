@@ -15,6 +15,7 @@ fix is available.
 
 ## Dependency security
 
-The repository runs npm and NuGet advisory checks in CI, verifies npm registry signatures, uses
-locked dependency graphs, and schedules Dependabot and CodeQL scans. Secrets must be supplied with
-environment variables or .NET User Secrets and must never be committed to tracked configuration.
+The repository runs npm and NuGet advisory checks and Trivy container image scans in CI, verifies
+npm registry signatures, uses locked dependency graphs, and schedules Dependabot updates. Secrets
+must be supplied with environment variables or .NET User Secrets and must never be committed to
+tracked configuration.

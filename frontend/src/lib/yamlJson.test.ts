@@ -34,4 +34,17 @@ service:
     expect(() => convertYamlToJson('broken: [')).toThrow();
     expect(() => convertJsonToYaml('{"broken":}')).toThrow();
   });
+
+  it('rejects YAML alias bombs exceeding 100 aliases and oversized input', () => {
+    const aliasRefs = Array.from({ length: 101 }, () => '*base').join(', ');
+    const aliasBomb = `base: &base [1, 2]\nitems: [${aliasRefs}]`;
+    expect(() => convertYamlToJson(aliasBomb)).toThrow();
+
+    const safeAliasRefs = Array.from({ length: 10 }, () => '*base').join(', ');
+    const safeYaml = `base: &base [1]\nitems: [${safeAliasRefs}]`;
+    expect(JSON.parse(convertYamlToJson(safeYaml)).items).toHaveLength(10);
+
+    expect(() => convertYamlToJson('a: 1\n'.repeat(250_000))).toThrow(/1,000,000/);
+    expect(() => convertJsonToYaml('x'.repeat(1_000_001))).toThrow(/1,000,000/);
+  });
 });

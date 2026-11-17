@@ -34,63 +34,66 @@ export default function SystemPromptXmlBuilderTool() {
   return (
     <div className="space-y-6">
       <div className="flex justify-end">
-        <button onClick={handleCopy} className="btn btn-primary btn-sm gap-2">
-          {copied ? <Check className="w-4 h-4 text-success" /> : <Copy className="w-4 h-4" />}
+        <button
+          onClick={handleCopy}
+          className="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-3.5 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700"
+        >
+          {copied ? <Check className="w-4 h-4 text-green-200" /> : <Copy className="w-4 h-4" />}
           {copied ? t("uiText.8dd5a4c2") : t("uiText.367b8cd5")}
         </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="p-4 rounded-xl border border-border bg-card space-y-4">
+        <div className="p-4 rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 space-y-4">
           <div>
-            <label className="text-xs font-semibold text-muted-foreground block mb-1">
+            <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 block mb-1">
               {t("uiText.d1ea5623")}</label>
             <input
               type="text"
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="input input-bordered input-sm w-full font-medium text-xs"
+              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
             />
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-muted-foreground block mb-1">
+            <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 block mb-1">
               {t("uiText.fa20c0f5")}</label>
             <textarea
               value={context}
               onChange={(e) => setContext(e.target.value)}
-              className="textarea textarea-bordered textarea-sm w-full h-20 text-xs"
+              className="w-full h-20 rounded-lg border border-gray-300 bg-white px-3 py-2 text-xs text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
             />
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-muted-foreground block mb-1">
+            <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 block mb-1">
               {t("uiText.a9e152fe")}</label>
             <textarea
               value={instructions}
               onChange={(e) => setInstructions(e.target.value)}
-              className="textarea textarea-bordered textarea-sm w-full h-24 text-xs font-mono"
+              className="w-full h-24 rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-xs text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
             />
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-muted-foreground block mb-1">
+            <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 block mb-1">
               {t("uiText.5aaa05ae")}</label>
             <textarea
               value={rules}
               onChange={(e) => setRules(e.target.value)}
-              className="textarea textarea-bordered textarea-sm w-full h-24 text-xs font-mono"
+              className="w-full h-24 rounded-lg border border-gray-300 bg-white px-3 py-2 font-mono text-xs text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-muted-foreground">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             {t("uiText.3cc0676d")}</label>
           <textarea
             readOnly
             value={promptOutput}
-            className="textarea textarea-bordered w-full h-[520px] font-mono text-xs leading-relaxed bg-muted/40 text-foreground"
+            className="w-full h-[520px] rounded-lg border border-gray-300 bg-gray-50 px-3 py-2.5 font-mono text-xs leading-relaxed text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
           />
         </div>
       </div>

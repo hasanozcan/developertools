@@ -1,8 +1,11 @@
+import { markdownToHtml } from './markdownToHtml';
+
 export function convertMarkdownToSlidesHtml(markdown: string, theme = 'dark'): string {
   const slides = markdown.split(/\n---\n/).map((s) => s.trim()).filter(Boolean);
 
   const slideHtmls = slides.map((s, idx) => {
-    return `  <section class="slide" id="slide-${idx + 1}">\n    ${s.replace(/\n/g, '<br/>')}\n  </section>`;
+    const safeSlideHtml = markdownToHtml(s);
+    return `  <section class="slide" id="slide-${idx + 1}">\n    ${safeSlideHtml}\n  </section>`;
   });
 
   return `<!DOCTYPE html>

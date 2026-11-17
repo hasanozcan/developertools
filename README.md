@@ -81,7 +81,11 @@
 
 ## 🧪 Verification & Testing
 
+Run all frontend npm scripts from the `frontend/` directory:
+
 ```bash
+cd frontend
+
 # Run unit tests and manifest contracts
 npm test
 

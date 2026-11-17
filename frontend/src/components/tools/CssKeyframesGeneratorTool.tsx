@@ -34,7 +34,7 @@ export default function CssKeyframesGeneratorTool() {
           <input type="text" value={duration} onChange={(e) => setDuration(e.target.value)} className="w-full rounded-xl border border-slate-200 bg-white p-2 text-xs font-mono dark:border-white/10 dark:bg-slate-900 dark:text-slate-100" />
           <div className="h-32 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-xl overflow-hidden">
             <style>{result.fullCss}</style>
-            <div className={`w-16 h-16 bg-indigo-600 rounded-2xl ${animName}`} />
+            <div className={`w-16 h-16 bg-indigo-600 rounded-2xl ${result.animationName}`} />
           </div>
         </div>
         <div className="surface-card rounded-2xl p-5 flex flex-col space-y-3">

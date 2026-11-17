@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { flattenObject, jsonToDelimitedText } from './jsonToExcel';
+import { escapeCsvCell, flattenObject, jsonToDelimitedText } from './jsonToExcel';
 
 describe('jsonToExcel', () => {
   it('converts json array of objects into csv/excel table', () => {
@@ -33,5 +33,25 @@ describe('jsonToExcel', () => {
     const csv = jsonToDelimitedText(data);
     expect(csv).toContain('"Line 1\nLine 2"');
     expect(csv).toContain('"He said ""Hello"""');
+  });
+
+  it('neutralizes spreadsheet formula injection while preserving pure negative numbers', () => {
+    expect(escapeCsvCell('=1+1')).toBe("'=1+1");
+    expect(escapeCsvCell('  +cmd|calc')).toBe("'  +cmd|calc");
+    expect(escapeCsvCell('-1+1')).toBe("'-1+1");
+    expect(escapeCsvCell('@SUM(A1:A2)')).toBe("'@SUM(A1:A2)");
+    expect(escapeCsvCell('\t=HYPERLINK("http://evil")')).toBe('"\'\t=HYPERLINK(""http://evil"")"');
+  });
+
+  it('preserves negative numbers and ignores prototype-polluting keys', () => {
+    expect(escapeCsvCell(-42)).toBe('-42');
+    expect(escapeCsvCell('-42.5')).toBe('-42.5');
+    expect(escapeCsvCell('\tfoo')).toBe("'\tfoo");
+    expect(escapeCsvCell('\rfoo')).toBe('"\'\rfoo"');
+
+    const payload = JSON.parse('[{"__proto__":{"polluted":true},"name":"=cmd()","val":-42}]');
+    const csv = jsonToDelimitedText(payload);
+    expect(csv).toBe("name,val\n'=cmd(),-42");
+    expect(({} as Record<string, unknown>).polluted).toBeUndefined();
   });
 });

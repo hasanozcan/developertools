@@ -44,7 +44,9 @@ const HTML_ENTITIES: Record<string, string> = {
 };
 
 // Reverse mapping for decoding
-const ENTITY_TO_CHAR: Record<string, string> = {};
+const ENTITY_TO_CHAR: Record<string, string> = {
+  '&apos;': "'",
+};
 Object.entries(HTML_ENTITIES).forEach(([char, entity]) => {
   ENTITY_TO_CHAR[entity] = char;
 });
@@ -69,28 +71,32 @@ function encodeHtmlEntities(text: string, encodeAll: boolean = false): string {
 }
 
 function decodeHtmlEntities(text: string): string {
-  // Create a temporary element to decode entities
-  if (typeof document !== 'undefined') {
-    const textarea = document.createElement('textarea');
-    textarea.innerHTML = text;
-    return textarea.value;
-  }
-  
-  // Fallback for SSR
-  let result = text;
-  
-  // Decode named entities
-  Object.entries(ENTITY_TO_CHAR).forEach(([entity, char]) => {
-    result = result.replace(new RegExp(entity, 'g'), char);
-  });
-  
-  // Decode numeric entities (decimal)
-  result = result.replace(/&#(\d+);/g, (_, code) => String.fromCharCode(parseInt(code, 10)));
-  
-  // Decode numeric entities (hex)
-  result = result.replace(/&#x([0-9a-fA-F]+);/g, (_, code) => String.fromCharCode(parseInt(code, 16)));
-  
-  return result;
+  return text.replace(
+    /&(?:#(\d+)|#x([0-9a-fA-F]+)|([a-zA-Z][a-zA-Z0-9]+));/g,
+    (fullMatch, decCode: string | undefined, hexCode: string | undefined, named: string | undefined) => {
+      if (decCode !== undefined) {
+        const cp = Number.parseInt(decCode, 10);
+        if (cp > 0 && cp <= 0x10ffff && (cp < 0xd800 || cp > 0xdfff)) {
+          return String.fromCodePoint(cp);
+        }
+        return fullMatch;
+      }
+
+      if (hexCode !== undefined) {
+        const cp = Number.parseInt(hexCode, 16);
+        if (cp > 0 && cp <= 0x10ffff && (cp < 0xd800 || cp > 0xdfff)) {
+          return String.fromCodePoint(cp);
+        }
+        return fullMatch;
+      }
+
+      if (named !== undefined && Object.hasOwn(ENTITY_TO_CHAR, fullMatch)) {
+        return ENTITY_TO_CHAR[fullMatch];
+      }
+
+      return fullMatch;
+    },
+  );
 }
 
 export default function HtmlEntityTool() {

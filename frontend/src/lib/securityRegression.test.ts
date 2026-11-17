@@ -11,6 +11,11 @@ import { generateBcryptHash } from './bcryptHashCalculator';
 import { generateEd25519Keypair } from './ed25519KeyGenerator';
 import { generateDicewarePassphrase } from './passphraseWordlistGenerator';
 import { verifyHmacSignature } from './webhookSignatureVerifier';
+import { generateBip39SeedPhrase } from './bip39SeedPhraseGenerator';
+import { BIP39_WORDLIST } from './bip39Wordlist';
+import { generateNanoId } from './nanoidGenerator';
+import { generateCustomNanoId } from './nanoidCustomAlphabet';
+import { generateUlid, decodeUlidTimestamp } from './ulidGenerator';
 
 beforeAll(() => vi.stubGlobal('crypto', webcrypto));
 afterEach(() => vi.restoreAllMocks());
@@ -71,5 +76,31 @@ describe('security regressions', () => {
     expect((await verifyHmacSignature(payload, secret, signature + '00')).valid).toBe(false);
     expect((await verifyHmacSignature(payload, secret, 'prefix-' + signature)).valid).toBe(false);
     expect((await verifyHmacSignature(payload, secret, '')).computed).toBe(signature);
+  });
+
+  it('generates BIP39, NanoID, custom NanoID, and ULID values without Math.random', () => {
+    vi.spyOn(Math, 'random').mockImplementation(() => {
+      throw new Error('Unsafe randomness');
+    });
+
+    const wordlist = new Set(BIP39_WORDLIST);
+    const phrase12 = generateBip39SeedPhrase(12);
+    expect(phrase12.words).toHaveLength(12);
+    expect(phrase12.words.every((w) => wordlist.has(w))).toBe(true);
+
+    const phrase24 = generateBip39SeedPhrase(24);
+    expect(phrase24.words).toHaveLength(24);
+    expect(phrase24.words.every((w) => wordlist.has(w))).toBe(true);
+
+    const nanoid = generateNanoId();
+    expect(nanoid).toMatch(/^[A-Za-z0-9_-]{21}$/);
+
+    const customNanoId = generateCustomNanoId('abc123', 12);
+    expect(customNanoId).toMatch(/^[abc123]{12}$/);
+
+    const now = 1771500000000;
+    const ulid = generateUlid(now);
+    expect(ulid).toMatch(/^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{26}$/);
+    expect(decodeUlidTimestamp(ulid)?.getTime()).toBe(now);
   });
 });

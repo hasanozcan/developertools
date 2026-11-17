@@ -1,3 +1,5 @@
+import { secureRandomInt } from './passwordSecurity';
+
 export function generateTestCard(brand: 'visa' | 'mastercard' | 'amex' = 'visa'): { number: string; exp: string; cvv: string; brand: string } {
   let prefix = '4532';
   if (brand === 'mastercard') prefix = '5425';
@@ -5,7 +7,7 @@ export function generateTestCard(brand: 'visa' | 'mastercard' | 'amex' = 'visa')
 
   let num = prefix;
   while (num.length < 15) {
-    num += Math.floor(Math.random() * 10);
+    num += secureRandomInt(10);
   }
 
   // Calculate Luhn checksum digit

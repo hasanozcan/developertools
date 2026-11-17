@@ -72,6 +72,7 @@ import {
 // AdSense unit id (distinct from the top banner), like the other optional placements.
 const CATEGORY_INFEED_INTERVAL = 12;
 import { resolveTitle } from '@/lib/toolTitle';
+import { serializeJsonForHtmlScript } from '@/lib/scriptSafeJson';
 
 /** Looks up a UI string for `locale` (English fallback) and fills `{placeholders}`. */
 function translate(
@@ -903,18 +904,18 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageStructuredData) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonForHtmlScript(collectionPageStructuredData) }}
       />
       {faqs.length > 0 && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonForHtmlScript(faqStructuredData) }}
         />
       )}
       {encodingApplicationStructuredData && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(encodingApplicationStructuredData) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonForHtmlScript(encodingApplicationStructuredData) }}
         />
       )}
       <div className="page-shell">

@@ -11,15 +11,20 @@ export function generateUlid(timestampMs: number = Date.now()): string {
     time = (time - mod) / 32;
   }
 
-  // 16 random characters
-  let randStr = '';
+  // 80-bit randomness encoded as 16 Crockford Base32 characters
   const randomBytes = new Uint8Array(10);
   crypto.getRandomValues(randomBytes);
 
+  let randValue = BigInt(0);
+  for (let i = 0; i < 10; i++) {
+    randValue = (randValue << BigInt(8)) | BigInt(randomBytes[i]);
+  }
+
+  let randStr = '';
+  const base32Mask = BigInt(0x1f);
   for (let i = 0; i < 16; i++) {
-    const randByte = randomBytes[i % 10];
-    const randIndex = (randByte + Math.floor(Math.random() * 32)) % 32;
-    randStr += ENCODING[randIndex];
+    randStr = ENCODING[Number(randValue & base32Mask)] + randStr;
+    randValue >>= BigInt(5);
   }
 
   return timeStr + randStr;

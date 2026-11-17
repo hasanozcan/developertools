@@ -87,14 +87,55 @@ export function isTrustedContactRequest(request: Request): boolean {
   }
 }
 
-export function getContactClientKey(request: Request): string {
-  const forwardedFor =
-    request.headers.get('x-vercel-forwarded-for') ||
-    request.headers.get('x-forwarded-for') ||
-    request.headers.get('x-real-ip');
+export interface ContactClientKeyOptions {
+  /**
+   * Only trust `x-forwarded-for` when behind an edge/reverse proxy configured to append
+   * the true connecting IP at the rightmost position (or via `TRUST_PROXY_FORWARDED_FOR=true`).
+   */
+  trustForwardedFor?: boolean;
+}
 
-  const candidate = forwardedFor?.split(',')[0]?.trim();
-  return candidate && isIP(candidate) ? candidate : 'unknown';
+function normalizeIpCandidate(value: string | undefined): string | null {
+  const trimmed = value?.trim();
+  if (!trimmed) return null;
+  return isIP(trimmed) ? trimmed.toLowerCase() : null;
+}
+
+/**
+ * Resolves a rate-limiter client key from trusted proxy headers in strict priority order:
+ * 1. `x-vercel-forwarded-for` (edge-verified on Vercel; leftmost IP)
+ * 2. `x-real-ip` (single connecting IP set by edge/reverse proxy; rejects multi-value lists)
+ * 3. `x-forwarded-for` (ONLY when explicitly trusted via `options.trustForwardedFor` or
+ *    `TRUST_PROXY_FORWARDED_FOR=true`, taking the rightmost proxy-appended IP)
+ */
+export function getContactClientKey(
+  request: Request,
+  options: ContactClientKeyOptions = {},
+): string {
+  const vercelForwardedFor = request.headers.get('x-vercel-forwarded-for');
+  if (vercelForwardedFor !== null) {
+    const first = vercelForwardedFor.split(',')[0];
+    return normalizeIpCandidate(first) ?? 'unknown';
+  }
+
+  const realIp = request.headers.get('x-real-ip');
+  if (realIp !== null) {
+    if (realIp.includes(',')) return 'unknown';
+    return normalizeIpCandidate(realIp) ?? 'unknown';
+  }
+
+  const trustForwardedFor =
+    options.trustForwardedFor ?? process.env.TRUST_PROXY_FORWARDED_FOR === 'true';
+  if (trustForwardedFor) {
+    const forwardedFor = request.headers.get('x-forwarded-for');
+    if (forwardedFor !== null) {
+      const parts = forwardedFor.split(',');
+      const rightmost = parts[parts.length - 1];
+      return normalizeIpCandidate(rightmost) ?? 'unknown';
+    }
+  }
+
+  return 'unknown';
 }
 
 export async function readLimitedJsonBody(request: Request, maxBytes: number): Promise<unknown> {

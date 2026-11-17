@@ -7,6 +7,7 @@ public interface IToolUsageRepository
     Task<ToolUsage> CreateAsync(ToolUsage usage);
     Task<ToolUsage?> GetBySessionAndSlugAsync(string sessionId, string toolSlug);
     Task<ToolUsage> UpdateAsync(ToolUsage usage);
+    Task<bool> TryIncrementSessionUsageAsync(string sessionId, string toolSlug, string? referrer, string? userAgent);
     Task<IEnumerable<ToolUsage>> GetByToolIdAsync(int toolId, DateTime? from = null, DateTime? to = null);
     Task<Dictionary<int, int>> GetUsageCountsByToolAsync(DateTime? from = null, DateTime? to = null);
     Task<IEnumerable<ToolUsageStatsDto>> GetUsageStatsAsync(int days = 30);

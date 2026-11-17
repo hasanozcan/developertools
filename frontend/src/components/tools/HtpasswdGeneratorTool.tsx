@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Copy, Check, Download, ShieldCheck, KeyRound, RefreshCw } from 'lucide-react';
+import { Copy, Check, Download, ShieldCheck, KeyRound } from 'lucide-react';
 import { generateHtpasswdLine, type HtpasswdAlgorithm } from '@/lib/htpasswdGenerator';
 import { useLanguage } from '@/context/LanguageContext';
+import { localizeUiText } from '@/lib/localizedText';
 
 export default function HtpasswdGeneratorTool() {
   const { t } = useLanguage();
@@ -13,22 +14,27 @@ export default function HtpasswdGeneratorTool() {
   const [htpasswdLine, setHtpasswdLine] = useState('');
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const generate = async () => {
-    setLoading(true);
-    try {
-      const entry = await generateHtpasswdLine(username, password, algorithm);
-      setHtpasswdLine(entry.line);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    generate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    let active = true;
+    setLoading(true);
+    setError(null);
+    generateHtpasswdLine(username, password, algorithm)
+      .then((entry) => {
+        if (!active) return;
+        setHtpasswdLine(entry.line);
+        setLoading(false);
+      })
+      .catch((err: unknown) => {
+        if (!active) return;
+        setHtpasswdLine('');
+        setError(err instanceof Error ? err.message : 'Failed to generate .htpasswd entry.');
+        setLoading(false);
+      });
+    return () => {
+      active = false;
+    };
   }, [username, password, algorithm]);
 
   const handleCopy = () => {
@@ -69,7 +75,7 @@ export default function HtpasswdGeneratorTool() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              placeholder={t("uiText.34c83614")}
+              placeholder={t('uiText.34c83614')}
             />
           </div>
 
@@ -82,7 +88,7 @@ export default function HtpasswdGeneratorTool() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              placeholder={t("uiText.364b5f18")}
+              placeholder={t('uiText.364b5f18')}
             />
           </div>
 
@@ -95,20 +101,26 @@ export default function HtpasswdGeneratorTool() {
               onChange={(e) => setAlgorithm(e.target.value as HtpasswdAlgorithm)}
               className="w-full px-3.5 py-2 text-xs rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              <option value="bcrypt">{t("uiText.b4bb9ac3")}</option>
-              <option value="sha1">{t("uiText.5b951ee3")}{'{SHA}'} {' ' + t("uiText.6a9e96e7")}</option>
-              <option value="plaintext">{t("uiText.cdb38f05")}</option>
+              <option value="bcrypt">{t('uiText.b4bb9ac3')}</option>
+              <option value="sha1">{t('uiText.5b951ee3')}{'{SHA}'} {' ' + t('uiText.6a9e96e7')}</option>
+              <option value="plaintext">{t('uiText.cdb38f05')}</option>
             </select>
           </div>
         </div>
       </div>
+
+      {error && (
+        <div className="p-4 rounded-xl border border-red-200 bg-red-50 text-xs text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-300">
+          {localizeUiText(error, t)}
+        </div>
+      )}
 
       {/* Output .htpasswd */}
       <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <KeyRound className="w-4 h-4 text-indigo-500" />
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{t("tool.htpasswd.outputLabel")}</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{t('tool.htpasswd.outputLabel')}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <button
@@ -123,7 +135,7 @@ export default function HtpasswdGeneratorTool() {
               onClick={handleDownload}
               disabled={!htpasswdLine || loading}
               className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition disabled:opacity-50"
-              title={t("uiText.22073f45")}
+              title={t('uiText.22073f45')}
             >
               <Download className="w-3.5 h-3.5" />
             </button>
@@ -132,7 +144,7 @@ export default function HtpasswdGeneratorTool() {
 
         <textarea
           readOnly
-          value={htpasswdLine}
+          value={loading && !htpasswdLine ? '...' : htpasswdLine}
           rows={4}
           className="w-full rounded-xl border border-slate-200 bg-slate-50/80 p-4 font-mono text-xs text-slate-900 shadow-inner focus:outline-none dark:border-white/10 dark:bg-slate-900/80 dark:text-emerald-400 resize-none"
         />

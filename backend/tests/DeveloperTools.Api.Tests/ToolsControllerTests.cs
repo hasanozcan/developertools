@@ -55,21 +55,59 @@ public sealed class ToolsControllerTests
     }
 
     [Theory]
-    [InlineData(0)]
-    [InlineData(101)]
-    public async Task GetFeatured_RejectsOutOfRangeCount(int count)
+    [InlineData(0, 1)]
+    [InlineData(-5, 1)]
+    [InlineData(51, 50)]
+    [InlineData(101, 50)]
+    public async Task GetFeatured_ClampsOutOfRangeCount(int count, int expectedCount)
     {
-        var controller = new ToolsController(new FakeToolRepository());
+        var repository = new FakeToolRepository();
+        var controller = new ToolsController(repository);
 
         var result = await controller.GetFeatured(count);
 
-        Assert.IsType<BadRequestObjectResult>(result.Result);
+        Assert.IsType<OkObjectResult>(result.Result);
+        Assert.Equal(expectedCount, repository.LastFeaturedCount);
+    }
+
+    [Theory]
+    [InlineData(0, 1)]
+    [InlineData(101, 50)]
+    public async Task GetPopular_ClampsOutOfRangeCount(int count, int expectedCount)
+    {
+        var repository = new FakeToolRepository();
+        var controller = new ToolsController(repository);
+
+        var result = await controller.GetPopular(count);
+
+        Assert.IsType<OkObjectResult>(result.Result);
+        Assert.Equal(expectedCount, repository.LastPopularCount);
+    }
+
+    [Theory]
+    [InlineData(0, 1)]
+    [InlineData(101, 50)]
+    public async Task GetRelated_ClampsOutOfRangeCount(int count, int expectedCount)
+    {
+        var repository = new FakeToolRepository
+        {
+            ToolBySlug = new Tool { Id = 7, Name = "JSON Formatter", Slug = "json-formatter" },
+        };
+        var controller = new ToolsController(repository);
+
+        var result = await controller.GetRelated("json-formatter", count);
+
+        Assert.IsType<OkObjectResult>(result.Result);
+        Assert.Equal(expectedCount, repository.LastRelatedCount);
     }
 
     private sealed class FakeToolRepository : IToolRepository
     {
         public Tool? ToolBySlug { get; init; }
         public int GetBySlugCalls { get; private set; }
+        public int LastFeaturedCount { get; private set; }
+        public int LastPopularCount { get; private set; }
+        public int LastRelatedCount { get; private set; }
 
         public Task<IEnumerable<Tool>> GetAllAsync() => Task.FromResult(Enumerable.Empty<Tool>());
         public Task<IEnumerable<Tool>> GetByCategoryAsync(string categorySlug) => Task.FromResult(Enumerable.Empty<Tool>());
@@ -80,9 +118,23 @@ public sealed class ToolsControllerTests
             return Task.FromResult(ToolBySlug);
         }
 
-        public Task<IEnumerable<Tool>> GetFeaturedAsync(int count = 10) => Task.FromResult(Enumerable.Empty<Tool>());
-        public Task<IEnumerable<Tool>> GetPopularAsync(int count = 10) => Task.FromResult(Enumerable.Empty<Tool>());
-        public Task<IEnumerable<Tool>> GetRelatedToolsAsync(int toolId, int count = 5) => Task.FromResult(Enumerable.Empty<Tool>());
+        public Task<IEnumerable<Tool>> GetFeaturedAsync(int count = 10)
+        {
+            LastFeaturedCount = count;
+            return Task.FromResult(Enumerable.Empty<Tool>());
+        }
+
+        public Task<IEnumerable<Tool>> GetPopularAsync(int count = 10)
+        {
+            LastPopularCount = count;
+            return Task.FromResult(Enumerable.Empty<Tool>());
+        }
+
+        public Task<IEnumerable<Tool>> GetRelatedToolsAsync(int toolId, int count = 5)
+        {
+            LastRelatedCount = count;
+            return Task.FromResult(Enumerable.Empty<Tool>());
+        }
         public Task<Tool> CreateAsync(Tool tool) => Task.FromResult(tool);
         public Task UpdateAsync(Tool tool) => Task.CompletedTask;
         public Task IncrementUsageCountAsync(int toolId) => Task.CompletedTask;

@@ -11,6 +11,7 @@ import ServiceWorkerRegister from '@/components/common/ServiceWorkerRegister';
 import AdSenseScripts from '@/components/common/AdSenseScripts';
 import { normalizeAdSenseClientId } from '@/lib/adsense';
 import { getHreflangAlternates, getOpenGraphAlternateLocales } from '@/lib/i18nRouting';
+import { serializeJsonForHtmlScript } from '@/lib/scriptSafeJson';
 import { toolCatalog } from '@/lib/api';
 import type { Language } from '@/translations';
 import type { ComponentType } from 'react';
@@ -166,7 +167,7 @@ export function RootDocument({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
+            __html: serializeJsonForHtmlScript({
               '@context': 'https://schema.org',
               '@type': 'WebSite',
               '@id': `${siteUrl}/#website`,
@@ -186,7 +187,7 @@ export function RootDocument({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
+            __html: serializeJsonForHtmlScript({
               '@context': 'https://schema.org',
               '@type': 'Organization',
               '@id': `${siteUrl}/#organization`,

@@ -68,7 +68,7 @@ function renderTools(tools) {
     const link = document.createElement('a');
     link.href = `${BASE_URL}/tools/${encodeURIComponent(tool.categorySlug)}/${encodeURIComponent(tool.slug)}`;
     link.target = '_blank';
-    link.rel = 'noopener';
+    link.rel = 'noopener noreferrer';
     link.className = 'tool-item';
     const info = document.createElement('div');
     info.className = 'tool-info';
@@ -99,10 +99,10 @@ function filterTools() {
   if (query) {
     filtered = filtered.filter(
       (t) =>
-        t.name.toLowerCase().includes(query) ||
-        t.slug.toLowerCase().includes(query) ||
-        t.shortDescription.toLowerCase().includes(query) ||
-        t.categorySlug.toLowerCase().includes(query),
+        (t.name || '').toLowerCase().includes(query) ||
+        (t.slug || '').toLowerCase().includes(query) ||
+        (t.shortDescription || '').toLowerCase().includes(query) ||
+        (t.categorySlug || '').toLowerCase().includes(query),
     );
   }
 
@@ -312,11 +312,21 @@ fileInput.addEventListener('change', () => {
   }
 });
 
+const MAX_HASH_FILE_BYTES = 50 * 1024 * 1024; // 50 MB
+
 async function processFile(file) {
   dropzoneLabel.textContent = `${file.name} (${formatBytes(file.size)})`;
   fileProgress.style.display = 'block';
-  fileProgress.textContent = 'Computing 100% offline SHA-256...';
   fileResults.style.display = 'none';
+
+  if (file.size > MAX_HASH_FILE_BYTES) {
+    fileSha256.value = '';
+    verifyBadge.style.display = 'none';
+    fileProgress.textContent = `Error: File exceeds the 50 MB limit (${formatBytes(file.size)}).`;
+    return;
+  }
+
+  fileProgress.textContent = 'Computing 100% offline SHA-256...';
 
   try {
     const arrayBuffer = await file.arrayBuffer();
@@ -493,19 +503,21 @@ function simpleMd5(s) {
   function ii(a, b, c, d, x, s, t) { return cmn(c ^ (b | ~d), a, b, x, s, t); }
   function add32(a, b) { return (a + b) & 0xffffffff; }
 
-  var n = s.length, state = [1732584193, -271733879, -1732584194, 271733878], i;
-  for (i = 64; i <= s.length; i += 64) {
-    md5cycle(state, md5blk(s.substring(i - 64, i)));
+  var bytes = new TextEncoder().encode(s);
+  var n = bytes.length, state = [1732584193, -271733879, -1732584194, 271733878], i;
+  for (i = 64; i <= bytes.length; i += 64) {
+    md5cycle(state, md5blk(bytes.subarray(i - 64, i)));
   }
-  s = s.substring(i - 64);
+  bytes = bytes.subarray(i - 64);
   var tail = [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0];
-  for (i = 0; i < s.length; i++) tail[i >> 2] |= s.charCodeAt(i) << ((i % 4) << 3);
+  for (i = 0; i < bytes.length; i++) tail[i >> 2] |= bytes[i] << ((i % 4) << 3);
   tail[i >> 2] |= 0x80 << ((i % 4) << 3);
   if (i > 55) {
     md5cycle(state, tail);
     for (i = 0; i < 16; i++) tail[i] = 0;
   }
-  tail[14] = n * 8;
+  tail[14] = (n * 8) | 0;
+  tail[15] = Math.floor(n / 0x20000000);
   md5cycle(state, tail);
   var hex = '0123456789abcdef', res = '';
   for (i = 0; i < 4; i++) {
@@ -516,10 +528,10 @@ function simpleMd5(s) {
   }
   return res;
 }
-function md5blk(s) {
+function md5blk(bytes) {
   var md5blks = [], i;
   for (i = 0; i < 64; i += 4) {
-    md5blks[i >> 2] = s.charCodeAt(i) + (s.charCodeAt(i + 1) << 8) + (s.charCodeAt(i + 2) << 16) + (s.charCodeAt(i + 3) << 24);
+    md5blks[i >> 2] = bytes[i] + (bytes[i + 1] << 8) + (bytes[i + 2] << 16) + (bytes[i + 3] << 24);
   }
   return md5blks;
 }

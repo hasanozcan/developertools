@@ -1,3 +1,5 @@
+import { sanitizeSvg as sanitizeSvgMarkup } from './svgToPng';
+
 export type RasterFormat = 'image/png' | 'image/jpeg' | 'image/webp';
 
 export interface RasterOptions {
@@ -12,7 +14,7 @@ export function sanitizeSvg(svgCode: string): string {
   if (!cleaned.startsWith('<svg') && cleaned.includes('<svg')) {
     cleaned = cleaned.slice(cleaned.indexOf('<svg'));
   }
-  return cleaned;
+  return sanitizeSvgMarkup(cleaned);
 }
 
 export function svgToDataUri(svgCode: string): string {

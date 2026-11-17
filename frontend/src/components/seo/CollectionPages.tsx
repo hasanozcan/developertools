@@ -10,6 +10,7 @@ import {
 } from '@/lib/adsenseSlots';
 import { groupCollectionSlugs } from '@/lib/collectionGroups';
 import { getLocalizedToolMeta, isToolLocaleIndexable, type Language } from '@/lib/i18nRouting';
+import { serializeJsonForHtmlScript } from '@/lib/scriptSafeJson';
 import {
   getCollectionTools,
   getLocalizedCollection,
@@ -163,7 +164,7 @@ export function CollectionDetailContent({ locale, collection }: { locale: Langua
 
   return (
     <main className="page-shell py-10 sm:py-14">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonForHtmlScript(structuredData) }} />
       <nav className="mb-5 text-sm text-slate-500 dark:text-slate-400">
         <Link href={`${prefix}/collections`} className="hover:text-indigo-600 dark:hover:text-indigo-400">{ui.back}</Link>
         <span className="px-2">/</span>

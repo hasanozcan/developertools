@@ -4,6 +4,7 @@ import Link from '@/components/common/LocalizedLink';
 import { ChevronRight } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { getLocalizedPath } from '@/lib/localeRouting';
+import { serializeJsonForHtmlScript } from '@/lib/scriptSafeJson';
 
 interface BreadcrumbItem {
   name: string;
@@ -38,7 +39,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: serializeJsonForHtmlScript(jsonLd) }}
       />
       <nav className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-6">
         {localizedItems.map((item, index) => (

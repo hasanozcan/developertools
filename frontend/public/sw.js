@@ -42,8 +42,9 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Skip non-GET requests and external analytics/ads scripts
+  // Skip non-GET requests, cross-origin requests, and external analytics/ads scripts
   if (request.method !== 'GET') return;
+  if (url.origin !== self.location.origin) return;
   if (
     url.hostname.includes('google') ||
     url.hostname.includes('doubleclick') ||

@@ -13,17 +13,24 @@ export function xmlToJson(xmlString: string): Record<string, unknown> {
   return domNodeToObject(xmlDoc.documentElement);
 }
 
+function setOwnProperty(obj: Record<string, unknown>, key: string, value: unknown): void {
+  Object.defineProperty(obj, key, {
+    value,
+    enumerable: true,
+    writable: true,
+    configurable: true,
+  });
+}
+
 function domNodeToObject(node: Element): Record<string, unknown> {
   const obj: Record<string, unknown> = {};
 
   // Parse element attributes
   if (node.attributes.length > 0) {
-    const attrs: Record<string, string> = {};
     for (let i = 0; i < node.attributes.length; i++) {
       const attr = node.attributes[i];
-      attrs[`@${attr.name}`] = attr.value;
+      setOwnProperty(obj, `@${attr.name}`, attr.value);
     }
-    Object.assign(obj, attrs);
   }
 
   // Parse child nodes
@@ -40,20 +47,22 @@ function domNodeToObject(node: Element): Record<string, unknown> {
       const nodeName = childElement.nodeName;
       const childData = domNodeToObject(childElement);
 
-      if (obj[nodeName] !== undefined) {
-        if (!Array.isArray(obj[nodeName])) {
-          obj[nodeName] = [obj[nodeName]];
+      if (Object.hasOwn(obj, nodeName)) {
+        const existing = Object.getOwnPropertyDescriptor(obj, nodeName)?.value;
+        if (Array.isArray(existing)) {
+          existing.push(childData);
+        } else {
+          setOwnProperty(obj, nodeName, [existing, childData]);
         }
-        (obj[nodeName] as unknown[]).push(childData);
       } else {
-        obj[nodeName] = childData;
+        setOwnProperty(obj, nodeName, childData);
       }
     } else if (child.nodeType === 3) {
       // Text Node
       const text = child.nodeValue?.trim();
       if (text) {
         if (hasElementChildren || Object.keys(obj).length > 0) {
-          obj['#text'] = parseValue(text);
+          setOwnProperty(obj, '#text', parseValue(text));
         } else {
           return parseValue(text) as unknown as Record<string, unknown>;
         }
@@ -97,7 +106,9 @@ export function jsonToXml(jsonObj: unknown, rootName: string = 'root', indent: n
       .map(([k, v]) => toXml(v, k, level + 1))
       .join('\n');
 
-    const textContent = (data as Record<string, unknown>)['#text'];
+    const textContent = Object.hasOwn(data as object, '#text')
+      ? (data as Record<string, unknown>)['#text']
+      : undefined;
 
     if (!children && textContent !== undefined) {
       return `${sp}<${name}${attrs}>${escapeXml(String(textContent))}</${name}>`;

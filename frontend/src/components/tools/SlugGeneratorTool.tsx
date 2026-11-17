@@ -12,6 +12,10 @@ interface SlugOptions {
   transliterate: boolean;
 }
 
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 export default function SlugGeneratorTool() {
   const { t } = useLanguage();
   const [input, setInput] = useState('');
@@ -139,12 +143,14 @@ export default function SlugGeneratorTool() {
       result = words.filter(word => !stopWords.includes(word.toLowerCase())).join(' ');
     }
 
+    const escapedSeparator = escapeRegExp(options.separator);
+
     // Replace spaces and special characters with separator
     result = result
       .replace(/[^\w\s-]/g, '') // Remove special characters except hyphens
       .replace(/\s+/g, options.separator) // Replace spaces with separator
-      .replace(new RegExp(`${options.separator}+`, 'g'), options.separator) // Remove duplicate separators
-      .replace(new RegExp(`^${options.separator}|${options.separator}$`, 'g'), ''); // Trim separators
+      .replace(new RegExp(`${escapedSeparator}+`, 'g'), options.separator) // Remove duplicate separators
+      .replace(new RegExp(`^${escapedSeparator}|${escapedSeparator}$`, 'g'), ''); // Trim separators
 
     // Apply max length
     if (options.maxLength > 0 && result.length > options.maxLength) {

@@ -36,19 +36,35 @@ function extractQuery(input: string): string {
   return query;
 }
 
+const DANGEROUS_QUERY_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+
 function parseQueryString(input: string): string {
   const query = extractQuery(input);
   const params = new URLSearchParams(query);
-  const result: Record<string, string | string[]> = {};
+  const result = Object.create(null) as Record<string, string | string[]>;
 
   params.forEach((value, key) => {
-    if (!(key in result)) {
-      result[key] = value;
+    if (DANGEROUS_QUERY_KEYS.has(key)) {
+      return;
+    }
+
+    if (!Object.hasOwn(result, key)) {
+      Object.defineProperty(result, key, {
+        value,
+        enumerable: true,
+        writable: true,
+        configurable: true,
+      });
       return;
     }
 
     const current = result[key];
-    result[key] = Array.isArray(current) ? [...current, value] : [current, value];
+    Object.defineProperty(result, key, {
+      value: Array.isArray(current) ? [...current, value] : [current, value],
+      enumerable: true,
+      writable: true,
+      configurable: true,
+    });
   });
 
   return JSON.stringify(result, null, 2);

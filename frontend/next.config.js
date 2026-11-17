@@ -3,10 +3,25 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  "object-src 'none'",
+  "script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com https://www.googletagmanager.com https://va.vercel-scripts.com https://ep2.adtrafficquality.google https://cdn.tailwindcss.com",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https:",
+  "font-src 'self' data:",
+  "connect-src 'self' data: blob: https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://vitals.vercel-insights.com https://va.vercel-scripts.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://googleads.g.doubleclick.net",
+  "frame-src 'self' blob: https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com https://www.google.com https://ep2.adtrafficquality.google",
+  "worker-src 'self' blob:",
+].join('; ');
+
 const securityHeaders = [
   {
     key: 'Content-Security-Policy',
-    value: "base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'",
+    value: contentSecurityPolicy,
   },
   {
     key: 'Permissions-Policy',
@@ -147,12 +162,6 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
   },
 };
 

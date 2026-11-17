@@ -1,3 +1,5 @@
+import { secureRandomInt } from './passwordSecurity';
+
 export interface BlobOptions {
   points: number; // 4 to 8
   growth: number; // 1 to 9
@@ -13,7 +15,7 @@ export interface BlobResult {
 
 export function generateRandomBlobRadius(): string {
   // Generate 8 percentage values for border-radius: a% b% c% d% / e% f% g% h%
-  const r = () => Math.floor(Math.random() * 40) + 30; // 30% to 70%
+  const r = () => secureRandomInt(40) + 30; // 30% to 69%
   const r1 = r(), r2 = 100 - r1;
   const r3 = r(), r4 = 100 - r3;
   const r5 = r(), r6 = 100 - r5;

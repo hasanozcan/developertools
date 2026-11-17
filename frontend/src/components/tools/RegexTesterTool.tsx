@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { useLanguage } from '@/context/LanguageContext';
 import { localizeUiText } from '@/lib/localizedText';
@@ -9,6 +9,114 @@ interface RegexMatch {
   match: string;
   index: number;
   groups: string[];
+}
+
+const MAX_REGEX_PATTERN_LENGTH = 1000;
+const MAX_REGEX_TEST_STRING_LENGTH = 100_000;
+const MAX_REGEX_MATCHES = 1000;
+const REGEX_WORKER_TIMEOUT_MS = 1000;
+const SYNC_TIME_BUDGET_MS = 500;
+
+const REGEX_WORKER_SOURCE = `
+self.onmessage = function(event) {
+  var data = event.data;
+  try {
+    var regex = new RegExp(data.pattern, data.flags);
+    var results = [];
+    if (data.flags.indexOf('g') !== -1) {
+      var match;
+      while ((match = regex.exec(data.testString)) !== null) {
+        results.push({
+          match: match[0],
+          index: match.index,
+          groups: match.slice(1)
+        });
+        if (results.length >= data.maxMatches) {
+          break;
+        }
+        if (match.index === regex.lastIndex) {
+          regex.lastIndex++;
+        }
+      }
+    } else {
+      var single = regex.exec(data.testString);
+      if (single) {
+        results.push({
+          match: single[0],
+          index: single.index,
+          groups: single.slice(1)
+        });
+      }
+    }
+    self.postMessage({ matches: results, error: null });
+  } catch (err) {
+    self.postMessage({ matches: [], error: err && err.message ? err.message : 'Invalid regular expression' });
+  }
+};
+`;
+
+function validateAndCompileRegex(pattern: string, flags: string, testString: string): RegExp {
+  if (pattern.length > MAX_REGEX_PATTERN_LENGTH) {
+    throw new Error(`Pattern is limited to ${MAX_REGEX_PATTERN_LENGTH} characters.`);
+  }
+  if (testString.length > MAX_REGEX_TEST_STRING_LENGTH) {
+    throw new Error(`Test string is limited to ${MAX_REGEX_TEST_STRING_LENGTH.toLocaleString()} characters.`);
+  }
+  return new RegExp(pattern, flags);
+}
+
+function executeRegexMatchesSync(
+  pattern: string,
+  flags: string,
+  testString: string,
+): { matches: RegexMatch[]; error: string | null } {
+  if (!pattern || !testString) {
+    return { matches: [], error: null };
+  }
+
+  try {
+    const regex = validateAndCompileRegex(pattern, flags, testString);
+    const results: RegexMatch[] = [];
+    const startedAt = typeof performance !== 'undefined' ? performance.now() : Date.now();
+
+    if (flags.includes('g')) {
+      let match: RegExpExecArray | null;
+      while ((match = regex.exec(testString)) !== null) {
+        results.push({
+          match: match[0],
+          index: match.index,
+          groups: match.slice(1),
+        });
+        if (results.length >= MAX_REGEX_MATCHES) {
+          break;
+        }
+        const elapsed = (typeof performance !== 'undefined' ? performance.now() : Date.now()) - startedAt;
+        if (elapsed > SYNC_TIME_BUDGET_MS) {
+          return {
+            matches: results,
+            error: 'Regex execution timed out (possible catastrophic backtracking).',
+          };
+        }
+        // Prevent infinite loops with zero-width matches
+        if (match.index === regex.lastIndex) {
+          regex.lastIndex++;
+        }
+      }
+    } else {
+      const match = regex.exec(testString);
+      if (match) {
+        results.push({
+          match: match[0],
+          index: match.index,
+          groups: match.slice(1),
+        });
+      }
+    }
+
+    return { matches: results, error: null };
+  } catch (e) {
+    return { matches: [], error: (e as Error).message };
+  }
 }
 
 interface CommonPattern {
@@ -98,81 +206,112 @@ export default function RegexTesterTool() {
   const [pattern, setPattern] = useState('');
   const [flags, setFlags] = useState('g');
   const [testString, setTestString] = useState('');
+  const [matches, setMatches] = useState<RegexMatch[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [selectedPattern, setSelectedPattern] = useState<CommonPattern | null>(null);
   const [showPatterns, setShowPatterns] = useState(false);
 
-  const matches = useMemo((): RegexMatch[] => {
+  useEffect(() => {
     if (!pattern || !testString) {
+      setMatches([]);
       setError(null);
-      return [];
+      return;
     }
 
     try {
-      const regex = new RegExp(pattern, flags);
-      const results: RegexMatch[] = [];
-      
-      if (flags.includes('g')) {
-        let match;
-        while ((match = regex.exec(testString)) !== null) {
-          results.push({
-            match: match[0],
-            index: match.index,
-            groups: match.slice(1),
-          });
-          // Prevent infinite loops with zero-width matches
-          if (match.index === regex.lastIndex) {
-            regex.lastIndex++;
-          }
-        }
-      } else {
-        const match = regex.exec(testString);
-        if (match) {
-          results.push({
-            match: match[0],
-            index: match.index,
-            groups: match.slice(1),
-          });
-        }
-      }
-      
-      setError(null);
-      return results;
+      validateAndCompileRegex(pattern, flags, testString);
     } catch (e) {
+      setMatches([]);
       setError((e as Error).message);
-      return [];
+      return;
     }
+
+    if (
+      typeof Worker !== 'undefined' &&
+      typeof Blob !== 'undefined' &&
+      typeof URL !== 'undefined' &&
+      typeof URL.createObjectURL === 'function'
+    ) {
+      let cancelled = false;
+      let workerUrl = '';
+      let worker: Worker | null = null;
+      let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
+      try {
+        const blob = new Blob([REGEX_WORKER_SOURCE], { type: 'application/javascript' });
+        workerUrl = URL.createObjectURL(blob);
+        worker = new Worker(workerUrl);
+
+        timeoutId = setTimeout(() => {
+          if (cancelled) return;
+          worker?.terminate();
+          setMatches([]);
+          setError('Regex execution timed out (possible catastrophic backtracking).');
+        }, REGEX_WORKER_TIMEOUT_MS);
+
+        worker.onmessage = (event: MessageEvent<{ matches: RegexMatch[]; error: string | null }>) => {
+          if (cancelled) return;
+          if (timeoutId !== undefined) clearTimeout(timeoutId);
+          setMatches(event.data.matches);
+          setError(event.data.error);
+          worker?.terminate();
+        };
+
+        worker.onerror = () => {
+          if (cancelled) return;
+          if (timeoutId !== undefined) clearTimeout(timeoutId);
+          worker?.terminate();
+          const fallback = executeRegexMatchesSync(pattern, flags, testString);
+          setMatches(fallback.matches);
+          setError(fallback.error);
+        };
+
+        worker.postMessage({
+          pattern,
+          flags,
+          testString,
+          maxMatches: MAX_REGEX_MATCHES,
+        });
+
+        return () => {
+          cancelled = true;
+          if (timeoutId !== undefined) clearTimeout(timeoutId);
+          worker?.terminate();
+          if (workerUrl) URL.revokeObjectURL(workerUrl);
+        };
+      } catch {
+        if (timeoutId !== undefined) clearTimeout(timeoutId);
+        worker?.terminate();
+        if (workerUrl) URL.revokeObjectURL(workerUrl);
+      }
+    }
+
+    const syncResult = executeRegexMatchesSync(pattern, flags, testString);
+    setMatches(syncResult.matches);
+    setError(syncResult.error);
   }, [pattern, testString, flags]);
 
   const highlightedText = useMemo(() => {
-    if (!pattern || !testString || error) return testString;
+    if (!pattern || !testString || error || matches.length === 0) return testString;
 
-    try {
-      const regex = new RegExp(pattern, flags.includes('g') ? flags : flags + 'g');
-      const parts: { text: string; isMatch: boolean }[] = [];
-      let lastIndex = 0;
+    const parts: { text: string; isMatch: boolean }[] = [];
+    let lastIndex = 0;
 
-      testString.replace(regex, (match, ...args) => {
-        const index = args[args.length - 2] as number;
-        
-        if (index > lastIndex) {
-          parts.push({ text: testString.slice(lastIndex, index), isMatch: false });
-        }
-        parts.push({ text: match, isMatch: true });
-        lastIndex = index + match.length;
-        
-        return match;
-      });
-
-      if (lastIndex < testString.length) {
-        parts.push({ text: testString.slice(lastIndex), isMatch: false });
+    for (const match of matches) {
+      if (match.index < lastIndex) continue;
+      if (match.index > lastIndex) {
+        parts.push({ text: testString.slice(lastIndex, match.index), isMatch: false });
       }
-
-      return parts;
-    } catch {
-      return testString;
+      parts.push({ text: match.match, isMatch: true });
+      lastIndex = match.index + match.match.length;
     }
-  }, [pattern, testString, flags, error]);
+
+    if (lastIndex < testString.length) {
+      parts.push({ text: testString.slice(lastIndex), isMatch: false });
+    }
+
+    return parts;
+  }, [pattern, testString, error, matches]);
 
   const toggleFlag = useCallback((flag: string) => {
     setFlags((prev) => 

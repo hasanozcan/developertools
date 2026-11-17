@@ -12,11 +12,16 @@ public class AnalyticsController : ControllerBase
 {
     private readonly IToolUsageRepository _usageRepository;
     private readonly IToolRepository _toolRepository;
+    private readonly bool _trustProxyCountryHeaders;
 
-    public AnalyticsController(IToolUsageRepository usageRepository, IToolRepository toolRepository)
+    public AnalyticsController(
+        IToolUsageRepository usageRepository,
+        IToolRepository toolRepository,
+        IConfiguration? configuration = null)
     {
         _usageRepository = usageRepository;
         _toolRepository = toolRepository;
+        _trustProxyCountryHeaders = configuration?.GetValue<bool>("Analytics:TrustProxyCountryHeaders") ?? false;
     }
 
     /// <summary>
@@ -29,28 +34,24 @@ public class AnalyticsController : ControllerBase
     {
         var toolSlug = request.ToolSlug.Trim();
         var sessionId = request.SessionId?.Trim();
-        var referrer = request.Referrer?.Trim();
+        var referrer = string.IsNullOrWhiteSpace(request.Referrer) ? null : request.Referrer.Trim();
+
+        if (referrer is not null &&
+            (!Uri.TryCreate(referrer, UriKind.Absolute, out var referrerUri) ||
+             (referrerUri.Scheme != Uri.UriSchemeHttp && referrerUri.Scheme != Uri.UriSchemeHttps)))
+        {
+            return BadRequest(new { message = "Referrer must be a valid http or https URL" });
+        }
 
         var tool = await _toolRepository.GetBySlugAsync(toolSlug);
         if (tool == null)
             return BadRequest(new { message = "Unknown tool slug" });
 
-        // Check if there's an existing record for this session and tool
-        ToolUsage? existingUsage = null;
-        if (!string.IsNullOrEmpty(sessionId))
-        {
-            existingUsage = await _usageRepository.GetBySessionAndSlugAsync(sessionId, toolSlug);
-        }
+        var userAgent = GetBoundedUserAgent();
+        var incremented = !string.IsNullOrEmpty(sessionId) &&
+            await _usageRepository.TryIncrementSessionUsageAsync(sessionId, toolSlug, referrer, userAgent);
 
-        if (existingUsage != null)
-        {
-            // Update existing record - increment click count
-            existingUsage.ClickCount++;
-            existingUsage.Referrer = referrer ?? existingUsage.Referrer;
-            existingUsage.UserAgent = GetBoundedUserAgent();
-            await _usageRepository.UpdateAsync(existingUsage);
-        }
-        else
+        if (!incremented)
         {
             // Create new record
             var usage = new ToolUsage
@@ -59,7 +60,7 @@ public class AnalyticsController : ControllerBase
                 ToolSlug = toolSlug,
                 SessionId = sessionId,
                 Referrer = referrer,
-                UserAgent = GetBoundedUserAgent(),
+                UserAgent = userAgent,
                 CountryCode = GetCountryFromHeaders(),
                 ClickCount = 1
             };
@@ -75,11 +76,11 @@ public class AnalyticsController : ControllerBase
     /// Get tool usage statistics
     /// </summary>
     [HttpGet("stats")]
-    [ResponseCache(Duration = 60)]
+    [EnableRateLimiting("api-read")]
+    [ResponseCache(Duration = 60, VaryByQueryKeys = new[] { "days" })]
     public async Task<ActionResult<IEnumerable<ToolUsageStatsDto>>> GetUsageStats([FromQuery] int days = 30)
     {
-        if (days is < 1 or > 365)
-            return BadRequest(new { message = "days must be between 1 and 365" });
+        days = Math.Clamp(days, 1, 90);
 
         var stats = await _usageRepository.GetUsageStatsAsync(days);
         return Ok(stats);
@@ -89,13 +90,12 @@ public class AnalyticsController : ControllerBase
     /// Get top used tools
     /// </summary>
     [HttpGet("top-tools")]
-    [ResponseCache(Duration = 300)]
+    [EnableRateLimiting("api-read")]
+    [ResponseCache(Duration = 300, VaryByQueryKeys = new[] { "count", "days" })]
     public async Task<ActionResult<IEnumerable<object>>> GetTopTools([FromQuery] int count = 10, [FromQuery] int days = 30)
     {
-        if (count is < 1 or > 100)
-            return BadRequest(new { message = "count must be between 1 and 100" });
-        if (days is < 1 or > 365)
-            return BadRequest(new { message = "days must be between 1 and 365" });
+        count = Math.Clamp(count, 1, 50);
+        days = Math.Clamp(days, 1, 90);
 
         var topTools = await _usageRepository.GetTopToolsAsync(count, days);
         return Ok(topTools);
@@ -105,6 +105,7 @@ public class AnalyticsController : ControllerBase
     /// Get sitemap data for SEO
     /// </summary>
     [HttpGet("sitemap")]
+    [EnableRateLimiting("api-read")]
     [ResponseCache(Duration = 3600)] // 1 hour cache
     public async Task<ActionResult<IEnumerable<object>>> GetSitemapData()
     {
@@ -123,6 +124,9 @@ public class AnalyticsController : ControllerBase
 
     private string? GetCountryFromHeaders()
     {
+        if (!_trustProxyCountryHeaders)
+            return null;
+
         // Cloudflare header
         if (Request.Headers.TryGetValue("CF-IPCountry", out var cfCountry))
             return NormalizeCountryCode(cfCountry.ToString());

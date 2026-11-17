@@ -130,6 +130,9 @@ export function buildSandboxDocument(
 </script>`
     : '';
 
+  const safeCss = css.replace(/<\/style/gi, '<\\/style');
+  const safeJs = js.replace(/<\/script/gi, '<\\/script');
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -138,7 +141,7 @@ export function buildSandboxDocument(
   <title>Sandbox Preview</title>
   ${tailwindScript}
   <style>
-    ${css}
+    ${safeCss}
   </style>
   ${consoleInterceptor}
 </head>
@@ -146,7 +149,7 @@ export function buildSandboxDocument(
   ${html}
   <script>
     try {
-      ${js}
+      ${safeJs}
     } catch (err) {
       console.error(err.message || String(err));
     }

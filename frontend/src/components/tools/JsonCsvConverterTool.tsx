@@ -14,19 +14,41 @@ interface JsonToCsvOptions {
   nestedHandling: 'flatten' | 'expand' | 'jsonString';
 }
 
+const DANGEROUS_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+const FORMULA_INJECTION_PATTERN = /^[ \t\r\n]*[=+\-@\t\r]/;
+const PURE_NEGATIVE_NUMBER_PATTERN = /^\s*-\d+(?:\.\d+)?\s*$/;
+
+function setSafeProperty(target: Record<string, unknown>, key: string, value: unknown): void {
+  Object.defineProperty(target, key, {
+    value,
+    enumerable: true,
+    writable: true,
+    configurable: true,
+  });
+}
+
 function flattenObject(obj: Record<string, unknown>, prefix = ''): Record<string, unknown> {
   const result: Record<string, unknown> = {};
 
-  for (const key in obj) {
+  for (const key of Object.keys(obj)) {
+    if (!Object.hasOwn(obj, key) || DANGEROUS_KEYS.has(key)) {
+      continue;
+    }
+
     const newKey = prefix ? `${prefix}.${key}` : key;
     const value = obj[key];
 
     if (value && typeof value === 'object' && !Array.isArray(value)) {
-      Object.assign(result, flattenObject(value as Record<string, unknown>, newKey));
+      const nested = flattenObject(value as Record<string, unknown>, newKey);
+      for (const nestedKey of Object.keys(nested)) {
+        if (Object.hasOwn(nested, nestedKey)) {
+          setSafeProperty(result, nestedKey, nested[nestedKey]);
+        }
+      }
     } else if (Array.isArray(value)) {
-      result[newKey] = JSON.stringify(value);
+      setSafeProperty(result, newKey, JSON.stringify(value));
     } else {
-      result[newKey] = value;
+      setSafeProperty(result, newKey, value);
     }
   }
 
@@ -38,7 +60,15 @@ function escapeCSVField(field: unknown, delimiter: string): string {
     return '';
   }
 
-  const str = String(field);
+  let str = String(field);
+
+  if (
+    typeof field !== 'number' &&
+    FORMULA_INJECTION_PATTERN.test(str) &&
+    !PURE_NEGATIVE_NUMBER_PATTERN.test(str)
+  ) {
+    str = `'${str}`;
+  }
 
   // If field contains delimiter, quotes, or newlines, wrap in quotes
   if (str.includes(delimiter) || str.includes('"') || str.includes('\n') || str.includes('\r')) {
@@ -62,14 +92,17 @@ function jsonToCsv(json: unknown[], options: JsonToCsvOptions): string {
     } else if (options.nestedHandling === 'jsonString') {
       // Convert nested objects to JSON strings
       const result: Record<string, unknown> = {};
-      for (const key in obj) {
+      for (const key of Object.keys(obj)) {
+        if (!Object.hasOwn(obj, key) || DANGEROUS_KEYS.has(key)) {
+          continue;
+        }
         const value = obj[key];
         if (value && typeof value === 'object' && !Array.isArray(value)) {
-          result[key] = JSON.stringify(value);
+          setSafeProperty(result, key, JSON.stringify(value));
         } else if (Array.isArray(value)) {
-          result[key] = JSON.stringify(value);
+          setSafeProperty(result, key, JSON.stringify(value));
         } else {
-          result[key] = value;
+          setSafeProperty(result, key, value);
         }
       }
       return result;
@@ -83,7 +116,11 @@ function jsonToCsv(json: unknown[], options: JsonToCsvOptions): string {
   const headers = new Set<string>();
   processedData.forEach((item) => {
     if (item && typeof item === 'object') {
-      Object.keys(item as object).forEach((key) => headers.add(key));
+      Object.keys(item as object).forEach((key) => {
+        if (!DANGEROUS_KEYS.has(key)) {
+          headers.add(key);
+        }
+      });
     }
   });
 
@@ -99,8 +136,9 @@ function jsonToCsv(json: unknown[], options: JsonToCsvOptions): string {
 
   // Add data rows
   processedData.forEach((item) => {
+    const record = item as Record<string, unknown>;
     const row = headerArray.map((header) => {
-      const value = (item as Record<string, unknown>)[header];
+      const value = Object.hasOwn(record, header) ? record[header] : undefined;
       return escapeCSVField(value, options.delimiter);
     });
     lines.push(row.join(options.delimiter));

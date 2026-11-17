@@ -2,7 +2,14 @@
 
 import React, { useState } from 'react';
 import { ShieldCheck, CheckCircle2, XCircle, RefreshCw } from 'lucide-react';
-import { parseBcryptHash, verifyBcryptHash } from '@/lib/bcryptVerifier';
+import {
+  BCRYPT_MAX_BROWSER_COST,
+  BCRYPT_MAX_PASSWORD_BYTES,
+  BCRYPT_MIN_COST,
+  getBcryptPasswordByteLength,
+  parseBcryptHash,
+  verifyBcryptHash,
+} from '@/lib/bcryptVerifier';
 import { useLanguage } from '@/context/LanguageContext';
 import { localizeUiText, interpolateText } from '@/lib/localizedText';
 
@@ -18,6 +25,7 @@ export default function BcryptVerifierTool() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const parsedInfo = parseBcryptHash(hashInput);
+  const passwordBytes = getBcryptPasswordByteLength(plainPassword);
 
   const handleVerify = async () => {
     setErrorMessage(null);
@@ -28,8 +36,22 @@ export default function BcryptVerifierTool() {
       return;
     }
 
+    if (passwordBytes > BCRYPT_MAX_PASSWORD_BYTES) {
+      setErrorMessage(
+        `Password is ${passwordBytes} UTF-8 bytes. Bcrypt only processes the first ${BCRYPT_MAX_PASSWORD_BYTES} bytes, so shorten it before hashing.`,
+      );
+      return;
+    }
+
     if (!parsedInfo.isValidStructure) {
       setErrorMessage('Invalid Bcrypt hash format (expected standard $2a$, $2b$, or $2y$ prefix).');
+      return;
+    }
+
+    if (!parsedInfo.isSupportedCost) {
+      setErrorMessage(
+        `This browser tool accepts bcrypt costs from ${BCRYPT_MIN_COST} to ${BCRYPT_MAX_BROWSER_COST} to avoid excessively long operations.`,
+      );
       return;
     }
 
@@ -57,7 +79,16 @@ export default function BcryptVerifierTool() {
 
         <div className="space-y-4">
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.c791f777")}</label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="text-xs font-bold text-slate-500 block">{t('uiText.c791f777')}</label>
+              <span
+                className={`text-[11px] font-mono ${
+                  passwordBytes > BCRYPT_MAX_PASSWORD_BYTES ? 'text-red-500 font-semibold' : 'text-slate-400'
+                }`}
+              >
+                {passwordBytes}/{BCRYPT_MAX_PASSWORD_BYTES} bytes
+              </span>
+            </div>
             <input
               type="text"
               value={plainPassword}
@@ -66,12 +97,12 @@ export default function BcryptVerifierTool() {
                 setVerificationResult(null);
               }}
               className="w-full px-3.5 py-2 text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
-              placeholder={t("uiText.457892f8")}
+              placeholder={t('uiText.457892f8')}
             />
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.0e7ad831")}</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">{t('uiText.0e7ad831')}</label>
             <input
               type="text"
               value={hashInput}
@@ -93,10 +124,10 @@ export default function BcryptVerifierTool() {
           {isVerifying ? (
             <>
               <RefreshCw className="w-4 h-4 animate-spin" />
-              <span>{t("uiText.6f8cfb72")}</span>
+              <span>{t('uiText.6f8cfb72')}</span>
             </>
           ) : (
-            <span>{t("uiText.a71ebe9a")}</span>
+            <span>{t('uiText.a71ebe9a')}</span>
           )}
         </button>
       </div>
@@ -117,12 +148,10 @@ export default function BcryptVerifierTool() {
           )}
           <div>
             <h4 className="font-bold text-sm">
-              {verificationResult ? t("uiText.0b51609b") : t("uiText.b3219090")}
+              {verificationResult ? t('uiText.0b51609b') : t('uiText.b3219090')}
             </h4>
             <p className="text-xs opacity-90 mt-0.5">
-              {verificationResult
-                ? t("uiText.3a6435eb")
-                : t("uiText.b2ba266f")}
+              {verificationResult ? t('uiText.3a6435eb') : t('uiText.b2ba266f')}
             </p>
           </div>
         </div>
@@ -137,31 +166,38 @@ export default function BcryptVerifierTool() {
       {/* Parsed Bcrypt Anatomy */}
       <div className="surface-card rounded-2xl p-6 space-y-4">
         <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-          {t("uiText.c658af05")}</span>
+          {t('uiText.c658af05')}
+        </span>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <div className="p-3.5 rounded-xl border border-slate-200/80 dark:border-white/5 bg-slate-50 dark:bg-slate-900/60">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">{t("tool.uuidGenerator.version")}</span>
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">
+              {t('tool.uuidGenerator.version')}
+            </span>
             <span className="font-mono text-sm font-black text-indigo-600 dark:text-indigo-400">
               {parsedInfo.version}
             </span>
           </div>
 
           <div className="p-3.5 rounded-xl border border-slate-200/80 dark:border-white/5 bg-slate-50 dark:bg-slate-900/60">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">{t("uiText.c8453cc8")}</span>
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">
+              {t('uiText.c8453cc8')}
+            </span>
             <span className="font-mono text-sm font-black text-indigo-600 dark:text-indigo-400">
               {parsedInfo.cost > 0 ? interpolateText(t('tool.bcrypt.costIterations'), { cost: parsedInfo.cost }) : '-'}
             </span>
           </div>
 
           <div className="p-3.5 rounded-xl border border-slate-200/80 dark:border-white/5 bg-slate-50 dark:bg-slate-900/60 sm:col-span-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">{t("uiText.6c93bcec")}</span>
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-0.5">
+              {t('uiText.6c93bcec')}
+            </span>
             <span
               className={`font-mono text-sm font-black ${
                 parsedInfo.isValidStructure ? 'text-emerald-500' : 'text-slate-400'
               }`}
             >
-              {parsedInfo.isValidStructure ? t("uiText.f8a133bf") : t("uiText.36e92d2e")}
+              {parsedInfo.isValidStructure ? t('uiText.f8a133bf') : t('uiText.36e92d2e')}
             </span>
           </div>
         </div>

@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { Copy, Check, Download, RefreshCw, FileCode, ArrowDown } from 'lucide-react';
 import { minifySvg } from '@/lib/svgConverter';
+import { sanitizeSvg } from '@/lib/svgToPng';
 import SvgPreview from './SvgPreview';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -47,7 +48,8 @@ export default function SvgMinifierTool() {
 
   const handleDownload = () => {
     if (!minified) return;
-    const blob = new Blob([minified], { type: 'image/svg+xml' });
+    const safeSvg = sanitizeSvg(minified);
+    const blob = new Blob([safeSvg], { type: 'image/svg+xml' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;

@@ -3,11 +3,13 @@ using DeveloperTools.Core.Interfaces;
 using DeveloperTools.Application.DTOs;
 using DeveloperTools.Application.Mappings;
 using DeveloperTools.Api.Validation;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace DeveloperTools.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[EnableRateLimiting("api-read")]
 public class CategoriesController : ControllerBase
 {
     private readonly ICategoryRepository _categoryRepository;

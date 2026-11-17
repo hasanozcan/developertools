@@ -22,4 +22,17 @@ describe('codePlayground', () => {
     expect(PLAYGROUND_TEMPLATES[0].css).toBeTruthy();
     expect(PLAYGROUND_TEMPLATES[0].js).toBeTruthy();
   });
+
+  it('escapes closing style and script sequences inside injected CSS and JS', () => {
+    const doc = buildSandboxDocument(
+      '<p>Hello</p>',
+      'body { color: red; } </style><script>alert(1)</script>',
+      'const s = "</script><img src=x onerror=alert(2)>";',
+    );
+
+    expect(doc).toContain('<\\/style>');
+    expect(doc).toContain('<\\/script>');
+    expect(doc).not.toContain('body { color: red; } </style>');
+    expect(doc).not.toContain('const s = "</script>');
+  });
 });

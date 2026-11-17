@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using DeveloperTools.Core.Interfaces;
 using DeveloperTools.Application.DTOs;
 using DeveloperTools.Application.Mappings;
@@ -8,6 +9,7 @@ namespace DeveloperTools.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[EnableRateLimiting("api-read")]
 public class ToolsController : ControllerBase
 {
     private readonly IToolRepository _toolRepository;
@@ -64,11 +66,10 @@ public class ToolsController : ControllerBase
     /// Get featured tools
     /// </summary>
     [HttpGet("featured")]
-    [ResponseCache(Duration = 600)]
+    [ResponseCache(Duration = 600, VaryByQueryKeys = new[] { "count" })]
     public async Task<ActionResult<IEnumerable<ToolSummaryDto>>> GetFeatured([FromQuery] int count = 10)
     {
-        if (count is < 1 or > 100)
-            return BadRequest(new { message = "count must be between 1 and 100" });
+        count = Math.Clamp(count, 1, 50);
 
         var tools = await _toolRepository.GetFeaturedAsync(count);
         return Ok(tools.Select(t => t.ToSummaryDto()));
@@ -78,11 +79,10 @@ public class ToolsController : ControllerBase
     /// Get popular tools
     /// </summary>
     [HttpGet("popular")]
-    [ResponseCache(Duration = 300)]
+    [ResponseCache(Duration = 300, VaryByQueryKeys = new[] { "count" })]
     public async Task<ActionResult<IEnumerable<ToolSummaryDto>>> GetPopular([FromQuery] int count = 10)
     {
-        if (count is < 1 or > 100)
-            return BadRequest(new { message = "count must be between 1 and 100" });
+        count = Math.Clamp(count, 1, 50);
 
         var tools = await _toolRepository.GetPopularAsync(count);
         return Ok(tools.Select(t => t.ToSummaryDto()));
@@ -92,13 +92,12 @@ public class ToolsController : ControllerBase
     /// Get related tools
     /// </summary>
     [HttpGet("{slug}/related")]
-    [ResponseCache(Duration = 600)]
+    [ResponseCache(Duration = 600, VaryByQueryKeys = new[] { "count" })]
     public async Task<ActionResult<IEnumerable<ToolSummaryDto>>> GetRelated(string slug, [FromQuery] int count = 5)
     {
         if (!SlugValidator.IsValid(slug, 150))
             return BadRequest(new { message = "Invalid tool slug" });
-        if (count is < 1 or > 20)
-            return BadRequest(new { message = "count must be between 1 and 20" });
+        count = Math.Clamp(count, 1, 50);
 
         var tool = await _toolRepository.GetBySlugAsync(slug);
         

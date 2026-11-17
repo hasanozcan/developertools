@@ -6,6 +6,7 @@ import { QrCode, Download, Copy, Check, RefreshCw, Palette } from 'lucide-react'
 import { useLanguage } from '@/context/LanguageContext';
 import QRCode from 'qrcode';
 import { localizeUiText } from '@/lib/localizedText';
+import SvgPreview from './SvgPreview';
 
 interface QrOptions {
   size: number;
@@ -87,10 +88,9 @@ export default function QrCodeGeneratorTool() {
 
     try {
       let data: string;
-      let mimeType: string;
-      
+
       if (format === 'svg') {
-        data = await QRCode.toString(text, {
+        const svgString = await QRCode.toString(text, {
           type: 'svg',
           errorCorrectionLevel: options.errorCorrection,
           width: options.size,
@@ -100,7 +100,7 @@ export default function QrCodeGeneratorTool() {
             light: options.background,
           },
         });
-        mimeType = 'image/svg+xml';
+        data = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgString)}`;
       } else {
         data = await QRCode.toDataURL(text, {
           errorCorrectionLevel: options.errorCorrection,
@@ -111,7 +111,6 @@ export default function QrCodeGeneratorTool() {
             light: options.background,
           },
         });
-        mimeType = 'image/png';
       }
 
       const link = document.createElement('a');
@@ -319,10 +318,12 @@ export default function QrCodeGeneratorTool() {
               </div>
             </div>
           ) : (options.format === 'svg' && qrSvg) ? (
-            <div 
-              dangerouslySetInnerHTML={{ __html: qrSvg }}
+            <div
+              className="flex items-center justify-center"
               style={{ width: Math.min(options.size, 400), height: Math.min(options.size, 400) }}
-            />
+            >
+              <SvgPreview svg={qrSvg} alt="QR Code Preview" className="max-h-full max-w-full" />
+            </div>
           ) : qrDataUrl ? (
             <Image
               src={qrDataUrl} 

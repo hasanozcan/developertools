@@ -24,15 +24,15 @@ chrome.omnibox.onInputChanged.addListener(async (text, suggest) => {
   const matched = catalog
     .filter(
       (tool) =>
-        tool.name.toLowerCase().includes(query) ||
-        tool.slug.toLowerCase().includes(query) ||
-        tool.categorySlug.toLowerCase().includes(query) ||
-        tool.shortDescription.toLowerCase().includes(query),
+        (tool.name || '').toLowerCase().includes(query) ||
+        (tool.slug || '').toLowerCase().includes(query) ||
+        (tool.categorySlug || '').toLowerCase().includes(query) ||
+        (tool.shortDescription || '').toLowerCase().includes(query),
     )
     .slice(0, 6);
 
   const suggestions = matched.map((tool) => ({
-    content: `${BASE_URL}/tools/${tool.categorySlug}/${tool.slug}`,
+    content: `${BASE_URL}/tools/${encodeURIComponent(tool.categorySlug)}/${encodeURIComponent(tool.slug)}`,
     description: `<match>${escapeXml(tool.name)}</match> <dim>(${escapeXml(tool.categoryName)}) - ${escapeXml(tool.shortDescription || '')}</dim>`,
   }));
 
@@ -40,9 +40,17 @@ chrome.omnibox.onInputChanged.addListener(async (text, suggest) => {
 });
 
 chrome.omnibox.onInputEntered.addListener((text, disposition) => {
-  let targetUrl = text.trim();
-  if (!targetUrl.startsWith('http')) {
-    targetUrl = `${BASE_URL}/#search=${encodeURIComponent(targetUrl)}`;
+  const trimmed = text.trim();
+  let targetUrl = `${BASE_URL}/?search=${encodeURIComponent(trimmed)}`;
+  if (trimmed === BASE_URL || trimmed.startsWith(`${BASE_URL}/`)) {
+    try {
+      const parsed = new URL(trimmed);
+      if (parsed.origin === BASE_URL) {
+        targetUrl = parsed.href;
+      }
+    } catch {
+      // Fall back to search URL on malformed input
+    }
   }
 
   if (disposition === 'currentTab') {

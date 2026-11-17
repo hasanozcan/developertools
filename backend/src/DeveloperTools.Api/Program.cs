@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
 using DeveloperTools.Core.Interfaces;
@@ -39,15 +40,23 @@ builder.Services.AddScoped<IToolUsageRepository, ToolUsageRepository>();
 // CORS
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy =>
+    options.AddPolicy("AllowFrontend", policy =>
     {
         policy.WithOrigins(
                 builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() 
                 ?? new[] { "http://localhost:3000" })
             .AllowAnyMethod()
-            .AllowAnyHeader()
-            .AllowCredentials();
+            .AllowAnyHeader();
+
     });
+});
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.ForwardLimit = 1;
+    options.KnownIPNetworks.Clear();
+    options.KnownProxies.Clear();
 });
 
 builder.Services.AddRateLimiter(options =>
@@ -76,6 +85,16 @@ builder.Services.AddRateLimiter(options =>
                 QueueLimit = 0,
                 AutoReplenishment = true
             }));
+    options.AddPolicy("api-read", context =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 120,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 0,
+                AutoReplenishment = true
+            }));
 });
 
 // Response Caching
@@ -97,8 +116,8 @@ else
     app.UseHsts();
 }
 
-app.MapGet("/", () => Results.Ok(new { service = "Developer Tools API", status = "ok" }));
-
+app.UseForwardedHeaders();
+app.UseCors("AllowFrontend");
 app.UseHttpsRedirection();
 app.Use(async (context, next) =>
 {
@@ -109,10 +128,10 @@ app.Use(async (context, next) =>
     await next();
 });
 
-app.UseCors();
 app.UseRateLimiter();
 app.UseResponseCaching();
 app.UseAuthorization();
+app.MapGet("/", () => Results.Ok(new { service = "Developer Tools API", status = "ok" }));
 app.MapControllers();
 app.MapHealthChecks("/health");
 

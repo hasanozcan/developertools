@@ -13,6 +13,7 @@ import {
   type DeveloperAudience,
 } from '@/lib/developerAudiences';
 import { getLocalizedToolMeta, isToolLocaleIndexable, type Language } from '@/lib/i18nRouting';
+import { serializeJsonForHtmlScript } from '@/lib/scriptSafeJson';
 import { getLocalizedCollection } from '@/lib/toolCollections';
 
 const pageCopy: Record<Language, { eyebrow: string; title: string; description: string; explore: string; featured: string; collections: string }> = {
@@ -89,7 +90,7 @@ export function AudienceDetailContent({ locale, audience }: { locale: Language; 
 
   return (
     <main className="page-shell py-10 sm:py-14">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonForHtmlScript(structuredData) }} />
       <nav className="mb-5 text-sm text-slate-500 dark:text-slate-400">
         <Link href={`${prefix}/for`} className="hover:text-indigo-600 dark:hover:text-indigo-400">{ui.title}</Link>
         <span className="px-2">/</span>

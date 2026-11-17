@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { Copy, Check, Download, Sparkles, Image as ImageIcon } from 'lucide-react';
 import { optimizeSvg, type SvgOptimizeResult } from '@/lib/svgOptimizer';
+import { sanitizeSvg } from '@/lib/svgToPng';
 import SvgPreview from './SvgPreview';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -41,7 +42,8 @@ export default function SvgOptimizerTool() {
 
   const handleDownload = () => {
     if (!result.optimizedSvg) return;
-    const blob = new Blob([result.optimizedSvg], { type: 'image/svg+xml' });
+    const safeSvg = sanitizeSvg(result.optimizedSvg);
+    const blob = new Blob([safeSvg], { type: 'image/svg+xml' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;

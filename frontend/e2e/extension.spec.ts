@@ -33,6 +33,15 @@ test('Chromium loads the extension and its offline tools work', async () => {
       'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad',
     );
     await expect(page.locator('#hash-md5')).toHaveValue('900150983cd24fb0d6963f7d28e17f72');
+    await page.locator('#hash-input').fill('çğıöşü');
+    await expect(page.locator('#hash-md5')).toHaveValue('9ae3363a33bf7686e944c9008852119a');
+    const blankTargetRels = await page
+      .locator('a[target="_blank"]')
+      .evaluateAll((links) => links.map((link) => link.getAttribute('rel')));
+    expect(blankTargetRels.length).toBeGreaterThan(0);
+    for (const rel of blankTargetRels) {
+      expect(rel?.split(/\s+/)).toEqual(expect.arrayContaining(['noopener', 'noreferrer']));
+    }
     expect(errors).toEqual([]);
   } finally {
     await context.close();

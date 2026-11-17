@@ -1,8 +1,16 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import { generateUlid, generateUuidV7, decodeUlidTimestamp } from './ulidGenerator';
 
 describe('ulidGenerator', () => {
-  it('should generate 26-character valid ULID', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('should generate 26-character valid ULID without Math.random', () => {
+    vi.spyOn(Math, 'random').mockImplementation(() => {
+      throw new Error('Unsafe randomness');
+    });
+
     const ulid = generateUlid();
     expect(ulid.length).toBe(26);
     expect(/^[0123456789ABCDEFGHJKMNPQRSTVWXYZ]{26}$/.test(ulid)).toBe(true);

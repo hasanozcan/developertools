@@ -29,4 +29,17 @@ describe('xmlToJson', () => {
   it('should throw error for empty or invalid XML', () => {
     expect(() => xmlToJson('')).toThrow();
   });
+
+  it('safely handles prototype-colliding tag names without prototype pollution', () => {
+    const xml = `<root><constructor>ctor</constructor><toString>str</toString><__proto__><polluted>yes</polluted></__proto__></root>`;
+    const json = xmlToJson(xml);
+
+    expect(Object.hasOwn(json, 'constructor')).toBe(true);
+    expect(json.constructor).toBe('ctor');
+    expect(Object.hasOwn(json, 'toString')).toBe(true);
+    expect(json.toString).toBe('str');
+    expect(Object.getPrototypeOf(json)).toBe(Object.prototype);
+    expect(Object.getOwnPropertyDescriptor(json, '__proto__')?.value).toEqual({ polluted: 'yes' });
+    expect(({} as Record<string, unknown>).polluted).toBeUndefined();
+  });
 });

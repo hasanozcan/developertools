@@ -43,6 +43,34 @@ describe('contact request security', () => {
     expect(getContactClientKey(invalid)).toBe('unknown');
   });
 
+  it('ignores untrusted X-Forwarded-For by default and prefers X-Real-IP / rightmost trusted hop', () => {
+    const spoofedXff = new Request('https://devstools.app/api/contact', {
+      headers: { 'X-Forwarded-For': '198.51.100.77' },
+    });
+    expect(getContactClientKey(spoofedXff)).toBe('unknown');
+
+    const withRealIp = new Request('https://devstools.app/api/contact', {
+      headers: {
+        'X-Forwarded-For': '1.2.3.4',
+        'X-Real-IP': '198.51.100.42',
+      },
+    });
+    expect(getContactClientKey(withRealIp)).toBe('198.51.100.42');
+
+    const trustedRightmost = new Request('https://devstools.app/api/contact', {
+      headers: { 'X-Forwarded-For': '1.2.3.4, 203.0.113.50' },
+    });
+    expect(getContactClientKey(trustedRightmost, { trustForwardedFor: true })).toBe('203.0.113.50');
+
+    const invalidVercelHeader = new Request('https://devstools.app/api/contact', {
+      headers: {
+        'X-Vercel-Forwarded-For': 'not-an-ip',
+        'X-Real-IP': '198.51.100.42',
+      },
+    });
+    expect(getContactClientKey(invalidVercelHeader)).toBe('unknown');
+  });
+
   it('requires JSON content', async () => {
     const request = new Request('https://devstools.app/api/contact', {
       method: 'POST',

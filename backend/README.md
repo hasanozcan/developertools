@@ -1,10 +1,10 @@
 # Developer Tools - Backend
 
-.NET Core 9 Web API ile oluşturulmuş RESTful API.
+.NET 10 Web API ile oluşturulmuş RESTful API.
 
 ## Gereksinimler
 
-- .NET 9 SDK
+- .NET 10 SDK
 - PostgreSQL 15+
 
 ## Kurulum
@@ -70,6 +70,8 @@ backend/
 
 ### Analytics
 - `POST /api/analytics/track` - Araç kullanımı takibi
+- `GET /api/analytics/stats` - Araç kullanım istatistikleri
+- `GET /api/analytics/top-tools` - En çok kullanılan araçlar
 - `GET /api/analytics/sitemap` - Sitemap verileri
 
 ## Veritabanı Şeması

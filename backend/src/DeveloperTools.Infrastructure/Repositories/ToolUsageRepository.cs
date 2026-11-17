@@ -35,6 +35,20 @@ public class ToolUsageRepository : IToolUsageRepository
         return usage;
     }
 
+    public async Task<bool> TryIncrementSessionUsageAsync(string sessionId, string toolSlug, string? referrer, string? userAgent)
+    {
+        var now = DateTime.UtcNow;
+        var updatedRows = await _context.ToolUsages
+            .Where(u => u.SessionId == sessionId && u.ToolSlug == toolSlug)
+            .ExecuteUpdateAsync(s => s
+                .SetProperty(u => u.ClickCount, u => u.ClickCount + 1)
+                .SetProperty(u => u.Referrer, u => referrer ?? u.Referrer)
+                .SetProperty(u => u.UserAgent, userAgent)
+                .SetProperty(u => u.UpdatedAt, now));
+
+        return updatedRows > 0;
+    }
+
     public async Task<IEnumerable<ToolUsage>> GetByToolIdAsync(int toolId, DateTime? from = null, DateTime? to = null)
     {
         var query = _context.ToolUsages.Where(u => u.ToolId == toolId);
@@ -65,6 +79,7 @@ public class ToolUsageRepository : IToolUsageRepository
 
     public async Task<IEnumerable<ToolUsageStatsDto>> GetUsageStatsAsync(int days = 30)
     {
+        days = Math.Clamp(days, 1, 90);
         var fromDate = DateTime.UtcNow.AddDays(-days);
 
         return await _context.ToolUsages
@@ -74,16 +89,22 @@ public class ToolUsageRepository : IToolUsageRepository
             {
                 ToolSlug = g.Key.ToolSlug,
                 Date = g.Key.Date,
-                UsageCount = g.Count(),
-                UniqueUsers = g.Select(x => x.SessionId).Distinct().Count()
+                UsageCount = g.Sum(x => x.ClickCount),
+                UniqueUsers = g.Where(x => !string.IsNullOrEmpty(x.SessionId))
+                    .Select(x => x.SessionId)
+                    .Distinct()
+                    .Count()
             })
             .OrderByDescending(s => s.Date)
             .ThenByDescending(s => s.UsageCount)
+            .ThenBy(s => s.ToolSlug)
             .ToListAsync();
     }
 
     public async Task<IEnumerable<TopToolDto>> GetTopToolsAsync(int count = 10, int days = 30)
     {
+        count = Math.Clamp(count, 1, 50);
+        days = Math.Clamp(days, 1, 90);
         var fromDate = DateTime.UtcNow.AddDays(-days);
 
         return await _context.ToolUsages
@@ -93,9 +114,13 @@ public class ToolUsageRepository : IToolUsageRepository
             {
                 ToolSlug = g.Key,
                 TotalUsage = g.Sum(x => x.ClickCount),
-                UniqueUsers = g.Select(x => x.SessionId).Distinct().Count()
+                UniqueUsers = g.Where(x => !string.IsNullOrEmpty(x.SessionId))
+                    .Select(x => x.SessionId)
+                    .Distinct()
+                    .Count()
             })
             .OrderByDescending(t => t.TotalUsage)
+            .ThenBy(t => t.ToolSlug)
             .Take(count)
             .ToListAsync();
     }

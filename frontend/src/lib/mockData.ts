@@ -1,3 +1,5 @@
+import { secureRandomInt } from './passwordSecurity';
+
 export type MockDataType = 'users' | 'products' | 'orders' | 'companies' | 'posts';
 
 const FIRST_NAMES = ['Alex', 'Sarah', 'Michael', 'Emma', 'David', 'Olivia', 'James', 'Sophia', 'Daniel', 'Emily', 'Liam', 'Mia', 'Lucas', 'Ava', 'Ethan', 'Isabella'];
@@ -19,11 +21,11 @@ const POST_TITLES = [
 ];
 
 function pick<T>(arr: readonly T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)];
+  return arr[secureRandomInt(arr.length)];
 }
 
 function randInt(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return secureRandomInt(max - min + 1) + min;
 }
 
 export function generateMockData(type: MockDataType, count: number = 10): Record<string, any>[] {
@@ -42,7 +44,7 @@ export function generateMockData(type: MockDataType, count: number = 10): Record
         email,
         phone: `+1 (${randInt(200, 999)}) ${randInt(100, 999)}-${randInt(1000, 9999)}`,
         role: pick(ROLES),
-        isActive: Math.random() > 0.15,
+        isActive: secureRandomInt(100) >= 15,
         location: {
           city: pick(CITIES),
           country: pick(COUNTRIES),
@@ -51,7 +53,7 @@ export function generateMockData(type: MockDataType, count: number = 10): Record
       });
     } else if (type === 'products') {
       const title = pick(PRODUCT_NAMES);
-      const price = parseFloat((randInt(19, 499) + Math.random()).toFixed(2));
+      const price = parseFloat((randInt(19, 499) + secureRandomInt(100) / 100).toFixed(2));
       result.push({
         id: i,
         sku: `SKU-${randInt(1000, 9999)}-${String.fromCharCode(65 + randInt(0, 25))}`,
@@ -59,11 +61,11 @@ export function generateMockData(type: MockDataType, count: number = 10): Record
         category: pick(CATEGORIES),
         price,
         inStock: randInt(0, 150),
-        rating: parseFloat((3.5 + Math.random() * 1.5).toFixed(1)),
-        isFeatured: Math.random() > 0.7,
+        rating: parseFloat((3.5 + secureRandomInt(16) / 10).toFixed(1)),
+        isFeatured: secureRandomInt(100) >= 70,
       });
     } else if (type === 'orders') {
-      const totalAmount = parseFloat((randInt(45, 1250) + Math.random()).toFixed(2));
+      const totalAmount = parseFloat((randInt(45, 1250) + secureRandomInt(100) / 100).toFixed(2));
       result.push({
         id: `ORD-${randInt(10000, 99999)}`,
         customer: `${pick(FIRST_NAMES)} ${pick(LAST_NAMES)}`,

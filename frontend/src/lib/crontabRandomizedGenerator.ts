@@ -1,3 +1,7 @@
+import { secureRandomInt } from './passwordSecurity';
+
 export function generateRandomizedCron(baseCron = '0 3 * * *', maxJitterSec = 300): string {
-  return 'sleep ' + Math.floor(Math.random() * maxJitterSec) + ' && /usr/local/bin/backup.sh';
+  const safeMax = Math.floor(maxJitterSec);
+  const jitter = safeMax > 0 ? secureRandomInt(safeMax) : 0;
+  return 'sleep ' + jitter + ' && /usr/local/bin/backup.sh';
 }

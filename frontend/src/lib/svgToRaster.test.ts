@@ -20,4 +20,17 @@ describe('svgToRaster', () => {
     const sanitized = sanitizeSvg(messySvg);
     expect(sanitized.startsWith('<svg')).toBe(true);
   });
+
+  it('should strip scripts, foreignObject, event handlers, and unsafe URLs', () => {
+    const malicious = `<!-- header --><svg/onload="alert(1)" viewBox="0 0 50 50"><script>alert(1)</script><foreignObject><div>x</div></foreignObject><a xlink:href="javascript:alert(2)"><rect width="10" height="10" onmouseover="alert(3)"/></a></svg>`;
+    const sanitized = sanitizeSvg(malicious);
+
+    expect(sanitized.startsWith('<svg')).toBe(true);
+    expect(sanitized).toContain('xmlns="http://www.w3.org/2000/svg"');
+    expect(sanitized).toContain('<rect width="10" height="10" />');
+    expect(sanitized).not.toMatch(/<script/i);
+    expect(sanitized).not.toMatch(/<foreignObject/i);
+    expect(sanitized).not.toMatch(/\bon(?:load|mouseover)\s*=/i);
+    expect(sanitized).not.toMatch(/javascript:/i);
+  });
 });

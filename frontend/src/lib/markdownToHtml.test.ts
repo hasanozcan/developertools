@@ -23,4 +23,26 @@ describe('markdownToHtml', () => {
   it('should return empty string for empty input', () => {
     expect(markdownToHtml('')).toBe('');
   });
+
+  it('strips dangerous HTML tags, event handlers, and unsafe URL schemes', () => {
+    const xss = [
+      '<script>alert(1)</script>',
+      '<img src="x" onerror="alert(2)">',
+      '<svg onload="alert(3)"></svg>',
+      '[bad](javascript:alert(4))',
+      '[bad2](vbscript:msgbox(5))',
+      '[bad3](data:text/html,<script>alert(6)</script>)',
+      '![img](javascript:alert(7))',
+      '![img2](data:text/html,<script>alert(8)</script>)',
+    ].join('\n\n');
+
+    const html = markdownToHtml(xss);
+
+    expect(html).not.toMatch(/<script/i);
+    expect(html).not.toMatch(/onerror\s*=/i);
+    expect(html).not.toMatch(/onload\s*=/i);
+    expect(html).not.toMatch(/javascript:/i);
+    expect(html).not.toMatch(/vbscript:/i);
+    expect(html).not.toMatch(/data:text\/html/i);
+  });
 });

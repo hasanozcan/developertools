@@ -4,13 +4,31 @@ export interface JsonToExcelOptions {
   flattenNested?: boolean;
 }
 
+const DANGEROUS_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+const FORMULA_INJECTION_PATTERN = /^[ \t\r\n]*[=+\-@\t\r]/;
+const PURE_NEGATIVE_NUMBER_PATTERN = /^\s*-\d+(?:\.\d+)?\s*$/;
+
+function setSafeProperty(target: Record<string, any>, key: string, value: any): void {
+  Object.defineProperty(target, key, {
+    value,
+    enumerable: true,
+    writable: true,
+    configurable: true,
+  });
+}
+
 export function flattenObject(
   obj: Record<string, any>,
   prefix = ''
 ): Record<string, any> {
   const result: Record<string, any> = {};
 
-  for (const [key, value] of Object.entries(obj)) {
+  for (const key of Object.keys(obj)) {
+    if (!Object.hasOwn(obj, key) || DANGEROUS_KEYS.has(key)) {
+      continue;
+    }
+
+    const value = obj[key];
     const newKey = prefix ? `${prefix}.${key}` : key;
     if (
       value !== null &&
@@ -18,11 +36,16 @@ export function flattenObject(
       !Array.isArray(value) &&
       Object.keys(value).length > 0
     ) {
-      Object.assign(result, flattenObject(value, newKey));
+      const nested = flattenObject(value, newKey);
+      for (const nestedKey of Object.keys(nested)) {
+        if (Object.hasOwn(nested, nestedKey)) {
+          setSafeProperty(result, nestedKey, nested[nestedKey]);
+        }
+      }
     } else if (Array.isArray(value)) {
-      result[newKey] = JSON.stringify(value);
+      setSafeProperty(result, newKey, JSON.stringify(value));
     } else {
-      result[newKey] = value;
+      setSafeProperty(result, newKey, value);
     }
   }
 
@@ -31,7 +54,16 @@ export function flattenObject(
 
 export function escapeCsvCell(val: any, delimiter = ','): string {
   if (val === null || val === undefined) return '';
-  const str = String(val);
+  let str = String(val);
+
+  if (
+    typeof val !== 'number' &&
+    FORMULA_INJECTION_PATTERN.test(str) &&
+    !PURE_NEGATIVE_NUMBER_PATTERN.test(str)
+  ) {
+    str = `'${str}`;
+  }
+
   if (
     str.includes(delimiter) ||
     str.includes('"') ||
@@ -76,7 +108,7 @@ export function jsonToDelimitedText(
   const headerKeys: string[] = [];
   processedRows.forEach((row) => {
     Object.keys(row).forEach((k) => {
-      if (!headerKeys.includes(k)) {
+      if (!DANGEROUS_KEYS.has(k) && !headerKeys.includes(k)) {
         headerKeys.push(k);
       }
     });
@@ -89,7 +121,9 @@ export function jsonToDelimitedText(
   }
 
   processedRows.forEach((row) => {
-    const rowValues = headerKeys.map((k) => escapeCsvCell(row[k] ?? '', delimiter));
+    const rowValues = headerKeys.map((k) =>
+      escapeCsvCell(Object.hasOwn(row, k) ? (row[k] ?? '') : '', delimiter)
+    );
     lines.push(rowValues.join(delimiter));
   });
 

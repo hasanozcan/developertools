@@ -1,7 +1,18 @@
+import {
+  escapeAttribute,
+  escapeHtml,
+  sanitizeHtmlFragment,
+  sanitizeLinkUrl,
+} from './markdownToHtml';
+
 export function convertHtmlToMarkdown(html: string): string {
   if (!html.trim()) return '';
 
-  let md = html;
+  let md = sanitizeHtmlFragment(html);
+  // Strip any script/style blocks if running without DOMPurify (e.g. SSR)
+  md = md.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, '');
+  md = md.replace(/<style\b[^>]*>[\s\S]*?<\/style\s*>/gi, '');
+
   // Convert headers
   md = md.replace(/<h1[^>]*>(.*?)<\/h1>/gi, '# $1\n\n');
   md = md.replace(/<h2[^>]*>(.*?)<\/h2>/gi, '## $1\n\n');
@@ -12,8 +23,11 @@ export function convertHtmlToMarkdown(html: string): string {
   md = md.replace(/<(strong|b)[^>]*>(.*?)<\/(strong|b)>/gi, '**$2**');
   md = md.replace(/<(em|i)[^>]*>(.*?)<\/(em|i)>/gi, '*$2*');
 
-  // Convert links
-  md = md.replace(/<a\s+[^>]*href=["']([^"']+)["'][^>]*>(.*?)<\/a>/gi, '[$2]($1)');
+  // Convert links (reject unsafe protocols)
+  md = md.replace(/<a\s+[^>]*href=["']([^"']+)["'][^>]*>(.*?)<\/a>/gi, (_, href, text) => {
+    const safeUrl = sanitizeLinkUrl(href);
+    return safeUrl ? `[${text}](${safeUrl})` : text;
+  });
 
   // Convert code blocks and inline code
   md = md.replace(/<pre[^>]*><code[^>]*>([\s\S]*?)<\/code><\/pre>/gi, '\`\`\`\n$1\n\`\`\`\n\n');
@@ -36,7 +50,19 @@ export function convertHtmlToMarkdown(html: string): string {
 export function convertMarkdownToHtml(md: string): string {
   if (!md.trim()) return '';
 
-  let html = md;
+  const placeholders: string[] = [];
+  const hold = (content: string) => {
+    const token = `\u0000INLINE_${placeholders.length}\u0000`;
+    placeholders.push(content);
+    return token;
+  };
+
+  let html = md.replace(/\`([^\`]+)\`/gim, (_, code) => hold(`<code>${escapeHtml(code)}</code>`));
+
+  if (typeof window === 'undefined') {
+    html = escapeHtml(html);
+  }
+
   // Headers
   html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
   html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
@@ -47,10 +73,15 @@ export function convertMarkdownToHtml(md: string): string {
   html = html.replace(/\*(.*?)\*/gim, '<em>$1</em>');
 
   // Links
-  html = html.replace(/\[([^\]]+)\]\(([^\)]+)\)/gim, '<a href="$2">$1</a>');
+  html = html.replace(/\[([^\]]+)\]\(([^\)]+)\)/gim, (_, text, url) => {
+    const safeUrl = sanitizeLinkUrl(url);
+    if (!safeUrl) {
+      return `<a>${text}</a>`;
+    }
+    return `<a href="${escapeAttribute(safeUrl)}">${text}</a>`;
+  });
 
-  // Inline code
-  html = html.replace(/\`([^\`]+)\`/gim, '<code>$1</code>');
+  html = html.replace(/\u0000INLINE_(\d+)\u0000/g, (_, idx) => placeholders[Number(idx)] ?? '');
 
-  return html.trim();
+  return sanitizeHtmlFragment(html).trim();
 }

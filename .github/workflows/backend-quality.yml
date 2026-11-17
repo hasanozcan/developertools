@@ -1,6 +1,7 @@
 name: Backend Quality
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "31 4 * * 1"
   push:
@@ -11,6 +12,10 @@ on:
     paths:
       - "backend/**"
       - ".github/workflows/backend-quality.yml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read

@@ -15,7 +15,7 @@ export default function Bip39SeedPhraseGeneratorTool() {
   };
 
   useEffect(() => {
-    gen(12);
+    setPhrase(generateBip39SeedPhrase(12));
   }, []);
 
   return (

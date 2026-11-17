@@ -1,9 +1,27 @@
+import {
+  BCRYPT_MAX_BROWSER_COST,
+  BCRYPT_MAX_PASSWORD_BYTES,
+  BCRYPT_MIN_COST,
+  getBcryptCost,
+  getBcryptPasswordByteLength,
+  verifyBcryptHash as verifyBoundedBcryptHash,
+} from './bcrypt';
+
+export {
+  BCRYPT_MAX_BROWSER_COST,
+  BCRYPT_MAX_PASSWORD_BYTES,
+  BCRYPT_MIN_COST,
+  getBcryptCost,
+  getBcryptPasswordByteLength,
+};
+
 export interface BcryptParsedInfo {
   version: string;
   cost: number;
   salt: string;
   hash: string;
   isValidStructure: boolean;
+  isSupportedCost: boolean;
 }
 
 export function parseBcryptHash(hashString: string): BcryptParsedInfo {
@@ -18,31 +36,33 @@ export function parseBcryptHash(hashString: string): BcryptParsedInfo {
       salt: '',
       hash: '',
       isValidStructure: false,
+      isSupportedCost: false,
     };
   }
 
+  const cost = parseInt(match[2], 10);
+
   return {
     version: `$2${match[1]}`,
-    cost: parseInt(match[2], 10),
+    cost,
     salt: match[3],
     hash: match[4],
     isValidStructure: true,
+    isSupportedCost: cost >= BCRYPT_MIN_COST && cost <= BCRYPT_MAX_BROWSER_COST,
   };
 }
 
+/**
+ * Verifies a password against a bcrypt hash, enforcing browser cost bounds (4..14)
+ * and the 72 UTF-8 byte bcrypt password limit via bcrypt.ts.
+ */
 export async function verifyBcryptHash(plainPassword: string, hashString: string): Promise<boolean> {
-  const parsed = parseBcryptHash(hashString);
+  const trimmedHash = hashString.trim();
+  const parsed = parseBcryptHash(trimmedHash);
   if (!parsed.isValidStructure) {
-    throw new Error('Invalid Bcrypt hash format (expected $2a$, $2b$, or $2y$ followed by cost and 53 base64 characters).');
+    throw new Error(
+      'Invalid Bcrypt hash format (expected $2a$, $2b$, or $2y$ followed by cost and 53 base64 characters).',
+    );
   }
-
-  // Fast client-side verification check
-  // In pure browser JS, we can dynamically import bcryptjs or check format
-  try {
-    const bcryptjs = await import('bcryptjs');
-    return bcryptjs.compare(plainPassword, hashString);
-  } catch {
-    // Fallback comparison
-    return false;
-  }
+  return verifyBoundedBcryptHash(plainPassword, trimmedHash);
 }

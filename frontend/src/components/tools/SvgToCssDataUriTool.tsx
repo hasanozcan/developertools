@@ -31,14 +31,14 @@ export default function SvgToCssDataUriTool() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl bg-card border border-border">
+      <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
         <div className="flex flex-wrap items-center gap-4">
           <div>
-            <label className="text-xs text-muted-foreground block mb-1">{t("uiText.5ba62793")}</label>
+            <label className="text-xs font-medium text-gray-700 dark:text-gray-300 block mb-1">{t("uiText.5ba62793")}</label>
             <select
               value={format}
               onChange={(e) => setFormat(e.target.value as any)}
-              className="select select-bordered select-sm"
+              className="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             >
               <option value="utf8-encoded">{t("uiText.de32a8d4")}</option>
               <option value="base64">Base64</option>
@@ -46,11 +46,11 @@ export default function SvgToCssDataUriTool() {
           </div>
 
           <div>
-            <label className="text-xs text-muted-foreground block mb-1">{t("uiText.cf559e20")}</label>
+            <label className="text-xs font-medium text-gray-700 dark:text-gray-300 block mb-1">{t("uiText.cf559e20")}</label>
             <select
               value={mode}
               onChange={(e) => setMode(e.target.value as any)}
-              className="select select-bordered select-sm"
+              className="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             >
               <option value="background-image">{t("uiText.118767bd")}</option>
               <option value="mask-image">{t("uiText.297dd2a1")}</option>
@@ -59,31 +59,34 @@ export default function SvgToCssDataUriTool() {
           </div>
         </div>
 
-        <button onClick={handleCopy} className="btn btn-primary btn-sm gap-2">
-          {copied ? <Check className="w-4 h-4 text-success" /> : <Copy className="w-4 h-4" />}
+        <button
+          onClick={handleCopy}
+          className="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-3.5 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-700"
+        >
+          {copied ? <Check className="w-4 h-4 text-green-200" /> : <Copy className="w-4 h-4" />}
           {copied ? t("uiText.8dc21305") : t("uiText.76c99cd7")}
         </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-muted-foreground">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             {t("uiText.1e7efb3f")}</label>
           <textarea
             value={svgInput}
             onChange={(e) => setSvgInput(e.target.value)}
             placeholder="<svg ...>...</svg>"
-            className="textarea textarea-bordered w-full h-80 font-mono text-xs leading-relaxed"
+            className="w-full h-80 rounded-lg border border-gray-300 bg-white px-3 py-2.5 font-mono text-xs leading-relaxed text-gray-900 placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
           />
         </div>
 
         <div className="space-y-2">
-          <label className="block text-sm font-medium text-muted-foreground">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
             {t("uiText.e4a5eef5")}</label>
           <textarea
             readOnly
             value={cssOutput}
-            className="textarea textarea-bordered w-full h-80 font-mono text-xs leading-relaxed bg-muted/40 text-foreground"
+            className="w-full h-80 rounded-lg border border-gray-300 bg-gray-50 px-3 py-2.5 font-mono text-xs leading-relaxed text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
           />
         </div>
       </div>
