@@ -49,6 +49,7 @@ export default function Header() {
   const [showFavorites, setShowFavorites] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const headerRef = useRef<HTMLElement>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const favoritesRef = useRef<HTMLDivElement>(null);
@@ -60,6 +61,11 @@ export default function Header() {
   const { favorites, isFavorite } = useFavorites();
   const { history } = useHistory();
   const { t, language } = useLanguage();
+
+  // Signal to browser tests that client event handlers on the header have hydrated.
+  useEffect(() => {
+    headerRef.current?.setAttribute('data-hydrated', 'true');
+  }, []);
 
   // Dynamic navigation with translations
   const navigation = useMemo(
@@ -321,7 +327,10 @@ export default function Header() {
   const favoriteTools = allTools.filter((t) => favorites.includes(t.slug));
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_8px_30px_-24px_rgba(15,23,42,0.6)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/95">
+    <header
+      ref={headerRef}
+      className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_8px_30px_-24px_rgba(15,23,42,0.6)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/95"
+    >
       <nav
         aria-label={t("uiText.6fba33cd")}
         className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-10 xl:px-12"

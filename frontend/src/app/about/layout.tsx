@@ -5,7 +5,7 @@ import EnDictionary from '@/translations/client/en';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
 const pageUrl = `${siteUrl}/about`;
-const ogImageUrl = `${siteUrl}/og-image.png`;
+const ogImageUrl = `${siteUrl}/about/opengraph-image`;
 
 const pageMetadata: Metadata = {
   title: 'About',

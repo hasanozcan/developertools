@@ -28,7 +28,15 @@ describe('sitemap', () => {
     const entries = await allEntries();
 
     const nonToolPagesPerLocale =
-      1 + categoryCatalog.length + 4 + 1 + toolCollections.length + 1 + developerAudiences.length;
+      1 +
+      categoryCatalog.length +
+      4 +
+      1 +
+      toolCollections.length +
+      1 +
+      developerAudiences.length +
+      1 +
+      developerGuides.length;
     const indexableLocalizedTools = NON_DEFAULT_LOCALES.reduce(
       (sum, locale) =>
         sum + toolCatalog.filter((tool) => isToolLocaleIndexable(tool.slug, locale)).length,
@@ -37,9 +45,7 @@ describe('sitemap', () => {
     const expectedLength =
       nonToolPagesPerLocale * SUPPORTED_LOCALES.length +
       toolCatalog.length +
-      indexableLocalizedTools +
-      1 +
-      developerGuides.length;
+      indexableLocalizedTools;
 
     expect(entries).toHaveLength(expectedLength);
     expect(entries.every((entry) => !('lastModified' in entry))).toBe(true);
@@ -60,8 +66,10 @@ describe('sitemap', () => {
     expect(urls).toContain(`${BASE}/for/api-developers`);
     expect(urls).toContain(`${BASE}/de/for/devops-engineers`);
     expect(urls).toContain(`${BASE}/guides`);
+    expect(urls).toContain(`${BASE}/tr/guides`);
     for (const guide of developerGuides) {
       expect(urls).toContain(`${BASE}/guides/${guide.slug}`);
+      expect(urls).toContain(`${BASE}/tr/guides/${guide.slug}`);
     }
   });
 

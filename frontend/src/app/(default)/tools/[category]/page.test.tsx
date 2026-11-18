@@ -82,7 +82,7 @@ describe('CategoryPage', () => {
       expect(cards.length).toBeGreaterThan(100);
       expect(grid.querySelectorAll('h2')).toHaveLength(0);
       expect(grid.querySelectorAll('h3')).toHaveLength(cards.length);
-      expect(doc.querySelectorAll('h2').length).toBeLessThan(5);
+      expect(doc.querySelectorAll('h2').length).toBeLessThan(10);
       expect(doc.getElementById('category-tools-heading')?.tagName).toBe('H2');
     }
   });
@@ -136,16 +136,23 @@ describe('CategoryPage', () => {
     expect(breadcrumb.itemListElement[1].name).toBe('Dönüştürücüler');
   });
 
-  it('omits English-only answer sections and FAQs on locale pages', async () => {
+  it('renders localized Turkish answer sections, FAQPage JSON-LD, and sources on Turkish pages without leaking English prose', async () => {
     const en = await renderCategoryPage('en', 'encoding');
     expect(en.byType('FAQPage')).toBeDefined();
     expect(en.doc.body.textContent).toContain('Encoding is not encryption or hashing');
 
     const tr = await renderCategoryPage('tr', 'encoding');
-    expect(tr.byType('FAQPage')).toBeUndefined();
+    const trFaq = tr.byType('FAQPage');
+    expect(trFaq).toBeDefined();
+    expect(trFaq.mainEntity).toHaveLength(3);
+    expect(trFaq.mainEntity[0].name).toBe('Hangi çevrimiçi kodlayıcıyı kullanmalıyım?');
+    expect(tr.doc.body.textContent).toContain('Kodlama, şifreleme veya özetleme değildir');
+    expect(tr.doc.body.textContent).toContain('Sık sorulan sorular');
+    expect(tr.doc.body.textContent).toContain('Kaynaklar ve referanslar');
     expect(tr.doc.body.textContent).not.toContain('Encoding is not encryption or hashing');
     expect(tr.doc.body.textContent).not.toContain('Frequently asked questions');
-    expect(tr.doc.body.textContent).not.toContain('Open an encoder or decoder');
+    expect(tr.doc.body.textContent).not.toContain('Which online encoder should I use?');
+    expect(tr.doc.querySelector('[data-answer-first="true"]')).not.toBeNull();
     expect(tr.doc.querySelector('h1')?.textContent).toBe(translations.tr['cat.encoding']);
 
     const app = tr.byType('WebApplication');
@@ -153,6 +160,49 @@ describe('CategoryPage', () => {
     expect(app.url).toBe(`${SITE}/tr/tools/encoding`);
     expect(app.inLanguage).toBe('tr');
   });
+
+  it('renders localized answer sections, visible FAQs, FAQPage JSON-LD, and citation parity across all 8 categories and 7 locales', async () => {
+    const allCategories = [
+      'converters',
+      'encoding',
+      'formatters',
+      'generators',
+      'json',
+      'text',
+      'utilities',
+      'crypto',
+    ] as const;
+    const allLocales: Language[] = ['en', 'tr', 'de', 'es', 'fr', 'ru', 'zh'];
+
+    for (const category of allCategories) {
+      const en = await renderCategoryPage('en', category);
+      const enFaqFirst = en.byType('FAQPage').mainEntity[0].name;
+
+      for (const locale of allLocales) {
+        const { doc, byType } = await renderCategoryPage(locale, category);
+        expect(doc.querySelector('[data-answer-first="true"]'), `${locale}/${category}`).not.toBeNull();
+
+        const faqPage = byType('FAQPage');
+        expect(faqPage, `${locale}/${category}`).toBeDefined();
+        expect(faqPage.mainEntity).toHaveLength(3);
+        for (const item of faqPage.mainEntity) {
+          expect(doc.body.textContent).toContain(item.name);
+        }
+        if (locale !== 'en') {
+          expect(faqPage.mainEntity[0].name, `${locale}/${category}`).not.toBe(enFaqFirst);
+        }
+
+        const sourcesSection = doc.querySelector('section[aria-labelledby="sources-heading"]');
+        expect(sourcesSection, `${locale}/${category}`).not.toBeNull();
+        const visibleUrls = [...sourcesSection!.querySelectorAll('a[href]')].map((a) =>
+          a.getAttribute('href'),
+        );
+        expect(visibleUrls.length).toBeGreaterThanOrEqual(2);
+        const collection = byType('CollectionPage');
+        expect(collection.citation).toEqual(visibleUrls);
+      }
+    }
+  }, 45_000);
 
   it('localizes the locale route metadata', async () => {
     const metadata = await generateLocalizedMetadata({

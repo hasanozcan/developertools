@@ -10,7 +10,7 @@ export const size = {
 export const contentType = 'image/png';
 
 export default async function Image() {
-  const toolCount = toolCatalog.length > 0 ? toolCatalog.length : 500;
+  const toolCount = toolCatalog.length > 0 ? toolCatalog.length : 476;
 
   return new ImageResponse(
     (

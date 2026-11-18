@@ -61,10 +61,6 @@ const tools: Record<string, readonly [string, string]> = {
     'İç İçe JSON Nesnelerini Düzleştirme Aracı',
     'İç içe JSON nesnelerini, nokta gösterimli anahtarlar kullanan tek düzeyli nesnelere dönüştürün.',
   ],
-  'morse-code-audio-converter': [
-    'Mors Alfabesi Metin Kodlayıcı',
-    'Harf ve rakamlardan oluşan metinleri uluslararası Mors alfabesine dönüştürün.',
-  ],
   'base64url-encoder': [
     'Base64URL Kodlayıcı ve Çözücü',
     'Dolgu karakterleri olmadan URL uyumlu Base64 verilerini kodlayın veya çözün.',
@@ -96,10 +92,6 @@ const tools: Record<string, readonly [string, string]> = {
   'protobuf-formatter': [
     'Protocol Buffers (.proto) Biçimlendirici',
     'Protobuf proto3 hizmet ve mesaj tanımlarını biçimlendirin ve girintileyin.',
-  ],
-  'totp-authenticator-simulator': [
-    'RFC 6238 TOTP Doğrulayıcı Simülatörü',
-    'Geri sayım sayacıyla zamana dayalı, altı haneli tek kullanımlık parolalar (TOTP) oluşturun.',
   ],
   'ed25519-key-generator': [
     'Ed25519 Anahtar Çifti Oluşturucu',
@@ -169,10 +161,6 @@ const tools: Record<string, readonly [string, string]> = {
     'SVG - WebP Veri URI Dönüştürücü',
     'SVG vektör grafiklerini yüksek performanslı Base64 veri URI biçiminde kodlayın.',
   ],
-  'docker-to-compose': [
-    'Docker Run - Docker Compose Dönüştürücü',
-    'Tek bir docker run terminal komutunu standart docker-compose.yml hizmet tanımına dönüştürün.',
-  ],
   'har-to-k6': [
     'HAR - k6 Yük Testi Betiği Dönüştürücü',
     'HTTP Archive (HAR) tarayıcı ağ günlüklerini k6 performans testi betiklerine dönüştürün.',
@@ -188,10 +176,6 @@ const tools: Record<string, readonly [string, string]> = {
   'openapi-to-typescript-fetch': [
     'OpenAPI - TypeScript Fetch İstemcisi',
     'OpenAPI 3.0 ve Swagger tanımlarından tür bilgisi içeren Fetch API istemci fonksiyonları oluşturun.',
-  ],
-  'postman-to-curl': [
-    'Postman Koleksiyonu - cURL Betiği',
-    'Dışa aktarılmış Postman koleksiyonlarındaki JSON isteklerini terminalde çalıştırılabilir cURL komutlarına dönüştürün.',
   ],
   'svg-to-react-native': [
     'SVG - React Native (SVGR) Dönüştürücü',
@@ -220,10 +204,6 @@ const tools: Record<string, readonly [string, string]> = {
   'nginx-rate-limit-calculator': [
     'Nginx İstek Hızı Sınırı Yönergesi Oluşturucu',
     'Nginx ters vekilleri için iyileştirilmiş limit_req_zone istek hızı sınırlama yönergeleri oluşturun.',
-  ],
-  'cron-next-runs-visualizer': [
-    'Cron Sonraki 20 Çalıştırma Hesaplayıcı',
-    'Herhangi bir Cron zamanlamasının sonraki 20 çalıştırma zamanını kesin olarak hesaplayın ve önizleyin.',
   ],
   'rag-chunking-visualizer': [
     'RAG Anlamsal Parçalama Görselleştirici',
@@ -1072,10 +1052,6 @@ const tools: Record<string, readonly [string, string]> = {
     'UUID v5 (SHA-1 Ad Alanı) Oluşturucu',
     'Ad alanlarından deterministik RFC 4122 UUID v5 özetleri oluşturun.',
   ],
-  'bip39-seed-phrase-generator': [
-    'BIP-39 Kurtarma İfadesi Oluşturucu',
-    'Kriptografik olarak güvenli, 12 ve 24 kelimelik BIP-39 kurtarma ifadeleri oluşturun.',
-  ],
   'eip712-hasher': [
     'Ethereum EIP-712 Tür Bilgili Veri Özeti Hesaplayıcı',
     'EIP-712 tür bilgili veri imzalama işlemleri için alan ayırıcısını ve yapı özetini hesaplayın.',
@@ -1099,10 +1075,6 @@ const tools: Record<string, readonly [string, string]> = {
   'http-headers-to-json': [
     'HTTP Başlığı - JSON Dönüştürücü',
     'HTTP başlık metinlerini JSON nesnelerine ve tersine dönüştürün.',
-  ],
-  'jwt-builder': [
-    'JWT Veri Oluşturucu ve Simülatörü',
-    'İmza simülasyonuyla özel başlık ve veri bölümleri içeren JWT belirteçleri oluşturun.',
   ],
   'passphrase-wordlist-generator': [
     'Diceware Parola İfadesi Oluşturucu',
@@ -1212,21 +1184,9 @@ const tools: Record<string, readonly [string, string]> = {
     'BBCode - GitHub Markdown Dönüştürücü',
     'Forum BBCode etiketlerini standart GitHub uyumlu Markdown metin biçimine dönüştürün.',
   ],
-  'curl-to-php-guzzle': [
-    'cURL - PHP Guzzle İstemcisi Dönüştürücü',
-    'Başlık ve gövde içeren terminal cURL komutlarını çalıştırılabilir PHP Guzzle istemci koduna dönüştürün.',
-  ],
   'curl-to-ruby-faraday': [
     'cURL - Ruby Faraday İstemcisi Dönüştürücü',
     'cURL isteklerini başlıklarıyla birlikte Ruby Faraday ve Net::HTTP istemci isteklerine dönüştürün.',
-  ],
-  'curl-to-rust-reqwest': [
-    'cURL - Rust reqwest Asenkron İstemcisi',
-    'cURL komutlarını asenkron Rust reqwest istemci isteği kod bloklarına dönüştürün.',
-  ],
-  'curl-to-go-http': [
-    'cURL - Go net/http İstemcisi Dönüştürücü',
-    'cURL komutlarını Go standart kitaplığındaki net/http istemci isteklerine dönüştürün.',
   ],
   'svg-to-android-vector': [
     'SVG - Android Vector Drawable XML Dönüştürücü',
@@ -1487,10 +1447,6 @@ const tools: Record<string, readonly [string, string]> = {
   'base64-pem-certificate-parser': [
     'X.509 TLS/SSL Sertifikası SAN ve Bilgi Ayrıştırıcı',
     'X.509 PEM sertifikalarını ayrıştırarak alternatif adları, düzenleyicileri ve geçerlilik bilgilerini çıkarın.',
-  ],
-  'punycode-idn-converter': [
-    'Punycode IDN Alan Adı Dönüştürücü',
-    'Uluslararası Unicode alan adlarını ASCII uyumlu Punycode (xn--) biçimine dönüştürün.',
   ],
   'crockford-base32-encoder': [
     'Crockford Base32 Kodlayıcı ve Çözücü',

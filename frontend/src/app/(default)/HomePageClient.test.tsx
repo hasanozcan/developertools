@@ -2,6 +2,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it, vi } from 'vitest';
 import { FavoritesProvider } from '@/context/FavoritesContext';
 import { LanguageProvider } from '@/context/LanguageContext';
+import { toolCatalog } from '@/lib/api';
 import type { Language } from '@/translations';
 import { translations } from '@/translations';
 import HomePageClient from './HomePageClient';
@@ -36,6 +37,15 @@ describe('homepage CollectionPage structured data', () => {
       });
       expect(collection.name).toBe(doc.querySelector('h1')?.textContent);
       expect(collection.description).toBe(doc.querySelector('h1 + p')?.textContent);
+
+      const directory = doc.querySelector('section[aria-label="Complete Tool Directory"]');
+      expect(directory).not.toBeNull();
+      const directoryHrefs = new Set(
+        [...directory!.querySelectorAll('a[href]')].map((a) => a.getAttribute('href')),
+      );
+      for (const tool of toolCatalog) {
+        expect(directoryHrefs.has(`${path}/tools/${tool.categorySlug}/${tool.slug}`)).toBe(true);
+      }
     },
   );
 });

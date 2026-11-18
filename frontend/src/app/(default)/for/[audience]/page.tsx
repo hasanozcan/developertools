@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ audience:
       siteName: 'DevsTools',
       images: [
         {
-          url: `${siteUrl}/og-image.png`,
+          url: `${siteUrl}/opengraph-image`,
           width: 1200,
           height: 630,
           alt: audience.title,
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<{ audience:
       card: 'summary_large_image',
       title: audience.title,
       description: audience.description,
-      images: [`${siteUrl}/og-image.png`],
+      images: [`${siteUrl}/twitter-image`],
     },
   };
 }

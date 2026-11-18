@@ -99,7 +99,7 @@ export default function Footer() {
               <Link href="/for" className="hover:text-primary-600 dark:hover:text-primary-400">
                 {t("uiText.ac6d3237")}</Link>
               <span className="px-2" aria-hidden="true">·</span>
-              <Link href="/guides" hrefLang="en" className="hover:text-primary-600 dark:hover:text-primary-400">
+              <Link href="/guides" className="hover:text-primary-600 dark:hover:text-primary-400">
                 {t("uiText.e4c8a27b")}</Link>
             </p>
           </div>

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     siteName: 'DevsTools',
     images: [
       {
-        url: `${siteUrl}/og-image.png`,
+        url: `${siteUrl}/opengraph-image`,
         width: 1200,
         height: 630,
         alt: 'DevsTools - Developer Tools by Role',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Developer Tools by Role',
     description: 'Role-focused developer toolboxes for API, frontend, backend, DevOps, security, data, AI, mobile, database, and QA work.',
-    images: [`${siteUrl}/og-image.png`],
+    images: [`${siteUrl}/twitter-image`],
   },
 };
 

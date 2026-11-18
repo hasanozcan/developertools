@@ -24,14 +24,6 @@
     "categoryName": "JSON Online"
   },
   {
-    "id": 4,
-    "slug": "morse-code-audio-converter",
-    "name": "Morse Code Text Encoder",
-    "shortDescription": "Convert alphanumeric text into International Morse Code.",
-    "categorySlug": "encoding",
-    "categoryName": "Encoder Online"
-  },
-  {
     "id": 5,
     "slug": "base64url-encoder",
     "name": "Base64URL Encoder & Decoder",
@@ -94,14 +86,6 @@
     "shortDescription": "Format and indent Protobuf proto3 service and message definitions.",
     "categorySlug": "formatters",
     "categoryName": "Formatter Online"
-  },
-  {
-    "id": 13,
-    "slug": "totp-authenticator-simulator",
-    "name": "RFC 6238 TOTP Authenticator Simulator",
-    "shortDescription": "Generate 6-digit Time-Based One-Time Passwords (TOTP) with countdown timer.",
-    "categorySlug": "crypto",
-    "categoryName": "Crypto Online"
   },
   {
     "id": 14,
@@ -240,14 +224,6 @@
     "categoryName": "Converter Online"
   },
   {
-    "id": 31,
-    "slug": "docker-to-compose",
-    "name": "Docker Run to Docker Compose Converter",
-    "shortDescription": "Convert single docker run terminal commands into standard docker-compose.yml services.",
-    "categorySlug": "converters",
-    "categoryName": "Converter Online"
-  },
-  {
     "id": 32,
     "slug": "har-to-k6",
     "name": "HAR to k6 Load Test Script Converter",
@@ -276,14 +252,6 @@
     "slug": "openapi-to-typescript-fetch",
     "name": "OpenAPI to TypeScript Fetch Client",
     "shortDescription": "Generate typed fetch API client functions from OpenAPI 3.0 and Swagger specs.",
-    "categorySlug": "converters",
-    "categoryName": "Converter Online"
-  },
-  {
-    "id": 36,
-    "slug": "postman-to-curl",
-    "name": "Postman Collection to cURL Script",
-    "shortDescription": "Convert exported Postman Collection JSON requests into executable terminal cURL commands.",
     "categorySlug": "converters",
     "categoryName": "Converter Online"
   },
@@ -340,14 +308,6 @@
     "slug": "nginx-rate-limit-calculator",
     "name": "Nginx Rate Limit Directives Builder",
     "shortDescription": "Generate optimized limit_req_zone rate limiting directives for Nginx reverse proxies.",
-    "categorySlug": "utilities",
-    "categoryName": "Utility Online"
-  },
-  {
-    "id": 44,
-    "slug": "cron-next-runs-visualizer",
-    "name": "Cron Next 20 Runs Calculator",
-    "shortDescription": "Calculate and preview the exact next 20 execution timestamps for any cron schedule.",
     "categorySlug": "utilities",
     "categoryName": "Utility Online"
   },
@@ -2648,14 +2608,6 @@
     "categoryName": "Crypto Online"
   },
   {
-    "id": 332,
-    "slug": "bip39-seed-phrase-generator",
-    "name": "BIP-39 Mnemonic Seed Phrase Generator",
-    "shortDescription": "Generate 12 and 24-word cryptographically secure BIP-39 seed phrases.",
-    "categorySlug": "crypto",
-    "categoryName": "Crypto Online"
-  },
-  {
     "id": 333,
     "slug": "eip712-hasher",
     "name": "Ethereum EIP-712 Typed Data Hasher",
@@ -2702,14 +2654,6 @@
     "shortDescription": "Convert HTTP header text into JSON object and vice versa.",
     "categorySlug": "converters",
     "categoryName": "Converter Online"
-  },
-  {
-    "id": 342,
-    "slug": "jwt-builder",
-    "name": "JWT Payload Builder & Simulator",
-    "shortDescription": "Build custom header/payload JWT tokens with signature simulation.",
-    "categorySlug": "generators",
-    "categoryName": "Generator Online"
   },
   {
     "id": 343,
@@ -2908,14 +2852,6 @@
     "slug": "video-to-gif",
     "name": "Video to GIF Maker & Converter",
     "shortDescription": "Convert MP4, WebM, and MOV video clips to animated GIF with FPS, dimension, and trim controls.",
-    "categorySlug": "converters",
-    "categoryName": "Converters"
-  },
-  {
-    "id": 368,
-    "slug": "svg-to-png-hd",
-    "name": "SVG to PNG & JPG High-Res Converter",
-    "shortDescription": "Convert SVG vector graphics into crisp PNG, JPG, and WebP raster images up to 8x resolution.",
     "categorySlug": "converters",
     "categoryName": "Converters"
   },
@@ -3120,22 +3056,6 @@
     "categoryName": "Generators"
   },
   {
-    "id": 397,
-    "slug": "crontab-schedule-translator",
-    "name": "Crontab Schedule & Human Language Translator",
-    "shortDescription": "Translate standard 5-field cron schedules into plain English and Turkish with next execution timestamps.",
-    "categorySlug": "utilities",
-    "categoryName": "Utilities"
-  },
-  {
-    "id": 398,
-    "slug": "bcrypt-hash-calculator",
-    "name": "Bcrypt & Argon2 Password Hash Generator & Verifier",
-    "shortDescription": "Generate secure $2a$ Bcrypt password hashes with configurable cost factors and validate existing hash strings.",
-    "categorySlug": "crypto",
-    "categoryName": "Crypto & Security"
-  },
-  {
     "id": 401,
     "slug": "sql-to-go-gorm",
     "name": "SQL DDL to Go GORM Models",
@@ -3288,34 +3208,10 @@
     "categoryName": "Converters"
   },
   {
-    "id": 420,
-    "slug": "curl-to-php-guzzle",
-    "name": "cURL to PHP Guzzle Client Converter",
-    "shortDescription": "Convert terminal cURL commands with headers and body into executable PHP Guzzle client code.",
-    "categorySlug": "converters",
-    "categoryName": "Converters"
-  },
-  {
     "id": 421,
     "slug": "curl-to-ruby-faraday",
     "name": "cURL to Ruby Faraday Client Converter",
     "shortDescription": "Convert cURL requests into Ruby Faraday and Net::HTTP client requests with headers.",
-    "categorySlug": "converters",
-    "categoryName": "Converters"
-  },
-  {
-    "id": 422,
-    "slug": "curl-to-rust-reqwest",
-    "name": "cURL to Rust reqwest Async Client",
-    "shortDescription": "Convert cURL commands into asynchronous Rust reqwest client request code blocks.",
-    "categorySlug": "converters",
-    "categoryName": "Converters"
-  },
-  {
-    "id": 423,
-    "slug": "curl-to-go-http",
-    "name": "cURL to Go net/http Client Converter",
-    "shortDescription": "Convert cURL commands into standard library Golang net/http client requests.",
     "categorySlug": "converters",
     "categoryName": "Converters"
   },
@@ -3838,14 +3734,6 @@
     "shortDescription": "Parse X.509 PEM certificates to extract Subject Alternative Names, issuers, and validity.",
     "categorySlug": "crypto",
     "categoryName": "Cryptography"
-  },
-  {
-    "id": 489,
-    "slug": "punycode-idn-converter",
-    "name": "Punycode IDN Domain Converter",
-    "shortDescription": "Convert internationalized Unicode domain names into ASCII-compatible Punycode (xn--).",
-    "categorySlug": "encoding",
-    "categoryName": "Encoding"
   },
   {
     "id": 490,

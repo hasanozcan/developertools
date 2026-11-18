@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       siteName: 'DevsTools',
       images: [
         {
-          url: `${siteUrl}/og-image.png`,
+          url: `${siteUrl}/opengraph-image`,
           width: 1200,
           height: 630,
           alt: localized.title,
@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       card: 'summary_large_image',
       title: localized.title,
       description: localized.description,
-      images: [`${siteUrl}/og-image.png`],
+      images: [`${siteUrl}/twitter-image`],
     },
   };
 }

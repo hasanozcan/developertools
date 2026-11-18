@@ -7,11 +7,11 @@ import { long as words } from '@wordlist/english-eff/long';
 import { generateApiKey } from './apiKeyGenerator';
 import { formatAesKeyHex } from './aesCryptoPlayground';
 import { generateArgon2idHash } from './argon2HashGenerator';
-import { generateBcryptHash } from './bcryptHashCalculator';
+import { generateBcryptHash } from './bcrypt';
 import { generateEd25519Keypair } from './ed25519KeyGenerator';
 import { generateDicewarePassphrase } from './passphraseWordlistGenerator';
 import { verifyHmacSignature } from './webhookSignatureVerifier';
-import { generateBip39SeedPhrase } from './bip39SeedPhraseGenerator';
+import { generateMnemonicSync } from './bip39';
 import { BIP39_WORDLIST } from './bip39Wordlist';
 import { generateNanoId } from './nanoidGenerator';
 import { generateCustomNanoId } from './nanoidCustomAlphabet';
@@ -84,11 +84,11 @@ describe('security regressions', () => {
     });
 
     const wordlist = new Set(BIP39_WORDLIST);
-    const phrase12 = generateBip39SeedPhrase(12);
+    const phrase12 = generateMnemonicSync(12);
     expect(phrase12.words).toHaveLength(12);
     expect(phrase12.words.every((w) => wordlist.has(w))).toBe(true);
 
-    const phrase24 = generateBip39SeedPhrase(24);
+    const phrase24 = generateMnemonicSync(24);
     expect(phrase24.words).toHaveLength(24);
     expect(phrase24.words.every((w) => wordlist.has(w))).toBe(true);
 

@@ -40,7 +40,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description =
     translations[locale][`${page}.subtitle`] || fallbackDescriptions[page] || pageTitle;
   const canonicalUrl = `${siteUrl}/${locale}/${page}`;
-  const ogImageUrl = `${siteUrl}/og-image.png`;
+  const ogImageUrl =
+    page === 'about'
+      ? `${siteUrl}/about/opengraph-image`
+      : page === 'contact'
+        ? `${siteUrl}/contact/opengraph-image`
+        : `${siteUrl}/opengraph-image`;
+  const twitterImageUrl =
+    page === 'about'
+      ? `${siteUrl}/about/opengraph-image`
+      : page === 'contact'
+        ? `${siteUrl}/contact/opengraph-image`
+        : `${siteUrl}/twitter-image`;
   return {
     title: { absolute: title },
     description,
@@ -69,7 +80,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title,
       description,
-      images: [ogImageUrl],
+      images: [twitterImageUrl],
     },
   };
 }

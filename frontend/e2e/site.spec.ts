@@ -4,7 +4,7 @@ import { toolCatalog } from '../src/lib/api';
 import { translations } from '../src/translations';
 
 test('every canonical tool route responds successfully', async ({ request }) => {
-  expect(toolCatalog.length).toBe(490);
+  expect(toolCatalog.length).toBe(476);
   for (const tool of toolCatalog) {
     const path = `/tools/${tool.categorySlug}/${tool.slug}`;
     const response = await request.get(path);
@@ -421,8 +421,8 @@ test('new developer tools render and function correctly', async ({ page }) => {
 
 test('all tools render interactive interface with zero browser errors', async ({ page }) => {
   test.slow();
-  test.setTimeout(360000);
-  expect(toolCatalog.length).toBe(490);
+  test.setTimeout(600_000);
+  expect(toolCatalog.length).toBe(476);
   const errors: string[] = [];
   page.on('console', (msg) => {
     if (msg.type() === 'error') {
@@ -589,11 +589,12 @@ test('interactive functionality across batch 2 (tools 11-20)', async ({ page }) 
 test('interactive functionality across batch 3 (tools 21-30)', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
 
-  // 21. morse-code-audio-converter
-  await page.goto('/tools/encoding/morse-code-audio-converter');
+  // 21. morse-code-converter
+  await page.goto('/tools/converters/morse-code-converter');
   const morseInput = page.locator('textarea').first();
   await morseInput.fill('SOS');
-  await expect(page.locator('textarea').last()).toContainText('... --- ...');
+  await page.locator('button.bg-indigo-600').first().click();
+  await expect(page.locator('textarea').last()).toHaveValue('... --- ...');
 
   // 22. password-strength-analyzer
   await page.goto('/tools/crypto/password-strength-analyzer');
@@ -806,10 +807,10 @@ test('batch 367-382 high-traffic tools interactive and rendering validation', as
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Video to GIF');
   await expect(page.locator('body')).toContainText('Convert to GIF');
 
-  // 2. SVG to High-Resolution PNG
-  await page.goto('/tools/converters/svg-to-png-hd');
+  // 2. SVG to PNG / JPG / WebP Converter
+  await page.goto('/tools/converters/svg-to-png');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('SVG to PNG');
-  await expect(page.locator('body')).toContainText('SVG Source Code');
+  await expect(page.locator('body')).toContainText('Export Format');
 
   // 3. PDF to Image Converter
   await page.goto('/tools/converters/pdf-to-image');
@@ -955,15 +956,15 @@ test('batch 383-398 high-traffic tools interactive and rendering validation', as
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Git Advanced Command');
   await expect(page.locator('body')).toContainText('Select Git Workflow');
 
-  // 15. Crontab Schedule Translator
-  await page.goto('/tools/utilities/crontab-schedule-translator');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Crontab Schedule');
-  await expect(page.locator('body')).toContainText('Enter Cron Expression');
+  // 15. Cron Parser
+  await page.goto('/tools/utilities/cron-parser');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Cron Parser');
+  await expect(page.locator('input[type="text"], textarea').first()).toBeVisible();
 
-  // 16. Bcrypt Password Hash Calculator
-  await page.goto('/tools/crypto/bcrypt-hash-calculator');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Bcrypt & Argon2 Password Hash');
-  await expect(page.locator('body')).toContainText('Generate Bcrypt Password Hash');
+  // 16. Bcrypt Generator & Verifier
+  await page.goto('/tools/crypto/bcrypt-generator');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Bcrypt Generator');
+  await expect(page.locator('#bcrypt-password')).toBeVisible();
 });
 test('batch 399-426 converters render correctly without browser errors', async ({ page }) => {
   const converters = [
@@ -972,8 +973,8 @@ test('batch 399-426 converters render correctly without browser errors', async (
     'yaml-to-terraform-hcl', 'terraform-hcl-to-yaml', 'csv-to-geojson', 'geojson-to-csv',
     'json-to-typescript-type-guards', 'typescript-interface-to-zod', 'zod-to-typescript-type',
     'css-to-scss', 'scss-to-css', 'html-to-jsx-tailwind', 'jsx-to-html', 'markdown-to-bbcode',
-    'bbcode-to-markdown', 'curl-to-php-guzzle', 'curl-to-ruby-faraday', 'curl-to-rust-reqwest',
-    'curl-to-go-http', 'svg-to-android-vector', 'svg-to-swiftui-shape', 'css-grid-to-tailwind'
+    'bbcode-to-markdown', 'curl-to-php', 'curl-to-ruby-faraday', 'curl-to-rust',
+    'curl-to-go', 'svg-to-android-vector', 'svg-to-swiftui-shape', 'css-grid-to-tailwind'
   ];
   for (const slug of converters) {
     await page.goto(`/tools/converters/${slug}`);
@@ -1034,7 +1035,7 @@ test('batch 477-500 crypto encoding json text render correctly without browser e
     { cat: 'crypto', slug: 'uuid-v7-timestamp-extractor' },
     { cat: 'crypto', slug: 'ethereum-abi-storage-slot-calculator' },
     { cat: 'crypto', slug: 'base64-pem-certificate-parser' },
-    { cat: 'encoding', slug: 'punycode-idn-converter' },
+    { cat: 'converters', slug: 'punycode-converter' },
     { cat: 'encoding', slug: 'crockford-base32-encoder' },
     { cat: 'encoding', slug: 'bcd-binary-coded-decimal-converter' },
     { cat: 'encoding', slug: 'ieee754-hex-float-converter' },

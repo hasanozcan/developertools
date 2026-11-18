@@ -232,6 +232,40 @@ const quickSearchTags = [
 const INITIAL_PAGE_SIZE = 48;
 const LOAD_MORE_STEP = 48;
 
+const directoryCopy: Record<
+  'en' | 'tr' | 'de' | 'es' | 'fr' | 'ru' | 'zh',
+  { heading: string; subtitle: string }
+> = {
+  en: {
+    heading: 'Complete Tool Directory',
+    subtitle: 'Direct links to every free client-side developer tool organized by category.',
+  },
+  tr: {
+    heading: 'Tüm Araçlar Dizini',
+    subtitle: 'Kategoriye göre düzenlenmiş tüm ücretsiz istemci tarafı geliştirici araçlarına doğrudan bağlantılar.',
+  },
+  de: {
+    heading: 'Vollständiges Tool-Verzeichnis',
+    subtitle: 'Direkte Links zu allen kostenlosen clientseitigen Entwickler-Tools nach Kategorie.',
+  },
+  es: {
+    heading: 'Directorio completo de herramientas',
+    subtitle: 'Enlaces directos a todas las herramientas gratuitas en el navegador organizadas por categoría.',
+  },
+  fr: {
+    heading: 'Répertoire complet des outils',
+    subtitle: 'Liens directs vers tous les outils développeurs gratuits côté client, classés par catégorie.',
+  },
+  ru: {
+    heading: 'Полный каталог инструментов',
+    subtitle: 'Прямые ссылки на все бесплатные клиентские инструменты разработчика по категориям.',
+  },
+  zh: {
+    heading: '完整工具目录',
+    subtitle: '按分类整理的所有免费浏览器端开发者工具直达链接。',
+  },
+};
+
 export default function Home({ hubs, children }: { hubs: HomeHubs; children?: React.ReactNode }) {
   const { t, language } = useLanguage();
   const { favorites, toggleFavorite, isFavorite } = useFavorites();
@@ -560,7 +594,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={t('home.filterPlaceholder') || 'Filter 500 tools... (or press /)'}
+                  placeholder={t('home.filterPlaceholder') || `Filter ${normalizedPopular.length} tools... (or press /)`}
                   className="w-full rounded-2xl border border-slate-200/80 bg-white/90 py-2 pl-9 pr-8 text-sm text-slate-800 placeholder:text-slate-400 shadow-sm transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 dark:border-white/10 dark:bg-slate-900/90 dark:text-slate-100"
                 />
                 {searchQuery && (
@@ -1018,6 +1052,59 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
               {t('home.feature3').split(':')[1]}
             </li>
           </ul>
+        </section>
+
+        {/* SSR Complete Tool Directory for crawl discovery & direct navigation */}
+        <section
+          aria-label="Complete Tool Directory"
+          data-complete-directory="true"
+          className="mt-12 rounded-3xl border border-slate-200/80 bg-white/75 p-6 shadow-sm dark:border-white/10 dark:bg-slate-900/60 sm:p-8"
+        >
+          <div className="mb-6">
+            <h2 className="text-xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-2xl">
+              {directoryCopy[language]?.heading || directoryCopy.en.heading}
+            </h2>
+            <p className="mt-1.5 text-sm text-slate-600 dark:text-slate-300">
+              {directoryCopy[language]?.subtitle || directoryCopy.en.subtitle}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {categories.map((cat) => {
+              const catTools = normalizedPopular.filter((item) => item.categorySlug === cat.slug);
+              if (catTools.length === 0) return null;
+              return (
+                <div key={`dir-${cat.slug}`} className="min-w-0">
+                  <h3 className="mb-2.5 flex items-center justify-between border-b border-slate-200/80 pb-1.5 text-sm font-bold text-slate-900 dark:border-white/10 dark:text-white">
+                    <Link
+                      href={`/tools/${cat.slug}`}
+                      className="hover:text-indigo-600 dark:hover:text-indigo-400"
+                    >
+                      {cat.name}
+                    </Link>
+                    <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                      {catTools.length}
+                    </span>
+                  </h3>
+                  <ul className="space-y-1 text-xs leading-5">
+                    {catTools.map((tool) => {
+                      const toolLabel = t(`toolName.${tool.slug}`) || tool.name;
+                      return (
+                        <li key={`dir-tool-${tool.slug}`} className="min-w-0">
+                          <Link
+                            href={buildToolPath(tool.categorySlug, tool.slug)}
+                            prefetch={false}
+                            className="inline-block break-words py-0.5 text-slate-700 hover:text-indigo-600 hover:underline dark:text-slate-300 dark:hover:text-indigo-400"
+                          >
+                            {toolLabel}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
         </section>
       </div>
     </>

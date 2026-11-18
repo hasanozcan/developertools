@@ -3,7 +3,8 @@ import { getHreflangAlternates } from '@/lib/i18nRouting';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
 const pageUrl = `${siteUrl}/terms`;
-const ogImageUrl = `${siteUrl}/og-image.png`;
+const ogImageUrl = `${siteUrl}/opengraph-image`;
+const twitterImageUrl = `${siteUrl}/twitter-image`;
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Terms of Service',
     description: 'Review the DevsTools terms of service for using our free online developer tools.',
-    images: [ogImageUrl],
+    images: [twitterImageUrl],
   },
 };
 

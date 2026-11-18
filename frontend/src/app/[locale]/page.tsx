@@ -13,8 +13,9 @@ import { getHomeHubs } from '@/lib/homeHubs';
 import { ToolTextProvider } from '@/context/LanguageContext';
 import { getToolTextMap } from '@/lib/toolText';
 import { toolCatalog } from '@/lib/api';
+import GuideCards from '@/components/seo/GuideCards';
 
-// Same rounding as the root layout ("490+") so titles stay stable as tools are added.
+// Same rounding as the root layout ("470+") so titles stay stable as tools are added.
 const toolCountLabel = `${Math.max(10, Math.floor(toolCatalog.length / 10) * 10)}+`;
 
 const titles: Record<Language, string> = {
@@ -73,7 +74,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: 'DevsTools',
       images: [
         {
-          url: `${siteUrl}/og-image.png`,
+          url: `${siteUrl}/opengraph-image`,
           width: 1200,
           height: 630,
           alt: title,
@@ -84,7 +85,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: 'summary_large_image',
       title,
       description,
-      images: [`${siteUrl}/og-image.png`],
+      images: [`${siteUrl}/twitter-image`],
     },
   };
 }
@@ -98,7 +99,9 @@ export default async function LocalizedHomePage({ params }: PageProps) {
   // Tool names/descriptions are not in the client dictionary; the tool grid gets them here.
   return (
     <ToolTextProvider text={getToolTextMap(locale as Language)}>
-      <HomePageClient hubs={getHomeHubs(locale as Language)} />
+      <HomePageClient hubs={getHomeHubs(locale as Language)}>
+        <GuideCards locale={locale as Language} />
+      </HomePageClient>
     </ToolTextProvider>
   );
 }

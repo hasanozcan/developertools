@@ -91,6 +91,17 @@ function englishEntries(): MetadataRoute.Sitemap {
     })),
   ];
 
+  const guideUrls = [
+    {
+      url: `${BASE_URL}/guides`,
+      alternates: { languages: getHreflangAlternates('/guides', BASE_URL) },
+    },
+    ...developerGuides.map((guide) => ({
+      url: `${BASE_URL}/guides/${guide.slug}`,
+      alternates: { languages: getHreflangAlternates(`/guides/${guide.slug}`, BASE_URL) },
+    })),
+  ];
+
   return [
     englishHome,
     ...englishCategories,
@@ -98,8 +109,7 @@ function englishEntries(): MetadataRoute.Sitemap {
     ...collectionUrls,
     ...audienceUrls,
     ...staticUrls,
-    { url: `${BASE_URL}/guides` },
-    ...developerGuides.map((guide) => ({ url: `${BASE_URL}/guides/${guide.slug}` })),
+    ...guideUrls,
   ];
 }
 
@@ -153,5 +163,15 @@ function localizedEntries(locale: Language): MetadataRoute.Sitemap {
       alternates: { languages: getHreflangAlternates(`/for/${audience.slug}`, BASE_URL) },
     })),
   ];
-  return [home, ...categories, ...tools, ...pages, ...collections, ...audiences];
+  const guides = [
+    {
+      url: `${BASE_URL}/${locale}/guides`,
+      alternates: { languages: getHreflangAlternates('/guides', BASE_URL) },
+    },
+    ...developerGuides.map((guide) => ({
+      url: `${BASE_URL}/${locale}/guides/${guide.slug}`,
+      alternates: { languages: getHreflangAlternates(`/guides/${guide.slug}`, BASE_URL) },
+    })),
+  ];
+  return [home, ...categories, ...tools, ...pages, ...collections, ...audiences, ...guides];
 }

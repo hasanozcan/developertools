@@ -166,11 +166,6 @@ const tools: readonly (readonly [string, string, string])[] = [
     'Aplana objetos JSON profundamente anidados en claves de un solo nivel con notación de puntos.',
   ],
   [
-    'morse-code-audio-converter',
-    'Codificador de texto a código morse',
-    'Convierte texto alfanumérico en código morse internacional.',
-  ],
-  [
     'base64url-encoder',
     'Codificador y decodificador Base64URL',
     'Codifica y decodifica Base64 apto para URL sin caracteres de relleno.',
@@ -209,11 +204,6 @@ const tools: readonly (readonly [string, string, string])[] = [
     'protobuf-formatter',
     'Formateador de Protocol Buffers (.proto)',
     'Formatea y aplica sangría a las definiciones de servicios y mensajes Protobuf proto3.',
-  ],
-  [
-    'totp-authenticator-simulator',
-    'Simulador de autenticador TOTP RFC 6238',
-    'Genera contraseñas de un solo uso basadas en el tiempo (TOTP) de 6 dígitos con un temporizador de cuenta atrás.',
   ],
   [
     'ed25519-key-generator',
@@ -301,11 +291,6 @@ const tools: readonly (readonly [string, string, string])[] = [
     'Codifica gráficos vectoriales SVG en URI de datos Base64 de alto rendimiento.',
   ],
   [
-    'docker-to-compose',
-    'Conversor de docker run a Docker Compose',
-    'Convierte comandos individuales docker run del terminal en servicios estándar de docker-compose.yml.',
-  ],
-  [
     'har-to-k6',
     'Conversor de HAR a scripts de pruebas de carga k6',
     'Convierte registros de red del navegador en formato HTTP Archive (HAR) en scripts de pruebas de rendimiento k6.',
@@ -324,11 +309,6 @@ const tools: readonly (readonly [string, string, string])[] = [
     'openapi-to-typescript-fetch',
     'OpenAPI a cliente Fetch de TypeScript',
     'Genera funciones de cliente de API fetch con tipos a partir de especificaciones OpenAPI 3.0 y Swagger.',
-  ],
-  [
-    'postman-to-curl',
-    'Colección Postman a script cURL',
-    'Convierte solicitudes JSON exportadas de colecciones Postman en comandos cURL ejecutables en un terminal.',
   ],
   [
     'svg-to-react-native',
@@ -364,11 +344,6 @@ const tools: readonly (readonly [string, string, string])[] = [
     'nginx-rate-limit-calculator',
     'Generador de directivas de límites de solicitudes de Nginx',
     'Genera directivas limit_req_zone optimizadas para limitar solicitudes en proxies inversos de Nginx.',
-  ],
-  [
-    'cron-next-runs-visualizer',
-    'Calculadora de las próximas 20 ejecuciones cron',
-    'Calcula y previsualiza las marcas de tiempo exactas de las próximas 20 ejecuciones de cualquier programación cron.',
   ],
   [
     'rag-chunking-visualizer',
@@ -1430,11 +1405,6 @@ const tools: readonly (readonly [string, string, string])[] = [
     'Genera hashes UUID v5 deterministas RFC 4122 a partir de espacios de nombres.',
   ],
   [
-    'bip39-seed-phrase-generator',
-    'Generador de frases semilla mnemotécnicas BIP-39',
-    'Genera frases semilla BIP-39 de 12 y 24 palabras criptográficamente seguras.',
-  ],
-  [
     'eip712-hasher',
     'Calculadora de hashes de datos tipados EIP-712 de Ethereum',
     'Calcula el separador de dominio y el hash de estructura para la firma de datos tipados EIP-712.',
@@ -1463,11 +1433,6 @@ const tools: readonly (readonly [string, string, string])[] = [
     'http-headers-to-json',
     'Conversor de cabeceras HTTP a JSON',
     'Convierte texto de cabeceras HTTP en un objeto JSON y viceversa.',
-  ],
-  [
-    'jwt-builder',
-    'Generador y simulador de cargas JWT',
-    'Crea tokens JWT con cabeceras y cargas personalizadas y simulación de firma.',
   ],
   [
     'passphrase-wordlist-generator',
@@ -1605,24 +1570,9 @@ const tools: readonly (readonly [string, string, string])[] = [
     'Convierte etiquetas BBCode de foros en formato de texto Markdown con la sintaxis de GitHub.',
   ],
   [
-    'curl-to-php-guzzle',
-    'Conversor de cURL a cliente PHP Guzzle',
-    'Convierte comandos cURL del terminal con cabeceras y cuerpo en código ejecutable de cliente PHP Guzzle.',
-  ],
-  [
     'curl-to-ruby-faraday',
     'Conversor de cURL a cliente Ruby Faraday',
     'Convierte solicitudes cURL en solicitudes de clientes Ruby Faraday y Net::HTTP con cabeceras.',
-  ],
-  [
-    'curl-to-rust-reqwest',
-    'cURL a cliente asíncrono Rust reqwest',
-    'Convierte comandos cURL en bloques de código de solicitudes del cliente asíncrono Rust reqwest.',
-  ],
-  [
-    'curl-to-go-http',
-    'Conversor de cURL a cliente Go net/http',
-    'Convierte comandos cURL en solicitudes del cliente net/http de la biblioteca estándar de Go.',
   ],
   [
     'svg-to-android-vector',
@@ -1948,11 +1898,6 @@ const tools: readonly (readonly [string, string, string])[] = [
     'base64-pem-certificate-parser',
     'Analizador de SAN e información de certificados X.509 TLS/SSL',
     'Analiza certificados X.509 PEM para extraer nombres alternativos del sujeto, emisores y validez.',
-  ],
-  [
-    'punycode-idn-converter',
-    'Conversor de dominios IDN Punycode',
-    'Convierte nombres de dominio Unicode internacionalizados en Punycode compatible con ASCII (xn--).',
   ],
   [
     'crockford-base32-encoder',

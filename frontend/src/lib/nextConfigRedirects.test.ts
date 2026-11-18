@@ -162,6 +162,20 @@ describe('Next.js configuration', () => {
       ['/tools/json/json-path-query-tester', '/tools/json/jsonpath-tester'],
       ['/tools/encoding/html-entities-converter', '/tools/encoding/html-entity'],
       ['/tools/encoding/url-safe-base64-converter', '/tools/encoding/base64url-encoder'],
+      ['/tools/converters/curl-to-go-http', '/tools/converters/curl-to-go'],
+      ['/tools/converters/curl-to-rust-reqwest', '/tools/converters/curl-to-rust'],
+      ['/tools/converters/curl-to-php-guzzle', '/tools/converters/curl-to-php'],
+      ['/tools/converters/postman-to-curl', '/tools/converters/postman-collection-to-curl'],
+      ['/tools/crypto/bcrypt-hash-calculator', '/tools/crypto/bcrypt-generator'],
+      ['/tools/crypto/bip39-seed-phrase-generator', '/tools/crypto/bip39-generator'],
+      ['/tools/crypto/totp-authenticator-simulator', '/tools/crypto/totp-generator'],
+      ['/tools/converters/svg-to-png-hd', '/tools/converters/svg-to-png'],
+      ['/tools/encoding/punycode-idn-converter', '/tools/converters/punycode-converter'],
+      ['/tools/converters/docker-to-compose', '/tools/converters/docker-run-to-compose'],
+      ['/tools/encoding/morse-code-audio-converter', '/tools/converters/morse-code-converter'],
+      ['/tools/generators/jwt-builder', '/tools/crypto/jwt-generator'],
+      ['/tools/utilities/cron-next-runs-visualizer', '/tools/utilities/cron-parser'],
+      ['/tools/utilities/crontab-schedule-translator', '/tools/utilities/cron-parser'],
     ];
 
     for (const [oldPath, primaryPath] of merged) {

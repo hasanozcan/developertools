@@ -39,9 +39,6 @@ export const frCompletion: Record<string, string> = {
   'toolName.json-flatten-unflatten': "Aplatisseur d'objets JSON imbriqués",
   'toolDesc.json-flatten-unflatten':
     'Aplatissez les objets JSON profondément imbriqués en clés à un seul niveau, séparées par des points.',
-  'toolName.morse-code-audio-converter': 'Encodeur de texte en morse',
-  'toolDesc.morse-code-audio-converter':
-    'Convertissez du texte alphanumérique en code morse international.',
   'toolName.base64url-encoder': 'Encodeur et décodeur Base64URL',
   'toolDesc.base64url-encoder':
     'Encodez et décodez du Base64 adapté aux URL, sans caractères de remplissage.',
@@ -66,9 +63,6 @@ export const frCompletion: Record<string, string> = {
   'toolName.protobuf-formatter': 'Formateur Protocol Buffers (.proto)',
   'toolDesc.protobuf-formatter':
     'Formatez et indentez les définitions de services et de messages Protobuf proto3.',
-  'toolName.totp-authenticator-simulator': "Simulateur d'authentificateur TOTP RFC 6238",
-  'toolDesc.totp-authenticator-simulator':
-    'Générez des mots de passe à usage unique temporels (TOTP) à 6 chiffres avec un compte à rebours.',
   'toolName.ed25519-key-generator': 'Générateur de paires de clés Ed25519',
   'toolDesc.ed25519-key-generator':
     'Générez des paires de clés cryptographiques publiques et privées Ed25519.',
@@ -120,9 +114,6 @@ export const frCompletion: Record<string, string> = {
   'toolName.svg-to-webp': 'Convertisseur SVG vers URI de données WebP',
   'toolDesc.svg-to-webp':
     'Encodez des graphiques vectoriels SVG en URI de données Base64 performantes.',
-  'toolName.docker-to-compose': 'Convertisseur de docker run vers Docker Compose',
-  'toolDesc.docker-to-compose':
-    'Convertissez des commandes individuelles docker run en services docker-compose.yml standard.',
   'toolName.har-to-k6': 'Convertisseur HAR vers scripts de test de charge k6',
   'toolDesc.har-to-k6':
     'Convertissez les journaux réseau du navigateur HTTP Archive (HAR) en scripts de test de performance k6.',
@@ -135,9 +126,6 @@ export const frCompletion: Record<string, string> = {
   'toolName.openapi-to-typescript-fetch': "Client Fetch TypeScript à partir d'OpenAPI",
   'toolDesc.openapi-to-typescript-fetch':
     'Générez des fonctions de client API fetch typées à partir de spécifications OpenAPI 3.0 et Swagger.',
-  'toolName.postman-to-curl': 'Collection Postman vers script cURL',
-  'toolDesc.postman-to-curl':
-    'Convertissez les requêtes JSON de collections Postman exportées en commandes cURL exécutables dans un terminal.',
   'toolName.svg-to-react-native': 'Convertisseur SVG vers React Native (SVGR)',
   'toolDesc.svg-to-react-native':
     'Transformez des graphiques vectoriels SVG bruts en composants JSX react-native-svg.',
@@ -159,9 +147,6 @@ export const frCompletion: Record<string, string> = {
   'toolName.nginx-rate-limit-calculator': 'Générateur de directives de limitation Nginx',
   'toolDesc.nginx-rate-limit-calculator':
     'Générez des directives limit_req_zone optimisées pour limiter le débit des proxys inverses Nginx.',
-  'toolName.cron-next-runs-visualizer': 'Calculateur des 20 prochaines exécutions cron',
-  'toolDesc.cron-next-runs-visualizer':
-    "Calculez et prévisualisez les 20 prochains horodatages d'exécution exacts d'un calendrier cron.",
   'toolName.rag-chunking-visualizer': 'Visualiseur de découpage sémantique RAG',
   'toolDesc.rag-chunking-visualizer':
     'Visualisez le découpage du texte avec des tailles de jetons personnalisées et des fenêtres glissantes qui se chevauchent.',
@@ -795,9 +780,6 @@ export const frCompletion: Record<string, string> = {
   'toolName.uuid-v5-generator': 'Générateur UUID v5 (espace de noms SHA-1)',
   'toolDesc.uuid-v5-generator':
     "Générez des UUID v5 RFC 4122 déterministes à partir d'espaces de noms.",
-  'toolName.bip39-seed-phrase-generator': 'Générateur de phrases de récupération BIP-39',
-  'toolDesc.bip39-seed-phrase-generator':
-    'Générez des phrases de récupération BIP-39 de 12 ou 24 mots cryptographiquement sûres.',
   'toolName.eip712-hasher': 'Hachage de données typées Ethereum EIP-712',
   'toolDesc.eip712-hasher':
     "Calculez le séparateur de domaine et l'empreinte de structure pour la signature de données typées EIP-712.",
@@ -814,9 +796,6 @@ export const frCompletion: Record<string, string> = {
   'toolName.http-headers-to-json': "Convertisseur d'en-têtes HTTP vers JSON",
   'toolDesc.http-headers-to-json':
     'Convertissez le texte des en-têtes HTTP en objets JSON et inversement.',
-  'toolName.jwt-builder': 'Générateur de contenu JWT et simulateur',
-  'toolDesc.jwt-builder':
-    'Créez des jetons JWT avec en-tête et contenu personnalisés et simulation de signature.',
   'toolName.passphrase-wordlist-generator': 'Générateur de phrases secrètes Diceware',
   'toolDesc.passphrase-wordlist-generator':
     'Générez des phrases secrètes Diceware robustes et mémorisables avec séparateurs personnalisés.',
@@ -898,18 +877,9 @@ export const frCompletion: Record<string, string> = {
   'toolName.bbcode-to-markdown': 'Convertisseur BBCode vers Markdown GitHub',
   'toolDesc.bbcode-to-markdown':
     'Convertissez les balises BBCode de forum en mise en forme Markdown compatible GitHub.',
-  'toolName.curl-to-php-guzzle': 'Convertisseur cURL vers client PHP Guzzle',
-  'toolDesc.curl-to-php-guzzle':
-    'Convertissez des commandes cURL avec en-têtes et corps en code client PHP Guzzle exécutable.',
   'toolName.curl-to-ruby-faraday': 'Convertisseur cURL vers client Ruby Faraday',
   'toolDesc.curl-to-ruby-faraday':
     'Convertissez des requêtes cURL en requêtes Ruby Faraday et Net::HTTP avec en-têtes.',
-  'toolName.curl-to-rust-reqwest': 'cURL vers client asynchrone Rust reqwest',
-  'toolDesc.curl-to-rust-reqwest':
-    'Convertissez des commandes cURL en blocs de code client asynchrone Rust reqwest.',
-  'toolName.curl-to-go-http': 'Convertisseur cURL vers client Go net/http',
-  'toolDesc.curl-to-go-http':
-    'Convertissez des commandes cURL en requêtes client de la bibliothèque standard Go net/http.',
   'toolName.svg-to-android-vector': 'SVG vers XML Android Vector Drawable',
   'toolDesc.svg-to-android-vector':
     'Convertissez des graphiques SVG au format XML Android Vector Drawable pour les applications Android natives.',
@@ -1115,9 +1085,6 @@ export const frCompletion: Record<string, string> = {
     'Analyseur SAN et informations de certificats X.509 TLS/SSL',
   'toolDesc.base64-pem-certificate-parser':
     'Analysez les certificats X.509 PEM pour extraire noms alternatifs du sujet, émetteurs et validité.',
-  'toolName.punycode-idn-converter': 'Convertisseur de domaines IDN Punycode',
-  'toolDesc.punycode-idn-converter':
-    'Convertissez les noms de domaine Unicode internationalisés en Punycode compatible ASCII (xn--).',
   'toolName.crockford-base32-encoder': 'Encodeur et décodeur Crockford Base32',
   'toolDesc.crockford-base32-encoder':
     'Encodez des nombres en chaînes Crockford Base32 lisibles qui excluent les lettres ambiguës.',

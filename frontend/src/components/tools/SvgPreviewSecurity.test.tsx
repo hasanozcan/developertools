@@ -4,7 +4,6 @@ import { LanguageProvider } from '@/context/LanguageContext';
 import SvgMinifierTool from './SvgMinifierTool';
 import SvgOptimizerTool from './SvgOptimizerTool';
 import SvgToPngConverterTool from './SvgToPngConverterTool';
-import SvgToPngTool from './SvgToPngTool';
 import SvgPlaceholderGeneratorTool from './SvgPlaceholderGeneratorTool';
 import { generateSvgPlaceholder } from '@/lib/svgPlaceholder';
 
@@ -14,7 +13,7 @@ const payload = '<svg xmlns="http://www.w3.org/2000/svg"><foreignObject><img xml
 describe('SVG preview isolation', () => {
   it.each([
     ['minifier', SvgMinifierTool], ['optimizer', SvgOptimizerTool],
-    ['converter', SvgToPngConverterTool], ['legacy converter', SvgToPngTool],
+    ['converter', SvgToPngConverterTool],
   ] as const)(
     'keeps untrusted markup out of the page DOM in %s', (_name, Tool) => {
       const { container } = render(<LanguageProvider><Tool /></LanguageProvider>);

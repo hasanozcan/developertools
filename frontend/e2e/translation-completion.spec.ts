@@ -63,6 +63,7 @@ test('mobile menu changes language by keyboard and preserves the current tool', 
       const start = locale === 'en' ? 'tr' : 'en';
       const path = '/tools/utilities/curl-to-fetch';
       await page.goto(localPath(start, path));
+      await expect(page.locator('header')).toHaveAttribute('data-hydrated', 'true');
       const menuButton = page.locator('button[aria-controls="mobile-navigation"]');
       await menuButton.focus();
       await page.keyboard.press('Enter');
@@ -90,8 +91,11 @@ test('mobile menu changes language by keyboard and preserves the current tool', 
       await expect(page.getByRole('heading', { level: 1 })).toHaveText(
         translations[locale]['toolName.curl-to-fetch'],
       );
-      await page.locator('button[aria-controls="mobile-navigation"]').focus();
+      await expect(page.locator('header')).toHaveAttribute('data-hydrated', 'true');
+      const nextMenuButton = page.locator('button[aria-controls="mobile-navigation"]');
+      await nextMenuButton.focus();
       await page.keyboard.press('Enter');
+      await expect(nextMenuButton).toHaveAttribute('aria-expanded', 'true');
       await expect(
         page.locator('#mobile-navigation button[aria-haspopup="listbox"]'),
       ).toHaveAttribute(

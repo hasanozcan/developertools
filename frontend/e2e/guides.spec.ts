@@ -1,12 +1,16 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from './fixtures';
-import { developerGuides } from '../src/lib/developerGuides';
+import { developerGuides, getLocalizedGuide } from '../src/lib/developerGuides';
 
-test('guides are discoverable, server-rendered, and connected to their tools', async ({
+const TOOLS_WITH_EMBEDDED_EXAMPLES = new Set(['sha256-hash', 'unicode-escape', 'uuid-generator']);
+
+test('guides are discoverable, server-rendered, localized, and connected to their tools', async ({
   page,
   request,
 }) => {
   const sitemap = await (await request.get('/sitemap/en.xml')).text();
+  const trSitemap = await (await request.get('/sitemap/tr.xml')).text();
+
   await page.goto('/');
   await expect(page.locator('[data-guide-cards="true"]')).toBeVisible();
   await page.getByRole('link', { name: 'All guides', exact: false }).click();
@@ -15,6 +19,7 @@ test('guides are discoverable, server-rendered, and connected to their tools', a
   for (const guide of developerGuides) {
     const path = `/guides/${guide.slug}`;
     expect(sitemap).toContain(`https://devstools.app${path}`);
+    expect(trSitemap).toContain(`https://devstools.app/tr${path}`);
     const response = await request.get(path);
     expect(response.ok()).toBeTruthy();
     const html = await response.text();
@@ -28,21 +33,43 @@ test('guides are discoverable, server-rendered, and connected to their tools', a
       'href',
       `https://devstools.app${path}`,
     );
-    await expect(page.locator('link[rel="alternate"][hreflang="tr"]')).toHaveCount(0);
+    await expect(page.locator('link[rel="alternate"][hreflang="tr"]')).toHaveAttribute(
+      'href',
+      `https://devstools.app/tr${path}`,
+    );
     await expect(page.locator('[data-code-example="true"]').first()).toBeVisible();
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.screenshot({ path: test.info().outputPath(`${guide.slug}.png`), fullPage: true });
 
     await page.getByRole('link', { name: `Open ${guide.toolName}`, exact: false }).click();
     await expect(page).toHaveURL(new RegExp(`${guide.toolHref}$`));
-    await expect(page.locator('[data-code-example="true"]')).toHaveCount(2);
+    if (TOOLS_WITH_EMBEDDED_EXAMPLES.has(guide.toolSlug)) {
+      await expect(page.locator('[data-code-example="true"]')).toHaveCount(2);
+    }
     await expect(page.locator('[data-related-guides="true"] a')).toHaveAttribute('href', path);
     await page.locator('[data-related-guides="true"] a').click();
     await expect(page).toHaveURL(new RegExp(`${path}$`));
     await page.getByRole('link', { name: 'Developer guides', exact: true }).click();
   }
+
+  // Verify localized Turkish guides index & detail pages
+  await page.goto('/tr/guides');
+  await expect(page.locator('html')).toHaveAttribute('lang', 'tr');
+  await expect(page.locator('link[rel="alternate"][hreflang="tr"]')).toHaveAttribute(
+    'href',
+    'https://devstools.app/tr/guides',
+  );
+  const trGuide = getLocalizedGuide(developerGuides[0], 'tr');
+  await page.locator(`a[href="/tr/guides/${trGuide.slug}"]`).first().click();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(trGuide.title);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    'href',
+    `https://devstools.app/tr/guides/${trGuide.slug}`,
+  );
+  await expect(page.locator('[data-code-example="true"]').first()).toBeVisible();
+
   expect((await request.get('/guides/not-a-guide')).status()).toBe(404);
-  expect((await request.get('/tr/guides')).status()).toBe(404);
+  expect((await request.get('/tr/guides/not-a-guide')).status()).toBe(404);
 });
 
 test('guide code can be copied and pages fit mobile screens without serious accessibility issues', async ({

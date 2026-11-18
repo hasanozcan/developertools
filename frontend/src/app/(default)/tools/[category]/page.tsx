@@ -73,6 +73,7 @@ import {
 const CATEGORY_INFEED_INTERVAL = 12;
 import { resolveTitle } from '@/lib/toolTitle';
 import { serializeJsonForHtmlScript } from '@/lib/scriptSafeJson';
+import { categoryUiLabels, getCategoryPageContent } from '@/lib/categoryPageContent';
 
 /** Looks up a UI string for `locale` (English fallback) and fills `{placeholders}`. */
 function translate(
@@ -250,62 +251,6 @@ const categories: Record<string, CategoryConfig> = {
         name: 'Image to Base64',
         slug: 'image-to-base64',
         description: 'Convert images to Base64 data URIs',
-      },
-    ],
-    answerSections: [
-      {
-        heading: 'Which online encoder should I use?',
-        paragraphs: [
-          'Use the workbench on this page for quick Base64, URL-component, hexadecimal, binary, or JSON-string conversion. Choose the representation required by the system that will consume the result, or open a dedicated tool when you need format-specific options.',
-        ],
-        bullets: [
-          'Base64 converts text to and from Base64; Image to Base64 creates a data URI for an image.',
-          'URL Encoder percent-encodes a full URL or one URL component.',
-          'HTML Entity handles characters used in HTML source.',
-          'Unicode Escape represents code points with escape sequences, while JSON String Escape prepares or reads string content used inside JSON.',
-          'HEX Encoder and Binary Encoder expose character data as hexadecimal or bit values.',
-          "JWT Decoder displays a token's Base64url-encoded header and payload for debugging, but decoding does not verify its signature or prove its claims are trustworthy.",
-        ],
-      },
-      {
-        heading: 'Encoding is not encryption or hashing',
-        paragraphs: [
-          "Encoding changes a value's representation so compatible software can reverse it; it is not a security control. Encryption uses a key to protect confidentiality, while hashing produces a digest intended to be one-way. Base64, percent encoding, HTML entities, hexadecimal, binary, Unicode escapes, and JSON escaping do not hide secrets. Use encryption when confidentiality is required, a keyed message-authentication code or digital signature when authenticity and integrity are required, and a dedicated salted, deliberately slow password-hashing scheme for stored passwords.",
-        ],
-      },
-      {
-        heading: 'Client-side processing and privacy',
-        paragraphs: [
-          'These encoding and decoding tools run in the current browser. Text transformations use browser JavaScript, and image conversion uses FileReader instead of uploading the selected file to a conversion service. That client-side boundary reduces routine data transfer, but it does not make sensitive material safe on every device. Clipboard history, browser extensions, third-party page scripts, screen sharing, or a shared computer can expose input. Do not paste production credentials, private keys, session tokens, or confidential JWT claims.',
-        ],
-      },
-    ],
-    faqs: [
-      {
-        question: 'Which online encoder should I use?',
-        answer:
-          'Use this page for Base64, URL-component, hexadecimal, binary, or JSON-string conversion. Use HTML entities for HTML source, Unicode escaping for code points, JWT Decoder for token inspection, and Image to Base64 for image data URIs.',
-      },
-      {
-        question: 'Is encoding the same as encryption or hashing?',
-        answer:
-          'No. Encoding is reversible representation and provides no confidentiality. Encryption protects data with a key, while hashing produces a digest that is generally intended to be one-way.',
-      },
-      {
-        question: 'Do these encoding tools upload my input?',
-        answer:
-          'The current tools perform their transformations in your browser and do not submit entered values or selected images to a conversion API. Clipboard history, extensions, page scripts, and shared devices can still expose sensitive input.',
-      },
-    ],
-    sources: [
-      { name: 'RFC 4648: Base-N Encodings', url: 'https://www.rfc-editor.org/rfc/rfc4648' },
-      {
-        name: 'WHATWG URL Standard: Percent-encoded bytes',
-        url: 'https://url.spec.whatwg.org/#percent-encoded-bytes',
-      },
-      {
-        name: 'NIST SP 800-63B: Authentication and Authenticator Management',
-        url: 'https://pages.nist.gov/800-63-4/sp800-63b.html',
       },
     ],
   },
@@ -767,11 +712,11 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
   const allToolsHeading = translate(locale, 'categoryPage.allToolsHeading', {
     category: categoryName,
   });
-  // Answer sections, FAQs, and their sources only exist in English; locale pages
-  // omit them rather than mixing English prose into a translated page.
-  const answerSections = isDefaultLocale ? category.answerSections || [] : [];
-  const faqs = isDefaultLocale ? category.faqs || [] : [];
-  const sources = isDefaultLocale ? category.sources || [] : [];
+  const localizedContent = getCategoryPageContent(categorySlug, locale);
+  const answerSections = localizedContent?.answerSections ?? category.answerSections ?? [];
+  const faqs = localizedContent?.faqs ?? category.faqs ?? [];
+  const sources = localizedContent?.sources ?? category.sources ?? [];
+  const contentUi = localizedContent?.ui ?? categoryUiLabels[locale] ?? categoryUiLabels.en;
 
   // Merge curated entries with the full catalog so every tool in this category
   // is reachable from its category hub (internal linking + crawl discovery).
@@ -1033,7 +978,7 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
         {faqs.length > 0 && (
           <section className="mb-8">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-              Frequently asked questions
+              {contentUi.faqHeading}
             </h2>
             <dl className="space-y-4">
               {faqs.map((faq) => (
@@ -1059,10 +1004,10 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
               id="sources-heading"
               className="text-xl font-bold text-gray-900 dark:text-white mb-4"
             >
-              Sources &amp; references
+              {contentUi.sourcesHeading}
             </h2>
             <p className="text-gray-600 dark:text-gray-300">
-              Primary references:{' '}
+              {contentUi.primaryReferences}{' '}
               {sources.map((source, index) => (
                 <span key={source.url}>
                   {index > 0 ? '; ' : ''}
@@ -1080,7 +1025,7 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
             </p>
             {categorySlug === 'encoding' && (
               <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
-                Last reviewed: <time dateTime="2026-07-11">2026-07-11</time>
+                {contentUi.lastReviewed} <time dateTime="2026-07-11">2026-07-11</time>
               </p>
             )}
           </section>

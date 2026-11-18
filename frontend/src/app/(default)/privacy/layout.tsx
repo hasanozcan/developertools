@@ -3,7 +3,8 @@ import { getHreflangAlternates } from '@/lib/i18nRouting';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
 const pageUrl = `${siteUrl}/privacy`;
-const ogImageUrl = `${siteUrl}/og-image.png`;
+const ogImageUrl = `${siteUrl}/opengraph-image`;
+const twitterImageUrl = `${siteUrl}/twitter-image`;
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Privacy Policy',
     description: 'Read the DevsTools privacy policy and learn how data is handled in our client-side tools.',
-    images: [ogImageUrl],
+    images: [twitterImageUrl],
   },
 };
 

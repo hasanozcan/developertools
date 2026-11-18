@@ -36,7 +36,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
-// Rounded down to the nearest 10 ("490+") so the homepage title stays stable as tools are added.
+// Rounded down to the nearest 10 ("470+") so the homepage title stays stable as tools are added.
 const toolCountLabel = `${Math.max(10, Math.floor(toolCatalog.length / 10) * 10)}+`;
 const homeTitle = `${toolCountLabel} Free Online Developer Tools | DevsTools`;
 const homeSocialDescription = `${toolCountLabel} free online developer tools for JSON, encoding, UUIDs, hashing, regex, QR codes, HTTP utilities and more. No registration required.`;
@@ -93,7 +93,7 @@ export const rootMetadata: Metadata = {
     description: homeSocialDescription,
     images: [
       {
-        url: `${siteUrl}/og-image.png`,
+        url: `${siteUrl}/opengraph-image`,
         width: 1200,
         height: 630,
         alt: 'DevsTools - Free Online Developer Tools',
@@ -104,7 +104,7 @@ export const rootMetadata: Metadata = {
     card: 'summary_large_image',
     title: homeTitle,
     description: homeSocialDescription,
-    images: [`${siteUrl}/og-image.png`],
+    images: [`${siteUrl}/twitter-image`],
   },
   robots: {
     index: true,
@@ -175,7 +175,15 @@ export function RootDocument({
               name: 'DevsTools',
               alternateName: homeTitle,
               description: 'Free online tools for programmers and web developers',
-              inLanguage: 'en',
+              inLanguage: lang,
+              potentialAction: {
+                '@type': 'SearchAction',
+                target: {
+                  '@type': 'EntryPoint',
+                  urlTemplate: `${siteUrl}${lang === 'en' ? '' : `/${lang}`}/?search={search_term_string}`,
+                },
+                'query-input': 'required name=search_term_string',
+              },
               publisher: {
                 '@type': 'Organization',
                 '@id': `${siteUrl}/#organization`,
