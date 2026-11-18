@@ -10,7 +10,7 @@ import ToolWorkflowBar from '@/components/common/ToolWorkflowBar';
 import WorkspaceControls from '@/components/common/WorkspaceControls';
 import AdSense from '@/components/common/AdSense';
 import PostToolAdBanner from '@/components/common/PostToolAdBanner';
-import { Maximize2, Minimize2, Sparkles, X, Sun, Moon } from 'lucide-react';
+import { Maximize2, Minimize2, Sun, Moon } from 'lucide-react';
 import Link from '@/components/common/LocalizedLink';
 import ProInterestCard from '@/components/common/ProInterestCard';
 import {
@@ -210,18 +210,17 @@ export default function ToolPageWrapper({
   const renderAnswerSection = (section: ToolSeoSection, answerFirst = false) => (
     <section
       key={section.heading}
-      className="mb-8"
+      className="mb-8 min-w-0"
       data-answer-first={answerFirst ? 'true' : undefined}
     >
-      <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{section.heading}</h2>
-      <div className="space-y-3 break-words text-gray-600 dark:text-gray-300">
+      <h2 className="mb-4 text-xl font-bold tracking-tight text-slate-950 dark:text-white">{section.heading}</h2>
+      <div className="min-w-0 space-y-3 break-words leading-7 text-slate-700 dark:text-slate-300">
         {section.paragraphs?.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
-        {language === 'en' &&
-          section.codeExamples?.map((example) => <CodeExample key={example.title} {...example} />)}
+        {section.codeExamples?.map((example) => <CodeExample key={example.title} {...example} />)}
         {section.bullets && (
-          <ul className="list-disc pl-6 space-y-2">
+          <ul className="list-disc space-y-2 pl-6">
             {section.bullets.map((bullet) => (
               <li key={bullet}>{bullet}</li>
             ))}
@@ -240,57 +239,71 @@ export default function ToolPageWrapper({
       <QuickAccessBar currentSlug={toolSlug} className="mb-4" />
 
       {/* Breadcrumb */}
-      <nav className="mb-6 overflow-x-auto rounded-full border border-white/80 bg-white/60 px-4 py-2.5 backdrop-blur dark:border-white/10 dark:bg-white/5">
-        <ol className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
-          <li>
+      <nav className="mb-6 overflow-x-auto rounded-xl border border-slate-200 bg-white px-4 py-2 dark:border-slate-800 dark:bg-slate-900/90">
+        <ol className="flex items-center space-x-2 font-mono text-xs text-slate-600 dark:text-slate-400 sm:text-sm">
+          <li className="shrink-0">
             <Link
               href="/"
-              className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              className="transition-colors hover:text-slate-950 hover:underline dark:hover:text-white"
             >
               {t('nav.home') || 'Home'}
             </Link>
           </li>
-          <li className="text-gray-400">/</li>
-          <li>
+          <li className="text-slate-400 dark:text-slate-600">/</li>
+          <li className="shrink-0">
             <Link
               href={`/tools/${category}`}
-              className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+              className="transition-colors hover:text-slate-950 hover:underline dark:hover:text-white"
             >
               {translatedCategoryName}
             </Link>
           </li>
-          <li className="text-gray-400">/</li>
-          <li className="text-gray-900 dark:text-white font-medium">{toolName}</li>
+          <li className="text-slate-400 dark:text-slate-600">/</li>
+          <li className="truncate font-medium text-slate-950 dark:text-white">{toolName}</li>
         </ol>
       </nav>
 
       {/* Header */}
-      <div className="surface-card mb-8 flex items-start justify-between gap-4 rounded-3xl p-6 sm:p-8">
+      <div className="mb-8 flex items-start justify-between gap-4 rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-950/90 sm:p-7">
         <div className="min-w-0 flex-1">
-          <span className="eyebrow mb-3">{translatedCategoryName}</span>
-          <h1 className="mb-2 break-words text-3xl font-extrabold tracking-tight text-gray-950 dark:text-white sm:text-4xl">
+          <div className="mb-3 flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center rounded border border-slate-300 bg-slate-100 px-2.5 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
+              {translatedCategoryName}
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded border border-emerald-200 bg-emerald-50 px-2 py-0.5 font-mono text-[11px] font-medium text-emerald-800 dark:border-emerald-800/60 dark:bg-emerald-950/50 dark:text-emerald-300">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
+              {t('uiText.fd35707d')}
+            </span>
+          </div>
+          <h1 className="mb-2 break-words text-2xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-4xl">
             {toolName}
           </h1>
-          <p className="max-w-3xl leading-7 text-gray-600 dark:text-gray-300">{toolDescription}</p>
+          <p className="max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">{toolDescription}</p>
         </div>
         <FavoriteButton toolSlug={toolSlug} className="shrink-0" />
       </div>
 
       {/* Main Content with Sidebar */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
         {/* Main Content Area */}
-        <div className="lg:col-span-3">
+        <div className="min-w-0 lg:col-span-3">
           {/* Lead with the direct answer before the interactive interface. */}
           {answerSections.slice(0, 1).map((section) => renderAnswerSection(section, true))}
 
           {/* Tool Component */}
           <div
-            className="surface-card mb-8 rounded-3xl p-4 sm:p-7 relative"
+            className="relative mb-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950/95"
             data-tool-interface="true"
           >
-            {/* Tool Toolbar (Full Screen Toggle) */}
-            <div className="flex flex-wrap items-center justify-between gap-2 mb-4 pb-2 border-b border-slate-100 dark:border-white/5">
-              <WorkspaceControls toolSlug={toolSlug} />
+            {/* Tool Toolbar (Window Chrome + Workspace + Full Screen Toggle) */}
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-slate-50 px-4 py-2.5 dark:border-slate-800 dark:bg-slate-900/95 sm:px-6">
+              <div className="flex min-w-0 flex-wrap items-center gap-3">
+                <span className="hidden items-center gap-1.5 font-mono text-[11px] font-semibold text-slate-600 dark:text-slate-400 sm:inline-flex">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
+                  {toolSlug}
+                </span>
+                <WorkspaceControls toolSlug={toolSlug} />
+              </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => {
@@ -299,20 +312,22 @@ export default function ToolPageWrapper({
                   }}
                   title={t('zenMode') || 'Full Screen'}
                   aria-label={t('zenMode') || 'Full Screen'}
-                  className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-white/90 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:border-indigo-300 hover:text-indigo-600 hover:-translate-y-0.5 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-indigo-500"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 font-mono text-xs font-semibold text-slate-800 transition-colors hover:border-slate-500 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-slate-500 dark:hover:bg-slate-700"
                 >
-                  <Maximize2 className="h-3.5 w-3.5 text-indigo-500" />
+                  <Maximize2 className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-400" />
                   <span>{t('zenMode') || 'Full Screen'}</span>
                 </button>
               </div>
             </div>
-            <RelatedGuideLinks guides={relatedGuides} locale={language} />
-            {/* The tool UI is client-only; reserve its typical height so mounting it
-                doesn't push the content below (CLS). */}
-            <div data-tool-slot="true" style={{ minHeight: `${interfaceMinHeight}px` }}>
-              {children}
+            <div className="p-4 sm:p-6">
+              <RelatedGuideLinks guides={relatedGuides} locale={language} />
+              {/* The tool UI is client-only; reserve its typical height so mounting it
+                  doesn't push the content below (CLS). */}
+              <div data-tool-slot="true" className="min-w-0" style={{ minHeight: `${interfaceMinHeight}px` }}>
+                {children}
+              </div>
+              <ToolWorkflowBar toolSlug={toolSlug} />
             </div>
-            <ToolWorkflowBar toolSlug={toolSlug} />
           </div>
 
           {/* Full Screen Overlay */}
@@ -321,19 +336,19 @@ export default function ToolPageWrapper({
               role="dialog"
               aria-modal="true"
               aria-label={`${toolName} - ${t('zenMode') || 'Full Screen'}`}
-              className="fixed inset-0 z-[100] flex flex-col bg-slate-100/95 p-2 sm:p-4 md:p-6 overflow-y-auto backdrop-blur-2xl dark:bg-slate-950/95 text-slate-900 dark:text-slate-100"
+              className="fixed inset-0 z-[100] flex flex-col overflow-y-auto bg-slate-100 p-2 text-slate-900 dark:bg-slate-950 dark:text-slate-100 sm:p-4 md:p-6"
             >
               {/* Header Bar */}
-              <div className="sticky top-0 z-20 flex items-center justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white/95 px-4 py-3 shadow-xl backdrop-blur-xl mb-4 dark:border-white/10 dark:bg-slate-900/90 w-full">
-                <div className="flex items-center gap-3">
-                  <span className="eyebrow py-0.5 px-2.5 text-[10px]">
+              <div className="sticky top-0 z-20 mb-4 flex w-full items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white px-4 py-2.5 shadow-md dark:border-slate-800 dark:bg-slate-900">
+                <div className="flex min-w-0 items-center gap-3">
+                  <span className="shrink-0 rounded border border-slate-300 bg-slate-100 px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
                     {translatedCategoryName}
                   </span>
-                  <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight truncate">
+                  <h2 className="truncate text-base font-bold tracking-tight text-slate-950 dark:text-white sm:text-lg">
                     {toolName}
                   </h2>
                 </div>
-                <div className="flex items-center gap-2 sm:gap-3">
+                <div className="flex shrink-0 items-center gap-2 sm:gap-3">
                   {/* Theme Toggle Button */}
                   <button
                     onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
@@ -347,17 +362,17 @@ export default function ToolPageWrapper({
                         ? translateOr('lightMode', 'Light Mode')
                         : translateOr('darkMode', 'Dark Mode')
                     }
-                    className="inline-flex items-center justify-center h-8 w-8 rounded-xl border border-slate-200/80 bg-white text-slate-700 shadow-sm transition hover:bg-slate-50 hover:border-slate-300 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-700 transition-colors hover:border-slate-500 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
                   >
                     {resolvedTheme === 'dark' ? (
                       <Sun className="h-4 w-4 text-amber-400" />
                     ) : (
-                      <Moon className="h-4 w-4 text-indigo-600" />
+                      <Moon className="h-4 w-4 text-slate-700" />
                     )}
                   </button>
 
-                  <span className="hidden md:inline-flex items-center text-xs text-slate-500 dark:text-slate-400">
-                    <kbd className="rounded border border-slate-300 bg-slate-200/90 px-1.5 py-0.5 text-[10px] font-mono font-semibold text-slate-800 mr-1.5 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100">
+                  <span className="hidden items-center text-xs text-slate-600 dark:text-slate-400 md:inline-flex">
+                    <kbd className="mr-1.5 rounded border border-slate-300 bg-slate-100 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-slate-800 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100">
                       {t('uiText.ea50bade')}
                     </kbd>
                     {t('exitZenMode') || 'to exit'}
@@ -366,7 +381,7 @@ export default function ToolPageWrapper({
                     onClick={() => setIsZenMode(false)}
                     title={t('exitZenMode') || 'Exit Full Screen'}
                     aria-label={t('exitZenMode') || 'Exit Full Screen'}
-                    className="inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-lg shadow-indigo-600/30 transition hover:bg-indigo-500 hover:-translate-y-0.5"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-slate-950 px-3.5 py-1.5 font-mono text-xs font-semibold text-white transition-colors hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
                   >
                     <Minimize2 className="h-4 w-4" />
                     <span className="hidden sm:inline">
@@ -377,9 +392,9 @@ export default function ToolPageWrapper({
               </div>
 
               {/* Fullscreen Body with Left Ad + Center Tool + Right Ad */}
-              <div className="flex-1 flex gap-4 items-start w-full mb-4">
+              <div className="mb-4 flex w-full flex-1 items-start gap-4">
                 {/* Left Skyscraper Ad (Large/Wide screens) */}
-                <aside className="hidden xl:block w-[160px] 2xl:w-[300px] shrink-0 sticky top-20">
+                <aside className="sticky top-20 hidden w-[160px] shrink-0 xl:block 2xl:w-[300px]">
                   {zenAdsReady && (
                     <AdSense
                       key={`zen-left-${zenAdSession}`}
@@ -388,19 +403,19 @@ export default function ToolPageWrapper({
                       responsive={true}
                       immediate={true}
                       placement="tool-zen-left"
-                      className="min-h-[600px] rounded-3xl border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
+                      className="min-h-[600px] rounded-xl border border-slate-200 bg-white/80 p-1 dark:border-slate-800 dark:bg-slate-900/80"
                     />
                   )}
                 </aside>
 
                 {/* Center Tool Content (Fluid width) */}
-                <main className="flex-1 min-w-0 w-full rounded-3xl border border-slate-200/80 bg-white p-4 sm:p-6 md:p-8 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-slate-900">
+                <main className="w-full min-w-0 flex-1 rounded-xl border border-slate-200 bg-white p-4 shadow-lg dark:border-slate-800 dark:bg-slate-900 sm:p-6 md:p-8">
                   <RelatedGuideLinks guides={relatedGuides} locale={language} />
                   {children}
                 </main>
 
                 {/* Right Skyscraper Ad (Large/Wide screens) */}
-                <aside className="hidden xl:block w-[160px] 2xl:w-[300px] shrink-0 sticky top-20">
+                <aside className="sticky top-20 hidden w-[160px] shrink-0 xl:block 2xl:w-[300px]">
                   {zenAdsReady && (
                     <AdSense
                       key={`zen-right-${zenAdSession}`}
@@ -409,7 +424,7 @@ export default function ToolPageWrapper({
                       responsive={true}
                       immediate={true}
                       placement="tool-zen-right"
-                      className="min-h-[600px] rounded-3xl border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50 p-1 shadow-sm"
+                      className="min-h-[600px] rounded-xl border border-slate-200 bg-white/80 p-1 dark:border-slate-800 dark:bg-slate-900/80"
                     />
                   )}
                 </aside>
@@ -425,7 +440,7 @@ export default function ToolPageWrapper({
                     responsive={true}
                     immediate={true}
                     placement="tool-zen-bottom"
-                    className="min-h-[90px] rounded-2xl border border-slate-200/60 bg-white/50 dark:border-white/5 dark:bg-slate-900/50"
+                    className="min-h-[90px] rounded-xl border border-slate-200 bg-white/80 dark:border-slate-800 dark:bg-slate-900/80"
                   />
                 )}
               </div>
@@ -460,17 +475,17 @@ export default function ToolPageWrapper({
 
           {/* Contextual internal links keep each tool connected to its topic cluster. */}
           <section className="mb-8" data-related-tools="true">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="mb-4 border-b border-slate-200 pb-2 text-xl font-bold text-slate-950 dark:border-slate-800 dark:text-white">
               {t('toolPage.relatedTools') || 'Related developer tools'}
             </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
+            <p className="mb-4 text-slate-700 dark:text-slate-300">
               {t('toolPage.continueWith') || 'Continue with'}{' '}
               {relatedTools.map((relatedTool, index) => (
                 <span key={`reader-${relatedTool.href}`}>
                   {index > 0 ? ', ' : ''}
                   <Link
                     href={relatedTool.href}
-                    className="text-primary-600 dark:text-primary-400 hover:underline"
+                    className="font-medium text-emerald-700 underline underline-offset-4 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
                   >
                     {relatedTool.name}
                   </Link>
@@ -478,17 +493,17 @@ export default function ToolPageWrapper({
               ))}
               .
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               {relatedTools.map((relatedTool) => (
                 <Link
                   key={relatedTool.href}
                   href={relatedTool.href}
-                  className="interactive-card block rounded-2xl p-4"
+                  className="interactive-card group block min-w-0 rounded-xl border border-slate-200 bg-white p-4 transition-colors hover:border-slate-400 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-600"
                 >
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                  <h3 className="mb-1.5 break-words font-semibold text-slate-950 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
                     {relatedTool.name}
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                  <p className="text-sm text-slate-600 dark:text-slate-300">
                     {relatedTool.description}
                   </p>
                 </Link>
@@ -502,26 +517,26 @@ export default function ToolPageWrapper({
               slot={bottomSlot}
               format={bottomFormat}
               placement="tool-bottom"
-              className="min-h-[90px] rounded-lg mb-8"
+              className="mb-8 min-h-[90px] rounded-lg"
             />
           )}
 
           {topicCollections.length > 0 && (
             <section className="mb-8" data-topic-collections="true">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+              <h2 className="mb-4 border-b border-slate-200 pb-2 text-xl font-bold text-slate-950 dark:border-slate-800 dark:text-white">
                 {seoCopy.topicCollectionsHeading}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                 {topicCollections.map((collection) => (
                   <Link
                     key={collection.href}
                     href={collection.href}
-                    className="interactive-card block rounded-2xl p-4"
+                    className="interactive-card group block min-w-0 rounded-xl border border-slate-200 bg-white p-4 transition-colors hover:border-slate-400 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-600"
                   >
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                    <h3 className="mb-1.5 break-words font-semibold text-slate-950 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
                       {collection.name}
                     </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                    <p className="text-sm text-slate-600 dark:text-slate-300">
                       {collection.description}
                     </p>
                   </Link>
@@ -533,11 +548,11 @@ export default function ToolPageWrapper({
           <ProInterestCard placement="tool" />
 
           {/* How to Use Section */}
-          <section className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+          <section className="mb-8 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/90">
+            <h2 className="mb-4 text-xl font-bold text-slate-950 dark:text-white">
               {t('toolPage.howToUse')} {toolName}
             </h2>
-            <ol className="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-300">
+            <ol className="list-inside list-decimal space-y-2 text-slate-700 dark:text-slate-300">
               {howToUseSteps.map((step, index) => (
                 <li key={index}>{step.replace(/^\d+\.\s*/, '')}</li>
               ))}
@@ -546,35 +561,38 @@ export default function ToolPageWrapper({
 
           {/* FAQ Section */}
           <section className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="mb-4 border-b border-slate-200 pb-2 text-xl font-bold text-slate-950 dark:border-slate-800 dark:text-white">
               {t('toolPage.faq')}
             </h2>
             <dl className="space-y-4">
               {faqs.map((faq) => (
                 <div
                   key={faq.question}
-                  className="border-b border-gray-100 dark:border-gray-700 pb-4"
+                  className="border-b border-slate-200 pb-4 dark:border-slate-800"
                 >
                   <dt>
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                    <h3 className="mb-2 font-semibold text-slate-950 dark:text-white">
                       {faq.question}
                     </h3>
                   </dt>
-                  <dd className="text-gray-600 dark:text-gray-300">{faq.answer}</dd>
+                  <dd className="text-slate-700 dark:text-slate-300">{faq.answer}</dd>
                 </div>
               ))}
             </dl>
           </section>
 
           {/* Sources and review metadata */}
-          <section className="mb-8" aria-labelledby="sources-heading">
+          <section
+            className="mb-8 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/90"
+            aria-labelledby="sources-heading"
+          >
             <h2
               id="sources-heading"
-              className="text-xl font-bold text-gray-900 dark:text-white mb-4"
+              className="mb-3 text-lg font-bold text-slate-950 dark:text-white sm:text-xl"
             >
               {t('toolPage.sourcesAndReferences') || 'Sources & references'}
             </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
+            <p className="mb-3 text-slate-700 dark:text-slate-300">
               {t('toolPage.primaryReferences') || 'Primary references:'}{' '}
               {sources.map((source, index) => (
                 <span key={source.url}>
@@ -583,7 +601,7 @@ export default function ToolPageWrapper({
                     href={source.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary-600 dark:text-primary-400 hover:underline"
+                    className="font-medium text-emerald-700 underline underline-offset-4 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
                   >
                     {source.name}
                   </a>
@@ -591,7 +609,7 @@ export default function ToolPageWrapper({
               ))}
               .
             </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="font-mono text-xs text-slate-600 dark:text-slate-400">
               {t('toolPage.reviewPolicy') ||
                 'Review policy: references and behavior notes are checked whenever the tool implementation changes.'}
             </p>

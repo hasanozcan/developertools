@@ -142,7 +142,7 @@ export default function ImageExifStripperTool() {
               ) : (
                 <button
                   onClick={handleDownload}
-                  className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-500 transition shadow-sm"
+                  className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-emerald-700 text-white text-xs font-bold hover:bg-emerald-800 transition shadow-sm"
                 >
                   <Download className="h-4 w-4" /> {t("uiText.289070ad")}</button>
               )}

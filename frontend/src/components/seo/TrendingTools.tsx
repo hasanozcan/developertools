@@ -47,12 +47,12 @@ export default function TrendingTools() {
           return (
             <Link key={tool.slug} href={buildToolPath(tool.categorySlug, tool.slug)} className="interactive-card rounded-2xl p-4">
               <h3 className="text-sm font-semibold text-slate-950 dark:text-white">{meta.name}</h3>
-              <p className="mt-1 line-clamp-2 text-xs leading-5 text-slate-500 dark:text-slate-400">{meta.description}</p>
+              <p className="mt-1 line-clamp-2 text-xs leading-5 text-zinc-600 dark:text-zinc-400">{meta.description}</p>
             </Link>
           );
         })}
       </div>
-      <p className="mt-2 text-[11px] text-slate-400 dark:text-slate-500">{t("uiText.f1c3aaa2")}</p>
+      <p className="mt-2 text-[11px] text-zinc-600 dark:text-zinc-400">{t("uiText.f1c3aaa2")}</p>
     </section>
   );
 }

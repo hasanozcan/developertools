@@ -2,12 +2,20 @@ import { ImageResponse } from 'next/og';
 import { toolCatalog } from '@/lib/api';
 
 export const runtime = 'nodejs';
-export const alt = 'DevsTools - Free Online Developer Tools';
+export const alt = 'DevsTools - Client-Side Developer Workbench';
 export const size = {
   width: 1200,
   height: 630,
 };
 export const contentType = 'image/png';
+
+const SPEC_MODULES = [
+  'JSON // YAML',
+  'CRYPTO // HASH',
+  'ENCODERS // JWT',
+  'REGEX // DIFF',
+  'FORMATTERS // SQL',
+];
 
 export default async function Image() {
   const toolCount = toolCatalog.length > 0 ? toolCatalog.length : 476;
@@ -20,281 +28,176 @@ export default async function Image() {
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '48px 56px',
-          backgroundColor: '#090d16',
-          backgroundImage:
-            'radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.18) 0%, transparent 50%), radial-gradient(circle at 85% 85%, rgba(139, 92, 246, 0.2) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 60%)',
+          padding: '64px 72px',
+          backgroundColor: '#09090B',
+          color: '#FAFAFA',
           fontFamily: 'system-ui, -apple-system, sans-serif',
           position: 'relative',
-          overflow: 'hidden',
         }}
       >
-        {/* Grid pattern overlay */}
+        {/* 1px Structural Frame */}
         <div
           style={{
             position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundImage:
-              'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
-            backgroundSize: '48px 48px',
+            top: 36,
+            left: 36,
+            right: 36,
+            bottom: 36,
+            border: '1px solid #27272A',
+            display: 'flex',
           }}
         />
 
-        {/* Ambient Glow Spheres */}
-        <div
-          style={{
-            position: 'absolute',
-            top: -120,
-            left: -120,
-            width: 500,
-            height: 500,
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, transparent 70%)',
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            bottom: -150,
-            right: -120,
-            width: 550,
-            height: 550,
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, transparent 70%)',
-          }}
-        />
+        {/* Corner + Registration Marks */}
+        <div style={{ position: 'absolute', top: 36, left: 28, width: 17, height: 1, backgroundColor: '#52525B', display: 'flex' }} />
+        <div style={{ position: 'absolute', top: 28, left: 36, width: 1, height: 17, backgroundColor: '#52525B', display: 'flex' }} />
+        <div style={{ position: 'absolute', top: 36, right: 28, width: 17, height: 1, backgroundColor: '#52525B', display: 'flex' }} />
+        <div style={{ position: 'absolute', top: 28, right: 36, width: 1, height: 17, backgroundColor: '#52525B', display: 'flex' }} />
+        <div style={{ position: 'absolute', bottom: 36, left: 28, width: 17, height: 1, backgroundColor: '#52525B', display: 'flex' }} />
+        <div style={{ position: 'absolute', bottom: 28, left: 36, width: 1, height: 17, backgroundColor: '#52525B', display: 'flex' }} />
+        <div style={{ position: 'absolute', bottom: 36, right: 28, width: 17, height: 1, backgroundColor: '#52525B', display: 'flex' }} />
+        <div style={{ position: 'absolute', bottom: 28, right: 36, width: 1, height: 17, backgroundColor: '#52525B', display: 'flex' }} />
 
-        {/* Top Header */}
+        {/* Top Spec Header */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             width: '100%',
-            position: 'relative',
-
+            padding: '12px 18px',
+            backgroundColor: '#111114',
+            border: '1px solid #27272A',
           }}
         >
-          <div
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div style={{ width: 8, height: 8, backgroundColor: '#10B981', display: 'flex' }} />
+            <span
+              style={{
+                fontFamily: 'monospace',
+                fontSize: 15,
+                fontWeight: 600,
+                letterSpacing: '1.5px',
+                color: '#A1A1AA',
+              }}
+            >
+              [ DEVSTOOLS // CLIENT-SIDE WORKBENCH ]
+            </span>
+          </div>
+          <span
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              padding: '8px 18px',
-              borderRadius: 999,
-              backgroundColor: 'rgba(56, 189, 248, 0.12)',
-              border: '1px solid rgba(56, 189, 248, 0.35)',
-              color: '#38bdf8',
-              fontSize: 15,
-              fontWeight: 700,
-              letterSpacing: '1px',
-              textTransform: 'uppercase',
+              fontFamily: 'monospace',
+              fontSize: 14,
+              fontWeight: 600,
+              letterSpacing: '1.4px',
+              color: '#10B981',
             }}
           >
-            <span>⚡ ALL-IN-ONE DEVELOPER HUB</span>
-          </div>
-
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              padding: '8px 20px',
-              borderRadius: 999,
-              backgroundColor: 'rgba(168, 85, 247, 0.15)',
-              border: '1px solid rgba(168, 85, 247, 0.4)',
-              color: '#c084fc',
-              fontSize: 16,
-              fontWeight: 700,
-            }}
-          >
-            <span>{toolCount}+ Free Tools</span>
-          </div>
+            LOCAL EXECUTION // V2
+          </span>
         </div>
 
-        {/* Center Hero Card */}
+        {/* Center Spec Block */}
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textAlign: 'center',
-            position: 'relative',
-
+            gap: 22,
+            width: '100%',
           }}
         >
-          {/* Logo Mark */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: 100,
-              height: 100,
-              borderRadius: 26,
-              background: 'linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%)',
-              boxShadow: '0 12px 36px rgba(56, 189, 248, 0.45)',
-              marginBottom: 20,
-              fontSize: 48,
-              fontWeight: 900,
-              color: '#ffffff',
-            }}
-          >
-            {'</>'}
-          </div>
-
-          {/* Title */}
-          <div
-            style={{
-              display: 'flex',
-              fontSize: 70,
-              fontWeight: 900,
-              color: '#ffffff',
-              letterSpacing: '-2px',
-              lineHeight: 1.1,
-              marginBottom: 10,
-            }}
-          >
-            DevsTools
-          </div>
-
-          {/* Subtitle */}
-          <div
-            style={{
-              display: 'flex',
-              fontSize: 26,
-              fontWeight: 500,
-              color: '#94a3b8',
-              marginBottom: 28,
-            }}
-          >
-            Free Online Developer Tools · Fast, Secure & Private
-          </div>
-
-          {/* Category Chips */}
-          <div
-            style={{
-              display: 'flex',
-              gap: 10,
-              flexWrap: 'wrap',
-              justifyContent: 'center',
-              maxWidth: 1000,
-            }}
-          >
-            {[
-              { label: 'JSON Tools', color: '#f59e0b' },
-              { label: 'Crypto & Hash', color: '#10b981' },
-              { label: 'Encoders', color: '#6366f1' },
-              { label: 'Converters', color: '#ec4899' },
-              { label: 'Formatters', color: '#0ea5e9' },
-              { label: 'Generators', color: '#f43f5e' },
-              { label: 'Regex & Text', color: '#14b8a6' },
-              { label: 'Utilities', color: '#8b5cf6' },
-            ].map((tag) => (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+            <svg width="88" height="88" viewBox="0 0 32 32" fill="none">
+              <rect width="32" height="32" rx="7.5" fill="#09090B" />
+              <rect x="1.5" y="1.5" width="29" height="29" rx="6" fill="#18181B" stroke="#27272A" strokeWidth="1" />
+              <path d="M9 9.5L15.5 16L9 22.5L7.3 20.8L12.1 16L7.3 11.2Z" fill="#FAFAFA" />
+              <rect x="17" y="19.75" width="7.75" height="2.75" rx="0.4" fill="#10B981" />
+            </svg>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               <div
-                key={tag.label}
                 style={{
                   display: 'flex',
-                  padding: '7px 18px',
-                  borderRadius: 12,
-                  backgroundColor: `${tag.color}18`,
-                  border: `1px solid ${tag.color}44`,
-                  color: tag.color,
-                  fontSize: 15,
-                  fontWeight: 600,
+                  fontSize: 72,
+                  fontWeight: 700,
+                  color: '#FAFAFA',
+                  letterSpacing: '-2px',
+                  lineHeight: 1.05,
                 }}
               >
-                {tag.label}
+                DevsTools
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  fontSize: 25,
+                  fontWeight: 400,
+                  color: '#A1A1AA',
+                }}
+              >
+                Browser-native developer workbench for formatting, encoding, crypto &amp; inspection.
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 4 }}>
+            {SPEC_MODULES.map((mod) => (
+              <div
+                key={mod}
+                style={{
+                  display: 'flex',
+                  padding: '8px 16px',
+                  backgroundColor: '#18181B',
+                  border: '1px solid #27272A',
+                  color: '#E4E4E7',
+                  fontFamily: 'monospace',
+                  fontSize: 14,
+                  fontWeight: 600,
+                  letterSpacing: '0.8px',
+                }}
+              >
+                {mod}
               </div>
             ))}
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        {/* Bottom Spec Bar */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             width: '100%',
-            position: 'relative',
-
+            paddingTop: 20,
+            borderTop: '1px solid #27272A',
           }}
         >
-          {/* Feature Badges */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                padding: '6px 14px',
-                borderRadius: 8,
-                backgroundColor: 'rgba(255, 255, 255, 0.06)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                color: '#cbd5e1',
-                fontSize: 14,
-                fontWeight: 600,
-              }}
-            >
-              <span>⚡</span> 100% Client-Side
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                padding: '6px 14px',
-                borderRadius: 8,
-                backgroundColor: 'rgba(255, 255, 255, 0.06)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                color: '#cbd5e1',
-                fontSize: 14,
-                fontWeight: 600,
-              }}
-            >
-              <span>🔒</span> Zero Server Storage
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                padding: '6px 14px',
-                borderRadius: 8,
-                backgroundColor: 'rgba(255, 255, 255, 0.06)',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                color: '#cbd5e1',
-                fontSize: 14,
-                fontWeight: 600,
-              }}
-            >
-              <span>🚀</span> No Registration
-            </div>
-          </div>
-
-          {/* URL Badge */}
-          <div
+          <span
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              padding: '6px 16px',
-              borderRadius: 8,
-              backgroundColor: 'rgba(56, 189, 248, 0.1)',
-              border: '1px solid rgba(56, 189, 248, 0.3)',
-              color: '#38bdf8',
-              fontSize: 16,
-              fontWeight: 700,
+              fontFamily: 'monospace',
+              fontSize: 15,
+              fontWeight: 600,
+              letterSpacing: '1.6px',
+              color: '#A1A1AA',
             }}
           >
-            devstools.app
+            {`${toolCount} TOOLS • ZERO SERVER UPLOADS • DEVSTOOLS.APP`}
+          </span>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div style={{ width: 8, height: 8, backgroundColor: '#10B981', display: 'flex' }} />
+            <span
+              style={{
+                fontFamily: 'monospace',
+                fontSize: 14,
+                fontWeight: 600,
+                letterSpacing: '1.5px',
+                color: '#FAFAFA',
+              }}
+            >
+              READY
+            </span>
           </div>
         </div>
       </div>

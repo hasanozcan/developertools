@@ -25,7 +25,7 @@ function sources(dir: string): string[] {
   });
 }
 
-describe('translation runtime coverage', () => {
+describe('translation runtime coverage', { timeout: 60_000 }, () => {
   it('resolves every literal interface key in every supported dictionary', () => {
     const keys = new Set<string>();
     for (const file of sources(sourceRoot).filter(

@@ -262,7 +262,7 @@ export default function CodeEditor({
       {/* Toolbar */}
       <div className="flex items-center justify-between px-3.5 py-2 bg-white dark:bg-slate-800/90 border-b border-slate-200/80 dark:border-white/5">
         <div className="flex items-center gap-2">
-          <span className="text-[11px] font-bold tracking-wider text-slate-500 dark:text-slate-400 uppercase">
+          <span className="text-[11px] font-bold tracking-wider text-zinc-600 dark:text-zinc-400 uppercase">
             {language}
           </span>
           {readOnly && (
@@ -421,7 +421,7 @@ export default function CodeEditor({
       <div
         id={feedbackId}
         role={feedback === 'copy-error' || feedback === 'paste-error' ? 'alert' : 'status'}
-        className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-200/80 bg-slate-50 px-3.5 py-1.5 text-[11px] text-slate-500 dark:border-white/5 dark:bg-slate-800/60 dark:text-slate-400"
+        className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-200/80 bg-slate-50 px-3.5 py-1.5 text-[11px] text-zinc-600 dark:border-white/5 dark:bg-slate-800/60 dark:text-zinc-400"
       >
         <div className="flex items-center gap-2">
           {feedback ? (

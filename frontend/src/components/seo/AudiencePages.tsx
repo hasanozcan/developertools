@@ -39,21 +39,42 @@ export function AudienceIndexContent({ locale }: { locale: Language }) {
   const prefix = localePrefix(locale);
 
   return (
-    <main className="page-shell py-10 sm:py-14">
-      <section className="mb-8 rounded-[2rem] border border-white/80 bg-white/70 p-7 shadow-sm backdrop-blur dark:border-white/10 dark:bg-slate-900/70 sm:p-10">
-        <span className="eyebrow mb-3">{ui.eyebrow}</span>
-        <h1 className="text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-4xl">{ui.title}</h1>
-        <p className="mt-4 max-w-3xl leading-7 text-slate-600 dark:text-slate-300">{ui.description}</p>
+    <main className="page-shell py-8 sm:py-12">
+      <section className="mb-8 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950/90 sm:p-8">
+        <span className="mb-3 inline-flex items-center rounded border border-slate-300 bg-slate-100 px-2.5 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+          {ui.eyebrow}
+        </span>
+        <h1 className="break-words text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-4xl">
+          {ui.title}
+        </h1>
+        <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">
+          {ui.description}
+        </p>
       </section>
 
-      <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {developerAudiences.map((audience) => {
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {developerAudiences.map((audience, index) => {
           const localized = getLocalizedAudience(audience, locale);
           return (
-            <Link key={audience.slug} href={`${prefix}/for/${audience.slug}`} className="interactive-card rounded-3xl p-6">
-              <h2 className="text-lg font-bold text-slate-950 dark:text-white">{localized.shortTitle}</h2>
-              <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">{localized.description}</p>
-              <p className="mt-4 text-xs font-semibold text-indigo-600 dark:text-indigo-400">{ui.explore} →</p>
+            <Link
+              key={audience.slug}
+              href={`${prefix}/for/${audience.slug}`}
+              className="interactive-card group flex min-w-0 flex-col justify-between rounded-xl border border-slate-200 bg-white p-5 transition-colors hover:border-slate-400 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-600"
+            >
+              <div className="min-w-0">
+                <span className="mb-2 inline-block font-mono text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                  ROLE // 0{index + 1}
+                </span>
+                <h2 className="break-words text-lg font-bold text-slate-950 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
+                  {localized.shortTitle}
+                </h2>
+                <p className="mt-2.5 text-sm leading-6 text-slate-600 dark:text-slate-300">
+                  {localized.description}
+                </p>
+              </div>
+              <p className="mt-4 font-mono text-xs font-semibold text-slate-900 group-hover:text-emerald-700 dark:text-slate-200 dark:group-hover:text-emerald-400">
+                {ui.explore} →
+              </p>
             </Link>
           );
         })}
@@ -89,18 +110,24 @@ export function AudienceDetailContent({ locale, audience }: { locale: Language; 
   };
 
   return (
-    <main className="page-shell py-10 sm:py-14">
+    <main className="page-shell py-8 sm:py-12">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonForHtmlScript(structuredData) }} />
-      <nav className="mb-5 text-sm text-slate-500 dark:text-slate-400">
-        <Link href={`${prefix}/for`} className="hover:text-indigo-600 dark:hover:text-indigo-400">{ui.title}</Link>
-        <span className="px-2">/</span>
-        <span>{localized.shortTitle}</span>
+      <nav className="mb-5 font-mono text-xs text-slate-600 dark:text-slate-400 sm:text-sm">
+        <Link href={`${prefix}/for`} className="hover:text-slate-950 hover:underline dark:hover:text-white">
+          {ui.title}
+        </Link>
+        <span className="px-2 text-slate-400 dark:text-slate-600">/</span>
+        <span className="text-slate-900 dark:text-slate-200">{localized.shortTitle}</span>
       </nav>
 
-      <section className="mb-8 rounded-[2rem] border border-white/80 bg-white/70 p-7 shadow-sm backdrop-blur dark:border-white/10 dark:bg-slate-900/70 sm:p-10">
-        <span className="eyebrow mb-3">{ui.eyebrow}</span>
-        <h1 className="text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-4xl">{localized.title}</h1>
-        <div data-audience-intro="true" className="mt-4 max-w-3xl space-y-4 leading-7 text-slate-600 dark:text-slate-300">
+      <section className="mb-8 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950/90 sm:p-8">
+        <span className="mb-3 inline-flex items-center rounded border border-slate-300 bg-slate-100 px-2.5 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+          {ui.eyebrow}
+        </span>
+        <h1 className="break-words text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-4xl">
+          {localized.title}
+        </h1>
+        <div data-audience-intro="true" className="mt-4 max-w-3xl space-y-4 text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">
           {paragraphs.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}
@@ -110,13 +137,24 @@ export function AudienceDetailContent({ locale, audience }: { locale: Language; 
       <AdSense slot={topSlot} format="auto" placement={`audience-${audience.slug}-${locale}-top`} className="mb-8 min-h-[90px]" />
 
       <section className="mb-10" aria-labelledby="audience-featured-tools">
-        <h2 id="audience-featured-tools" className="mb-5 text-2xl font-bold text-slate-950 dark:text-white">{ui.featured}</h2>
+        <h2 id="audience-featured-tools" className="mb-5 border-b border-slate-200 pb-2 text-xl font-bold text-slate-950 dark:border-slate-800 dark:text-white sm:text-2xl">
+          {ui.featured}
+        </h2>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {tools.map((tool) => {
             const meta = getLocalizedToolMeta(tool.slug, locale, tool.name, tool.shortDescription || tool.name);
             return (
-              <Link key={tool.slug} href={`${prefix}/tools/${tool.categorySlug}/${tool.slug}`} className="interactive-card rounded-3xl p-5">
-                <h3 className="font-bold text-slate-950 dark:text-white">{meta.name}</h3>
+              <Link
+                key={tool.slug}
+                href={`${prefix}/tools/${tool.categorySlug}/${tool.slug}`}
+                className="interactive-card group min-w-0 rounded-xl border border-slate-200 bg-white p-5 transition-colors hover:border-slate-400 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-600"
+              >
+                <span className="mb-2 inline-block rounded border border-slate-200 bg-slate-100 px-1.5 py-0.5 font-mono text-[10px] font-semibold uppercase text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                  {tool.categorySlug}
+                </span>
+                <h3 className="break-words font-bold text-slate-950 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
+                  {meta.name}
+                </h3>
                 <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{meta.description}</p>
               </Link>
             );
@@ -125,13 +163,21 @@ export function AudienceDetailContent({ locale, audience }: { locale: Language; 
       </section>
 
       <section className="mb-8" aria-labelledby="audience-collections">
-        <h2 id="audience-collections" className="mb-5 text-2xl font-bold text-slate-950 dark:text-white">{ui.collections}</h2>
+        <h2 id="audience-collections" className="mb-5 border-b border-slate-200 pb-2 text-xl font-bold text-slate-950 dark:border-slate-800 dark:text-white sm:text-2xl">
+          {ui.collections}
+        </h2>
         <div className="grid gap-4 md:grid-cols-3">
           {collections.map((collection) => {
             const localizedCollection = getLocalizedCollection(collection, locale);
             return (
-              <Link key={collection.slug} href={`${prefix}/collections/${collection.slug}`} className="interactive-card rounded-3xl p-5">
-                <h3 className="font-bold text-slate-950 dark:text-white">{localizedCollection.shortTitle}</h3>
+              <Link
+                key={collection.slug}
+                href={`${prefix}/collections/${collection.slug}`}
+                className="interactive-card group min-w-0 rounded-xl border border-slate-200 bg-white p-5 transition-colors hover:border-slate-400 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-600"
+              >
+                <h3 className="break-words font-bold text-slate-950 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
+                  {localizedCollection.shortTitle}
+                </h3>
                 <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{localizedCollection.description}</p>
               </Link>
             );

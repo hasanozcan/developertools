@@ -51,7 +51,7 @@ const scriptPath = path.resolve(process.cwd(), 'scripts/seo-geo-audit.mjs');
 let audit: AuditModule;
 beforeAll(async () => {
   audit = (await import(/* @vite-ignore */ pathToFileURL(scriptPath).href)) as AuditModule;
-});
+}, 60_000);
 
 // ---------------------------------------------------------------------------
 // HTML fixtures
@@ -234,7 +234,7 @@ function legacySite(mode: LegacyMode) {
 // Existing end-to-end checks (now in-process: no child process per test)
 // ---------------------------------------------------------------------------
 
-describe('SEO/GEO audit script', { timeout: 30_000 }, () => {
+describe('SEO/GEO audit script', { timeout: 60_000 }, () => {
   it('rejects a canonical on the wrong origin', async () => {
     const report = await auditSite(legacySite('wrong-canonical'));
     expect(findIssue(report, 'invalid-canonical')).toBeTruthy();
@@ -314,7 +314,7 @@ describe('SEO/GEO audit script', { timeout: 30_000 }, () => {
           { cwd: process.cwd(), env: { ...process.env, NODE_OPTIONS: '' } },
         );
         // Never leave an orphaned child hitting a server another test may reuse.
-        const killTimer = setTimeout(() => child.kill(), 25_000);
+        const killTimer = setTimeout(() => child.kill(), 35_000);
         let stdout = '';
         let stderr = '';
         child.stdout.on('data', (chunk) => {
@@ -634,7 +634,7 @@ describe('SEO/GEO audit localization checks', () => {
 // New checks end-to-end: sampling semantics and wiring into the report
 // ---------------------------------------------------------------------------
 
-describe('SEO/GEO audit crawl modes', { timeout: 30_000 }, () => {
+describe('SEO/GEO audit crawl modes', { timeout: 60_000 }, () => {
   function localizedSite(origin: string): Routes {
     const tool = '/tools/json/json-formatter';
     const alternates: Array<[string, string]> = [

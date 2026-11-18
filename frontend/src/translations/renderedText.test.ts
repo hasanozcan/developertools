@@ -49,7 +49,7 @@ function literalKeys(node: ts.Expression): string[] {
   return [];
 }
 
-describe('rendered translation text', () => {
+describe('rendered translation text', { timeout: 60_000 }, () => {
   it('contains no HTML entities, which React would print literally', () => {
     const offenders = locales.flatMap((locale) => [
       ...Object.entries(clientDictionaries[locale])

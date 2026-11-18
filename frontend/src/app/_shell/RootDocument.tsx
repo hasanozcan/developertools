@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { IBM_Plex_Sans, JetBrains_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Script from 'next/script';
@@ -10,7 +10,7 @@ import { Providers } from '@/components/Providers';
 import ServiceWorkerRegister from '@/components/common/ServiceWorkerRegister';
 import AdSenseScripts from '@/components/common/AdSenseScripts';
 import { normalizeAdSenseClientId } from '@/lib/adsense';
-import { getHreflangAlternates, getOpenGraphAlternateLocales } from '@/lib/i18nRouting';
+import { getOpenGraphAlternateLocales } from '@/lib/i18nRouting';
 import { serializeJsonForHtmlScript } from '@/lib/scriptSafeJson';
 import { toolCatalog } from '@/lib/api';
 import type { Language } from '@/translations';
@@ -23,13 +23,15 @@ import type { ComponentType } from 'react';
 // attribute differs between them, so the server-rendered HTML declares the page
 // language without any per-request work.
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
+const ibmPlexSans = IBM_Plex_Sans({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin', 'latin-ext', 'cyrillic'],
+  variable: '--font-sans',
 });
 
 const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin', 'latin-ext', 'cyrillic'],
   variable: '--font-mono',
   display: 'swap',
   preload: false,
@@ -79,10 +81,6 @@ export const rootMetadata: Metadata = {
   authors: [{ name: 'DevsTools' }],
   creator: 'DevsTools',
   publisher: 'DevsTools',
-  alternates: {
-    canonical: '/',
-    languages: getHreflangAlternates('/', siteUrl),
-  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -148,7 +146,7 @@ export function RootDocument({
   return (
     <html
       lang={lang}
-      className={`${inter.variable} ${jetbrainsMono.variable}`}
+      className={`${ibmPlexSans.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -159,7 +157,7 @@ export function RootDocument({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="DevsTools" />
-        <meta name="theme-color" content="#4f46e5" />
+        <meta name="theme-color" content="#09090b" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         {/* Theme must be applied before first paint to avoid a light/dark flash. */}
         <script dangerouslySetInnerHTML={{ __html: setInitialTheme }} />
@@ -217,7 +215,7 @@ export function RootDocument({
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
       </head>
       <body
-        className={`${inter.className} antialiased text-gray-900 dark:text-gray-100`}
+        className={`${ibmPlexSans.className} antialiased bg-[#fafafa] text-zinc-950 dark:bg-[#09090b] dark:text-zinc-50`}
         suppressHydrationWarning
       >
         <Dictionary lang={lang}>

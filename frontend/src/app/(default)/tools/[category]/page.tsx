@@ -149,6 +149,64 @@ const toolIcons: Record<string, LucideIcon> = {
   'curl-to-fetch': Code2,
 };
 
+interface CategoryAccent {
+  code: string;
+  iconBox: string;
+  badge: string;
+  topBorder: string;
+}
+
+const categoryAccents: Record<string, CategoryAccent> = {
+  json: {
+    code: 'JSON',
+    iconBox: 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-800/70 dark:bg-emerald-950/60 dark:text-emerald-300',
+    badge: 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-800/70 dark:bg-emerald-950/60 dark:text-emerald-300',
+    topBorder: 'border-t-emerald-500',
+  },
+  crypto: {
+    code: 'CRYPTO',
+    iconBox: 'border-amber-200 bg-amber-50 text-amber-800 dark:border-amber-800/70 dark:bg-amber-950/60 dark:text-amber-300',
+    badge: 'border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-800/70 dark:bg-amber-950/60 dark:text-amber-300',
+    topBorder: 'border-t-amber-500',
+  },
+  encoding: {
+    code: 'ENC',
+    iconBox: 'border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-800/70 dark:bg-sky-950/60 dark:text-sky-300',
+    badge: 'border-sky-200 bg-sky-50 text-sky-800 dark:border-sky-800/70 dark:bg-sky-950/60 dark:text-sky-300',
+    topBorder: 'border-t-sky-500',
+  },
+  converters: {
+    code: 'CONV',
+    iconBox: 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800/70 dark:bg-blue-950/60 dark:text-blue-300',
+    badge: 'border-blue-200 bg-blue-50 text-blue-800 dark:border-blue-800/70 dark:bg-blue-950/60 dark:text-blue-300',
+    topBorder: 'border-t-blue-500',
+  },
+  formatters: {
+    code: 'FMT',
+    iconBox: 'border-teal-200 bg-teal-50 text-teal-700 dark:border-teal-800/70 dark:bg-teal-950/60 dark:text-teal-300',
+    badge: 'border-teal-200 bg-teal-50 text-teal-800 dark:border-teal-800/70 dark:bg-teal-950/60 dark:text-teal-300',
+    topBorder: 'border-t-teal-500',
+  },
+  generators: {
+    code: 'GEN',
+    iconBox: 'border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-800/70 dark:bg-rose-950/60 dark:text-rose-300',
+    badge: 'border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-800/70 dark:bg-rose-950/60 dark:text-rose-300',
+    topBorder: 'border-t-rose-500',
+  },
+  text: {
+    code: 'TEXT',
+    iconBox: 'border-zinc-300 bg-zinc-100 text-zinc-800 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200',
+    badge: 'border-zinc-300 bg-zinc-100 text-zinc-800 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200',
+    topBorder: 'border-t-zinc-500',
+  },
+  utilities: {
+    code: 'UTIL',
+    iconBox: 'border-cyan-200 bg-cyan-50 text-cyan-800 dark:border-cyan-800/70 dark:bg-cyan-950/60 dark:text-cyan-300',
+    badge: 'border-cyan-200 bg-cyan-50 text-cyan-800 dark:border-cyan-800/70 dark:bg-cyan-950/60 dark:text-cyan-300',
+    topBorder: 'border-t-cyan-500',
+  },
+};
+
 interface CategoryConfig {
   name: string;
   metadataTitle?: string;
@@ -688,6 +746,7 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
   }
 
   const Icon = category.icon;
+  const accent = categoryAccents[categorySlug] ?? categoryAccents.utilities;
   const categoryTopSlot = resolveAdSenseSlot(
     process.env.NEXT_PUBLIC_ADSENSE_CATEGORY_TOP_SLOT,
     DEFAULT_ADSENSE_CATEGORY_TOP_SLOT,
@@ -826,16 +885,16 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
   ) => (
     <section
       key={section.heading}
-      className="mb-8"
+      className="mb-8 min-w-0"
       data-answer-first={answerFirst ? 'true' : undefined}
     >
-      <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{section.heading}</h2>
-      <div className="space-y-3 text-gray-600 dark:text-gray-300">
+      <h2 className="mb-4 text-xl font-bold tracking-tight text-slate-950 dark:text-white">{section.heading}</h2>
+      <div className="min-w-0 space-y-3 break-words leading-7 text-slate-700 dark:text-slate-300">
         {section.paragraphs?.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
         {section.bullets && (
-          <ul className="list-disc pl-6 space-y-2">
+          <ul className="list-disc space-y-2 pl-6">
             {section.bullets.map((bullet) => (
               <li key={bullet}>{bullet}</li>
             ))}
@@ -875,18 +934,23 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
         />
 
         {/* Header */}
-        <div className="flex items-start gap-4 mb-8">
-          <div className="p-4 bg-primary-50 dark:bg-primary-900/30 rounded-xl">
-            <Icon className="w-8 h-8 text-primary-600 dark:text-primary-400" />
+        <div className={`mb-8 flex flex-col gap-4 rounded-2xl border border-slate-200 border-t-2 ${accent.topBorder} bg-white p-5 dark:border-slate-800 dark:bg-slate-950/90 sm:flex-row sm:items-start sm:p-7`}>
+          <div className={`inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border ${accent.iconBox}`}>
+            <Icon className="h-6 w-6" />
           </div>
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+          <div className="min-w-0 flex-1">
+            <div className="mb-2.5 flex flex-wrap items-center gap-2">
+              <span className={`inline-flex items-center rounded border px-2 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wider ${accent.badge}`}>
+                {accent.code}
+              </span>
+              <span className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 font-mono text-[11px] font-medium text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300">
+                {translate(locale, 'categoryPage.showingAll', { count: allCategoryTools.length })}
+              </span>
+            </div>
+            <h1 className="mb-2 break-words text-2xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
               {categoryName}
             </h1>
-            <p className="text-gray-600 dark:text-gray-300">{categoryDescription}</p>
-            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-              {translate(locale, 'categoryPage.showingAll', { count: allCategoryTools.length })}
-            </p>
+            <p className="max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">{categoryDescription}</p>
           </div>
         </div>
 
@@ -895,7 +959,7 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
         {categorySlug === 'encoding' && (
           <nav
             aria-label={translate(locale, 'categoryPage.encodingShortcutsAria')}
-            className="mb-8 text-gray-600 dark:text-gray-300"
+            className="mb-8 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-300"
           >
             {translate(locale, 'categoryPage.encodingShortcutsLabel')}{' '}
             {allCategoryTools
@@ -905,7 +969,7 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
                   {index > 0 ? ', ' : ''}
                   <Link
                     href={tool.href}
-                    className="text-primary-600 dark:text-primary-400 hover:underline"
+                    className="font-medium text-emerald-700 underline underline-offset-4 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
                   >
                     {tool.name}
                   </Link>
@@ -922,19 +986,24 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
           slot={categoryTopSlot}
           format="horizontal"
           placement={`category-${categorySlug}-top`}
-          className="min-h-[90px] rounded-lg mb-8"
+          className="mb-8 min-h-[90px] rounded-lg"
         />
 
         {/* Tools Grid: one section heading, tool card titles are h3 */}
         <section aria-labelledby="category-tools-heading">
-          <h2
-            id="category-tools-heading"
-            className="text-xl font-bold text-gray-900 dark:text-white mb-4"
-          >
-            {allToolsHeading}
-          </h2>
+          <div className="mb-4 flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800">
+            <h2
+              id="category-tools-heading"
+              className="text-xl font-bold tracking-tight text-slate-950 dark:text-white"
+            >
+              {allToolsHeading}
+            </h2>
+            <span className="font-mono text-xs font-semibold text-slate-600 dark:text-slate-400">
+              {allCategoryTools.length}
+            </span>
+          </div>
           <div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
             data-topic-interface="true"
             data-related-tools="true"
           >
@@ -948,16 +1017,23 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
                 <Fragment key={tool.slug}>
                   <Link
                     href={tool.href}
-                    className="interactive-card group rounded-3xl p-6"
+                    className="interactive-card group flex min-w-0 flex-col justify-between rounded-xl border border-slate-200 bg-white p-5 transition-colors hover:border-slate-400 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-600"
                   >
-                    <h3 className="font-semibold text-lg text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 flex items-center justify-between mb-2">
-                      <span className="flex items-center gap-2">
-                        <ToolIcon className="w-5 h-5 text-primary-500" />
-                        {tool.name}
-                      </span>
-                      <ChevronRight className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </h3>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm">{tool.description}</p>
+                    <div className="min-w-0">
+                      <div className="mb-3 flex items-center justify-between gap-2">
+                        <span className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border ${accent.iconBox}`}>
+                          <ToolIcon className="h-4 w-4" />
+                        </span>
+                        <span className="truncate font-mono text-[10px] font-medium text-slate-600 dark:text-slate-400">
+                          {tool.slug}
+                        </span>
+                      </div>
+                      <h3 className="mb-1.5 flex items-center justify-between gap-2 break-words text-base font-bold text-slate-950 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
+                        <span className="min-w-0 break-words">{tool.name}</span>
+                        <ChevronRight className="h-4 w-4 shrink-0 opacity-0 transition-opacity group-hover:opacity-100" />
+                      </h3>
+                      <p className="text-sm leading-6 text-slate-600 dark:text-slate-300">{tool.description}</p>
+                    </div>
                   </Link>
                   {showInFeed && categoryInFeedSlot && (
                     <InFeedAdCard
@@ -977,21 +1053,21 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
 
         {faqs.length > 0 && (
           <section className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 className="mb-4 border-b border-slate-200 pb-2 text-xl font-bold text-slate-950 dark:border-slate-800 dark:text-white">
               {contentUi.faqHeading}
             </h2>
             <dl className="space-y-4">
               {faqs.map((faq) => (
                 <div
                   key={faq.question}
-                  className="border-b border-gray-100 dark:border-gray-700 pb-4"
+                  className="border-b border-slate-200 pb-4 dark:border-slate-800"
                 >
                   <dt>
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                    <h3 className="mb-2 font-semibold text-slate-950 dark:text-white">
                       {faq.question}
                     </h3>
                   </dt>
-                  <dd className="text-gray-600 dark:text-gray-300">{faq.answer}</dd>
+                  <dd className="text-slate-700 dark:text-slate-300">{faq.answer}</dd>
                 </div>
               ))}
             </dl>
@@ -999,14 +1075,17 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
         )}
 
         {sources.length > 0 && (
-          <section className="mb-8" aria-labelledby="sources-heading">
+          <section
+            className="mb-8 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/90"
+            aria-labelledby="sources-heading"
+          >
             <h2
               id="sources-heading"
-              className="text-xl font-bold text-gray-900 dark:text-white mb-4"
+              className="mb-3 text-lg font-bold text-slate-950 dark:text-white sm:text-xl"
             >
               {contentUi.sourcesHeading}
             </h2>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-slate-700 dark:text-slate-300">
               {contentUi.primaryReferences}{' '}
               {sources.map((source, index) => (
                 <span key={source.url}>
@@ -1015,7 +1094,7 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
                     href={source.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary-600 dark:text-primary-400 hover:underline"
+                    className="font-medium text-emerald-700 underline underline-offset-4 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300"
                   >
                     {source.name}
                   </a>
@@ -1024,7 +1103,7 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
               .
             </p>
             {categorySlug === 'encoding' && (
-              <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-3 font-mono text-xs text-slate-600 dark:text-slate-400">
                 {contentUi.lastReviewed} <time dateTime="2026-07-11">2026-07-11</time>
               </p>
             )}
@@ -1033,9 +1112,9 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
 
         {/* SEO Content */}
         {isDefaultLocale ? (
-          <section className="mt-12 prose prose-gray dark:prose-invert max-w-none">
-            <h2 className="text-gray-900 dark:text-white">About {category.name}</h2>
-            <p className="text-gray-600 dark:text-gray-300">
+          <section className="prose prose-gray mt-12 max-w-none dark:prose-invert">
+            <h2 className="text-slate-950 dark:text-white">About {category.name}</h2>
+            <p className="text-slate-700 dark:text-slate-300">
               {categorySlug === 'encoding'
                 ? 'This encoder online workbench and its dedicated tools are designed to help developers work more efficiently. '
                 : `Our ${category.name.toLowerCase()} are designed to help developers work more efficiently. `}
@@ -1044,11 +1123,11 @@ export default async function CategoryPage({ params, locale = DEFAULT_LOCALE }: 
             </p>
           </section>
         ) : (
-          <section className="mt-12 prose prose-gray dark:prose-invert max-w-none">
-            <h2 className="text-gray-900 dark:text-white">
+          <section className="prose prose-gray mt-12 max-w-none dark:prose-invert">
+            <h2 className="text-slate-950 dark:text-white">
               {translate(locale, 'categoryPage.aboutHeading', { category: categoryName })}
             </h2>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-slate-700 dark:text-slate-300">
               {translate(locale, 'categoryPage.aboutText')}
             </p>
           </section>

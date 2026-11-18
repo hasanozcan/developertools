@@ -157,7 +157,7 @@ export default function UnicodeEscapeTool() {
         </div>
       </div>
 
-      <div className="text-sm text-gray-500 dark:text-gray-400 space-y-1">
+      <div className="text-sm text-zinc-600 dark:text-zinc-400 space-y-1">
         <p>
           {t('tool.unicodeEscape.supports')
             .split(/(\{unicode\}|\{braced\}|\{hex\})/)

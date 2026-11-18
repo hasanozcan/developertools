@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from '@/components/common/LocalizedLink';
-import { History, Star, ShieldCheck, Sparkles, Command } from 'lucide-react';
+import { History, ShieldCheck, Terminal } from 'lucide-react';
 import { useHistory } from '@/context/HistoryContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { useLanguage } from '@/context/LanguageContext';
@@ -33,7 +33,7 @@ export default function QuickAccessBar({ currentSlug, className = '' }: QuickAcc
       <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5 max-w-full">
         {recentItems.length > 0 ? (
           <>
-            <span className="flex items-center gap-1 font-semibold text-slate-400 dark:text-slate-500 shrink-0 text-[11px]">
+            <span className="flex items-center gap-1 font-semibold text-zinc-600 dark:text-zinc-400 shrink-0 text-[11px]">
               <History className="h-3.5 w-3.5 text-indigo-500" />
               <span className="hidden sm:inline">{t('common.recentTools') || 'Recent'}:</span>
             </span>
@@ -53,8 +53,8 @@ export default function QuickAccessBar({ currentSlug, className = '' }: QuickAcc
             })}
           </>
         ) : (
-          <span className="flex items-center gap-1.5 font-medium text-slate-500 dark:text-slate-400 text-[11px]">
-            <Sparkles className="h-3.5 w-3.5 text-amber-500 shrink-0" />
+          <span className="flex items-center gap-1.5 font-medium text-zinc-600 dark:text-zinc-400 text-[11px]">
+            <Terminal className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-400 shrink-0" />
             <span>{t('header.exploreTools') || 'Fast, Private & Client-Side Developer Suite'}</span>
           </span>
         )}

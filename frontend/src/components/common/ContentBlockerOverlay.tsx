@@ -248,17 +248,17 @@ export default function ContentBlockerOverlay({
         <div
           role="region"
           aria-label={t('adblock.title')}
-          className="pointer-events-auto mx-auto flex w-full max-w-2xl flex-col gap-3 rounded-2xl border border-amber-200/80 bg-white/95 p-4 shadow-xl backdrop-blur-md dark:border-amber-800/60 dark:bg-gray-900/95 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
+          className="pointer-events-auto mx-auto flex w-full max-w-2xl flex-col gap-3 rounded-xl border border-amber-300/80 bg-white/95 p-4 shadow-xl backdrop-blur-md dark:border-amber-700/60 dark:bg-zinc-900/95 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
         >
           <div className="flex items-start gap-3">
-            <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/30">
+            <div className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-amber-200 bg-amber-50 dark:border-amber-800/60 dark:bg-amber-950/50">
               <WarningTriangleIcon className="h-5 w-5 text-amber-600 dark:text-amber-400" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-gray-900 dark:text-white">
+              <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
                 {t('adblock.title')}
               </p>
-              <p className="mt-0.5 text-xs text-gray-600 dark:text-gray-300">
+              <p className="mt-0.5 text-xs text-zinc-600 dark:text-zinc-400">
                 {t('adblock.softNote')}
               </p>
             </div>
@@ -269,14 +269,14 @@ export default function ContentBlockerOverlay({
               type="button"
               onClick={reloadPage}
               disabled={checking}
-              className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-primary-600 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-primary-500 dark:hover:bg-primary-600"
+              className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-700 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-60"
             >
               <span aria-live="polite">{checking ? t('adblock.checking') : t('adblock.retry')}</span>
             </button>
             <button
               type="button"
               onClick={handleDismissSoftBanner}
-              className="inline-flex items-center justify-center rounded-lg border border-gray-300 px-3 py-2 text-xs font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+              className="inline-flex items-center justify-center rounded-lg border border-zinc-300 bg-white px-3 py-2 text-xs font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
             >
               {t('adblock.dismiss')}
             </button>
@@ -287,7 +287,7 @@ export default function ContentBlockerOverlay({
   }
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-zinc-950/75 p-4 backdrop-blur-sm">
       <div
         ref={dialogRef}
         role="dialog"
@@ -297,21 +297,21 @@ export default function ContentBlockerOverlay({
         aria-busy={checking}
         tabIndex={-1}
         onKeyDown={keepFocusInsideDialog}
-        className="w-full max-w-md rounded-2xl bg-white p-8 shadow-2xl outline-none dark:bg-gray-800"
+        className="w-full max-w-md rounded-xl border border-zinc-200 bg-white p-8 shadow-2xl outline-none dark:border-zinc-800 dark:bg-zinc-900"
       >
-        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-900/30">
-          <WarningTriangleIcon className="h-7 w-7 text-amber-600 dark:text-amber-400" />
+        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl border border-amber-200 bg-amber-50 dark:border-amber-800/60 dark:bg-amber-950/50">
+          <WarningTriangleIcon className="h-6 w-6 text-amber-600 dark:text-amber-400" />
         </div>
 
         <h2
           id="adblock-title"
-          className="mb-2 text-center text-xl font-bold text-gray-900 dark:text-white"
+          className="mb-2 text-center text-xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50"
         >
           {t('adblock.title')}
         </h2>
         <p
           id="adblock-message"
-          className="mb-6 text-center text-sm text-gray-600 dark:text-gray-300"
+          className="mb-6 text-center text-sm text-zinc-600 dark:text-zinc-400"
         >
           {t('adblock.message')}
         </p>
@@ -321,7 +321,7 @@ export default function ContentBlockerOverlay({
             type="button"
             onClick={reloadPage}
             disabled={checking}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-primary-500 dark:hover:bg-primary-600"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {checking && (
               <svg
@@ -350,7 +350,7 @@ export default function ContentBlockerOverlay({
           <button
             type="button"
             onClick={reloadPage}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+            className="w-full rounded-lg border border-zinc-300 bg-white px-4 py-2.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
           >
             {t('adblock.reload')}
           </button>

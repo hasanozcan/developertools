@@ -277,7 +277,7 @@ export default function Sha256HashTool() {
         >
           {t('tool.sha256Hash.hashFile')}
         </h2>
-        <p id="sha256-file-help" className="mb-3 text-sm text-gray-500 dark:text-gray-400">
+        <p id="sha256-file-help" className="mb-3 text-sm text-zinc-600 dark:text-zinc-400">
           {t('tool.sha256Hash.fileMemoryHelp')}
         </p>
 
@@ -408,7 +408,7 @@ export default function Sha256HashTool() {
               </p>
             )}
             {checksumComparison === 'empty' && (
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-zinc-600 dark:text-zinc-400">
                 {t('tool.sha256Hash.checksumHelp')}
               </p>
             )}
@@ -418,7 +418,7 @@ export default function Sha256HashTool() {
 
       {/* Direct Related Crypto Tools Grid */}
       <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-3">
           {t("uiText.e4937a28")}</h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
           <Link
@@ -426,7 +426,7 @@ export default function Sha256HashTool() {
             className="flex flex-col p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           >
             <span className="font-semibold text-xs text-gray-900 dark:text-white">{t("tool.md5Hash.md5Hash")}</span>
-            <span className="text-[11px] text-gray-500 dark:text-gray-400">{t("uiText.d72874bf")}</span>
+            <span className="text-[11px] text-zinc-600 dark:text-zinc-400">{t("uiText.d72874bf")}</span>
           </Link>
           <Link
             href="/tools/crypto/sha512-hash"
@@ -434,7 +434,7 @@ export default function Sha256HashTool() {
           >
             <span className="font-semibold text-xs text-gray-900 dark:text-white">
               {t("uiText.6d1f7f38")}</span>
-            <span className="text-[11px] text-gray-500 dark:text-gray-400">{t("uiText.29736d5f")}</span>
+            <span className="text-[11px] text-zinc-600 dark:text-zinc-400">{t("uiText.29736d5f")}</span>
           </Link>
           <Link
             href="/tools/crypto/hmac-generator"
@@ -442,20 +442,20 @@ export default function Sha256HashTool() {
           >
             <span className="font-semibold text-xs text-gray-900 dark:text-white">
               {t("uiText.62cddcb3")}</span>
-            <span className="text-[11px] text-gray-500 dark:text-gray-400">{t("uiText.f4d3f95b")}</span>
+            <span className="text-[11px] text-zinc-600 dark:text-zinc-400">{t("uiText.f4d3f95b")}</span>
           </Link>
           <Link
             href="/tools/crypto/bcrypt-generator"
             className="flex flex-col p-2.5 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
           >
             <span className="font-semibold text-xs text-gray-900 dark:text-white">{t("uiText.5d38faf9")}</span>
-            <span className="text-[11px] text-gray-500 dark:text-gray-400">{t("uiText.a47cc2f0")}</span>
+            <span className="text-[11px] text-zinc-600 dark:text-zinc-400">{t("uiText.a47cc2f0")}</span>
           </Link>
         </div>
       </div>
 
       {/* Info */}
-      <div className="text-sm text-gray-500 dark:text-gray-400">
+      <div className="text-sm text-zinc-600 dark:text-zinc-400">
         <p>{t('tool.sha256Hash.infoText')}</p>
       </div>
     </div>

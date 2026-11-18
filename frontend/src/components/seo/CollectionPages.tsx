@@ -68,11 +68,17 @@ export function CollectionIndexContent({ locale }: { locale: Language }) {
   );
 
   return (
-    <main className="page-shell py-10 sm:py-14">
-      <section className="mb-8 rounded-[2rem] border border-white/80 bg-white/70 p-7 shadow-sm backdrop-blur dark:border-white/10 dark:bg-slate-900/70 sm:p-10">
-        <span className="eyebrow mb-3">{ui.eyebrow}</span>
-        <h1 className="text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-4xl">{ui.title}</h1>
-        <p className="mt-4 max-w-3xl leading-7 text-slate-600 dark:text-slate-300">{ui.description}</p>
+    <main className="page-shell py-8 sm:py-12">
+      <section className="mb-8 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950/90 sm:p-8">
+        <span className="mb-3 inline-flex items-center rounded border border-slate-300 bg-slate-100 px-2.5 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+          {ui.eyebrow}
+        </span>
+        <h1 className="break-words text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-4xl">
+          {ui.title}
+        </h1>
+        <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">
+          {ui.description}
+        </p>
       </section>
 
       <AdSense
@@ -84,7 +90,10 @@ export function CollectionIndexContent({ locale }: { locale: Language }) {
 
       {groups.map((group) => (
         <section key={group.id} className="mb-10" aria-labelledby={`collection-group-${group.id}`}>
-          <h2 id={`collection-group-${group.id}`} className="mb-4 text-2xl font-bold text-slate-950 dark:text-white">
+          <h2
+            id={`collection-group-${group.id}`}
+            className="mb-4 border-b border-slate-200 pb-2 text-xl font-bold tracking-tight text-slate-950 dark:border-slate-800 dark:text-white sm:text-2xl"
+          >
             {group.title}
           </h2>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -97,16 +106,24 @@ export function CollectionIndexContent({ locale }: { locale: Language }) {
                 <Link
                   key={slug}
                   href={`${prefix}/collections/${slug}`}
-                  className="interactive-card rounded-3xl p-5"
+                  className="interactive-card group flex min-w-0 flex-col justify-between rounded-xl border border-slate-200 bg-white p-5 transition-colors hover:border-slate-400 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-600"
                 >
-                  <div className="mb-2 flex items-center justify-between gap-3">
-                    <h3 className="text-lg font-bold text-slate-950 dark:text-white">{localized.shortTitle}</h3>
-                    <span className="shrink-0 rounded-full bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300">
-                      {toolCount} {ui.tools}
-                    </span>
+                  <div className="min-w-0">
+                    <div className="mb-2 flex items-start justify-between gap-3">
+                      <h3 className="min-w-0 break-words text-base font-bold text-slate-950 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
+                        {localized.shortTitle}
+                      </h3>
+                      <span className="shrink-0 rounded border border-slate-200 bg-slate-100 px-2 py-0.5 font-mono text-[11px] font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                        {toolCount} {ui.tools}
+                      </span>
+                    </div>
+                    <p className="line-clamp-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+                      {localized.description}
+                    </p>
                   </div>
-                  <p className="line-clamp-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{localized.description}</p>
-                  <p className="mt-3 text-xs font-semibold text-indigo-600 dark:text-indigo-400">{ui.explore} →</p>
+                  <p className="mt-3 font-mono text-xs font-semibold text-slate-900 group-hover:text-emerald-700 dark:text-slate-200 dark:group-hover:text-emerald-400">
+                    {ui.explore} →
+                  </p>
                 </Link>
               );
             })}
@@ -163,25 +180,34 @@ export function CollectionDetailContent({ locale, collection }: { locale: Langua
   };
 
   return (
-    <main className="page-shell py-10 sm:py-14">
+    <main className="page-shell py-8 sm:py-12">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonForHtmlScript(structuredData) }} />
-      <nav className="mb-5 text-sm text-slate-500 dark:text-slate-400">
-        <Link href={`${prefix}/collections`} className="hover:text-indigo-600 dark:hover:text-indigo-400">{ui.back}</Link>
-        <span className="px-2">/</span>
-        <span>{localized.shortTitle}</span>
+      <nav className="mb-5 font-mono text-xs text-slate-600 dark:text-slate-400 sm:text-sm">
+        <Link href={`${prefix}/collections`} className="hover:text-slate-950 hover:underline dark:hover:text-white">
+          {ui.back}
+        </Link>
+        <span className="px-2 text-slate-400 dark:text-slate-600">/</span>
+        <span className="text-slate-900 dark:text-slate-200">{localized.shortTitle}</span>
       </nav>
 
-      <section className="mb-8 rounded-[2rem] border border-white/80 bg-white/70 p-7 shadow-sm backdrop-blur dark:border-white/10 dark:bg-slate-900/70 sm:p-10">
-        <span className="eyebrow mb-3">{ui.eyebrow}</span>
-        <h1 className="text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-4xl">{localized.title}</h1>
-        <div data-collection-intro="true" className="mt-4 max-w-3xl space-y-4 leading-7 text-slate-600 dark:text-slate-300">
+      <section className="mb-8 rounded-2xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-950/90 sm:p-8">
+        <span className="mb-3 inline-flex items-center rounded border border-slate-300 bg-slate-100 px-2.5 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+          {ui.eyebrow}
+        </span>
+        <h1 className="break-words text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-4xl">
+          {localized.title}
+        </h1>
+        <div data-collection-intro="true" className="mt-4 max-w-3xl space-y-4 text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">
           {paragraphs.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}
         </div>
         <div className="mt-5 flex flex-wrap gap-2">
           {collection.searchIntents.map((intent) => (
-            <span key={intent} className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-xs text-slate-600 dark:border-white/10 dark:bg-slate-800 dark:text-slate-300">
+            <span
+              key={intent}
+              className="rounded border border-slate-200 bg-slate-50 px-2.5 py-1 font-mono text-xs text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300"
+            >
               {intent}
             </span>
           ))}
@@ -193,15 +219,28 @@ export function CollectionDetailContent({ locale, collection }: { locale: Langua
       <AdSense slot={topSlot} format="auto" placement={`collection-${slug}${placementSuffix}-top`} className="mb-8 min-h-[90px]" />
 
       <section className="mb-10" aria-labelledby="collection-tools-heading">
-        <h2 id="collection-tools-heading" className="mb-5 text-2xl font-bold text-slate-950 dark:text-white">{ui.toolsHeading}</h2>
+        <h2
+          id="collection-tools-heading"
+          className="mb-5 border-b border-slate-200 pb-2 text-xl font-bold text-slate-950 dark:border-slate-800 dark:text-white sm:text-2xl"
+        >
+          {ui.toolsHeading}
+        </h2>
         <div data-collection-tools="true" className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {tools.map((tool, index) => {
             const meta = toolMeta.get(tool.slug)!;
             return (
-              <Link key={tool.slug} href={`${prefix}/tools/${tool.categorySlug}/${tool.slug}`} className="interactive-card rounded-3xl p-5">
-                <div className="mb-3 flex items-center gap-3">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 text-xs font-bold text-indigo-700 dark:bg-indigo-950/50 dark:text-indigo-300">{index + 1}</span>
-                  <h3 className="font-bold text-slate-950 dark:text-white">{meta.name}</h3>
+              <Link
+                key={tool.slug}
+                href={`${prefix}/tools/${tool.categorySlug}/${tool.slug}`}
+                className="interactive-card group min-w-0 rounded-xl border border-slate-200 bg-white p-5 transition-colors hover:border-slate-400 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-600"
+              >
+                <div className="mb-2.5 flex items-center gap-3">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded border border-slate-200 bg-slate-100 font-mono text-xs font-bold text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                    {index + 1}
+                  </span>
+                  <h3 className="min-w-0 break-words font-bold text-slate-950 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
+                    {meta.name}
+                  </h3>
                 </div>
                 <p className="text-sm leading-6 text-slate-600 dark:text-slate-300">{meta.description}</p>
               </Link>
@@ -212,7 +251,10 @@ export function CollectionDetailContent({ locale, collection }: { locale: Langua
 
       {workflowSteps && (
         <section className="mb-10" aria-labelledby="collection-workflow-heading">
-          <h2 id="collection-workflow-heading" className="mb-4 text-2xl font-bold text-slate-950 dark:text-white">
+          <h2
+            id="collection-workflow-heading"
+            className="mb-4 border-b border-slate-200 pb-2 text-xl font-bold text-slate-950 dark:border-slate-800 dark:text-white sm:text-2xl"
+          >
             {WORKFLOW_HEADING}
           </h2>
           <ol data-collection-workflow="true" className="grid gap-4 md:grid-cols-2">
@@ -220,10 +262,19 @@ export function CollectionDetailContent({ locale, collection }: { locale: Langua
               const tool = tools.find((item) => item.slug === step.toolSlug);
               if (!tool) return null;
               return (
-                <li key={`${step.toolSlug}-${index}`} className="rounded-3xl border border-slate-200 bg-white/80 p-5 dark:border-white/10 dark:bg-slate-900/70">
-                  <h3 className="text-lg font-bold text-slate-950 dark:text-white">{step.title}</h3>
+                <li
+                  key={`${step.toolSlug}-${index}`}
+                  className="min-w-0 rounded-xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900/90"
+                >
+                  <span className="mb-2 inline-block font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
+                    STEP {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="break-words text-lg font-bold text-slate-950 dark:text-white">{step.title}</h3>
                   <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{step.description}</p>
-                  <Link href={`${prefix}/tools/${tool.categorySlug}/${tool.slug}`} className="mt-4 inline-block text-sm font-semibold text-indigo-600 hover:underline dark:text-indigo-400">
+                  <Link
+                    href={`${prefix}/tools/${tool.categorySlug}/${tool.slug}`}
+                    className="mt-4 inline-block font-mono text-xs font-semibold text-emerald-700 hover:underline dark:text-emerald-400"
+                  >
                     {ui.open} {tool.name} →
                   </Link>
                 </li>

@@ -9,6 +9,7 @@ import { useFavorites } from '@/context/FavoritesContext';
 import { useHistory } from '@/context/HistoryContext';
 import { useLanguage } from '@/context/LanguageContext';
 import LanguageSelector from '@/components/common/LanguageSelector';
+import { BrandLogoMark } from '@/components/common/BrandLogo';
 import CommandPalette from '@/components/layout/CommandPalette';
 import { toolCatalog } from '@/lib/api';
 import { buildToolPath, getCanonicalToolCategory } from '@/lib/toolRoutes';
@@ -136,7 +137,7 @@ export default function Header() {
             category: 'converters',
             name: t('toolName.query-string-parser'),
           },
-          { slug: 'json-csv', category: 'converters', name: t('toolName.json-csv') },
+          { slug: 'json-csv', category: 'json', name: t('toolName.json-csv') },
           { slug: 'json-to-typescript', category: 'json', name: t('toolName.json-to-typescript') },
           { slug: 'yaml-json', category: 'json', name: t('toolName.yaml-json') },
         ],
@@ -157,7 +158,7 @@ export default function Header() {
             category: 'utilities',
             name: t('toolName.http-headers-parser'),
           },
-          { slug: 'markdown-preview', category: 'utilities', name: t('toolName.markdown-preview') },
+          { slug: 'markdown-preview', category: 'text', name: t('toolName.markdown-preview') },
           { slug: 'cron-parser', category: 'utilities', name: t('toolName.cron-parser') },
           {
             slug: 'http-status-codes',
@@ -329,85 +330,54 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-[0_8px_30px_-24px_rgba(15,23,42,0.6)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/95"
+      className="sticky top-0 z-50 border-b border-zinc-200 bg-white/95 backdrop-blur-md dark:border-zinc-800 dark:bg-[#09090b]/95"
     >
       <nav
         aria-label={t("uiText.6fba33cd")}
         className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-10 xl:px-12"
       >
-        <div className="flex h-[4.5rem] items-center">
+        <div className="flex h-14 items-center">
           {/* Logo - Sol */}
           <Link href="/" className="group flex shrink-0 items-center gap-2.5">
-            <svg
-              className="h-9 w-9 drop-shadow-md transition-transform duration-300 group-hover:rotate-6 group-hover:scale-105"
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <defs>
-                <linearGradient id="logoGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style={{ stopColor: '#0EA5E9' }} />
-                  <stop offset="50%" style={{ stopColor: '#8B5CF6' }} />
-                  <stop offset="100%" style={{ stopColor: '#EC4899' }} />
-                </linearGradient>
-                <linearGradient id="logoGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
-                  <stop offset="0%" style={{ stopColor: '#10B981' }} />
-                  <stop offset="100%" style={{ stopColor: '#06B6D4' }} />
-                </linearGradient>
-              </defs>
-              <path d="M16 2L28 9V23L16 30L4 23V9L16 2Z" fill="url(#logoGrad1)" />
-              <path d="M16 5L25 10.5V21.5L16 27L7 21.5V10.5L16 5Z" fill="rgba(255,255,255,0.1)" />
-              <path
-                d="M10 12L6 16L10 20"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M22 12L26 16L22 20"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <circle cx="16" cy="16" r="2.5" fill="url(#logoGrad2)" />
-            </svg>
-            <span className="text-xl font-extrabold tracking-[-0.04em] text-slate-950 dark:text-white">
-              {t("uiText.11e991fd")}<span className="gradient-text">{t("uiText.950196fc")}</span>
+            <BrandLogoMark
+              size={28}
+              className="shrink-0 transition-transform duration-200 group-hover:scale-105"
+            />
+            <span className="text-lg font-extrabold tracking-[-0.04em] text-zinc-950 dark:text-zinc-50">
+              {t("uiText.11e991fd")}<span className="text-emerald-600 dark:text-emerald-400">{t("uiText.950196fc")}</span>
             </span>
           </Link>
 
           {/* Desktop Navigation - Logo'dan sonra */}
-          <div className="hidden lg:flex items-center gap-0.5 xl:gap-1 ml-4 xl:ml-8">
+          <div className="ml-4 hidden items-center gap-0.5 lg:flex xl:ml-8 xl:gap-1">
             {navigation.map((item) => (
               <div key={item.name} className="relative group">
                 <Link
                   href={item.href}
-                  className="flex items-center gap-1 rounded-full px-2.5 xl:px-3 py-1.5 text-xs xl:text-sm font-medium text-slate-600 transition-colors hover:bg-indigo-50 hover:text-indigo-700 dark:text-slate-300 dark:hover:bg-white/10 dark:hover:text-white shrink-0 whitespace-nowrap"
+                  className="flex shrink-0 items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-1.5 text-xs font-medium text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-800/80 dark:hover:text-zinc-50 xl:px-3 xl:text-sm"
                 >
                   {item.name}
-                  <ChevronDown className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 transition-opacity" />
+                  <ChevronDown className="h-3.5 w-3.5 opacity-50 transition-opacity group-hover:opacity-100" />
                 </Link>
                 {/* Dropdown Menu */}
-                <div className="absolute left-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 z-50">
-                  <div className="min-w-[240px] rounded-2xl border border-slate-200 bg-white py-2 shadow-2xl dark:border-slate-800 dark:bg-slate-900">
+                <div className="invisible absolute left-0 top-full z-50 pt-1.5 opacity-0 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                  <div className="min-w-[240px] rounded-xl border border-zinc-200 bg-white py-1.5 shadow-xl dark:border-zinc-800 dark:bg-zinc-900">
                     {item.tools.map((tool: any) => (
                       <Link
                         key={tool.slug}
                         href={buildToolPath(tool.category, tool.slug)}
                         prefetch={false}
-                        className="block px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-indigo-50 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
+                        className="block px-3.5 py-1.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 hover:text-emerald-700 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-emerald-400"
                       >
                         {tool.name}
                       </Link>
                     ))}
                     {item.href !== '/#categories' && (
-                      <div className="border-t border-slate-100 dark:border-slate-800 mt-1.5 pt-1.5">
+                      <div className="mt-1 border-t border-zinc-100 pt-1 dark:border-zinc-800">
                         <Link
                           href={item.href}
                           prefetch={false}
-                          className="block px-4 py-2 text-sm text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-slate-800 font-semibold"
+                          className="block px-3.5 py-1.5 text-sm font-semibold text-emerald-700 transition-colors hover:bg-zinc-100 dark:text-emerald-400 dark:hover:bg-zinc-800"
                         >
                           {t('nav.viewAll')}
                         </Link>
@@ -420,10 +390,10 @@ export default function Header() {
           </div>
 
           {/* Spacer */}
-          <div className="flex-1 min-w-3" />
+          <div className="min-w-2 flex-1" />
 
           {/* Right side controls - Sağ */}
-          <div className="hidden md:flex items-center gap-1.5 lg:gap-2 shrink-0">
+          <div className="hidden shrink-0 items-center gap-1.5 md:flex lg:gap-2">
             {/* Search Trigger */}
             <button
               onClick={() => setCommandPaletteOpen(true)}
@@ -432,11 +402,11 @@ export default function Header() {
               aria-label={t('search')}
               aria-controls="tool-search-results"
               aria-haspopup="dialog"
-              className="flex items-center gap-2 rounded-full border border-slate-200/80 bg-white px-3 py-1.5 text-slate-700 transition hover:border-indigo-300 hover:text-indigo-600 hover:shadow-sm dark:border-white/10 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-indigo-500 shrink-0"
+              className="flex shrink-0 items-center gap-2.5 rounded-lg border border-zinc-200 bg-zinc-50/80 px-2.5 py-1.5 text-zinc-600 transition-colors hover:border-zinc-300 hover:bg-zinc-100 hover:text-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:border-zinc-700 dark:hover:bg-zinc-800/80 dark:hover:text-zinc-100"
             >
-              <Search className="w-4 h-4 text-indigo-500" />
-              <span className="text-xs lg:text-sm font-medium">{t('search')}...</span>
-              <kbd className="hidden xl:inline-flex items-center px-1.5 py-0.5 text-[11px] font-mono font-semibold text-slate-800 bg-slate-200/90 dark:bg-slate-700 dark:text-slate-100 rounded border border-slate-300 dark:border-slate-600">
+              <Search className="h-3.5 w-3.5 shrink-0 text-emerald-700 dark:text-emerald-400" />
+              <span className="text-xs font-medium">{t('search')}...</span>
+              <kbd className="hidden items-center rounded border border-zinc-200 bg-white px-1.5 py-0.5 font-mono text-[10px] font-medium text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400 xl:inline-flex">
                 {t("uiText.1c039058")}</kbd>
             </button>
 
@@ -447,25 +417,25 @@ export default function Header() {
                   setShowFavorites(!showFavorites);
                   setShowHistory(false);
                 }}
-                className={`p-2 rounded-lg transition-colors ${
+                className={`rounded-lg p-2 transition-colors ${
                   favoriteTools.length > 0
-                    ? 'text-yellow-500 hover:bg-yellow-50 dark:hover:bg-yellow-900/20'
-                    : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+                    ? 'text-amber-500 hover:bg-amber-500/10'
+                    : 'text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100'
                 }`}
                 title={t('favorites')}
                 aria-label={t('favorites')}
                 aria-expanded={showFavorites}
                 aria-controls="favorite-tools-menu"
               >
-                <Star className={`w-5 h-5 ${favoriteTools.length > 0 ? 'fill-current' : ''}`} />
+                <Star className={`h-4 w-4 ${favoriteTools.length > 0 ? 'fill-current' : ''}`} />
               </button>
               {showFavorites && (
                 <div
                   id="favorite-tools-menu"
-                  className="absolute right-0 mt-2 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden z-[100]"
+                  className="absolute right-0 z-[100] mt-2 w-72 overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
                 >
-                  <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-800/80 border-b border-slate-100 dark:border-slate-800">
-                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                  <div className="border-b border-zinc-200 bg-zinc-50 px-4 py-2 dark:border-zinc-800 dark:bg-zinc-950/60">
+                    <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
                       {t('favorites')}
                     </span>
                   </div>
@@ -474,13 +444,13 @@ export default function Header() {
                       <button
                         key={tool.slug}
                         onClick={() => handleSelectTool(tool, 'favorites')}
-                        className="w-full px-4 py-2.5 text-left hover:bg-indigo-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 text-sm font-medium transition-colors"
+                        className="w-full px-4 py-2 text-left text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 hover:text-emerald-700 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:hover:text-emerald-400"
                       >
                         {tool.name}
                       </button>
                     ))
                   ) : (
-                    <div className="px-4 py-4 text-sm text-slate-500 dark:text-slate-400 text-center">
+                    <div className="px-4 py-4 text-center text-sm text-zinc-500 dark:text-zinc-400">
                       {t('favorites.empty')}
                     </div>
                   )}
@@ -495,21 +465,21 @@ export default function Header() {
                   setShowHistory(!showHistory);
                   setShowFavorites(false);
                 }}
-                className="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                className="rounded-lg p-2 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
                 title={t('recent')}
                 aria-label={t('recent')}
                 aria-expanded={showHistory}
                 aria-controls="recent-tools-menu"
               >
-                <Clock className="w-5 h-5" />
+                <Clock className="h-4 w-4" />
               </button>
               {showHistory && (
                 <div
                   id="recent-tools-menu"
-                  className="absolute right-0 mt-2 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden z-[100]"
+                  className="absolute right-0 z-[100] mt-2 w-72 overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
                 >
-                  <div className="px-4 py-2.5 bg-slate-50 dark:bg-slate-800/80 border-b border-slate-100 dark:border-slate-800">
-                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
+                  <div className="border-b border-zinc-200 bg-zinc-50 px-4 py-2 dark:border-zinc-800 dark:bg-zinc-950/60">
+                    <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
                       {t('recent')}
                     </span>
                   </div>
@@ -521,13 +491,13 @@ export default function Header() {
                           router.push(getLocalizedPath(buildToolPath(item.category, item.slug), language));
                           setShowHistory(false);
                         }}
-                        className="w-full px-4 py-2.5 text-left hover:bg-indigo-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 text-sm font-medium transition-colors"
+                        className="w-full px-4 py-2 text-left text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 hover:text-emerald-700 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:hover:text-emerald-400"
                       >
                         {item.name}
                       </button>
                     ))
                   ) : (
-                    <div className="px-4 py-4 text-sm text-slate-500 dark:text-slate-400 text-center">
+                    <div className="px-4 py-4 text-center text-sm text-zinc-500 dark:text-zinc-400">
                       {t('recent.empty')}
                     </div>
                   )}
@@ -541,36 +511,36 @@ export default function Header() {
             {/* Theme Toggle */}
             <button
               onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-              className="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+              className="rounded-lg p-2 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
               title={resolvedTheme === 'dark' ? t('lightMode') : t('darkMode')}
               aria-label={resolvedTheme === 'dark' ? t('lightMode') : t('darkMode')}
             >
               {resolvedTheme === 'dark' ? (
-                <Sun className="w-5 h-5" />
+                <Sun className="h-4 w-4" />
               ) : (
-                <Moon className="w-5 h-5" />
+                <Moon className="h-4 w-4" />
               )}
             </button>
           </div>
 
           {/* Mobile controls */}
-          <div className="ml-auto flex items-center gap-1.5 md:hidden">
+          <div className="ml-auto flex shrink-0 items-center gap-1.5 md:hidden">
             <button
               onClick={() => setCommandPaletteOpen(true)}
               aria-label={t("uiText.ac59e99d")}
               aria-haspopup="dialog"
-              className="rounded-xl border border-slate-200 bg-white/70 p-2 text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
+              className="rounded-lg border border-zinc-200 bg-zinc-50 p-2 text-zinc-600 transition-colors hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800"
             >
-              <Search className="w-5 h-5" />
+              <Search className="h-4 w-4" />
             </button>
             <button
-              className="rounded-xl border border-slate-200 bg-white/70 p-2 text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300"
+              className="rounded-lg border border-zinc-200 bg-zinc-50 p-2 text-zinc-600 transition-colors hover:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={mobileMenuOpen ? t("uiText.feac2727") : t("uiText.b807c8dd")}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-navigation"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
             </button>
           </div>
         </div>
@@ -579,10 +549,10 @@ export default function Header() {
         {mobileMenuOpen && (
           <div
             id="mobile-navigation"
-            className="md:hidden py-4 border-t border-gray-100 dark:border-gray-700"
+            className="border-t border-zinc-200 py-4 dark:border-zinc-800 md:hidden"
           >
-            <div className="mb-3 flex items-center justify-between gap-3 border-b border-gray-100 pb-3 dark:border-gray-700">
-              <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
+            <div className="mb-3 flex items-center justify-between gap-3 border-b border-zinc-200 pb-3 dark:border-zinc-800">
+              <span className="text-sm font-medium text-zinc-600 dark:text-zinc-300">
                 {t('common.selectLanguage')}
               </span>
               <LanguageSelector />
@@ -590,17 +560,17 @@ export default function Header() {
             {navigation.map((item, index) => (
               <div
                 key={item.name}
-                className="border-b border-gray-100 dark:border-gray-700 last:border-b-0"
+                className="border-b border-zinc-200 last:border-b-0 dark:border-zinc-800"
               >
                 <button
                   onClick={() => setActiveDropdown(activeDropdown === item.name ? null : item.name)}
                   aria-expanded={activeDropdown === item.name}
                   aria-controls={`mobile-navigation-group-${index}`}
-                  className="w-full flex items-center justify-between py-3 text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium"
+                  className="flex w-full items-center justify-between py-3 font-medium text-zinc-700 transition-colors hover:text-emerald-700 dark:text-zinc-300 dark:hover:text-emerald-400"
                 >
                   <span>{item.name}</span>
                   <ChevronDown
-                    className={`w-4 h-4 transition-transform ${activeDropdown === item.name ? 'rotate-180' : ''}`}
+                    className={`h-4 w-4 transition-transform ${activeDropdown === item.name ? 'rotate-180' : ''}`}
                   />
                 </button>
                 {activeDropdown === item.name && item.tools.length > 0 && (
@@ -608,7 +578,7 @@ export default function Header() {
                     {item.href !== '/#categories' && (
                       <Link
                         href={item.href}
-                        className="block py-2 text-sm text-primary-600 dark:text-primary-400 font-medium"
+                        className="block py-2 text-sm font-medium text-emerald-700 dark:text-emerald-400"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         {t('nav.viewAll')}
@@ -618,7 +588,7 @@ export default function Header() {
                       <Link
                         key={tool.slug}
                         href={buildToolPath(tool.category, tool.slug)}
-                        className="block py-2 text-sm text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
+                        className="block py-2 text-sm text-zinc-600 transition-colors hover:text-emerald-700 dark:text-zinc-400 dark:hover:text-emerald-400"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         {tool.name}
@@ -631,12 +601,12 @@ export default function Header() {
             {/* Mobile Theme Toggle */}
             <button
               onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-              className="flex items-center gap-2 py-3 text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium"
+              className="flex items-center gap-2 py-3 font-medium text-zinc-700 transition-colors hover:text-emerald-700 dark:text-zinc-300 dark:hover:text-emerald-400"
             >
               {resolvedTheme === 'dark' ? (
-                <Sun className="w-5 h-5" />
+                <Sun className="h-4 w-4" />
               ) : (
-                <Moon className="w-5 h-5" />
+                <Moon className="h-4 w-4" />
               )}
               <span>{resolvedTheme === 'dark' ? t('lightMode') : t('darkMode')}</span>
             </button>

@@ -92,7 +92,7 @@ export default function FileChecksumComparatorTool() {
           <div className="flex items-center justify-between">
             <label
               htmlFor="checksum-text"
-              className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400"
+              className="text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400"
             >
               {t("uiText.627c0307")}</label>
             {selectedFile && (
@@ -116,7 +116,7 @@ export default function FileChecksumComparatorTool() {
             className="w-full rounded-xl border border-slate-200 bg-slate-50/50 p-3 font-mono text-xs text-slate-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-800 dark:bg-slate-950 dark:text-white"
           />
 
-          <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+          <div className="flex flex-wrap items-center gap-2 text-xs text-zinc-600 dark:text-zinc-400">
             <button
               type="button"
               onClick={() => {
@@ -146,7 +146,7 @@ export default function FileChecksumComparatorTool() {
               <span>{t("uiText.391a11c1")}</span>
             </div>
           </div>
-          <p id="checksum-file-help" className="text-xs text-slate-500 dark:text-slate-400">
+          <p id="checksum-file-help" className="text-xs text-zinc-600 dark:text-zinc-400">
             {t("uiText.75970fd0")}</p>
         </div>
 
@@ -155,10 +155,10 @@ export default function FileChecksumComparatorTool() {
           <div className="space-y-2">
             <label
               htmlFor="checksum-expected"
-              className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5"
+              className="text-xs font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 flex items-center gap-1.5"
             >
               <ShieldCheck className="h-3.5 w-3.5 text-indigo-500" /> {t("uiText.ccd1cbc4")}</label>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
+            <p className="text-xs text-zinc-600 dark:text-zinc-400">
               {t("uiText.ce2adfa5")}</p>
             <input
               id="checksum-expected"
@@ -175,10 +175,10 @@ export default function FileChecksumComparatorTool() {
           {normalizedExpectedHash && !isHashing && !inputError && (
             <div role="status" className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 text-xs">
               {comparedChecksums.some((c) => c.matchesExpected) ? (
-                <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-bold">
+                <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-400 font-bold">
                   <CheckCircle2 className="h-4 w-4" /> {t("uiText.35aba754")}</div>
               ) : (
-                <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-medium">
+                <div className="flex items-center gap-2 text-amber-700 dark:text-amber-400 font-medium">
                   <XCircle className="h-4 w-4" /> {t("uiText.d53946be")}</div>
               )}
             </div>
@@ -193,7 +193,7 @@ export default function FileChecksumComparatorTool() {
         aria-busy={isHashing}
         className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm dark:border-white/10 dark:bg-slate-900"
       >
-        <div className="p-4 border-b border-slate-100 dark:border-white/5 font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">
+        <div className="p-4 border-b border-slate-100 dark:border-white/5 font-bold text-xs uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
           {t("uiText.877ac750")}</div>
         {isHashing && (
           <p role="status" className="p-4 text-sm text-slate-600 dark:text-slate-300">
@@ -215,10 +215,10 @@ export default function FileChecksumComparatorTool() {
                 </span>
                 {matchesExpected !== undefined &&
                   (matchesExpected ? (
-                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
+                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
                       <CheckCircle2 className="h-3.5 w-3.5" /> {t("uiText.3bb15d76")}</span>
                   ) : normalizedExpectedHash ? (
-                    <span className="text-[11px] text-slate-400">{t("uiText.bfdb40b1")}</span>
+                    <span className="text-[11px] text-zinc-600 dark:text-zinc-400">{t("uiText.bfdb40b1")}</span>
                   ) : null)}
               </div>
 

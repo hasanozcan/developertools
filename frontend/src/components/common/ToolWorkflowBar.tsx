@@ -82,7 +82,7 @@ export default function ToolWorkflowBar({ toolSlug }: { toolSlug: string }) {
         )}
       </div>
       {!output && (
-        <p className="mt-2 text-[11px] text-slate-500 dark:text-slate-400">
+        <p className="mt-2 text-[11px] text-zinc-600 dark:text-zinc-400">
           {t("uiText.aa63eb07")}</p>
       )}
     </div>

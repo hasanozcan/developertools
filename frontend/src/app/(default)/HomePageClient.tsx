@@ -41,12 +41,10 @@ import {
   Tags,
   Trash,
   ArrowUpDown,
-  ArrowUp,
-  Shield,
   Circle,
   Calculator,
   Network,
-  Sparkles,
+  Terminal,
   Search,
   Flame,
   LayoutGrid,
@@ -203,30 +201,89 @@ const popularToolSlugs = new Set([
   'blake3-hash-generator',
 ]);
 
-const spotlightTools = [
-  { slug: 'json-formatter', icon: FileJson, color: 'from-amber-500 to-orange-600', category: 'json' },
-  { slug: 'jwt-decoder', icon: KeyRound, color: 'from-indigo-500 to-violet-600', category: 'encoding' },
-  { slug: 'base64', icon: Binary, color: 'from-blue-500 to-cyan-600', category: 'encoding' },
-  { slug: 'uuid-generator', icon: Fingerprint, color: 'from-emerald-500 to-teal-600', category: 'generators' },
-  { slug: 'regex-tester', icon: Regex, color: 'from-rose-500 to-pink-600', category: 'utilities' },
-  { slug: 'dockerfile-ai-optimized-generator', icon: Binary, color: 'from-sky-500 to-blue-600', category: 'generators' },
-  { slug: 'sql-to-python-sqlalchemy', icon: Database, color: 'from-purple-500 to-indigo-600', category: 'converters' },
-  { slug: 'tailwind-v4-mesh-gradient-generator', icon: Paintbrush, color: 'from-fuchsia-500 to-rose-600', category: 'generators' },
-];
+interface CategoryAccent {
+  code: string;
+  topBorder: string;
+  iconBox: string;
+  badge: string;
+}
 
-const quickSearchTags = [
-  'JSON',
-  'Docker',
-  'SQL',
-  'Base64',
-  'JWT',
-  'Rust',
-  'Kubernetes',
-  'Tailwind',
-  'TypeScript',
-  'GraphQL',
-  'Regex',
-  'Hash',
+const categoryAccents: Record<string, CategoryAccent> = {
+  json: {
+    code: 'JSON',
+    topBorder: 'border-t-emerald-500',
+    iconBox: 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-800/70 dark:bg-emerald-950/60 dark:text-emerald-300',
+    badge: 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-800/70 dark:bg-emerald-950/60 dark:text-emerald-300',
+  },
+  crypto: {
+    code: 'CRYPTO',
+    topBorder: 'border-t-amber-500',
+    iconBox: 'border-amber-200 bg-amber-50 text-amber-800 dark:border-amber-800/70 dark:bg-amber-950/60 dark:text-amber-300',
+    badge: 'border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-800/70 dark:bg-amber-950/60 dark:text-amber-300',
+  },
+  encoding: {
+    code: 'ENC',
+    topBorder: 'border-t-sky-500',
+    iconBox: 'border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-800/70 dark:bg-sky-950/60 dark:text-sky-300',
+    badge: 'border-sky-200 bg-sky-50 text-sky-800 dark:border-sky-800/70 dark:bg-sky-950/60 dark:text-sky-300',
+  },
+  converters: {
+    code: 'CONV',
+    topBorder: 'border-t-blue-500',
+    iconBox: 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800/70 dark:bg-blue-950/60 dark:text-blue-300',
+    badge: 'border-blue-200 bg-blue-50 text-blue-800 dark:border-blue-800/70 dark:bg-blue-950/60 dark:text-blue-300',
+  },
+  formatters: {
+    code: 'FMT',
+    topBorder: 'border-t-teal-500',
+    iconBox: 'border-teal-200 bg-teal-50 text-teal-700 dark:border-teal-800/70 dark:bg-teal-950/60 dark:text-teal-300',
+    badge: 'border-teal-200 bg-teal-50 text-teal-800 dark:border-teal-800/70 dark:bg-teal-950/60 dark:text-teal-300',
+  },
+  generators: {
+    code: 'GEN',
+    topBorder: 'border-t-rose-500',
+    iconBox: 'border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-800/70 dark:bg-rose-950/60 dark:text-rose-300',
+    badge: 'border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-800/70 dark:bg-rose-950/60 dark:text-rose-300',
+  },
+  text: {
+    code: 'TEXT',
+    topBorder: 'border-t-zinc-500',
+    iconBox: 'border-zinc-300 bg-zinc-100 text-zinc-800 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200',
+    badge: 'border-zinc-300 bg-zinc-100 text-zinc-800 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200',
+  },
+  utilities: {
+    code: 'UTIL',
+    topBorder: 'border-t-cyan-500',
+    iconBox: 'border-cyan-200 bg-cyan-50 text-cyan-800 dark:border-cyan-800/70 dark:bg-cyan-950/60 dark:text-cyan-300',
+    badge: 'border-cyan-200 bg-cyan-50 text-cyan-800 dark:border-cyan-800/70 dark:bg-cyan-950/60 dark:text-cyan-300',
+  },
+};
+
+const heroShortcutSlugs = [
+  { slug: 'json-formatter', fallbackCategory: 'json' },
+  { slug: 'jwt-decoder', fallbackCategory: 'encoding' },
+  { slug: 'base64', fallbackCategory: 'encoding' },
+  { slug: 'sha256-hash', fallbackCategory: 'crypto' },
+  { slug: 'regex-tester', fallbackCategory: 'text' },
+  { slug: 'curl-to-fetch', fallbackCategory: 'utilities' },
+] as const;
+
+const workbenchDailySlugs = [
+  { slug: 'json-formatter', fallbackCategory: 'json', tag: 'JSON', tagClass: 'border-emerald-700/80 bg-emerald-950/80 text-emerald-300' },
+  { slug: 'sha256-hash', fallbackCategory: 'crypto', tag: 'CRYPTO', tagClass: 'border-amber-700/80 bg-amber-950/80 text-amber-300' },
+  { slug: 'jwt-decoder', fallbackCategory: 'encoding', tag: 'ENC', tagClass: 'border-sky-700/80 bg-sky-950/80 text-sky-300' },
+  { slug: 'curl-to-fetch', fallbackCategory: 'utilities', tag: 'UTIL', tagClass: 'border-cyan-700/80 bg-cyan-950/80 text-cyan-300' },
+] as const;
+
+const spotlightTools = [
+  { slug: 'json-formatter', icon: FileJson, category: 'json' },
+  { slug: 'jwt-decoder', icon: KeyRound, category: 'encoding' },
+  { slug: 'base64', icon: Binary, category: 'encoding' },
+  { slug: 'uuid-generator', icon: Fingerprint, category: 'generators' },
+  { slug: 'regex-tester', icon: Regex, category: 'utilities' },
+  { slug: 'dockerfile-ai-optimized-generator', icon: Binary, category: 'generators' },
+  { slug: 'sql-to-python-sqlalchemy', icon: Database, category: 'converters' },
+  { slug: 'tailwind-v4-mesh-gradient-generator', icon: Paintbrush, category: 'generators' },
 ];
 
 const INITIAL_PAGE_SIZE = 48;
@@ -276,11 +333,32 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
   const [visibleCount, setVisibleCount] = useState(INITIAL_PAGE_SIZE);
 
   useEffect(() => {
-    const hash = new URLSearchParams(window.location.hash.slice(1));
-    const query = new URLSearchParams(window.location.search);
-    const initialSearch = hash.get('search') ?? query.get('search');
-    if (initialSearch !== null) setSearchQuery((current) => current || initialSearch);
+    const readUrlSearch = () => {
+      const hash = new URLSearchParams(window.location.hash.slice(1));
+      const query = new URLSearchParams(window.location.search);
+      const urlSearch = hash.get('search') ?? query.get('search');
+      if (urlSearch !== null) {
+        setSearchQuery(urlSearch);
+      }
+    };
+    readUrlSearch();
+    window.addEventListener('hashchange', readUrlSearch);
+    return () => window.removeEventListener('hashchange', readUrlSearch);
   }, []);
+
+  const updateSearchQuery = (nextValue: string) => {
+    setSearchQuery(nextValue);
+    try {
+      const nextHash = nextValue.trim() ? `#search=${encodeURIComponent(nextValue)}` : '';
+      window.history.replaceState(
+        null,
+        '',
+        `${window.location.pathname}${window.location.search}${nextHash}`,
+      );
+    } catch {
+      // Ignore history errors in restricted test environments.
+    }
+  };
 
   const normalizedPopular = useMemo(() => {
     return toolCatalog.map((tool, index) => ({
@@ -292,6 +370,14 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
       id: tool.id || index,
     }));
   }, []);
+
+  const toolCategoryBySlug = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const tool of normalizedPopular) {
+      map.set(tool.slug, tool.categorySlug);
+    }
+    return map;
+  }, [normalizedPopular]);
 
   const categories = useMemo(() => {
     return categorySlugs.map((slug) => ({
@@ -375,16 +461,6 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
     return groups;
   }, [categories, filteredTools]);
 
-  const handleTagClick = (tag: string) => {
-    if (searchQuery.toLowerCase() === tag.toLowerCase()) {
-      setSearchQuery('');
-    } else {
-      setSearchQuery(tag);
-      setSelectedCategory(null);
-      setShowFavoritesOnly(false);
-    }
-  };
-
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
   // Localized homepages (/tr, /de, ...) render this same component.
   const localizedHomePath = getLocalizedPath('/', language);
@@ -424,6 +500,91 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
     },
   };
 
+  const renderToolCard = (
+    tool: (typeof normalizedPopular)[number],
+    headingLevel: 'h3' | 'h4',
+    showCategoryBadge: boolean,
+  ) => {
+    const accent = categoryAccents[tool.categorySlug] ?? categoryAccents.utilities;
+    const ToolIcon = toolIconMap[tool.slug] || categoryIcons[tool.categorySlug] || Terminal;
+    const categoryLabel = tool.categorySlug ? t(`cat.${tool.categorySlug}`) || tool.categorySlug : '';
+    const toolName = t(`toolName.${tool.slug}`) || tool.slug.replace(/-/g, ' ');
+    const toolDesc = t(`toolDesc.${tool.slug}`) || tool.shortDescription || '';
+    const isPopular = popularToolSlugs.has(tool.slug);
+    const isFav = isFavorite(tool.slug);
+
+    return (
+      <Link
+        key={`${tool.slug}-${tool.categorySlug}`}
+        href={buildToolPath(tool.categorySlug, tool.slug)}
+        title={`${toolName} - ${toolDesc || interpolateText(t('home.openTool'), { tool: toolName })}`}
+        className={`group relative flex min-w-0 flex-col justify-between rounded-xl border border-slate-200 border-t-2 ${accent.topBorder} bg-white p-4 transition-colors hover:border-slate-400 dark:border-slate-800 dark:bg-slate-900/95 dark:hover:border-slate-600`}
+      >
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleFavorite(tool.slug);
+          }}
+          title={isFav ? t('uiText.c23fbb86') : t('uiText.2baec734')}
+          aria-label={interpolateText(t(isFav ? 'home.removeFavorite' : 'home.addFavorite'), {
+            tool: toolName,
+          })}
+          className={`absolute right-2.5 top-2.5 z-10 rounded-md p-1.5 transition ${
+            isFav
+              ? 'bg-amber-50 text-amber-600 hover:bg-amber-100 dark:bg-amber-950/60 dark:text-amber-400'
+              : 'text-slate-500 opacity-100 hover:bg-slate-100 hover:text-amber-600 focus-visible:opacity-100 sm:opacity-0 sm:group-hover:opacity-100 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-amber-400'
+          }`}
+        >
+          <Star className={`h-3.5 w-3.5 ${isFav ? 'fill-amber-500' : ''}`} />
+        </button>
+
+        <div className="flex items-start gap-3">
+          <div className={`shrink-0 rounded-lg border p-2 ${accent.iconBox}`}>
+            <ToolIcon className="h-4 w-4" />
+          </div>
+          <div className="min-w-0 flex-1 pr-6">
+            {headingLevel === 'h3' ? (
+              <h3 className="truncate text-sm font-bold text-slate-950 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
+                {toolName}
+              </h3>
+            ) : (
+              <h4 className="truncate text-sm font-bold text-slate-950 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
+                {toolName}
+              </h4>
+            )}
+            {toolDesc && (
+              <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                {toolDesc}
+              </p>
+            )}
+            <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
+              {showCategoryBadge && (
+                <span
+                  className={`inline-flex items-center rounded border px-1.5 py-0.5 font-mono text-[10px] font-semibold uppercase ${accent.badge}`}
+                >
+                  {accent.code}
+                </span>
+              )}
+              {showCategoryBadge && categoryLabel && (
+                <span className="truncate text-[11px] font-medium text-slate-600 dark:text-slate-400">
+                  {categoryLabel}
+                </span>
+              )}
+              {isPopular && (
+                <span className="inline-flex shrink-0 items-center gap-0.5 whitespace-nowrap rounded border border-amber-200 bg-amber-50 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-amber-900 dark:border-amber-800/60 dark:bg-amber-950/60 dark:text-amber-300">
+                  <Flame className="h-2.5 w-2.5 fill-amber-500 text-amber-600 dark:text-amber-400" />
+                  {t('home.popularBadge') || 'Popular'}
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      </Link>
+    );
+  };
+
   return (
     <>
       {/* Structured Data */}
@@ -436,71 +597,213 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
         dangerouslySetInnerHTML={{ __html: serializeJsonForHtmlScript(collectionPageStructuredData) }}
       />
       <div className="page-shell">
-        {/* Hero Section */}
-        <section className="relative mb-8 overflow-hidden rounded-[2rem] border border-white/80 bg-white/70 px-6 py-12 text-center shadow-[0_30px_90px_-45px_rgba(79,70,229,0.55)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70 sm:px-10 sm:py-16">
-          <div className="pointer-events-none absolute -left-16 -top-20 h-56 w-56 rounded-full bg-indigo-400/20 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-24 -right-12 h-64 w-64 rounded-full bg-cyan-400/20 blur-3xl" />
-          <div className="eyebrow mb-5">
-            <Sparkles className="h-3.5 w-3.5" /> {toolCatalog.length} {t("uiText.3323a216")}</div>
-          <h1 className="relative mx-auto mb-4 max-w-5xl text-3xl font-extrabold tracking-[-0.04em] text-gray-950 dark:text-white md:text-5xl lg:text-6xl">
-            {t('home.title')}
-          </h1>
-          <p className="mx-auto max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-lg">
-            {t('home.subtitle')}
-          </p>
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-            <a
-              href="#tools"
-              title={interpolateText(t('home.browseTools'), { count: toolCatalog.length })}
-              className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-6 py-2.5 text-xs font-semibold text-white shadow-lg shadow-slate-950/20 transition hover:-translate-y-0.5 hover:bg-indigo-600 dark:bg-white dark:text-slate-950 dark:hover:bg-indigo-200"
+        {/* Asymmetric Developer Workbench Hero */}
+        <section className="mb-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950/90 sm:p-8">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:items-stretch">
+            {/* Left Column: Title, Subtitle, Inline Instant Filter, Quick-Launch Chips */}
+            <div className="flex min-w-0 flex-col justify-between lg:col-span-7">
+              <div>
+                <div className="mb-4 flex flex-wrap items-center gap-2 font-mono text-[11px] font-semibold text-slate-700 dark:text-slate-300">
+                  <span className="inline-flex items-center gap-1.5 rounded border border-slate-300 bg-slate-100 px-2.5 py-0.5 dark:border-slate-700 dark:bg-slate-900">
+                    <Terminal className="h-3 w-3 text-emerald-700 dark:text-emerald-400" />
+                    {toolCatalog.length} {t('uiText.3323a216')}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-emerald-800 dark:border-emerald-800/70 dark:bg-emerald-950/60 dark:text-emerald-300">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
+                    WebCrypto / Wasm · {t('uiText.fd35707d')}
+                  </span>
+                </div>
+
+                <h1 className="mb-3 break-words text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-4xl lg:text-5xl">
+                  {t('home.title')}
+                </h1>
+                <p className="max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">
+                  {t('home.subtitle')}
+                </p>
+              </div>
+
+              <div className="mt-6 space-y-3.5">
+                {/* Inline Instant Filter Input */}
+                <div className="relative">
+                  <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500 dark:text-slate-400" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => updateSearchQuery(e.target.value)}
+                    placeholder={
+                      t('home.filterPlaceholder') || `Filter ${normalizedPopular.length} tools...`
+                    }
+                    aria-label={t('home.filterPlaceholder') || 'Filter tools'}
+                    className="w-full rounded-xl border border-slate-300 bg-slate-50 py-3 pl-10 pr-24 text-sm text-slate-950 placeholder:text-slate-500 transition-colors focus:border-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-900/10 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-400 dark:focus:border-emerald-400 dark:focus:bg-slate-950 dark:focus:ring-emerald-400/20"
+                  />
+                  <div className="absolute right-2.5 top-1/2 flex -translate-y-1/2 items-center gap-1.5">
+                    {searchQuery ? (
+                      <button
+                        type="button"
+                        onClick={() => updateSearchQuery('')}
+                        title={t('home.clearFilter') || 'Clear'}
+                        aria-label={t('home.clearFilter') || 'Clear'}
+                        className="rounded-md border border-slate-300 bg-white p-1 text-slate-700 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                      >
+                        <X className="h-3.5 w-3.5" />
+                      </button>
+                    ) : (
+                      <kbd className="hidden rounded border border-slate-300 bg-white px-1.5 py-0.5 font-mono text-[11px] font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 sm:inline-block">
+                        /
+                      </kbd>
+                    )}
+                    <a
+                      href="#tools"
+                      title={interpolateText(t('home.browseTools'), { count: toolCatalog.length })}
+                      className="rounded-md border border-slate-300 bg-white px-2 py-0.5 font-mono text-[11px] font-semibold text-slate-800 hover:border-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+                    >
+                      {filteredTools.length}/{normalizedPopular.length}
+                    </a>
+                  </div>
+                </div>
+
+                {/* Quick-launch tool shortcut chips */}
+                <div className="flex flex-wrap items-center gap-2">
+                  {heroShortcutSlugs.map(({ slug, fallbackCategory }) => {
+                    const cat = toolCategoryBySlug.get(slug) || fallbackCategory;
+                    const accent = categoryAccents[cat] ?? categoryAccents.utilities;
+                    const toolLabel = t(`toolName.${slug}`) || slug.replace(/-/g, ' ');
+                    return (
+                      <Link
+                        key={slug}
+                        href={buildToolPath(cat, slug)}
+                        title={interpolateText(t('home.quickLaunch'), { tool: toolLabel })}
+                        className="inline-flex max-w-full items-center gap-1.5 rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs font-medium text-slate-800 transition-colors hover:border-slate-400 hover:bg-white dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-800"
+                      >
+                        <span
+                          className={`shrink-0 rounded border px-1 py-0.5 font-mono text-[9px] font-bold uppercase ${accent.badge}`}
+                        >
+                          {accent.code}
+                        </span>
+                        <span className="truncate">{toolLabel}</span>
+                      </Link>
+                    );
+                  })}
+                  {favorites.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowFavoritesOnly(true);
+                        setSelectedCategory(null);
+                        const el = document.getElementById('tools');
+                        el?.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-amber-300 bg-amber-50 px-2.5 py-1.5 text-xs font-semibold text-amber-900 transition-colors hover:bg-amber-100 dark:border-amber-800/70 dark:bg-amber-950/50 dark:text-amber-300"
+                    >
+                      <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-600 dark:text-amber-400" />
+                      <span>
+                        {t('uiText.69396f32')}
+                        {favorites.length})
+                      </span>
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column (Desktop): Quick Workbench / Keyboard-First Inspector Panel */}
+            <aside
+              aria-label={t('uiText.947317d5')}
+              className="hidden flex-col justify-between overflow-hidden rounded-xl border border-slate-800 bg-slate-950 text-slate-100 lg:col-span-5 lg:flex"
             >
-              <Search className="h-3.5 w-3.5" /> {t('home.popularTools')}
-            </a>
-            {favorites.length > 0 && (
-              <button
-                onClick={() => {
-                  setShowFavoritesOnly(true);
-                  setSelectedCategory(null);
-                  const el = document.getElementById('tools');
-                  el?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 px-4 py-2.5 text-xs font-semibold text-amber-900 shadow-sm transition hover:bg-amber-100 dark:border-amber-700/50 dark:bg-amber-950/40 dark:text-amber-300"
-              >
-                <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
-                <span>{t("uiText.69396f32")}{favorites.length})</span>
-              </button>
-            )}
+              <div className="flex items-center justify-between border-b border-slate-800 bg-slate-900/90 px-4 py-2.5">
+                <div className="flex items-center gap-2 font-mono text-xs font-semibold text-slate-200">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400" aria-hidden="true" />
+                  <span>{t('uiText.947317d5')}</span>
+                </div>
+                <div className="flex items-center gap-1.5 font-mono text-[11px] text-slate-300">
+                  <kbd className="rounded border border-slate-700 bg-slate-800 px-1.5 py-0.5 text-slate-200">
+                    /
+                  </kbd>
+                  <kbd className="rounded border border-slate-700 bg-slate-800 px-1.5 py-0.5 text-slate-200">
+                    ⌘K
+                  </kbd>
+                </div>
+              </div>
+
+              <div className="divide-y divide-slate-800/90">
+                {workbenchDailySlugs.map(({ slug, fallbackCategory, tag, tagClass }) => {
+                  const cat = toolCategoryBySlug.get(slug) || fallbackCategory;
+                  const name = t(`toolName.${slug}`) || slug.replace(/-/g, ' ');
+                  const desc = t(`toolDesc.${slug}`) || '';
+                  return (
+                    <Link
+                      key={`wb-${slug}`}
+                      href={buildToolPath(cat, slug)}
+                      className="group flex items-center justify-between gap-3 px-4 py-3 transition-colors hover:bg-slate-900"
+                    >
+                      <div className="flex min-w-0 items-center gap-3">
+                        <span
+                          className={`w-14 shrink-0 rounded border px-1.5 py-0.5 text-center font-mono text-[10px] font-bold tracking-wider ${tagClass}`}
+                        >
+                          {tag}
+                        </span>
+                        <div className="min-w-0">
+                          <span className="block truncate text-sm font-semibold text-white group-hover:text-emerald-300">
+                            {name}
+                          </span>
+                          {desc && (
+                            <span className="block truncate text-xs text-slate-300">{desc}</span>
+                          )}
+                        </div>
+                      </div>
+                      <ChevronRight className="h-4 w-4 shrink-0 text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:text-emerald-300" />
+                    </Link>
+                  );
+                })}
+              </div>
+
+              <div className="flex items-center justify-between border-t border-slate-800 bg-slate-900/70 px-4 py-2 font-mono text-[11px] text-slate-300">
+                <span>{t('uiText.71aeeea3')}</span>
+                <span className="text-emerald-300">{t('uiText.fd35707d')}</span>
+              </div>
+            </aside>
           </div>
         </section>
 
         {children}
 
-        {/* 🌟 Spotlight Top Launchpad Band */}
-        <section className="mb-8" aria-label={t("uiText.bc885c90")}>
-          <div className="flex items-center justify-between mb-3 px-1">
+        {/* Workbench Top Launchpad Band */}
+        <section className="mb-8" aria-label={t('uiText.bc885c90')}>
+          <div className="mb-3 flex items-center justify-between px-1">
             <div className="flex items-center gap-2">
-              <Zap className="h-4 w-4 text-amber-500 fill-amber-500" />
-              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
-                {t("uiText.947317d5")}</h2>
+              <Zap className="h-4 w-4 fill-amber-500 text-amber-600 dark:text-amber-400" />
+              <h2 className="font-mono text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                {t('uiText.947317d5')}
+              </h2>
             </div>
-            <span className="text-[11px] text-slate-400 dark:text-slate-500 hidden sm:inline">{t("uiText.71aeeea3")}</span>
+            <span className="hidden font-mono text-[11px] text-slate-600 dark:text-slate-400 sm:inline">
+              {t('uiText.71aeeea3')}
+            </span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 lg:grid-cols-8">
             {spotlightTools.map((st) => {
               const Icon = st.icon;
+              const cat = toolCategoryBySlug.get(st.slug) || st.category;
+              const accent = categoryAccents[cat] ?? categoryAccents.utilities;
               const toolName = t(`toolName.${st.slug}`) || st.slug.replace(/-/g, ' ');
               return (
                 <Link
                   key={st.slug}
-                  href={buildToolPath(st.category, st.slug)}
+                  href={buildToolPath(cat, st.slug)}
                   title={interpolateText(t('home.quickLaunch'), { tool: toolName })}
-                  className="group relative flex flex-col items-center justify-center p-3 rounded-2xl border border-slate-200/80 bg-white/80 text-center shadow-xs backdrop-blur-md transition hover:-translate-y-1 hover:border-indigo-300 hover:shadow-md dark:border-white/5 dark:bg-slate-900/60 dark:hover:border-indigo-500/50"
+                  className={`group relative flex min-w-0 flex-col items-start justify-between rounded-xl border border-slate-200 border-t-2 ${accent.topBorder} bg-white p-3 transition-colors hover:border-slate-400 dark:border-slate-800 dark:bg-slate-900/95 dark:hover:border-slate-600`}
                 >
-                  <div className={`mb-2 rounded-xl bg-gradient-to-br ${st.color} p-2.5 shadow-sm text-white transition group-hover:scale-110`}>
-                    <Icon className="h-4 w-4" />
+                  <div className="mb-2 flex w-full items-center justify-between gap-1.5">
+                    <span className={`rounded-md border p-1.5 ${accent.iconBox}`}>
+                      <Icon className="h-3.5 w-3.5" />
+                    </span>
+                    <span className="font-mono text-[9px] font-bold uppercase text-slate-600 dark:text-slate-400">
+                      {accent.code}
+                    </span>
                   </div>
-                  <span className="text-xs font-semibold text-slate-800 dark:text-slate-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 truncate w-full">
+                  <span className="w-full truncate text-xs font-semibold text-slate-900 group-hover:text-emerald-700 dark:text-slate-100 dark:group-hover:text-emerald-400">
                     {toolName}
                   </span>
                 </Link>
@@ -515,14 +818,24 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
         <TrendingTools />
 
         <section className="mb-10" aria-labelledby="workflow-collections-heading">
-          <div className="mb-4 flex items-end justify-between gap-4">
+          <div className="mb-4 flex items-end justify-between gap-4 border-b border-slate-200 pb-3 dark:border-slate-800">
             <div>
-              <span className="eyebrow mb-2">{t("uiText.e23d5661")}</span>
-              <h2 id="workflow-collections-heading" className="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
-                {t("uiText.06e7efd4")}</h2>
+              <span className="mb-1.5 inline-block rounded border border-slate-300 bg-slate-100 px-2 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                {t('uiText.e23d5661')}
+              </span>
+              <h2
+                id="workflow-collections-heading"
+                className="text-2xl font-bold tracking-tight text-slate-950 dark:text-white"
+              >
+                {t('uiText.06e7efd4')}
+              </h2>
             </div>
-            <Link href="/collections" className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 sm:inline">
-              {t("uiText.49d6ab9c")}</Link>
+            <Link
+              href="/collections"
+              className="hidden font-mono text-xs font-semibold text-slate-800 underline decoration-slate-400 underline-offset-4 hover:text-emerald-700 dark:text-slate-200 dark:hover:text-emerald-400 sm:inline"
+            >
+              {t('uiText.49d6ab9c')}
+            </Link>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {hubs.collections.map((collection) => {
@@ -530,13 +843,17 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
                 <Link
                   key={collection.slug}
                   href={`/collections/${collection.slug}`}
-                  className="interactive-card rounded-2xl p-4"
+                  className="interactive-card group min-w-0 rounded-xl border border-slate-200 bg-white p-4 transition-colors hover:border-slate-400 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-600"
                 >
                   <div className="flex items-center justify-between gap-3">
-                    <h3 className="font-bold text-slate-900 dark:text-white">{collection.title}</h3>
-                    <ChevronRight className="h-4 w-4 text-indigo-500" />
+                    <h3 className="min-w-0 break-words font-bold text-slate-950 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
+                      {collection.title}
+                    </h3>
+                    <ChevronRight className="h-4 w-4 shrink-0 text-slate-600 dark:text-slate-400" />
                   </div>
-                  <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-600 dark:text-slate-400">{collection.description}</p>
+                  <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-600 dark:text-slate-300">
+                    {collection.description}
+                  </p>
                 </Link>
               );
             })}
@@ -546,24 +863,42 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
         <ProInterestCard placement="home" />
 
         <section className="mb-10" aria-labelledby="role-toolboxes-heading">
-          <div className="mb-4 flex items-end justify-between gap-4">
+          <div className="mb-4 flex items-end justify-between gap-4 border-b border-slate-200 pb-3 dark:border-slate-800">
             <div>
-              <span className="eyebrow mb-2">{t("uiText.937daf64")}</span>
-              <h2 id="role-toolboxes-heading" className="text-2xl font-bold tracking-tight text-slate-950 dark:text-white">
-                {t("uiText.83151179")}</h2>
+              <span className="mb-1.5 inline-block rounded border border-slate-300 bg-slate-100 px-2 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                {t('uiText.937daf64')}
+              </span>
+              <h2
+                id="role-toolboxes-heading"
+                className="text-2xl font-bold tracking-tight text-slate-950 dark:text-white"
+              >
+                {t('uiText.83151179')}
+              </h2>
             </div>
-            <Link href="/for" className="hidden text-sm font-semibold text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 sm:inline">
-              {t("uiText.2168cca4")}</Link>
+            <Link
+              href="/for"
+              className="hidden font-mono text-xs font-semibold text-slate-800 underline decoration-slate-400 underline-offset-4 hover:text-emerald-700 dark:text-slate-200 dark:hover:text-emerald-400 sm:inline"
+            >
+              {t('uiText.2168cca4')}
+            </Link>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {hubs.audiences.map((audience) => {
               return (
-                <Link key={audience.slug} href={`/for/${audience.slug}`} className="interactive-card rounded-2xl p-4">
+                <Link
+                  key={audience.slug}
+                  href={`/for/${audience.slug}`}
+                  className="interactive-card group min-w-0 rounded-xl border border-slate-200 bg-white p-4 transition-colors hover:border-slate-400 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-600"
+                >
                   <div className="flex items-center justify-between gap-3">
-                    <h3 className="font-bold text-slate-900 dark:text-white">{audience.title}</h3>
-                    <ChevronRight className="h-4 w-4 text-indigo-500" />
+                    <h3 className="min-w-0 break-words font-bold text-slate-950 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
+                      {audience.title}
+                    </h3>
+                    <ChevronRight className="h-4 w-4 shrink-0 text-slate-600 dark:text-slate-400" />
                   </div>
-                  <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-600 dark:text-slate-400">{audience.description}</p>
+                  <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-600 dark:text-slate-300">
+                    {audience.description}
+                  </p>
                 </Link>
               );
             })}
@@ -573,63 +908,58 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
         {/* Interactive Toolbox Section */}
         <section className="mb-14 scroll-mt-24" id="tools">
           {/* Header & Controls Bar */}
-          <div className="mb-4 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="mb-5 flex flex-col gap-4 border-b border-slate-200 pb-4 dark:border-slate-800 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <span className="eyebrow mb-1.5">{t("uiText.239a9538")}</span>
-              <div className="flex items-center gap-3">
-                <h2 className="text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl">
-                  {showFavoritesOnly ? t("uiText.6d8800c0") : t('home.popularTools')}
+              <span className="mb-1.5 inline-block rounded border border-slate-300 bg-slate-100 px-2 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                {t('uiText.239a9538')}
+              </span>
+              <div className="flex flex-wrap items-center gap-3">
+                <h2 className="text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
+                  {showFavoritesOnly ? t('uiText.6d8800c0') : t('home.popularTools')}
                 </h2>
-                <span className="rounded-full border border-slate-200/80 bg-white/80 px-2.5 py-0.5 text-xs font-semibold text-slate-600 shadow-sm dark:border-white/10 dark:bg-slate-800 dark:text-slate-300">
+                <span className="rounded border border-slate-300 bg-slate-100 px-2 py-0.5 font-mono text-xs font-semibold text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
                   {filteredTools.length} / {normalizedPopular.length}
                 </span>
               </div>
             </div>
 
-            {/* Filter Search Input & View Mode Toggles */}
-            <div className="flex items-center gap-2.5 sm:gap-3">
-              <div className="relative flex-1 sm:w-72 sm:flex-initial">
-                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={t('home.filterPlaceholder') || `Filter ${normalizedPopular.length} tools... (or press /)`}
-                  className="w-full rounded-2xl border border-slate-200/80 bg-white/90 py-2 pl-9 pr-8 text-sm text-slate-800 placeholder:text-slate-400 shadow-sm transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 dark:border-white/10 dark:bg-slate-900/90 dark:text-slate-100"
-                />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery('')}
-                    title={t('home.clearFilter') || 'Clear'}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
-                  >
-                    <X className="h-3.5 w-3.5" />
-                  </button>
-                )}
-              </div>
+            {/* Active Search Reset + View Mode Toggles */}
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+              {searchQuery.trim() && (
+                <button
+                  type="button"
+                  onClick={() => updateSearchQuery('')}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 font-mono text-xs font-semibold text-slate-800 hover:border-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
+                >
+                  <span className="max-w-[160px] truncate">{searchQuery}</span>
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              )}
 
               {/* View Mode Toggle */}
-              <div className="inline-flex rounded-2xl border border-slate-200/80 bg-white/80 p-1 shadow-sm dark:border-white/10 dark:bg-slate-900/80">
+              <div className="inline-flex rounded-xl border border-slate-200 bg-slate-100 p-1 dark:border-slate-800 dark:bg-slate-900">
                 <button
+                  type="button"
                   onClick={() => setViewMode('grid')}
                   title={t('home.viewGrid') || 'Grid View'}
-                  aria-label={t("uiText.00c3ebe6")}
-                  className={`rounded-xl p-2 transition ${
+                  aria-label={t('uiText.00c3ebe6')}
+                  className={`rounded-lg p-2 transition-colors ${
                     viewMode === 'grid'
-                      ? 'bg-indigo-600 text-white shadow-sm'
-                      : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white'
+                      ? 'bg-slate-950 text-white dark:bg-white dark:text-slate-950'
+                      : 'text-slate-700 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white'
                   }`}
                 >
                   <LayoutGrid className="h-4 w-4" />
                 </button>
                 <button
+                  type="button"
                   onClick={() => setViewMode('grouped')}
                   title={t('home.viewGrouped') || 'Grouped View'}
-                  aria-label={t("uiText.b6ca2302")}
-                  className={`rounded-xl p-2 transition ${
+                  aria-label={t('uiText.b6ca2302')}
+                  className={`rounded-lg p-2 transition-colors ${
                     viewMode === 'grouped'
-                      ? 'bg-indigo-600 text-white shadow-sm'
-                      : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white'
+                      ? 'bg-slate-950 text-white dark:bg-white dark:text-slate-950'
+                      : 'text-slate-700 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white'
                   }`}
                 >
                   <FolderTree className="h-4 w-4" />
@@ -638,72 +968,58 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
             </div>
           </div>
 
-          {/* 🏷️ Quick Search Suggestion Tags */}
-          <div className="mb-5 flex flex-wrap items-center gap-1.5">
-            <span className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 mr-1">{t("uiText.0b5c90c5")}</span>
-            {quickSearchTags.map((tag) => {
-              const isActive = searchQuery.toLowerCase() === tag.toLowerCase();
-              return (
-                <button
-                  key={tag}
-                  onClick={() => handleTagClick(tag)}
-                  className={`rounded-lg px-2.5 py-1 text-[11px] font-medium transition ${
-                    isActive
-                      ? 'bg-indigo-600 text-white shadow-xs'
-                      : 'bg-slate-100/90 text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:bg-indigo-950/40 dark:hover:text-indigo-400'
-                  }`}
-                >
-                  #{tag}
-                </button>
-              );
-            })}
-          </div>
-
           {/* Interactive Category Filter Pills */}
           <div className="mb-8 flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
             <button
+              type="button"
               onClick={() => {
                 setSelectedCategory(null);
                 setShowFavoritesOnly(false);
               }}
-              className={`flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+              className={`flex shrink-0 items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-colors ${
                 selectedCategory === null && !showFavoritesOnly
-                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                  : 'border border-slate-200/80 bg-white/80 text-slate-700 hover:border-indigo-300 hover:text-indigo-600 dark:border-white/10 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:border-indigo-500'
+                  ? 'border-slate-950 bg-slate-950 text-white dark:border-white dark:bg-white dark:text-slate-950'
+                  : 'border-slate-200 bg-white text-slate-800 hover:border-slate-400 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-600'
               }`}
             >
-              <Sparkles className="h-3.5 w-3.5" />
               <span>{t('home.allCategories') || 'All'}</span>
               <span
-                className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${
+                className={`rounded px-1.5 py-0.5 font-mono text-[10px] font-semibold ${
                   selectedCategory === null && !showFavoritesOnly
-                    ? 'bg-indigo-900/60 text-white'
-                    : 'bg-slate-200/80 text-slate-800 dark:bg-slate-700 dark:text-slate-100'
+                    ? 'bg-slate-800 text-slate-100 dark:bg-slate-200 dark:text-slate-900'
+                    : 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200'
                 }`}
               >
                 {categoryCounts.all || normalizedPopular.length}
               </span>
             </button>
 
-            {/* ⭐ Favorites Pill */}
+            {/* Favorites Pill */}
             <button
+              type="button"
               onClick={() => {
                 setShowFavoritesOnly(!showFavoritesOnly);
                 setSelectedCategory(null);
               }}
-              className={`flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+              className={`flex shrink-0 items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-colors ${
                 showFavoritesOnly
-                  ? 'bg-amber-600 text-white shadow-md shadow-amber-600/30'
-                  : 'border border-amber-200/80 bg-amber-50/70 text-amber-800 hover:border-amber-400 hover:text-amber-900 dark:border-amber-800/40 dark:bg-amber-950/30 dark:text-amber-300'
+                  ? 'border-amber-700 bg-amber-700 text-white dark:border-amber-500 dark:bg-amber-500 dark:text-slate-950'
+                  : 'border-amber-300 bg-amber-50 text-amber-900 hover:border-amber-500 dark:border-amber-800/60 dark:bg-amber-950/40 dark:text-amber-300'
               }`}
             >
-              <Star className={`h-3.5 w-3.5 ${showFavoritesOnly ? 'fill-white text-white' : 'fill-amber-500 text-amber-500'}`} />
-              <span>{t("commandPalette.favorites")}</span>
-              <span
-                className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${
+              <Star
+                className={`h-3.5 w-3.5 ${
                   showFavoritesOnly
-                    ? 'bg-amber-950/60 text-white'
-                    : 'bg-amber-200/80 text-amber-900 dark:bg-amber-900/60 dark:text-amber-200'
+                    ? 'fill-current'
+                    : 'fill-amber-500 text-amber-600 dark:text-amber-400'
+                }`}
+              />
+              <span>{t('commandPalette.favorites')}</span>
+              <span
+                className={`rounded px-1.5 py-0.5 font-mono text-[10px] font-semibold ${
+                  showFavoritesOnly
+                    ? 'bg-amber-900/60 text-white dark:bg-amber-950/30 dark:text-slate-950'
+                    : 'bg-amber-200/80 text-amber-950 dark:bg-amber-900/70 dark:text-amber-200'
                 }`}
               >
                 {favorites.length}
@@ -717,24 +1033,25 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
 
               return (
                 <button
+                  type="button"
                   key={cat.slug}
                   onClick={() => {
                     setSelectedCategory(isSelected ? null : cat.slug);
                     setShowFavoritesOnly(false);
                   }}
-                  className={`flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+                  className={`flex shrink-0 items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-colors ${
                     isSelected
-                      ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                      : 'border border-slate-200/80 bg-white/80 text-slate-700 hover:border-indigo-300 hover:text-indigo-600 dark:border-white/10 dark:bg-slate-800/80 dark:text-slate-200 dark:hover:border-indigo-500'
+                      ? 'border-slate-950 bg-slate-950 text-white dark:border-white dark:bg-white dark:text-slate-950'
+                      : 'border-slate-200 bg-white text-slate-800 hover:border-slate-400 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-slate-600'
                   }`}
                 >
                   <Icon className="h-3.5 w-3.5" />
                   <span>{cat.name}</span>
                   <span
-                    className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${
+                    className={`rounded px-1.5 py-0.5 font-mono text-[10px] font-semibold ${
                       isSelected
-                        ? 'bg-indigo-900/60 text-white'
-                        : 'bg-slate-200/80 text-slate-800 dark:bg-slate-700 dark:text-slate-100'
+                        ? 'bg-slate-800 text-slate-100 dark:bg-slate-200 dark:text-slate-900'
+                        : 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200'
                     }`}
                   >
                     {count}
@@ -746,20 +1063,21 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
 
           {/* Tool Cards Content */}
           {filteredTools.length === 0 ? (
-            <div className="rounded-3xl border border-slate-200/80 bg-white/80 p-12 text-center shadow-sm dark:border-white/10 dark:bg-slate-900/80">
-              <Search className="mx-auto mb-3 h-8 w-8 text-slate-400" />
+            <div className="rounded-xl border border-slate-200 bg-white p-12 text-center dark:border-slate-800 dark:bg-slate-900/90">
+              <Search className="mx-auto mb-3 h-8 w-8 text-slate-500 dark:text-slate-400" />
               <p className="text-base font-semibold text-slate-800 dark:text-slate-200">
                 {showFavoritesOnly
-                  ? t("uiText.db45a87d")
+                  ? t('uiText.db45a87d')
                   : t('home.noToolsFound') || 'No tools found matching your filter.'}
               </p>
               <button
+                type="button"
                 onClick={() => {
                   setSelectedCategory(null);
                   setShowFavoritesOnly(false);
-                  setSearchQuery('');
+                  updateSearchQuery('');
                 }}
-                className="mt-4 inline-flex items-center gap-1.5 rounded-xl bg-indigo-600 px-4 py-2 text-xs font-semibold text-white shadow-md transition hover:bg-indigo-500"
+                className="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-slate-950 px-4 py-2 font-mono text-xs font-semibold text-white transition-colors hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
               >
                 <X className="h-3.5 w-3.5" />
                 <span>{t('home.clearFilter') || 'Clear Filter'}</span>
@@ -768,93 +1086,36 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
           ) : viewMode === 'grid' ? (
             /* Grid View */
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
                 {displayedGridTools.map((tool, index) => {
                   const showInFeed = (index + 1) % 12 === 0 && index < displayedGridTools.length - 1;
-                  const ToolIcon = toolIconMap[tool.slug] || categoryIcons[tool.categorySlug] || Wand2;
-                  const categoryLabel = tool.categorySlug
-                    ? t(`cat.${tool.categorySlug}`) || tool.categorySlug
-                    : '';
-                  const toolName = t(`toolName.${tool.slug}`) || tool.slug.replace(/-/g, ' ');
-                  const toolDesc = t(`toolDesc.${tool.slug}`) || tool.shortDescription || '';
-                  const isPopular = popularToolSlugs.has(tool.slug);
-                  const isFav = isFavorite(tool.slug);
-
                   return (
                     <React.Fragment key={`frag-${tool.slug}-${tool.categorySlug}`}>
-                      <Link
-                        key={`${tool.slug}-${tool.categorySlug}`}
-                        href={buildToolPath(tool.categorySlug, tool.slug)}
-                        title={`${toolName} - ${toolDesc || interpolateText(t('home.openTool'), { tool: toolName })}`}
-                        className="interactive-card group rounded-2xl p-4 relative"
-                      >
-                        {/* ⭐ Favorite Pin Button */}
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            toggleFavorite(tool.slug);
-                          }}
-                          title={isFav ? t("uiText.c23fbb86") : t("uiText.2baec734")}
-                          aria-label={interpolateText(t(isFav ? 'home.removeFavorite' : 'home.addFavorite'), { tool: toolName })}
-                          className={`absolute top-3 right-3 p-1.5 rounded-lg transition z-10 ${
-                            isFav
-                              ? 'text-amber-500 bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100'
-                              : 'text-slate-300 opacity-0 group-hover:opacity-100 hover:text-amber-500 hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-600'
-                          }`}
-                        >
-                          <Star className={`h-3.5 w-3.5 ${isFav ? 'fill-amber-500' : ''}`} />
-                        </button>
-
-                        <div className="flex items-start gap-3">
-                          <div className="rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 p-2.5 shadow-md shadow-indigo-500/20 shrink-0 group-hover:scale-105 transition-transform">
-                            <ToolIcon className="h-5 w-5 text-white" />
-                          </div>
-                          <div className="flex-1 min-w-0 pr-5">
-                            <div className="flex items-start justify-between gap-1.5">
-                              <h3 className="font-semibold text-sm text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 truncate">
-                                {toolName}
-                              </h3>
-                            </div>
-                            {toolDesc && (
-                              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed">
-                                {toolDesc}
-                              </p>
-                            )}
-                            <div className="mt-2 flex items-center gap-1.5">
-                              {isPopular && (
-                                <span className="inline-flex items-center gap-0.5 whitespace-nowrap rounded-full bg-amber-100 dark:bg-amber-950/50 px-1.5 py-0.5 text-[9px] font-semibold text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60 shrink-0">
-                                  <Flame className="h-2.5 w-2.5 text-amber-500 fill-amber-500" />
-                                  {t('home.popularBadge') || 'Popular'}
-                                </span>
-                              )}
-                              {categoryLabel && (
-                                <span className="inline-block rounded-md bg-slate-100 px-1.5 py-0.5 text-[10px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300">
-                                  {categoryLabel}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </Link>
+                      {renderToolCard(tool, 'h3', true)}
                       {showInFeed && (
-                        <InFeedAdCard key={`infeed-search-${tool.slug}-${index}`} slot={HOME_INFEED_SLOT} placement="home-search-infeed" />
+                        <InFeedAdCard
+                          key={`infeed-search-${tool.slug}-${index}`}
+                          slot={HOME_INFEED_SLOT}
+                          placement="home-search-infeed"
+                        />
                       )}
                     </React.Fragment>
                   );
                 })}
               </div>
 
-              {/* ⚡ Progressive Load More Bar */}
+              {/* Progressive Load More Bar */}
               {hasMore && (
                 <div className="mt-10 flex flex-col items-center justify-center gap-3">
-                  <div className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                  <div className="font-mono text-xs font-semibold text-slate-600 dark:text-slate-300">
                     {t('home.showingTools')
                       .split(/(\{shown\})/)
                       .map((part, index) =>
                         part === '{shown}' ? (
-                          <span key={index} className="text-indigo-600 dark:text-indigo-400 font-bold">
+                          <span
+                            key={index}
+                            className="font-bold text-emerald-700 dark:text-emerald-400"
+                          >
                             {displayedGridTools.length}
                           </span>
                         ) : (
@@ -862,17 +1123,19 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
                         ),
                       )}
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap justify-center gap-2">
                     <button
+                      type="button"
                       onClick={() => setVisibleCount((prev) => prev + LOAD_MORE_STEP)}
-                      className="inline-flex items-center gap-1.5 rounded-2xl bg-indigo-600 px-5 py-2.5 text-xs font-semibold text-white shadow-md shadow-indigo-600/20 transition hover:bg-indigo-500 hover:-translate-y-0.5"
+                      className="inline-flex items-center gap-1.5 rounded-lg bg-slate-950 px-5 py-2.5 font-mono text-xs font-semibold text-white transition-colors hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
                     >
                       <ChevronDown className="h-4 w-4" />
                       <span>{translateCount(t, language, 'home.loadMoreTools', LOAD_MORE_STEP)}</span>
                     </button>
                     <button
+                      type="button"
                       onClick={() => setVisibleCount(filteredTools.length)}
-                      className="inline-flex items-center gap-1.5 rounded-2xl border border-slate-200/80 bg-white/80 px-4 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200"
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-4 py-2.5 font-mono text-xs font-semibold text-slate-800 transition-colors hover:border-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
                     >
                       <span>{interpolateText(t('home.showAll'), { count: filteredTools.length })}</span>
                     </button>
@@ -885,91 +1148,42 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
             <div className="space-y-10">
               {groupedByCategory.map((group) => {
                 const CatIcon = group.icon;
+                const accent = categoryAccents[group.slug] ?? categoryAccents.utilities;
                 return (
                   <div key={group.slug} className="space-y-4">
-                    <div className="flex items-center justify-between border-b border-slate-200/80 pb-2.5 dark:border-white/10">
+                    <div className="flex items-center justify-between border-b border-slate-200 pb-2.5 dark:border-slate-800">
                       <div className="flex items-center gap-2.5">
-                        <div className="rounded-xl bg-indigo-50 p-2 dark:bg-indigo-900/30">
-                          <CatIcon className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+                        <div className={`rounded-lg border p-2 ${accent.iconBox}`}>
+                          <CatIcon className="h-4 w-4" />
                         </div>
-                        <h3 className="text-lg font-bold text-slate-900 dark:text-white">
+                        <h3 className="text-lg font-bold text-slate-950 dark:text-white">
                           {group.name}
                         </h3>
-                        <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+                        <span className="rounded border border-slate-200 bg-slate-100 px-2 py-0.5 font-mono text-[11px] font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                           {group.tools.length}
                         </span>
                       </div>
                       <Link
                         href={`/tools/${group.slug}`}
-                        className="text-xs font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 inline-flex items-center gap-1"
+                        className="inline-flex items-center gap-1 font-mono text-xs font-semibold text-slate-800 hover:text-emerald-700 dark:text-slate-200 dark:hover:text-emerald-400"
                       >
                         <span>{t('nav.viewAll')}</span>
                         <ChevronRight className="h-3.5 w-3.5" />
                       </Link>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
                       {group.tools.map((tool, index) => {
                         const showInFeed = (index + 1) % 12 === 0 && index < group.tools.length - 1;
-                        const ToolIcon = toolIconMap[tool.slug] || group.icon || Wand2;
-                        const toolName = t(`toolName.${tool.slug}`) || tool.slug.replace(/-/g, ' ');
-                        const toolDesc = t(`toolDesc.${tool.slug}`) || tool.shortDescription || '';
-                        const isPopular = popularToolSlugs.has(tool.slug);
-                        const isFav = isFavorite(tool.slug);
-
                         return (
                           <React.Fragment key={`frag-${group.slug}-${tool.slug}`}>
-                            <Link
-                              key={`${tool.slug}-${tool.categorySlug}`}
-                              href={buildToolPath(tool.categorySlug, tool.slug)}
-                              title={`${toolName} - ${toolDesc || interpolateText(t('home.openTool'), { tool: toolName })}`}
-                              className="interactive-card group rounded-2xl p-4 relative"
-                            >
-                              {/* ⭐ Favorite Pin Button */}
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  toggleFavorite(tool.slug);
-                                }}
-                                title={isFav ? t("uiText.c23fbb86") : t("uiText.2baec734")}
-                                aria-label={interpolateText(t(isFav ? 'home.removeFavorite' : 'home.addFavorite'), { tool: toolName })}
-                                className={`absolute top-3 right-3 p-1.5 rounded-lg transition z-10 ${
-                                  isFav
-                                    ? 'text-amber-500 bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100'
-                                    : 'text-slate-300 opacity-0 group-hover:opacity-100 hover:text-amber-500 hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-600'
-                                }`}
-                              >
-                                <Star className={`h-3.5 w-3.5 ${isFav ? 'fill-amber-500' : ''}`} />
-                              </button>
-
-                              <div className="flex items-start gap-3">
-                                <div className="rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 p-2.5 shadow-md shadow-indigo-500/20 shrink-0 group-hover:scale-105 transition-transform">
-                                  <ToolIcon className="h-5 w-5 text-white" />
-                                </div>
-                                <div className="flex-1 min-w-0 pr-5">
-                                  <div className="flex items-start justify-between gap-1.5">
-                                    <h4 className="font-semibold text-sm text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 truncate">
-                                      {toolName}
-                                    </h4>
-                                  </div>
-                                  {toolDesc && (
-                                    <p className="mt-1 text-xs text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed">
-                                      {toolDesc}
-                                    </p>
-                                  )}
-                                  {isPopular && (
-                                    <span className="mt-2 inline-flex items-center gap-0.5 whitespace-nowrap rounded-full bg-amber-100 dark:bg-amber-950/50 px-1.5 py-0.5 text-[9px] font-semibold text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800/60 shrink-0">
-                                      <Flame className="h-2.5 w-2.5 text-amber-500 fill-amber-500" />
-                                      {t('home.popularBadge') || 'Popular'}
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-                            </Link>
+                            {renderToolCard(tool, 'h4', false)}
                             {showInFeed && (
-                              <InFeedAdCard key={`infeed-${group.slug}-${index}`} slot={HOME_INFEED_SLOT} placement={`home-${group.slug}-infeed`} />
+                              <InFeedAdCard
+                                key={`infeed-${group.slug}-${index}`}
+                                slot={HOME_INFEED_SLOT}
+                                placement={`home-${group.slug}-infeed`}
+                              />
                             )}
                           </React.Fragment>
                         );
@@ -987,37 +1201,43 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
           slot={HOME_AFTER_TOOLS_SLOT}
           format="horizontal"
           placement="home-after-tools"
-          className="min-h-[90px] rounded-lg mb-12"
+          className="mb-12 min-h-[90px] rounded-lg"
         />
 
         {/* Categories */}
         <section className="mb-16" id="categories">
-          <span className="eyebrow mb-3">{t("uiText.4d9eb2dc")}</span>
-          <h2 className="mb-7 text-2xl font-bold tracking-tight text-gray-950 dark:text-white sm:text-3xl">
+          <span className="mb-2 inline-block rounded border border-slate-300 bg-slate-100 px-2 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+            {t('uiText.4d9eb2dc')}
+          </span>
+          <h2 className="mb-6 text-2xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-3xl">
             {t('home.browseByCategory')}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
             {categories.map((category) => {
               const Icon = category.icon;
+              const accent = categoryAccents[category.slug] ?? categoryAccents.utilities;
               return (
                 <Link
                   key={category.slug}
                   href={`/tools/${category.slug}`}
                   title={`${category.name} - ${category.description}`}
-                  className="interactive-card group rounded-3xl p-6"
+                  className={`interactive-card group flex min-w-0 flex-col justify-between rounded-xl border border-slate-200 border-t-2 ${accent.topBorder} bg-white p-5 transition-colors hover:border-slate-400 dark:border-slate-800 dark:bg-slate-900/95 dark:hover:border-slate-600`}
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="rounded-2xl bg-indigo-50 p-3.5 transition group-hover:bg-indigo-600 dark:bg-indigo-400/10 dark:group-hover:bg-indigo-500">
-                      <Icon className="h-6 w-6 text-indigo-600 transition group-hover:text-white dark:text-indigo-300" />
+                  <div>
+                    <div className="mb-3 flex items-center justify-between gap-2">
+                      <div className={`rounded-lg border p-2.5 ${accent.iconBox}`}>
+                        <Icon className="h-5 w-5" />
+                      </div>
+                      <span className={`rounded border px-2 py-0.5 font-mono text-[10px] font-bold uppercase ${accent.badge}`}>
+                        {accent.code}
+                      </span>
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-primary-400 mb-1">
-                        {category.name}
-                      </h3>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
-                        {category.description}
-                      </p>
-                    </div>
+                    <h3 className="mb-1 font-bold text-slate-950 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
+                      {category.name}
+                    </h3>
+                    <p className="text-sm leading-6 text-slate-600 dark:text-slate-300">
+                      {category.description}
+                    </p>
                   </div>
                 </Link>
               );
@@ -1030,13 +1250,13 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
           slot={HOME_BEFORE_SEO_SLOT}
           format="horizontal"
           placement="home-before-seo"
-          className="min-h-[90px] rounded-lg mb-12"
+          className="mb-12 min-h-[90px] rounded-lg"
         />
 
         {/* SEO Content */}
-        <section className="prose prose-gray dark:prose-invert max-w-none">
-          <h2 className="text-gray-900 dark:text-white">{t('home.whyUse')}</h2>
-          <p className="text-gray-600 dark:text-gray-300">{t('home.whyUseDesc')}</p>
+        <section className="prose prose-gray max-w-none dark:prose-invert">
+          <h2 className="text-slate-950 dark:text-white">{t('home.whyUse')}</h2>
+          <p className="text-slate-700 dark:text-slate-300">{t('home.whyUseDesc')}</p>
           <h3>{t('home.keyFeatures')}</h3>
           <ul>
             <li>
@@ -1058,34 +1278,35 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
         <section
           aria-label="Complete Tool Directory"
           data-complete-directory="true"
-          className="mt-12 rounded-3xl border border-slate-200/80 bg-white/75 p-6 shadow-sm dark:border-white/10 dark:bg-slate-900/60 sm:p-8"
+          className="mt-12 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-950/90 sm:p-6"
         >
-          <div className="mb-6">
-            <h2 className="text-xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-2xl">
+          <div className="mb-5 border-b border-slate-200 pb-4 dark:border-slate-800">
+            <h2 className="text-lg font-bold tracking-tight text-slate-950 dark:text-white sm:text-xl">
               {directoryCopy[language]?.heading || directoryCopy.en.heading}
             </h2>
-            <p className="mt-1.5 text-sm text-slate-600 dark:text-slate-300">
+            <p className="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-300 sm:text-sm">
               {directoryCopy[language]?.subtitle || directoryCopy.en.subtitle}
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-6 lg:grid-cols-4">
             {categories.map((cat) => {
               const catTools = normalizedPopular.filter((item) => item.categorySlug === cat.slug);
               if (catTools.length === 0) return null;
+              const accent = categoryAccents[cat.slug] ?? categoryAccents.utilities;
               return (
                 <div key={`dir-${cat.slug}`} className="min-w-0">
-                  <h3 className="mb-2.5 flex items-center justify-between border-b border-slate-200/80 pb-1.5 text-sm font-bold text-slate-900 dark:border-white/10 dark:text-white">
+                  <h3 className="mb-2 flex items-center justify-between gap-2 border-b border-slate-200 pb-1.5 font-mono text-xs font-bold text-slate-950 dark:border-slate-800 dark:text-white">
                     <Link
                       href={`/tools/${cat.slug}`}
-                      className="hover:text-indigo-600 dark:hover:text-indigo-400"
+                      className="min-w-0 truncate hover:text-emerald-700 dark:hover:text-emerald-400"
                     >
                       {cat.name}
                     </Link>
-                    <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                    <span className={`shrink-0 rounded border px-1.5 py-0.5 text-[10px] ${accent.badge}`}>
                       {catTools.length}
                     </span>
                   </h3>
-                  <ul className="space-y-1 text-xs leading-5">
+                  <ul className="space-y-0.5 font-mono text-[11px] leading-5">
                     {catTools.map((tool) => {
                       const toolLabel = t(`toolName.${tool.slug}`) || tool.name;
                       return (
@@ -1093,7 +1314,7 @@ export default function Home({ hubs, children }: { hubs: HomeHubs; children?: Re
                           <Link
                             href={buildToolPath(tool.categorySlug, tool.slug)}
                             prefetch={false}
-                            className="inline-block break-words py-0.5 text-slate-700 hover:text-indigo-600 hover:underline dark:text-slate-300 dark:hover:text-indigo-400"
+                            className="block min-w-0 break-words py-0.5 text-slate-700 [overflow-wrap:anywhere] hover:text-emerald-700 hover:underline dark:text-slate-300 dark:hover:text-emerald-400"
                           >
                             {toolLabel}
                           </Link>

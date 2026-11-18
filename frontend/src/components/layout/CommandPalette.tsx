@@ -328,16 +328,16 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
       role="dialog"
       aria-modal="true"
       aria-label={t('commandPalette.title') || 'Command Palette'}
-      className="fixed inset-0 z-[9999] flex items-start justify-center p-4 sm:p-6 pt-16 sm:pt-24 md:pt-28 overflow-y-auto bg-slate-950/70 backdrop-blur-md transition-opacity"
+      className="fixed inset-0 z-[9999] flex items-start justify-center overflow-y-auto bg-zinc-950/75 p-4 pt-16 backdrop-blur-sm transition-opacity sm:p-6 sm:pt-24 md:pt-28"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl overflow-hidden rounded-3xl border border-white/80 bg-white/95 shadow-2xl shadow-indigo-500/20 backdrop-blur-2xl transition-all dark:border-white/10 dark:bg-slate-900/95"
+        className="relative w-full max-w-2xl overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-2xl transition-all dark:border-zinc-800 dark:bg-zinc-900"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Header */}
-        <div className="relative flex items-center border-b border-slate-200/80 px-4 py-3.5 dark:border-white/10">
-          <Search className="h-5 w-5 text-indigo-600 dark:text-indigo-400 shrink-0 ml-1 mr-3" />
+        <div className="relative flex items-center border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
+          <Search className="ml-0.5 mr-3 h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
           <input
             ref={inputRef}
             type="text"
@@ -350,28 +350,28 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={t('commandPalette.placeholder') || 'Search tools or type a command...'}
-            className="w-full bg-transparent text-base text-slate-900 placeholder:text-slate-400 focus:outline-none dark:text-white dark:placeholder:text-slate-500"
+            className="w-full bg-transparent text-sm sm:text-base text-zinc-950 placeholder:text-zinc-400 focus:outline-none dark:text-zinc-50 dark:placeholder:text-zinc-500"
           />
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="p-1 rounded-full text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+              className="rounded-md p-1 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
             >
               <X className="h-4 w-4" />
             </button>
           )}
-          <kbd className="ml-2 hidden sm:inline-flex items-center rounded-lg border border-slate-300 bg-slate-200/90 px-2 py-0.5 text-[11px] font-semibold text-slate-800 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100">
+          <kbd className="ml-2 hidden items-center rounded border border-zinc-200 bg-zinc-100 px-1.5 py-0.5 font-mono text-[11px] font-medium text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 sm:inline-flex">
             {t("uiText.ea50bade")}</kbd>
         </div>
 
         {/* Category Filter Chips */}
-        <div className="flex items-center gap-1.5 overflow-x-auto px-4 py-2.5 border-b border-slate-100 dark:border-white/5 no-scrollbar">
+        <div className="flex items-center gap-1.5 overflow-x-auto border-b border-zinc-200/80 bg-zinc-50/70 px-4 py-2 dark:border-zinc-800 dark:bg-zinc-950/40 no-scrollbar">
           <button
             onClick={() => setSelectedCategory(null)}
-            className={`whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium transition ${
+            className={`whitespace-nowrap rounded-md px-2.5 py-1 text-xs font-medium transition ${
               selectedCategory === null
-                ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                ? 'bg-emerald-700 text-white dark:bg-emerald-500/15 dark:text-emerald-300 dark:ring-1 dark:ring-emerald-500/40'
+                : 'border border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300 hover:text-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:border-zinc-700 dark:hover:text-zinc-200'
             }`}
           >
             {t('commandPalette.allTools') || 'All Tools'} ({allTools.length})
@@ -380,10 +380,10 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
             <button
               key={cat.slug}
               onClick={() => setSelectedCategory(selectedCategory === cat.slug ? null : cat.slug)}
-              className={`whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium transition flex items-center gap-1.5 ${
+              className={`flex items-center gap-1.5 whitespace-nowrap rounded-md px-2.5 py-1 text-xs font-medium transition ${
                 selectedCategory === cat.slug
-                  ? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700'
+                  ? 'bg-emerald-700 text-white dark:bg-emerald-500/15 dark:text-emerald-300 dark:ring-1 dark:ring-emerald-500/40'
+                  : 'border border-zinc-200 bg-white text-zinc-600 hover:border-zinc-300 hover:text-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:border-zinc-700 dark:hover:text-zinc-200'
               }`}
             >
               <cat.icon className="h-3 w-3" />
@@ -394,10 +394,10 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
 
         {/* Quick Access (Recent & Favorites) when query is empty and no category filter */}
         {!query && !selectedCategory && (recentToolItems.length > 0 || favoriteToolItems.length > 0) && (
-          <div className="border-b border-slate-100 px-4 py-3 dark:border-white/5 bg-slate-50/50 dark:bg-slate-900/50">
+          <div className="border-b border-zinc-200/80 bg-zinc-50/50 px-4 py-3 dark:border-zinc-800 dark:bg-zinc-950/30">
             {favoriteToolItems.length > 0 && (
               <div className="mb-2">
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400 flex items-center gap-1 mb-1.5">
+                <span className="mb-1.5 flex items-center gap-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400">
                   <Star className="h-3 w-3 fill-amber-500 text-amber-500" /> {t('commandPalette.favorites') || 'Favorites'}
                 </span>
                 <div className="flex flex-wrap gap-1.5">
@@ -405,9 +405,9 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
                     <button
                       key={`fav-${tool.slug}`}
                       onClick={() => handleSelectTool(tool)}
-                      className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 shadow-sm transition hover:border-indigo-300 hover:text-indigo-600 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-indigo-500"
+                      className="inline-flex items-center gap-1.5 rounded-md border border-zinc-200 bg-white px-2.5 py-1 text-xs font-medium text-zinc-700 transition hover:border-emerald-500/50 hover:text-emerald-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-emerald-500/40 dark:hover:text-emerald-300"
                     >
-                      <tool.icon className="h-3 w-3 text-indigo-500" />
+                      <tool.icon className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
                       {tool.name}
                     </button>
                   ))}
@@ -417,7 +417,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
 
             {recentToolItems.length > 0 && (
               <div>
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1 mb-1.5">
+                <span className="mb-1.5 flex items-center gap-1 font-mono text-[11px] font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
                   <Clock className="h-3 w-3" /> {t('commandPalette.recent') || 'Recent Tools'}
                 </span>
                 <div className="flex flex-wrap gap-1.5">
@@ -425,9 +425,9 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
                     <button
                       key={`rec-${tool.slug}`}
                       onClick={() => handleSelectTool(tool)}
-                      className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/80 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 shadow-sm transition hover:border-indigo-300 hover:text-indigo-600 dark:border-white/10 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-indigo-500"
+                      className="inline-flex items-center gap-1.5 rounded-md border border-zinc-200 bg-white px-2.5 py-1 text-xs font-medium text-zinc-700 transition hover:border-emerald-500/50 hover:text-emerald-700 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-emerald-500/40 dark:hover:text-emerald-300"
                     >
-                      <tool.icon className="h-3 w-3 text-cyan-500" />
+                      <tool.icon className="h-3 w-3 text-emerald-600 dark:text-emerald-400" />
                       {tool.name}
                     </button>
                   ))}
@@ -456,30 +456,30 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
                   onMouseEnter={() => setSelectedIndex(index)}
                   role="option"
                   aria-selected={isSelected}
-                  className={`w-full flex items-center justify-between gap-3 rounded-2xl px-3.5 py-2.5 text-left transition ${
+                  className={`flex w-full items-center justify-between gap-3 rounded-lg border-l-2 px-3 py-2 text-left transition ${
                     isSelected
-                      ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/25'
-                      : 'text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800/80'
+                      ? 'border-emerald-500 bg-emerald-500/10 text-zinc-950 dark:text-zinc-50'
+                      : 'border-transparent text-zinc-700 hover:bg-zinc-100/80 dark:text-zinc-300 dark:hover:bg-zinc-800/60'
                   }`}
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <div
-                      className={`p-2 rounded-xl shrink-0 transition ${
+                      className={`shrink-0 rounded-md p-1.5 transition ${
                         isSelected
-                          ? 'bg-white/20 text-white'
-                          : 'bg-indigo-50 text-indigo-600 dark:bg-indigo-400/10 dark:text-indigo-400'
+                          ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400'
+                          : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400'
                       }`}
                     >
                       <Icon className="h-4 w-4" />
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-sm truncate">{tool.name}</span>
+                        <span className="truncate text-sm font-semibold">{tool.name}</span>
                         <span
-                          className={`rounded-full px-2 py-0.5 text-[10px] font-medium shrink-0 ${
+                          className={`shrink-0 rounded px-1.5 py-0.5 font-mono text-[10px] font-medium ${
                             isSelected
-                              ? 'bg-white/20 text-white'
-                              : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400'
+                              ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
+                              : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400'
                           }`}
                         >
                           {tool.categoryName}
@@ -487,8 +487,8 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
                       </div>
                       {tool.description && (
                         <p
-                          className={`text-xs truncate mt-0.5 ${
-                            isSelected ? 'text-indigo-100' : 'text-slate-500 dark:text-slate-400'
+                          className={`mt-0.5 truncate text-xs ${
+                            isSelected ? 'text-zinc-600 dark:text-zinc-300' : 'text-zinc-600 dark:text-zinc-400'
                           }`}
                         >
                           {tool.description}
@@ -497,14 +497,14 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
                     </div>
                   </div>
                   {isSelected && (
-                    <CornerDownLeft className="h-4 w-4 shrink-0 text-white/80" />
+                    <CornerDownLeft className="h-3.5 w-3.5 shrink-0 text-emerald-700 dark:text-emerald-400" />
                   )}
                 </button>
               );
             })
           ) : (
-            <div className="py-12 text-center text-slate-500 dark:text-slate-400">
-              <Sparkles className="h-8 w-8 mx-auto mb-2 text-slate-300 dark:text-slate-600" />
+            <div className="py-12 text-center text-zinc-600 dark:text-zinc-400">
+              <Sparkles className="mx-auto mb-2 h-7 w-7 text-zinc-300 dark:text-zinc-700" />
               <p className="text-sm font-medium">
                 {t('commandPalette.noResults') || 'No tools found matching'} &quot;{query}&quot;
               </p>
@@ -513,25 +513,27 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
         </div>
 
         {/* Footer Hints */}
-        <div className="flex items-center justify-between border-t border-slate-100 bg-slate-50/80 px-4 py-2.5 text-[11px] text-slate-500 dark:border-white/5 dark:bg-slate-900/80 dark:text-slate-400">
-          <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between border-t border-zinc-200 bg-zinc-50 px-4 py-2 text-[11px] text-zinc-600 dark:border-zinc-800 dark:bg-zinc-950/60 dark:text-zinc-400">
+          <div className="flex items-center gap-3 font-mono">
             <span className="flex items-center gap-1">
-              <kbd className="rounded border border-slate-200 bg-white px-1 py-0.5 text-[10px] font-semibold dark:border-slate-700 dark:bg-slate-800">
-                ↑
+              <kbd className="rounded border border-zinc-200 bg-white px-1 py-0.5 font-mono text-[10px] font-medium dark:border-zinc-700 dark:bg-zinc-800">
+                ↑↓
               </kbd>
-              <kbd className="rounded border border-slate-200 bg-white px-1 py-0.5 text-[10px] font-semibold dark:border-slate-700 dark:bg-slate-800">
-                ↓
-              </kbd>
-              <span>{t('commandPalette.shortcuts') || 'Navigate'}</span>
+              <span className="font-sans">{t('commandPalette.shortcuts') || 'Navigate'}</span>
             </span>
             <span className="flex items-center gap-1">
-              <kbd className="rounded border border-slate-200 bg-white px-1 py-0.5 text-[10px] font-semibold dark:border-slate-700 dark:bg-slate-800">
+              <kbd className="rounded border border-zinc-200 bg-white px-1 py-0.5 font-mono text-[10px] font-medium dark:border-zinc-700 dark:bg-zinc-800">
                 ↵
               </kbd>
-              <span>{t('commandPalette.select') || 'Select'}</span>
+              <span className="font-sans">{t('commandPalette.select') || 'Select'}</span>
+            </span>
+            <span className="hidden sm:flex items-center gap-1">
+              <kbd className="rounded border border-zinc-200 bg-white px-1 py-0.5 font-mono text-[10px] font-medium dark:border-zinc-700 dark:bg-zinc-800">
+                {t("uiText.ea50bade")}
+              </kbd>
             </span>
           </div>
-          <span>
+          <span className="font-mono">
             {filteredTools.length} {filteredTools.length === 1 ? (t('common.tool') || 'tool') : (t('common.tools') || 'tools')}
           </span>
         </div>

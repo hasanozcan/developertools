@@ -203,7 +203,7 @@ export default function PdfMergerTool() {
               {mergedUrl && (
                 <button
                   onClick={handleDownload}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-500 transition shadow-sm"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-700 text-white text-xs font-bold hover:bg-emerald-800 transition shadow-sm"
                 >
                   <Download className="h-4 w-4" /> {t("uiText.4a47c785")}</button>
               )}

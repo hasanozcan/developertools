@@ -197,12 +197,12 @@ export default function UuidGeneratorTool({ presetVersion }: { presetVersion?: U
             className="w-full resize-y rounded border border-gray-200 bg-white p-3 font-mono text-sm text-gray-800 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200"
           />
         ) : (
-          <p className="text-gray-500 dark:text-gray-400 text-center py-8">{t('common.generate')}...</p>
+          <p className="text-zinc-600 dark:text-zinc-400 text-center py-8">{t('common.generate')}...</p>
         )}
       </div>
 
       {/* Info */}
-      <div className="text-sm text-gray-500 dark:text-gray-400">
+      <div className="text-sm text-zinc-600 dark:text-zinc-400">
         <p>{t(version === 'v7' ? 'tool.uuidGenerator.infoV7' : 'tool.uuidGenerator.info')}</p>
       </div>
     </div>

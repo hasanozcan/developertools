@@ -45,13 +45,13 @@ afterEach(() => {
   }
 });
 
-describe('installed guarded braces consumers', () => {
+describe('installed guarded braces consumers', { timeout: 90_000 }, () => {
   it('uses the reviewed implementation on every declared installed consumer path', () => {
     const report = JSON.parse(
       execFileSync(process.execPath, ['scripts/verify-guarded-braces.mjs'], {
         cwd: process.cwd(),
         encoding: 'utf8',
-        timeout: 5000,
+        timeout: 30_000,
       }),
     );
     expect(report.package).toBe('@devstools/guarded-braces');

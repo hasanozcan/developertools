@@ -5,6 +5,9 @@ import { ToolTextProvider } from '@/context/LanguageContext';
 import { getToolTextMap } from '@/lib/toolText';
 import { rootMetadata } from '../_shell/RootDocument';
 import GuideCards from '@/components/seo/GuideCards';
+import { getHreflangAlternates } from '@/lib/i18nRouting';
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
 
 // The homepage used to pick up app/opengraph-image.tsx and app/twitter-image.tsx
 // automatically because it lived in the app root segment. It now sits in the
@@ -20,6 +23,10 @@ const shareImage = {
 };
 
 export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+    languages: getHreflangAlternates('/', siteUrl),
+  },
   openGraph: {
     ...rootMetadata.openGraph,
     images: [{ url: '/opengraph-image', ...shareImage }],
