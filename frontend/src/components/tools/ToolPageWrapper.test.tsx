@@ -118,7 +118,7 @@ describe('ToolPageWrapper contextual guides', () => {
     mockLanguage = 'en';
   });
 
-  it('keeps a compact localized guide next to the tool controls and links to the English guide', () => {
+  it('keeps a compact localized guide next to the tool controls and links to the localized guide', () => {
     mockLanguage = 'tr';
     renderToolPage([
       {
@@ -129,12 +129,99 @@ describe('ToolPageWrapper contextual guides', () => {
     ]);
     const nav = screen.getByRole('navigation', { name: 'Pratik rehberler' });
     expect(nav.closest('[data-tool-interface]')).not.toBeNull();
-    expect(nav.querySelector('a')).toHaveTextContent('Unicode kaçışlarını çözme (İngilizce)');
-    expect(nav.querySelector('a')).toHaveAttribute('href', '/guides/decode-unicode-escapes');
-    expect(nav.querySelector('a')).toHaveAttribute('hreflang', 'en');
+    expect(nav.querySelector('a')).toHaveTextContent('Unicode kaçışlarını çözme');
+    expect(nav.querySelector('a')).not.toHaveTextContent('(İngilizce)');
+    expect(nav.querySelector('a')).toHaveAttribute('href', '/tr/guides/decode-unicode-escapes');
+    expect(nav.querySelector('a')).toHaveAttribute('hreflang', 'tr');
     expect(document.querySelectorAll('[data-related-guides]')).toHaveLength(1);
     const slot = document.querySelector('[data-tool-slot]')!;
     expect(nav.compareDocumentPosition(slot) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it('mounts tool children once and preserves child DOM and state across Zen mode toggles', () => {
+    let mountCount = 0;
+    function StatefulToolChild() {
+      const [count, setCount] = React.useState(0);
+      const [text, setText] = React.useState('');
+      React.useEffect(() => {
+        mountCount += 1;
+      }, []);
+      return (
+        <div>
+          <input aria-label="Tool input" value={text} onChange={(e) => setText(e.target.value)} />
+          <button type="button" onClick={() => setCount((c) => c + 1)}>
+            Count: {count}
+          </button>
+        </div>
+      );
+    }
+
+    render(
+      <ToolPageWrapper
+        toolSlug="json-formatter"
+        category="json"
+        categoryName="JSON"
+        defaultName="JSON Formatter"
+        defaultDescription="Format JSON"
+        faqs={[]}
+        sources={[]}
+        answerSections={[]}
+        relatedTools={[]}
+        topicCollections={[]}
+        relatedGuides={[
+          {
+            name: 'Decode Unicode Escapes',
+            description: 'Decode escaped text.',
+            href: '/guides/decode-unicode-escapes',
+          },
+        ]}
+      >
+        <StatefulToolChild />
+      </ToolPageWrapper>,
+    );
+
+    const input = screen.getByLabelText('Tool input') as HTMLInputElement;
+    const slot = document.querySelector('[data-tool-slot="true"]')!;
+    fireEvent.change(input, { target: { value: 'hello zen' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Count: 0' }));
+    expect(screen.getByRole('button', { name: 'Count: 1' })).toBeInTheDocument();
+    expect(mountCount).toBe(1);
+    expect(document.querySelectorAll('[data-related-guides]')).toHaveLength(1);
+    expect(slot).toHaveStyle({ minHeight: '420px' });
+
+    // Enter Full Screen
+    fireEvent.click(screen.getByRole('button', { name: 'Full Screen' }));
+    expect(screen.getByRole('dialog')).toHaveAttribute('data-tool-interface', 'true');
+    expect(screen.getByRole('main')).toBeInTheDocument();
+    expect(screen.getByLabelText('Tool input')).toBe(input);
+    expect(input.value).toBe('hello zen');
+    expect(screen.getByRole('button', { name: 'Count: 1' })).toBeInTheDocument();
+    expect(document.querySelector('[data-tool-slot="true"]')).toBe(slot);
+    expect(document.querySelectorAll('[data-related-guides]')).toHaveLength(1);
+    expect(mountCount).toBe(1);
+    expect(document.body.style.overflow).toBe('hidden');
+
+    // Exit Full Screen
+    fireEvent.click(screen.getByRole('button', { name: 'Exit Full Screen' }));
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(screen.getByLabelText('Tool input')).toBe(input);
+    expect(input.value).toBe('hello zen');
+    expect(screen.getByRole('button', { name: 'Count: 1' })).toBeInTheDocument();
+    expect(slot).toHaveStyle({ minHeight: '420px' });
+    expect(mountCount).toBe(1);
+    expect(document.body.style.overflow).not.toBe('hidden');
+
+    // Re-enter Full Screen and mutate state again
+    fireEvent.click(screen.getByRole('button', { name: 'Full Screen' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Count: 1' }));
+    expect(screen.getByLabelText('Tool input')).toBe(input);
+    expect(screen.getByRole('button', { name: 'Count: 2' })).toBeInTheDocument();
+    expect(mountCount).toBe(1);
+
+    // Exit via Escape key restores body overflow
+    fireEvent.keyDown(window, { key: 'Escape' });
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(document.body.style.overflow).not.toBe('hidden');
   });
 });
 

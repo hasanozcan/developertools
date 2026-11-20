@@ -1,7 +1,9 @@
+import { createHash } from 'node:crypto';
 import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
 import {
   buildContactEmailBody,
+  isValidContactEmail,
   MAX_CONTACT_BODY_BYTES,
   validateContactPayload,
 } from '@/lib/contactForm';
@@ -23,6 +25,21 @@ const parseBooleanEnv = (value?: string) => {
   return ['true', '1', 'yes', 'y', 'on'].includes(value.toLowerCase());
 };
 
+function resolveContactLimiterKey(request: Request): string | null {
+  const clientKey = getContactClientKey(request);
+  if (clientKey !== 'unknown') {
+    return clientKey;
+  }
+
+  const userAgent = request.headers.get('user-agent')?.trim();
+  if (!userAgent) {
+    return null;
+  }
+
+  const uaDigest = createHash('sha256').update(userAgent).digest('hex').slice(0, 16);
+  return `unknown:ua:${uaDigest}`;
+}
+
 export async function POST(request: Request) {
   try {
     if (!isTrustedContactRequest(request)) {
@@ -32,11 +49,10 @@ export async function POST(request: Request) {
       );
     }
 
-    const rateLimitDecision = consumeContactRateLimits(
-      clientRateLimiter,
-      globalRateLimiter,
-      getContactClientKey(request),
-    );
+    const limiterKey = resolveContactLimiterKey(request);
+    const rateLimitDecision = limiterKey
+      ? consumeContactRateLimits(clientRateLimiter, globalRateLimiter, limiterKey)
+      : globalRateLimiter.consume('global');
     if (!rateLimitDecision.allowed) {
       return NextResponse.json(
         { error: 'Too many requests' },
@@ -87,7 +103,8 @@ export async function POST(request: Request) {
       !Number.isInteger(smtpPort) ||
       smtpPort < 1 ||
       smtpPort > 65_535 ||
-      targetEmail.length === 0
+      targetEmail.length === 0 ||
+      targetEmail.some((recipient) => !isValidContactEmail(recipient))
     ) {
       console.error('SMTP configuration is incomplete.');
       return NextResponse.json(

@@ -7,7 +7,7 @@ export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
 export default async function AboutOpenGraphImage() {
-  const toolCount = toolCatalog.length > 0 ? toolCatalog.length : 476;
+  const toolCount = toolCatalog.length > 0 ? toolCatalog.length : 467;
 
   return new ImageResponse(
     (

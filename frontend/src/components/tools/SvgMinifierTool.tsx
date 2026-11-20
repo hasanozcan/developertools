@@ -41,7 +41,7 @@ export default function SvgMinifierTool() {
 
   const handleCopy = () => {
     if (!minified) return;
-    navigator.clipboard.writeText(minified);
+    navigator.clipboard.writeText(sanitizeSvg(minified));
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -63,16 +63,28 @@ export default function SvgMinifierTool() {
       {/* Stats Header */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5 text-center">
-          <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">{t("tool.cssMinifier.originalSize")}</span>
-          <p className="text-lg font-bold text-slate-900 dark:text-white mt-1">{(originalSize / 1024).toFixed(2)} KB</p>
+          <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+            {t('tool.cssMinifier.originalSize')}
+          </span>
+          <p className="text-lg font-bold text-slate-900 dark:text-white mt-1">
+            {(originalSize / 1024).toFixed(2)} KB
+          </p>
         </div>
         <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5 text-center">
-          <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">{t("tool.cssMinifier.minifiedSize")}</span>
-          <p className="text-lg font-bold text-emerald-600 dark:text-emerald-400 mt-1">{(minifiedSize / 1024).toFixed(2)} KB</p>
+          <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+            {t('tool.cssMinifier.minifiedSize')}
+          </span>
+          <p className="text-lg font-bold text-emerald-600 dark:text-emerald-400 mt-1">
+            {(minifiedSize / 1024).toFixed(2)} KB
+          </p>
         </div>
         <div className="p-4 rounded-2xl bg-indigo-50/80 dark:bg-indigo-900/20 border border-indigo-200/80 dark:border-indigo-500/20 text-center">
-          <span className="text-xs text-indigo-700 dark:text-indigo-300 font-semibold">{t("uiText.18cb6603")}</span>
-          <p className="text-lg font-extrabold text-indigo-600 dark:text-indigo-400 mt-1">-{savingsPercent}%</p>
+          <span className="text-xs text-indigo-700 dark:text-indigo-300 font-semibold">
+            {t('uiText.18cb6603')}
+          </span>
+          <p className="text-lg font-extrabold text-indigo-600 dark:text-indigo-400 mt-1">
+            -{savingsPercent}%
+          </p>
         </div>
       </div>
 
@@ -81,12 +93,14 @@ export default function SvgMinifierTool() {
         <div className="flex flex-col space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              {t("uiText.8139e1a4")}</span>
+              {t('uiText.8139e1a4')}
+            </span>
             <button
               onClick={() => setInputSvg(SAMPLE_BLOATED_SVG)}
               className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1"
             >
-              <RefreshCw className="h-3 w-3" /> {t("common.loadSample")}</button>
+              <RefreshCw className="h-3 w-3" /> {t('common.loadSample')}
+            </button>
           </div>
           <textarea
             value={inputSvg}
@@ -99,7 +113,8 @@ export default function SvgMinifierTool() {
         <div className="flex flex-col space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              {t("uiText.97b65488")}</span>
+              {t('uiText.97b65488')}
+            </span>
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCopy}
@@ -107,14 +122,15 @@ export default function SvgMinifierTool() {
                 className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-50 px-2.5 py-1 text-xs font-semibold text-indigo-600 transition hover:bg-indigo-100 disabled:opacity-50 dark:bg-indigo-400/10 dark:text-indigo-300 dark:hover:bg-indigo-400/20"
               >
                 {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-                {copied ? t("uiText.8dc21305") : t("common.copy")}
+                {copied ? t('uiText.8dc21305') : t('common.copy')}
               </button>
               <button
                 onClick={handleDownload}
                 disabled={!minified}
                 className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-2.5 py-1 text-xs font-semibold text-white shadow-sm transition hover:bg-indigo-500 disabled:opacity-50"
               >
-                <Download className="h-3.5 w-3.5" /> {t("common.download")}</button>
+                <Download className="h-3.5 w-3.5" /> {t('common.download')}
+              </button>
             </div>
           </div>
           <textarea
@@ -130,11 +146,10 @@ export default function SvgMinifierTool() {
       {minified && (
         <div className="rounded-2xl border border-slate-200/80 dark:border-white/10 p-6 bg-slate-50/60 dark:bg-slate-900/40 text-center">
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-4">
-            {t("uiText.e5b7ae30")}</span>
-          <div
-            className="inline-flex items-center justify-center p-6 rounded-2xl bg-white dark:bg-slate-800 shadow-inner border border-slate-200/60 dark:border-white/10"
-          >
-            <SvgPreview svg={minified} alt={t("uiText.e5b7ae30")} />
+            {t('uiText.e5b7ae30')}
+          </span>
+          <div className="inline-flex items-center justify-center p-6 rounded-2xl bg-white dark:bg-slate-800 shadow-inner border border-slate-200/60 dark:border-white/10">
+            <SvgPreview svg={minified} alt={t('uiText.e5b7ae30')} />
           </div>
         </div>
       )}

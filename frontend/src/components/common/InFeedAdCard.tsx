@@ -3,6 +3,8 @@
 import { useLanguage } from '@/context/LanguageContext';
 import React from 'react';
 import AdSense from './AdSense';
+import { useAdSenseAllowedHost } from './useAdSenseAllowedHost';
+import { normalizeAdSenseClientId } from '@/lib/adsense';
 import { DEFAULT_ADSENSE_INFEED_SLOT } from '@/lib/adsenseSlots';
 
 interface InFeedAdCardProps {
@@ -17,6 +19,10 @@ export default function InFeedAdCard({
   placement = 'home-infeed',
 }: InFeedAdCardProps) {
   const { t } = useLanguage();
+  const adsAllowed = useAdSenseAllowedHost();
+  const adClient = normalizeAdSenseClientId(process.env.NEXT_PUBLIC_ADSENSE_ID);
+  if (!adClient || !adsAllowed || !slot?.trim()) return null;
+
   return (
     <div
       data-ad-banner="true"
@@ -24,7 +30,8 @@ export default function InFeedAdCard({
     >
       <div className="flex items-center justify-between gap-1.5 mb-2">
         <span className="inline-flex items-center rounded-md bg-indigo-100/80 dark:bg-indigo-900/40 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-700/40">
-          {t("uiText.05daeb37")}</span>
+          {t('uiText.05daeb37')}
+        </span>
       </div>
 
       <div className="flex-1 flex items-center justify-center w-full">

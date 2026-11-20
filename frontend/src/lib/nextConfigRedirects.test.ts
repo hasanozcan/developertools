@@ -176,6 +176,21 @@ describe('Next.js configuration', () => {
       ['/tools/generators/jwt-builder', '/tools/crypto/jwt-generator'],
       ['/tools/utilities/cron-next-runs-visualizer', '/tools/utilities/cron-parser'],
       ['/tools/utilities/crontab-schedule-translator', '/tools/utilities/cron-parser'],
+      ['/tools/converters/video-to-gif', '/tools/converters/image-converter'],
+      ['/tools/converters/audio-converter', '/tools/converters/image-converter'],
+      ['/tools/converters/pdf-to-image', '/tools/utilities/pdf-splitter'],
+      ['/tools/converters/svg-to-webp', '/tools/converters/svg-to-png'],
+      [
+        '/tools/generators/dockerfile-ai-optimized-generator',
+        '/tools/utilities/dockerfile-generator',
+      ],
+      ['/tools/generators/gitlab-ci-pipeline-builder', '/tools/generators/gitlab-ci-generator'],
+      [
+        '/tools/utilities/embedding-token-cost-estimator',
+        '/tools/utilities/embedding-cost-calculator',
+      ],
+      ['/tools/utilities/ssl-tls-handshake-simulator', '/tools/crypto/ssl-certificate-inspector'],
+      ['/tools/crypto/hmac-sha384-sha512-calculator', '/tools/crypto/hmac-generator'],
     ];
 
     for (const [oldPath, primaryPath] of merged) {
@@ -221,6 +236,10 @@ describe('Next.js configuration', () => {
     expect(headerRules[0].source).toBe('/:path*');
     expect(headers['Content-Security-Policy']).toContain("frame-ancestors 'none'");
     expect(headers['Content-Security-Policy']).toContain("object-src 'none'");
+    expect(headers['Content-Security-Policy']).toContain('ws:');
+    expect(headers['Content-Security-Policy']).toContain('wss:');
+    expect(headers['Content-Security-Policy']).toContain('https://dns.google');
+    expect(headers['Content-Security-Policy']).toContain('https://cloudflare-dns.com');
     expect(headers['Content-Security-Policy-Report-Only']).toBeUndefined();
     expect(headers['X-Content-Type-Options']).toBe('nosniff');
     expect(headers['Referrer-Policy']).toBe('strict-origin-when-cross-origin');

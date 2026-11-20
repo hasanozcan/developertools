@@ -185,6 +185,7 @@ export function pageTypeOfPath(pagePath, ctx) {
   const [, first = '', ...rest] = basePath.split('/');
   if (first === 'collections') return 'collection';
   if (first === 'for') return 'audience';
+  if (first === 'guides') return 'guide';
   if (rest.length === 0) return 'static';
   return 'other';
 }

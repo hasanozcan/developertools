@@ -75,44 +75,58 @@ const DEFAULT_CONFIG: MetaTagsConfig = {
   jsonLdImage: '',
 };
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 export default function MetaTagsGeneratorTool() {
   const { t } = useLanguage();
   const [config, setConfig] = useState<MetaTagsConfig>(DEFAULT_CONFIG);
-  const [activeTab, setActiveTab] = useState<'basic' | 'og' | 'twitter' | 'linkedin' | 'jsonld'>('basic');
+  const [activeTab, setActiveTab] = useState<'basic' | 'og' | 'twitter' | 'linkedin' | 'jsonld'>(
+    'basic',
+  );
   const [copied, setCopied] = useState(false);
   const [autoSync, setAutoSync] = useState(true);
   const [includeJsonLd, setIncludeJsonLd] = useState(false);
 
-  const updateConfig = useCallback((key: keyof MetaTagsConfig, value: string) => {
-    setConfig(prev => {
-      const updated = { ...prev, [key]: value };
-      
-      // Auto-sync OG and Twitter fields with basic fields
-      if (autoSync) {
-        if (key === 'title') {
-          updated.ogTitle = value;
-          updated.twitterTitle = value;
-        } else if (key === 'description') {
-          updated.ogDescription = value;
-          updated.twitterDescription = value;
-        } else if (key === 'ogImage') {
-          updated.twitterImage = value;
-        } else if (key === 'canonical') {
-          updated.ogUrl = value;
+  const updateConfig = useCallback(
+    (key: keyof MetaTagsConfig, value: string) => {
+      setConfig((prev) => {
+        const updated = { ...prev, [key]: value };
+
+        // Auto-sync OG and Twitter fields with basic fields
+        if (autoSync) {
+          if (key === 'title') {
+            updated.ogTitle = value;
+            updated.twitterTitle = value;
+          } else if (key === 'description') {
+            updated.ogDescription = value;
+            updated.twitterDescription = value;
+          } else if (key === 'ogImage') {
+            updated.twitterImage = value;
+          } else if (key === 'canonical') {
+            updated.ogUrl = value;
+          }
         }
-      }
-      
-      return updated;
-    });
-  }, [autoSync]);
+
+        return updated;
+      });
+    },
+    [autoSync],
+  );
 
   const generateMetaTags = useCallback(() => {
     const tags: string[] = [];
-    
+
     // Charset & Viewport
     tags.push('<meta charset="UTF-8">');
     tags.push('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
-    
+
     // Favicon
     if (config.favicon) {
       tags.push(`<link rel="icon" type="image/x-icon" href="${escapeHtml(config.favicon)}">`);
@@ -120,7 +134,7 @@ export default function MetaTagsGeneratorTool() {
     if (config.appleTouchIcon) {
       tags.push(`<link rel="apple-touch-icon" href="${escapeHtml(config.appleTouchIcon)}">`);
     }
-    
+
     // Basic meta tags
     if (config.title) {
       tags.push(`<title>${escapeHtml(config.title)}</title>`);
@@ -143,19 +157,25 @@ export default function MetaTagsGeneratorTool() {
     if (config.language) {
       tags.push(`<meta http-equiv="content-language" content="${escapeHtml(config.language)}">`);
     }
-    
+
     // Open Graph tags
     if (config.ogTitle || config.title) {
-      tags.push(`<meta property="og:title" content="${escapeHtml(config.ogTitle || config.title)}">`);
+      tags.push(
+        `<meta property="og:title" content="${escapeHtml(config.ogTitle || config.title)}">`,
+      );
     }
     if (config.ogDescription || config.description) {
-      tags.push(`<meta property="og:description" content="${escapeHtml(config.ogDescription || config.description)}">`);
+      tags.push(
+        `<meta property="og:description" content="${escapeHtml(config.ogDescription || config.description)}">`,
+      );
     }
     if (config.ogImage) {
       tags.push(`<meta property="og:image" content="${escapeHtml(config.ogImage)}">`);
     }
     if (config.ogUrl || config.canonical) {
-      tags.push(`<meta property="og:url" content="${escapeHtml(config.ogUrl || config.canonical)}">`);
+      tags.push(
+        `<meta property="og:url" content="${escapeHtml(config.ogUrl || config.canonical)}">`,
+      );
     }
     if (config.ogType) {
       tags.push(`<meta property="og:type" content="${escapeHtml(config.ogType)}">`);
@@ -163,7 +183,7 @@ export default function MetaTagsGeneratorTool() {
     if (config.ogSiteName) {
       tags.push(`<meta property="og:site_name" content="${escapeHtml(config.ogSiteName)}">`);
     }
-    
+
     // Twitter tags
     if (config.twitterCard) {
       tags.push(`<meta name="twitter:card" content="${escapeHtml(config.twitterCard)}">`);
@@ -175,57 +195,64 @@ export default function MetaTagsGeneratorTool() {
       tags.push(`<meta name="twitter:creator" content="${escapeHtml(config.twitterCreator)}">`);
     }
     if (config.twitterTitle || config.title) {
-      tags.push(`<meta name="twitter:title" content="${escapeHtml(config.twitterTitle || config.title)}">`);
+      tags.push(
+        `<meta name="twitter:title" content="${escapeHtml(config.twitterTitle || config.title)}">`,
+      );
     }
     if (config.twitterDescription || config.description) {
-      tags.push(`<meta name="twitter:description" content="${escapeHtml(config.twitterDescription || config.description)}">`);
+      tags.push(
+        `<meta name="twitter:description" content="${escapeHtml(config.twitterDescription || config.description)}">`,
+      );
     }
     if (config.twitterImage || config.ogImage) {
-      tags.push(`<meta name="twitter:image" content="${escapeHtml(config.twitterImage || config.ogImage)}">`);
+      tags.push(
+        `<meta name="twitter:image" content="${escapeHtml(config.twitterImage || config.ogImage)}">`,
+      );
     }
-    
+
     // LinkedIn tags (uses Open Graph, but we add specific ones)
     if (config.linkedinTitle || config.title) {
-      tags.push(`<meta property="linkedin:title" content="${escapeHtml(config.linkedinTitle || config.title)}">`);
+      tags.push(
+        `<meta property="linkedin:title" content="${escapeHtml(config.linkedinTitle || config.title)}">`,
+      );
     }
     if (config.linkedinDescription || config.description) {
-      tags.push(`<meta property="linkedin:description" content="${escapeHtml(config.linkedinDescription || config.description)}">`);
+      tags.push(
+        `<meta property="linkedin:description" content="${escapeHtml(config.linkedinDescription || config.description)}">`,
+      );
     }
     if (config.linkedinImage || config.ogImage) {
-      tags.push(`<meta property="linkedin:image" content="${escapeHtml(config.linkedinImage || config.ogImage)}">`);
+      tags.push(
+        `<meta property="linkedin:image" content="${escapeHtml(config.linkedinImage || config.ogImage)}">`,
+      );
     }
     if (config.linkedinUrl || config.canonical) {
-      tags.push(`<meta property="linkedin:url" content="${escapeHtml(config.linkedinUrl || config.canonical)}">`);
+      tags.push(
+        `<meta property="linkedin:url" content="${escapeHtml(config.linkedinUrl || config.canonical)}">`,
+      );
     }
-    
+
     // JSON-LD Structured Data
     if (includeJsonLd && (config.jsonLdName || config.title)) {
       const jsonLd = {
         '@context': 'https://schema.org',
         '@type': config.jsonLdType,
-        'name': config.jsonLdName || config.title,
-        'description': config.jsonLdDescription || config.description,
-        'url': config.canonical,
-        'image': config.jsonLdImage || config.ogImage,
+        name: config.jsonLdName || config.title,
+        description: config.jsonLdDescription || config.description,
+        url: config.canonical,
+        image: config.jsonLdImage || config.ogImage,
       };
       // Remove undefined values
       const cleanJsonLd = Object.fromEntries(
-        Object.entries(jsonLd).filter(([_, v]) => v !== undefined && v !== '')
+        Object.entries(jsonLd).filter(([_, v]) => v !== undefined && v !== ''),
       );
-      tags.push(`<script type="application/ld+json">\n${serializeJsonForHtmlScript(cleanJsonLd, 2)}\n</script>`);
+      tags.push(
+        `<script type="application/ld+json">\n${serializeJsonForHtmlScript(cleanJsonLd, 2)}\n</script>`,
+      );
     }
-    
+
     return tags.join('\n');
   }, [config, includeJsonLd]);
-
-  const escapeHtml = (str: string) => {
-    return str
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  };
 
   const copyCode = useCallback(() => {
     navigator.clipboard.writeText(generateMetaTags());
@@ -240,7 +267,8 @@ export default function MetaTagsGeneratorTool() {
   const loadSample = useCallback(() => {
     setConfig({
       title: 'Developer Tools - Free Online Web Development Utilities',
-      description: 'A collection of free online tools for developers. JSON formatting, Base64 encoding, UUID generation, and more.',
+      description:
+        'A collection of free online tools for developers. JSON formatting, Base64 encoding, UUID generation, and more.',
       keywords: 'developer tools, json formatter, base64, uuid generator, web development',
       author: 'Developer Tools Team',
       robots: 'index, follow',
@@ -283,7 +311,7 @@ export default function MetaTagsGeneratorTool() {
     <div className="space-y-6">
       {/* Tabs */}
       <div className="flex border-b border-gray-200 dark:border-gray-700">
-        {tabs.map(tab => (
+        {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
@@ -307,7 +335,10 @@ export default function MetaTagsGeneratorTool() {
           onChange={(e) => setAutoSync(e.target.checked)}
           className="w-4 h-4 text-primary-600 rounded border-gray-300 focus:ring-primary-500"
         />
-        <label htmlFor="autoSync" className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
+        <label
+          htmlFor="autoSync"
+          className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1"
+        >
           {t('tool.metaTags.autoSync')}
           <span title={t('tool.metaTags.autoSyncInfo')}>
             <Info className="w-4 h-4" />
@@ -328,10 +359,12 @@ export default function MetaTagsGeneratorTool() {
                 value={config.title}
                 onChange={(e) => updateConfig('title', e.target.value)}
                 maxLength={60}
-                placeholder={t("uiText.30085a1d")}
+                placeholder={t('uiText.30085a1d')}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
-              <p className="text-xs text-gray-500 mt-1">{config.title.length}/60 {t('tool.metaTags.characters')}</p>
+              <p className="text-xs text-gray-500 mt-1">
+                {config.title.length}/60 {t('tool.metaTags.characters')}
+              </p>
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -342,10 +375,12 @@ export default function MetaTagsGeneratorTool() {
                 onChange={(e) => updateConfig('description', e.target.value)}
                 maxLength={160}
                 rows={3}
-                placeholder={t("uiText.86fb70b5")}
+                placeholder={t('uiText.86fb70b5')}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm resize-none"
               />
-              <p className="text-xs text-gray-500 mt-1">{config.description.length}/160 {t('tool.metaTags.characters')}</p>
+              <p className="text-xs text-gray-500 mt-1">
+                {config.description.length}/160 {t('tool.metaTags.characters')}
+              </p>
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -355,7 +390,7 @@ export default function MetaTagsGeneratorTool() {
                 type="text"
                 value={config.keywords}
                 onChange={(e) => updateConfig('keywords', e.target.value)}
-                placeholder={t("uiText.9ef1ef40")}
+                placeholder={t('uiText.9ef1ef40')}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
@@ -367,7 +402,7 @@ export default function MetaTagsGeneratorTool() {
                 type="text"
                 value={config.author}
                 onChange={(e) => updateConfig('author', e.target.value)}
-                placeholder={t("uiText.45e079f8")}
+                placeholder={t('uiText.45e079f8')}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
@@ -380,10 +415,10 @@ export default function MetaTagsGeneratorTool() {
                 onChange={(e) => updateConfig('robots', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               >
-                <option value="index, follow">{t("uiText.c4a18e42")}</option>
-                <option value="index, nofollow">{t("uiText.b2a24ee1")}</option>
-                <option value="noindex, follow">{t("uiText.95c234ff")}</option>
-                <option value="noindex, nofollow">{t("uiText.e99264ac")}</option>
+                <option value="index, follow">{t('uiText.c4a18e42')}</option>
+                <option value="index, nofollow">{t('uiText.b2a24ee1')}</option>
+                <option value="noindex, follow">{t('uiText.95c234ff')}</option>
+                <option value="noindex, nofollow">{t('uiText.e99264ac')}</option>
               </select>
             </div>
             <div className="md:col-span-2">
@@ -398,7 +433,7 @@ export default function MetaTagsGeneratorTool() {
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
-            
+
             {/* Favicon */}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -439,7 +474,7 @@ export default function MetaTagsGeneratorTool() {
                 type="text"
                 value={config.ogTitle}
                 onChange={(e) => updateConfig('ogTitle', e.target.value)}
-                placeholder={config.title || t("uiText.5cdca37b")}
+                placeholder={config.title || t('uiText.5cdca37b')}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
@@ -451,13 +486,14 @@ export default function MetaTagsGeneratorTool() {
                 value={config.ogDescription}
                 onChange={(e) => updateConfig('ogDescription', e.target.value)}
                 rows={2}
-                placeholder={config.description || t("uiText.1dca2c1f")}
+                placeholder={config.description || t('uiText.1dca2c1f')}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm resize-none"
               />
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                og:image <span className="text-gray-400">(1200x630 {t('tool.metaTags.recommended')})</span>
+                og:image{' '}
+                <span className="text-gray-400">(1200x630 {t('tool.metaTags.recommended')})</span>
               </label>
               <input
                 type="url"
@@ -476,10 +512,10 @@ export default function MetaTagsGeneratorTool() {
                 onChange={(e) => updateConfig('ogType', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               >
-                <option value="website">{t("uiText.fcefccca")}</option>
-                <option value="article">{t("uiText.17676759")}</option>
-                <option value="book">{t("uiText.c1948a38")}</option>
-                <option value="profile">{t("uiText.4674caee")}</option>
+                <option value="website">{t('uiText.fcefccca')}</option>
+                <option value="article">{t('uiText.17676759')}</option>
+                <option value="book">{t('uiText.c1948a38')}</option>
+                <option value="profile">{t('uiText.4674caee')}</option>
                 <option value="video.movie">video.movie</option>
                 <option value="music.song">music.song</option>
               </select>
@@ -492,7 +528,7 @@ export default function MetaTagsGeneratorTool() {
                 type="text"
                 value={config.ogSiteName}
                 onChange={(e) => updateConfig('ogSiteName', e.target.value)}
-                placeholder={t("uiText.e0296fd6")}
+                placeholder={t('uiText.e0296fd6')}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
@@ -510,10 +546,10 @@ export default function MetaTagsGeneratorTool() {
                 onChange={(e) => updateConfig('twitterCard', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               >
-                <option value="summary">{t("uiText.10a44713")}</option>
-                <option value="summary_large_image">{t("uiText.92db9731")}</option>
-                <option value="app">{t("uiText.1f6a832c")}</option>
-                <option value="player">{t("uiText.2c99c300")}</option>
+                <option value="summary">{t('uiText.10a44713')}</option>
+                <option value="summary_large_image">{t('uiText.92db9731')}</option>
+                <option value="app">{t('uiText.1f6a832c')}</option>
+                <option value="player">{t('uiText.2c99c300')}</option>
               </select>
             </div>
             <div>
@@ -524,7 +560,7 @@ export default function MetaTagsGeneratorTool() {
                 type="text"
                 value={config.twitterSite}
                 onChange={(e) => updateConfig('twitterSite', e.target.value)}
-                placeholder={t("uiText.49739e07")}
+                placeholder={t('uiText.49739e07')}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
@@ -536,7 +572,7 @@ export default function MetaTagsGeneratorTool() {
                 type="text"
                 value={config.twitterCreator}
                 onChange={(e) => updateConfig('twitterCreator', e.target.value)}
-                placeholder={t("uiText.4fea9530")}
+                placeholder={t('uiText.4fea9530')}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
@@ -548,7 +584,7 @@ export default function MetaTagsGeneratorTool() {
                 type="text"
                 value={config.twitterTitle}
                 onChange={(e) => updateConfig('twitterTitle', e.target.value)}
-                placeholder={config.title || t("uiText.266c13aa")}
+                placeholder={config.title || t('uiText.266c13aa')}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
@@ -560,7 +596,7 @@ export default function MetaTagsGeneratorTool() {
                 value={config.twitterDescription}
                 onChange={(e) => updateConfig('twitterDescription', e.target.value)}
                 rows={2}
-                placeholder={config.description || t("uiText.ec002d46")}
+                placeholder={config.description || t('uiText.ec002d46')}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm resize-none"
               />
             </div>
@@ -583,29 +619,32 @@ export default function MetaTagsGeneratorTool() {
           <>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {t("uiText.7a36c8c1")}</label>
+                {t('uiText.7a36c8c1')}
+              </label>
               <input
                 type="text"
                 value={config.linkedinTitle}
                 onChange={(e) => updateConfig('linkedinTitle', e.target.value)}
-                placeholder={config.title || t("uiText.7a36c8c1")}
+                placeholder={config.title || t('uiText.7a36c8c1')}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {t("uiText.d2f096e1")}</label>
+                {t('uiText.d2f096e1')}
+              </label>
               <textarea
                 value={config.linkedinDescription}
                 onChange={(e) => updateConfig('linkedinDescription', e.target.value)}
                 rows={2}
-                placeholder={config.description || t("uiText.d2f096e1")}
+                placeholder={config.description || t('uiText.d2f096e1')}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm resize-none"
               />
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {t("uiText.767366b2")}</label>
+                {t('uiText.767366b2')}
+              </label>
               <input
                 type="url"
                 value={config.linkedinImage}
@@ -616,7 +655,8 @@ export default function MetaTagsGeneratorTool() {
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {t("uiText.91833986")}</label>
+                {t('uiText.91833986')}
+              </label>
               <input
                 type="url"
                 value={config.linkedinUrl}
@@ -639,56 +679,61 @@ export default function MetaTagsGeneratorTool() {
                   className="w-4 h-4 text-primary-600 rounded border-gray-300 dark:border-gray-600"
                 />
                 <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {t("uiText.6ff3a51b")}</span>
+                  {t('uiText.6ff3a51b')}
+                </span>
               </label>
             </div>
 
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {t("tool.metaTags.schemaType")}</label>
+                {t('tool.metaTags.schemaType')}
+              </label>
               <select
                 value={config.jsonLdType}
                 onChange={(e) => updateConfig('jsonLdType', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               >
-                <option value="WebSite">{t("tool.metaTags.schemaWebSite")}</option>
-                <option value="WebPage">{t("tool.metaTags.schemaWebPage")}</option>
-                <option value="Article">{t("tool.metaTags.schemaArticle")}</option>
-                <option value="BlogPosting">{t("tool.metaTags.schemaBlogPosting")}</option>
-                <option value="Organization">{t("tool.metaTags.schemaOrganization")}</option>
-                <option value="Person">{t("tool.metaTags.schemaPerson")}</option>
-                <option value="Product">{t("tool.metaTags.schemaProduct")}</option>
-                <option value="LocalBusiness">{t("tool.metaTags.schemaLocalBusiness")}</option>
+                <option value="WebSite">{t('tool.metaTags.schemaWebSite')}</option>
+                <option value="WebPage">{t('tool.metaTags.schemaWebPage')}</option>
+                <option value="Article">{t('tool.metaTags.schemaArticle')}</option>
+                <option value="BlogPosting">{t('tool.metaTags.schemaBlogPosting')}</option>
+                <option value="Organization">{t('tool.metaTags.schemaOrganization')}</option>
+                <option value="Person">{t('tool.metaTags.schemaPerson')}</option>
+                <option value="Product">{t('tool.metaTags.schemaProduct')}</option>
+                <option value="LocalBusiness">{t('tool.metaTags.schemaLocalBusiness')}</option>
               </select>
             </div>
 
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {t("contact.name")}</label>
+                {t('contact.name')}
+              </label>
               <input
                 type="text"
                 value={config.jsonLdName}
                 onChange={(e) => updateConfig('jsonLdName', e.target.value)}
-                placeholder={config.title || t("uiText.35b99844")}
+                placeholder={config.title || t('uiText.35b99844')}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm"
               />
             </div>
 
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {t("tool.metaTags.description")}</label>
+                {t('tool.metaTags.description')}
+              </label>
               <textarea
                 value={config.jsonLdDescription}
                 onChange={(e) => updateConfig('jsonLdDescription', e.target.value)}
                 rows={2}
-                placeholder={config.description || t("uiText.b9ea25dc")}
+                placeholder={config.description || t('uiText.b9ea25dc')}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-sm resize-none"
               />
             </div>
 
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                {t("uiText.590ca79a")}</label>
+                {t('uiText.590ca79a')}
+              </label>
               <input
                 type="url"
                 value={config.jsonLdImage}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useLanguage } from '@/context/LanguageContext';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Upload, Download, ArrowUp, ArrowDown, Trash2, FileCheck, Layers } from 'lucide-react';
 import { PDFDocument } from 'pdf-lib';
 import {
@@ -23,6 +23,27 @@ export default function ImagesToPdfTool() {
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const pdfUrlRef = useRef<string | null>(null);
+  const isMountedRef = useRef(true);
+
+  const replacePdfUrl = (nextUrl: string | null) => {
+    if (pdfUrlRef.current && pdfUrlRef.current !== nextUrl) {
+      URL.revokeObjectURL(pdfUrlRef.current);
+    }
+    pdfUrlRef.current = nextUrl;
+    setPdfUrl(nextUrl);
+  };
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      if (pdfUrlRef.current) {
+        URL.revokeObjectURL(pdfUrlRef.current);
+        pdfUrlRef.current = null;
+      }
+    };
+  }, []);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -32,9 +53,11 @@ export default function ImagesToPdfTool() {
       const file = files[i];
       const reader = new FileReader();
       reader.onload = (event) => {
+        if (!isMountedRef.current) return;
         const dataUrl = event.target?.result as string;
         const img = new Image();
         img.onload = () => {
+          if (!isMountedRef.current) return;
           setImages((prev) => [
             ...prev,
             {
@@ -45,7 +68,7 @@ export default function ImagesToPdfTool() {
               height: img.height,
             },
           ]);
-          setPdfUrl(null);
+          replacePdfUrl(null);
         };
         img.src = dataUrl;
       };
@@ -56,18 +79,18 @@ export default function ImagesToPdfTool() {
   const moveUp = (index: number) => {
     if (index === 0) return;
     setImages(reorderPdfList(images, index, index - 1));
-    setPdfUrl(null);
+    replacePdfUrl(null);
   };
 
   const moveDown = (index: number) => {
     if (index === images.length - 1) return;
     setImages(reorderPdfList(images, index, index + 1));
-    setPdfUrl(null);
+    replacePdfUrl(null);
   };
 
   const removeImage = (id: string) => {
     setImages(images.filter((img) => img.id !== id));
-    setPdfUrl(null);
+    replacePdfUrl(null);
   };
 
   const handleGeneratePdf = async () => {
@@ -99,24 +122,22 @@ export default function ImagesToPdfTool() {
           embeddedImage = await pdfDoc.embedJpg(jpegDataUrl);
         }
 
-        const { width: pageW, height: pageH, marginPt } = getPageDimensions(
-          pageFormat,
-          orientation,
-          item.width,
-          item.height,
-          margin
-        );
+        const {
+          width: pageW,
+          height: pageH,
+          marginPt,
+        } = getPageDimensions(pageFormat, orientation, item.width, item.height, margin);
 
         const page = pdfDoc.addPage([pageW, pageH]);
         const availW = pageW - marginPt * 2;
         const availH = pageH - marginPt * 2;
 
-        const { width: drawW, height: drawH, x, y } = calculateFittedImageSize(
-          item.width,
-          item.height,
-          availW,
-          availH
-        );
+        const {
+          width: drawW,
+          height: drawH,
+          x,
+          y,
+        } = calculateFittedImageSize(item.width, item.height, availW, availH);
 
         page.drawImage(embeddedImage, {
           x: marginPt + x,
@@ -127,12 +148,15 @@ export default function ImagesToPdfTool() {
       }
 
       const pdfBytes = await pdfDoc.save();
+      if (!isMountedRef.current) return;
       const blob = new Blob([pdfBytes as any], { type: 'application/pdf' });
-      setPdfUrl(URL.createObjectURL(blob));
+      replacePdfUrl(URL.createObjectURL(blob));
     } catch (err) {
       console.error('PDF Generation failed:', err);
     } finally {
-      setIsGenerating(false);
+      if (isMountedRef.current) {
+        setIsGenerating(false);
+      }
     }
   };
 
@@ -164,9 +188,9 @@ export default function ImagesToPdfTool() {
         </div>
         <div>
           <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200">
-            {t("uiText.be704cf2")}</h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
-            {t("uiText.63d9fd1b")}</p>
+            {t('uiText.be704cf2')}
+          </h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400">{t('uiText.63d9fd1b')}</p>
         </div>
       </div>
 
@@ -176,43 +200,46 @@ export default function ImagesToPdfTool() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-5 rounded-2xl bg-slate-50/80 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5">
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                {t("uiText.58f382eb")}</label>
+                {t('uiText.58f382eb')}
+              </label>
               <select
                 value={pageFormat}
                 onChange={(e) => setPageFormat(e.target.value as PageFormat)}
                 className="w-full rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
               >
-                <option value="a4">{t("uiText.e27e4f49")}</option>
-                <option value="letter">{t("uiText.758e86ff")}</option>
-                <option value="fit">{t("uiText.696e2971")}</option>
+                <option value="a4">{t('uiText.e27e4f49')}</option>
+                <option value="letter">{t('uiText.758e86ff')}</option>
+                <option value="fit">{t('uiText.696e2971')}</option>
               </select>
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                {t("uiText.05744c84")}</label>
+                {t('uiText.05744c84')}
+              </label>
               <select
                 value={orientation}
                 onChange={(e) => setOrientation(e.target.value as PageOrientation)}
                 className="w-full rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
               >
-                <option value="auto">{t("uiText.1a96dccb")}</option>
-                <option value="portrait">{t("uiText.29092ffa")}</option>
-                <option value="landscape">{t("uiText.2bfbe892")}</option>
+                <option value="auto">{t('uiText.1a96dccb')}</option>
+                <option value="portrait">{t('uiText.29092ffa')}</option>
+                <option value="landscape">{t('uiText.2bfbe892')}</option>
               </select>
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                {t("uiText.b5e3e838")}</label>
+                {t('uiText.b5e3e838')}
+              </label>
               <select
                 value={margin}
                 onChange={(e) => setMargin(e.target.value as MarginOption)}
                 className="w-full rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-xs text-slate-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
               >
-                <option value="none">{t("uiText.7ee9aa6b")}</option>
-                <option value="small">{t("uiText.7ee38574")}</option>
-                <option value="large">{t("uiText.bfadde46")}</option>
+                <option value="none">{t('uiText.7ee9aa6b')}</option>
+                <option value="small">{t('uiText.7ee38574')}</option>
+                <option value="large">{t('uiText.bfadde46')}</option>
               </select>
             </div>
           </div>
@@ -225,7 +252,10 @@ export default function ImagesToPdfTool() {
                 className="group relative rounded-2xl border border-slate-200 bg-white p-2.5 shadow-sm dark:border-white/10 dark:bg-slate-900 flex flex-col justify-between"
               >
                 <div className="flex justify-between items-center pb-1">
-                  <span className="text-[10px] font-bold text-slate-400">{t("uiText.e83d9196") + ' '}{idx + 1}</span>
+                  <span className="text-[10px] font-bold text-slate-400">
+                    {t('uiText.e83d9196') + ' '}
+                    {idx + 1}
+                  </span>
                   <button
                     onClick={() => removeImage(img.id)}
                     className="text-red-400 hover:text-red-500 p-0.5"
@@ -235,11 +265,7 @@ export default function ImagesToPdfTool() {
                 </div>
 
                 <div className="h-28 flex items-center justify-center bg-slate-50 dark:bg-slate-950 rounded-xl overflow-hidden my-1">
-                  <img
-                    src={img.dataUrl}
-                    alt={img.name}
-                    className="max-h-full object-contain"
-                  />
+                  <img src={img.dataUrl} alt={img.name} className="max-h-full object-contain" />
                 </div>
 
                 <div className="flex items-center justify-between pt-1">
@@ -268,7 +294,7 @@ export default function ImagesToPdfTool() {
           {/* Action Footer */}
           <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-slate-50/80 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5">
             <span className="text-xs text-slate-600 dark:text-slate-400">
-              {t("uiText.4cb981a5")} {images.length}
+              {t('uiText.4cb981a5')} {images.length}
             </span>
 
             <div className="flex items-center gap-3">
@@ -278,7 +304,7 @@ export default function ImagesToPdfTool() {
                 className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-500 transition shadow-sm disabled:opacity-50"
               >
                 <FileCheck className="h-4 w-4" />
-                {isGenerating ? t("uiText.174893f3") : t("uiText.446e879f")}
+                {isGenerating ? t('uiText.174893f3') : t('uiText.446e879f')}
               </button>
 
               {pdfUrl && (
@@ -286,7 +312,8 @@ export default function ImagesToPdfTool() {
                   onClick={handleDownload}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-700 text-white text-xs font-bold hover:bg-emerald-800 transition shadow-sm"
                 >
-                  <Download className="h-4 w-4" /> {t("uiText.643bf50b")}</button>
+                  <Download className="h-4 w-4" /> {t('uiText.643bf50b')}
+                </button>
               )}
             </div>
           </div>

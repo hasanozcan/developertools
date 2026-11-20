@@ -125,11 +125,6 @@ export const toolSources: Record<string, ToolSource[]> = {
     { name: 'Radix UI Colors System', url: 'https://www.radix-ui.com/colors' },
     { name: 'MDN CSS Custom Properties', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties' },
   ],
-  'svg-to-webp': [
-    { name: 'W3C SVG 2 Specification', url: 'https://www.w3.org/TR/SVG2/' },
-    { name: 'WebP Container Specification', url: 'https://developers.google.com/speed/webp/docs/riff_container' },
-    { name: 'MDN HTMLCanvasElement.toDataURL', url: 'https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL' },
-  ],
   'har-to-k6': [
     { name: 'Grafana k6 Documentation', url: 'https://grafana.com/docs/k6/latest/' },
     { name: 'W3C HAR 1.2 Specification', url: 'https://w3c.github.io/web-performance/specs/HAR/Overview.html' },
@@ -1514,19 +1509,6 @@ export const toolSources: Record<string, ToolSource[]> = {
     { name: 'RFC 1321 MD5 Specification', url: 'https://www.rfc-editor.org/rfc/rfc1321.html' },
     { name: 'MDN SubtleCrypto.digest', url: 'https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest' },
   ],
-  'video-to-gif': [
-    { name: 'W3C GIF89a Specification', url: 'https://www.w3.org/Graphics/GIF/spec-gif89a.txt' },
-    { name: 'MDN Media Formats for HTML Audio and Video', url: 'https://developer.mozilla.org/en-US/docs/Web/Media/Formats' },
-    { name: 'MDN HTMLVideoElement', url: 'https://developer.mozilla.org/en-US/docs/Web/API/HTMLVideoElement' },
-  ],
-  'pdf-to-image': [
-    { name: 'PDF 2.0 Specification (ISO 32000-2)', url: 'https://pdfa.org/resource/iso-32000-2/' },
-    { name: 'MDN HTMLCanvasElement.toDataURL', url: 'https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL' },
-  ],
-  'audio-converter': [
-    { name: 'MDN Web Audio API', url: 'https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API' },
-    { name: 'MDN Audio Formats Guide', url: 'https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Audio_codecs' },
-  ],
   'swagger-to-typescript': [
     { name: 'OpenAPI Specification v3.1.0', url: 'https://spec.openapis.org/oas/v3.1.0' },
     { name: 'OpenAPI Specification v2.0 (Swagger)', url: 'https://swagger.io/specification/v2/' },
@@ -1722,11 +1704,6 @@ export const toolSources: Record<string, ToolSource[]> = {
     { name: 'Tailwind CSS Grid Template Columns', url: 'https://tailwindcss.com/docs/grid-template-columns' },
     { name: 'MDN CSS Grid Layout', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout' },
   ],
-  'dockerfile-ai-optimized-generator': [
-    { name: 'Dockerfile Reference', url: 'https://docs.docker.com/reference/dockerfile/' },
-    { name: 'Docker Multi-Stage Builds', url: 'https://docs.docker.com/build/building/multi-stage/' },
-    { name: 'Docker Security Best Practices', url: 'https://docs.docker.com/build/building/best-practices/' },
-  ],
   'kubernetes-deployment-generator': [
     { name: 'Kubernetes Deployments', url: 'https://kubernetes.io/docs/concepts/workloads/controllers/deployment/' },
     { name: 'Kubernetes Services', url: 'https://kubernetes.io/docs/concepts/services-networking/service/' },
@@ -1738,10 +1715,6 @@ export const toolSources: Record<string, ToolSource[]> = {
   'helm-chart-yaml-generator': [
     { name: 'Helm Charts Documentation', url: 'https://helm.sh/docs/topics/charts/' },
     { name: 'Helm Values Files', url: 'https://helm.sh/docs/chart_template_guide/values_files/' },
-  ],
-  'gitlab-ci-pipeline-builder': [
-    { name: 'GitLab CI/CD YAML Syntax', url: 'https://docs.gitlab.com/ee/ci/yaml/' },
-    { name: 'GitLab CI/CD Caching', url: 'https://docs.gitlab.com/ee/ci/caching/' },
   ],
   'github-issue-pr-template-generator': [
     { name: 'GitHub Issue and Pull Request Templates', url: 'https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/about-issue-and-pull-request-templates' },
@@ -1854,10 +1827,6 @@ export const toolSources: Record<string, ToolSource[]> = {
     { name: 'Anthropic Token Counting & Context Windows', url: 'https://platform.claude.com/docs/en/build-with-claude/token-counting' },
     { name: 'OpenAI Context Window & Models', url: 'https://platform.openai.com/docs/models' },
   ],
-  'embedding-token-cost-estimator': [
-    { name: 'OpenAI Embeddings Pricing & Models', url: 'https://platform.openai.com/docs/guides/embeddings' },
-    { name: 'Voyage AI Embeddings Documentation', url: 'https://docs.voyageai.com/docs/embeddings' },
-  ],
   'webhook-payload-simulator': [
     { name: 'Stripe Webhook Events', url: 'https://docs.stripe.com/webhooks' },
     { name: 'GitHub Webhook Events & Payloads', url: 'https://docs.github.com/en/webhooks/webhook-events-and-payloads' },
@@ -1866,10 +1835,6 @@ export const toolSources: Record<string, ToolSource[]> = {
   'network-port-reference': [
     { name: 'IANA Service Name and Port Number Registry', url: 'https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml' },
     { name: 'RFC 6335 IANA Port Assignment Procedures', url: 'https://www.rfc-editor.org/rfc/rfc6335.html' },
-  ],
-  'ssl-tls-handshake-simulator': [
-    { name: 'RFC 8446 The Transport Layer Security (TLS) 1.3', url: 'https://www.rfc-editor.org/rfc/rfc8446.html' },
-    { name: 'RFC 5246 TLS Protocol Version 1.2', url: 'https://www.rfc-editor.org/rfc/rfc5246.html' },
   ],
   'http2-http3-frame-inspector': [
     { name: 'RFC 9113 HTTP/2 Specification', url: 'https://www.rfc-editor.org/rfc/rfc9113.html' },
@@ -1938,11 +1903,6 @@ export const toolSources: Record<string, ToolSource[]> = {
     { name: 'RFC 8018 PKCS #5 PBKDF2', url: 'https://www.rfc-editor.org/rfc/rfc8018.html' },
     { name: 'NIST SP 800-132 Password-Based Key Derivation', url: 'https://csrc.nist.gov/pubs/sp/800/132/final' },
     { name: 'MDN SubtleCrypto.deriveBits', url: 'https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveBits' },
-  ],
-  'hmac-sha384-sha512-calculator': [
-    { name: 'RFC 4231 HMAC-SHA-224/256/384/512', url: 'https://www.rfc-editor.org/rfc/rfc4231.html' },
-    { name: 'RFC 2104 HMAC Specification', url: 'https://www.rfc-editor.org/rfc/rfc2104.html' },
-    { name: 'MDN SubtleCrypto.sign', url: 'https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/sign' },
   ],
   'ethereum-eip191-signature-verifier': [
     { name: 'Ethereum EIP-191 Signed Data Standard', url: 'https://eips.ethereum.org/EIPS/eip-191' },

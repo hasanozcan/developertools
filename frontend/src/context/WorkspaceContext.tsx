@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { isToolSlug } from '@/lib/api';
 
 const STORAGE_KEY = 'devstools-workspaces-v1';
 
@@ -29,6 +30,65 @@ interface WorkspaceContextValue extends WorkspaceState {
 const DEFAULT_WORKSPACE: ToolWorkspace = { id: 'default', name: 'My Workspace', toolSlugs: [] };
 const WorkspaceContext = createContext<WorkspaceContextValue | undefined>(undefined);
 
+function createWorkspaceId(): string {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return `workspace-${crypto.randomUUID()}`;
+  }
+  return `workspace-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function sanitizeToolSlugs(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return [
+    ...new Set(
+      value.filter((slug): slug is string => typeof slug === 'string' && isToolSlug(slug)),
+    ),
+  ];
+}
+
+function sanitizeWorkspace(raw: unknown): ToolWorkspace | null {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+  const candidate = raw as Record<string, unknown>;
+  if (
+    typeof candidate.id !== 'string' ||
+    candidate.id.trim().length === 0 ||
+    typeof candidate.name !== 'string' ||
+    candidate.name.trim().length === 0 ||
+    !Array.isArray(candidate.toolSlugs)
+  ) {
+    return null;
+  }
+  return {
+    id: candidate.id.trim().slice(0, 80),
+    name: candidate.name.trim().slice(0, 80),
+    toolSlugs: sanitizeToolSlugs(candidate.toolSlugs),
+  };
+}
+
+function sanitizeWorkspaceState(raw: unknown): WorkspaceState | null {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+  const candidate = raw as Record<string, unknown>;
+  if (!Array.isArray(candidate.workspaces)) return null;
+
+  const seenIds = new Set<string>();
+  const workspaces: ToolWorkspace[] = [];
+  for (const entry of candidate.workspaces) {
+    const workspace = sanitizeWorkspace(entry);
+    if (!workspace || seenIds.has(workspace.id)) continue;
+    seenIds.add(workspace.id);
+    workspaces.push(workspace);
+  }
+  if (workspaces.length === 0) return null;
+
+  const activeId =
+    typeof candidate.activeWorkspaceId === 'string' &&
+    seenIds.has(candidate.activeWorkspaceId.trim())
+      ? candidate.activeWorkspaceId.trim()
+      : workspaces[0].id;
+
+  return { activeWorkspaceId: activeId, workspaces };
+}
+
 export function WorkspaceProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<WorkspaceState>({
     activeWorkspaceId: DEFAULT_WORKSPACE.id,
@@ -40,8 +100,9 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
       if (raw) {
-        const parsed = JSON.parse(raw) as WorkspaceState;
-        if (Array.isArray(parsed.workspaces) && parsed.workspaces.length > 0) setState(parsed);
+        const parsed: unknown = JSON.parse(raw);
+        const sanitized = sanitizeWorkspaceState(parsed);
+        if (sanitized) setState(sanitized);
       }
     } catch {
       // Ignore malformed or unavailable local storage.
@@ -73,7 +134,7 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
         setState((current) => {
           const nextIndex = current.workspaces.length + 1;
           const workspace: ToolWorkspace = {
-            id: `workspace-${Date.now()}`,
+            id: createWorkspaceId(),
             name: `Workspace ${nextIndex}`,
             toolSlugs: [],
           };
@@ -113,19 +174,24 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
         anchor.href = url;
         anchor.download = `${activeWorkspace.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'workspace'}.devstools.json`;
         anchor.click();
-        URL.revokeObjectURL(url);
+        window.setTimeout(() => URL.revokeObjectURL(url), 1000);
       },
       importWorkspace: (content) => {
         try {
-          const parsed = JSON.parse(content) as Partial<ToolWorkspace>;
-          if (!parsed.name || !Array.isArray(parsed.toolSlugs)) return false;
-          const toolSlugs = parsed.toolSlugs.filter(
-            (slug): slug is string => typeof slug === 'string' && slug.length > 0,
-          );
+          const parsed: unknown = JSON.parse(content);
+          if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return false;
+          const candidate = parsed as Record<string, unknown>;
+          if (
+            typeof candidate.name !== 'string' ||
+            candidate.name.trim().length === 0 ||
+            !Array.isArray(candidate.toolSlugs)
+          ) {
+            return false;
+          }
           const workspace: ToolWorkspace = {
-            id: `workspace-${Date.now()}`,
-            name: String(parsed.name).slice(0, 80),
-            toolSlugs: [...new Set(toolSlugs)],
+            id: createWorkspaceId(),
+            name: candidate.name.trim().slice(0, 80),
+            toolSlugs: sanitizeToolSlugs(candidate.toolSlugs),
           };
           setState((current) => ({
             activeWorkspaceId: workspace.id,

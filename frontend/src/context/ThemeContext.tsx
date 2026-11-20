@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState, ReactNode } from 'react';
 
 type Theme = 'light' | 'dark' | 'system';
 
@@ -12,56 +12,64 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+function isValidTheme(value: unknown): value is Theme {
+  return value === 'light' || value === 'dark' || value === 'system';
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === 'undefined') return 'system';
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
-    return savedTheme || 'system';
-  });
+  // Always initialize identically on server and first client render to avoid hydration mismatches.
+  const [theme, setThemeState] = useState<Theme>('system');
   const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light');
   const [isInitialized, setIsInitialized] = useState(false);
 
-  useEffect(() => {
-    if (isInitialized) return;
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
-    if (savedTheme && savedTheme !== theme) {
-      setTheme(savedTheme);
+  const setTheme = useCallback((nextTheme: Theme) => {
+    if (isValidTheme(nextTheme)) {
+      setThemeState(nextTheme);
     }
-    setIsInitialized(true);
-  }, [isInitialized, theme]);
+  }, []);
 
   useEffect(() => {
+    try {
+      const savedTheme = window.localStorage.getItem('theme');
+      if (isValidTheme(savedTheme)) {
+        setThemeState(savedTheme);
+      }
+    } catch {
+      // Ignore unavailable localStorage.
+    } finally {
+      setIsInitialized(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isInitialized) return;
     const root = window.document.documentElement;
 
     let resolved: 'light' | 'dark';
 
     if (theme === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light';
-      resolved = systemTheme;
+      const prefersDark =
+        typeof window.matchMedia === 'function' &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches;
+      resolved = prefersDark ? 'dark' : 'light';
     } else {
       resolved = theme;
     }
 
-    if (resolved === 'dark') {
-      root.classList.add('dark');
-      root.classList.remove('light');
-    } else {
-      root.classList.add('light');
-      root.classList.remove('dark');
-    }
+    root.classList.remove('light', 'dark');
+    root.classList.add(resolved);
     setResolvedTheme(resolved);
-    
-    // Only save to localStorage after initialization
-    if (isInitialized) {
-      localStorage.setItem('theme', theme);
+
+    try {
+      window.localStorage.setItem('theme', theme);
+    } catch {
+      // Keep theme working in memory when storage is unavailable.
     }
   }, [theme, isInitialized]);
 
   // Listen for system theme changes
   useEffect(() => {
-    if (theme !== 'system') return;
+    if (theme !== 'system' || typeof window.matchMedia !== 'function') return;
 
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = (e: MediaQueryListEvent) => {

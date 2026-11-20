@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Download, Image as ImageIcon, Upload, RefreshCw } from 'lucide-react';
 import { sanitizeSvg, extractSvgDimensions, type RasterFormat } from '@/lib/svgToRaster';
 import SvgPreview from './SvgPreview';
@@ -26,10 +26,37 @@ export default function SvgToPngConverterTool() {
   const [scale, setScale] = useState(2); // 1x, 2x, 4x
   const [bgColor, setBgColor] = useState('transparent');
   const [isRendering, setIsRendering] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const renderBlobUrlRef = useRef<string | null>(null);
+  const isMountedRef = useRef(true);
+
+  const revokeRenderBlobUrl = (targetUrl?: string) => {
+    if (targetUrl) {
+      URL.revokeObjectURL(targetUrl);
+      if (renderBlobUrlRef.current === targetUrl) {
+        renderBlobUrlRef.current = null;
+      }
+      return;
+    }
+    if (renderBlobUrlRef.current) {
+      URL.revokeObjectURL(renderBlobUrlRef.current);
+      renderBlobUrlRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      revokeRenderBlobUrl();
+    };
+  }, []);
 
   const handleConvertAndDownload = () => {
+    setError(null);
     setIsRendering(true);
+    revokeRenderBlobUrl();
     try {
       const sanitized = sanitizeSvg(svgInput);
       const { width, height } = extractSvgDimensions(sanitized);
@@ -44,14 +71,16 @@ export default function SvgToPngConverterTool() {
       const img = new Image();
       const svgBlob = new Blob([sanitized], { type: 'image/svg+xml;charset=utf-8' });
       const url = URL.createObjectURL(svgBlob);
+      renderBlobUrlRef.current = url;
 
       img.onload = () => {
+        revokeRenderBlobUrl(url);
+        if (!isMountedRef.current) return;
         if (bgColor !== 'transparent') {
           ctx.fillStyle = bgColor;
           ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        URL.revokeObjectURL(url);
 
         const ext = format === 'image/png' ? 'png' : format === 'image/jpeg' ? 'jpg' : 'webp';
         const dataUrl = canvas.toDataURL(format, 0.95);
@@ -64,14 +93,18 @@ export default function SvgToPngConverterTool() {
       };
 
       img.onerror = () => {
+        revokeRenderBlobUrl(url);
+        if (!isMountedRef.current) return;
         setIsRendering(false);
-        alert('Failed to parse SVG for rendering.');
+        setError('Failed to parse SVG for rendering.');
       };
 
       img.src = url;
     } catch {
+      revokeRenderBlobUrl();
+      if (!isMountedRef.current) return;
       setIsRendering(false);
-      alert('Invalid SVG markup.');
+      setError('Invalid SVG markup.');
     }
   };
 
@@ -88,6 +121,14 @@ export default function SvgToPngConverterTool() {
   return (
     <div className="space-y-6">
       <canvas ref={canvasRef} className="hidden" />
+      {error && (
+        <div
+          role="alert"
+          className="p-4 rounded-xl border border-red-200 bg-red-50 text-xs text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-300"
+        >
+          {error}
+        </div>
+      )}
 
       {/* Configuration Settings */}
       <div className="surface-card rounded-2xl p-6 space-y-4">
@@ -101,43 +142,49 @@ export default function SvgToPngConverterTool() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {/* Format */}
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.50802e1b")}</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">
+              {t('uiText.50802e1b')}
+            </label>
             <select
               value={format}
               onChange={(e) => setFormat(e.target.value as RasterFormat)}
               className="w-full px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
             >
-              <option value="image/png">{t("uiText.ce19e3cb")}</option>
-              <option value="image/jpeg">{t("uiText.5418ca9d")}</option>
-              <option value="image/webp">{t("uiText.e4603de4")}</option>
+              <option value="image/png">{t('uiText.ce19e3cb')}</option>
+              <option value="image/jpeg">{t('uiText.5418ca9d')}</option>
+              <option value="image/webp">{t('uiText.e4603de4')}</option>
             </select>
           </div>
 
           {/* Scale */}
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.176d23a9")}</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">
+              {t('uiText.176d23a9')}
+            </label>
             <select
               value={scale}
               onChange={(e) => setScale(parseInt(e.target.value, 10))}
               className="w-full px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
             >
-              <option value="1">{t("uiText.8185c559")}</option>
-              <option value="2">{t("uiText.75de06a7")}</option>
-              <option value="4">{t("uiText.c60cd0db")}</option>
+              <option value="1">{t('uiText.8185c559')}</option>
+              <option value="2">{t('uiText.75de06a7')}</option>
+              <option value="4">{t('uiText.c60cd0db')}</option>
             </select>
           </div>
 
           {/* Background Color */}
           <div>
-            <label className="text-xs font-bold text-slate-500 block mb-1">{t("uiText.8ab53a3e")}</label>
+            <label className="text-xs font-bold text-slate-500 block mb-1">
+              {t('uiText.8ab53a3e')}
+            </label>
             <select
               value={bgColor}
               onChange={(e) => setBgColor(e.target.value)}
               className="w-full px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"
             >
-              <option value="transparent">{t("uiText.3d396206")}</option>
-              <option value="#ffffff">{t("uiText.2202d932")}</option>
-              <option value="#000000">{t("uiText.7c3e1cf4")}</option>
+              <option value="transparent">{t('uiText.3d396206')}</option>
+              <option value="#ffffff">{t('uiText.2202d932')}</option>
+              <option value="#000000">{t('uiText.7c3e1cf4')}</option>
             </select>
           </div>
         </div>
@@ -149,11 +196,12 @@ export default function SvgToPngConverterTool() {
         <div className="surface-card rounded-2xl p-6 flex flex-col space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              {t("uiText.a9cc0ea5")}</span>
+              {t('uiText.a9cc0ea5')}
+            </span>
             <div className="flex items-center gap-2">
               <label className="cursor-pointer inline-flex items-center gap-1 text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">
                 <Upload className="w-3.5 h-3.5" />
-                <span>{t("uiText.8da7500c")}</span>
+                <span>{t('uiText.8da7500c')}</span>
                 <input type="file" accept=".svg" onChange={handleFileUpload} className="hidden" />
               </label>
             </div>
@@ -169,11 +217,10 @@ export default function SvgToPngConverterTool() {
         {/* Live Preview & Convert Action */}
         <div className="surface-card rounded-2xl p-6 flex flex-col justify-between space-y-4">
           <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            {t("uiText.1bce2112")}</span>
+            {t('uiText.1bce2112')}
+          </span>
 
-          <div
-            className="flex-1 flex items-center justify-center p-6 rounded-xl border border-dashed border-slate-200 dark:border-white/10 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:16px_16px] overflow-hidden min-h-[220px]"
-          >
+          <div className="flex-1 flex items-center justify-center p-6 rounded-xl border border-dashed border-slate-200 dark:border-white/10 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:16px_16px] overflow-hidden min-h-[220px]">
             <SvgPreview svg={svgInput} alt={t('tool.svg.preview')} />
           </div>
 
@@ -185,14 +232,19 @@ export default function SvgToPngConverterTool() {
             {isRendering ? (
               <>
                 <RefreshCw className="w-4 h-4 animate-spin" />
-                <span>{t("uiText.2618b1c5")}</span>
+                <span>{t('uiText.2618b1c5')}</span>
               </>
             ) : (
               <>
                 <Download className="w-4 h-4" />
                 <span>
-                  {t("uiText.f115afce")} {format === 'image/png' ? t("uiText.aceadefc") : format === 'image/jpeg' ? 'JPEG' : 'WebP'} (
-                  {scale}x)
+                  {t('uiText.f115afce')}{' '}
+                  {format === 'image/png'
+                    ? t('uiText.aceadefc')
+                    : format === 'image/jpeg'
+                      ? 'JPEG'
+                      : 'WebP'}{' '}
+                  ({scale}x)
                 </span>
               </>
             )}

@@ -15,12 +15,21 @@ export interface ContactMessage {
 }
 
 export type ContactValidationResult =
-  | { ok: true; value: ContactMessage }
-  | { ok: false; error: string };
+  { ok: true; value: ContactMessage } | { ok: false; error: string };
 
 const EMAIL_PATTERN = /^[^\s@<>(),:;\\[\]"]+@[^\s@<>(),:;\\[\]"]+\.[^\s@<>(),:;\\[\]"]+$/;
 const HEADER_CONTROL_PATTERN = /[\u0000-\u001f\u007f]/;
 const MESSAGE_CONTROL_PATTERN = /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/;
+
+export function isValidContactEmail(email: string): boolean {
+  const trimmed = email.trim();
+  return (
+    trimmed.length > 0 &&
+    trimmed.length <= CONTACT_FIELD_LIMITS.email &&
+    EMAIL_PATTERN.test(trimmed) &&
+    !HEADER_CONTROL_PATTERN.test(trimmed)
+  );
+}
 
 function escapeHtml(value: string): string {
   return value.replace(/[&<>"']/g, (character) => {
@@ -66,7 +75,7 @@ export function validateContactPayload(payload: unknown): ContactValidationResul
     }
   }
 
-  if (!EMAIL_PATTERN.test(value.email) || HEADER_CONTROL_PATTERN.test(value.email)) {
+  if (!isValidContactEmail(value.email)) {
     return { ok: false, error: 'Invalid email address' };
   }
 

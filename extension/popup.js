@@ -183,11 +183,26 @@ document.getElementById('btn-json-clear').addEventListener('click', () => {
 const b64Input = document.getElementById('b64-input');
 const b64Msg = document.getElementById('b64-msg');
 
+function utf8ToBase64(str) {
+  const bytes = new TextEncoder().encode(str);
+  let binary = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  }
+  return btoa(binary);
+}
+
+function base64ToUtf8(b64) {
+  const binary = atob(b64);
+  const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+  return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+}
+
 document.getElementById('btn-b64-encode').addEventListener('click', () => {
   try {
     const val = b64Input.value;
     if (!val) return;
-    b64Input.value = btoa(unescape(encodeURIComponent(val)));
+    b64Input.value = utf8ToBase64(val);
     showStatus(b64Msg, 'Encoded to Base64!', 'success');
   } catch (err) {
     showStatus(b64Msg, `Encoding error: ${err.message}`, 'error');
@@ -198,7 +213,7 @@ document.getElementById('btn-b64-decode').addEventListener('click', () => {
   try {
     const val = b64Input.value.trim();
     if (!val) return;
-    b64Input.value = decodeURIComponent(escape(atob(val)));
+    b64Input.value = base64ToUtf8(val);
     showStatus(b64Msg, 'Decoded from Base64!', 'success');
   } catch (err) {
     showStatus(b64Msg, 'Invalid Base64 string', 'error');
@@ -377,9 +392,13 @@ document.querySelectorAll('.copy-icon-btn').forEach((btn) => {
     const targetId = btn.getAttribute('data-target');
     const input = document.getElementById(targetId);
     if (input && input.value) {
-      navigator.clipboard.writeText(input.value);
-      btn.textContent = '✓';
-      setTimeout(() => (btn.textContent = '📋'), 1500);
+      navigator.clipboard
+        .writeText(input.value)
+        .then(() => {
+          btn.textContent = '✓';
+          setTimeout(() => (btn.textContent = '📋'), 1500);
+        })
+        .catch(() => {});
     }
   });
 });
@@ -397,11 +416,11 @@ setInterval(updateClock, 1000);
 updateClock();
 
 document.getElementById('btn-time-now-copy').addEventListener('click', () => {
-  navigator.clipboard.writeText(timeSecEl.textContent);
+  navigator.clipboard.writeText(timeSecEl.textContent).catch(() => {});
 });
 
 document.getElementById('btn-iso-now-copy').addEventListener('click', () => {
-  navigator.clipboard.writeText(timeIsoEl.textContent);
+  navigator.clipboard.writeText(timeIsoEl.textContent).catch(() => {});
 });
 
 // Utilities
@@ -415,9 +434,14 @@ function showStatus(el, msg, type) {
 
 function copyToClipboard(text, msgEl, successMsg) {
   if (!text) return;
-  navigator.clipboard.writeText(text).then(() => {
-    if (msgEl) showStatus(msgEl, successMsg, 'success');
-  });
+  navigator.clipboard
+    .writeText(text)
+    .then(() => {
+      if (msgEl) showStatus(msgEl, successMsg, 'success');
+    })
+    .catch(() => {
+      if (msgEl) showStatus(msgEl, 'Failed to copy to clipboard.', 'error');
+    });
 }
 
 // Minimal MD5 Implementation

@@ -157,10 +157,6 @@ const tools: Record<string, readonly [string, string]> = {
     'Shadcn UI Tema ve CSS Değişkeni Oluşturucu',
     'Shadcn UI ve Radix bileşenleri için özel renk paletleri ve CSS değişkenleri oluşturun.',
   ],
-  'svg-to-webp': [
-    'SVG - WebP Veri URI Dönüştürücü',
-    'SVG vektör grafiklerini yüksek performanslı Base64 veri URI biçiminde kodlayın.',
-  ],
   'har-to-k6': [
     'HAR - k6 Yük Testi Betiği Dönüştürücü',
     'HTTP Archive (HAR) tarayıcı ağ günlüklerini k6 performans testi betiklerine dönüştürün.',
@@ -1200,10 +1196,6 @@ const tools: Record<string, readonly [string, string]> = {
     'CSS Grid - Tailwind CSS Sınıfı Dönüştürücü',
     'CSS grid-template-columns ve gap stillerini Tailwind CSS Grid yardımcı sınıflarına dönüştürün.',
   ],
-  'dockerfile-ai-optimized-generator': [
-    'Çok Aşamalı Dockerfile Oluşturucu',
-    'Node, Python, Go ve Rust için güvenlik ayarları içeren, üretime uygun çok aşamalı Dockerfile dosyaları oluşturun.',
-  ],
   'kubernetes-deployment-generator': [
     'Kubernetes Deployment YAML Oluşturucu',
     'Üretim için Kubernetes Deployment, Service ve kaynak sınırı YAML bildirimleri oluşturun.',
@@ -1215,10 +1207,6 @@ const tools: Record<string, readonly [string, string]> = {
   'helm-chart-yaml-generator': [
     'Helm Chart ve Values Başlangıç Şablonu Oluşturucu',
     'Bulut için tasarlanmış Kubernetes uygulamalarına yönelik Helm Chart.yaml ve values.yaml başlangıç şablonları oluşturun.',
-  ],
-  'gitlab-ci-pipeline-builder': [
-    'GitLab CI/CD YAML İşlem Hattı Oluşturucu',
-    'Derleme, test ve önbellekleme içeren çok aşamalı .gitlab-ci.yml işlem hattı yapılandırmaları oluşturun.',
   ],
   'github-issue-pr-template-generator': [
     'GitHub Issue ve PR Şablonu Oluşturucu',
@@ -1328,10 +1316,6 @@ const tools: Record<string, readonly [string, string]> = {
     'LLM İstem Bağlam Penceresi İyileştirme Aracı',
     'Yorumları, docstring açıklamalarını ve fazla boşlukları kaldırarak istem token tüketimini azaltın.',
   ],
-  'embedding-token-cost-estimator': [
-    'Metin Gömme Token ve API Maliyeti Tahmin Aracı',
-    'OpenAI text-embedding-3 ve Voyage AI modellerinin vektör gömme token maliyetlerini hesaplayın.',
-  ],
   'webhook-payload-simulator': [
     'Örnek Webhook Olay Verisi Simülatörü',
     'Stripe, GitHub, Slack ve Shopify için yapay webhook JSON olay verileri oluşturun.',
@@ -1339,10 +1323,6 @@ const tools: Record<string, readonly [string, string]> = {
   'network-port-reference': [
     'TCP/UDP Port Numarası Başvuru Kaynağı',
     'Standart TCP ve UDP port numaralarını, hizmet atamalarını ve güvenlik notlarını arayın.',
-  ],
-  'ssl-tls-handshake-simulator': [
-    'TLS 1.2 ve TLS 1.3 Kriptografik El Sıkışma Simülatörü',
-    'TLS 1.2 (2-RTT) ve TLS 1.3 (1-RTT) kriptografik el sıkışma akışlarını simüle edin ve karşılaştırın.',
   ],
   'http2-http3-frame-inspector': [
     'HTTP/2 ve HTTP/3 QUIC Çerçeve İnceleyici',
@@ -1407,10 +1387,6 @@ const tools: Record<string, readonly [string, string]> = {
   'pbkdf2-key-derivation': [
     'PBKDF2 Anahtar Türetme Fonksiyonu Hesaplayıcı',
     'HMAC-SHA256 ve ayarlanabilir yineleme sayısıyla PBKDF2 kullanarak güvenli kriptografik anahtarlar türetin.',
-  ],
-  'hmac-sha384-sha512-calculator': [
-    'HMAC-SHA384 ve HMAC-SHA512 İmza Oluşturucu',
-    'SHA-384 ve SHA-512 özetleriyle anahtarlı mesaj doğrulama kodlarını (HMAC) hesaplayın.',
   ],
   'ethereum-eip191-signature-verifier': [
     'Ethereum EIP-191 Kişisel İmza Doğrulayıcı',

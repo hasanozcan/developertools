@@ -213,12 +213,16 @@ export default function ToolPageWrapper({
       className="mb-8 min-w-0"
       data-answer-first={answerFirst ? 'true' : undefined}
     >
-      <h2 className="mb-4 text-xl font-bold tracking-tight text-slate-950 dark:text-white">{section.heading}</h2>
+      <h2 className="mb-4 text-xl font-bold tracking-tight text-slate-950 dark:text-white">
+        {section.heading}
+      </h2>
       <div className="min-w-0 space-y-3 break-words leading-7 text-slate-700 dark:text-slate-300">
         {section.paragraphs?.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
-        {section.codeExamples?.map((example) => <CodeExample key={example.title} {...example} />)}
+        {section.codeExamples?.map((example) => (
+          <CodeExample key={example.title} {...example} />
+        ))}
         {section.bullets && (
           <ul className="list-disc space-y-2 pl-6">
             {section.bullets.map((bullet) => (
@@ -278,7 +282,9 @@ export default function ToolPageWrapper({
           <h1 className="mb-2 break-words text-2xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-4xl">
             {toolName}
           </h1>
-          <p className="max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">{toolDescription}</p>
+          <p className="max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">
+            {toolDescription}
+          </p>
         </div>
         <FavoriteButton toolSlug={toolSlug} className="shrink-0" />
       </div>
@@ -290,56 +296,24 @@ export default function ToolPageWrapper({
           {/* Lead with the direct answer before the interactive interface. */}
           {answerSections.slice(0, 1).map((section) => renderAnswerSection(section, true))}
 
-          {/* Tool Component */}
+          {/* Tool Component (single-mount across normal and Zen modes so child state persists) */}
           <div
-            className="relative mb-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950/95"
+            className={
+              isZenMode
+                ? 'fixed inset-0 z-[100] flex flex-col overflow-y-auto bg-slate-100 p-2 text-slate-900 dark:bg-slate-950 dark:text-slate-100 sm:p-4 md:p-6'
+                : 'relative mb-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950/95'
+            }
             data-tool-interface="true"
+            role={isZenMode ? 'dialog' : undefined}
+            aria-modal={isZenMode ? true : undefined}
+            aria-label={isZenMode ? `${toolName} - ${t('zenMode') || 'Full Screen'}` : undefined}
           >
-            {/* Tool Toolbar (Window Chrome + Workspace + Full Screen Toggle) */}
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-slate-50 px-4 py-2.5 dark:border-slate-800 dark:bg-slate-900/95 sm:px-6">
-              <div className="flex min-w-0 flex-wrap items-center gap-3">
-                <span className="hidden items-center gap-1.5 font-mono text-[11px] font-semibold text-slate-600 dark:text-slate-400 sm:inline-flex">
-                  <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
-                  {toolSlug}
-                </span>
-                <WorkspaceControls toolSlug={toolSlug} />
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => {
-                    setZenAdSession((session) => session + 1);
-                    setIsZenMode(true);
-                  }}
-                  title={t('zenMode') || 'Full Screen'}
-                  aria-label={t('zenMode') || 'Full Screen'}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 font-mono text-xs font-semibold text-slate-800 transition-colors hover:border-slate-500 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-slate-500 dark:hover:bg-slate-700"
-                >
-                  <Maximize2 className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-400" />
-                  <span>{t('zenMode') || 'Full Screen'}</span>
-                </button>
-              </div>
-            </div>
-            <div className="p-4 sm:p-6">
-              <RelatedGuideLinks guides={relatedGuides} locale={language} />
-              {/* The tool UI is client-only; reserve its typical height so mounting it
-                  doesn't push the content below (CLS). */}
-              <div data-tool-slot="true" className="min-w-0" style={{ minHeight: `${interfaceMinHeight}px` }}>
-                {children}
-              </div>
-              <ToolWorkflowBar toolSlug={toolSlug} />
-            </div>
-          </div>
-
-          {/* Full Screen Overlay */}
-          {isZenMode && (
-            <div
-              role="dialog"
-              aria-modal="true"
-              aria-label={`${toolName} - ${t('zenMode') || 'Full Screen'}`}
-              className="fixed inset-0 z-[100] flex flex-col overflow-y-auto bg-slate-100 p-2 text-slate-900 dark:bg-slate-950 dark:text-slate-100 sm:p-4 md:p-6"
-            >
-              {/* Header Bar */}
-              <div className="sticky top-0 z-20 mb-4 flex w-full items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white px-4 py-2.5 shadow-md dark:border-slate-800 dark:bg-slate-900">
+            {/* Header / Toolbar Slot */}
+            {isZenMode ? (
+              <div
+                key="zen-header"
+                className="sticky top-0 z-20 mb-4 flex w-full items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white px-4 py-2.5 shadow-md dark:border-slate-800 dark:bg-slate-900"
+              >
                 <div className="flex min-w-0 items-center gap-3">
                   <span className="shrink-0 rounded border border-slate-300 bg-slate-100 px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
                     {translatedCategoryName}
@@ -351,6 +325,7 @@ export default function ToolPageWrapper({
                 <div className="flex shrink-0 items-center gap-2 sm:gap-3">
                   {/* Theme Toggle Button */}
                   <button
+                    type="button"
                     onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
                     title={
                       resolvedTheme === 'dark'
@@ -378,6 +353,7 @@ export default function ToolPageWrapper({
                     {t('exitZenMode') || 'to exit'}
                   </span>
                   <button
+                    type="button"
                     onClick={() => setIsZenMode(false)}
                     title={t('exitZenMode') || 'Exit Full Screen'}
                     aria-label={t('exitZenMode') || 'Exit Full Screen'}
@@ -390,10 +366,40 @@ export default function ToolPageWrapper({
                   </button>
                 </div>
               </div>
+            ) : (
+              <div
+                key="normal-toolbar"
+                className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-slate-50 px-4 py-2.5 dark:border-slate-800 dark:bg-slate-900/95 sm:px-6"
+              >
+                <div className="flex min-w-0 flex-wrap items-center gap-3">
+                  <span className="hidden items-center gap-1.5 font-mono text-[11px] font-semibold text-slate-600 dark:text-slate-400 sm:inline-flex">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
+                    {toolSlug}
+                  </span>
+                  <WorkspaceControls toolSlug={toolSlug} />
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setZenAdSession((session) => session + 1);
+                      setIsZenMode(true);
+                    }}
+                    title={t('zenMode') || 'Full Screen'}
+                    aria-label={t('zenMode') || 'Full Screen'}
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 font-mono text-xs font-semibold text-slate-800 transition-colors hover:border-slate-500 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:border-slate-500 dark:hover:bg-slate-700"
+                  >
+                    <Maximize2 className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-400" />
+                    <span>{t('zenMode') || 'Full Screen'}</span>
+                  </button>
+                </div>
+              </div>
+            )}
 
-              {/* Fullscreen Body with Left Ad + Center Tool + Right Ad */}
-              <div className="mb-4 flex w-full flex-1 items-start gap-4">
-                {/* Left Skyscraper Ad (Large/Wide screens) */}
+            {/* Body Wrapper: fixed 3-slot child order around a stable <div> slot */}
+            <div className={isZenMode ? 'mb-4 flex w-full flex-1 items-start gap-4' : 'p-4 sm:p-6'}>
+              {/* Slot 0: Left Skyscraper Ad (Large/Wide screens) */}
+              {isZenMode && (
                 <aside className="sticky top-20 hidden w-[160px] shrink-0 xl:block 2xl:w-[300px]">
                   {zenAdsReady && (
                     <AdSense
@@ -407,14 +413,32 @@ export default function ToolPageWrapper({
                     />
                   )}
                 </aside>
+              )}
 
-                {/* Center Tool Content (Fluid width) */}
-                <main className="w-full min-w-0 flex-1 rounded-xl border border-slate-200 bg-white p-4 shadow-lg dark:border-slate-800 dark:bg-slate-900 sm:p-6 md:p-8">
-                  <RelatedGuideLinks guides={relatedGuides} locale={language} />
+              {/* Slot 1: Center Tool Content (always <div> at index 1 so children never remount) */}
+              <div
+                role={isZenMode ? 'main' : undefined}
+                className={
+                  isZenMode
+                    ? 'w-full min-w-0 flex-1 rounded-xl border border-slate-200 bg-white p-4 shadow-lg dark:border-slate-800 dark:bg-slate-900 sm:p-6 md:p-8'
+                    : undefined
+                }
+              >
+                <RelatedGuideLinks guides={relatedGuides} locale={language} />
+                {/* The tool UI is client-only; reserve its typical height so mounting it
+                    doesn't push the content below (CLS). */}
+                <div
+                  data-tool-slot="true"
+                  className="min-w-0"
+                  style={isZenMode ? undefined : { minHeight: `${interfaceMinHeight}px` }}
+                >
                   {children}
-                </main>
+                </div>
+                {!isZenMode && <ToolWorkflowBar toolSlug={toolSlug} />}
+              </div>
 
-                {/* Right Skyscraper Ad (Large/Wide screens) */}
+              {/* Slot 2: Right Skyscraper Ad (Large/Wide screens) */}
+              {isZenMode && (
                 <aside className="sticky top-20 hidden w-[160px] shrink-0 xl:block 2xl:w-[300px]">
                   {zenAdsReady && (
                     <AdSense
@@ -428,9 +452,11 @@ export default function ToolPageWrapper({
                     />
                   )}
                 </aside>
-              </div>
+              )}
+            </div>
 
-              {/* Bottom Horizontal Ad Banner (Visible on mobile/tablet when sidebars are hidden) */}
+            {/* Bottom Horizontal Ad Banner (Visible on mobile/tablet when sidebars are hidden) */}
+            {isZenMode && (
               <div className="w-full shrink-0 xl:hidden">
                 {zenAdsReady && zenBottomSlot && (
                   <AdSense
@@ -444,8 +470,8 @@ export default function ToolPageWrapper({
                   />
                 )}
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
           {/* High-Impact Post-Tool Result Banner */}
           <PostToolAdBanner slot={postResultSlot} format={postToolFormat} className="mb-8" />

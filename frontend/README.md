@@ -21,24 +21,29 @@ Site `http://localhost:3000` adresinde çalışacaktır.
 
 ```
 frontend/
+├── public/                       # Statik dosyalar (llms.txt dahil)
 ├── src/
 │   ├── app/                      # Next.js App Router
 │   │   ├── layout.tsx            # Ana layout
-│   │   ├── page.tsx              # Ana sayfa
+│   │   ├── (default)/            # Varsayılan İngilizce rotalar (page.tsx, collections/, for/, guides/, tools/, ...)
+│   │   ├── [locale]/             # Yerelleştirilmiş rotalar (tr, de, es, fr, ru, zh)
+│   │   │   ├── collections/      # Koleksiyon sayfaları
+│   │   │   ├── for/              # Geliştirici rolü sayfaları
+│   │   │   ├── guides/           # Geliştirici kılavuzları
+│   │   │   └── tools/            # Araç sayfaları
 │   │   ├── sitemap.ts            # Dil başına sitemap (/sitemap/<id>.xml)
 │   │   ├── sitemap-index/route.ts  # Sitemap index (/sitemap.xml rewrite)
-│   │   ├── robots.ts             # Robots.txt
-│   │   └── tools/
-│   │       ├── [category]/       # Kategori sayfaları
-│   │       │   └── [tool]/       # Araç sayfaları
+│   │   └── robots.ts             # Robots.txt
 │   │
 │   ├── components/
-│   │   ├── layout/               # Header, Footer, AdBanner
-│   │   ├── common/               # CodeEditor, CopyButton, Breadcrumb
+│   │   ├── layout/               # Header, Footer
+│   │   ├── common/               # CodeEditor, CopyButton, Breadcrumb, RelatedGuideLinks
+│   │   ├── seo/                  # CollectionPages, AudiencePages, GuidePages
 │   │   └── tools/                # Araç bileşenleri
 │   │
+│   ├── translations/             # 7 dil sözlükleri ve bölünmüş UI sözlükleri
 │   └── lib/
-│       └── api.ts                # API istemcisi
+│       └── api.ts                # Statik araç kataloğu (backend API çağrısı yapılmaz)
 │
 ├── package.json
 ├── next.config.js
@@ -65,13 +70,15 @@ frontend/
 
 ```env
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
+# NEXT_PUBLIC_API_URL=http://localhost:5000/api  # Statik katalog modunda kullanılmaz
 NEXT_PUBLIC_ADSENSE_ID=ca-pub-xxxxxxxxxxxxxxxx
 NEXT_PUBLIC_ADSENSE_COLLECTION_INDEX_SLOT=6442607030
 NEXT_PUBLIC_ADSENSE_COLLECTION_TOP_SLOT=6416143146
 NEXT_PUBLIC_ADSENSE_COLLECTION_BOTTOM_SLOT=2103906771
 NEXT_PUBLIC_GOOGLE_VERIFICATION=xxxxxxxxxxxxxxxx
 ```
+
+> **Not:** Frontend şu anda statik katalog modunda (`src/lib/api.ts`) çalışır; `NEXT_PUBLIC_API_URL` devre dışıdır ve araçlar sunucu isteği olmadan tarayıcıda çalışır.
 
 Collection sayfalarının gelirini AdSense panelinde ayrı ölçmek için AdSense'te üç ayrı display ad unit oluşturun ve her unit'in yalnızca sayısal slot kimliğini şu değişkenlere yazın:
 
@@ -89,6 +96,8 @@ Collection reklamları için üç gerçek AdSense unit tanımlıdır ve birbirin
 
 - 48 konu koleksiyonu: `/collections` ve 6 ek dilde localized karşılıkları
 - 10 geliştirici rolü landing page'i: `/for/[audience]` ve localized karşılıkları
+- 6 pratik geliştirici kılavuzu: `/guides` ve 7 dilin tamamında yerelleştirilmiş kılavuz sayfaları
+- `public/llms.txt`: LLM ve AI arama motorları için araç kataloğu ve rehber özeti
 - Tool sayfalarında FAQ, HowTo, WebApplication, Breadcrumb ve related-tool structured data
 - Tool sayfalarında otomatik örnek kullanım içeriği, workflow bağlantıları ve topic collection iç linkleri
 - Dil başına sitemap (sitemap index: `/sitemap.xml`) + canonical/hreflang ağı
@@ -151,8 +160,20 @@ npm run type-check
 # Unit tests (Vitest)
 npm run test
 
+# Playwright E2E browser tests
+npm run test:e2e
+
 # Full quality pipeline
 npm run check
+
+# Split UI dictionaries after translation updates
+npm run i18n:split
+
+# SEO/GEO audit against a running server
+npm run audit:seo
+
+# Sync and package the browser extension
+npm run build:extension
 
 # Dependency advisories and registry signatures
 npm run audit:security
@@ -162,7 +183,7 @@ npm audit signatures
 npm run analyze
 ```
 
-Bundle analyzer raporlarÄ±:
+Bundle analyzer raporları:
 
 - `.next/analyze/client.html`
 - `.next/analyze/nodejs.html`

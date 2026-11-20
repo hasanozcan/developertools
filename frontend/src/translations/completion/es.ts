@@ -286,11 +286,6 @@ const tools: readonly (readonly [string, string, string])[] = [
     'Crea paletas de colores y variables CSS personalizadas para componentes de Shadcn UI y Radix.',
   ],
   [
-    'svg-to-webp',
-    'Conversor de SVG a URI de datos WebP',
-    'Codifica gráficos vectoriales SVG en URI de datos Base64 de alto rendimiento.',
-  ],
-  [
     'har-to-k6',
     'Conversor de HAR a scripts de pruebas de carga k6',
     'Convierte registros de red del navegador en formato HTTP Archive (HAR) en scripts de pruebas de rendimiento k6.',
@@ -1590,11 +1585,6 @@ const tools: readonly (readonly [string, string, string])[] = [
     'Convierte estilos CSS grid-template-columns y gap en clases de utilidad de cuadrícula de Tailwind CSS.',
   ],
   [
-    'dockerfile-ai-optimized-generator',
-    'Generador de Dockerfile de varias etapas',
-    'Genera Dockerfiles de producción de varias etapas para Node, Python, Go y Rust con opciones de seguridad.',
-  ],
-  [
     'kubernetes-deployment-generator',
     'Generador de YAML Deployment de Kubernetes',
     'Genera manifiestos YAML de producción con Deployment, Service y límites de recursos de Kubernetes.',
@@ -1608,11 +1598,6 @@ const tools: readonly (readonly [string, string, string])[] = [
     'helm-chart-yaml-generator',
     'Generador de plantillas iniciales Helm Chart y Values',
     'Genera plantillas iniciales Helm Chart.yaml y values.yaml para aplicaciones Kubernetes nativas de la nube.',
-  ],
-  [
-    'gitlab-ci-pipeline-builder',
-    'Generador de YAML de canalizaciones CI/CD de GitLab',
-    'Genera configuraciones .gitlab-ci.yml de varias etapas con compilación, pruebas y caché.',
   ],
   [
     'github-issue-pr-template-generator',
@@ -1750,11 +1735,6 @@ const tools: readonly (readonly [string, string, string])[] = [
     'Reduce el consumo de tokens de instrucciones eliminando comentarios, cadenas de documentación y espacios adicionales.',
   ],
   [
-    'embedding-token-cost-estimator',
-    'Estimador de tokens y costes de API de embeddings de texto',
-    'Calcula costes de tokens de embeddings vectoriales para modelos OpenAI text-embedding-3 y Voyage AI.',
-  ],
-  [
     'webhook-payload-simulator',
     'Simulador de cargas de eventos ficticios de webhooks',
     'Genera cargas JSON sintéticas de eventos de webhooks de Stripe, GitHub, Slack y Shopify.',
@@ -1763,11 +1743,6 @@ const tools: readonly (readonly [string, string, string])[] = [
     'network-port-reference',
     'Referencia y directorio de números de puertos TCP/UDP',
     'Consulta números de puertos TCP y UDP estándar, servicios asignados y notas de seguridad.',
-  ],
-  [
-    'ssl-tls-handshake-simulator',
-    'Simulador de negociación criptográfica TLS 1.2 y TLS 1.3',
-    'Simula y compara flujos de negociación criptográfica TLS 1.2 (2-RTT) y TLS 1.3 (1-RTT).',
   ],
   [
     'http2-http3-frame-inspector',
@@ -1848,11 +1823,6 @@ const tools: readonly (readonly [string, string, string])[] = [
     'pbkdf2-key-derivation',
     'Calculadora de la función de derivación de claves PBKDF2',
     'Deriva claves criptográficas seguras mediante PBKDF2 con HMAC-SHA256 e iteraciones configurables.',
-  ],
-  [
-    'hmac-sha384-sha512-calculator',
-    'Generador de firmas HMAC-SHA384 y HMAC-SHA512',
-    'Calcula códigos de autenticación de mensajes basados en hash con clave (HMAC) mediante SHA-384 y SHA-512.',
   ],
   [
     'ethereum-eip191-signature-verifier',

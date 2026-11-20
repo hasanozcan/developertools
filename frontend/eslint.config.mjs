@@ -6,8 +6,8 @@ export default defineConfig([
   ...nextVitals,
   {
     rules: {
-      'react-hooks/immutability': 'off',
-      'react-hooks/purity': 'off',
+      'react-hooks/immutability': 'error',
+      'react-hooks/purity': 'error',
       'react-hooks/set-state-in-effect': 'off',
       'react-hooks/set-state-in-render': 'off',
     },

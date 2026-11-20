@@ -111,9 +111,6 @@ export const frCompletion: Record<string, string> = {
   'toolName.shadcn-theme-generator': 'Générateur de thèmes Shadcn UI et variables CSS',
   'toolDesc.shadcn-theme-generator':
     'Créez des palettes personnalisées et des variables CSS pour Shadcn UI et les composants Radix.',
-  'toolName.svg-to-webp': 'Convertisseur SVG vers URI de données WebP',
-  'toolDesc.svg-to-webp':
-    'Encodez des graphiques vectoriels SVG en URI de données Base64 performantes.',
   'toolName.har-to-k6': 'Convertisseur HAR vers scripts de test de charge k6',
   'toolDesc.har-to-k6':
     'Convertissez les journaux réseau du navigateur HTTP Archive (HAR) en scripts de test de performance k6.',
@@ -889,9 +886,6 @@ export const frCompletion: Record<string, string> = {
   'toolName.css-grid-to-tailwind': 'CSS Grid vers classes Tailwind CSS',
   'toolDesc.css-grid-to-tailwind':
     'Convertissez les styles CSS grid-template-columns et gap en classes utilitaires de grille Tailwind CSS.',
-  'toolName.dockerfile-ai-optimized-generator': 'Générateur de Dockerfiles à plusieurs étapes',
-  'toolDesc.dockerfile-ai-optimized-generator':
-    'Générez des Dockerfiles de production à plusieurs étapes pour Node, Python, Go et Rust avec paramètres de sécurité.',
   'toolName.kubernetes-deployment-generator': 'Générateur YAML Kubernetes Deployment',
   'toolDesc.kubernetes-deployment-generator':
     'Générez des manifestes YAML de production Kubernetes Deployment, Service et de limites de ressources.',
@@ -902,9 +896,6 @@ export const frCompletion: Record<string, string> = {
   'toolName.helm-chart-yaml-generator': 'Générateur de structures Helm Chart et Values',
   'toolDesc.helm-chart-yaml-generator':
     'Générez des modèles Helm Chart.yaml et values.yaml pour les applications Kubernetes natives du cloud.',
-  'toolName.gitlab-ci-pipeline-builder': 'Générateur YAML de pipelines GitLab CI/CD',
-  'toolDesc.gitlab-ci-pipeline-builder':
-    'Générez des pipelines .gitlab-ci.yml à plusieurs étapes avec compilation, tests et cache.',
   'toolName.github-issue-pr-template-generator': "Générateur de modèles d'issues et de PR GitHub",
   'toolDesc.github-issue-pr-template-generator':
     "Générez des modèles d'issues GitHub en Markdown et des listes de vérification de pull requests.",
@@ -991,19 +982,12 @@ export const frCompletion: Record<string, string> = {
   'toolName.llm-context-window-shrinker': 'Optimiseur de fenêtre de contexte LLM',
   'toolDesc.llm-context-window-shrinker':
     'Réduisez la consommation de jetons en retirant les commentaires, chaînes de documentation et espaces superflus.',
-  'toolName.embedding-token-cost-estimator': 'Estimateur de jetons et de coûts API de plongement',
-  'toolDesc.embedding-token-cost-estimator':
-    'Calculez les coûts de jetons des plongements vectoriels pour OpenAI text-embedding-3 et Voyage AI.',
   'toolName.webhook-payload-simulator': "Simulateur de données d'événements de webhooks",
   'toolDesc.webhook-payload-simulator':
     'Générez des événements JSON synthétiques de webhooks Stripe, GitHub, Slack et Shopify.',
   'toolName.network-port-reference': 'Répertoire de référence des ports TCP/UDP',
   'toolDesc.network-port-reference':
     'Recherchez les numéros de ports TCP et UDP standard, leurs services et les notes de sécurité.',
-  'toolName.ssl-tls-handshake-simulator':
-    'Simulateur de négociation cryptographique TLS 1.2 et TLS 1.3',
-  'toolDesc.ssl-tls-handshake-simulator':
-    'Simulez et comparez les négociations cryptographiques TLS 1.2 (2-RTT) et TLS 1.3 (1-RTT).',
   'toolName.http2-http3-frame-inspector': 'Inspecteur de trames HTTP/2 et HTTP/3 QUIC',
   'toolDesc.http2-http3-frame-inspector':
     'Inspectez les types de trames binaires, drapeaux et fonctions des données des flux HTTP/2 et HTTP/3 QUIC.',
@@ -1053,9 +1037,6 @@ export const frCompletion: Record<string, string> = {
   'toolName.pbkdf2-key-derivation': 'Calculateur de dérivation de clés PBKDF2',
   'toolDesc.pbkdf2-key-derivation':
     "Dérivez des clés cryptographiques avec PBKDF2 et HMAC-SHA256, avec un nombre d'itérations configurable.",
-  'toolName.hmac-sha384-sha512-calculator': 'Générateur de signatures HMAC-SHA384 et HMAC-SHA512',
-  'toolDesc.hmac-sha384-sha512-calculator':
-    "Calculez des codes d'authentification de messages par hachage à clé (HMAC) avec SHA-384 et SHA-512.",
   'toolName.ethereum-eip191-signature-verifier': 'Validateur Ethereum EIP-191 personal_sign',
   'toolDesc.ethereum-eip191-signature-verifier':
     'Formatez et validez les messages préfixés Ethereum EIP-191 personal_sign pour les portefeuilles Web3.',

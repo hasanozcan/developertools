@@ -44,7 +44,7 @@ async function renderAudience(locale: Language, audience: string) {
 }
 
 describe('collection detail page', () => {
-  it('connects each guide to its matching collection in every locale using its English URL', async () => {
+  it('connects each guide to its matching collection in every locale using its localized URL', async () => {
     for (const guide of developerGuides) {
       for (const locale of Object.keys(guideLinkCopy) as Language[]) {
         const slug = guide.collectionHref.split('/').pop()!;
@@ -52,15 +52,18 @@ describe('collection detail page', () => {
         const nav = doc.querySelector('[data-related-guides]')!;
         const link = nav.querySelector('a')!;
         const href = `/guides/${guide.slug}`;
+        const localizedHref = locale === 'en' ? href : `/${locale}${href}`;
         expect(nav.getAttribute('aria-label')).toBe(guideLinkCopy[locale].heading);
         expect(nav.querySelectorAll('a')).toHaveLength(1);
-        expect(link.getAttribute('href')).toBe(href);
-        expect(link.getAttribute('hreflang')).toBe('en');
-        expect(link.textContent).toContain(guideLinkCopy[locale].labels[href]);
-        if (locale !== 'en') expect(link.textContent).toContain(guideLinkCopy[locale].english);
+        expect(link.getAttribute('href')).toBe(localizedHref);
+        expect(link.getAttribute('hreflang')).toBe(locale);
+        expect(link.textContent).toBe(guideLinkCopy[locale].labels[href]);
+        if (locale !== 'en') expect(link.textContent).not.toContain(guideLinkCopy[locale].english);
       }
     }
-    expect((await renderCollection('en', 'api-debugging')).doc.querySelector('[data-related-guides]')).toBeNull();
+    expect(
+      (await renderCollection('en', 'api-debugging')).doc.querySelector('[data-related-guides]'),
+    ).toBeNull();
   });
 
   it('renders EN long-form intro, tools as h3 cards and an ordered workflow', async () => {
@@ -69,8 +72,12 @@ describe('collection detail page', () => {
 
     expect(doc.querySelectorAll('h1')).toHaveLength(1);
     expect(doc.querySelector('h1')?.textContent).toBe(collection.title);
-    expect(doc.querySelectorAll('[data-collection-intro] p')).toHaveLength(collection.introParagraphs!.length);
-    expect(doc.querySelector('#collection-tools-heading')?.textContent).toBe('Tools in this collection');
+    expect(doc.querySelectorAll('[data-collection-intro] p')).toHaveLength(
+      collection.introParagraphs!.length,
+    );
+    expect(doc.querySelector('#collection-tools-heading')?.textContent).toBe(
+      'Tools in this collection',
+    );
 
     const grid = doc.querySelector('[data-collection-tools]')!;
     expect(grid.querySelectorAll('h2')).toHaveLength(0);
@@ -78,7 +85,9 @@ describe('collection detail page', () => {
 
     const workflow = doc.querySelector('ol[data-collection-workflow]')!;
     expect(workflow).not.toBeNull();
-    expect(doc.querySelector('#collection-workflow-heading')?.textContent).toBe('Recommended workflow');
+    expect(doc.querySelector('#collection-workflow-heading')?.textContent).toBe(
+      'Recommended workflow',
+    );
     expect(workflow.querySelectorAll('li')).toHaveLength(collection.workflowSteps!.length);
     for (const step of collection.workflowSteps!) {
       expect(workflow.querySelector(`a[href$="/${step.toolSlug}"]`), step.toolSlug).not.toBeNull();
@@ -107,7 +116,9 @@ describe('collection detail page', () => {
     expect(grid.querySelector('a')?.getAttribute('href')).toMatch(/^\/tr\/tools\//);
 
     const list = jsonLd.find((node) => node['@type'] === 'ItemList');
-    const expected = collection.toolSlugs.filter((slug) => isToolLocaleIndexable(slug, 'tr')).length;
+    const expected = collection.toolSlugs.filter((slug) =>
+      isToolLocaleIndexable(slug, 'tr'),
+    ).length;
     expect(list.itemListElement).toHaveLength(expected);
     for (const item of list.itemListElement) {
       expect(item.url).toMatch(new RegExp(`^${SITE}/tr/tools/`));
@@ -138,7 +149,9 @@ describe('collections index', () => {
       expect(doc.querySelectorAll('h1')).toHaveLength(1);
       expect(doc.querySelectorAll('h2').length).toBeGreaterThanOrEqual(6);
       expect(doc.querySelectorAll('h3')).toHaveLength(toolCollections.length);
-      const hrefs = [...doc.querySelectorAll(`a[href^="${prefix}/collections/"]`)].map((a) => a.getAttribute('href'));
+      const hrefs = [...doc.querySelectorAll(`a[href^="${prefix}/collections/"]`)].map((a) =>
+        a.getAttribute('href'),
+      );
       expect(new Set(hrefs).size).toBe(toolCollections.length);
     }
   });
@@ -151,12 +164,15 @@ describe('audience detail page', () => {
 
     expect(doc.querySelectorAll('h1')).toHaveLength(1);
     expect(doc.querySelector('h1')?.textContent).toBe(audience.title);
-    expect(doc.querySelectorAll('[data-audience-intro] p')).toHaveLength(audience.introParagraphs!.length);
+    expect(doc.querySelectorAll('[data-audience-intro] p')).toHaveLength(
+      audience.introParagraphs!.length,
+    );
     const featured = doc.querySelector('#audience-featured-tools')!.parentElement!;
     expect(featured.querySelectorAll('h3').length).toBeGreaterThan(0);
     expect(featured.querySelectorAll('h2')).toHaveLength(1);
     const list = jsonLd.find((node) => node['@type'] === 'ItemList');
-    for (const item of list.itemListElement) expect(item.url).toMatch(new RegExp(`^${SITE}/tools/`));
+    for (const item of list.itemListElement)
+      expect(item.url).toMatch(new RegExp(`^${SITE}/tools/`));
   });
 
   it('renders de with the localized short intro and de-prefixed urls', async () => {
@@ -166,6 +182,7 @@ describe('audience detail page', () => {
     expect(doc.querySelectorAll('[data-audience-intro] p')).toHaveLength(1);
     expect(doc.querySelector('a[href^="/de/collections/"]')).not.toBeNull();
     const list = jsonLd.find((node) => node['@type'] === 'ItemList');
-    for (const item of list.itemListElement) expect(item.url).toMatch(new RegExp(`^${SITE}/de/tools/`));
+    for (const item of list.itemListElement)
+      expect(item.url).toMatch(new RegExp(`^${SITE}/de/tools/`));
   });
 });

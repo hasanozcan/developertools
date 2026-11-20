@@ -13,7 +13,7 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
-  "connect-src 'self' data: blob: https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://vitals.vercel-insights.com https://va.vercel-scripts.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://googleads.g.doubleclick.net",
+  "connect-src 'self' data: blob: ws: wss: https://dns.google https://cloudflare-dns.com https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://vitals.vercel-insights.com https://va.vercel-scripts.com https://ep1.adtrafficquality.google https://ep2.adtrafficquality.google https://googleads.g.doubleclick.net",
   "frame-src 'self' blob: https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://pagead2.googlesyndication.com https://fundingchoicesmessages.google.com https://www.google.com https://ep2.adtrafficquality.google",
   "worker-src 'self' blob:",
 ].join('; ');
@@ -79,6 +79,15 @@ const MERGED_TOOL_REDIRECTS = [
   { from: 'jwt-builder', to: '/tools/crypto/jwt-generator' },
   { from: 'cron-next-runs-visualizer', to: '/tools/utilities/cron-parser' },
   { from: 'crontab-schedule-translator', to: '/tools/utilities/cron-parser' },
+  { from: 'video-to-gif', to: '/tools/converters/image-converter' },
+  { from: 'audio-converter', to: '/tools/converters/image-converter' },
+  { from: 'pdf-to-image', to: '/tools/utilities/pdf-splitter' },
+  { from: 'svg-to-webp', to: '/tools/converters/svg-to-png' },
+  { from: 'dockerfile-ai-optimized-generator', to: '/tools/utilities/dockerfile-generator' },
+  { from: 'gitlab-ci-pipeline-builder', to: '/tools/generators/gitlab-ci-generator' },
+  { from: 'embedding-token-cost-estimator', to: '/tools/utilities/embedding-cost-calculator' },
+  { from: 'ssl-tls-handshake-simulator', to: '/tools/crypto/ssl-certificate-inspector' },
+  { from: 'hmac-sha384-sha512-calculator', to: '/tools/crypto/hmac-generator' },
 ].flatMap(({ from, to }) => [
   { source: `/tools/:category/${from}`, destination: to, permanent: true },
   {

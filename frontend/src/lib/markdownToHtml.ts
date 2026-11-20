@@ -28,13 +28,16 @@ function decodeHtmlEntitiesForScheme(value: string): string {
   return value
     .replace(/&#(\d+);?/g, (_, dec) => String.fromCharCode(Number(dec)))
     .replace(/&#x([0-9a-f]+);?/gi, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
-    .replace(/&colon;/gi, ':');
+    .replace(/&colon;/gi, ':')
+    .replace(/&tab;?/gi, '\t')
+    .replace(/&newline;?/gi, '\n');
 }
 
 export function sanitizeLinkUrl(rawUrl: string): string | null {
   const trimmed = rawUrl.trim();
   if (!trimmed) return null;
   const normalized = decodeHtmlEntitiesForScheme(trimmed).replace(CONTROL_OR_SPACE_RE, '');
+  if (trimmed.startsWith('//') || normalized.startsWith('//')) return null;
   const schemeMatch = /^([a-zA-Z][a-zA-Z0-9+.-]*):/.exec(normalized);
   if (!schemeMatch) return trimmed;
   const scheme = schemeMatch[1].toLowerCase();
@@ -48,6 +51,7 @@ export function sanitizeImageUrl(rawUrl: string): string | null {
   const trimmed = rawUrl.trim();
   if (!trimmed) return null;
   const normalized = decodeHtmlEntitiesForScheme(trimmed).replace(CONTROL_OR_SPACE_RE, '');
+  if (trimmed.startsWith('//') || normalized.startsWith('//')) return null;
   const schemeMatch = /^([a-zA-Z][a-zA-Z0-9+.-]*):/.exec(normalized);
   if (!schemeMatch) return trimmed;
   const scheme = schemeMatch[1].toLowerCase();
@@ -68,7 +72,7 @@ export function sanitizeHtmlFragment(html: string): string {
       USE_PROFILES: { html: true },
     });
   }
-  return html;
+  return escapeHtml(html);
 }
 
 function escapeRawHtmlOutsideBlockquotes(input: string): string {
@@ -105,8 +109,10 @@ export function markdownToHtml(markdown: string): string {
   // Inline code `code`
   html = html.replace(/`([^`]+)`/g, (_, code) => hold(`<code>${escapeHtml(code)}</code>`));
 
+  const hasDomPurify = typeof DOMPurify?.sanitize === 'function';
+
   // When DOMPurify is unavailable (SSR), escape raw HTML up front so no unsafe tags survive.
-  if (typeof DOMPurify?.sanitize !== 'function') {
+  if (!hasDomPurify) {
     html = escapeRawHtmlOutsideBlockquotes(html);
   }
 
@@ -175,18 +181,14 @@ export function markdownToHtml(markdown: string): string {
     return `<p>${trimmed.replace(/\n/g, '<br />')}</p>`;
   });
 
-  return sanitizeHtmlFragment(wrapped.filter(Boolean).join('\n\n'));
+  const output = wrapped.filter(Boolean).join('\n\n');
+  return hasDomPurify ? sanitizeHtmlFragment(output) : output;
 }
 
 export function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 export function escapeAttribute(str: string): string {
-  return escapeHtml(str)
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+  return escapeHtml(str).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }

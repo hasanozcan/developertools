@@ -18,7 +18,7 @@ const SPEC_MODULES = [
 ];
 
 export default async function Image() {
-  const toolCount = toolCatalog.length > 0 ? toolCatalog.length : 476;
+  const toolCount = toolCatalog.length > 0 ? toolCatalog.length : 467;
 
   return new ImageResponse(
     (

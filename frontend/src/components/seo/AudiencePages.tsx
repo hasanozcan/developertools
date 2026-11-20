@@ -15,15 +15,81 @@ import {
 import { getLocalizedToolMeta, isToolLocaleIndexable, type Language } from '@/lib/i18nRouting';
 import { serializeJsonForHtmlScript } from '@/lib/scriptSafeJson';
 import { getLocalizedCollection } from '@/lib/toolCollections';
+import { translations } from '@/translations';
 
-const pageCopy: Record<Language, { eyebrow: string; title: string; description: string; explore: string; featured: string; collections: string }> = {
-  en: { eyebrow: 'Developer roles', title: 'Tools by Developer Role', description: 'Start with a role-focused toolbox built around the tasks, formats, and workflows you use most.', explore: 'Explore toolbox', featured: 'Featured tools', collections: 'Related collections' },
-  tr: { eyebrow: 'Geliştirici rolleri', title: 'Geliştirici Rolüne Göre Araçlar', description: 'En sık kullandığınız görevler, formatlar ve iş akışları etrafında hazırlanmış rol odaklı araç kutularıyla başlayın.', explore: 'Araç kutusunu aç', featured: 'Öne çıkan araçlar', collections: 'İlgili koleksiyonlar' },
-  de: { eyebrow: 'Entwicklerrollen', title: 'Tools nach Entwicklerrolle', description: 'Starten Sie mit einem rollenbezogenen Werkzeugkasten für Ihre häufigsten Aufgaben, Formate und Workflows.', explore: 'Toolbox öffnen', featured: 'Empfohlene Tools', collections: 'Verwandte Sammlungen' },
-  es: { eyebrow: 'Roles de desarrollo', title: 'Herramientas por rol de desarrollador', description: 'Empieza con una caja de herramientas enfocada en las tareas, formatos y flujos que más utilizas.', explore: 'Abrir herramientas', featured: 'Herramientas destacadas', collections: 'Colecciones relacionadas' },
-  fr: { eyebrow: 'Rôles développeur', title: 'Outils par rôle de développeur', description: 'Commencez avec une boîte à outils centrée sur les tâches, formats et workflows que vous utilisez le plus.', explore: 'Ouvrir la boîte à outils', featured: 'Outils recommandés', collections: 'Collections associées' },
-  ru: { eyebrow: 'Роли разработчиков', title: 'Инструменты по роли разработчика', description: 'Начните с набора инструментов для задач, форматов и процессов, которые чаще всего нужны в вашей роли.', explore: 'Открыть набор', featured: 'Рекомендуемые инструменты', collections: 'Связанные коллекции' },
-  zh: { eyebrow: '开发者角色', title: '按开发者角色查找工具', description: '从围绕常见任务、数据格式和工作流整理的角色工具箱开始。', explore: '打开工具箱', featured: '精选工具', collections: '相关合集' },
+const pageCopy: Record<
+  Language,
+  {
+    eyebrow: string;
+    title: string;
+    description: string;
+    explore: string;
+    featured: string;
+    collections: string;
+  }
+> = {
+  en: {
+    eyebrow: 'Developer roles',
+    title: 'Tools by Developer Role',
+    description:
+      'Start with a role-focused toolbox built around the tasks, formats, and workflows you use most.',
+    explore: 'Explore toolbox',
+    featured: 'Featured tools',
+    collections: 'Related collections',
+  },
+  tr: {
+    eyebrow: 'Geliştirici rolleri',
+    title: 'Geliştirici Rolüne Göre Araçlar',
+    description:
+      'En sık kullandığınız görevler, formatlar ve iş akışları etrafında hazırlanmış rol odaklı araç kutularıyla başlayın.',
+    explore: 'Araç kutusunu aç',
+    featured: 'Öne çıkan araçlar',
+    collections: 'İlgili koleksiyonlar',
+  },
+  de: {
+    eyebrow: 'Entwicklerrollen',
+    title: 'Tools nach Entwicklerrolle',
+    description:
+      'Starten Sie mit einem rollenbezogenen Werkzeugkasten für Ihre häufigsten Aufgaben, Formate und Workflows.',
+    explore: 'Toolbox öffnen',
+    featured: 'Empfohlene Tools',
+    collections: 'Verwandte Sammlungen',
+  },
+  es: {
+    eyebrow: 'Roles de desarrollo',
+    title: 'Herramientas por rol de desarrollador',
+    description:
+      'Empieza con una caja de herramientas enfocada en las tareas, formatos y flujos que más utilizas.',
+    explore: 'Abrir herramientas',
+    featured: 'Herramientas destacadas',
+    collections: 'Colecciones relacionadas',
+  },
+  fr: {
+    eyebrow: 'Rôles développeur',
+    title: 'Outils par rôle de développeur',
+    description:
+      'Commencez avec une boîte à outils centrée sur les tâches, formats et workflows que vous utilisez le plus.',
+    explore: 'Ouvrir la boîte à outils',
+    featured: 'Outils recommandés',
+    collections: 'Collections associées',
+  },
+  ru: {
+    eyebrow: 'Роли разработчиков',
+    title: 'Инструменты по роли разработчика',
+    description:
+      'Начните с набора инструментов для задач, форматов и процессов, которые чаще всего нужны в вашей роли.',
+    explore: 'Открыть набор',
+    featured: 'Рекомендуемые инструменты',
+    collections: 'Связанные коллекции',
+  },
+  zh: {
+    eyebrow: '开发者角色',
+    title: '按开发者角色查找工具',
+    description: '从围绕常见任务、数据格式和工作流整理的角色工具箱开始。',
+    explore: '打开工具箱',
+    featured: '精选工具',
+    collections: '相关合集',
+  },
 };
 
 export function getAudienceIndexCopy(locale: Language) {
@@ -63,7 +129,7 @@ export function AudienceIndexContent({ locale }: { locale: Language }) {
             >
               <div className="min-w-0">
                 <span className="mb-2 inline-block font-mono text-[11px] font-semibold text-slate-600 dark:text-slate-400">
-                  ROLE // 0{index + 1}
+                  {String(index + 1).padStart(2, '0')}
                 </span>
                 <h2 className="break-words text-lg font-bold text-slate-950 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
                   {localized.shortTitle}
@@ -83,16 +149,31 @@ export function AudienceIndexContent({ locale }: { locale: Language }) {
   );
 }
 
-export function AudienceDetailContent({ locale, audience }: { locale: Language; audience: DeveloperAudience }) {
+export function AudienceDetailContent({
+  locale,
+  audience,
+}: {
+  locale: Language;
+  audience: DeveloperAudience;
+}) {
   const localized = getLocalizedAudience(audience, locale);
   const tools = getAudienceTools(audience);
   const collections = getAudienceCollections(audience);
   const ui = pageCopy[locale];
   const prefix = localePrefix(locale);
-  const paragraphs = localized.introParagraphs && localized.introParagraphs.length > 0 ? localized.introParagraphs : [localized.intro];
+  const paragraphs =
+    localized.introParagraphs && localized.introParagraphs.length > 0
+      ? localized.introParagraphs
+      : [localized.intro];
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://devstools.app';
-  const topSlot = resolveAdSenseSlot(process.env.NEXT_PUBLIC_ADSENSE_COLLECTION_TOP_SLOT, DEFAULT_ADSENSE_COLLECTION_TOP_SLOT);
-  const bottomSlot = resolveAdSenseSlot(process.env.NEXT_PUBLIC_ADSENSE_COLLECTION_BOTTOM_SLOT, DEFAULT_ADSENSE_COLLECTION_BOTTOM_SLOT);
+  const topSlot = resolveAdSenseSlot(
+    process.env.NEXT_PUBLIC_ADSENSE_COLLECTION_TOP_SLOT,
+    DEFAULT_ADSENSE_COLLECTION_TOP_SLOT,
+  );
+  const bottomSlot = resolveAdSenseSlot(
+    process.env.NEXT_PUBLIC_ADSENSE_COLLECTION_BOTTOM_SLOT,
+    DEFAULT_ADSENSE_COLLECTION_BOTTOM_SLOT,
+  );
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
@@ -104,16 +185,23 @@ export function AudienceDetailContent({ locale, audience }: { locale: Language; 
       .map((tool, index) => ({
         '@type': 'ListItem',
         position: index + 1,
-        name: getLocalizedToolMeta(tool.slug, locale, tool.name, tool.shortDescription || tool.name).name,
+        name: getLocalizedToolMeta(tool.slug, locale, tool.name, tool.shortDescription || tool.name)
+          .name,
         url: `${siteUrl}${prefix}/tools/${tool.categorySlug}/${tool.slug}`,
       })),
   };
 
   return (
     <main className="page-shell py-8 sm:py-12">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonForHtmlScript(structuredData) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonForHtmlScript(structuredData) }}
+      />
       <nav className="mb-5 font-mono text-xs text-slate-600 dark:text-slate-400 sm:text-sm">
-        <Link href={`${prefix}/for`} className="hover:text-slate-950 hover:underline dark:hover:text-white">
+        <Link
+          href={`${prefix}/for`}
+          className="hover:text-slate-950 hover:underline dark:hover:text-white"
+        >
           {ui.title}
         </Link>
         <span className="px-2 text-slate-400 dark:text-slate-600">/</span>
@@ -127,22 +215,38 @@ export function AudienceDetailContent({ locale, audience }: { locale: Language; 
         <h1 className="break-words text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-4xl">
           {localized.title}
         </h1>
-        <div data-audience-intro="true" className="mt-4 max-w-3xl space-y-4 text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">
+        <div
+          data-audience-intro="true"
+          className="mt-4 max-w-3xl space-y-4 text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base"
+        >
           {paragraphs.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}
         </div>
       </section>
 
-      <AdSense slot={topSlot} format="auto" placement={`audience-${audience.slug}-${locale}-top`} className="mb-8 min-h-[90px]" />
+      <AdSense
+        slot={topSlot}
+        format="auto"
+        placement={`audience-${audience.slug}-${locale}-top`}
+        className="mb-8 min-h-[90px]"
+      />
 
       <section className="mb-10" aria-labelledby="audience-featured-tools">
-        <h2 id="audience-featured-tools" className="mb-5 border-b border-slate-200 pb-2 text-xl font-bold text-slate-950 dark:border-slate-800 dark:text-white sm:text-2xl">
+        <h2
+          id="audience-featured-tools"
+          className="mb-5 border-b border-slate-200 pb-2 text-xl font-bold text-slate-950 dark:border-slate-800 dark:text-white sm:text-2xl"
+        >
           {ui.featured}
         </h2>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {tools.map((tool) => {
-            const meta = getLocalizedToolMeta(tool.slug, locale, tool.name, tool.shortDescription || tool.name);
+            const meta = getLocalizedToolMeta(
+              tool.slug,
+              locale,
+              tool.name,
+              tool.shortDescription || tool.name,
+            );
             return (
               <Link
                 key={tool.slug}
@@ -150,12 +254,14 @@ export function AudienceDetailContent({ locale, audience }: { locale: Language; 
                 className="interactive-card group min-w-0 rounded-xl border border-slate-200 bg-white p-5 transition-colors hover:border-slate-400 dark:border-slate-800 dark:bg-slate-900/90 dark:hover:border-slate-600"
               >
                 <span className="mb-2 inline-block rounded border border-slate-200 bg-slate-100 px-1.5 py-0.5 font-mono text-[10px] font-semibold uppercase text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
-                  {tool.categorySlug}
+                  {translations[locale][`cat.${tool.categorySlug}`] || tool.categorySlug}
                 </span>
                 <h3 className="break-words font-bold text-slate-950 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
                   {meta.name}
                 </h3>
-                <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{meta.description}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+                  {meta.description}
+                </p>
               </Link>
             );
           })}
@@ -163,7 +269,10 @@ export function AudienceDetailContent({ locale, audience }: { locale: Language; 
       </section>
 
       <section className="mb-8" aria-labelledby="audience-collections">
-        <h2 id="audience-collections" className="mb-5 border-b border-slate-200 pb-2 text-xl font-bold text-slate-950 dark:border-slate-800 dark:text-white sm:text-2xl">
+        <h2
+          id="audience-collections"
+          className="mb-5 border-b border-slate-200 pb-2 text-xl font-bold text-slate-950 dark:border-slate-800 dark:text-white sm:text-2xl"
+        >
           {ui.collections}
         </h2>
         <div className="grid gap-4 md:grid-cols-3">
@@ -178,14 +287,21 @@ export function AudienceDetailContent({ locale, audience }: { locale: Language; 
                 <h3 className="break-words font-bold text-slate-950 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
                   {localizedCollection.shortTitle}
                 </h3>
-                <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{localizedCollection.description}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+                  {localizedCollection.description}
+                </p>
               </Link>
             );
           })}
         </div>
       </section>
 
-      <AdSense slot={bottomSlot} format="auto" placement={`audience-${audience.slug}-${locale}-bottom`} className="mt-8 min-h-[90px]" />
+      <AdSense
+        slot={bottomSlot}
+        format="auto"
+        placement={`audience-${audience.slug}-${locale}-bottom`}
+        className="mt-8 min-h-[90px]"
+      />
     </main>
   );
 }

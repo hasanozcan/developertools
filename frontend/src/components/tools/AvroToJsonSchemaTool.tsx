@@ -6,12 +6,16 @@ import { convertAvroToJsonSchema } from '@/lib/avroToJsonSchema';
 
 export default function AvroToJsonSchemaTool() {
   const { t } = useLanguage();
-  const [input, setInput] = useState("{\\n  \"type\": \"record\",\\n  \"name\": \"User\",\\n  \"fields\": [{ \"name\": \"id\", \"type\": \"long\" }]\\n}");
+  const [input, setInput] = useState(
+    '{\n  "type": "record",\n  "name": "User",\n  "fields": [{ "name": "id", "type": "long" }]\n}',
+  );
   const [copied, setCopied] = useState(false);
 
   const result = useMemo(() => {
     try {
-      return typeof convertAvroToJsonSchema === 'function' ? String(convertAvroToJsonSchema(input)) : '';
+      return typeof convertAvroToJsonSchema === 'function'
+        ? String(convertAvroToJsonSchema(input))
+        : '';
     } catch (e: any) {
       return 'Error: ' + e.message;
     }
@@ -26,7 +30,7 @@ export default function AvroToJsonSchemaTool() {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <label className="text-sm font-medium text-muted-foreground">{t("common.input")}</label>
+        <label className="text-sm font-medium text-muted-foreground">{t('common.input')}</label>
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -36,13 +40,17 @@ export default function AvroToJsonSchemaTool() {
       </div>
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-sm font-medium text-muted-foreground">{t("common.output")}</label>
+          <label className="text-sm font-medium text-muted-foreground">{t('common.output')}</label>
           <button
             onClick={handleCopy}
             className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-secondary hover:bg-secondary/80 transition-colors"
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-            {copied ? t("uiText.8dc21305") : t("common.copy")}
+            {copied ? (
+              <Check className="w-3.5 h-3.5 text-emerald-500" />
+            ) : (
+              <Copy className="w-3.5 h-3.5" />
+            )}
+            {copied ? t('uiText.8dc21305') : t('common.copy')}
           </button>
         </div>
         <textarea

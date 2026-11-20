@@ -41,7 +41,7 @@ chrome.omnibox.onInputChanged.addListener(async (text, suggest) => {
 
 chrome.omnibox.onInputEntered.addListener((text, disposition) => {
   const trimmed = text.trim();
-  let targetUrl = `${BASE_URL}/?search=${encodeURIComponent(trimmed)}`;
+  let targetUrl = `${BASE_URL}/#search=${encodeURIComponent(trimmed)}`;
   if (trimmed === BASE_URL || trimmed.startsWith(`${BASE_URL}/`)) {
     try {
       const parsed = new URL(trimmed);
@@ -62,45 +62,47 @@ chrome.omnibox.onInputEntered.addListener((text, disposition) => {
 
 // 2. Context Menu (Right-click selected text on web)
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.contextMenus.create({
-    id: 'devstools-parent',
-    title: 'DevsTools (Developer Utilities)',
-    contexts: ['selection'],
-  });
+  chrome.contextMenus.removeAll(() => {
+    chrome.contextMenus.create({
+      id: 'devstools-parent',
+      title: 'DevsTools (Developer Utilities)',
+      contexts: ['selection'],
+    });
 
-  chrome.contextMenus.create({
-    id: 'devstools-json',
-    parentId: 'devstools-parent',
-    title: 'Format JSON in DevsTools',
-    contexts: ['selection'],
-  });
+    chrome.contextMenus.create({
+      id: 'devstools-json',
+      parentId: 'devstools-parent',
+      title: 'Format JSON in DevsTools',
+      contexts: ['selection'],
+    });
 
-  chrome.contextMenus.create({
-    id: 'devstools-base64',
-    parentId: 'devstools-parent',
-    title: 'Decode / Inspect Base64',
-    contexts: ['selection'],
-  });
+    chrome.contextMenus.create({
+      id: 'devstools-base64',
+      parentId: 'devstools-parent',
+      title: 'Decode / Inspect Base64',
+      contexts: ['selection'],
+    });
 
-  chrome.contextMenus.create({
-    id: 'devstools-jwt',
-    parentId: 'devstools-parent',
-    title: 'Inspect JWT Token',
-    contexts: ['selection'],
-  });
+    chrome.contextMenus.create({
+      id: 'devstools-jwt',
+      parentId: 'devstools-parent',
+      title: 'Inspect JWT Token',
+      contexts: ['selection'],
+    });
 
-  chrome.contextMenus.create({
-    id: 'devstools-hash',
-    parentId: 'devstools-parent',
-    title: 'Generate Hashes (MD5, SHA-256)',
-    contexts: ['selection'],
-  });
+    chrome.contextMenus.create({
+      id: 'devstools-hash',
+      parentId: 'devstools-parent',
+      title: 'Generate Hashes (MD5, SHA-256)',
+      contexts: ['selection'],
+    });
 
-  chrome.contextMenus.create({
-    id: 'devstools-search',
-    parentId: 'devstools-parent',
-    title: 'Search in DevsTools',
-    contexts: ['selection'],
+    chrome.contextMenus.create({
+      id: 'devstools-search',
+      parentId: 'devstools-parent',
+      title: 'Search in DevsTools',
+      contexts: ['selection'],
+    });
   });
 });
 

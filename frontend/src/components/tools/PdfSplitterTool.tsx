@@ -1,7 +1,7 @@
 'use client';
 
 import { useLanguage } from '@/context/LanguageContext';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Upload, Download, FileText, Scissors, CheckCircle2 } from 'lucide-react';
 import { PDFDocument } from 'pdf-lib';
 import { parsePageRangeString, formatPageRangeString } from '@/lib/pdfSplitter';
@@ -16,22 +16,45 @@ export default function PdfSplitterTool() {
   const [splitPdfUrl, setSplitPdfUrl] = useState<string | null>(null);
   const [isSplitting, setIsSplitting] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const splitPdfUrlRef = useRef<string | null>(null);
+  const isMountedRef = useRef(true);
+
+  const replaceSplitPdfUrl = (nextUrl: string | null) => {
+    if (splitPdfUrlRef.current && splitPdfUrlRef.current !== nextUrl) {
+      URL.revokeObjectURL(splitPdfUrlRef.current);
+    }
+    splitPdfUrlRef.current = nextUrl;
+    setSplitPdfUrl(nextUrl);
+  };
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      if (splitPdfUrlRef.current) {
+        URL.revokeObjectURL(splitPdfUrlRef.current);
+        splitPdfUrlRef.current = null;
+      }
+    };
+  }, []);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
     if (!selected) return;
 
     const buffer = await selected.arrayBuffer();
+    if (!isMountedRef.current) return;
     const uint8 = new Uint8Array(buffer);
 
     try {
       const doc = await PDFDocument.load(uint8, { ignoreEncryption: true });
+      if (!isMountedRef.current) return;
       const pages = doc.getPageCount();
       setFile(selected);
       setPdfBytes(uint8);
       setPageCount(pages);
       setRangeInput(pages > 1 ? `1-${Math.min(pages, 3)}` : '1');
-      setSplitPdfUrl(null);
+      replaceSplitPdfUrl(null);
     } catch (err) {
       console.error('Failed to load PDF:', err);
     }
@@ -54,12 +77,15 @@ export default function PdfSplitterTool() {
       copiedPages.forEach((page) => newPdf.addPage(page));
 
       const newBytes = await newPdf.save();
+      if (!isMountedRef.current) return;
       const blob = new Blob([newBytes as any], { type: 'application/pdf' });
-      setSplitPdfUrl(URL.createObjectURL(blob));
+      replaceSplitPdfUrl(URL.createObjectURL(blob));
     } catch (err) {
       console.error('Error splitting PDF:', err);
     } finally {
-      setIsSplitting(false);
+      if (isMountedRef.current) {
+        setIsSplitting(false);
+      }
     }
   };
 
@@ -90,9 +116,9 @@ export default function PdfSplitterTool() {
           </div>
           <div className="space-y-1">
             <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200">
-              {t("uiText.d38637b5")}</h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              {t("uiText.8f93eb04")}</p>
+              {t('uiText.d38637b5')}
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">{t('uiText.8f93eb04')}</p>
           </div>
         </div>
       ) : (
@@ -106,7 +132,7 @@ export default function PdfSplitterTool() {
               <div>
                 <p className="text-xs font-bold text-slate-900 dark:text-slate-100">{file.name}</p>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                  {t("uiText.8baeb255")} {pageCount} • {formatFileSize(file.size)}
+                  {t('uiText.8baeb255')} {pageCount} • {formatFileSize(file.size)}
                 </p>
               </div>
             </div>
@@ -115,7 +141,8 @@ export default function PdfSplitterTool() {
               onClick={() => fileInputRef.current?.click()}
               className="px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
             >
-              {t("uiText.b3573353")}</button>
+              {t('uiText.b3573353')}
+            </button>
             <input
               ref={fileInputRef}
               type="file"
@@ -128,11 +155,13 @@ export default function PdfSplitterTool() {
           {/* Range Selection Box */}
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-900 space-y-4">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-              <Scissors className="h-3.5 w-3.5 text-indigo-500" /> {t("uiText.b12ef05d")}</span>
+              <Scissors className="h-3.5 w-3.5 text-indigo-500" /> {t('uiText.b12ef05d')}
+            </span>
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                {t("uiText.c76892ac")}{pageCount})
+                {t('uiText.c76892ac')}
+                {pageCount})
               </label>
               <input
                 type="text"
@@ -142,7 +171,8 @@ export default function PdfSplitterTool() {
                 className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2 text-xs text-slate-900 font-mono focus:ring-2 focus:ring-indigo-500 dark:border-slate-700 dark:bg-slate-800 dark:text-white"
               />
               <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-                {t("uiText.97b07537")}</p>
+                {t('uiText.97b07537')}
+              </p>
             </div>
 
             {/* Quick Presets */}
@@ -151,13 +181,15 @@ export default function PdfSplitterTool() {
                 onClick={() => setRangeInput('1')}
                 className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-[11px] font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-200"
               >
-                {t("uiText.9ba938e0")}</button>
+                {t('uiText.9ba938e0')}
+              </button>
               {pageCount >= 2 && (
                 <button
                   onClick={() => setRangeInput(`1-${Math.ceil(pageCount / 2)}`)}
                   className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-[11px] font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-200"
                 >
-                  {t("uiText.4d39bc60")}{Math.ceil(pageCount / 2)})
+                  {t('uiText.4d39bc60')}
+                  {Math.ceil(pageCount / 2)})
                 </button>
               )}
               {pageCount >= 2 && (
@@ -165,14 +197,16 @@ export default function PdfSplitterTool() {
                   onClick={() => setRangeInput(`${Math.ceil(pageCount / 2) + 1}-${pageCount}`)}
                   className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-[11px] font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-200"
                 >
-                  {t("uiText.2ed74f82")}{Math.ceil(pageCount / 2) + 1}-{pageCount})
+                  {t('uiText.2ed74f82')}
+                  {Math.ceil(pageCount / 2) + 1}-{pageCount})
                 </button>
               )}
               <button
                 onClick={() => setRangeInput(String(pageCount))}
                 className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-[11px] font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-200"
               >
-                {t("uiText.db7aa4a8")}{pageCount})
+                {t('uiText.db7aa4a8')}
+                {pageCount})
               </button>
             </div>
 
@@ -183,7 +217,7 @@ export default function PdfSplitterTool() {
                 className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-500 transition shadow-sm disabled:opacity-50"
               >
                 <Scissors className="h-4 w-4" />
-                {isSplitting ? t("uiText.6894a118") : t("uiText.57878a1b")}
+                {isSplitting ? t('uiText.6894a118') : t('uiText.57878a1b')}
               </button>
 
               {splitPdfUrl && (
@@ -191,7 +225,8 @@ export default function PdfSplitterTool() {
                   onClick={handleDownload}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-700 text-white text-xs font-bold hover:bg-emerald-800 transition shadow-sm"
                 >
-                  <Download className="h-4 w-4" /> {t("uiText.b6b82aab")}</button>
+                  <Download className="h-4 w-4" /> {t('uiText.b6b82aab')}
+                </button>
               )}
             </div>
           </div>

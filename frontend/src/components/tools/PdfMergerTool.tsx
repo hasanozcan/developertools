@@ -1,11 +1,26 @@
 'use client';
 
 import { useLanguage } from '@/context/LanguageContext';
-import React, { useState, useRef } from 'react';
-import { Upload, Download, FileText, ArrowUp, ArrowDown, Trash2, Combine, CheckCircle2 } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  Upload,
+  Download,
+  FileText,
+  ArrowUp,
+  ArrowDown,
+  Trash2,
+  Combine,
+  CheckCircle2,
+} from 'lucide-react';
 import { PDFDocument } from 'pdf-lib';
 import { reorderPdfList, type PdfFileItem } from '@/lib/pdfMerger';
 import { formatFileSize } from '@/lib/imageCompressor';
+
+let nextPdfItemSeq = 0;
+function createPdfItemId(fileName: string): string {
+  nextPdfItemSeq += 1;
+  return `${fileName}-${nextPdfItemSeq}`;
+}
 
 export default function PdfMergerTool() {
   const { t } = useLanguage();
@@ -13,6 +28,27 @@ export default function PdfMergerTool() {
   const [isMerging, setIsMerging] = useState(false);
   const [mergedUrl, setMergedUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const mergedUrlRef = useRef<string | null>(null);
+  const isMountedRef = useRef(true);
+
+  const replaceMergedUrl = (nextUrl: string | null) => {
+    if (mergedUrlRef.current && mergedUrlRef.current !== nextUrl) {
+      URL.revokeObjectURL(mergedUrlRef.current);
+    }
+    mergedUrlRef.current = nextUrl;
+    setMergedUrl(nextUrl);
+  };
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      if (mergedUrlRef.current) {
+        URL.revokeObjectURL(mergedUrlRef.current);
+        mergedUrlRef.current = null;
+      }
+    };
+  }, []);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
@@ -34,7 +70,7 @@ export default function PdfMergerTool() {
       }
 
       newItems.push({
-        id: `${file.name}-${Date.now()}-${Math.random()}`,
+        id: createPdfItemId(file.name),
         name: file.name,
         size: file.size,
         data: uint8,
@@ -42,25 +78,26 @@ export default function PdfMergerTool() {
       });
     }
 
+    if (!isMountedRef.current) return;
     setFiles((prev) => [...prev, ...newItems]);
-    setMergedUrl(null);
+    replaceMergedUrl(null);
   };
 
   const moveUp = (index: number) => {
     if (index === 0) return;
     setFiles(reorderPdfList(files, index, index - 1));
-    setMergedUrl(null);
+    replaceMergedUrl(null);
   };
 
   const moveDown = (index: number) => {
     if (index === files.length - 1) return;
     setFiles(reorderPdfList(files, index, index + 1));
-    setMergedUrl(null);
+    replaceMergedUrl(null);
   };
 
   const removeFile = (id: string) => {
     setFiles(files.filter((f) => f.id !== id));
-    setMergedUrl(null);
+    replaceMergedUrl(null);
   };
 
   const handleMerge = async () => {
@@ -77,13 +114,16 @@ export default function PdfMergerTool() {
       }
 
       const pdfBytes = await mergedPdf.save();
+      if (!isMountedRef.current) return;
       const blob = new Blob([pdfBytes as any], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
-      setMergedUrl(url);
+      replaceMergedUrl(url);
     } catch (err) {
       console.error('Merge error:', err);
     } finally {
-      setIsMerging(false);
+      if (isMountedRef.current) {
+        setIsMerging(false);
+      }
     }
   };
 
@@ -115,9 +155,9 @@ export default function PdfMergerTool() {
         </div>
         <div>
           <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200">
-            {t("uiText.3fe9db76")}</h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
-            {t("uiText.1f34ea3f")}</p>
+            {t('uiText.3fe9db76')}
+          </h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400">{t('uiText.1f34ea3f')}</p>
         </div>
       </div>
 
@@ -126,13 +166,18 @@ export default function PdfMergerTool() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              {t("uiText.25a8d2d9")}{files.length})
+              {t('uiText.25a8d2d9')}
+              {files.length})
             </span>
             <button
-              onClick={() => setFiles([])}
+              onClick={() => {
+                setFiles([]);
+                replaceMergedUrl(null);
+              }}
               className="text-xs text-red-500 hover:underline"
             >
-              {t("uiText.de7f94e5")}</button>
+              {t('uiText.de7f94e5')}
+            </button>
           </div>
 
           <div className="space-y-2">
@@ -150,7 +195,9 @@ export default function PdfMergerTool() {
                       {index + 1}. {file.name}
                     </p>
                     <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                      {file.pageCount} {file.pageCount === 1 ? t("uiText.815dfa76") : t("uiText.abf095df")} • {formatFileSize(file.size)}
+                      {file.pageCount}{' '}
+                      {file.pageCount === 1 ? t('uiText.815dfa76') : t('uiText.abf095df')} •{' '}
+                      {formatFileSize(file.size)}
                     </p>
                   </div>
                 </div>
@@ -160,7 +207,7 @@ export default function PdfMergerTool() {
                     disabled={index === 0}
                     onClick={() => moveUp(index)}
                     className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30"
-                    title={t("uiText.e6875021")}
+                    title={t('uiText.e6875021')}
                   >
                     <ArrowUp className="h-4 w-4" />
                   </button>
@@ -168,14 +215,14 @@ export default function PdfMergerTool() {
                     disabled={index === files.length - 1}
                     onClick={() => moveDown(index)}
                     className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30"
-                    title={t("uiText.ab5bae88")}
+                    title={t('uiText.ab5bae88')}
                   >
                     <ArrowDown className="h-4 w-4" />
                   </button>
                   <button
                     onClick={() => removeFile(file.id)}
                     className="p-1.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"
-                    title={t("uiText.21a5901d")}
+                    title={t('uiText.21a5901d')}
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -187,7 +234,7 @@ export default function PdfMergerTool() {
           {/* Action Footer */}
           <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-slate-50/80 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5">
             <span className="text-xs text-slate-600 dark:text-slate-400">
-              {t("uiText.8baeb255")} {files.reduce((acc, f) => acc + (f.pageCount || 1), 0)}
+              {t('uiText.8baeb255')} {files.reduce((acc, f) => acc + (f.pageCount || 1), 0)}
             </span>
 
             <div className="flex items-center gap-3">
@@ -197,7 +244,7 @@ export default function PdfMergerTool() {
                 className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-500 transition shadow-sm disabled:opacity-50"
               >
                 <Combine className="h-4 w-4" />
-                {isMerging ? t("uiText.d58ef773") : t("uiText.50e98a03")}
+                {isMerging ? t('uiText.d58ef773') : t('uiText.50e98a03')}
               </button>
 
               {mergedUrl && (
@@ -205,7 +252,8 @@ export default function PdfMergerTool() {
                   onClick={handleDownload}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-700 text-white text-xs font-bold hover:bg-emerald-800 transition shadow-sm"
                 >
-                  <Download className="h-4 w-4" /> {t("uiText.4a47c785")}</button>
+                  <Download className="h-4 w-4" /> {t('uiText.4a47c785')}
+                </button>
               )}
             </div>
           </div>

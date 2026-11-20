@@ -19,23 +19,107 @@ import {
   type ToolCollection,
 } from '@/lib/toolCollections';
 
-const indexCopy: Record<Language, { eyebrow: string; title: string; description: string; explore: string; tools: string }> = {
-  en: { eyebrow: 'Developer workflows', title: 'Developer Tool Collections', description: 'Start from the job you need to finish, then move through related DevsTools without hunting for each utility separately.', explore: 'Explore collection', tools: 'tools' },
-  tr: { eyebrow: 'Geliştirici iş akışları', title: 'Geliştirici Araç Koleksiyonları', description: 'Yapmak istediğiniz işe göre hazırlanmış araç kümelerinden başlayın ve ilgili araçlar arasında hızlıca ilerleyin.', explore: 'Koleksiyonu aç', tools: 'araç' },
-  de: { eyebrow: 'Entwickler-Workflows', title: 'Entwickler-Tool-Sammlungen', description: 'Starten Sie mit kuratierten Tool-Sammlungen für Ihre Aufgabe und wechseln Sie schnell zwischen zusammengehörigen Werkzeugen.', explore: 'Sammlung öffnen', tools: 'Tools' },
-  es: { eyebrow: 'Flujos de desarrollo', title: 'Colecciones de herramientas para desarrolladores', description: 'Empieza con colecciones creadas para una tarea concreta y avanza rápidamente entre herramientas relacionadas.', explore: 'Abrir colección', tools: 'herramientas' },
-  fr: { eyebrow: 'Workflows développeur', title: 'Collections d’outils pour développeurs', description: 'Commencez par une collection adaptée à votre tâche puis enchaînez rapidement les outils associés.', explore: 'Ouvrir la collection', tools: 'outils' },
-  ru: { eyebrow: 'Рабочие процессы разработчика', title: 'Коллекции инструментов разработчика', description: 'Начните с подборки под конкретную задачу и быстро переходите между связанными инструментами.', explore: 'Открыть коллекцию', tools: 'инструментов' },
-  zh: { eyebrow: '开发者工作流', title: '开发者工具合集', description: '从面向具体任务的工具合集开始，并在相关工具之间快速衔接。', explore: '打开合集', tools: '个工具' },
+const indexCopy: Record<
+  Language,
+  { eyebrow: string; title: string; description: string; explore: string; tools: string }
+> = {
+  en: {
+    eyebrow: 'Developer workflows',
+    title: 'Developer Tool Collections',
+    description:
+      'Start from the job you need to finish, then move through related DevsTools without hunting for each utility separately.',
+    explore: 'Explore collection',
+    tools: 'tools',
+  },
+  tr: {
+    eyebrow: 'Geliştirici iş akışları',
+    title: 'Geliştirici Araç Koleksiyonları',
+    description:
+      'Yapmak istediğiniz işe göre hazırlanmış araç kümelerinden başlayın ve ilgili araçlar arasında hızlıca ilerleyin.',
+    explore: 'Koleksiyonu aç',
+    tools: 'araç',
+  },
+  de: {
+    eyebrow: 'Entwickler-Workflows',
+    title: 'Entwickler-Tool-Sammlungen',
+    description:
+      'Starten Sie mit kuratierten Tool-Sammlungen für Ihre Aufgabe und wechseln Sie schnell zwischen zusammengehörigen Werkzeugen.',
+    explore: 'Sammlung öffnen',
+    tools: 'Tools',
+  },
+  es: {
+    eyebrow: 'Flujos de desarrollo',
+    title: 'Colecciones de herramientas para desarrolladores',
+    description:
+      'Empieza con colecciones creadas para una tarea concreta y avanza rápidamente entre herramientas relacionadas.',
+    explore: 'Abrir colección',
+    tools: 'herramientas',
+  },
+  fr: {
+    eyebrow: 'Workflows développeur',
+    title: 'Collections d’outils pour développeurs',
+    description:
+      'Commencez par une collection adaptée à votre tâche puis enchaînez rapidement les outils associés.',
+    explore: 'Ouvrir la collection',
+    tools: 'outils',
+  },
+  ru: {
+    eyebrow: 'Рабочие процессы разработчика',
+    title: 'Коллекции инструментов разработчика',
+    description:
+      'Начните с подборки под конкретную задачу и быстро переходите между связанными инструментами.',
+    explore: 'Открыть коллекцию',
+    tools: 'инструментов',
+  },
+  zh: {
+    eyebrow: '开发者工作流',
+    title: '开发者工具合集',
+    description: '从面向具体任务的工具合集开始，并在相关工具之间快速衔接。',
+    explore: '打开合集',
+    tools: '个工具',
+  },
 };
 
-const detailCopy: Record<Language, { back: string; eyebrow: string; toolsHeading: string; open: string }> = {
-  en: { back: 'Collections', eyebrow: 'Curated workflow', toolsHeading: 'Tools in this collection', open: 'Open' },
-  tr: { back: 'Koleksiyonlar', eyebrow: 'Seçilmiş iş akışı', toolsHeading: 'Bu koleksiyondaki araçlar', open: 'Aç' },
-  de: { back: 'Sammlungen', eyebrow: 'Kuratierter Workflow', toolsHeading: 'Tools in dieser Sammlung', open: 'Öffnen' },
-  es: { back: 'Colecciones', eyebrow: 'Flujo seleccionado', toolsHeading: 'Herramientas de esta colección', open: 'Abrir' },
-  fr: { back: 'Collections', eyebrow: 'Workflow sélectionné', toolsHeading: 'Outils de cette collection', open: 'Ouvrir' },
-  ru: { back: 'Коллекции', eyebrow: 'Подобранный процесс', toolsHeading: 'Инструменты в этой коллекции', open: 'Открыть' },
+const detailCopy: Record<
+  Language,
+  { back: string; eyebrow: string; toolsHeading: string; open: string }
+> = {
+  en: {
+    back: 'Collections',
+    eyebrow: 'Curated workflow',
+    toolsHeading: 'Tools in this collection',
+    open: 'Open',
+  },
+  tr: {
+    back: 'Koleksiyonlar',
+    eyebrow: 'Seçilmiş iş akışı',
+    toolsHeading: 'Bu koleksiyondaki araçlar',
+    open: 'Aç',
+  },
+  de: {
+    back: 'Sammlungen',
+    eyebrow: 'Kuratierter Workflow',
+    toolsHeading: 'Tools in dieser Sammlung',
+    open: 'Öffnen',
+  },
+  es: {
+    back: 'Colecciones',
+    eyebrow: 'Flujo seleccionado',
+    toolsHeading: 'Herramientas de esta colección',
+    open: 'Abrir',
+  },
+  fr: {
+    back: 'Collections',
+    eyebrow: 'Workflow sélectionné',
+    toolsHeading: 'Outils de cette collection',
+    open: 'Ouvrir',
+  },
+  ru: {
+    back: 'Коллекции',
+    eyebrow: 'Подобранный процесс',
+    toolsHeading: 'Инструменты в этой коллекции',
+    open: 'Открыть',
+  },
   zh: { back: '工具合集', eyebrow: '精选工作流', toolsHeading: '此合集中的工具', open: '打开' },
 };
 
@@ -134,7 +218,13 @@ export function CollectionIndexContent({ locale }: { locale: Language }) {
   );
 }
 
-export function CollectionDetailContent({ locale, collection }: { locale: Language; collection: ToolCollection }) {
+export function CollectionDetailContent({
+  locale,
+  collection,
+}: {
+  locale: Language;
+  collection: ToolCollection;
+}) {
   const localized = getLocalizedCollection(collection, locale);
   const tools = getCollectionTools(collection);
   const ui = detailCopy[locale];
@@ -147,18 +237,34 @@ export function CollectionDetailContent({ locale, collection }: { locale: Langua
   if (locale === 'en') {
     const footerSlot = resolveAdSenseSlot(process.env.NEXT_PUBLIC_ADSENSE_FOOTER_SLOT);
     topSlot = resolveAdSenseSlot(process.env.NEXT_PUBLIC_ADSENSE_COLLECTION_TOP_SLOT, footerSlot);
-    bottomSlot = resolveAdSenseSlot(process.env.NEXT_PUBLIC_ADSENSE_COLLECTION_BOTTOM_SLOT, footerSlot);
+    bottomSlot = resolveAdSenseSlot(
+      process.env.NEXT_PUBLIC_ADSENSE_COLLECTION_BOTTOM_SLOT,
+      footerSlot,
+    );
   } else {
-    topSlot = resolveAdSenseSlot(process.env.NEXT_PUBLIC_ADSENSE_COLLECTION_TOP_SLOT, DEFAULT_ADSENSE_COLLECTION_TOP_SLOT);
-    bottomSlot = resolveAdSenseSlot(process.env.NEXT_PUBLIC_ADSENSE_COLLECTION_BOTTOM_SLOT, DEFAULT_ADSENSE_COLLECTION_BOTTOM_SLOT);
+    topSlot = resolveAdSenseSlot(
+      process.env.NEXT_PUBLIC_ADSENSE_COLLECTION_TOP_SLOT,
+      DEFAULT_ADSENSE_COLLECTION_TOP_SLOT,
+    );
+    bottomSlot = resolveAdSenseSlot(
+      process.env.NEXT_PUBLIC_ADSENSE_COLLECTION_BOTTOM_SLOT,
+      DEFAULT_ADSENSE_COLLECTION_BOTTOM_SLOT,
+    );
   }
   const placementSuffix = locale === 'en' ? '' : `-${locale}`;
 
-  const paragraphs = localized.introParagraphs && localized.introParagraphs.length > 0 ? localized.introParagraphs : [localized.intro];
+  const paragraphs =
+    localized.introParagraphs && localized.introParagraphs.length > 0
+      ? localized.introParagraphs
+      : [localized.intro];
   const toolMeta = new Map(
-    tools.map((tool) => [tool.slug, getLocalizedToolMeta(tool.slug, locale, tool.name, tool.shortDescription || tool.name)]),
+    tools.map((tool) => [
+      tool.slug,
+      getLocalizedToolMeta(tool.slug, locale, tool.name, tool.shortDescription || tool.name),
+    ]),
   );
-  const workflowSteps = locale === 'en' && localized.workflowSteps ? localized.workflowSteps : undefined;
+  const workflowSteps =
+    locale === 'en' && localized.workflowSteps ? localized.workflowSteps : undefined;
   const guides = developerGuides
     .filter((guide) => guide.collectionHref === `/collections/${slug}`)
     .map((guide) => ({ name: guide.title, href: `/guides/${guide.slug}` }));
@@ -181,9 +287,15 @@ export function CollectionDetailContent({ locale, collection }: { locale: Langua
 
   return (
     <main className="page-shell py-8 sm:py-12">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonForHtmlScript(structuredData) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonForHtmlScript(structuredData) }}
+      />
       <nav className="mb-5 font-mono text-xs text-slate-600 dark:text-slate-400 sm:text-sm">
-        <Link href={`${prefix}/collections`} className="hover:text-slate-950 hover:underline dark:hover:text-white">
+        <Link
+          href={`${prefix}/collections`}
+          className="hover:text-slate-950 hover:underline dark:hover:text-white"
+        >
           {ui.back}
         </Link>
         <span className="px-2 text-slate-400 dark:text-slate-600">/</span>
@@ -197,26 +309,36 @@ export function CollectionDetailContent({ locale, collection }: { locale: Langua
         <h1 className="break-words text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white sm:text-4xl">
           {localized.title}
         </h1>
-        <div data-collection-intro="true" className="mt-4 max-w-3xl space-y-4 text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">
+        <div
+          data-collection-intro="true"
+          className="mt-4 max-w-3xl space-y-4 text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base"
+        >
           {paragraphs.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}
         </div>
-        <div className="mt-5 flex flex-wrap gap-2">
-          {collection.searchIntents.map((intent) => (
-            <span
-              key={intent}
-              className="rounded border border-slate-200 bg-slate-50 px-2.5 py-1 font-mono text-xs text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300"
-            >
-              {intent}
-            </span>
-          ))}
-        </div>
+        {locale === 'en' && collection.searchIntents.length > 0 && (
+          <div className="mt-5 flex flex-wrap gap-2">
+            {collection.searchIntents.map((intent) => (
+              <span
+                key={intent}
+                className="rounded border border-slate-200 bg-slate-50 px-2.5 py-1 font-mono text-xs text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300"
+              >
+                {intent}
+              </span>
+            ))}
+          </div>
+        )}
       </section>
 
       <RelatedGuideLinks guides={guides} locale={locale} />
 
-      <AdSense slot={topSlot} format="auto" placement={`collection-${slug}${placementSuffix}-top`} className="mb-8 min-h-[90px]" />
+      <AdSense
+        slot={topSlot}
+        format="auto"
+        placement={`collection-${slug}${placementSuffix}-top`}
+        className="mb-8 min-h-[90px]"
+      />
 
       <section className="mb-10" aria-labelledby="collection-tools-heading">
         <h2
@@ -242,7 +364,9 @@ export function CollectionDetailContent({ locale, collection }: { locale: Langua
                     {meta.name}
                   </h3>
                 </div>
-                <p className="text-sm leading-6 text-slate-600 dark:text-slate-300">{meta.description}</p>
+                <p className="text-sm leading-6 text-slate-600 dark:text-slate-300">
+                  {meta.description}
+                </p>
               </Link>
             );
           })}
@@ -269,8 +393,12 @@ export function CollectionDetailContent({ locale, collection }: { locale: Langua
                   <span className="mb-2 inline-block font-mono text-[11px] font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
                     STEP {String(index + 1).padStart(2, '0')}
                   </span>
-                  <h3 className="break-words text-lg font-bold text-slate-950 dark:text-white">{step.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{step.description}</p>
+                  <h3 className="break-words text-lg font-bold text-slate-950 dark:text-white">
+                    {step.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
+                    {step.description}
+                  </p>
                   <Link
                     href={`${prefix}/tools/${tool.categorySlug}/${tool.slug}`}
                     className="mt-4 inline-block font-mono text-xs font-semibold text-emerald-700 hover:underline dark:text-emerald-400"
@@ -284,7 +412,12 @@ export function CollectionDetailContent({ locale, collection }: { locale: Langua
         </section>
       )}
 
-      <AdSense slot={bottomSlot} format="auto" placement={`collection-${slug}${placementSuffix}-bottom`} className="mt-8 min-h-[90px]" />
+      <AdSense
+        slot={bottomSlot}
+        format="auto"
+        placement={`collection-${slug}${placementSuffix}-bottom`}
+        className="mt-8 min-h-[90px]"
+      />
     </main>
   );
 }

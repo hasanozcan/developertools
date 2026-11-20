@@ -36,7 +36,7 @@ export default async function CategoryOpenGraphImage({ params }: ImageProps) {
   );
   const categoryCount =
     categoryTools.length > 0 ? categoryTools.length : categoryInfo?.toolCount || 10;
-  const totalCount = toolCatalog.length > 0 ? toolCatalog.length : 476;
+  const totalCount = toolCatalog.length > 0 ? toolCatalog.length : 467;
   const previewTools = categoryTools.slice(0, 4).map((t) => t.name);
   const glyph = CATEGORY_GLYPHS[categorySlug.toLowerCase()] || '</>';
 

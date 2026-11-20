@@ -68,7 +68,7 @@
   <!-- Bottom Spec Bar -->
   <line x1="64" y1="522" x2="1136" y2="522" stroke="#27272A" stroke-width="1"/>
   <text x="80" y="558" font-family="Consolas, 'Courier New', monospace" font-size="15" font-weight="600" letter-spacing="1.8" fill="#A1A1AA">
-    476 TOOLS  •  ZERO SERVER UPLOADS  •  DEVSTOOLS.APP
+    467 TOOLS  •  ZERO SERVER UPLOADS  •  DEVSTOOLS.APP
   </text>
   <rect x="1040" y="544" width="8" height="8" rx="1" fill="#10B981"/>
   <text x="1120" y="558" text-anchor="end" font-family="Consolas, 'Courier New', monospace" font-size="15" font-weight="600" letter-spacing="1.5" fill="#FAFAFA">

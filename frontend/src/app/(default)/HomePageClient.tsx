@@ -175,7 +175,7 @@ const toolIconMap: Record<string, LucideIcon> = {
   'bip39-generator': Key,
   'dmarc-generator': ShieldCheck,
   'json-to-models': Code2,
-  'dockerfile-ai-optimized-generator': Binary,
+  'dockerfile-generator': Binary,
   'kubernetes-deployment-generator': Network,
   'tailwind-v4-mesh-gradient-generator': Paintbrush,
   'blake3-hash-generator': ShieldCheck,
@@ -196,7 +196,7 @@ const popularToolSlugs = new Set([
   'qr-code',
   'md5-hash',
   'color-converter',
-  'dockerfile-ai-optimized-generator',
+  'dockerfile-generator',
   'tailwind-v4-mesh-gradient-generator',
   'blake3-hash-generator',
 ]);
@@ -280,8 +280,8 @@ const spotlightTools = [
   { slug: 'jwt-decoder', icon: KeyRound, category: 'encoding' },
   { slug: 'base64', icon: Binary, category: 'encoding' },
   { slug: 'uuid-generator', icon: Fingerprint, category: 'generators' },
-  { slug: 'regex-tester', icon: Regex, category: 'utilities' },
-  { slug: 'dockerfile-ai-optimized-generator', icon: Binary, category: 'generators' },
+  { slug: 'regex-tester', icon: Regex, category: 'text' },
+  { slug: 'dockerfile-generator', icon: Binary, category: 'utilities' },
   { slug: 'sql-to-python-sqlalchemy', icon: Database, category: 'converters' },
   { slug: 'tailwind-v4-mesh-gradient-generator', icon: Paintbrush, category: 'generators' },
 ];

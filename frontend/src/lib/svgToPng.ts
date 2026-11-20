@@ -1,3 +1,5 @@
+import DOMPurify from 'dompurify';
+
 export interface SvgDimensions {
   width: number;
   height: number;
@@ -6,7 +8,9 @@ export interface SvgDimensions {
 export function parseSvgDimensions(svgContent: string): SvgDimensions {
   const widthMatch = svgContent.match(/\bwidth\s*=\s*["']?([\d.]+)(px)?["']?/i);
   const heightMatch = svgContent.match(/\bheight\s*=\s*["']?([\d.]+)(px)?["']?/i);
-  const viewBoxMatch = svgContent.match(/\bviewBox\s*=\s*["']?[\d.]+[\s,]+[\d.]+[\s,]+([\d.]+)[\s,]+([\d.]+)["']?/i);
+  const viewBoxMatch = svgContent.match(
+    /\bviewBox\s*=\s*["']?[\d.]+[\s,]+[\d.]+[\s,]+([\d.]+)[\s,]+([\d.]+)["']?/i,
+  );
 
   let width = 300;
   let height = 150;
@@ -30,27 +34,70 @@ export function calculateExportDimensions(original: SvgDimensions, scale: number
   };
 }
 
-const DANGEROUS_SVG_TAG_BLOCK_RE =
-  /<(?:[a-z0-9_-]+:)?(script|foreignObject|iframe|object|embed)\b[^>]*>[\s\S]*?<\/(?:[a-z0-9_-]+:)?\1\s*>/gi;
-const DANGEROUS_SVG_TAG_SINGLE_RE =
-  /<(?:[a-z0-9_-]+:)?(script|foreignObject|iframe|object|embed)\b[^>]*\/?>/gi;
+const DANGEROUS_SVG_TAGS =
+  'script|foreignObject|iframe|object|embed|style|animate[a-z0-9_-]*|set|handler|listener';
+const DANGEROUS_SVG_TAG_SELF_CLOSING_RE = new RegExp(
+  `<(?:[a-z0-9_-]+:)?(?:${DANGEROUS_SVG_TAGS})\\b(?:[^>"']|"[^"]*"|'[^']*')*\\/>`,
+  'gi',
+);
+const DANGEROUS_SVG_TAG_BLOCK_RE = new RegExp(
+  `<(?:[a-z0-9_-]+:)?(${DANGEROUS_SVG_TAGS})\\b(?:[^>"']|"[^"]*"|'[^']*')*>[\\s\\S]*?<\\/(?:[a-z0-9_-]+:)?\\1\\s*>`,
+  'gi',
+);
+const DANGEROUS_SVG_TAG_SINGLE_RE = new RegExp(
+  `<(?:[a-z0-9_-]+:)?(?:${DANGEROUS_SVG_TAGS})\\b(?:[^>"']|"[^"]*"|'[^']*')*>`,
+  'gi',
+);
 const SVG_TAG_RE = /<([a-zA-Z][a-zA-Z0-9:_-]*)((?:[^>"']|"[^"]*"|'[^']*')*)>/g;
 const SVG_ATTR_RE =
   /([a-zA-Z_:][a-zA-Z0-9:._-]*)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`\/]+)))?/g;
 const URL_ATTR_NAMES = new Set(['href', 'xlink:href', 'src', 'action', 'formaction']);
 const SAFE_SVG_DATA_URI_RE = /^data:image\/(?:png|jpe?g|gif|webp);base64,/i;
+const EXTERNAL_CSS_URL_RE = /url\(\s*['"]?\s*(?:https?:|\/\/)/i;
 const CONTROL_OR_SPACE_RE = /[\u0000-\u0020\u007F]/g;
+
+const DOMPURIFY_SVG_FORBID_TAGS = [
+  'script',
+  'foreignObject',
+  'iframe',
+  'object',
+  'embed',
+  'style',
+  'animate',
+  'set',
+  'animateTransform',
+  'animateMotion',
+  'animateColor',
+  'handler',
+  'listener',
+];
+
+const DOMPURIFY_SVG_FORBID_ATTR = [
+  'onload',
+  'onerror',
+  'onclick',
+  'onmouseover',
+  'onfocus',
+  'onbegin',
+  'onend',
+  'onrepeat',
+];
 
 function decodeEntitiesForProtocolCheck(value: string): string {
   return value
     .replace(/&#(\d+);?/g, (_, dec) => String.fromCharCode(Number(dec)))
     .replace(/&#x([0-9a-f]+);?/gi, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
-    .replace(/&colon;/gi, ':');
+    .replace(/&colon;/gi, ':')
+    .replace(/&tab;?/gi, '\t')
+    .replace(/&newline;?/gi, '\n');
 }
 
 function isUnsafeSvgUrl(value: string): boolean {
   const normalized = decodeEntitiesForProtocolCheck(value).replace(CONTROL_OR_SPACE_RE, '');
   if (/^(?:javascript|vbscript):/i.test(normalized)) {
+    return true;
+  }
+  if (/^(?:https?:)?\/\//i.test(normalized)) {
     return true;
   }
   if (/^data:/i.test(normalized) && !SAFE_SVG_DATA_URI_RE.test(normalized)) {
@@ -61,7 +108,10 @@ function isUnsafeSvgUrl(value: string): boolean {
 
 function isUnsafeSvgStyle(value: string): boolean {
   const normalized = decodeEntitiesForProtocolCheck(value).replace(CONTROL_OR_SPACE_RE, '');
-  return /(?:javascript|vbscript):|expression\(|data:text\/html/i.test(normalized);
+  return (
+    /(?:javascript|vbscript):|expression\(|data:text\/html|@import/i.test(normalized) ||
+    EXTERNAL_CSS_URL_RE.test(normalized)
+  );
 }
 
 function stripUnsafeSvgAttributes(tag: string, tagName: string, rawAttrs: string): string {
@@ -89,6 +139,15 @@ function stripUnsafeSvgAttributes(tag: string, tagName: string, rawAttrs: string
       removedAny = true;
       continue;
     }
+    if (
+      !lowerName.startsWith('xmlns') &&
+      EXTERNAL_CSS_URL_RE.test(
+        decodeEntitiesForProtocolCheck(attrValue).replace(CONTROL_OR_SPACE_RE, ''),
+      )
+    ) {
+      removedAny = true;
+      continue;
+    }
 
     keptAttrs.push(match[0]);
   }
@@ -103,12 +162,22 @@ function stripUnsafeSvgAttributes(tag: string, tagName: string, rawAttrs: string
 
 export function sanitizeSvg(svg: string): string {
   let cleaned = svg;
-  let previous = '';
-  while (cleaned !== previous) {
-    previous = cleaned;
-    cleaned = cleaned
-      .replace(DANGEROUS_SVG_TAG_BLOCK_RE, '')
-      .replace(DANGEROUS_SVG_TAG_SINGLE_RE, '');
+
+  if (typeof DOMPurify?.sanitize === 'function') {
+    cleaned = DOMPurify.sanitize(cleaned, {
+      USE_PROFILES: { svg: true, svgFilters: true },
+      FORBID_TAGS: DOMPURIFY_SVG_FORBID_TAGS,
+      FORBID_ATTR: DOMPURIFY_SVG_FORBID_ATTR,
+    });
+  } else {
+    let previous = '';
+    while (cleaned !== previous) {
+      previous = cleaned;
+      cleaned = cleaned
+        .replace(DANGEROUS_SVG_TAG_SELF_CLOSING_RE, '')
+        .replace(DANGEROUS_SVG_TAG_BLOCK_RE, '')
+        .replace(DANGEROUS_SVG_TAG_SINGLE_RE, '');
+    }
   }
 
   cleaned = cleaned.replace(SVG_TAG_RE, (fullTag, tagName: string, rawAttrs: string) =>

@@ -53,4 +53,31 @@ describe('extension web integration', () => {
     expect(searchUrl.search).toBe('');
     expect(new URLSearchParams(searchUrl.hash.slice(1)).get('search')).toBe(selectionText);
   });
+
+  it('includes the text category chip in popup.html', () => {
+    const popupHtml = fs.readFileSync(path.join(extensionDir, 'popup.html'), 'utf8');
+    expect(popupHtml).toContain('data-cat="text"');
+  });
+
+  it('opens omnibox searches via the fragment rather than a query string', () => {
+    const onInputEntered = { addListener: vi.fn() };
+    const create = vi.fn();
+    const update = vi.fn();
+    vm.runInNewContext(fs.readFileSync(path.join(extensionDir, 'background.js'), 'utf8'), {
+      chrome: {
+        contextMenus: { onClicked: { addListener: vi.fn() }, create: vi.fn(), removeAll: vi.fn() },
+        runtime: { onInstalled: { addListener: vi.fn() } },
+        omnibox: {
+          onInputChanged: { addListener: vi.fn() },
+          onInputEntered,
+        },
+        tabs: { create, update },
+      },
+    });
+    const handler = onInputEntered.addListener.mock.calls[0][0];
+    handler('json formatter', 'newForegroundTab');
+    const url = new URL(create.mock.lastCall![0].url);
+    expect(url.search).toBe('');
+    expect(new URLSearchParams(url.hash.slice(1)).get('search')).toBe('json formatter');
+  });
 });

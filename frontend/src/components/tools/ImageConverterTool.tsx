@@ -1,7 +1,7 @@
 'use client';
 
 import { useLanguage } from '@/context/LanguageContext';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Upload, Download, ArrowRightLeft, Image as ImageIcon } from 'lucide-react';
 import {
   SUPPORTED_IMAGE_FORMATS,
@@ -21,11 +21,33 @@ export default function ImageConverterTool() {
   const [quality, setQuality] = useState<number>(90);
   const [isConverting, setIsConverting] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const convertedUrlRef = useRef<string | null>(null);
+  const isMountedRef = useRef(true);
+
+  const replaceConvertedUrl = (nextUrl: string | null) => {
+    if (convertedUrlRef.current && convertedUrlRef.current !== nextUrl) {
+      URL.revokeObjectURL(convertedUrlRef.current);
+    }
+    convertedUrlRef.current = nextUrl;
+    setConvertedUrl(nextUrl);
+  };
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      if (convertedUrlRef.current) {
+        URL.revokeObjectURL(convertedUrlRef.current);
+        convertedUrlRef.current = null;
+      }
+    };
+  }, []);
 
   const convertImage = (imageFile: File, fmt: SupportedImageFormat, q: number) => {
     setIsConverting(true);
     const reader = new FileReader();
     reader.onload = (e) => {
+      if (!isMountedRef.current) return;
       const dataUrl = e.target?.result as string;
       setPreviewUrl(dataUrl);
 
@@ -36,7 +58,10 @@ export default function ImageConverterTool() {
         canvas.height = img.height;
 
         const ctx = canvas.getContext('2d');
-        if (!ctx) return;
+        if (!ctx) {
+          if (isMountedRef.current) setIsConverting(false);
+          return;
+        }
 
         if (fmt === 'image/jpeg') {
           // Fill background white for transparent images converting to JPEG
@@ -48,15 +73,19 @@ export default function ImageConverterTool() {
 
         canvas.toBlob(
           (blob) => {
+            if (!isMountedRef.current) return;
             if (blob) {
               setConvertedBlob(blob);
-              setConvertedUrl(URL.createObjectURL(blob));
+              replaceConvertedUrl(URL.createObjectURL(blob));
             }
             setIsConverting(false);
           },
           fmt,
-          q / 100
+          q / 100,
         );
+      };
+      img.onerror = () => {
+        if (isMountedRef.current) setIsConverting(false);
       };
       img.src = dataUrl;
     };
@@ -106,9 +135,9 @@ export default function ImageConverterTool() {
           </div>
           <div className="space-y-1">
             <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200">
-              {t("uiText.7e341302")}</h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              {t("uiText.d26adf64")}</p>
+              {t('uiText.7e341302')}
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">{t('uiText.d26adf64')}</p>
           </div>
         </div>
       ) : (
@@ -117,7 +146,8 @@ export default function ImageConverterTool() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-5 rounded-2xl bg-slate-50/80 dark:bg-slate-900/50 border border-slate-200/80 dark:border-white/5">
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                {t("uiText.50802e1b")}</label>
+                {t('uiText.50802e1b')}
+              </label>
               <select
                 value={targetFormat}
                 onChange={(e) => handleFormatChange(e.target.value as SupportedImageFormat)}
@@ -133,7 +163,7 @@ export default function ImageConverterTool() {
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                {t("uiText.5619a6b4")} {quality}%
+                {t('uiText.5619a6b4')} {quality}%
               </label>
               <input
                 type="range"
@@ -153,7 +183,8 @@ export default function ImageConverterTool() {
                 onClick={() => fileInputRef.current?.click()}
                 className="flex-1 px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
               >
-                {t("uiText.8d19477c")}</button>
+                {t('uiText.8d19477c')}
+              </button>
               <input
                 ref={fileInputRef}
                 type="file"
@@ -166,7 +197,8 @@ export default function ImageConverterTool() {
                 disabled={!convertedUrl || isConverting}
                 className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-500 transition disabled:opacity-50"
               >
-                <Download className="h-4 w-4" /> {t("common.download")}</button>
+                <Download className="h-4 w-4" /> {t('common.download')}
+              </button>
             </div>
           </div>
 
@@ -174,14 +206,18 @@ export default function ImageConverterTool() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2 text-center">
               <div className="flex justify-between items-center px-1">
-                <span className="text-xs font-bold text-slate-500 dark:text-slate-400">{t("tool.cssMinifier.original")}</span>
-                <span className="text-xs font-mono text-slate-400">{formatFileSize(file.size)}</span>
+                <span className="text-xs font-bold text-slate-500 dark:text-slate-400">
+                  {t('tool.cssMinifier.original')}
+                </span>
+                <span className="text-xs font-mono text-slate-400">
+                  {formatFileSize(file.size)}
+                </span>
               </div>
               <div className="rounded-2xl border border-slate-200 dark:border-slate-800 p-2 bg-slate-100 dark:bg-slate-950 flex items-center justify-center min-h-[250px]">
                 {previewUrl && (
                   <img
                     src={previewUrl}
-                    alt={t("tool.cssMinifier.original")}
+                    alt={t('tool.cssMinifier.original')}
                     className="max-h-80 object-contain rounded-xl"
                   />
                 )}
@@ -191,7 +227,8 @@ export default function ImageConverterTool() {
             <div className="space-y-2 text-center">
               <div className="flex justify-between items-center px-1">
                 <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">
-                  {t("uiText.807254e9")}{getImageExtension(targetFormat).toUpperCase()})
+                  {t('uiText.807254e9')}
+                  {getImageExtension(targetFormat).toUpperCase()})
                 </span>
                 {convertedBlob && (
                   <span className="text-xs font-mono text-indigo-500 font-bold">
@@ -203,11 +240,11 @@ export default function ImageConverterTool() {
                 {convertedUrl ? (
                   <img
                     src={convertedUrl}
-                    alt={t("uiText.c7b76e99")}
+                    alt={t('uiText.c7b76e99')}
                     className="max-h-80 object-contain rounded-xl"
                   />
                 ) : (
-                  <span className="text-xs text-slate-400">{t("uiText.1c99f296")}</span>
+                  <span className="text-xs text-slate-400">{t('uiText.1c99f296')}</span>
                 )}
               </div>
             </div>

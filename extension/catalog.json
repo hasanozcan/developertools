@@ -216,14 +216,6 @@
     "categoryName": "Generator Online"
   },
   {
-    "id": 30,
-    "slug": "svg-to-webp",
-    "name": "SVG to WebP Data URI Converter",
-    "shortDescription": "Encode SVG vector graphics into high-performance base64 data URIs.",
-    "categorySlug": "converters",
-    "categoryName": "Converter Online"
-  },
-  {
     "id": 32,
     "slug": "har-to-k6",
     "name": "HAR to k6 Load Test Script Converter",
@@ -2848,30 +2840,6 @@
     "categoryName": "Crypto & Security"
   },
   {
-    "id": 367,
-    "slug": "video-to-gif",
-    "name": "Video to GIF Maker & Converter",
-    "shortDescription": "Convert MP4, WebM, and MOV video clips to animated GIF with FPS, dimension, and trim controls.",
-    "categorySlug": "converters",
-    "categoryName": "Converters"
-  },
-  {
-    "id": 369,
-    "slug": "pdf-to-image",
-    "name": "PDF to PNG & JPG Image Converter",
-    "shortDescription": "Convert PDF document pages into high-resolution PNG and JPEG images client-side with ZIP download.",
-    "categorySlug": "converters",
-    "categoryName": "Converters"
-  },
-  {
-    "id": 370,
-    "slug": "audio-converter",
-    "name": "Audio Format Converter & Trimmer",
-    "shortDescription": "Convert audio files between WAV, MP3, and OGG formats with waveform preview and trimming.",
-    "categorySlug": "converters",
-    "categoryName": "Converters"
-  },
-  {
     "id": 371,
     "slug": "swagger-to-typescript",
     "name": "Swagger & OpenAPI to TypeScript Client Generator",
@@ -3240,14 +3208,6 @@
     "categoryName": "Converters"
   },
   {
-    "id": 427,
-    "slug": "dockerfile-ai-optimized-generator",
-    "name": "Multi-Stage Dockerfile Generator",
-    "shortDescription": "Generate production multi-stage Dockerfiles for Node, Python, Go, and Rust with security.",
-    "categorySlug": "generators",
-    "categoryName": "Generators"
-  },
-  {
     "id": 428,
     "slug": "kubernetes-deployment-generator",
     "name": "Kubernetes Deployment YAML Generator",
@@ -3268,14 +3228,6 @@
     "slug": "helm-chart-yaml-generator",
     "name": "Helm Chart & Values Scaffold Generator",
     "shortDescription": "Generate Helm Chart.yaml and values.yaml starter templates for cloud-native Kubernetes apps.",
-    "categorySlug": "generators",
-    "categoryName": "Generators"
-  },
-  {
-    "id": 431,
-    "slug": "gitlab-ci-pipeline-builder",
-    "name": "GitLab CI/CD Pipeline YAML Builder",
-    "shortDescription": "Generate multi-stage .gitlab-ci.yml pipeline configuration with build, test, and caching.",
     "categorySlug": "generators",
     "categoryName": "Generators"
   },
@@ -3496,14 +3448,6 @@
     "categoryName": "Utilities"
   },
   {
-    "id": 459,
-    "slug": "embedding-token-cost-estimator",
-    "name": "Text Embedding Token & API Cost Estimator",
-    "shortDescription": "Calculate vector embedding token costs across OpenAI text-embedding-3 and Voyage AI models.",
-    "categorySlug": "utilities",
-    "categoryName": "Utilities"
-  },
-  {
     "id": 460,
     "slug": "webhook-payload-simulator",
     "name": "Webhook Mock Event Payload Simulator",
@@ -3516,14 +3460,6 @@
     "slug": "network-port-reference",
     "name": "TCP/UDP Port Number Reference & Directory",
     "shortDescription": "Look up standard TCP and UDP port numbers, service assignments, and security notes.",
-    "categorySlug": "utilities",
-    "categoryName": "Utilities"
-  },
-  {
-    "id": 462,
-    "slug": "ssl-tls-handshake-simulator",
-    "name": "TLS 1.2 & TLS 1.3 Cryptographic Handshake Simulator",
-    "shortDescription": "Simulate and compare TLS 1.2 (2-RTT) and TLS 1.3 (1-RTT) cryptographic handshake flows.",
     "categorySlug": "utilities",
     "categoryName": "Utilities"
   },
@@ -3652,14 +3588,6 @@
     "slug": "pbkdf2-key-derivation",
     "name": "PBKDF2 Key Derivation Function Calculator",
     "shortDescription": "Derive secure cryptographic keys using PBKDF2 with HMAC-SHA256 and configurable iterations.",
-    "categorySlug": "crypto",
-    "categoryName": "Cryptography"
-  },
-  {
-    "id": 479,
-    "slug": "hmac-sha384-sha512-calculator",
-    "name": "HMAC-SHA384 & HMAC-SHA512 Signature Generator",
-    "shortDescription": "Calculate keyed hash message authentication codes (HMAC) with SHA-384 and SHA-512 digests.",
     "categorySlug": "crypto",
     "categoryName": "Cryptography"
   },

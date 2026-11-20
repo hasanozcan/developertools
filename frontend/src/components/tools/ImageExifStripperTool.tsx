@@ -1,8 +1,17 @@
 'use client';
 
 import { useLanguage } from '@/context/LanguageContext';
-import React, { useState, useRef } from 'react';
-import { Upload, Download, ShieldCheck, ShieldAlert, Camera, MapPin, Calendar, Info } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  Upload,
+  Download,
+  ShieldCheck,
+  ShieldAlert,
+  Camera,
+  MapPin,
+  Calendar,
+  Info,
+} from 'lucide-react';
 import { parseExifFromBuffer, stripJpegExif, type ParsedExifData } from '@/lib/imageExifStripper';
 import { formatFileSize } from '@/lib/imageCompressor';
 
@@ -14,25 +23,71 @@ export default function ImageExifStripperTool() {
   const [cleanBlob, setCleanBlob] = useState<Blob | null>(null);
   const [cleanUrl, setCleanUrl] = useState<string | null>(null);
   const [isStripped, setIsStripped] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const previewUrlRef = useRef<string | null>(null);
+  const cleanUrlRef = useRef<string | null>(null);
+  const isMountedRef = useRef(true);
+
+  const replacePreviewUrl = (nextUrl: string | null) => {
+    if (previewUrlRef.current && previewUrlRef.current !== nextUrl) {
+      URL.revokeObjectURL(previewUrlRef.current);
+    }
+    previewUrlRef.current = nextUrl;
+    setPreviewUrl(nextUrl);
+  };
+
+  const replaceCleanUrl = (nextUrl: string | null) => {
+    if (cleanUrlRef.current && cleanUrlRef.current !== nextUrl) {
+      URL.revokeObjectURL(cleanUrlRef.current);
+    }
+    cleanUrlRef.current = nextUrl;
+    setCleanUrl(nextUrl);
+  };
+
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      if (previewUrlRef.current) {
+        URL.revokeObjectURL(previewUrlRef.current);
+        previewUrlRef.current = null;
+      }
+      if (cleanUrlRef.current) {
+        URL.revokeObjectURL(cleanUrlRef.current);
+        cleanUrlRef.current = null;
+      }
+    };
+  }, []);
+
+  const isSvgImage = (candidate: File) =>
+    candidate.type.toLowerCase() === 'image/svg+xml' || /\.svg$/i.test(candidate.name);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
     if (!selected) return;
 
+    if (isSvgImage(selected)) {
+      setError('SVG images are not supported. Please upload a raster image (JPEG, PNG, or WebP).');
+      e.target.value = '';
+      return;
+    }
+
+    setError(null);
     setFile(selected);
     setIsStripped(false);
     setCleanBlob(null);
-    setCleanUrl(null);
+    replaceCleanUrl(null);
 
     const reader = new FileReader();
     reader.onload = (event) => {
       const buffer = event.target?.result as ArrayBuffer;
       if (buffer) {
+        if (!isMountedRef.current) return;
         const parsed = parseExifFromBuffer(buffer);
         setExifData(parsed);
         const dataUrl = URL.createObjectURL(new Blob([buffer], { type: selected.type }));
-        setPreviewUrl(dataUrl);
+        replacePreviewUrl(dataUrl);
       }
     };
     reader.readAsArrayBuffer(selected);
@@ -40,15 +95,22 @@ export default function ImageExifStripperTool() {
 
   const handleStrip = () => {
     if (!file) return;
+    if (isSvgImage(file)) {
+      setError('SVG images are not supported. Please upload a raster image (JPEG, PNG, or WebP).');
+      return;
+    }
+    setError(null);
 
     const reader = new FileReader();
     reader.onload = (event) => {
       const buffer = event.target?.result as ArrayBuffer;
       if (buffer) {
+        if (!isMountedRef.current) return;
         let cleanBytes: Uint8Array;
         if (file.type === 'image/jpeg' || file.name.match(/\.(jpg|jpeg)$/i)) {
           cleanBytes = stripJpegExif(buffer);
         } else {
+          if (!previewUrlRef.current) return;
           // Re-encode via canvas for non-JPEG
           const img = new Image();
           img.onload = () => {
@@ -58,20 +120,27 @@ export default function ImageExifStripperTool() {
             const ctx = canvas.getContext('2d');
             ctx?.drawImage(img, 0, 0);
             canvas.toBlob((blob) => {
-              if (blob) {
-                setCleanBlob(blob);
-                setCleanUrl(URL.createObjectURL(blob));
-                setIsStripped(true);
-              }
-            }, file.type);
+              if (!blob) return;
+              if (!isMountedRef.current) return;
+              const url = URL.createObjectURL(blob);
+              setCleanBlob(blob);
+              replaceCleanUrl(url);
+              setIsStripped(true);
+            }, file.type || 'image/png');
           };
-          img.src = previewUrl!;
+          img.onerror = () => {
+            if (isMountedRef.current) {
+              setError('Failed to decode image for EXIF stripping.');
+            }
+          };
+          img.src = previewUrlRef.current;
           return;
         }
 
         const blob = new Blob([cleanBytes as any], { type: file.type || 'image/jpeg' });
+        const url = URL.createObjectURL(blob);
         setCleanBlob(blob);
-        setCleanUrl(URL.createObjectURL(blob));
+        replaceCleanUrl(url);
         setIsStripped(true);
       }
     };
@@ -88,6 +157,14 @@ export default function ImageExifStripperTool() {
 
   return (
     <div className="space-y-6">
+      {error && (
+        <div
+          role="alert"
+          className="p-4 rounded-xl border border-red-200 bg-red-50 text-xs text-red-700 dark:border-red-900/40 dark:bg-red-950/40 dark:text-red-300"
+        >
+          {error}
+        </div>
+      )}
       {!file ? (
         <div
           onClick={() => fileInputRef.current?.click()}
@@ -105,9 +182,9 @@ export default function ImageExifStripperTool() {
           </div>
           <div className="space-y-1">
             <h3 className="font-bold text-sm text-slate-800 dark:text-slate-200">
-              {t("uiText.b5b60fed")}</h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              {t("uiText.318b8d7b")}</p>
+              {t('uiText.b5b60fed')}
+            </h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">{t('uiText.318b8d7b')}</p>
           </div>
         </div>
       ) : (
@@ -124,11 +201,12 @@ export default function ImageExifStripperTool() {
                 onClick={() => fileInputRef.current?.click()}
                 className="px-3 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
               >
-                {t("uiText.9c2b71f1")}</button>
+                {t('uiText.9c2b71f1')}
+              </button>
               <input
                 ref={fileInputRef}
                 type="file"
-                accept="image/*"
+                accept="image/jpeg, image/png, image/webp"
                 onChange={handleFileChange}
                 className="hidden"
               />
@@ -138,13 +216,15 @@ export default function ImageExifStripperTool() {
                   onClick={handleStrip}
                   className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-indigo-600 text-white text-xs font-bold hover:bg-indigo-500 transition shadow-sm"
                 >
-                  <ShieldCheck className="h-4 w-4" /> {t("uiText.52c3ae7f")}</button>
+                  <ShieldCheck className="h-4 w-4" /> {t('uiText.52c3ae7f')}
+                </button>
               ) : (
                 <button
                   onClick={handleDownload}
                   className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-emerald-700 text-white text-xs font-bold hover:bg-emerald-800 transition shadow-sm"
                 >
-                  <Download className="h-4 w-4" /> {t("uiText.289070ad")}</button>
+                  <Download className="h-4 w-4" /> {t('uiText.289070ad')}
+                </button>
               )}
             </div>
           </div>
@@ -155,40 +235,44 @@ export default function ImageExifStripperTool() {
               {previewUrl && (
                 <img
                   src={isStripped && cleanUrl ? cleanUrl : previewUrl}
-                  alt={t("tool.colorConverter.preview")}
+                  alt={t('tool.colorConverter.preview')}
                   className="max-h-80 object-contain rounded-xl shadow-sm"
                 />
               )}
               {isStripped && (
                 <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-emerald-600 dark:text-emerald-400">
-                  <ShieldCheck className="h-4 w-4" /> {t("uiText.5df59474")}</span>
+                  <ShieldCheck className="h-4 w-4" /> {t('uiText.5df59474')}
+                </span>
               )}
             </div>
 
             {/* Metadata Info Panel */}
             <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-slate-900">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
-                <Info className="h-3.5 w-3.5 text-indigo-500" /> {t("uiText.1c937f7c")}</span>
+                <Info className="h-3.5 w-3.5 text-indigo-500" /> {t('uiText.1c937f7c')}
+              </span>
 
               {exifData?.hasExif ? (
                 <div className="space-y-3 text-xs">
                   <div className="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/40 flex items-center gap-2 text-amber-700 dark:text-amber-300">
                     <ShieldAlert className="h-4 w-4 flex-shrink-0" />
-                    <span>{t("uiText.d5788776")}</span>
+                    <span>{t('uiText.d5788776')}</span>
                   </div>
 
                   <div className="divide-y divide-slate-100 dark:divide-slate-800">
                     {exifData.cameraModel && (
                       <div className="py-2 flex items-center justify-between">
                         <span className="text-slate-500 flex items-center gap-1.5">
-                          <Camera className="h-3.5 w-3.5" /> {t("uiText.5eaf3f8b")}</span>
+                          <Camera className="h-3.5 w-3.5" /> {t('uiText.5eaf3f8b')}
+                        </span>
                         <span className="font-semibold">{exifData.cameraModel}</span>
                       </div>
                     )}
                     {exifData.dateTimeOriginal && (
                       <div className="py-2 flex items-center justify-between">
                         <span className="text-slate-500 flex items-center gap-1.5">
-                          <Calendar className="h-3.5 w-3.5" /> {t("uiText.5795e823")}</span>
+                          <Calendar className="h-3.5 w-3.5" /> {t('uiText.5795e823')}
+                        </span>
                         <span className="font-semibold">{exifData.dateTimeOriginal}</span>
                       </div>
                     )}
@@ -202,7 +286,8 @@ export default function ImageExifStripperTool() {
                 </div>
               ) : (
                 <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/40 text-center text-xs text-slate-500 dark:text-slate-400">
-                  {t("uiText.6abcb6c5")}</div>
+                  {t('uiText.6abcb6c5')}
+                </div>
               )}
             </div>
           </div>

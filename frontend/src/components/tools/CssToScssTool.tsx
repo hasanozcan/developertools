@@ -6,7 +6,14 @@ import CopyButton from '@/components/common/CopyButton';
 import { convertCssToScss } from '@/lib/cssToScss';
 import { localizeUiText } from '@/lib/localizedText';
 
-const SAMPLE = ".card header { color: red; }\n.card .body { font-size: 14px; }";
+const SAMPLE = `.card { border-radius: 12px; }
+.card header { color: red; }
+.card > .body { font-size: 14px; }
+.card > .body:hover { opacity: 0.9; }
+
+@media (min-width: 768px) {
+  .card > .body { font-size: 16px; }
+}`;
 
 export default function CssToScssTool() {
   const { t } = useLanguage();
@@ -25,10 +32,21 @@ export default function CssToScssTool() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.ed1ec772")}</label>
-            <button onClick={() => setInput(SAMPLE)} className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">{t("common.loadSample")}</button>
+            <label
+              htmlFor="css-to-scss-input"
+              className="text-xs font-semibold text-slate-700 dark:text-slate-300"
+            >
+              {t('uiText.ed1ec772')}
+            </label>
+            <button
+              onClick={() => setInput(SAMPLE)}
+              className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline"
+            >
+              {t('common.loadSample')}
+            </button>
           </div>
           <textarea
+            id="css-to-scss-input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             rows={14}
@@ -37,7 +55,12 @@ export default function CssToScssTool() {
         </div>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">{t("uiText.52a7d9ab")}</label>
+            <label
+              htmlFor="css-to-scss-output"
+              className="text-xs font-semibold text-slate-700 dark:text-slate-300"
+            >
+              {t('uiText.52a7d9ab')}
+            </label>
             <CopyButton text={output} />
           </div>
           {error ? (
@@ -46,6 +69,7 @@ export default function CssToScssTool() {
             </div>
           ) : (
             <textarea
+              id="css-to-scss-output"
               value={output}
               readOnly
               rows={14}

@@ -1,6 +1,6 @@
 # DevsTools
 
-> 476 free, privacy-first online developer tools. Tool inputs and transformations run 100% client-side in the browser. No paywalls or mandatory signups.
+> 467 free, privacy-first online developer tools. Tool inputs and transformations run 100% client-side in the browser. No paywalls or mandatory signups.
 
 Site: https://devstools.app
 Sitemap: https://devstools.app/sitemap.xml
@@ -8,19 +8,20 @@ Languages: English (default, no prefix), Türkçe (/tr), Deutsch (/de), Español
 
 ## Tool categories
 
-- Converters: https://devstools.app/tools/converters
-- Encoders & Decoders: https://devstools.app/tools/encoding
-- Formatters & Beautifiers: https://devstools.app/tools/formatters
-- Generators: https://devstools.app/tools/generators
-- JSON Tools: https://devstools.app/tools/json
-- Text Tools: https://devstools.app/tools/text
-- Developer Utilities: https://devstools.app/tools/utilities
-- Cryptography & Security: https://devstools.app/tools/crypto
+- Converters (132): https://devstools.app/tools/converters
+- Encoders & Decoders (20): https://devstools.app/tools/encoding
+- Formatters & Beautifiers (20): https://devstools.app/tools/formatters
+- Generators (97): https://devstools.app/tools/generators
+- JSON Tools (16): https://devstools.app/tools/json
+- Text Tools (20): https://devstools.app/tools/text
+- Developer Utilities (116): https://devstools.app/tools/utilities
+- Cryptography & Security (46): https://devstools.app/tools/crypto
 
 ## Curated entry points
 
 - Workflow collections: https://devstools.app/collections
 - Toolboxes by role: https://devstools.app/for
+- Developer guides: https://devstools.app/guides
 
 ## Popular tools
 

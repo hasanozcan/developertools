@@ -1071,10 +1071,6 @@ const toolComponents: Record<ToolSlug, ComponentType> = {
     loading: Loading,
     ssr: false,
   }),
-  'svg-to-webp': dynamic(() => import('./SvgToWebpTool'), {
-    loading: Loading,
-    ssr: false,
-  }),
   'shadcn-theme-generator': dynamic(() => import('./ShadcnThemeGeneratorTool'), {
     loading: Loading,
     ssr: false,
@@ -1427,18 +1423,6 @@ const toolComponents: Record<ToolSlug, ComponentType> = {
     loading: Loading,
     ssr: false,
   }),
-  'video-to-gif': dynamic(() => import('./VideoToGifTool'), {
-    loading: Loading,
-    ssr: false,
-  }),
-  'pdf-to-image': dynamic(() => import('./PdfToImageTool'), {
-    loading: Loading,
-    ssr: false,
-  }),
-  'audio-converter': dynamic(() => import('./AudioConverterTool'), {
-    loading: Loading,
-    ssr: false,
-  }),
   'swagger-to-typescript': dynamic(() => import('./SwaggerToTypescriptTool'), {
     loading: Loading,
     ssr: false,
@@ -1631,10 +1615,6 @@ const toolComponents: Record<ToolSlug, ComponentType> = {
     loading: Loading,
     ssr: false,
   }),
-  'dockerfile-ai-optimized-generator': dynamic(() => import('./DockerfileAiGeneratorTool'), {
-    loading: Loading,
-    ssr: false,
-  }),
   'kubernetes-deployment-generator': dynamic(() => import('./KubernetesDeploymentGeneratorTool'), {
     loading: Loading,
     ssr: false,
@@ -1644,10 +1624,6 @@ const toolComponents: Record<ToolSlug, ComponentType> = {
     ssr: false,
   }),
   'helm-chart-yaml-generator': dynamic(() => import('./HelmChartYamlGeneratorTool'), {
-    loading: Loading,
-    ssr: false,
-  }),
-  'gitlab-ci-pipeline-builder': dynamic(() => import('./GitlabCiPipelineBuilderTool'), {
     loading: Loading,
     ssr: false,
   }),
@@ -1759,19 +1735,11 @@ const toolComponents: Record<ToolSlug, ComponentType> = {
     loading: Loading,
     ssr: false,
   }),
-  'embedding-token-cost-estimator': dynamic(() => import('./EmbeddingTokenCostEstimatorTool'), {
-    loading: Loading,
-    ssr: false,
-  }),
   'webhook-payload-simulator': dynamic(() => import('./WebhookPayloadSimulatorTool'), {
     loading: Loading,
     ssr: false,
   }),
   'network-port-reference': dynamic(() => import('./NetworkPortReferenceTool'), {
-    loading: Loading,
-    ssr: false,
-  }),
-  'ssl-tls-handshake-simulator': dynamic(() => import('./SslTlsHandshakeSimulatorTool'), {
     loading: Loading,
     ssr: false,
   }),
@@ -1836,10 +1804,6 @@ const toolComponents: Record<ToolSlug, ComponentType> = {
     ssr: false,
   }),
   'pbkdf2-key-derivation': dynamic(() => import('./Pbkdf2KeyDerivationTool'), {
-    loading: Loading,
-    ssr: false,
-  }),
-  'hmac-sha384-sha512-calculator': dynamic(() => import('./HmacSha384Sha512CalculatorTool'), {
     loading: Loading,
     ssr: false,
   }),

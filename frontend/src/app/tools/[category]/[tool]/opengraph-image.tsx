@@ -52,7 +52,7 @@ export default async function ToolOpenGraphImage({ params }: ImageProps) {
   const categoryName = tool?.categoryName || category.replace(/-/g, ' ');
   const description =
     tool?.shortDescription || 'Client-side browser developer utility with deterministic local execution.';
-  const totalCount = toolCatalog.length > 0 ? toolCatalog.length : 476;
+  const totalCount = toolCatalog.length > 0 ? toolCatalog.length : 467;
 
   const fallbackGlyph = CATEGORY_GLYPHS[category.toLowerCase()] || '</>';
   const toolGlyph = getToolGlyph(toolSlug, fallbackGlyph);

@@ -4,7 +4,7 @@ import { toolCatalog } from '../src/lib/api';
 import { translations } from '../src/translations';
 
 test('every canonical tool route responds successfully', async ({ request }) => {
-  expect(toolCatalog.length).toBe(476);
+  expect(toolCatalog.length).toBe(467);
   for (const tool of toolCatalog) {
     const path = `/tools/${tool.categorySlug}/${tool.slug}`;
     const response = await request.get(path);
@@ -422,7 +422,7 @@ test('new developer tools render and function correctly', async ({ page }) => {
 test('all tools render interactive interface with zero browser errors', async ({ page }) => {
   test.slow();
   test.setTimeout(600_000);
-  expect(toolCatalog.length).toBe(476);
+  expect(toolCatalog.length).toBe(467);
   const errors: string[] = [];
   page.on('console', (msg) => {
     if (msg.type() === 'error') {
@@ -802,25 +802,10 @@ test('16 newly added high-traffic tools interactive and rendering validation', a
 test('batch 367-382 high-traffic tools interactive and rendering validation', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
 
-  // 1. Video to GIF Converter
-  await page.goto('/tools/converters/video-to-gif');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Video to GIF');
-  await expect(page.locator('body')).toContainText('Convert to GIF');
-
   // 2. SVG to PNG / JPG / WebP Converter
   await page.goto('/tools/converters/svg-to-png');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('SVG to PNG');
   await expect(page.locator('body')).toContainText('Export Format');
-
-  // 3. PDF to Image Converter
-  await page.goto('/tools/converters/pdf-to-image');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('PDF to');
-  await expect(page.locator('body')).toContainText('Pages to Convert');
-
-  // 4. Audio Format Converter
-  await page.goto('/tools/converters/audio-converter');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Audio Format Converter');
-  await expect(page.locator('body')).toContainText('Target Output Format');
 
   // 5. Swagger/OpenAPI to TypeScript
   await page.goto('/tools/converters/swagger-to-typescript');
@@ -985,8 +970,8 @@ test('batch 399-426 converters render correctly without browser errors', async (
 
 test('batch 427-451 generators render correctly without browser errors', async ({ page }) => {
   const generators = [
-    'dockerfile-ai-optimized-generator', 'kubernetes-deployment-generator', 'kubernetes-configmap-secret-builder',
-    'helm-chart-yaml-generator', 'gitlab-ci-pipeline-builder', 'github-issue-pr-template-generator',
+    'kubernetes-deployment-generator', 'kubernetes-configmap-secret-builder',
+    'helm-chart-yaml-generator', 'github-issue-pr-template-generator',
     'opa-rego-policy-builder', 'systemd-service-hardened-builder', 'nginx-security-conf-generator',
     'caddyfile-production-generator', 'prometheus-recording-rules-generator', 'tailwind-v4-mesh-gradient-generator',
     'css-isometric-grid-generator', 'css-ribbon-banner-generator', 'svg-wavy-divider-generator',
@@ -1006,8 +991,8 @@ test('batch 452-476 utilities render correctly without browser errors', async ({
   const utilities = [
     'http-cache-control-tester', 'dns-soa-dnssec-inspector', 'ip-supernetting-calculator',
     'opengraph-tag-inspector', 'jwt-expiry-calculator', 'regex-benchmark-simulator',
-    'llm-context-window-shrinker', 'embedding-token-cost-estimator', 'webhook-payload-simulator',
-    'network-port-reference', 'ssl-tls-handshake-simulator', 'http2-http3-frame-inspector',
+    'llm-context-window-shrinker', 'webhook-payload-simulator',
+    'network-port-reference', 'http2-http3-frame-inspector',
     'dns-spf-record-flattener', 'mime-type-extension-lookup', 'color-blindness-simulator',
     'contrast-ratio-apca-calculator', 'viewport-size-tester', 'unicode-glyph-category-inspector',
     'seo-robots-noindex-simulator', 'cors-preflight-inspector', 'css-selector-speed-profiler',
@@ -1025,7 +1010,6 @@ test('batch 477-500 crypto encoding json text render correctly without browser e
   const tools = [
     { cat: 'crypto', slug: 'blake3-hash-generator' },
     { cat: 'crypto', slug: 'pbkdf2-key-derivation' },
-    { cat: 'crypto', slug: 'hmac-sha384-sha512-calculator' },
     { cat: 'crypto', slug: 'ethereum-eip191-signature-verifier' },
     { cat: 'crypto', slug: 'bitcoin-bech32-address-encoder' },
     { cat: 'crypto', slug: 'rsa-pkcs1-pkcs8-converter' },

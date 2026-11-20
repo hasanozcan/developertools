@@ -19,7 +19,7 @@ metinlerini yükler, bir aracın kendi metinleri o aracın sayfasıyla gelir
 - Kaynakta kullanılan fakat yedi sözlükte de bulunmayan **143 anahtarın
   1.001 dil/anahtar değeri** tamamlandı. Başlangıç etkin sözlüklerinde boş değer
   yoktu; İngilizce miras değerler birçok çeviri eksiğini gizliyordu.
-- 490 aracın ad ve açıklamaları denetlendi. Altı dilde İngilizceden miras kalan
+- 467 aracın ad ve açıklamaları denetlendi. Altı dilde İngilizceden miras kalan
   **4.568 metadata alanı** yerelleştirildi.
 - SSS ve açıklama bölümlerindeki **1.422 farklı kaynak metnin** altı dilde
   tamamı çevrildi: **8.532 çeviri**. Kod örnekleri aynı kaldı.
@@ -85,9 +85,10 @@ Kullanıcı verileri ve saklanan çalışma alanı adları, kod/örnek girdileri
 protokol değerleri, form seçeneklerinin işlevsel değerleri ve algoritmalar
 korunur. Tanınmayan yerel ayrıştırıcı
 hataları özgün tanı bilgisini korur. Doğal dil cron aracının İngilizce örnekleri
-mevcut ayrıştırıcının kabul ettiği girdilerdir. Kılavuzlar ve çeviri sistemi
-olmayan CLI/eklenti yüzeyleri mevcut İngilizce içeriğini kullanır; kılavuz
-bağlantılarında dil belirtilir.
+mevcut ayrıştırıcının kabul ettiği girdilerdir. 6 geliştirici kılavuzunun tamamı
+7 dilin hepsinde yerelleştirilmiştir ve kılavuz bağlantıları doğrudan yerelleştirilmiş
+kılavuz sayfalarına gider; çeviri sistemi olmayan CLI/eklenti yüzeyleri mevcut
+İngilizce içeriğini kullanır.
 
 JSON Pointer açıklamasındaki çözme sırası, mevcut doğru ayrıştırıcıyla uyumlu
 olarak `~1`, ardından `~0` şeklinde düzeltildi.
@@ -120,7 +121,7 @@ bağlantıları için test 404 içeriğindeki tam ad ve hedefi denetler.
 - İlk tam tarayıcı çalışmasındaki dört bulgunun hedefli son kontrolü:
   **4/4 geçti**. Son üretim çıktısındaki tam tarayıcı çalışması:
   **63/63 geçti**; sıfır atlanan, başarısız veya kararsız test. Önceki 49 vaka
-  korundu; yedi dil için 14 masaüstü/mobil vaka eklendi. 490 araç açılışı,
+  korundu; yedi dil için 14 masaüstü/mobil vaka eklendi. 467 araç açılışı,
   checksum karşılaştırma regresyonları, klavye araması ve cURL dönüşümü,
   yerelleştirilmiş SSS/JSON-LD, 404 hedefleri ve 320/390 piksel düzenleri geçti.
 
